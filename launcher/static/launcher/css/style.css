@@ -1,0 +1,9 @@
+header{
+	background-color: #eee;
+}
+div#readbox,
+div#sendbox,
+div#readbox a,
+div#sendbox a{
+	height: 300px;
+}
