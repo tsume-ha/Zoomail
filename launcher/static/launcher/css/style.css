@@ -19,18 +19,23 @@ div#sendbox a{
 
 div#readbox{
 	background: #5cbfe4;
-	background: linear-gradient(90deg, #fff, #5cbfe4);
+	background: linear-gradient(90deg, #fff, #99EEFF);
 }
 div#sendbox{
 	background: #8aef75;
-	background: linear-gradient(90deg, #8aef75, #fff);
+	background: linear-gradient(90deg, #BBFF99, #fff);
 }
 
 div#readbox a:hover{
-	background: #5cbfe4;
+	background: #99EEFF;
 }
 
 
 div#sendbox a:hover{
-	background: #8aef75;
+	background: #BBFF99;
+}
+
+div#introduction{
+	background-color: #d6eef5;
+	margin-top: 20px;
 }
