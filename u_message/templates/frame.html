@@ -5,18 +5,19 @@
 	<meta charset="utf-8">
 	<meta name="viewpoint" content="width=device-width, initial-scale=1,shrink-to-fit=no">
 	<title>{% block title %}{% endblock %}</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/style.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/bootstrap.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/bootstrap-grid.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/bootstrap-reboot.min.css' %}">
 	<script src="{% static 'u_message/js/jquery-3.4.1.min.js' %}"></script>
 	<script src="{% static 'u_message/js/bootstrap.min.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/launcher-style.css' %}">
 	{% block extrastyle %}{% endblock %}
 </head>
 <body>
 <header>
 	<div class="container">
-		<h2>U Message</h2>
+		<h2 class="pb-1">U Message</h2>
 	</div>
 </header>
 <div id="container" class="container">

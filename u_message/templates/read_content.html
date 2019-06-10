@@ -1,0 +1,17 @@
+{% extends 'frame.html' %}
+{% block title %}{{title}} | Unplugged Message{% endblock %}
+
+{% block body %}
+	<div class="row my-3">
+		<span class="col tag">{{tag}}</span>
+	</div>
+	<h3 class="my-1">6月ライブリハの口頭コメント アンケート</h3>
+	<div class="col-sm-12 col-md-8 mt-1 pl-0">
+		<span class="date">2019.6.9 (Sun.)</span>
+		<span class="ml-4 whosent" data-userid="609">そんき人</span>
+		<span class="float-right star">☆</span>
+	</div>
+	<p class="content col-sm-12 col-md-9 mt-4">{{article_body}}</p>
+	
+	
+{% endblock %}

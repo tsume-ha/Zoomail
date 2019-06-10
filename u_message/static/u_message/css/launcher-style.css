@@ -1,6 +1,4 @@
-header{
-	background-color: #d6eef5;
-}
+@charset "utf-8";
 
 div#readbox a,
 div#sendbox a{
