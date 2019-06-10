@@ -5,4 +5,4 @@ def index(request):
 	params = {
 		'search':'検索とかそういうの - 開発中',
 	}
-	return render(request, 'read/index.html', params)
+	return render(request, 'read_index.html', params)
