@@ -1,0 +1,26 @@
+{% extends 'frame.html' %}
+{% load static %}
+{% block title %}Read{% endblock %}
+
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/launcher-style.css' %}">
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-sm-6 text-center" id="readbox"><a class="text-decoration-none py-5" href="read/">READ<br></a></div>
+		<div class="col-sm-6 text-center" id="sendbox"><a>SEND<br><img src="{% static 'u_message/img/send.svg' %}" height="128" width="128"></a></div>
+	</div>
+	<div id="introduction" class="row center-block center-block">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8 text-center">
+			<h1>Unplugged Message</h1><br>
+			<p>
+				京都大学を中心に活動するアコースティック軽音サークル<br>
+				「京大アンプラグド」の部内連絡管理アプリ
+			</p>
+			
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+{% endblock %}

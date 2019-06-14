@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+div#readbox a,
+div#sendbox a{
+	display: block;
+	transition: .3s;
+}
+
+div#readbox,
+div#sendbox,
+div#readbox a,
+div#sendbox a{
+	height: 300px;
+	font-size: 80px;
+	font-weight: 100;
+}
+
+div#readbox{
+	background: #5cbfe4;
+	background: linear-gradient(90deg, #fff, #99EEFF);
+}
+div#sendbox{
+	background: #8aef75;
+	background: linear-gradient(90deg, #BBFF99, #fff);
+}
+
+div#readbox a:hover{
+	background: #99EEFF;
+}
+
+
+div#sendbox a:hover{
+	background: #BBFF99;
+}
+
+div#introduction{
+	background-color: #d6eef5;
+	margin-top: 20px;
+}

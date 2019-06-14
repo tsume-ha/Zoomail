@@ -1,11 +1,10 @@
-header{
-	background-color: #d6eef5;
-}
+@charset "utf-8";
 
 div#readbox a,
 div#sendbox a{
 	display: block;
 	transition: .3s;
+	color: #333;
 }
 
 div#readbox,
@@ -19,7 +18,7 @@ div#sendbox a{
 
 div#readbox{
 	background: #5cbfe4;
-	background: linear-gradient(90deg, #fff, #99EEFF);
+	background: linear-gradient(90deg, #fff, #bbe3ee);
 }
 div#sendbox{
 	background: #8aef75;
@@ -27,7 +26,7 @@ div#sendbox{
 }
 
 div#readbox a:hover{
-	background: #99EEFF;
+	background: #bbe3ee;
 }
 
 
