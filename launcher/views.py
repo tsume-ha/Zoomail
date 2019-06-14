@@ -2,4 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-	return render(request, 'launcher/index.html')
+	params = {
+	
+	}
+	return render(request, 'launcher_index.html', params)
