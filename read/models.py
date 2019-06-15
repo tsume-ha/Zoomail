@@ -2,7 +2,6 @@ from django.db import models
 
 class PostTest(models.Model):
 	"""docstring for PostTest"""
-	post_ID = models.IntegerField()
 	title = models.CharField(max_length=200)
 	content = models.TextField()
 	created_at = models.DateTimeField()

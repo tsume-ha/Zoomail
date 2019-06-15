@@ -11,7 +11,9 @@
 		<span class="ml-4 whosent" data-userid="609">{{data.whosend}}</span>
 		<span class="float-right star">☆</span>
 	</div>
-	<p class="content col-sm-12 col-md-9 mt-4">{{data.content}}</p>
+	<p class="content col-sm-12 col-md-9 mt-4">
+		{{data.content | linebreaks}}
+	</p>
 	
 	
 {% endblock %}
