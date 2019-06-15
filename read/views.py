@@ -11,8 +11,9 @@ def index(request):
 	return render(request, 'read_index.html', params)
 
 def content(request, cont_num):
+	print(cont_num)
 	data = PostTest.objects.all().filter(id=cont_num)
 	params = {
 		'data':data,
-			}
+	}
 	return render(request, 'read_content.html', params)
