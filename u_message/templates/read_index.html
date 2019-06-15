@@ -6,6 +6,18 @@
 		<p>{{search}}</p>
 	</div>
 
+
+	{% for item in data %}
+		<div class="article row border border-left-0 border-right-0">
+				<h4 class="col-sm-12 my-1"><a href="content/{{item.id}}" class="text-decoration-none">{{item.title}}</a></h4>
+				<div class="col-sm-12 mt-1">
+					<span class="float-left date">{{item.created_at}}</span>
+					<span class="float-left ml-4 whosent" data-userid="609">{{item.whosend}}</span>
+					<span class="float-right star">☆</span>
+				</div>
+				<p class="content col-sm-12 mt-2">{{item.content}}</p>
+		</div>
+	{% endfor %}
 	<div class="article row border border-left-0 border-right-0">
 			<h4 class="col-sm-12 my-1"><a href="content/" class="text-decoration-none">6月ライブリハの口頭コメント アンケート</a></h4>
 			<div class="col-sm-12 mt-1">

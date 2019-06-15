@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import PostTest
 
 def index(request):
+	data = PostTest.objects.all().order_by('id').reverse() #逆順で取得
 	params = {
 		'search':'検索とかそういうの - 開発中',
+		'data':data,
 	}
 	return render(request, 'read_index.html', params)
 
-def content(request):
+def content(request, cont_num):
+	data = PostTest.objects.all().filter(id=cont_num)
 	params = {
-		'tag':'全回メーリス',
-		'article_body':'全回メーリス失礼します。会長の成です。※1回生のみなさんには関係のないメーリスです。読まなくても大丈夫です。6月ライブお疲れ様でした。本ライブのリハーサルでは制限時間、コメント内容の禁止事項など、いくつかルールを設けて、任意の形で口頭コメントを行いました。※ルールについては5/28の全回メーリス2911号をご覧ください。',
-	}
+		'data':data,
+			}
 	return render(request, 'read_content.html', params)
