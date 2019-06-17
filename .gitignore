@@ -3,3 +3,5 @@ __pycache__/
 *$py.class
 
 db.sqlite3
+
+u_message/settings_local.py
