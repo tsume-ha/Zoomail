@@ -8,7 +8,10 @@
 	<h1>Send a Message</h1>
 	<form method="post">
 		{% csrf_token %}
-		{{ form.as_p }}
+		<p><label>件名</label>{{ form.title }}</p>
+		<p><label>宛先</label>{{ form.to }}</p>
+		<p><label>本文</label>{{ form.content }}</p>
+		
 
 		<input type="submit" name="SEND">
 	</form>

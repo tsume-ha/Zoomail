@@ -9,6 +9,6 @@ div.content p{
 div.content p:first-child{
 	display: none;
 }
-div.content p:last-child{
-	margin-bottom: 8px;
+div.content p br{
+	display: none;
 }

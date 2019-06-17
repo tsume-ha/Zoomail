@@ -30,7 +30,7 @@ def send(request):
 		to = request.POST["to"]
 		content = request.POST["content"]
 		nowtime = datetime.datetime.now()
-		data = PostTest(title = title, content = content, created_at = nowtime, whosend = 1, whopost = 1)
+		data = PostTest(title=title, content=content, created_at=nowtime, whosend=1, whopost=1)
 		data.save()
 		return redirect(to='../read/')
 	return render(request, 'send.html', params)
