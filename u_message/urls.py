@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+import read.views as read
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('launcher/', include('launcher.urls')),
     path('', include('launcher.urls')),
     path('read/', include('read.urls'), name="read"),
+    path('send/', read.send, name="send")
 ]
