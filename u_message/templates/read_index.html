@@ -1,6 +1,10 @@
 {% extends 'frame.html' %}
+{% load static %}
 {% block title %}Read{% endblock %}
 
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/read_index.css' %}">
+{% endblock %}
 
 {% block body %}
 	<div class="row">
@@ -17,7 +21,7 @@
 					<span class="float-right star">☆</span>
 				</div>
 				<div class="content col-sm-12 mt-2">
-					{{item.content|linebreaks|truncatechars:"99"}}
+					{{item.content|linebreaks|truncatechars:"150"}}
 				</div>
 		</div>
 	{% endfor %}

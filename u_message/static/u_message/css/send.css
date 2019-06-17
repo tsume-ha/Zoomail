@@ -1,5 +1,16 @@
 @charset "utf-8";
 
-form{
-	background-color: #eee;
+form label{
+	display: block;
+}
+
+form input,
+form textarea{
+
+}
+
+form input:not([type="submit"]),
+form textarea{
+	width: 100%;
+	max-width: 720px;
 }

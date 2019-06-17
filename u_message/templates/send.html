@@ -1,6 +1,9 @@
 {% extends 'frame.html' %}
+{% load static %}
 {% block title %}{{title}} | Unplugged Message{% endblock %}
-
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/send.css' %}">
+{% endblock %}
 {% block body %}
 	<h1>Send a Message</h1>
 	<form method="post">
