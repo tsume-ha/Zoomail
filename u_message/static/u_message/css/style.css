@@ -3,6 +3,9 @@
 header{
 	background-color: #d6eef5;
 }
+header h3{
+	font-weight: 300;
+}
 a{
 	text-decoration: none;!important
 	color: #666;!important
