@@ -5,3 +5,4 @@ __pycache__/
 db.sqlite3
 
 u_message/settings_local.py
+config/settings_local.py
