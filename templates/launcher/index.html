@@ -1,17 +1,17 @@
-{% extends 'frame.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Unplugged Message{% endblock %}
 
 {% block extrastyle %}
-	<link rel="stylesheet" type="text/css" href="{% static 'u_message/css/launcher-style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/launcher/style.css' %}">
 {% endblock %}
 
 
 {% block body %}
 	<div class="row">
-		<div class="col-sm-6 text-center" id="readbox"><a class="text-decoration-none py-3" href="read/">READ<br><img src="{% static 'u_message/img/read.svg' %}" height="128" width="128"></a></div>
-		<div class="col-sm-6 text-center" id="sendbox"><a class="text-decoration-none py-3" href="send/">SEND<br><img src="{% static 'u_message/img/send.svg' %}" height="128" width="128"></a></div>
+		<div class="col-sm-6 text-center" id="readbox"><a class="text-decoration-none text-dark py-3" href="read/">READ<br><img src="{% static 'img/read.svg' %}" height="128" width="128"></a></div>
+		<div class="col-sm-6 text-center" id="sendbox"><a class="text-decoration-none text-dark py-3" href="send/">SEND<br><img src="{% static 'img/send.svg' %}" height="128" width="128"></a></div>
 	</div>
 	<div id="introduction" class="row center-block center-block">
 		<div class="col-sm-2"></div>

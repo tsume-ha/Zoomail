@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewpoint" content="width=device-width, initial-scale=1">
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-grid.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.min.css' %}">
+	<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+	{% block extrastyle %}{% endblock %}
+</head>
+<body>
+<header>
+	<div class="container">
+		<h3 class="py-2"><a href="/" class="text-decoration-none text-dark p-1">U Message</a></h3>
+	</div>
+</header>
+<div id="container" class="container">
+	{% block body %}
+	{% endblock %}
+</div>
+</body>
+</html>
