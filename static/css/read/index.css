@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+article p{
+	margin-bottom: 0;
+	padding-bottom: 0.2rem;
+	padding-left: 5px;
+	border-left: #d6eef5 2px solid;
+}
+article p:first-child{
+	display: none;
+}
+article p br{
+	display: none;
+}
