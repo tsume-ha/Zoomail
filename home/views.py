@@ -5,4 +5,4 @@ def index(request):
 	params = {
 	
 	}
-	return render(request, 'launcher/index.html', params)
+	return render(request, 'home/index.html', params)
