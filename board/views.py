@@ -32,5 +32,5 @@ def send(request):
 		nowtime = datetime.datetime.now()
 		data = PostTest(title=title, content=content, created_at=nowtime, whosend=1, whopost=1)
 		data.save()
-		return redirect(to='../board/')
+		return redirect(to='../read/')
 	return render(request, 'board/send.html', params)
