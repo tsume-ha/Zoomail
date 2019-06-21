@@ -12,7 +12,7 @@ class PostTest(models.Model):
 		return 'post_ID=' + str(self.id) + ', title=' + self.title
 
 
-class Messages(object):
+class Messages(models.Model):
 	"""docstring for Messages"""
 	title = models.CharField(max_length=200)
 	content = models.TextField()
@@ -27,4 +27,11 @@ class Messages(object):
 	updated_at = DateTimeField()
 	def __init__(self):
 		return 'mes_ID=' + str(self.id) + ', title=' + self.title
+		
+class Message_Year(models.Model):
+	"""docstring for Message_Year"""
+	mes_ID = models.ForeignKey(Messages, on_delete=models.CASCADE)
+	year = models.IntegerField()
+	def __init__(self, arg):
+		return self.mes_ID.title + str(self.year)
 		
