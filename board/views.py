@@ -30,7 +30,7 @@ def send(request):
 		to = request.POST["to"]
 		content = request.POST["content"]
 		nowtime = datetime.datetime.now()
-		data = Messages(title=title, content=content, attaciment=False, sender_id=1, writer_id=1, created_at=nowtime, updated_at=nowtime)
+		data = Messages(title=title, content=content, sender_id=1, writer_id=1, created_at=nowtime, updated_at=nowtime)
 		data.save()
 		return redirect(to='../read/')
 	return render(request, 'board/send.html', params)

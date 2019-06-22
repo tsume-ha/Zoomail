@@ -26,13 +26,13 @@ class Messages(models.Model):
 	created_at = models.DateTimeField()
 	updated_at = models.DateTimeField()
 	
-	def __init__(self):
+	def __str__(self):
 		return 'mes_ID=' + str(self.id) + ', title=' + self.title
 		
 class Message_Year(models.Model):
 	"""docstring for Message_Year"""
 	mes_ID = models.ForeignKey(Messages, on_delete=models.CASCADE)
 	year = models.IntegerField()
-	def __init__(self):
+	def __str__(self):
 		return self.mes_ID.title + str(self.year)
 		
