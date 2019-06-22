@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from .models import Messages
+from .models import Message_Year
 from .forms import SendMessage
 
 import datetime
@@ -30,7 +31,8 @@ def send(request):
 		to = request.POST["to"]
 		content = request.POST["content"]
 		nowtime = datetime.datetime.now()
-		data = Messages(title=title, content=content, sender_id=1, writer_id=1, created_at=nowtime, updated_at=nowtime)
-		data.save()
+		content_data = Messages(title=title, content=content, sender_id=1, writer_id=1, created_at=nowtime, updated_at=nowtime)
+		content_data.save()
+
 		return redirect(to='../read/')
 	return render(request, 'board/send.html', params)
