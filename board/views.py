@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Messages
-from .models import Message_Year
+from extra_views import InlineFormSetFactory, CreateWithInlinesView, UpdateWithInlinesView
+from .models import Messages, Message_Year
 from .forms import SendMessage
 
 import datetime
@@ -22,17 +22,31 @@ def content(request, cont_num):
 	}
 	return render(request, 'board/content.html', params)
 
-def send(request):
-	params = {
-		'form':SendMessage(),
-	}
-	if (request.method == 'POST'):
-		title = request.POST["title"]
-		to = request.POST["to"]
-		content = request.POST["content"]
-		nowtime = datetime.datetime.now()
-		content_data = Messages(title=title, content=content, sender_id=1, writer_id=1, created_at=nowtime, updated_at=nowtime)
-		content_data.save()
+# def send(request):
+# 	params = {
+# 		'form':SendMessage(),
+# 	}
+# 	if (request.method == 'POST'):
+# 		title = request.POST["title"]
+# 		to = request.POST["to"]
+# 		content = request.POST["content"]
+# 		nowtime = datetime.datetime.now()
+# 		content_data = Messages(title=title, content=content, sender_id=1, writer_id=1, created_at=nowtime, updated_at=nowtime)
+# 		content_data.save()
 
-		return redirect(to='../read/')
-	return render(request, 'board/send.html', params)
+# 		return redirect(to='../read/')
+# 	return render(request, 'board/send.html', params)
+
+
+class MessYear(InlineFormSetFactory):
+	"""docstring for MessYear"""
+	model = Message_Year
+	to = '__all__'
+
+class PostMessage(CreateWithInlinesView):
+	model = Messages
+	to = ['to']
+	context_object_name = 'Messages'
+	inlines = [MessYear]
+	template_name = 'board/send.html'
+	success_url = '../read/'
