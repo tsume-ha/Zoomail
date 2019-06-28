@@ -9,8 +9,7 @@ class SendMessage(forms.Form):
 		)
 	content = forms.CharField(label="本文",widget=forms.Textarea)
 
-class SendTo(object):
-	"""docstring for SendTo"""
+class SendTo(forms.Form):
 	to = forms.ChoiceField(
 		choices = [("全回メーリス","全回メーリス",),("Public","Public",),],
 		label = "宛先",
