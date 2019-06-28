@@ -8,9 +8,9 @@
 	<h1>Send a Message</h1>
 	<form method="post">
 		{% csrf_token %}
-		<p><label>件名</label>{{ form.title }}</p>
-		<p><label>宛先</label>{{ form.to }}</p>
-		<p><label>本文</label>{{ form.content }}</p>
+		{{ content_form.as_p }}
+
+		{{ year_form }}
 		
 
 		<input type="submit" name="SEND">

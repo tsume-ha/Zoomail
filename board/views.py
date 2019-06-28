@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from extra_views import InlineFormSetFactory, CreateWithInlinesView, UpdateWithInlinesView
+from django.forms.models import inlineformset_factory
 from .models import Messages, Message_Year
-from .forms import SendMessage
+from .forms import SendMessage, SendTo
 
 import datetime
 
@@ -22,18 +22,43 @@ def content(request, cont_num):
 	}
 	return render(request, 'board/content.html', params)
 
+# def send(request):
+# 	params = {
+# 		'form':SendMessage(),
+# 	}
+# 	if (request.method == 'POST'):
+# 		title = request.POST["title"]
+# 		to = request.POST["to"]
+# 		content = request.POST["content"]
+# 		nowtime = datetime.datetime.now()
+# 		content_data = Messages(title=title, content=content, sender_id=1, writer_id=1, created_at=nowtime, updated_at=nowtime)
+# 		content_data.save()
+
+# 		return redirect(to='../read/')
+# 	return render(request, 'board/send.html', params)
+
+
 def send(request):
+	SendInlineFormset = inlineformset_factory(Messages, Message_Year, form=SendMessage)
+	if request.method == 'POST':
+		yearForm = SendTo(request.POST)
+
+		if yearForm.is_valid():
+			new_yearForm = yearForm.save(commit=False)
+			sendInlineFormset = SendInlineFormset(request.POST, request.FILES, instance=new_yearForm)
+			if sendInlineFormset.is_valid():
+				sendInlineFormset.save()
+				return redirect(to='../read/')
+			else :
+				classificationformset = ClassificationInlineFormSet(request.POST, request.FILES, instance=new_yearForm)
+	else:
+		sendInlineFormset = SendInlineFormset()
+		yearForm = SendTo(request.POST)
 	params = {
-		'form':SendMessage(),
+		'content_form': SendInlineFormset(),
+		# 'year_form': SendTo(),
+
 	}
-	if (request.method == 'POST'):
-		title = request.POST["title"]
-		to = request.POST["to"]
-		content = request.POST["content"]
-		nowtime = datetime.datetime.now()
-		content_data = Messages(title=title, content=content, sender_id=1, writer_id=1, created_at=nowtime, updated_at=nowtime)
-		content_data.save()
-
-		return redirect(to='../read/')
 	return render(request, 'board/send.html', params)
-
+				
+				
