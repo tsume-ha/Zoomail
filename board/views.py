@@ -9,10 +9,13 @@ import datetime
 
 def index(request):
 	data = Messages.objects.all().order_by('id').reverse() #逆順で取得
-	textlange = 120
+	textmax = 120
 	for record in data:
+		textrange = len(record.content)
 		count = record.content.find('\n')
-		record.content = record.content[count:count+textlange].replace('\n', ' ')
+		record.content = record.content[count:count+textmax].replace('\n', ' ')
+		if textrange > textmax:
+			record.content += ' ...'
 	params = {
 		'search':'検索とかそういうの - 開発中',
 		'data':data,
