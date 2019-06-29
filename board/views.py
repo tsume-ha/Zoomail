@@ -39,7 +39,12 @@ def content(request, cont_num):
 
 
 def send(request):
-	SendInlineFormset = inlineformset_factory(Messages, Message_Year, form=SendMessage)
+	SendInlineFormset = inlineformset_factory(
+		parent_model = Messages,
+		model = Message_Year,
+		form = SendMessage,
+		extra = 1
+	)
 	if request.method == 'POST':
 		yearForm = SendTo(request.POST)
 
@@ -55,8 +60,8 @@ def send(request):
 		sendInlineFormset = SendInlineFormset()
 		yearForm = SendTo(request.POST)
 	params = {
-		'content_form': SendInlineFormset(),
-		# 'year_form': SendTo(),
+		'content_form': Send(),
+		'year_form': SendTo(),
 
 	}
 	return render(request, 'board/send.html', params)

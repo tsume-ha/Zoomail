@@ -8,10 +8,9 @@
 	<h1>Send a Message</h1>
 	<form method="post">
 		{% csrf_token %}
-		{{ content_form.as_p }}
 
-		{{ year_form }}
-		
+		{{ content_form.as_p }}
+		{{ year_form.as_p }}
 
 		<input type="submit" name="SEND">
 	</form>
