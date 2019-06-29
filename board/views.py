@@ -9,6 +9,10 @@ import datetime
 
 def index(request):
 	data = Messages.objects.all().order_by('id').reverse() #逆順で取得
+	textlange = 120
+	for record in data:
+		count = record.content.find('\n')
+		record.content = record.content[count:count+textlange].replace('\n', ' ')
 	params = {
 		'search':'検索とかそういうの - 開発中',
 		'data':data,
@@ -60,7 +64,7 @@ def send(request):
 		sendInlineFormset = SendInlineFormset()
 		yearForm = SendTo(request.POST)
 	params = {
-		'content_form': Send(),
+		'content_form': SendMessage(),
 		'year_form': SendTo(),
 
 	}
