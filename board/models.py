@@ -11,7 +11,7 @@ class Messages(models.Model):
 		#転載時に使用。
 		#文章を書いた人がwriter、アップロードした人がsender。
 		#通常なら sender == writer で同じになる。
-	created_at = models.DateTimeField()
+	created_at = models.DateTimeField(unique=True)
 	updated_at = models.DateTimeField()
 	
 	def __str__(self):

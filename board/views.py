@@ -9,7 +9,7 @@ import datetime
 
 def index(request):
 	data = Messages.objects.all().order_by('id').reverse() #逆順で取得
-	textmax = 120
+	textmax = 80
 	for record in data:
 		textrange = len(record.content)
 		count = record.content.find('\n')
