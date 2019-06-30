@@ -5,13 +5,11 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/board/send.css' %}">
 {% endblock %}
 {% block body %}
-	<h1>Send a Message</h1>
+	<h1 class="mb-4">Send a Message</h1>
 	<form method="post">
 		{% csrf_token %}
-		<p><label>件名</label>{{ form.title }}</p>
-		<p><label>宛先</label>{{ form.to }}</p>
-		<p><label>本文</label>{{ form.content }}</p>
-		
+
+		{{ message_form.as_p }}
 
 		<input type="submit" name="SEND">
 	</form>
