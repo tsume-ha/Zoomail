@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Message, Message_Year
+from django.forms.models import inlineformset_factory
+from .models import Messages, Message_Year
 from .forms import SendMessage
-
 
 import datetime
 
 def index(request):
-	data = Message.objects.all().order_by('id').reverse() #逆順で取得
+	data = Messages.objects.all().order_by('id').reverse() #逆順で取得
 	textmax = 120
 	for record in data:
 		textrange = len(record.content)
@@ -23,7 +23,7 @@ def index(request):
 	return render(request, 'board/index.html', params)
 
 def content(request, cont_num):
-	data = Message.objects.get(id=cont_num)
+	data = Messages.objects.get(id=cont_num)
 	params = {
 		'data':data,
 	}
@@ -39,7 +39,7 @@ def send(request):
 		content = request.POST["content"]
 		nowtime = datetime.datetime.now()
 		now_user = 1
-		content_data = Message(
+		content_data = Messages(
 			title=title,
 			content=content,
 			sender_id=now_user,
@@ -48,7 +48,7 @@ def send(request):
 			updated_at=nowtime
 		)
 		content_data.save()
-		tmp = Message.objects.get(created_at=nowtime)
+		tmp = Messages.objects.get(created_at=nowtime)
 		year_data = Message_Year(mes_ID=tmp, year=to)
 		year_data.save()
 
