@@ -1,14 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.forms.models import inlineformset_factory
+from django.db.models import Q
 from .models import Messages, Message_Year
 from .forms import SendMessage, Search
 
 import datetime
 
 def index(request):
-	data = Messages.objects.all().order_by('updated_at').reverse() #逆順で取得
+	if (request.method == 'POST'):
+		str = request.POST['text']
+		data = Messages.objects.filter(Q(content__contains=str)|Q(title__contains=str)).order_by('updated_at').reverse()
+	else:
+		data = Messages.objects.all().order_by('updated_at').reverse() #逆順で取得
+
 	textmax = 80
 	for record in data:
 		textrange = len(record.content)
@@ -16,9 +21,6 @@ def index(request):
 		record.content = record.content[count:count+textmax].replace('\n', ' ')
 		if textrange > textmax:
 			record.content += ' ...'
-
-
-
 	params = {
 		'search':Search(),
 		'data':data,
