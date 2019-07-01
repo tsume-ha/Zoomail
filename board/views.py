@@ -3,12 +3,12 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.forms.models import inlineformset_factory
 from .models import Messages, Message_Year
-from .forms import SendMessage
+from .forms import SendMessage, Search
 
 import datetime
 
 def index(request):
-	data = Messages.objects.all().order_by('id').reverse() #逆順で取得
+	data = Messages.objects.all().order_by('updated_at').reverse() #逆順で取得
 	textmax = 80
 	for record in data:
 		textrange = len(record.content)
@@ -16,9 +16,13 @@ def index(request):
 		record.content = record.content[count:count+textmax].replace('\n', ' ')
 		if textrange > textmax:
 			record.content += ' ...'
+
+
+
 	params = {
-		'search':'検索とかそういうの - 開発中',
+		'search':Search(),
 		'data':data,
+
 	}
 	return render(request, 'board/index.html', params)
 

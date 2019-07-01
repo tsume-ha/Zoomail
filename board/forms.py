@@ -26,3 +26,9 @@ class SendMessage(forms.Form):
 		'placeholder': '本文を入力',
 	}))
 
+
+
+class Search(forms.Form):
+	text = forms.CharField(label="",widget=forms.TextInput(attrs={
+		'placeholder': '検索'
+		}))
