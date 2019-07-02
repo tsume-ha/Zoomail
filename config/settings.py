@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
+    'members',
     'board',
 ]
 
@@ -106,6 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# CustomUserModel
+AUTH_USER_MODEL = 'members.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
