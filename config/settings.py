@@ -17,7 +17,6 @@ from . import settings_local
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-print("setting.py - " + BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -107,8 +106,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+
 # CustomUserModel
 AUTH_USER_MODEL = 'members.User'
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
