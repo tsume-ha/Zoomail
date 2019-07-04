@@ -7,9 +7,10 @@ from .models import User
 class UserAdmin(BaseUserAdmin):
 	fieldsets = (
 		(None, {'fields': ('google_account', 'year')}),
-		('Personal info'), {'fields': ('first_name', 'last_name', 'google_account')}),
-		('Permissions', {'fields': ('is_admin', )}),
-		)
+		('Personal info', {'fields': ('first_name', 'last_name')}),
+	)
+	list_display = ('google_account', 'first_name', 'last_name', 'year',)
+	list_filter = ('google_account',)
 	search_fields = ('google_account',)
 	ordering = ('google_account',)
 	filter_horizontal = ()

@@ -1,12 +1,29 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.utils import timezone
 
 class UserManager(BaseUserManager):
-	def create_superuser(self, google_account, password=None):
+	def create_user(self, google_account, year, password=None):
+		if not google_account:
+			raise ValueError('Users must have a Google account')
+		user = self.model(
+			google_account = google_account,
+			year = year,
+			# created_at = timezone.now(),
+			# updated_at = timezone.now(),
+		)
+		user.set_password(password)
+		user.save(using=self._db)
+		return user
+
+	def create_superuser(self, google_account, year, password=None):
 		user = self.create_user(
 			google_account,
-			password=password,
+			year = year,
+			password = password,
+			# created_at = timezone.now(),
+			# updated_at = timezone.now(),
 		)
 		user.is_admin = True
 		user.save(using=self._db)
@@ -21,8 +38,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 	created_at = models.DateTimeField()
 	updated_at = models.DateTimeField()
 
+	objects = UserManager()
+
 	USERNAME_FIELD = 'google_account'
-	REQUIRED_FIELDS = []
+	REQUIRED_FIELDS = ['year']
 
 	def __str__(self):
 		return str(self.id) + self.last_name + self.first_name + self.google_account
