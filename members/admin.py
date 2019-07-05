@@ -8,6 +8,7 @@ class UserAdmin(BaseUserAdmin):
 	fieldsets = (
 		(None, {'fields': ('google_account', 'year')}),
 		('Personal info', {'fields': ('first_name', 'last_name')}),
+		('Permissions', {'fields': ('is_admin', 'is_staff')}),
 	)
 	list_display = ('google_account', 'first_name', 'last_name', 'year',)
 	list_filter = ('google_account',)

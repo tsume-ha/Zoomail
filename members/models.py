@@ -10,8 +10,6 @@ class UserManager(BaseUserManager):
 		user = self.model(
 			google_account = google_account,
 			year = year,
-			# created_at = timezone.now(),
-			# updated_at = timezone.now(),
 		)
 		user.set_password(password)
 		user.save(using=self._db)
@@ -22,10 +20,9 @@ class UserManager(BaseUserManager):
 			google_account,
 			year = year,
 			password = password,
-			# created_at = timezone.now(),
-			# updated_at = timezone.now(),
 		)
 		user.is_admin = True
+		user.is_staff = True
 		user.save(using=self._db)
 		return user
 
@@ -35,8 +32,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 	last_name = models.CharField(max_length=255)
 	nickname = models.CharField(max_length=255)
 	year = models.IntegerField()
-	created_at = models.DateTimeField()
-	updated_at = models.DateTimeField()
+	created_at = models.DateTimeField(default=timezone.now)
+	updated_at = models.DateTimeField(default=timezone.now)
+	is_staff = models.BooleanField(default=False)
+	is_admin = models.BooleanField(default=False)
 
 	objects = UserManager()
 
