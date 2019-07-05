@@ -21,7 +21,7 @@ class UserManager(BaseUserManager):
 			year = year,
 			password = password,
 		)
-		user.is_admin = True
+		user.is_superuser = True
 		user.is_staff = True
 		user.save(using=self._db)
 		return user
@@ -35,7 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	created_at = models.DateTimeField(default=timezone.now)
 	updated_at = models.DateTimeField(default=timezone.now)
 	is_staff = models.BooleanField(default=False)
-	is_admin = models.BooleanField(default=False)
+	is_superuser = models.BooleanField(default=False)
 
 	objects = UserManager()
 
