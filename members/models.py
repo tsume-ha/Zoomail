@@ -44,4 +44,3 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 	def __str__(self):
 		return str(self.id) + self.last_name + self.first_name + self.google_account
-

@@ -44,7 +44,7 @@ def send(request):
 		to = request.POST["to"]
 		content = request.POST["content"]
 		nowtime = datetime.datetime.now()
-		now_user = 1
+		now_user = request.user
 		content_data = Messages(
 			title=title,
 			content=content,

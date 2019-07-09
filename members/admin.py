@@ -8,12 +8,18 @@ class UserAdmin(BaseUserAdmin):
 	fieldsets = (
 		(None, {'fields': ('google_account', 'year')}),
 		(('Personal info'), {'fields': ('first_name', 'last_name')}),
-		(('Permissions'), {'fields': ('is_superuser', 'is_staff')}),
+		(('Permissions'), {'fields': ('is_superuser', 'is_staff', 'groups')}),
 	)
+	add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('google_account', 'password1', 'password2', 'year')
+        }),
+    )
 	list_display = ('google_account', 'first_name', 'last_name', 'year',)
 	list_filter = ('google_account',)
 	search_fields = ('google_account',)
 	ordering = ('google_account',)
 	filter_horizontal = ()
 
-admin.site.unregister(Group)
+# admin.site.unregister(Group)
