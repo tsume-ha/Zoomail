@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from members.models import User
 
-class Messages(models.Model):
+class Message(models.Model):
 	title = models.CharField(max_length=200)
 	content = models.TextField()
 
@@ -22,20 +22,29 @@ class Messages(models.Model):
 	def __str__(self):
 		return 'mes_ID=' + str(self.id) + ', title=' + self.title
 		
-class Message_Year(models.Model):
-	mes_ID = models.ForeignKey('Messages', null=True, on_delete=models.CASCADE)
+class Year(models.Model):
+	messages = models.ManyToManyField(Message)
 	year = models.IntegerField()
-	def __str__(self):
-		return self.mes_ID.title + str(self.year)
 
-class Message_Attachment(models.Model):
-	mes_ID = models.ForeignKey('Messages', null=True, on_delete=models.CASCADE)
+	ALL = -1
+	def display(self):
+		if self.year == self.ALL:
+			return "ALL"
+		
+		return self.year
+
+
+	def __str__(self):
+		return self.display()
+
+class Attachment(models.Model):
+	message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE)
 	attachment = models.FileField()
 	def __str__(self):
-		return self.mes_ID.title
+		return self.message.title
 
-class Message_Tag(models.Model):
-	mes_ID = models.ForeignKey('Messages', null=True, on_delete=models.CASCADE)
+class Tag(models.Model):
+	messages = models.ManyToManyField(Message)
 	tag = models.CharField(max_length=30)
 	def __str__(self):
-		return self.mes_ID.title + self.tag
+		return self.message.title + "-" + self.tag
