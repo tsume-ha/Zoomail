@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Unplugged Message{% endblock %}
+{% block extrastyle %}<script src="https://unpkg.com/wavesurfer.js"></script>{% endblock %}
+
+
+{% block body %}
+<div id="waveform"></div>
+<script type="text/javascript">
+var wavesurfer = WaveSurfer.create({
+    container: '#waveform'
+});
+wavesurfer.load('{% static '08 境界の彼方.mp3' %}');
+wavesurfer.on('ready', function () {
+    wavesurfer.play();
+});
+</script>
+{% endblock %}

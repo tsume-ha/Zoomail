@@ -24,5 +24,6 @@ urlpatterns = [
     path('', include('home.urls')),
     path('members/', include('members.urls')),
     path('read/', include('board.urls'), name="read"),
-    path('send/', board.send, name="send")
+    path('send/', board.send, name="send"),
+    path('player/', include('player.urls')),
 ]
