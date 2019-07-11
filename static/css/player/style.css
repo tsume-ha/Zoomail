@@ -68,11 +68,12 @@
 .download a:after{content:''; height:10px; width:7px; display:block; background:#333; position:absolute; top:0px; left:7px;}
 
 
-ol{
-	display: list-item;
+.songnum{
+	width: 21px;
 }
-
-ol li{
-	display: list-item;
-	list-style-type: decimal;
+.songtime{
+	width: 30px;
+}
+.download{
+	width: 22px;
 }
