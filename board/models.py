@@ -44,7 +44,7 @@ class Attachment(models.Model):
 		return self.message.title
 
 class Tag(models.Model):
+	name = models.CharField(max_length=30)
 	messages = models.ManyToManyField(Message)
-	tag = models.CharField(max_length=30)
 	def __str__(self):
-		return self.message.title + "-" + self.tag
+		return self.name
