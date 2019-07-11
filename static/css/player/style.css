@@ -67,6 +67,12 @@
 .download a:before{content:''; height:0; width:0; display:block; border:11px transparent solid; border-bottom-width:0; border-top-color:#333; position:absolute; bottom:0px; left:0px; }
 .download a:after{content:''; height:10px; width:7px; display:block; background:#333; position:absolute; top:0px; left:7px;}
 
-ol #songlist{
+
+ol{
+	display: list-item;
+}
+
+ol li{
+	display: list-item;
 	list-style-type: decimal;
 }
