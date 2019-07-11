@@ -9,9 +9,6 @@ class Message(models.Model):
 	#添付ファイルの有無
 	attachment = models.BooleanField(default=False)
 	sender_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='send_message')
-	
-	#全回メーリスかどうか
-	all = models.BooleanField(default=False)
 
 	#転載時に使用。
 	#文章を書いた人がwriter、アップロードした人がsender。
@@ -27,6 +24,14 @@ class Message(models.Model):
 class MessageYear(models.Model):
 	year = models.IntegerField()
 	message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='years')
+
+	ALL = -1
+
+	def display(self):
+		if self.year == self.ALL:
+			return "全回"
+		
+		return self.year
 
 class Attachment(models.Model):
 	message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name='attachments')
