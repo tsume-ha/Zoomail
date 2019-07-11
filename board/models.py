@@ -9,36 +9,27 @@ class Message(models.Model):
 	#添付ファイルの有無
 	attachment = models.BooleanField(default=False)
 	sender_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='send_message')
-	# sender_id = models.IntegerField()
+	
+	#全回メーリスかどうか
+	all = models.BooleanField(default=False)
 
 	#転載時に使用。
 	#文章を書いた人がwriter、アップロードした人がsender。
 	#通常なら sender == writer で同じになる。
 	writer_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='write_message')	
-	# writer_id = models.IntegerField()
+
 	created_at = models.DateTimeField(default=timezone.now)
 	updated_at = models.DateTimeField(default=timezone.now)
 	
 	def __str__(self):
 		return 'mes_ID=' + str(self.id) + ', title=' + self.title
 		
-class Year(models.Model):
-	messages = models.ManyToManyField(Message)
+class MessageYear(models.Model):
 	year = models.IntegerField()
-
-	ALL = -1
-	def display(self):
-		if self.year == self.ALL:
-			return "ALL"
-		
-		return self.year
-
-
-	def __str__(self):
-		return self.display()
+	message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='years')
 
 class Attachment(models.Model):
-	message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE)
+	message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name='attachments')
 	attachment = models.FileField()
 	def __str__(self):
 		return self.message.title
