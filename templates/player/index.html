@@ -2,18 +2,78 @@
 {% load static %}
 
 {% block title %}Unplugged Message{% endblock %}
-{% block extrastyle %}<script src="https://unpkg.com/wavesurfer.js"></script>{% endblock %}
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/player/style.css' %}">
+<script src="https://unpkg.com/wavesurfer.js"></script>
+<script src="{% static 'js/wavesurfer.timeline.js' %}"></script>
+{% endblock %}
 
 
 {% block body %}
+<div class="row"><!-- Live Title -->
+	<div class="col-sm-12">
+		<a href="/" class="float-left col-xs-2" id="return"> </a>
+		<h5 class="float-left col-xs-7 ml-2">新人ライブリハ#2</h5>
+		<span class="float-right col-xs-3 small">2019/6/7 (金)</span>
+	</div>
+</div>
+<div class="row"><!-- Song Title -->
+	<div class="col-sm-12" id="songtitle">
+		<h4><span>01.</span>境界の彼方</h4>
+	</div>
+</div>
 <div id="waveform"></div>
+<div id="wavetimeline"></div>
+<div class="row justify-content-around mt-3" id="ctrl">
+	<div class="col-xs-2"><button id="prev"></button></div>
+	<div class="col-xs-2"><button id="back"></button></div>
+	<div class="col-xs-3"><button id="start" class="getstart"></button></div>
+	<div class="col-xs-2"><button id="forward"></button></div>
+	<div class="col-xs-2"><button id="next"></button></div>
+</div>
+
+<ol id="songlist" class="row my-3">
+	<li class="col-sm-12 row">
+		<span class="songname col float-left ml-0 pl-0">残酷な天使のテーゼ</span>
+		<span class="songtime float-right mx-2">3:15</span>
+		<span class="download float-right mx-2"><a href="{% static '08 境界の彼方.mp3' %}">　</a></span>
+	</li>
+</ol>
+
+
+
+
 <script type="text/javascript">
 var wavesurfer = WaveSurfer.create({
-    container: '#waveform'
+	container: '#waveform',
+	barWidth: 1,
+	waveColor: '#33abcc',
+	progressColor: '#144552',
+	scrollParent: false,
+	// plugins: [
+	// 	WaveSurfer.timeline.create({
+	// 		container: "#wavetimeline"
+	// 	})
+	// ]
 });
 wavesurfer.load('{% static '08 境界の彼方.mp3' %}');
+$(document).on('click',"#start",function(){
+	console.log();
+	if (wavesurfer.isPlaying()) {
+		//playing => off
+		wavesurfer.pause();
+		$(this).removeClass('getstop');
+		$(this).addClass('getstart');
+	} else {
+		//not playing => on
+		wavesurfer.play();
+		$(this).removeClass('getstart');
+		$(this).addClass('getstop');
+	}
+	
+})
 wavesurfer.on('ready', function () {
-    wavesurfer.play();
+    // 
 });
 </script>
 {% endblock %}
