@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+article:hover{
+	background-color: #e4f4f8;
+}
+
+.card-body{
+	padding: 1rem;
+}
+
+h4.card-title{
+	display: inline;
+}
+
+h6.card-subtitle{
+	display: inline;
+}
+
+.card a{
+	color: #212529;
+}
+
+
+a.card-body{
+	text-decoration: none;
+}

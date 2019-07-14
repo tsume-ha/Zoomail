@@ -6,3 +6,9 @@ def index(request):
 	
 	}
 	return render(request, 'player/index.html', params)
+
+def playlist(request):
+	params = {
+	
+	}
+	return render(request, 'player/playlist.html', params)

@@ -3,97 +3,115 @@
 
 {% block title %}Unplugged Message{% endblock %}
 {% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/player/style.css' %}">
-<script src="https://unpkg.com/wavesurfer.js"></script>
-<script src="{% static 'js/wavesurfer.timeline.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/player/index.css' %}">
+<script src="{% static 'js/touch-hover.js' %}"></script>
 {% endblock %}
 
 
 {% block body %}
-<div class="row"><!-- Live Title -->
-	<div class="col-sm-12">
-		<a href="/" class="float-left col-xs-2" id="return"> </a>
-		<h5 class="float-left col-xs-7 ml-2">新人ライブリハ#2</h5>
-		<span class="float-right col-xs-3 small">2019/6/7 (金)</span>
-	</div>
-</div>
-<div class="row"><!-- Song Title -->
-	<div class="col-sm-12" id="songtitle">
-		<h4><span>01.</span>境界の彼方</h4>
-	</div>
-</div>
-<div id="waveform"></div>
-<div id="wavetimeline"></div>
-<div class="row justify-content-around mt-3" id="ctrl">
-	<div class="col-xs-2"><button id="prev"></button></div>
-	<div class="col-xs-2"><button id="back"></button></div>
-	<div class="col-xs-3"><button id="start" class="getstart"></button></div>
-	<div class="col-xs-2"><button id="forward"></button></div>
-	<div class="col-xs-2"><button id="next"></button></div>
-</div>
+<section class="row">
 
-
-<div id="songlist" class="row my-3">
-	<div class="col-sm-12  border-bottom py-1">
-		<span class="songnum  float-left ml-1 mr-2">1.</span>
-		<span class="songname float-left ml-0 pl-0">残酷な天使のテーゼ</span>
-		<span class="download float-right mx-2"><a href="{% static '08 境界の彼方.mp3' %}">　</a></span>
-		<span class="songtime float-right mx-2">3:15</span>
+	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
+		<article class="card border-info m-2">
+			<div class="card-body">
+				<h5 class="card-title bg-info　mb-2">新しく音源を追加</h5>
+				<p class="text-info">こちらから追加</p>
+			</div>
+		</article>
 	</div>
-	<div class="col-sm-12  border-bottom py-1">
-		<span class="songnum  float-left ml-1 mr-2">2.</span>
-		<span class="songname float-left ml-0 pl-0">可愛い転校生に告白されて付き合おうと思ったら彼女はなんと狐娘だったので人間のぼくが幸せについて本気出して考えてみた</span>
-		<span class="download float-right mx-2"><a href="{% static '08 境界の彼方.mp3' %}">　</a></span>
-		<span class="songtime float-right mx-2">3:15</span>
-	</div>
-	<div class="col-sm-12  border-bottom py-1">
-		<span class="songnum  float-left ml-1 mr-2">3.</span>
-		<span class="songname float-left ml-0 pl-0">可愛い転校生に告白されて付き合おうと思ったら彼女は</span>
-		<span class="download float-right mx-2"><a href="{% static '08 境界の彼方.mp3' %}">　</a></span>
-		<span class="songtime float-right mx-2">3:15</span>
-	</div>
-	<div class="col-sm-12  border-bottom py-1">
-		<span class="songnum  float-left ml-1 mr-2">10.</span>
-		<span class="songname float-left ml-0 pl-0">残酷な天使のテーゼ</span>
-		<span class="download float-right mx-2"><a href="{% static '08 境界の彼方.mp3' %}">　</a></span>
-		<span class="songtime float-right mx-2">3:15</span>
-	</div>
-</div>
 
 
 
+	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
+		<article class="card m-2">
+			<a href="{% url 'playlist' %}" class="card-body">
+				<h5 class="card-title　float-left mb-2">新人ライブリハ#2</h5>
+				<h6 class="card-subtitle float-right small">Recorded : 2019/6/7</h6>
+				<table class="table table-sm mb-0">
+					<tr>
+						<td><a href="{% url 'playlist' %}?n=1">1. 君に届け</a></td>
+						<td><a href="">2. 君と歩いた季節</a></td>
+					</tr>
+					<tr>
+						<td><a href="">3. 不死鳥</a></td>
+						<td><a href="">4. Lemon</a></td>
+					</tr>
+					<caption class="p-0 small">ほか、全11曲</caption>
+				</table>
+			</a>
+		</article>
+	</div>
 
-<script type="text/javascript">
-var wavesurfer = WaveSurfer.create({
-	container: '#waveform',
-	barWidth: 1,
-	waveColor: '#33abcc',
-	progressColor: '#144552',
-	scrollParent: false,
-	// plugins: [
-	// 	WaveSurfer.timeline.create({
-	// 		container: "#wavetimeline"
-	// 	})
-	// ]
-});
-wavesurfer.load('{% static '08 境界の彼方.mp3' %}');
-$(document).on('click',"#start",function(){
-	console.log();
-	if (wavesurfer.isPlaying()) {
-		//playing => off
-		wavesurfer.pause();
-		$(this).removeClass('getstop');
-		$(this).addClass('getstart');
-	} else {
-		//not playing => on
-		wavesurfer.play();
-		$(this).removeClass('getstart');
-		$(this).addClass('getstop');
-	}
-	
-})
-wavesurfer.on('ready', function () {
-    // 
-});
-</script>
+
+	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
+		<article class="card m-2">
+			<a href="" class="card-body">
+				<h5 class="card-title　float-left mb-2">新人ライブリハ#2</h5>
+				<h6 class="card-subtitle float-right small">Recorded : 2019/6/7</h6>
+				<table class="table table-sm mb-0">
+					<tr>
+						<td><a href="">1. 君に届け</a></td>
+						<td><a href="">2. 君と歩いた季節</a></td>
+					</tr>
+					<tr>
+						<td><a href="">3. 不死鳥</a></td>
+						<td><a href="">4. Lemon</a></td>
+					</tr>
+					<caption class="p-0 small">ほか、全11曲</caption>
+				</table>
+			</a>
+		</article>
+	</div>
+
+
+
+	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
+		<article class="card m-2">
+			<a href="playlist/" class="card-body">
+				<h5 class="card-title　float-left mb-2">新人ライブリハ#2</h5>
+				<h6 class="card-subtitle float-right small">Recorded : 2019/6/7</h6>
+				<table class="table table-sm mb-0">
+					<tr>
+						<td><a href="">1. 君に届け</a></td>
+						<td><a href="">2. 君と歩いた季節</a></td>
+					</tr>
+					<tr>
+						<td><a href="">3. 不死鳥</a></td>
+						<td><a href="">4. Lemon</a></td>
+					</tr>
+					<caption class="p-0 small">ほか、全11曲</caption>
+				</table>
+			</a>
+		</article>
+	</div>
+
+
+
+	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
+		<article class="card m-2">
+			<a href="" class="card-body">
+				<h5 class="card-title　float-left mb-2">新人ライブリハ#2</h5>
+				<h6 class="card-subtitle float-right small">Recorded : 2019/6/7</h6>
+				<table class="table table-sm mb-0">
+					<tr>
+						<td><a href="">1. 君に届け</a></td>
+						<td><a href="">2. 君と歩いた季節</a></td>
+					</tr>
+					<tr>
+						<td><a href="">3. 不死鳥</a></td>
+						<td><a href="">4. Lemon</a></td>
+					</tr>
+					<caption class="p-0 small">ほか、全11曲</caption>
+				</table>
+			</a>
+		</article>
+	</div>
+
+
+
+
+</section>
+
+
+
 {% endblock %}

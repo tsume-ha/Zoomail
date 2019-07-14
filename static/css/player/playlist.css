@@ -41,8 +41,9 @@
 	position: relative;
 	min-width: 40px;
 	min-height: 40px;
-	background-color: #eee;
-	border: none;
+	background-color: #fff;
+	border: 1px solid #aaa;
+	border-radius: 3px;
 }
 
 #prev:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-left-width:0; border-right-color:#333; position:absolute; top:10px; left:18px;}
@@ -54,7 +55,7 @@
 .getstart:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#333; position:absolute; top:10px; left:16px;}
 .getstop:before, .getstop:after{content:''; height:20px; width:4px; display:block; background:#333; position:absolute; top:10px; left:14px;}
 .getstop:after{left:22px;}
-#start{transition: .2s}
+.getstart:after, .getstart:before, .getstop:before, .getstop:after{transition: .2s}
 
 #forward:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#333; position:absolute; top:10px; left:12px;}
 #forward:after{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#333; position:absolute; top:10px; left:22px;}
@@ -68,8 +69,17 @@
 .download a:after{content:''; height:10px; width:7px; display:block; background:#333; position:absolute; top:0px; left:7px;}
 
 
+#songlist span{
+	height: 24px;
+	overflow: hidden;
+}
+
 .songnum{
 	width: 21px;
+	text-align: right;
+}
+.songname{
+	width: calc(100% - 120px);
 }
 .songtime{
 	width: 30px;
