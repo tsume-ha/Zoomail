@@ -22,6 +22,7 @@ $(function(){
 
 
 function load(href,title) {
+	$('#waveloading').css('display','block');
 	$('#waveloading').html('Now Loading... ' + title + '<span class="nowloading"> </span>');
 	wavesurfer.load(href);
 }
