@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from config import settings
 
 def index(request):
 	params = {
@@ -9,6 +10,6 @@ def index(request):
 
 def playlist(request):
 	params = {
-	
+	'media_url': settings.MEDIA_URL,
 	}
 	return render(request, 'player/playlist.html', params)

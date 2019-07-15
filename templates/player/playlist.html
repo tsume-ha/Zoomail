@@ -36,8 +36,8 @@
 <div id="songlist" class="row my-3">
 	<div class="col-sm-12  border-bottom py-1">
 		<span class="songnum  float-left ml-1 mr-2">1.</span>
-		<span class="songname float-left ml-0 pl-0">残酷な天使のテーゼ</span>
-		<span class="download float-right mx-2"><a href="{% static '08 境界の彼方.mp3' %}">　</a></span>
+		<span class="songname float-left ml-0 pl-0">Lemon</span>
+		<span class="download float-right mx-2"><a href="{{media_url}}music/2019/07/15/01_Lemon.mp3">　</a></span>
 		<span class="songtime float-right mx-2">3:15</span>
 	</div>
 	<div class="col-sm-12  border-bottom py-1">
@@ -76,7 +76,7 @@ var wavesurfer = WaveSurfer.create({
 	// 	})
 	// ]
 });
-wavesurfer.load('{% static '08 境界の彼方.mp3' %}');
+wavesurfer.load('{{media_url}}music/2019/07/15/01_Lemon.mp3');
 $(document).on('click',"#start",function(){
 	console.log();
 	if (wavesurfer.isPlaying()) {
