@@ -8,9 +8,12 @@
 	<h1 class="mb-4">Send a Message</h1>
 	<form method="post">
 		{% csrf_token %}
-
-		{{ message_form.as_p }}
-
+		<div id="message_form">
+			{{ message_form.as_p }}
+		</div>
+		<div id="message_attachment">
+			{{ message_attachment.as_p }}
+		</div>
 		<input type="submit" name="SEND">
 	</form>
 	

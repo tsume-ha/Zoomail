@@ -26,7 +26,11 @@ class SendMessage(forms.Form):
 		'placeholder': '本文を入力',
 	}))
 
-
+class Attachment(forms.Form):
+	file = forms.FileField(
+		label = "ファイルを選択してください",
+	)
+		
 
 class Search(forms.Form):
 	text = forms.CharField(label="",required=False,widget=forms.TextInput(attrs={
