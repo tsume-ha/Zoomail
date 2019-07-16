@@ -52,20 +52,32 @@ def send(request):
 
         if request.POST["attachment"] == "on":
             attachment = True
+            file = request.FILES["select_file"]
+            content_data = Message(
+                title=title,
+                content=content,
+                attachment=attachment,
+                sender_id=now_user,
+                writer_id=now_user,
+                created_at=nowtime,
+                updated_at=nowtime
+            )
+            content_data.save()
+            content_data.years.create(year=to)
+            content_data.attachments.create(attachment_file=file)
         else:
             attachment = False
-
-        content_data = Message(
-            title=title,
-            content=content,
-            attachment=attachment,
-            sender_id=now_user,
-            writer_id=now_user,
-            created_at=nowtime,
-            updated_at=nowtime
-        )
-        content_data.save()
-        content_data.years.create(year=2016)
+            content_data = Message(
+                title=title,
+                content=content,
+                attachment=attachment,
+                sender_id=now_user,
+                writer_id=now_user,
+                created_at=nowtime,
+                updated_at=nowtime
+            )
+            content_data.save()
+            content_data.years.create(year=to)
         content_data.save()
 
         return redirect(to='../read/')

@@ -35,7 +35,7 @@ class MessageYear(models.Model):
 
 class Attachment(models.Model):
 	message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name='attachments')
-	attachment = models.FileField(upload_to='document/%Y/%m/%d', null=True)
+	attachment_file = models.FileField(upload_to='document/%Y/%m/%d', null=True)
 	def __str__(self):
 		return self.message.title
 

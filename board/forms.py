@@ -27,7 +27,7 @@ class SendMessage(forms.Form):
 	}))
 
 class Attachment(forms.Form):
-	file = forms.FileField(
+	select_file = forms.FileField(
 		label = "ファイルを選択してください",
 	)
 		
