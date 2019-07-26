@@ -40,3 +40,12 @@ $('input, textarea').change(function(){
 	var saved_content = localStorage.getItem('content');
 	console.log(saved_content);
 })
+
+
+$('#SendMessageForm').submit(function(){
+	var is_error = $('#id_to').val() == 'error';
+	if (is_error) {
+		
+		return false;
+	}
+})

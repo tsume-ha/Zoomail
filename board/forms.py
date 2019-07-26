@@ -26,9 +26,16 @@ class SendMessage(forms.Form):
 		'placeholder': '本文を入力',
 	}))
 
+	def ValidationSendMessage(self):
+		cleaned_data = super().clean()
+		to = cleaned_data['to']
+		if to == 'error':
+			raise forms.ValidationError('宛先を選択してください')
+
 class Attachment(forms.Form):
 	select_file = forms.FileField(
 		label = "ファイルを選択してください",
+		required = False,
 	)
 		
 
