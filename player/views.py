@@ -10,6 +10,6 @@ def index(request):
 
 def playlist(request):
 	params = {
-	'media_url': settings.MEDIA_URL,
+	'music_root': '/private-media/music',
 	}
 	return render(request, 'player/playlist.html', params)

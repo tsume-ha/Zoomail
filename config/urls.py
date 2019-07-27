@@ -29,5 +29,5 @@ urlpatterns = [
     path('read/', include('board.urls'), name="read"),
     path('send/', board.send, name="send"),
     path('player/', include('player.urls')),
-    path('private-media/', include(private_storage.urls))
+    path('private-media/', include(private_storage.urls), name="private_media")
 ]
