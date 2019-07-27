@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from members.models import User
+from private_storage.fields import PrivateFileField
 
 class Message(models.Model):
 	title = models.CharField(max_length=200)
@@ -35,7 +36,7 @@ class MessageYear(models.Model):
 
 class Attachment(models.Model):
 	message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name='attachments')
-	attachment_file = models.FileField(upload_to='document/%Y/%m/%d', null=True)
+	attachment_file = PrivateFileField(upload_to='document/%Y/%m/%d', null=True)
 	def __str__(self):
 		return self.message.title
 

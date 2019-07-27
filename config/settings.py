@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'private_storage',
     'home',
     'members',
     'board',
@@ -128,9 +129,8 @@ USE_TZ = False
 
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-
+PRIVATE_STORAGE_ROOT = os.path.join(BASE_DIR, 'private_media')
+PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_staff'
 
 
 
