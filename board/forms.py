@@ -15,18 +15,32 @@ def now_kaisei():
 
 class SendMessage(forms.Form):
 	title = forms.CharField(label="件名",widget=forms.TextInput(attrs={
-		'placeholder': '件名'
+		'placeholder': '件名',
+		'class': 'form-control',
 		}))
 	to = forms.ChoiceField(
 		choices = [("error","宛先を選択してください"),(0,"全回メーリス" + "（" + now_kaisei() + "～21期）",)] + kaisei,
-		label = "宛先"
+		label = "宛先",
+		widget = forms.Select(attrs={'class': 'form-control is-invalid'}),
 	)
 	attachment = forms.BooleanField(label="添付ファイル",required=False)
 	content = forms.CharField(label="本文",widget=forms.Textarea(attrs={
 		'placeholder': '本文を入力',
+		'class': 'form-control',
 	}))
 
+	def ValidationSendMessage(self):
+		cleaned_data = super().clean()
+		to = cleaned_data['to']
+		if to == 'error':
+			raise forms.ValidationError('宛先を選択してください')
 
+class Attachment(forms.Form):
+	select_file = forms.FileField(
+		label = "ファイルを選択してください",
+		required = False,
+	)
+		
 
 class Search(forms.Form):
 	text = forms.CharField(label="",required=False,widget=forms.TextInput(attrs={

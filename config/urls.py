@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 import board.views as board
 import home.views as home
+import private_storage.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +28,5 @@ urlpatterns = [
     path('members/', include('members.urls')),
     path('read/', include('board.urls'), name="read"),
     path('send/', board.send, name="send"),
-    path('player/', include('player.urls')),
+    path('private-media/', include(private_storage.urls))
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

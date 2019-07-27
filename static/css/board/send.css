@@ -1,12 +1,11 @@
 @charset "utf-8";
 
-form label:not([for="id_attachment"]){
+#SaveDataInfo{
 	display: none;
 }
 
-form input,
-form textarea{
-
+form label:not([for="id_attachment"]){
+	display: none;
 }
 
 form input:not([type="submit"]),
@@ -18,4 +17,9 @@ form textarea{
 form select{
 	width: 100%;
 	max-width: 300px;
+}
+
+input#id_attachment{
+	width: 50px;
+
 }

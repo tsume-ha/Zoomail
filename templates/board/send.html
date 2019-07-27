@@ -6,13 +6,17 @@
 {% endblock %}
 {% block body %}
 	<h1 class="mb-4">Send a Message</h1>
-	<form method="post">
+	<section id="SaveDataInfo" class="alert alert-success alert-dismissible"></section>
+	<form method="post" enctype="multipart/form-data" id="SendMessageForm">
 		{% csrf_token %}
-
-		{{ message_form.as_p }}
-
+		<div id="message_form">
+			{{ message_form.as_p }}
+		</div>
+		<div id="message_attachment">
+			{{ message_attachment.as_p }}
+		</div>
 		<input type="submit" name="SEND">
 	</form>
 	
-	
+<script src="{% static 'js/send.js' %}"></script>
 {% endblock %}
