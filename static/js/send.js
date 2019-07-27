@@ -22,15 +22,21 @@ function cancel_restore(){
 	$('#SaveDataInfo').fadeOut(400);
 }
 
-$('input, textarea').change(function(){
+$('input, select, textarea').change(function(){
+	// 宛先を未選択のとき
+	var is_error = $('#id_to').val() == 'error';
+	if (is_error) {
+		$('#id_to').addClass("is-invalid");
+	}　else {
+		$('#id_to').removeClass("is-invalid");
+	}
+
 	// title storage保存
 	var title = $('#id_title').val();
 	if (title == "") {} else {
 		localStorage.setItem("title",title);
 	}
 	var saved_title = localStorage.getItem('title');
-	console.log(saved_title);
-
 
 	// content storage保存
 	var content = $('#id_content').val();
@@ -38,14 +44,19 @@ $('input, textarea').change(function(){
 		localStorage.setItem("content",content);
 	}
 	var saved_content = localStorage.getItem('content');
-	console.log(saved_content);
 })
 
 
 $('#SendMessageForm').submit(function(){
 	var is_error = $('#id_to').val() == 'error';
 	if (is_error) {
-		
+		$('#id_to').addClass("is-invalid");
 		return false;
 	}
+
+	// when everything is successed
+	// delete local storage
+	
+	// localStorage.clear();// DBにデータを複製するためにOFFにしておきます
+
 })

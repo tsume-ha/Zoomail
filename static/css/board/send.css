@@ -8,11 +8,6 @@ form label:not([for="id_attachment"]){
 	display: none;
 }
 
-form input,
-form textarea{
-
-}
-
 form input:not([type="submit"]),
 form textarea{
 	width: 100%;
