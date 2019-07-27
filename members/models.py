@@ -44,3 +44,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 	def __str__(self):
 		return str(self.id) + self.last_name + self.first_name + self.google_account
+
+	def get_short_name(self):
+		if self.nickname == "":
+			return self.last_name + " " +  self.first_name
+		else:
+			return self.nickname

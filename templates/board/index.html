@@ -24,10 +24,10 @@
 				<div class="col-sm-12 mt-1">
 					<span class="float-left date small mr-2 p-1">{{item.created_at|date:"Y/m/d (D) H:i"}}</span>
 					{% if item.created_at < item.updated_at %}
-						<span class="updated float-left alert-warning small p-1">{{item.updated_at|date:"Y/m/d (D) H:i"}} 更新</span>
+					<span class="updated float-left alert-warning small p-1">{{item.updated_at|date:"Y/m/d (D) H:i"}} 更新</span>
 					{% endif %}
 					
-					<span class="float-left ml-4 whosent" data-userid="609">{{item.writer_id}}</span>
+					<span class="float-left ml-4 whosent" data-userid="609">{{item.writer_id.get_short_name}}</span>
 					<span class="float-right star">☆</span>
 				</div>
 				<article class="col-sm-12 my-2">
