@@ -1,14 +1,12 @@
 from django import forms
+from .models import User
 
-class SendMessage(forms.Form):
-	title = forms.CharField(label="件名",widget=forms.TextInput(attrs={
-		'placeholder': '件名'
-		}))
-	to = forms.ChoiceField(
-		choices = [("error","宛先を選択してください"),(0,"全回メーリス" + "（" + now_kaisei() + "～21期）",)] + kaisei,
-		label = "宛先"
-	)
-	attachment = forms.BooleanField(label="添付ファイル",required=False)
-	content = forms.CharField(label="本文",widget=forms.Textarea(attrs={
-		'placeholder': '本文を入力',
-	}))
+class UserUpdateForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ('google_account', 'last_name', 'first_name','nickname')
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		for field in self.fields.values():
+			field.widget.attrs['class'] = 'form-control'

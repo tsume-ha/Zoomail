@@ -6,7 +6,9 @@
 
 
 {% block body %}
-	members
-	{{user_pk}}
-	<a href="mypage/{{user_pk}}">go to mypage</a>
+	<form>
+		{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" name="UPDATE">
+	</form>
 {% endblock %}

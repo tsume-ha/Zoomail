@@ -21,7 +21,7 @@ class SendMessage(forms.Form):
 	to = forms.ChoiceField(
 		choices = [("error","宛先を選択してください"),(0,"全回メーリス" + "（" + now_kaisei() + "～21期）",)] + kaisei,
 		label = "宛先",
-		widget = forms.Select(attrs={'class': 'form-control is-invalid'}),
+		widget = forms.Select(attrs={'class': 'form-control'}),
 	)
 	attachment = forms.BooleanField(label="添付ファイル",required=False)
 	content = forms.CharField(label="本文",widget=forms.Textarea(attrs={
