@@ -9,16 +9,25 @@
 
 
 {% block body %}
+
+{% if messages %}
+	<div class="messages">
+		{% for message in messages %}
+			<p  class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} ">{{ message }}</p>
+		{% endfor %}
+	</div>
+{% endif %}
+
 <div class="row"><!-- Live Title -->
 	<div class="col-sm-12">
 		<a href="{% url 'index' %}" class="float-left col-xs-2" id="return"> </a>
-		<h5 class="float-left col-xs-7 ml-2">新人ライブリハ#2</h5>
-		<span class="float-right col-xs-3 small">2019/6/7 (金)</span>
+		<h5 class="float-left col-xs-7 ml-2">{{PerformanceData.live_name}}</h5>
+		<span class="float-right col-xs-3 small">{{PerformanceData.recorded_at|date:"Y/m/d D"}}</span>
 	</div>
 </div>
 <div class="row"><!-- Song Title -->
 	<div class="col-sm-12" id="songtitle">
-		<h4><span>1.</span>境界の彼方</h4>
+		<h4><span>0.</span>no music file selected</h4>
 	</div>
 </div>
 <div id="waveloading" class="p-4"><p>下のリストからロードする曲を選択してください</p></div>
@@ -34,24 +43,15 @@
 
 
 <div id="songlist" class="row my-3">
-	<div class="col-sm-12  border-bottom py-1" onclick="load('{{music_root}}/2019/07/15/01_Lemon.mp3','lemon')">
-		<span class="songnum  float-left ml-1 mr-2">1.</span>
-		<span class="songname float-left ml-0 pl-0">Lemon</span>
-		<span class="download float-right mx-2"><a href="{{music_root}}/2019/07/15/01_Lemon.mp3">　</a></span>
-		<span class="songtime float-right mx-2">3:15</span>
+	{% for Song in SongData %}
+	<div class="col-sm-12  border-bottom py-1" onclick="load('{{Song.file.url}}','{{Song.track_num}}','{{Song.song_name}}')">
+		<span class="songnum  float-left ml-1 mr-2">{{Song.track_num}}.</span>
+		<span class="songname float-left ml-0 pl-0">{{Song.song_name}}</span>
+		<span class="download float-right mx-2"><a href="{{Song.file.url}}">　</a></span>
+		<span class="songtime float-right mx-2">0:00</span>
 	</div>
-	<div class="col-sm-12  border-bottom py-1" onclick="load('{{music_root}}/2019/07/15/02_Viva_la_vida.mp3','Viva la vida')">
-		<span class="songnum  float-left ml-1 mr-2">2.</span>
-		<span class="songname float-left ml-0 pl-0">Viva_la_vida</span>
-		<span class="download float-right mx-2"><a href="{{music_root}}/2019/07/15/02_Viva_la_vida.mp3">　</a></span>
-		<span class="songtime float-right mx-2">3:15</span>
-	</div>
-	<div class="col-sm-12  border-bottom py-1" onclick="load('{{music_root}}/2019/07/15/08_境界の彼方kyo.mp3','境界の彼方')">
-		<span class="songnum  float-left ml-1 mr-2">3.</span>
-		<span class="songname float-left ml-0 pl-0">境界の彼方</span>
-		<span class="download float-right mx-2"><a href="{{music_root}}/2019/07/15/08_境界の彼方kyo.mp3">　</a></span>
-		<span class="songtime float-right mx-2">3:15</span>
-	</div>
+	{% endfor %}
+
 
 </div>
 

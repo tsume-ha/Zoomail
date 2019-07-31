@@ -1,4 +1,3 @@
-
 var wavesurfer = WaveSurfer.create({
 	container: '#waveform',
 	barWidth: 1,
@@ -21,9 +20,10 @@ $(function(){
 
 
 
-function load(href,title) {
+function load(href,number,title) {
 	$('#waveloading').css('display','block');
 	$('#waveloading').html('Now Loading... ' + title + '<span class="nowloading"> </span>');
+	$('#songtitle').html('<h4><span>' + number + '.</span>' + title + '</h4>');
 	wavesurfer.load(href);
 }
 

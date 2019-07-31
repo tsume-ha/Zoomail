@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
 	path('', views.index, name='index'),
-	path('playlist/', views.playlist, name='playlist'),
+	path('playlist/<int:live_id>', views.playlist, name='playlist'),
+	path('songupload/', views.songupload, name='songupload'),
 ]

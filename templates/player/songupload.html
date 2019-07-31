@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{title}} | Unplugged Message{% endblock %}
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/player/songupload.css' %}">
+{% endblock %}
+{% block body %}
+	<h1 class="mb-4">Upload Songs</h1>
+	<form method="post" enctype="multipart/form-data" id="">
+		{% csrf_token %}
+		<div id="CreateRehasalForm" class="mb-4">
+			{{ CreateRehasalForm }}
+		</div>
+		<div id="CreateSongForm">
+			<ol>
+				{% for SongForm in CreateSongFormSet %}
+				<li class="row my-2" style="display:list-item">
+					<span class="m-2">{{ SongForm.song_name }}</span>
+					<span class="m-2">{{ SongForm.song_file }}</span>
+				</li>
+					{% for field in SongForm.hidden_fields %}
+						{{ field }}
+					{% endfor %}
+				{% endfor %}
+			</ol>
+		</div>
+		<input type="submit" name="UPLOAD">
+	</form>
+{% endblock %}
