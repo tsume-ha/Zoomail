@@ -5,14 +5,14 @@
 	<div class="row my-3">
 		<span class="col tag">{{tag}}</span>
 	</div>
-	<h3 class="my-1">{{data.title}}</h3>
+	<h3 class="my-1">{{message.title}}</h3>
 	<div class="col-sm-12 col-md-8 mt-1 pl-0">
 		<span class="date">{{data.created_at|date:"Y/m/d D H:i"}}</span>
-		<span class="ml-4 whosent" data-userid="609">{{data.whosend}}</span>
+		<span class="ml-4 whosent" data-userid="609">{{message.whosend}}</span>
 		<span class="float-right star">☆</span>
 	</div>
 	<p class="content col-sm-12 col-md-9 mt-4">
-		{{data.content | linebreaks | urlize}}
+		{{message.content | linebreaks | urlize}}
 	</p>
 	
 	

@@ -16,22 +16,20 @@
 			<input type="submit" name="search" value="検索">
 		</form>
 	</div>
-
-
-	{% for item in data %}
+	{% for message in messages %}
 		<section class="row border border-left-0 border-right-0">
-				<h4 class="col-sm-12 my-1"><a href="content/{{item.id}}" class="text-decoration-none">{{item.title}}</a></h4>
+				<h4 class="col-sm-12 my-1"><a href="content/{{message.id}}" class="text-decoration-none">{{message.title}}</a></h4>
 				<div class="col-sm-12 mt-1">
-					<span class="float-left date small mr-2 p-1">{{item.created_at|date:"Y/m/d (D) H:i"}}</span>
-					{% if item.created_at < item.updated_at %}
-					<span class="updated float-left alert-warning small p-1">{{item.updated_at|date:"Y/m/d (D) H:i"}} 更新</span>
+					<span class="float-left date small mr-2 p-1">{{message.created_at|date:"Y/m/d (D) H:i"}}</span>
+					{% if message.created_at < message.updated_at %}
+					<span class="updated float-left alert-warning small p-1">{{message.updated_at|date:"Y/m/d (D) H:i"}} 更新</span>
 					{% endif %}
 					
-					<span class="float-left ml-4 whosent" data-userid="609">{{item.writer_id.get_short_name}}</span>
+					<span class="float-left ml-4 whosent" data-userid="609">{{message.writer_id.get_short_name}}</span>
 					<span class="float-right star">☆</span>
 				</div>
 				<article class="col-sm-12 my-2">
-					{{item.content}}
+					{{message.content}}
 				</article>
 		</section>
 	{% endfor %}
