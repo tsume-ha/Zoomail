@@ -14,6 +14,12 @@
 	<p class="content col-sm-12 col-md-9 mt-4">
 		{{message.content | linebreaks | urlize}}
 	</p>
-	
+	{% for attachment in attachments %}
+	{% if attachment.isImage %}
+	<img src="/private-media/{{attachment.path}}" width="100%">
+	{% else %}
+	<a href="/private-media/{{attachment.path}}" download="{{attachment.fileName}}">{{attachment.fileName}}</a>
+	{% endif %}
+	{% endfor %}
 	
 {% endblock %}

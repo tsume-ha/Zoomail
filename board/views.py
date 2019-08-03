@@ -9,11 +9,13 @@ import datetime
 
 def index(request):
     # ログインしているユーザーの年度だけ含める
-    query = Message.objects.filter(Q(years__year = request.user.year) | Q(years__year = -1))
+    query = Message.objects.filter(
+        Q(years__year=request.user.year) | Q(years__year=-1))
 
     if (request.method == 'POST'):
         str = request.POST['text']
-        query = query.filter(Q(years__year = request.user.year) | Q(years__year = -1)).filter(Q(content__contains=str) | Q(title__contains=str))
+        query = query.filter(Q(years__year=request.user.year) | Q(
+            years__year=-1)).filter(Q(content__contains=str) | Q(title__contains=str))
 
     messages = query.order_by('updated_at').reverse()  # 逆順で取得
 
@@ -38,8 +40,13 @@ def content(request, id):
     if not message.years.all().filter(Q(year=request.user.year)|Q(year=-1)).exists():
         return redirect('/read')
 
+    attachments = map(
+        lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName()},
+        message.attachments.all()
+    )
     params = {
         'message': message,
+        'attachments': attachments
     }
     return render(request, 'board/content.html', params)
 

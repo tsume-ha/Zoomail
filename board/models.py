@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.utils import timezone
 from members.models import User
@@ -39,6 +40,17 @@ class Attachment(models.Model):
 	attachment_file = PrivateFileField(upload_to='document/%Y/%m/%d', null=True)
 	def __str__(self):
 		return self.message.title
+	
+	def extension(self):
+		_, extension = os.path.splitext(self.attachment_file.name)
+		return extension
+
+	def isImage(self):
+		return self.extension() in [".gif", ".png", ".jpeg", ".jpg"]
+
+	def fileName(self):
+		_, fileName = os.path.split(self.attachment_file.name)
+		return fileName
 
 class Tag(models.Model):
 	name = models.CharField(max_length=30)
