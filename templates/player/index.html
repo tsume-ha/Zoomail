@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load getsongdetail %}
 
 {% block title %}Unplugged Message{% endblock %}
 {% block extrastyle %}
@@ -10,7 +11,7 @@
 
 {% block body %}
 <section class="row">
-
+	{% if is_allowed %}
 	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
 		<article class="card border-info m-2">
 			<a href="{% url 'songupload' %}" class="card-body">
@@ -19,99 +20,33 @@
 			</a>
 		</article>
 	</div>
+	{% endif %}
 
-
-
+	{% for Performance in Performances %}
 	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
 		<article class="card m-2">
-			<a href="{% url 'playlist' %}" class="card-body">
-				<h5 class="card-title　float-left mb-2">新人ライブリハ#2</h5>
-				<h6 class="card-subtitle float-right small">Recorded : 2019/6/7</h6>
-				<table class="table table-sm mb-0">
-					<tr>
-						<td><a href="{% url 'playlist' %}?n=1">1. 君に届け</a></td>
-						<td><a href="">2. 君と歩いた季節</a></td>
-					</tr>
-					<tr>
-						<td><a href="">3. 不死鳥</a></td>
-						<td><a href="">4. Lemon</a></td>
-					</tr>
-					<caption class="p-0 small">ほか、全11曲</caption>
-				</table>
+			<a href="{% url 'playlist' Performance.pk %}" class="card-body pb-1">
+				<h5 class="card-title　float-left mb-2">{{ Performance.live_name }}</h5>
+				<h6 class="card-subtitle float-right small">Recorded : {{ Performance.recorded_at | date:"Y/m/d D" }}</h6>
+				{% GetSongDetail Performance %}
 			</a>
 		</article>
 	</div>
+	{% endfor %}
 
-
-	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
-		<article class="card m-2">
-			<a href="" class="card-body">
-				<h5 class="card-title　float-left mb-2">新人ライブリハ#2</h5>
-				<h6 class="card-subtitle float-right small">Recorded : 2019/6/7</h6>
-				<table class="table table-sm mb-0">
-					<tr>
-						<td><a href="">1. 君に届け</a></td>
-						<td><a href="">2. 君と歩いた季節</a></td>
-					</tr>
-					<tr>
-						<td><a href="">3. 不死鳥</a></td>
-						<td><a href="">4. Lemon</a></td>
-					</tr>
-					<caption class="p-0 small">ほか、全11曲</caption>
-				</table>
-			</a>
-		</article>
-	</div>
-
-
-
-	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
-		<article class="card m-2">
-			<a href="playlist/" class="card-body">
-				<h5 class="card-title　float-left mb-2">新人ライブリハ#2</h5>
-				<h6 class="card-subtitle float-right small">Recorded : 2019/6/7</h6>
-				<table class="table table-sm mb-0">
-					<tr>
-						<td><a href="">1. 君に届け</a></td>
-						<td><a href="">2. 君と歩いた季節</a></td>
-					</tr>
-					<tr>
-						<td><a href="">3. 不死鳥</a></td>
-						<td><a href="">4. Lemon</a></td>
-					</tr>
-					<caption class="p-0 small">ほか、全11曲</caption>
-				</table>
-			</a>
-		</article>
-	</div>
-
-
-
-	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
-		<article class="card m-2">
-			<a href="" class="card-body">
-				<h5 class="card-title　float-left mb-2">新人ライブリハ#2</h5>
-				<h6 class="card-subtitle float-right small">Recorded : 2019/6/7</h6>
-				<table class="table table-sm mb-0">
-					<tr>
-						<td><a href="">1. 君に届け</a></td>
-						<td><a href="">2. 君と歩いた季節</a></td>
-					</tr>
-					<tr>
-						<td><a href="">3. 不死鳥</a></td>
-						<td><a href="">4. Lemon</a></td>
-					</tr>
-					<caption class="p-0 small">ほか、全11曲</caption>
-				</table>
-			</a>
-		</article>
-	</div>
 
 
 
 
 </section>
 
-
+<script type="text/javascript">
+$('.js-link').on('click', function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    console.log($(this).data('url'));
+    location.href = $(this).data('url');
+})
+</script>
 
 {% endblock %}

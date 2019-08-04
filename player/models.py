@@ -5,8 +5,7 @@ from private_storage.fields import PrivateFileField
 
 class Performance(models.Model):
 	live_name = models.CharField(max_length=255)
-	song_num = models.IntegerField()
-	recorded_at = models.DateField()
+	recorded_at = models.DateField(default=timezone.now)
 	created_at = models.DateTimeField(default=timezone.now)
 	updated_at = models.DateTimeField(default=timezone.now)
 	updated_by = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='perform_updated_by')

@@ -6,26 +6,38 @@ from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.forms import formset_factory
 from django.utils.datastructures import MultiValueDictKeyError
+from django.core.exceptions import ObjectDoesNotExist
 from .forms import CreateRehasalForm, CreateSongForm
 from .models import Performance, Song
 import datetime
 
 def index(request):
-	params = {
-	
-	}
-	return render(request, 'player/index.html', params)
+    Performances = Performance.objects.all().order_by('updated_at').reverse()
+    now_user = request.user
+    is_allowed =  now_user.is_superuser
+    params = {
+        'Performances': Performances,
+        'is_allowed': is_allowed,
+    }
+    return render(request, 'player/index.html', params)
 
 
 
 def playlist(request, live_id):
-	PerformanceData = get_object_or_404(Performance, id=live_id)
-	SongData = Song.objects.filter(performance=PerformanceData).order_by('track_num')
+	Performances = get_object_or_404(Performance, id=live_id)
+	Songs = Song.objects.filter(performance=Performances).order_by('track_num')
 	params = {
-	'music_root': '/private-media/music',
-	'PerformanceData': PerformanceData,
-	'SongData': SongData,
+	'Performances': Performances,
+	'Songs': Songs,
 	}
+	if 'track' in request.GET:
+		try:
+			track = request.GET['track']
+			if 0 < int(track):
+					SongToPreload = Songs.get(track_num=track)
+					params['SongToPreload'] = SongToPreload
+		except :
+			pass
 	return render(request, 'player/playlist.html', params)
 
 FormSetExtraNum = 20
@@ -47,7 +59,6 @@ def songupload(request):
 			now_user = request.user
 			content_Performance = Performance(
 				live_name = livename,
-				song_num = 11,
 				recorded_at = now_time,
 				created_at = now_time,
 				updated_at = now_time,

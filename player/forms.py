@@ -6,7 +6,8 @@ class CreateRehasalForm(forms.Form):
 		'placeholder': 'NFリハ#2',
 		'class': 'form-control',
 		}))
-	recorded_at = forms.DateField(label="収録日",widget=forms.TextInput(attrs={
+	recorded_at = forms.DateField(label="収録日",widget=forms.DateInput(attrs={
+		'type': 'date',
 		'placeholder': '2019-07-30',
 		'class': 'form-control',
 		})
@@ -21,6 +22,7 @@ class CreateSongForm(forms.Form):
 		label = "MP3ファイルを選択してください",
 		# validators = [validate_is_MP3],
 		required = False,
+		widget = forms.FileInput(attrs={'class':'border border-primary rounded-right'}),
 	)
 
 	# def validate_is_MP3(value):

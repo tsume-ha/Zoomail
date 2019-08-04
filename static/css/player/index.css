@@ -24,3 +24,13 @@ h6.card-subtitle{
 a.card-body{
 	text-decoration: none;
 }
+
+.songdetail{
+	max-height: 48px;
+	overflow-y: hidden;
+}
+
+.songdetail span{
+	display: inline-block;
+	white-space: nowrap;
+}

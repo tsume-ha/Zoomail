@@ -21,8 +21,8 @@
 <div class="row"><!-- Live Title -->
 	<div class="col-sm-12">
 		<a href="{% url 'index' %}" class="float-left col-xs-2" id="return"> </a>
-		<h5 class="float-left col-xs-7 ml-2">{{PerformanceData.live_name}}</h5>
-		<span class="float-right col-xs-3 small">{{PerformanceData.recorded_at|date:"Y/m/d D"}}</span>
+		<h5 class="float-left col-xs-7 ml-2">{{Performances.live_name}}</h5>
+		<span class="float-right col-xs-3 small">{{Performances.recorded_at|date:"Y/m/d D"}}</span>
 	</div>
 </div>
 <div class="row"><!-- Song Title -->
@@ -43,12 +43,13 @@
 
 
 <div id="songlist" class="row my-3">
-	{% for Song in SongData %}
-	<div class="col-sm-12  border-bottom py-1" onclick="load('{{Song.file.url}}','{{Song.track_num}}','{{Song.song_name}}')">
-		<span class="songnum  float-left ml-1 mr-2">{{Song.track_num}}.</span>
+	{% for Song in Songs %}
+	<div class="col-sm-12  border-bottom py-1" onclick="load('{{Song.file.url}}','{{Song.track_num}}','{{Song.song_name}}')"
+	data-track="{{Song.track_num}}" data-url="{{Song.file.url}}" data-name="{{Song.song_name}}">
+		<span class="songnum float-left ml-1 mr-2">{{Song.track_num}}.</span>
 		<span class="songname float-left ml-0 pl-0">{{Song.song_name}}</span>
 		<span class="download float-right mx-2"><a href="{{Song.file.url}}">　</a></span>
-		<span class="songtime float-right mx-2">0:00</span>
+		<!-- <span class="songtime float-right mx-2" data-tnum="{{Song.track_num}}">0:00</span> -->
 	</div>
 	{% endfor %}
 
@@ -59,4 +60,14 @@
 <script src="https://unpkg.com/wavesurfer.js"></script>
 <!-- <script src="{% static 'js/wavesurfer.timeline.js' %}"></script> -->
 <script src="{% static 'js/player.js' %}"></script>
+<script type="text/javascript">
+{% if SongToPreload %}
+$(function(){
+	load('{{SongToPreload.file.url}}','{{SongToPreload.track_num}}','{{SongToPreload.song_name}}');
+})
+{% endif %}
+</script>
+
+
+
 {% endblock %}

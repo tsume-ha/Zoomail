@@ -3,6 +3,7 @@
 {% block title %}{{title}} | Unplugged Message{% endblock %}
 {% block extrastyle %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/player/songupload.css' %}">
+	<script src="{% static 'js/music_upload.js' %}"></script>
 {% endblock %}
 {% block body %}
 	<h1 class="mb-4">Upload Songs</h1>
@@ -11,18 +12,19 @@
 		<div id="CreateRehasalForm" class="mb-4">
 			{{ CreateRehasalForm }}
 		</div>
-		<div id="CreateSongForm">
-			<ol>
+		<div id="CreateSongForm" class="mb-4">
+			<table>
 				{% for SongForm in CreateSongFormSet %}
-				<li class="row my-2" style="display:list-item">
-					<span class="m-2">{{ SongForm.song_name }}</span>
-					<span class="m-2">{{ SongForm.song_file }}</span>
-				</li>
-					{% for field in SongForm.hidden_fields %}
-						{{ field }}
-					{% endfor %}
+				<tr>
+					<td class="index text-right">{{ forloop.counter }}.</td>
+					<td class="name">{{ SongForm.song_name }}</td>
+					<td class="file">
+						<span class="small">クリックしてファイルを選択・もしくはここにドロップ</span>
+						{{ SongForm.song_file }}
+					</td>
+				</tr>
 				{% endfor %}
-			</ol>
+			</table>
 		</div>
 		<input type="submit" name="UPLOAD">
 	</form>

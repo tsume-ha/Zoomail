@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+.name input{
+	min-width: 240px;
+}
+
+.file{
+	position: relative;
+	margin: 1px;
+}
+
+.file input{
+	opacity: 0;
+	width: 360px;
+	z-index: 2;
+}
+.file span{
+	position: absolute;
+	left: 5px;
+	top: 2px;
+	padding: 5px;
+	width: 360px;
+	background-color: #eee;
+}
