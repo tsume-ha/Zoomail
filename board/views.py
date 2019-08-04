@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Message, MessageYear
 from .forms import SendMessage, Search, Attachment
 
 import datetime
 
+@login_required(login_url='/admin/login/')
 def index(request):
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(
@@ -32,7 +34,7 @@ def index(request):
     }
     return render(request, 'board/index.html', params)
 
-
+@login_required(login_url='/admin/login/')
 def content(request, id):
     message = Message.objects.get(id=id)
 
@@ -50,7 +52,7 @@ def content(request, id):
     }
     return render(request, 'board/content.html', params)
 
-
+@login_required(login_url='/admin/login/')
 def send(request):
     params = {
         'message_form': SendMessage(),

@@ -43,7 +43,7 @@ def playlist(request, live_id):
 FormSetExtraNum = 20
 CreateSongFormSet = formset_factory(CreateSongForm, extra=FormSetExtraNum)
 
-@login_required
+@login_required(login_url='/admin/login/')
 def songupload(request):
 	now_user = request.user
 	is_allowed =  now_user.is_superuser
