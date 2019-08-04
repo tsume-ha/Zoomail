@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Unplugged Message{% endblock %}
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/player/playlist.css' %}">
+
+{% endblock %}
+
+
+{% block body %}
+
+{% if messages %}
+	<div class="messages">
+		{% for message in messages %}
+			<p  class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} ">{{ message }}</p>
+		{% endfor %}
+	</div>
+{% endif %}
+
+<div class="row"><!-- Live Title -->
+	<div class="col-sm-12">
+		<a href="{% url 'index' %}" class="float-left col-xs-2" id="return"> </a>
+		<h5 class="float-left col-xs-7 ml-2">{{Performances.live_name}}</h5>
+		<span class="float-right col-xs-3 small">{{Performances.recorded_at|date:"Y/m/d D"}}</span>
+	</div>
+</div>
+<div class="row"><!-- Song Title -->
+	<div class="col-sm-12" id="songtitle">
+		<h4><span>0.</span>no music file selected</h4>
+	</div>
+</div>
+<div id="waveloading" class="p-4"><p>下のリストからロードする曲を選択してください</p></div>
+<div id="waveform"></div>
+<div id="wavetimeline"></div>
+<div class="row justify-content-around mt-3" id="ctrl">
+	<div class="col-xs-2"><button id="prev"></button></div>
+	<div class="col-xs-2"><button id="back"></button></div>
+	<div class="col-xs-3"><button id="start" class="getstart"></button></div>
+	<div class="col-xs-2"><button id="forward"></button></div>
+	<div class="col-xs-2"><button id="next"></button></div>
+</div>
+
+
+<div id="songlist" class="row my-3">
+	{% for Song in Songs %}
+	<div class="col-sm-12  border-bottom py-1" onclick="load('{{Song.file.url}}','{{Song.track_num}}','{{Song.song_name}}')"
+	data-track="{{Song.track_num}}" data-url="{{Song.file.url}}" data-name="{{Song.song_name}}">
+		<span class="songnum float-left ml-1 mr-2">{{Song.track_num}}.</span>
+		<span class="songname float-left ml-0 pl-0">{{Song.song_name}}</span>
+		<span class="download float-right mx-2"><a href="{{Song.file.url}}">　</a></span>
+		<!-- <span class="songtime float-right mx-2" data-tnum="{{Song.track_num}}">0:00</span> -->
+	</div>
+	{% endfor %}
+
+
+</div>
+
+
+<script src="https://unpkg.com/wavesurfer.js"></script>
+<!-- <script src="{% static 'js/wavesurfer.timeline.js' %}"></script> -->
+<script src="{% static 'js/player.js' %}"></script>
+<script type="text/javascript">
+{% if SongToPreload %}
+$(function(){
+	load('{{SongToPreload.file.url}}','{{SongToPreload.track_num}}','{{SongToPreload.song_name}}');
+})
+{% endif %}
+</script>
+
+
+
+{% endblock %}
