@@ -8,32 +8,45 @@ from .forms import SendMessage, Search, Attachment
 import datetime
 
 def index(request):
+    # ログインしているユーザーの年度だけ含める
+    query = Message.objects.filter(
+        Q(years__year=request.user.year) | Q(years__year=-1))
+
     if (request.method == 'POST'):
         str = request.POST['text']
-        data = Message.objects.filter(Q(content__contains=str) | Q(
-            title__contains=str)).order_by('updated_at').reverse()
-    else:
-        data = Message.objects.all().order_by('updated_at').reverse()  # 逆順で取得
+        query = query.filter(Q(years__year=request.user.year) | Q(
+            years__year=-1)).filter(Q(content__contains=str) | Q(title__contains=str))
+
+    messages = query.order_by('updated_at').reverse()  # 逆順で取得
 
     textmax = 80
-    for record in data:
-        textrange = len(record.content)
-        count = record.content.find('\n')
-        record.content = record.content[count:count+textmax].replace('\n', ' ')
+    for message in messages:
+        textrange = len(message.content)
+        count = message.content.find('\n')
+        message.content = message.content[count:count+textmax].replace('\n', ' ')
         if textrange > textmax:
-            record.content += ' ...'
+            message.content += ' ...'
     params = {
         'search': Search(),
-        'data': data,
-
+        'messages': messages,
     }
     return render(request, 'board/index.html', params)
 
 
-def content(request, cont_num):
-    data = Message.objects.get(id=cont_num)
+def content(request, id):
+    message = Message.objects.get(id=id)
+
+    # 閲覧できないならば/read にリダイレクトする
+    if not message.years.all().filter(Q(year=request.user.year)|Q(year=-1)).exists():
+        return redirect('/read')
+
+    attachments = map(
+        lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName()},
+        message.attachments.all()
+    )
     params = {
-        'data': data,
+        'message': message,
+        'attachments': attachments
     }
     return render(request, 'board/content.html', params)
 
