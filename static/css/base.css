@@ -4,19 +4,29 @@ header{
 	background-color: #d6eef5;
 }
 header h3{
+	display: inline-block;
 	font-weight: 300;
 }
 header h3 a{
 	border-radius: 6px;
 }
-header h3 a:hover{
+header h3 a.hover{
 	background-color: #bbe3ee;
 }
-div#readbox,
-div#sendbox{
-	padding: 0;
+
+
+nav{
+	display: inline-block;
 }
-a{
-	text-decoration: none;!important
-	color: #666;!important
+
+nav a{
+	text-decoration: none;
+	color: #666;
+	font-size: 1.25rem;
+	font-weight: 200;
+}
+
+nav a.hover{
+	text-decoration: underline;
+	color: #333;
 }

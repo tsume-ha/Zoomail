@@ -1,8 +1,10 @@
+const selectors = 'a,div'
+
 $(function(){
-	$("document *")
-	.bind('touchstart', function(){
+	$(selectors)
+	.bind('touchstart mouseenter', function(){
 	    $(this).addClass('hover');
-	}).bind('touchend', function(){
+	}).bind('touchend mouseleave', function(){
 	    $(this).removeClass('hover');
 	});
 })

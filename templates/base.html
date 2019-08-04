@@ -10,13 +10,21 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.min.css' %}">
 	<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/touch-hover.js' %}"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 	{% block extrastyle %}{% endblock %}
 </head>
 <body>
 <header>
-	<div class="container">
-		<h3 class="py-2"><a href="/" class="text-decoration-none text-dark p-1">U Message</a></h3>
+	<div class="container py-1 mb-2">
+		<h3 class="py-2"><a href="/" class="text-decoration-none text-dark px-1 pt-0 pb-2">U Message</a></h3>
+		<nav class="ml-4" id="nav">
+			<ul class="list-inline">
+				<li class="list-inline-item mx-2"><a href="/read/">Read</a></li>
+				<li class="list-inline-item mx-2"><a href="/members/">My Page</a></li>
+				<li class="list-inline-item mx-2"><a href="/player/">リハ音源</a></li>
+			</ul>
+		</nav>
 	</div>
 </header>
 <div id="container" class="container">

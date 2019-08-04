@@ -11,6 +11,8 @@ from .forms import CreateRehasalForm, CreateSongForm
 from .models import Performance, Song
 import datetime
 
+
+@login_required(login_url='/admin/login/')
 def index(request):
     Performances = Performance.objects.all().order_by('updated_at').reverse()
     now_user = request.user
@@ -22,7 +24,7 @@ def index(request):
     return render(request, 'player/index.html', params)
 
 
-
+@login_required(login_url='/admin/login/')
 def playlist(request, live_id):
 	Performances = get_object_or_404(Performance, id=live_id)
 	Songs = Song.objects.filter(performance=Performances).order_by('track_num')

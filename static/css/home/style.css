@@ -6,6 +6,10 @@ div#sendbox a{
 	transition: .3s;
 	color: #333;
 }
+div#readbox,
+div#sendbox{
+	padding: 0;
+}
 
 div#readbox,
 div#sendbox,
