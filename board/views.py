@@ -10,12 +10,12 @@ import datetime
 def index(request):
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(
-        Q(years__year=request.user.year) | Q(years__year=-1))
+        Q(years__year=request.user.year) | Q(years__year=0))
 
     if (request.method == 'POST'):
         str = request.POST['text']
         query = query.filter(Q(years__year=request.user.year) | Q(
-            years__year=-1)).filter(Q(content__contains=str) | Q(title__contains=str))
+            years__year=0)).filter(Q(content__contains=str) | Q(title__contains=str))
 
     messages = query.order_by('updated_at').reverse()  # 逆順で取得
 
@@ -37,7 +37,7 @@ def content(request, id):
     message = Message.objects.get(id=id)
 
     # 閲覧できないならば/read にリダイレクトする
-    if not message.years.all().filter(Q(year=request.user.year)|Q(year=-1)).exists():
+    if not message.years.all().filter(Q(year=request.user.year)|Q(year=0)).exists():
         return redirect('/read')
 
     attachments = map(
