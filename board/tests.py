@@ -57,8 +57,8 @@ class AuthentificationViewTest(TestCase):
         User_LogOUT(self)
         response = self.client.get('/read/')
         self.assertEqual(response.status_code, 302)
-        url_to = response.url
-        response = self.client.get(url_to)
+        url_redial_to = response.url
+        response = self.client.get(url_redial_to)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Google account')
 
@@ -87,20 +87,26 @@ class AuthentificationViewTest(TestCase):
             target = '/read/content/' + str(index+1)
             response = self.client.get(target)
             self.assertEqual(response.status_code, 302)
-            url_to = response.url
-            response = self.client.get(url_to)
+            url_redial_to = response.url
+            response = self.client.get(url_redial_to)
             self.assertEqual(response.status_code, 200)
             self.assertContains(response, 'Google account')
 
     def test_read_content_logIN(self):
-        User_LogIN(self)
-        for index in [0,2,4,6,8,10,12]: # 一時的に全回だけ取り出してます。あとで全メーリスにアクセス範囲変えます。
-            pk = index + 1
-            target = '/read/content/' + str(pk)
-            response = self.client.get(target)
-            if index < self.MessageCount:
-                print(response)
-                self.assertEqual(response.status_code, 200)
-            else:
-                print(response)
-                self.assertEqual(response.status_code, 404)
+        for User_Year in self.TestYears:
+            User_LogIN(self,year=User_Year)
+            for index in range(self.MessageCount+3):
+                pk = index + 1
+                target = '/read/content/' + str(pk)
+                response = self.client.get(target)
+                if index < self.MessageCount:
+                    Message_Year = MessageYear.objects.get(message=Message.objects.get(pk=pk)).year
+                    if Message_Year == 0 or Message_Year == User_Year:
+                        # print('message_'+str(pk)+': 200')
+                        self.assertEqual(response.status_code, 200)
+                    else:
+                        # print('message_'+str(pk)+': 302')
+                        self.assertEqual(response.status_code, 302)
+                else:
+                    # print('message_'+str(pk)+': 404')
+                    self.assertEqual(response.status_code, 404)
