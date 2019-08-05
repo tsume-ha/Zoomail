@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Message, MessageYear
@@ -36,7 +36,7 @@ def index(request):
 
 @login_required(login_url='/admin/login/')
 def content(request, id):
-    message = Message.objects.get(id=id)
+    message = get_object_or_404(Message, id=id)
 
     # 閲覧できないならば/read にリダイレクトする
     if not message.years.all().filter(Q(year=request.user.year)|Q(year=0)).exists():
