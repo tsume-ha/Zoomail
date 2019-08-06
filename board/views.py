@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db.models import Q
 from .models import Message, MessageYear
-from .forms import SendMessage, Search, Attachment
+from .forms import SendMessage, Search, Attachment, DivErrorList
 
 import datetime
 
@@ -54,32 +55,37 @@ def content(request, id):
 
 @login_required(login_url='/admin/login/')
 def send(request):
+    messageForm = SendMessage(request.POST or None, error_class=DivErrorList)
+    attachmentForm = Attachment(request.POST or None, error_class=DivErrorList)
     params = {
-        'message_form': SendMessage(),
-        'message_attachment': Attachment(),
+        'message_form': messageForm,
+        'message_attachment': attachmentForm,
     }
     if (request.method == 'POST'):
-        title = request.POST["title"]
-        to = request.POST["to"]
-        content = request.POST["content"]
-        nowtime = datetime.datetime.now()
-        now_user = request.user
-        is_attachment = request.POST.get('attachment', '') == 'on'
-        content_data = Message(
-            title=title,
-            content=content,
-            attachment=is_attachment,
-            sender_id=now_user,
-            writer_id=now_user,
-            created_at=nowtime,
-            updated_at=nowtime
-        )
-        content_data.save()
-        content_data.years.create(year=to)
-        if is_attachment:
-            file = request.FILES["select_file"]
-            content_data.attachments.create(attachment_file=file)
-        content_data.save()
-
+        if messageForm.is_valid():
+            to = request.POST["to"]
+            title = request.POST["title"]
+            content = request.POST["content"]
+            nowtime = datetime.datetime.now()
+            now_user = request.user
+            is_attachment = request.POST.get('attachment', '') == 'on'
+            content_data = Message(
+                title=title,
+                content=content,
+                attachment=is_attachment,
+                sender_id=now_user,
+                writer_id=now_user,
+                created_at=nowtime,
+                updated_at=nowtime
+            )
+            content_data.save()
+            content_data.years.create(year=to)
+            if is_attachment:
+                if attachmentForm.is_valid():
+                    file = request.FILES["select_file"]
+                    content_data.attachments.create(attachment_file=file)
+            content_data.save()
+        else:
+            return render(request, 'board/send.html', params)
         return redirect(to='../read/')
     return render(request, 'board/send.html', params)

@@ -1,5 +1,7 @@
 from django import forms
+from django.forms.utils import ErrorList
 import datetime
+from django.core import validators
 
 kaisei = [
 (2019,"2019 25期",),
@@ -10,39 +12,51 @@ kaisei = [
 ]
 
 def now_kaisei():
-	year = datetime.datetime.now().year
-	return str(year - 1994) + "期"
+    year = datetime.datetime.now().year
+    return str(year - 1994) + "期"
+
+def validate_to(value):
+    if value == 'error':
+        raise forms.ValidationError('エラー : 宛先を選択してください')
+    return value
+
+ 
+class DivErrorList(ErrorList):
+    def __str__(self):
+        return self.as_divs()
+    def as_divs(self):
+        if not self: 
+        	return ''
+        return '<div class="errorlist">%s</div>' % ''.join(['<div class="error alert alert-danger">%s</div>' % e for e in self])
+
 
 class SendMessage(forms.Form):
-	title = forms.CharField(label="件名",widget=forms.TextInput(attrs={
-		'placeholder': '件名',
-		'class': 'form-control',
-		}))
-	to = forms.ChoiceField(
-		choices = [("error","宛先を選択してください"),(0,"全回メーリス" + "（" + now_kaisei() + "～21期）",)] + kaisei,
-		label = "宛先",
-		widget = forms.Select(attrs={'class': 'form-control'}),
-	)
-	attachment = forms.BooleanField(label="添付ファイル",required=False)
-	content = forms.CharField(label="本文",widget=forms.Textarea(attrs={
-		'placeholder': '本文を入力',
-		'class': 'form-control',
-	}))
+    title = forms.CharField(label="件名",widget=forms.TextInput(attrs={
+        'placeholder': '件名',
+        'class': 'form-control',
+        }))
+    to = forms.ChoiceField(
+        choices = [("error","宛先を選択してください"),(0,"全回メーリス" + "（" + now_kaisei() + "～21期）",)] + kaisei,
+        label = "宛先",
+        widget = forms.Select(attrs={'class': 'form-control'}),
+        validators = [validate_to],
+    )
+    attachment = forms.BooleanField(label="添付ファイル",required=False)
+    content = forms.CharField(label="本文",widget=forms.Textarea(attrs={
+        'placeholder': '本文を入力',
+        'class': 'form-control',
+    }))
 
-	def ValidationSendMessage(self):
-		cleaned_data = super().clean()
-		to = cleaned_data['to']
-		if to == 'error':
-			raise forms.ValidationError('宛先を選択してください')
+
 
 class Attachment(forms.Form):
-	select_file = forms.FileField(
-		label = "ファイルを選択してください",
-		required = False,
-	)
-		
+    select_file = forms.FileField(
+        label = "ファイルを選択してください",
+        required = False,
+    )
+        
 
 class Search(forms.Form):
-	text = forms.CharField(label="",required=False,widget=forms.TextInput(attrs={
-		'placeholder': '件名・本文で検索'
-		}))
+    text = forms.CharField(label="",required=False,widget=forms.TextInput(attrs={
+        'placeholder': '件名・本文で検索'
+        }))

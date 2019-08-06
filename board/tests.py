@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, RequestFactory
 from django.db.models import Count
 from members.models import User
 import datetime
@@ -84,7 +84,8 @@ class AuthentificationViewTest(TestCase):
     def test_read_content_logOUT(self):
         User_LogOUT(self)
         for index in range(self.MessageCount+3):
-            target = '/read/content/' + str(index+1)
+            pk = index + 1
+            target = '/read/content/' + str(pk)
             response = self.client.get(target)
             self.assertEqual(response.status_code, 302)
             url_redial_to = response.url
@@ -110,3 +111,22 @@ class AuthentificationViewTest(TestCase):
                 else:
                     # print('message_'+str(pk)+': 404')
                     self.assertEqual(response.status_code, 404)
+
+    def test_send_view_logOUT(self):
+        User_LogOUT(self)
+        response = self.client.get('/send/')
+        self.assertEqual(response.status_code, 302)
+        url_redial_to = response.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Google account')
+
+    def test_send_POST_logOUT(self):
+        data = {
+            'title': 'NFりはの日程について',
+            'to': 0,
+            'content': '全回メーリス失礼します。\n\nNFリハの日程が決まりました。',
+        }
+        User_LogOUT(self)
+        request = RequestFactory().post('/send/', data)
+
