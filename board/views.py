@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from .models import Message, MessageYear
 from .forms import SendMessage, Search, Attachment, DivErrorList
@@ -62,7 +63,10 @@ def send(request):
         'message_attachment': attachmentForm,
     }
     if (request.method == 'POST'):
-        if messageForm.is_valid():
+        if not messageForm.is_valid():
+            # validation error 宛先未選択
+            return render(request, 'board/send.html', params)
+        else:
             to = request.POST["to"]
             title = request.POST["title"]
             content = request.POST["content"]
@@ -78,14 +82,25 @@ def send(request):
                 created_at=nowtime,
                 updated_at=nowtime
             )
-            content_data.save()
-            content_data.years.create(year=to)
-            if is_attachment:
+            if not is_attachment:
+                content_data.save()
+                content_data.years.create(year=to)
+                # everything successed
+                return redirect(to='../read/')
+            else:
                 if attachmentForm.is_valid():
-                    file = request.FILES["select_file"]
-                    content_data.attachments.create(attachment_file=file)
-            content_data.save()
-        else:
-            return render(request, 'board/send.html', params)
-        return redirect(to='../read/')
+                    try:
+                        print('attachmentForm is true')
+                        file = request.FILES["attachmentfile"]
+                        content_data.save()
+                        content_data.years.create(year=to)
+                        content_data.attachments.create(attachment_file=file)
+                        # everything successed with file
+                        return redirect(to='../read/')
+                    except MultiValueDictKeyError:
+                        return render(request, 'board/send.html', params)# validation error 未選択
+                else:
+                    print('attachmentForm is false')
+                    return render(request, 'board/send.html', params)# validation error　ファイルサイズオーバー
+
     return render(request, 'board/send.html', params)
