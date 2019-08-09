@@ -1,8 +1,16 @@
-from django.test import TestCase, Client, RequestFactory
+from django.test import TestCase, Client
 from django.db.models import Count
 from members.models import User
 import datetime
+from django.core.exceptions import ObjectDoesNotExist
 from .models import Message, MessageYear, Attachment
+
+# HTTP CODE
+    # 200 success
+    # 302 redial
+    # 403 forbidden
+    # 404 not found
+    # 500 server error
 
 
 def User_LogOUT(self):
@@ -44,7 +52,7 @@ def CreateMessages(self, TestYears):
         User_LogOUT(self)
 
 
-class AuthentificationViewTest(TestCase):
+class AuthentificationReadViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.TestYears = [y for y in range(2015,2020)]
@@ -112,6 +120,12 @@ class AuthentificationViewTest(TestCase):
                     # print('message_'+str(pk)+': 404')
                     self.assertEqual(response.status_code, 404)
 
+
+class AuthentificationSendTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User_and_LogIN(cls)
+
     def test_send_view_logOUT(self):
         User_LogOUT(self)
         response = self.client.get('/send/')
@@ -123,10 +137,45 @@ class AuthentificationViewTest(TestCase):
 
     def test_send_POST_logOUT(self):
         data = {
-            'title': 'NFりはの日程について',
+            'title': 'LogOUT POST test',
             'to': 0,
-            'content': '全回メーリス失礼します。\n\nNFリハの日程が決まりました。',
+            'content': 'LogOUT POST test message',
         }
         User_LogOUT(self)
-        request = RequestFactory().post('/send/', data)
+        request = self.client.post('/send/', data)
+        self.assertEqual(request.status_code, 302)
+        url_redial_to = request.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Google account')
 
+        try:
+            saved_content = Message.objects.get(title='LogOUT POST test')
+            self.assertTrue(False)
+        except ObjectDoesNotExist:
+            self.assertTrue(True)
+        
+
+
+    def test_send_POST_logIN(self):
+        data = {
+            'title': 'LogIN POST test',
+            'to': 0,
+            'content': 'LogIN POST test message',
+        }
+        User_LogIN(self)
+        request = self.client.post('/send/', data)
+        self.assertEqual(request.status_code, 302)
+        url_redial_to = request.url
+        self.assertEqual(url_redial_to, '../read/')
+
+        response = self.client.get('/read/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'LogIN POST test')
+        
+        saved_content = Message.objects.get(title='LogIN POST test')
+        target = '/read/content/' + str(saved_content.pk)
+        response = self.client.get(target)
+        self.assertEqual(response.status_code, 200)
+        print(response)
+        self.assertContains(response, 'LogIN POST test message')
