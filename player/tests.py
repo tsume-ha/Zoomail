@@ -43,7 +43,7 @@ class PlayerViewTest(TestCase):
     def setUpTestData(cls):
         Make_User(cls)
         Make_Song(cls)
-        cls.Reha_num = Performance.objects.aggregate(Count('pk'))['pk__count']
+        cls.performance_num = Performance.objects.aggregate(Count('pk'))['pk__count']
 
     def test_player_index_logOUT(self):
         User_LogOUT(self)
@@ -63,7 +63,7 @@ class PlayerViewTest(TestCase):
 
     def test_player_playlist_logOUT(self):
         User_LogOUT(self)
-        for index in range(self.Reha_num+3):
+        for index in range(self.performance_num+3):
             pk = index + 1
             response = self.client.get('/player/playlist/' + str(pk))
             self.assertEqual(response.status_code, 302)
@@ -74,10 +74,10 @@ class PlayerViewTest(TestCase):
 
     def test_player_playlist_logIN(self):
         User_LogIN(self)
-        for index in range(self.Reha_num+3):
+        for index in range(self.performance_num+3):
             pk = index + 1
             response = self.client.get('/player/playlist/' + str(pk))
-            if index < self.Reha_num:
+            if index < self.performance_num:
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(response, 'TestSong')
                 self.songs_in_playlist = Song.objects.filter(performance=Performance.objects.get(pk=pk))
@@ -85,3 +85,18 @@ class PlayerViewTest(TestCase):
                     self.assertContains(response, song.file.url)
             else:
                 self.assertEqual(response.status_code, 404)
+
+    def test_player_songupload_logOUT(self):
+        User_LogOUT(self)
+        response = self.client.get('/player/songupload/')
+        self.assertEqual(response.status_code, 302)
+        url_redial_to = response.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Google account')
+
+
+    def test_player_index_logIN(self):
+        User_LogIN(self)
+        response = self.client.get('/player/songupload/')
+        self.assertEqual(response.status_code, 403)
