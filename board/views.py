@@ -57,7 +57,7 @@ def content(request, id):
 @login_required(login_url='/admin/login/')
 def send(request):
     messageForm = SendMessage(request.POST or None, error_class=DivErrorList)
-    attachmentForm = Attachment(request.POST or None, error_class=DivErrorList)
+    attachmentForm = Attachment(request.POST or None, request.FILES or None, error_class=DivErrorList)
     params = {
         'message_form': messageForm,
         'message_attachment': attachmentForm,

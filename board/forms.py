@@ -21,14 +21,6 @@ def validate_to(value):
         raise forms.ValidationError('エラー : 宛先を選択してください')
     return value
 
-# def validate_attachmentfile(value):
-#     print('validation done')
-#     print(value)
-#     # if not value:
-#     #     raise forms.ValidationError('添付ファイルが選択されていないため、送信できません')
-#     # if len(value) > 5242880: # 50MB
-#     #     raise forms.ValidationError('ファイルサイズが50MB以上のため、アップロードできません')
-#     return value
 
 class DivErrorList(ErrorList):
     def __str__(self):
@@ -58,29 +50,29 @@ class SendMessage(forms.Form):
 
 
 
-class Attachment(forms.Form):
-    # def validate_attachmentfile(self, value):
-    #     print('validation done')
-    #     print(value)
-    #     # if not value:
-    #     #     raise forms.ValidationError('添付ファイルが選択されていないため、送信できません')
-    #     # if len(value) > 5242880: # 50MB
-    #     #     raise forms.ValidationError('ファイルサイズが50MB以上のため、アップロードできません')
-    #     return value
+def validate_attachmentfile(value):
+    print('validation done')
+    print(value)
+    if not value:
+        raise forms.ValidationError('添付ファイルが選択されていないため、送信できません')
+    if value.size > 50 * 1024 * 1024: # 50MB
+        raise forms.ValidationError('ファイルサイズが50MB以上のため、アップロードできません')
+    return value
 
+class Attachment(forms.Form):
     attachmentfile = forms.FileField(
         label = "ファイルを選択してください",
         required = False,
-        # validators = [validate_attachmentfile],
+        validators = [validate_attachmentfile],
     )
         
     # def clean_attachmentfile(self):
-    #     content = self.cleaned_data.get('attachmentfile')
+    #     content = self.cleaned_data.get('attachmentfile', None)
     #     print('file validation done')
     #     print(self.cleaned_data)
     #     if not content:
     #         raise forms.ValidationError('添付ファイルが選択されていないため、送信できません')
-    #     if content.file.size > 5242880: # 50MB
+    #     if content.file.size > 50 * 1024 * 1024: # 50MB
     #         raise forms.ValidationError('ファイルサイズが50MB以上のため、アップロードできません')
     #     return content
 
