@@ -1,7 +1,7 @@
 $(function(){
 	var saved_title = localStorage.getItem('title');
 	var saved_content = localStorage.getItem('content');
-	if (saved_title != null || saved_content != null) {
+	if ((saved_title != null || saved_content != null) && JSstop == false) {
 		if (saved_title == null) {saved_title = "（入力なし）";}
 		if (saved_content == null) {saved_content = "（入力なし）";}
 		const text = '<h5>前回終了時に自動保存されたメッセージがあります。</h5><p>件名 : ' + saved_title + '<br>本文 : ' + saved_content.substring(0,50) + 

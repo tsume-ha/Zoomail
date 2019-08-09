@@ -18,5 +18,12 @@
 		<input type="submit" name="SEND">
 	</form>
 	
+
+<script type="text/javascript">
+	let JSstop = false;
+	{% if JSstop %}
+	let JSstop = true;
+	{% endif %}
+</script>
 <script src="{% static 'js/send.js' %}"></script>
 {% endblock %}

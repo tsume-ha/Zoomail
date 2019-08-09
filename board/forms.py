@@ -55,8 +55,8 @@ def validate_attachmentfile(value):
     print(value)
     if not value:
         raise forms.ValidationError('添付ファイルが選択されていないため、送信できません')
-    if value.size > 50 * 1024 * 1024: # 50MB
-        raise forms.ValidationError('ファイルサイズが50MB以上のため、アップロードできません')
+    if value.size > 30 * 1024 * 1024: # 30MB
+        raise forms.ValidationError('ファイルサイズが30MB以上のため、アップロードできません')
     return value
 
 class Attachment(forms.Form):
@@ -72,8 +72,8 @@ class Attachment(forms.Form):
     #     print(self.cleaned_data)
     #     if not content:
     #         raise forms.ValidationError('添付ファイルが選択されていないため、送信できません')
-    #     if content.file.size > 50 * 1024 * 1024: # 50MB
-    #         raise forms.ValidationError('ファイルサイズが50MB以上のため、アップロードできません')
+    #     if content.file.size > 30 * 1024 * 1024: # 30MB
+    #         raise forms.ValidationError('ファイルサイズが30MB以上のため、アップロードできません')
     #     return content
 
 class Search(forms.Form):

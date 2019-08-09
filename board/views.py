@@ -65,6 +65,7 @@ def send(request):
     if (request.method == 'POST'):
         if not messageForm.is_valid():
             # validation error 宛先未選択
+            params['JSstop'] = True
             return render(request, 'board/send.html', params)
         else:
             to = request.POST["to"]
@@ -98,9 +99,11 @@ def send(request):
                         # everything successed with file
                         return redirect(to='../read/')
                     except MultiValueDictKeyError:
+                        params['JSstop'] = True
                         return render(request, 'board/send.html', params)# validation error 未選択
                 else:
                     print('attachmentForm is false')
+                    params['JSstop'] = True
                     return render(request, 'board/send.html', params)# validation error　ファイルサイズオーバー
 
     return render(request, 'board/send.html', params)
