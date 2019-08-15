@@ -2,12 +2,10 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from .models import Message, MessageYear
 from .forms import SendMessage, Search, DivErrorList
-
 import datetime
 
 @login_required(login_url='/admin/login/')
@@ -86,16 +84,10 @@ def send(request):
                 created_at=nowtime,
                 updated_at=nowtime
             )
-            if not is_attachment:
-                content_data.save()
-                content_data.years.create(year=to)
-                # everything successed
-                return redirect(to='../read/')
-            else:
-                content_data.save()
-                content_data.years.create(year=to)
+            content_data.save()
+            content_data.years.create(year=to)
+            if is_attachment == True:
                 content_data.attachments.create(attachment_file=file)
-                # everything successed with file
-                return redirect(to='../read/')
+            return redirect(to='../read/')
 
     return render(request, 'board/send.html', params)

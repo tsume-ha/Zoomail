@@ -9,6 +9,9 @@ from .models import Message, MessageYear, Attachment
 from .forms import validation_error_messages
 from config.settings import BASE_DIR
 
+# >> py manage.py test board.tests.AuthentificationSendTest
+# でclassごとにテストできる
+
 
 # HTTP CODE
     # 200 success

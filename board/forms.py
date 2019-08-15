@@ -2,7 +2,6 @@ from django import forms
 from django.forms.utils import ErrorList
 import datetime
 from django.core import validators
-from django.template.defaultfilters import filesizeformat
 
 kaisei = [
 (2019,"2019 25期",),
