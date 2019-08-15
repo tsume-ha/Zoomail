@@ -5,6 +5,8 @@ import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Message, MessageYear, Attachment
+import os
+from config.settings import BASE_DIR
 
 # HTTP CODE
     # 200 success
@@ -184,16 +186,19 @@ class AuthentificationSendTest(TestCase):
         self.testfiles = [['29MB.txt', 29*1024*1024], ['31MB.txt', 31*1024*1024]]
         User_LogIN(self)
         for textfile in self.testfiles:
-            data = {
-                'title': 'LogIN POST test with' + textfile[0],
-                'to': 0,
-                'content': 'LogIN POST test message',
-                'attachment': 'on',
-                'attachment_file': SimpleUploadedFile(textfile[0], b"file_content"),
-            }
-            request = self.client.post('/send/', data)
-            if textfile[1] < 30*1024*1024:
-                self.assertEqual(request.status_code, 200) # => read/へ転送
+            filedir = os.path.join(BASE_DIR, 'board', textfile[0])
+            with open(filedir, 'rb') as file:
+                data = {
+                    'title': 'LogIN POST test with' + textfile[0],
+                    'to': 0,
+                    'content': 'LogIN POST test message',
+                    'attachment': 'on',
+                    'attachmentfile': SimpleUploadedFile(textfile[0], file.read()),
+                }
+                request = self.client.post('/send/', data)
+                if textfile[1] < 30*1024*1024:
+                    print(request)
+                    self.assertEqual(request.status_code, 302) # => read/へ転送
 
-            else:
-                self.assertEqual(request.status_code, 302) # => sendにとどまる
+                else:
+                    self.assertEqual(request.status_code, 200) # => sendにとどまる
