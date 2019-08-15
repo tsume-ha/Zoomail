@@ -52,7 +52,6 @@ class SendMessage(forms.Form):
 
 def validate_attachmentfile(value):
     print('validation done')
-    print(value)
     if not value:
         raise forms.ValidationError('添付ファイルが選択されていないため、送信できません')
     if value.size > 30 * 1024 * 1024: # 30MB

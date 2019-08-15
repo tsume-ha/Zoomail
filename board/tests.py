@@ -159,7 +159,6 @@ class AuthentificationSendTest(TestCase):
             self.assertTrue(True)
         
 
-
     def test_send_POST_logIN(self):
         data = {
             'title': 'LogIN POST test',
@@ -174,13 +173,26 @@ class AuthentificationSendTest(TestCase):
 
         response = self.client.get('/read/')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'LogIN POST test')
+        self.assertContains(response, data['title'])
         
-        saved_content = Message.objects.get(title='LogIN POST test')
+        saved_content = Message.objects.get(title=data['title'])
         target = '/read/content/' + str(saved_content.pk)
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'LogIN POST test message')
+        self.assertContains(response, data['content'])
+
+
+    def test_send_POST_logIN_missing_File(self):
+        data = {
+            'title': 'LogIN POST test missing Files',
+            'to': 0,
+            'content': 'LogIN POST test message',
+            'attachment': 'on',
+        }
+        User_LogIN(self)
+        request = self.client.post('/send/', data)
+        self.assertEqual(request.status_code, 200)
+        self.assertContains(request, data['title'])
 
     def test_send_POST_logIN_with_TextFile(self):
         self.testfiles = [['29MB.txt', 29*1024*1024], ['31MB.txt', 31*1024*1024]]
@@ -197,8 +209,21 @@ class AuthentificationSendTest(TestCase):
                 }
                 request = self.client.post('/send/', data)
                 if textfile[1] < 30*1024*1024:
-                    print(request)
-                    self.assertEqual(request.status_code, 302) # => read/へ転送
+                    self.assertEqual(request.status_code, 302) # => 成功、read/へ転送
+                    url_redial_to = request.url
+                    self.assertEqual(url_redial_to, '../read/')
 
+                    response = self.client.get('/read/')
+                    self.assertEqual(response.status_code, 200)
+                    self.assertContains(response, data['title'])
+                    
+                    saved_content = Message.objects.get(title=data['title'])
+                    target = '/read/content/' + str(saved_content.pk)
+                    response = self.client.get(target)
+                    self.assertEqual(response.status_code, 200)
+                    self.assertContains(response, data['content'])
+                    self.assertContains(response, textfile[0])
+                    
                 else:
-                    self.assertEqual(request.status_code, 200) # => sendにとどまる
+                    self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
+                    self.assertContains(request, data['title'])
