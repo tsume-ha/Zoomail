@@ -23,11 +23,16 @@ def index(request):
 
     textmax = 80
     for message in messages:
-        textrange = len(message.content)
+        if len(message.content) < textmax:
+            continue
         count = message.content.find('\n')
-        message.content = message.content[count:count+textmax].replace('\n', ' ')
-        if textrange > textmax:
-            message.content += ' ...'
+        while message.content[-2:-1] == '\n':
+            message.content = message.content[:-3]
+        message.content = message.content[count:].replace('\n', ' ')
+        if len(message.content) < textmax + 5:
+            continue
+        message.content = message.content[:textmax]
+        message.content += ' ...'
     params = {
         'search': Search(),
         'messages': messages,
@@ -60,7 +65,7 @@ def send(request):
     }
     if (request.method == 'POST'):
         if not messageForm.is_valid():
-            # validation error 宛先未選択　ファイルサイズオーバー
+            # validation error
             params['JSstop'] = True
             return render(request, 'board/send.html', params)
         else:

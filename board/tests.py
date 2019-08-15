@@ -119,13 +119,10 @@ class AuthentificationReadViewTest(TestCase):
                 if index < self.MessageCount:
                     Message_Year = MessageYear.objects.get(message=Message.objects.get(pk=pk)).year
                     if Message_Year == 0 or Message_Year == User_Year:
-                        # print('message_'+str(pk)+': 200')
                         self.assertEqual(response.status_code, 200)
                     else:
-                        # print('message_'+str(pk)+': 302')
                         self.assertEqual(response.status_code, 302)
                 else:
-                    # print('message_'+str(pk)+': 404')
                     self.assertEqual(response.status_code, 404)
 
 
