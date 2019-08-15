@@ -46,7 +46,8 @@ class Attachment(models.Model):
 		return extension
 
 	def isImage(self):
-		return self.extension() in [".gif", ".png", ".jpeg", ".jpg", ".bmp", ".GIF", ".PNG", ".JPEG", ".JPG", ".BMP"]
+		ImageExtensions = [".gif", ".png", ".jpeg", ".jpg", ".bmp"]
+		return self.extension() in [str.lower() for str in ImageExtensions] + [str.upper() for str in ImageExtensions]
 
 	def fileName(self):
 		_, fileName = os.path.split(self.attachment_file.name)

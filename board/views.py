@@ -73,7 +73,12 @@ def send(request):
             content = request.POST["content"]
             nowtime = datetime.datetime.now()
             now_user = request.user
-            is_attachment = request.POST.get('attachment', '') == 'on'
+            try:
+                file = request.FILES["attachmentfile"]
+                is_attachment = True
+            except MultiValueDictKeyError:
+                is_attachment = False
+
             content_data = Message(
                 title=title,
                 content=content,
@@ -90,17 +95,12 @@ def send(request):
                 return redirect(to='../read/')
             else:
                 if attachmentForm.is_valid():
-                    try:
-                        print('attachmentForm is true')
-                        file = request.FILES["attachmentfile"]
-                        content_data.save()
-                        content_data.years.create(year=to)
-                        content_data.attachments.create(attachment_file=file)
-                        # everything successed with file
-                        return redirect(to='../read/')
-                    except MultiValueDictKeyError:
-                        params['JSstop'] = True
-                        return render(request, 'board/send.html', params)# validation error 未選択
+                    print('attachmentForm is true')
+                    content_data.save()
+                    content_data.years.create(year=to)
+                    content_data.attachments.create(attachment_file=file)
+                    # everything successed with file
+                    return redirect(to='../read/')
                 else:
                     print('attachmentForm is false')
                     params['JSstop'] = True

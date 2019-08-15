@@ -42,7 +42,6 @@ class SendMessage(forms.Form):
         widget = forms.Select(attrs={'class': 'form-control'}),
         validators = [validate_to],
     )
-    attachment = forms.BooleanField(label="添付ファイル",required=False)
     content = forms.CharField(label="本文",widget=forms.Textarea(attrs={
         'placeholder': '本文を入力',
         'class': 'form-control',
@@ -51,9 +50,6 @@ class SendMessage(forms.Form):
 
 
 def validate_attachmentfile(value):
-    print('validation done')
-    if not value:
-        raise forms.ValidationError('添付ファイルが選択されていないため、送信できません')
     if value.size > 30 * 1024 * 1024: # 30MB
         raise forms.ValidationError('ファイルサイズが30MB以上のため、アップロードできません')
     return value
@@ -65,16 +61,7 @@ class Attachment(forms.Form):
         validators = [validate_attachmentfile],
     )
         
-    # def clean_attachmentfile(self):
-    #     content = self.cleaned_data.get('attachmentfile', None)
-    #     print('file validation done')
-    #     print(self.cleaned_data)
-    #     if not content:
-    #         raise forms.ValidationError('添付ファイルが選択されていないため、送信できません')
-    #     if content.file.size > 30 * 1024 * 1024: # 30MB
-    #         raise forms.ValidationError('ファイルサイズが30MB以上のため、アップロードできません')
-    #     return content
-
+        
 class Search(forms.Form):
     text = forms.CharField(label="",required=False,widget=forms.TextInput(attrs={
         'placeholder': '件名・本文で検索'

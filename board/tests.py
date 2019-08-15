@@ -181,19 +181,6 @@ class AuthentificationSendTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, data['content'])
 
-
-    def test_send_POST_logIN_missing_File(self):
-        data = {
-            'title': 'LogIN POST test missing Files',
-            'to': 0,
-            'content': 'LogIN POST test message',
-            'attachment': 'on',
-        }
-        User_LogIN(self)
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 200)
-        self.assertContains(request, data['title'])
-
     def test_send_POST_logIN_with_TextFile(self):
         self.testfiles = [['29MB.txt', 29*1024*1024], ['31MB.txt', 31*1024*1024]]
         User_LogIN(self)
@@ -204,7 +191,6 @@ class AuthentificationSendTest(TestCase):
                     'title': 'LogIN POST test with' + textfile[0],
                     'to': 0,
                     'content': 'LogIN POST test message',
-                    'attachment': 'on',
                     'attachmentfile': SimpleUploadedFile(textfile[0], file.read()),
                 }
                 request = self.client.post('/send/', data)
@@ -223,7 +209,9 @@ class AuthentificationSendTest(TestCase):
                     self.assertEqual(response.status_code, 200)
                     self.assertContains(response, data['content'])
                     self.assertContains(response, textfile[0])
-                    
+
                 else:
                     self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
+                    self.assertTemplateUsed(request, 'board/send.html')
                     self.assertContains(request, data['title'])
+                    self.assertContains(request, 'ファイルサイズが30MB以上のため、アップロードできません')
