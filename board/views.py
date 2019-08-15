@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from .models import Message, MessageYear
-from .forms import SendMessage, Search, Attachment, DivErrorList
+from .forms import SendMessage, Search, DivErrorList
 
 import datetime
 
@@ -56,15 +56,13 @@ def content(request, id):
 
 @login_required(login_url='/admin/login/')
 def send(request):
-    messageForm = SendMessage(request.POST or None, error_class=DivErrorList)
-    attachmentForm = Attachment(request.POST or None, request.FILES or None, error_class=DivErrorList)
+    messageForm = SendMessage(request.POST or None, request.FILES or None, error_class=DivErrorList)
     params = {
         'message_form': messageForm,
-        'message_attachment': attachmentForm,
     }
     if (request.method == 'POST'):
         if not messageForm.is_valid():
-            # validation error 宛先未選択
+            # validation error 宛先未選択　ファイルサイズオーバー
             params['JSstop'] = True
             return render(request, 'board/send.html', params)
         else:
@@ -94,16 +92,10 @@ def send(request):
                 # everything successed
                 return redirect(to='../read/')
             else:
-                if attachmentForm.is_valid():
-                    print('attachmentForm is true')
-                    content_data.save()
-                    content_data.years.create(year=to)
-                    content_data.attachments.create(attachment_file=file)
-                    # everything successed with file
-                    return redirect(to='../read/')
-                else:
-                    print('attachmentForm is false')
-                    params['JSstop'] = True
-                    return render(request, 'board/send.html', params)# validation error　ファイルサイズオーバー
+                content_data.save()
+                content_data.years.create(year=to)
+                content_data.attachments.create(attachment_file=file)
+                # everything successed with file
+                return redirect(to='../read/')
 
     return render(request, 'board/send.html', params)

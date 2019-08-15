@@ -1,12 +1,14 @@
 from django.test import TestCase, Client
 from django.db.models import Count
 from members.models import User
+import os
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Message, MessageYear, Attachment
-import os
+from .forms import validation_error_messages
 from config.settings import BASE_DIR
+
 
 # HTTP CODE
     # 200 success
@@ -153,7 +155,7 @@ class AuthentificationSendTest(TestCase):
         self.assertContains(response, 'Google account')
 
         try:
-            saved_content = Message.objects.get(title='LogOUT POST test')
+            saved_content = Message.objects.get(title=data['title'])
             self.assertTrue(False)
         except ObjectDoesNotExist:
             self.assertTrue(True)
@@ -180,6 +182,58 @@ class AuthentificationSendTest(TestCase):
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, data['content'])
+
+    def test_send_POST_logIN_missing_YEAR(self):
+        data = {
+            'title': 'LogIN POST test missing YEAR',
+            'to': 'error',
+            'content': 'LogIN POST test message missing YEAR',
+        }
+        User_LogIN(self)
+        request = self.client.post('/send/', data)
+        self.assertEqual(request.status_code, 200)
+        self.assertTemplateUsed(request, 'board/send.html')
+        self.assertContains(request, data['title'])
+        self.assertContains(request, validation_error_messages['no_year'])
+        try:
+            saved_content = Message.objects.get(title=data['title'])
+            self.assertTrue(False)
+        except ObjectDoesNotExist:
+            self.assertTrue(True)
+
+    def test_send_POST_logIN_missing_TITLE(self):
+        data = {
+            'title': '',
+            'to': 'error',
+            'content': 'LogIN POST test message missing TITLE',
+        }
+        User_LogIN(self)
+        request = self.client.post('/send/', data)
+        self.assertEqual(request.status_code, 200)
+        self.assertTemplateUsed(request, 'board/send.html')
+        self.assertContains(request, validation_error_messages['no_title'])
+        try:
+            saved_content = Message.objects.get(title=data['title'])
+            self.assertTrue(False)
+        except ObjectDoesNotExist:
+            self.assertTrue(True)
+
+    def test_send_POST_logIN_missing_CONTENT(self):
+        data = {
+            'title': 'LogIN POST test missing CONTENT',
+            'to': 'error',
+            'content': '',
+        }
+        User_LogIN(self)
+        request = self.client.post('/send/', data)
+        self.assertEqual(request.status_code, 200)
+        self.assertTemplateUsed(request, 'board/send.html')
+        self.assertContains(request, validation_error_messages['no_content'])
+        try:
+            saved_content = Message.objects.get(title=data['title'])
+            self.assertTrue(False)
+        except ObjectDoesNotExist:
+            self.assertTrue(True)
 
     def test_send_POST_logIN_with_TextFile(self):
         self.testfiles = [['29MB.txt', 29*1024*1024], ['31MB.txt', 31*1024*1024]]
@@ -214,4 +268,9 @@ class AuthentificationSendTest(TestCase):
                     self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
                     self.assertTemplateUsed(request, 'board/send.html')
                     self.assertContains(request, data['title'])
-                    self.assertContains(request, 'ファイルサイズが30MB以上のため、アップロードできません')
+                    self.assertContains(request, validation_error_messages['filesize_limit'])
+                    try:
+                        saved_content = Message.objects.get(title=data['title'])
+                        self.assertTrue(False)
+                    except ObjectDoesNotExist:
+                        self.assertTrue(True)
