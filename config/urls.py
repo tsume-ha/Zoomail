@@ -24,10 +24,13 @@ import private_storage.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('home.urls')),
-    path('', include('home.urls')),
+    path('', include('home.urls'), name="home"),
+    path('login/', home.login, name="login"),
+    path('logout/', home.logout, name="logout"),
+    path('auth/', include('social_django.urls', namespace='social')),
+    path('private-media/', include(private_storage.urls), name="private_media"),
     path('members/', include('members.urls')),
     path('read/', include('board.urls'), name="read"),
     path('send/', board.send, name="send"),
     path('player/', include('player.urls')),
-    path('private-media/', include(private_storage.urls), name="private_media")
 ]
