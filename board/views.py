@@ -31,8 +31,8 @@ def index(request):
         message.content = message.content[count:].replace('\n', ' ')
         if len(message.content) < textmax + 5:
             continue
-        message.content = message.content[:textmax]
-        message.content += ' ...'
+        message.content = message.content[:textmax] + ' ...'
+
     params = {
         'search': Search(),
         'messages': messages,
@@ -61,14 +61,11 @@ def content(request, id):
 def send(request):
     messageForm = SendMessage(request.POST or None, request.FILES or None, error_class=DivErrorList)
     params = {
+        'title': 'Send a Message',
         'message_form': messageForm,
     }
     if (request.method == 'POST'):
-        if not messageForm.is_valid():
-            # validation error
-            params['JSstop'] = True
-            return render(request, 'board/send.html', params)
-        else:
+        if messageForm.is_valid():
             to = request.POST["to"]
             title = request.POST["title"]
             content = request.POST["content"]
@@ -94,5 +91,9 @@ def send(request):
             if is_attachment == True:
                 content_data.attachments.create(attachment_file=file)
             return redirect(to='../read/')
+
+        else:
+            # validation error
+            params['JSstop'] = True
 
     return render(request, 'board/send.html', params)
