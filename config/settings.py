@@ -17,7 +17,6 @@ from . import settings_local
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-print("setting.py - " + BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -41,8 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'private_storage',
     'home',
+    'members',
     'board',
+    'player',
 ]
 
 MIDDLEWARE = [
@@ -107,6 +109,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+# CustomUserModel
+AUTH_USER_MODEL = 'members.User'
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -119,6 +127,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
+
+
+
+PRIVATE_STORAGE_ROOT = os.path.join(BASE_DIR, 'private_media')
+PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_staff'
+
 
 
 # Static files (CSS, JavaScript, Images)

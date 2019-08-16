@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Unplugged Message{% endblock %}
+
+
+
+{% block body %}
+	members
+	{{user_pk}}
+	<a href="mypage/{{user_pk}}">go to mypage</a>
+{% endblock %}
