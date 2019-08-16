@@ -4,7 +4,7 @@
 	display: none;
 }
 
-form label:not([for="id_attachment"]){
+form label{
 	display: none;
 }
 
@@ -17,9 +17,4 @@ form textarea{
 form select{
 	width: 100%;
 	max-width: 300px;
-}
-
-input#id_attachment{
-	width: 50px;
-
 }

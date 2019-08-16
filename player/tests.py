@@ -3,7 +3,9 @@ from django.db.models import Count
 from django.core.files.uploadedfile import SimpleUploadedFile
 from members.models import User
 import datetime
+import os
 from .models import Performance, Song
+from config.settings import BASE_DIR
 
 
 def User_LogOUT(self):
@@ -21,20 +23,16 @@ def Make_Song(self, user_year=2019):
         live_name = 'Test Rehasal 1',
         updated_by = User.objects.get(google_account=str(user_year) + 'mail@gmail.com')
         )
-    self.song = Song.objects.create(
-        performance = self.performance,
-        track_num = 1,
-        song_name = 'TestSong',
-        file = SimpleUploadedFile("test.mp3", b"file_content"),
-        updated_by = User.objects.get(google_account=str(user_year) + 'mail@gmail.com')
-        )
-    Song.objects.create(
-        performance = self.performance,
-        track_num = 2,
-        song_name = 'TestSong',
-        file = SimpleUploadedFile("test.mp3", b"file_content"),
-        updated_by = User.objects.get(google_account=str(user_year) + 'mail@gmail.com')
-        )
+    mp3dir = os.path.join(BASE_DIR, 'player', 'test.mp3')
+    with open(mp3dir, 'rb') as file:
+        Song.objects.create(
+            performance = self.performance,
+            track_num = 1,
+            song_name = 'TestSong',
+            file = SimpleUploadedFile("test.mp3", file.read()),
+            updated_by = User.objects.get(google_account=str(user_year) + 'mail@gmail.com')
+            )
+
 
 
 

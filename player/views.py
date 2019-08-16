@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.forms import formset_factory
 from django.utils.datastructures import MultiValueDictKeyError
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from .forms import CreateRehasalForm, CreateSongForm
 from .models import Performance, Song
 import datetime
