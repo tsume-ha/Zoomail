@@ -31,6 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	first_name = models.CharField(max_length=255)
 	last_name = models.CharField(max_length=255)
 	nickname = models.CharField(max_length=255)
+	furigana = models.CharField(max_length=255, default="")
 	year = models.IntegerField()
 	created_at = models.DateTimeField(default=timezone.now)
 	updated_at = models.DateTimeField(default=timezone.now)

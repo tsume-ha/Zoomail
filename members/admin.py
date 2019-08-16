@@ -7,7 +7,7 @@ from .models import User
 class UserAdmin(BaseUserAdmin):
 	fieldsets = (
 		(None, {'fields': ('google_account', 'year')}),
-		(('Personal info'), {'fields': ('first_name', 'last_name')}),
+		(('Personal info'), {'fields': ('first_name', 'last_name', 'nickname', 'furigana')}),
 		(('Permissions'), {'fields': ('is_superuser', 'is_staff', 'groups')}),
 	)
 	add_fieldsets = (
