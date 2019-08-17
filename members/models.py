@@ -4,20 +4,20 @@ from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
 
 class UserManager(BaseUserManager):
-    def create_user(self, google_account, year, password=None):
-        if not google_account:
+    def create_user(self, email, password=None, year=0):
+        if not email: # changed from google_account
             raise ValueError('Users must have a Google account')
         user = self.model(
-            google_account = google_account,
+            email = email, # changed from google_account
             year = year,
         )
-        user.set_password(password)
+        user.set_unusable_password()
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, google_account, year, password=None):
+    def create_superuser(self, email, year, password=None): # changed from google_account
         user = self.create_user(
-            google_account,
+            email, # changed from google_account
             year = year,
             password = password,
         )
@@ -27,7 +27,7 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    google_account = models.EmailField(unique=True)
+    email = models.EmailField(unique=True) # changed from google_account
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     nickname = models.CharField(max_length=255)
@@ -39,11 +39,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'google_account'
+    USERNAME_FIELD = 'email' # changed from google_account
     REQUIRED_FIELDS = ['year']
 
     def __str__(self):
-        return str(self.id) + self.last_name + self.first_name + self.google_account
+        return str(self.id) + self.last_name + self.first_name + self.email # changed from google_account
 
     def get_short_name(self):
         if self.nickname == "":

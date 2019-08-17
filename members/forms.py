@@ -4,7 +4,7 @@ from .models import User
 class UserUpdateForm(forms.ModelForm):
 	class Meta:
 		model = User
-		fields = ('google_account', 'last_name', 'first_name','nickname')
+		fields = ('email', 'last_name', 'first_name','nickname') # changed from google_account
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)

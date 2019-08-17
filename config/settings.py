@@ -199,8 +199,6 @@ SOCIAL_AUTH_PIPELINE = (
     # there's any collision.
     'social_core.pipeline.user.get_username',
 
-    'social_core.pipeline.user.create_user',
-
     # Create the record that associates the social account with the user.
     'social_core.pipeline.social_auth.associate_user',
 
