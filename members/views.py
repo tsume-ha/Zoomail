@@ -6,7 +6,7 @@ from django.http import Http404
 from .models import User
 from .forms import UserUpdateForm
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def index(request):
 	now_user = request.user
 	#User.objects.get(now_user)
@@ -15,7 +15,7 @@ def index(request):
 	}
 	return render(request, 'members/index.html', params)
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def Mypage(request, url_user_pk):
 	now_user = request.user
 	is_allowed = now_user.pk == url_user_pk or now_user.is_superuser
@@ -28,7 +28,7 @@ def Mypage(request, url_user_pk):
 	else:
 		raise PermissionDenied
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def UserUpdate(request, url_user_pk):
 	now_user = request.user
 	is_allowed = now_user.pk == url_user_pk or now_user.is_superuser

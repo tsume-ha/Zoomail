@@ -112,26 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Google OAuth 2
-AUTHENTICATION_BACKENDS = ( 
-    'social_core.backends.open_id.OpenIdAuth',
-    'social_core.backends.google.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend', # これがあると UserName & Passでloginできる
-)
-
-
-SOCIAL_AUTH_LOGIN_URL = 'login/'
-LOGIN_URL = 'login/'
-
-LOGIN_REDIRECT_URL = 'mypage_index'
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = settings_local.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = settings_local.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
-
-
-
 # CustomUserModel
 AUTH_USER_MODEL = 'members.User'
 
@@ -152,6 +132,8 @@ USE_TZ = False
 
 
 
+# Private uploaded files
+
 PRIVATE_STORAGE_ROOT = os.path.join(BASE_DIR, 'private_media')
 PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_staff'
 
@@ -160,11 +142,35 @@ PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_staff'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-
 STATIC_URL = '/static/'
-
-
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
 ]
+
+
+
+
+
+
+
+
+# Google OAuth 2
+AUTHENTICATION_BACKENDS = ( 
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend', # これがあると UserName & Passでloginできる
+)
+
+SOCIAL_AUTH_LOGIN_URL = 'login/'
+LOGIN_URL = 'login/'
+
+LOGIN_REDIRECT_URL = 'mypage_index'
+SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = settings_local.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = settings_local.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+
+# other settings
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
