@@ -198,6 +198,9 @@ SOCIAL_AUTH_PIPELINE = (
     # Make up a username for this person, appends a random string at the end if
     # there's any collision.
     'social_core.pipeline.user.get_username',
+    
+    # Create a user account if we haven't found one yet.
+    # 'social_core.pipeline.user.create_user',
 
     # Create the record that associates the social account with the user.
     'social_core.pipeline.social_auth.associate_user',

@@ -49,3 +49,16 @@ def UserUpdate(request, url_user_pk):
 		return render(request, 'members/mypage_UserUpdate.html', params)
 	else:
 		raise PermissionDenied
+
+from .create_google_user import Create_Google_User as register
+from django.shortcuts import redirect
+
+@login_required(login_url='/login/')
+def UserRegistration(request):
+	now_user = request.user
+	is_allowed = now_user.is_superuser
+	if is_allowed:
+		register(email='hogehoge@example.com', year=2018)
+		return redirect('/members')
+	else:
+		return redirect('/members')

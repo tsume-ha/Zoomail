@@ -10,3 +10,19 @@ class UserUpdateForm(forms.ModelForm):
 		super().__init__(*args, **kwargs)
 		for field in self.fields.values():
 			field.widget.attrs['class'] = 'form-control'
+
+class RegistarForm(forms.Form):
+    email = forms.CharField(
+        label = "",
+        required = True,
+        widget = forms.TextInput(attrs = {
+            'placeholder': 'Google Accountを入力'
+        })
+    )
+    email = forms.IntegerField(
+        label = "",
+        required = False,
+        widget = forms.TextInput(attrs = {
+            'placeholder': '回生を入力'
+        })
+    )
