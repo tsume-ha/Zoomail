@@ -11,18 +11,32 @@ class UserUpdateForm(forms.ModelForm):
 		for field in self.fields.values():
 			field.widget.attrs['class'] = 'form-control'
 
-class RegistarForm(forms.Form):
-    email = forms.CharField(
+class RegisterForm(forms.Form):
+    email = forms.EmailField(
         label = "",
         required = True,
         widget = forms.TextInput(attrs = {
             'placeholder': 'Google Accountを入力'
         })
     )
-    email = forms.IntegerField(
+    year = forms.IntegerField(
         label = "",
-        required = False,
+        required = True,
         widget = forms.TextInput(attrs = {
             'placeholder': '回生を入力'
+        })
+    )
+    last_name = forms.CharField(
+        label = "",
+        required = True,
+        widget = forms.TextInput(attrs = {
+            'placeholder': '苗字'
+        })
+    )
+    first_name = forms.CharField(
+        label = "",
+        required = True,
+        widget = forms.TextInput(attrs = {
+            'placeholder': '名前'
         })
     )

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Unplugged Message{% endblock %}
+
+
+
+{% block body %}
+		<form method="post">
+			{% csrf_token %}
+
+			{{ RegisterForm.as_p }}
+
+			<input type="submit" name="search" value="登録">
+		</form>
+
+{% endblock %}
