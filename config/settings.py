@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -113,13 +114,21 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Google OAuth 2
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = ( 
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend', # これがあると UserName & Passでloginできる
 )
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
+
+SOCIAL_AUTH_LOGIN_URL = 'login/'
+LOGIN_URL = 'login/'
+
+LOGIN_REDIRECT_URL = 'mypage_index'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = settings_local.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = settings_local.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
 
 
 
