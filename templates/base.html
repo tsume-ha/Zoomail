@@ -27,6 +27,17 @@
 		</nav>
 	</div>
 </header>
+{% if messages %}
+<div class="container">
+	<div class="messages">
+		{% for message in messages %}
+			<p  class="alert 
+			{% if message.tags %}alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} ">{{ message }}</p>
+		{% endfor %}
+	</div>
+</div>
+{% endif %}
+
 <div id="container" class="container">
 	{% block body %}
 	{% endblock %}

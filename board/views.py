@@ -2,13 +2,14 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from .models import Message, MessageYear
 from .forms import SendMessage, Search, DivErrorList
 import datetime
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def index(request):
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(
@@ -19,27 +20,27 @@ def index(request):
         query = query.filter(Q(years__year=request.user.year) | Q(
             years__year=0)).filter(Q(content__contains=str) | Q(title__contains=str))
 
-    messages = query.order_by('updated_at').reverse()  # 逆順で取得
+    message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
 
     textmax = 80
-    for message in messages:
-        if len(message.content) < textmax:
+    for message_letter in message_letters:
+        if len(message_letter.content) < textmax:
             continue
-        count = message.content.find('\n')
-        while message.content[-2:-1] == '\n':
-            message.content = message.content[:-3]
-        message.content = message.content[count:].replace('\n', ' ')
-        if len(message.content) < textmax + 5:
+        count = message_letter.content.find('\n')
+        while message_letter.content[-2:-1] == '\n':
+            message_letter.content = message_letter.content[:-3]
+        message_letter.content = message_letter.content[count:].replace('\n', ' ')
+        if len(message_letter.content) < textmax + 5:
             continue
-        message.content = message.content[:textmax] + ' ...'
+        message_letter.content = message_letter.content[:textmax] + ' ...'
 
     params = {
         'search': Search(),
-        'messages': messages,
+        'message_letters': message_letters,
     }
     return render(request, 'board/index.html', params)
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def content(request, id):
     message = get_object_or_404(Message, id=id)
 
@@ -57,7 +58,7 @@ def content(request, id):
     }
     return render(request, 'board/content.html', params)
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def send(request):
     messageForm = SendMessage(request.POST or None, request.FILES or None, error_class=DivErrorList)
     params = {
@@ -90,6 +91,7 @@ def send(request):
             content_data.years.create(year=to)
             if is_attachment == True:
                 content_data.attachments.create(attachment_file=file)
+            django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
             return redirect(to='../read/')
 
         else:

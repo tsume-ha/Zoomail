@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Unplugged Message{% endblock %}
+
+
+
+{% block body %}
+
+<h3>Register Member</h3>
+	<p><a href="{% url 'register_form' %}">フォームに入力して１人ずつ登録 はこちら</a></p>
+	<section id="csv_register" class="my-3">
+		<h5>CSVで一括登録する</h5>
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+
+			{{ RegisterCSV.as_p }}
+
+			<input type="submit" value="確認画面へ">
+		</form>
+		<p>
+			<h6>CSVファイルの要件について</h6>
+			<ul>
+				<li>CSVファイルのヘッダーはつけないでください。</li>
+				<li>各行には順番に、「姓」「名」「ふりがな」「Googleアカウント」「入部年度」の値を入れてください。</li>
+				<li>UTF-8でエンコードしてください。</li>
+			</ul>
+			<div>
+				CSVファイルの例<br>
+				京大,太郎,きょうだいたろう,example@gmail.com,2019<br>
+				京大,花子,きょうだいはなこ,example2@gmail.com,2018
+			</div>
+		</p>
+	</section>
+	
+{% endblock %}
