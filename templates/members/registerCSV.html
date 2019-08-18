@@ -11,28 +11,6 @@
 	<p><a href="{% url 'register_form' %}">フォームに入力して１人ずつ登録 はこちら</a></p>
 	<section id="csv_register" class="my-3">
 		<h5>CSVで一括登録する</h5>
-		{% if confirm %}
-		<table class="table">
-			<tbody>
-				<tr>
-					<th>No.</th>
-					<th>名字</th>
-					<th>名前</th>
-					<th>ふりがな</th>
-					<th>入部年度</th>
-					<th>Googleアカウント</th>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td>京大</td>
-					<td>太郎</td>
-					<td>きょうだいたろう</td>
-					<td>2019</td>
-					<td>hogehoge@gmail.com</td>
-				</tr>
-			</tbody>
-		</table>
-		{% else %}
 		<form method="post" enctype="multipart/form-data">
 			{% csrf_token %}
 
@@ -40,7 +18,19 @@
 
 			<input type="submit" value="確認画面へ">
 		</form>
-		{% endif %}
+		<p>
+			<h6>CSVファイルの要件について</h6>
+			<ul>
+				<li>CSVファイルのヘッダーはつけないでください。</li>
+				<li>各行には順番に、「姓」「名」「ふりがな」「Googleアカウント」「入部年度」の値を入れてください。</li>
+				<li>UTF-8でエンコードしてください。</li>
+			</ul>
+			<div>
+				CSVファイルの例<br>
+				京大,太郎,きょうだいたろう,example@gmail.com,2019<br>
+				京大,花子,きょうだいはなこ,example2@gmail.com,2018
+			</div>
+		</p>
 	</section>
 	
 {% endblock %}

@@ -107,15 +107,6 @@ def UserRegistrationCSV(request):
                     )
                 content.save()
             return redirect('preview/')
-                # print(row)['2019/08/18 0:02:36', '橋爪', '雅史', 'はしづめまさふみ', 'hashimasa0503@gmail.com', '24']
-
-
-            # if csvform.is_valid():
-            #     csv = 
-            #     print(csv)
-            #     params['confirm'] = True
-            # else:
-            #     messages.error(request, '登録に失敗しました。')
         return render(request, 'members/registerCSV.html', params)
     else:
         return redirect('/members')
