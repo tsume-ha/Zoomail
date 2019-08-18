@@ -21,14 +21,14 @@
 		<nav id="nav">
 			<ul>
 				{% if user.is_authenticated %}
-				<li><a href="/read/">メッセージ</a></li>
+				<li><a href="/read/">メーリス</a></li>
 				<li><a href="/">感想用紙</a></li>
 				<li><a href="/player/">リハ音源</a></li>
 				<li><a href="/">ライブ映像</a></li>
 				<li><a href="/">写真</a></li>
 				<li><a href="/">その他資料</a></li>
-				<li><a href="/">Logout</a></li>
 				<li><a href="/members/">My Page</a></li>
+				<li><a href="/">Logout</a></li>
 				{% else %}
 				<li><a href="/login/">Login with Google</a></li>
 				{% endif %}
