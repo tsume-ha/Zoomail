@@ -2,6 +2,10 @@ from members.models import User
 from social_django.models import UserSocialAuth
 from django.db.utils import IntegrityError
 
+class DuplicateGmailAccountError(Exception):
+    pass
+        
+
 def Create_Google_User(email, year=0, first_name=None, last_name=None):
     try:
         user = User.objects.create_user(email, year)
@@ -14,4 +18,4 @@ def Create_Google_User(email, year=0, first_name=None, last_name=None):
             )
         content_social.save()
     except IntegrityError:
-        print('Regst. Fail : ' + email)
+        raise DuplicateGmailAccountError('すでに登録されているGoogleアカウントです')

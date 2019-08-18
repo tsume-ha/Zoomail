@@ -8,6 +8,7 @@ from .models import User, TmpMember
 from .forms import UserUpdateForm
 import csv
 from io import TextIOWrapper
+from .create_google_user import DuplicateGmailAccountError
 
 @login_required(login_url='/login/')
 def index(request):
@@ -117,17 +118,25 @@ def UserRegistrationPreview(request):
     is_allowed = now_user.is_superuser
     if is_allowed:
         TmpMembers = TmpMember.objects.filter(session=request.session.session_key).order_by('id')
-        aboid_delete_data = TmpMembers
         params = {
-            'TmpMembers': aboid_delete_data
+            'TmpMembers': TmpMembers
         }
         if (request.method == 'POST'):
-            MembersToRegister = aboid_delete_data
+            MembersToRegister = TmpMembers
+            is_error = False
             for member in MembersToRegister:
-            	register(email=member.email, year=member.year, last_name=member.last_name, first_name=member.first_name)
-            messages.success(request, '登録しました')
-            TmpMembers.delete()
-            return redirect('/members/register/csv/')
+                try:
+                    register(email=member.email, year=member.year, last_name=member.last_name, first_name=member.first_name)
+                    member.delete()
+                except DuplicateGmailAccountError:
+                    messages.error(request, member.email+' はすでに登録されているアカウントのため登録できませんでした。')
+                    is_error = True
+            if is_error:
+                messages.error(request, '一部ユーザーが登録できませんでした。登録できなかったユーザーが以下の表に残されています。')
+                return render(request, 'members/register_preview.html', params)
+            else:
+                messages.success(request, '登録しました')
+                return redirect('/members/register/csv/')
         return render(request, 'members/register_preview.html', params)
     else:
         return redirect('/members')
