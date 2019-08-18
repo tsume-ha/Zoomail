@@ -16,10 +16,10 @@
 
 			{{ RegisterCSV.as_p }}
 
-			<input type="submit" value="確認画面へ">
+			<input type="submit" value="確認画面へ" class="btn btn-info my-2">
+			<p class="small">ここでは新たなユーザーは登録されません。次の確認画面で登録できます。</p>
 		</form>
-		<p>
-			<h6>CSVファイルの要件について</h6>
+			<h5 class="mt-4 mb-3">CSVファイルの要件について</h5>
 			<ul>
 				<li>CSVファイルのヘッダーはつけないでください。</li>
 				<li>各行には順番に、「姓」「名」「ふりがな」「Googleアカウント」「入部年度」の値を入れてください。</li>
@@ -30,7 +30,6 @@
 				京大,太郎,きょうだいたろう,example@gmail.com,2019<br>
 				京大,花子,きょうだいはなこ,example2@gmail.com,2018
 			</div>
-		</p>
 	</section>
 	
 {% endblock %}
