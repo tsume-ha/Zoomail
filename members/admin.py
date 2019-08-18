@@ -7,7 +7,7 @@ from .models import User, TmpMember
 class UserAdmin(BaseUserAdmin):
 	fieldsets = (
 		(None, {'fields': ('email', 'year')}), # changed from google_account
-		(('Personal info'), {'fields': ('first_name', 'last_name')}),
+		(('Personal info'), {'fields': ('first_name', 'last_name', 'nickname', 'furigana')}),
 		(('Permissions'), {'fields': ('is_superuser', 'is_staff', 'groups')}),
 	)
 	add_fieldsets = (

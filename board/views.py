@@ -82,8 +82,8 @@ def send(request):
                 title=title,
                 content=content,
                 attachment=is_attachment,
-                sender_id=now_user,
-                writer_id=now_user,
+                sender=now_user,
+                writer=now_user,
                 created_at=nowtime,
                 updated_at=nowtime
             )

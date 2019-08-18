@@ -41,8 +41,8 @@ def CreateMessage(self, year, is_attachment=False):
             title='Title Example ' + str(messageyear),
             content='Content Example \n'*10,
             attachment=is_attachment,
-            sender_id=user,
-            writer_id=user,
+            sender=user,
+            writer=user,
             created_at=nowtime,
             updated_at=nowtime
         )

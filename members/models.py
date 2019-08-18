@@ -33,29 +33,30 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True) # changed from google_account
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    nickname = models.CharField(max_length=255)
-    year = models.IntegerField()
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+	email = models.EmailField(unique=True) # changed from google_account
+	first_name = models.CharField(max_length=255)
+	last_name = models.CharField(max_length=255)
+	nickname = models.CharField(max_length=255)
+	furigana = models.CharField(max_length=255, default="")
+	year = models.IntegerField()
+	created_at = models.DateTimeField(default=timezone.now)
+	updated_at = models.DateTimeField(default=timezone.now)
+	is_staff = models.BooleanField(default=False)
+	is_superuser = models.BooleanField(default=False)
 
-    objects = UserManager()
+	objects = UserManager()
 
-    USERNAME_FIELD = 'email' # changed from google_account
-    REQUIRED_FIELDS = ['year']
+	USERNAME_FIELD = 'email' # changed from google_account
+	REQUIRED_FIELDS = ['year']
 
-    def __str__(self):
-        return str(self.id) + self.last_name + self.first_name + self.email # changed from google_account
+	def __str__(self):
+		return str(self.id) + self.last_name + self.first_name + self.email # changed from google_account
 
-    def get_short_name(self):
-        if self.nickname == "":
-            return self.last_name + " " +  self.first_name
-        else:
-            return self.nickname
+	def get_short_name(self):
+		if self.nickname == "":
+			return self.last_name + " " +  self.first_name
+		else:
+			return self.nickname
 
 
 class TmpMember(models.Model):
