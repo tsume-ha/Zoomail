@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
-from .models import User
+from .models import User, TmpMember
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
@@ -22,4 +22,4 @@ class UserAdmin(BaseUserAdmin):
 	ordering = ('email',) # changed from google_account
 	filter_horizontal = ()
 
-# admin.site.unregister(Group)
+admin.site.register(TmpMember)

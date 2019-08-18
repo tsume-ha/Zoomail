@@ -52,3 +52,12 @@ class User(AbstractBaseUser, PermissionsMixin):
             return self.nickname
 
 
+class TmpMember(models.Model):
+    session = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    furigana = models.CharField(max_length=255)
+    year = models.IntegerField(default=0)
+    email = models.EmailField()
+    def __str__(self):
+        return self.session + self.email

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Unplugged Message{% endblock %}
+
+
+
+{% block body %}
+
+<h3>Register Member</h3>
+	<p><a href="{% url 'register_form' %}">フォームに入力して１人ずつ登録 はこちら</a></p>
+	<section id="csv_register" class="my-3">
+		<h5>CSVで一括登録する</h5>
+		<p>以下のメンバーを登録します</p>
+		{% if TmpMembers %}
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>No.</th>
+					<th>名字</th>
+					<th>名前</th>
+					<th>ふりがな</th>
+					<th>入部年度</th>
+					<th>Googleアカウント</th>
+				</tr>
+				{% for member in TmpMembers %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ member.last_name }}</td>
+					<td>{{ member.first_name }}</td>
+					<td>{{ member.furigana }}</td>
+					<td>{{ member.year }}</td>
+					<td>{{ member.email }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<form method="post">
+			{% csrf_token %}
+			<input type="submit" value="登録する">
+		</form>
+		{% else %}
+		<p>データが確認できません。</p>
+		{% endif %}
+	</section>
+	
+{% endblock %}

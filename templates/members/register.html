@@ -6,6 +6,11 @@
 
 
 {% block body %}
+
+<h3>Register Member</h3>
+	<p><a href="{% url 'register_CSV' %}">CSVファイルで一括登録 はこちら</a></p>
+	<section id="form_register" class="my-3">
+		<h5>１人ずつ登録する</h5>
 		<form method="post">
 			{% csrf_token %}
 
@@ -13,5 +18,6 @@
 
 			<input type="submit" name="search" value="登録">
 		</form>
-
+	</section>
+	
 {% endblock %}
