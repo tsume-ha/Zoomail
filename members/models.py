@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
+from social_django.models import UserSocialAuth
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, year=0):
@@ -19,11 +20,16 @@ class UserManager(BaseUserManager):
         user = self.create_user(
             email, # changed from google_account
             year = year,
-            password = password,
         )
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
+        content_social = UserSocialAuth(
+            user = user,
+            provider = 'google-oauth2',
+            uid = email,
+            )
+        content_social.save()
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
