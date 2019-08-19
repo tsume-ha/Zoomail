@@ -15,10 +15,10 @@
 	{% block extrastyle %}{% endblock %}
 </head>
 <body>
+<input type="checkbox" id="nav_open">
 <header>
 	<div class="container">
 		<h1><a href="{% url 'home' %}">U Message</a></h1>
-		<input type="checkbox" id="nav_open">
 		<label id="nav_SW" for="nav_open"><span></span></label>
 		<nav id="nav">
 			<ul>
@@ -39,7 +39,7 @@
 	</div>
 </header>
 {% if messages %}
-<div class="container">
+<div class="container mt-3">
 	<div class="messages my-3">
 		{% for message in messages %}
 			<p  class="alert 
@@ -49,7 +49,7 @@
 </div>
 {% endif %}
 
-<div id="container" class="container">
+<div id="container" class="container mt-3">
 	{% block body %}
 	{% endblock %}
 </div>

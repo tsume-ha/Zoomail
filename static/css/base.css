@@ -2,7 +2,6 @@
 
 header{
 	background-color: #d6eef5;
-	margin-bottom: 1rem;
 }
 header div{
 	position: relative;
@@ -22,7 +21,7 @@ header div h1 a.hover{
 	text-decoration: none;
 }
 
-header div input#nav_open{
+input#nav_open{
 	display: none;
 }
 
@@ -95,6 +94,8 @@ nav ul li:last-child{
 /*　画面サイズ 991pxまで適用　*/
 header{
 	padding: 0.25rem 0 0;
+	max-height: 3rem;
+	transition: 0.5s;
 }
 header div{
 	padding: 0 0 0.75rem;
@@ -112,7 +113,7 @@ header div label#nav_SW{
 	position: absolute;
 	top: 0;
 	right: 15px;
-	width: 30px;
+	width: 36px;
 	height: 30px;
 	margin: 2px;
 	padding: 1px;
@@ -122,15 +123,19 @@ header div label#nav_SW{
 }
 nav{
 	padding: 0.5rem 0 0 1.5rem;
-	display: none;
+	max-height: 0;
 	opacity: 0;
 	transition: 0.5s;
 }
 
-input#nav_open:checked + label#nav_SW + nav{
-	display: block;
+input#nav_open:checked + header > div > nav{
+	max-height: 264px;
 	opacity: 1;
 }
+input#nav_open:checked + header{
+	max-height: 317px;
+}
+
 
 label#nav_SW span,
 label#nav_SW span:before,
@@ -147,7 +152,7 @@ label#nav_SW span:after{
 
 label#nav_SW span{
 	top:14px;
-	left:4px;
+	left:7px;
 }
 
 label#nav_SW span:before{
@@ -159,13 +164,11 @@ label#nav_SW span:after{
 	left:0;
 }
 
-input#nav_open:checked + label#nav_SW > span{
-	top: 14px;
-	left: 4px;
+input#nav_open:checked + header > div > label#nav_SW > span{
 	transform: rotate(-45deg);
 }
-input#nav_open:checked + label#nav_SW > span:before,
-input#nav_open:checked + label#nav_SW > span:after{
+input#nav_open:checked + header > div > label#nav_SW > span:before,
+input#nav_open:checked + header > div > label#nav_SW > span:after{
 	top: 0px;
 	left: 0px;
 	transform: rotate(90deg);
