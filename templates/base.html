@@ -18,6 +18,8 @@
 <header>
 	<div class="container">
 		<h1><a href="{% url 'home' %}">U Message</a></h1>
+		<input type="checkbox" id="nav_open">
+		<label id="nav_SW" for="nav_open"><span></span></label>
 		<nav id="nav">
 			<ul>
 				{% if user.is_authenticated %}
