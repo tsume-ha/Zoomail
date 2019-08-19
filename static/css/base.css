@@ -174,10 +174,17 @@ input#nav_open:checked + label#nav_SW > span:after{
 nav ul{
 	padding: 0;
 	margin: 0;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
 }
 nav ul li{
 	padding: 0.25rem 0;
 	margin: 0;
+	width: 150px;
 }
 
 }
