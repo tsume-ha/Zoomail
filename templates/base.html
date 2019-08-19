@@ -30,7 +30,7 @@
 				<li><a href="/">写真</a></li>
 				<li><a href="/">その他資料</a></li>
 				<li><a href="/members/">My Page</a></li>
-				<li><a href="/">Logout</a></li>
+				<li><a href="/admin/logout/">Logout</a></li>
 				{% else %}
 				<li><a href="/login/">Login with Google</a></li>
 				{% endif %}
@@ -40,7 +40,7 @@
 </header>
 {% if messages %}
 <div class="container">
-	<div class="messages">
+	<div class="messages my-3">
 		{% for message in messages %}
 			<p  class="alert 
 			{% if message.tags %}alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} ">{{ message }}</p>
