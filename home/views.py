@@ -1,14 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth import logout
+from django.contrib import messages
+from django.shortcuts import redirect
 
 def index(request):
-	params = {
-	
-	}
-	return render(request, 'home/index.html', params)
+    params = {
+    
+    }
+    return render(request, 'home/index.html', params)
 
 def login(request):
-	return render(request, 'admin/login.html')
+    params = {
+    
+    }
+    if 'next' in request.GET:
+        params['next'] = request.GET['next'] 
+    return render(request, 'admin/login.html', params)
 
-def logout(request):
-	return render(request, 'registration/logged_out.html')
+def logoutview(request):
+    logout(request)
+    messages.success(request,"ログアウトしました。")
+    return redirect(to='/')

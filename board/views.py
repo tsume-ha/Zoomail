@@ -9,7 +9,7 @@ from .models import Message, MessageYear
 from .forms import SendMessage, Search, DivErrorList
 import datetime
 
-@login_required(login_url='/login/')
+@login_required()
 def index(request):
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(
@@ -40,7 +40,7 @@ def index(request):
     }
     return render(request, 'board/index.html', params)
 
-@login_required(login_url='/login/')
+@login_required()
 def content(request, id):
     message = get_object_or_404(Message, id=id)
 
@@ -58,7 +58,7 @@ def content(request, id):
     }
     return render(request, 'board/content.html', params)
 
-@login_required(login_url='/login/')
+@login_required()
 def send(request):
     messageForm = SendMessage(request.POST or None, request.FILES or None, error_class=DivErrorList)
     params = {

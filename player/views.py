@@ -12,7 +12,7 @@ from .models import Performance, Song
 import datetime
 
 
-@login_required(login_url='/login/')
+@login_required()
 def index(request):
     Performances = Performance.objects.all().order_by('updated_at').reverse()
     now_user = request.user
@@ -24,7 +24,7 @@ def index(request):
     return render(request, 'player/index.html', params)
 
 
-@login_required(login_url='/login/')
+@login_required()
 def playlist(request, live_id):
 	Performances = get_object_or_404(Performance, id=live_id)
 	Songs = Song.objects.filter(performance=Performances).order_by('track_num')
@@ -45,7 +45,7 @@ def playlist(request, live_id):
 FormSetExtraNum = 20
 CreateSongFormSet = formset_factory(CreateSongForm, extra=FormSetExtraNum)
 
-@login_required(login_url='/login/')
+@login_required()
 def songupload(request):
 	now_user = request.user
 	is_allowed =  now_user.is_superuser

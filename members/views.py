@@ -10,7 +10,7 @@ import csv
 from io import TextIOWrapper
 from .create_google_user import DuplicateGmailAccountError
 
-@login_required(login_url='/login/')
+@login_required()
 def index(request):
     now_user = request.user
     #User.objects.get(now_user)
@@ -19,7 +19,7 @@ def index(request):
     }
     return render(request, 'members/index.html', params)
 
-@login_required(login_url='/login/')
+@login_required()
 def Mypage(request, url_user_pk):
     now_user = request.user
     is_allowed = now_user.pk == url_user_pk or now_user.is_superuser
@@ -32,7 +32,7 @@ def Mypage(request, url_user_pk):
     else:
         raise PermissionDenied
 
-@login_required(login_url='/login/')
+@login_required()
 def UserUpdate(request, url_user_pk):
     now_user = request.user
     is_allowed = now_user.pk == url_user_pk or now_user.is_superuser
@@ -58,7 +58,7 @@ from .create_google_user import Create_Google_User as register
 from django.shortcuts import redirect
 from .forms import RegisterForm, RegisterCSV, DivErrorList
 
-@login_required(login_url='/login/')
+@login_required()
 def UserRegistration(request):
     now_user = request.user
     is_allowed = now_user.is_superuser
@@ -84,7 +84,7 @@ def UserRegistration(request):
         return redirect('/members')
 
 
-@login_required(login_url='/login/')
+@login_required()
 def UserRegistrationCSV(request):
     now_user = request.user
     is_allowed = now_user.is_superuser
@@ -112,7 +112,7 @@ def UserRegistrationCSV(request):
     else:
         return redirect('/members')
 
-@login_required(login_url='/login/')
+@login_required()
 def UserRegistrationPreview(request):
     now_user = request.user
     is_allowed = now_user.is_superuser

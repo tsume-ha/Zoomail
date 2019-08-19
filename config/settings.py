@@ -163,8 +163,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # これがあると UserName & Passでloginできる
 )
 
-SOCIAL_AUTH_LOGIN_URL = 'login/'
-LOGIN_URL = 'login/'
+SOCIAL_AUTH_LOGIN_URL = '/login/'
+LOGIN_URL = '/login/'
 
 LOGIN_REDIRECT_URL = 'mypage_index'
 SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL

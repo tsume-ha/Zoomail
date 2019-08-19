@@ -13,7 +13,7 @@
 		ホームページ係を通して登録してください。
 	</p>
 	<p>
-		<a href="{% url 'social:begin' 'google-oauth2' %}">
+		<a href="{% url 'social:begin' 'google-oauth2' %}{% if next %}?next={{ next }}{% endif %}">
 		<img src="{% static 'img/btn_google_signin_light_normal_web@2x.png' %}" width="192" height="46" id="G-login"></a>
 	</p>
 	
