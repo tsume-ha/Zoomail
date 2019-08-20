@@ -19,40 +19,15 @@ def index(request):
     }
     return render(request, 'members/index.html', params)
 
-@login_required()
-def Mypage(request, url_user_pk):
-    now_user = request.user
-    is_allowed = now_user.pk == url_user_pk or now_user.is_superuser
-    if is_allowed:
-        data = get_object_or_404(User,pk=url_user_pk)
-        params = {
-            'data': data,
-        }
-        return render(request, 'members/mypage_detail.html', params)
-    else:
-        raise PermissionDenied
 
 @login_required()
-def UserUpdate(request, url_user_pk):
+def UserUpdate(request):
     now_user = request.user
-    is_allowed = now_user.pk == url_user_pk or now_user.is_superuser
-    if is_allowed:
-        try:
-            data = User.objects.get(pk=url_user_pk)
-        except User.DoesNotExist:
-            raise Http404
-        
-        if request.method == 'POST':
-            pass
+    params = {
+        'form': UserUpdateForm,
+    }
+    return render(request, 'members/mypage_UserUpdate.html', params)
 
-        else:
-            params = {
-                'form': UserUpdateForm(),
-                'data': data,
-            }
-        return render(request, 'members/mypage_UserUpdate.html', params)
-    else:
-        raise PermissionDenied
 
 from .create_google_user import Create_Google_User as register
 from django.shortcuts import redirect
