@@ -12,7 +12,9 @@
 		<div class="form-group">
 			{{ field.label_tag }}
 			{{ field }}
-			{{ field.errors }}
+			{% if field.errors %}
+			<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>
+			{% endif %}
 		</div>
 		{% endfor %}
 		<input type="submit" name="search" value="更新" class="btn btn-info mx-2 my-3">
