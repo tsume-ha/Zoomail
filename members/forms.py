@@ -8,7 +8,7 @@ from .models import User
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'last_name', 'first_name', 'furigana', 'nickname']
+        fields = ['last_name', 'first_name', 'furigana', 'nickname']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

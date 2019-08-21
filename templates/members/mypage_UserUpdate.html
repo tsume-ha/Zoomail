@@ -6,6 +6,15 @@
 
 {% block body %}
 <h3>登録情報変更</h3>
+<label>Googleアカウント:</label>
+<div class="p-2 border rounded">{{ user.email }}</div>
+<span id="update_detail" class="small text-secondary">Googleアカウントを変更する時は管理者にお問い合わせください</span>
+<p id="showdetail" class="small text-secondary mb-3 d-none">
+	もし、再登録したGoogleアカウントのアドレスにスペルミス等があった場合、<br>
+	次回正しいGoogleアカウントでログインすることができず、<br>
+	自分のアカウントに入れないという事故が起きる可能性があるためです。
+</p>
+
 	<form method="post">
 		{% csrf_token %}
 		{% for field in form %}
@@ -19,4 +28,16 @@
 		{% endfor %}
 		<input type="submit" name="search" value="更新" class="btn btn-info mx-2 my-3">
 	</form>
+
+<script type="text/javascript">
+(function () {
+    $('#showdetail').css('display', 'hidden');
+}());
+$(document).on('click',"#update_detail",function(){
+	$("#showdetail").toggleClass('d-none');
+});
+$(document).on('click',"#showdetail",function(){
+	$("#showdetail").addClass('d-none');
+});
+</script>
 {% endblock %}
