@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -6,24 +6,30 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from .models import User, TmpMember
 from social_django.models import UserSocialAuth
-from .forms import UserUpdateForm
+from .forms import UserUpdateForm, RegisterForm, RegisterCSV
 import csv
 from io import TextIOWrapper
 from .create_google_user import DuplicateGmailAccountError
 from board.models import Message
+from .create_google_user import Create_Google_User as register
+
+
+def MemberRegisterPermission(user):
+    return user.is_superuser or\
+        user.groups.filter(name='Administer').exists()
 
 @login_required()
 def index(request):
     now_user = request.user
+    register_allowed = MemberRegisterPermission(now_user)
     messages_you_send = Message.objects.filter(sender=now_user)
     messages_you_wrote = Message.objects.filter(writer=now_user).exclude(sender=now_user)
     params = {
-        'user_pk': now_user.pk,
+        'register_allowed': register_allowed,
         'yousend': messages_you_send,
         'yourmessage_otherssend': messages_you_wrote,
     }
     return render(request, 'members/index.html', params)
-
 
 @login_required()
 def UserUpdate(request):
@@ -32,15 +38,8 @@ def UserUpdate(request):
     if (request.method == 'POST'):
         if form.is_valid():
             content = form
-            try:
-                content.save()
-                social_user = UserSocialAuth.objects.get(user=request.user)
-                social_user.uid = request.user.email
-                social_user.save()
-                messages.success(request, '更新しました')
-            except DuplicateGmailAccountError:
-                messages.error(request, request.POST["email"]+'はすでに登録されているアカウントのため登録できませんでした。')
-                return render(request, 'members/mypage_UserUpdate.html', params)
+            content.save()
+            messages.success(request, '更新しました')
             return redirect('/members')
         else:
             messages.error(request, '更新できませんでした')
@@ -49,15 +48,10 @@ def UserUpdate(request):
     }
     return render(request, 'members/mypage_UserUpdate.html', params)
 
-
-from .create_google_user import Create_Google_User as register
-from django.shortcuts import redirect
-from .forms import RegisterForm, RegisterCSV
-
 @login_required()
 def UserRegistration(request):
     now_user = request.user
-    is_allowed = now_user.is_superuser
+    is_allowed = MemberRegisterPermission(now_user)
     if is_allowed:
         form = RegisterForm(request.POST or None)
         params = {
@@ -83,7 +77,7 @@ def UserRegistration(request):
 @login_required()
 def UserRegistrationCSV(request):
     now_user = request.user
-    is_allowed = now_user.is_superuser
+    is_allowed = MemberRegisterPermission(now_user)
     if is_allowed:
         csvform = RegisterCSV(request.POST or None, request.FILES or None)
         params = {
@@ -111,7 +105,7 @@ def UserRegistrationCSV(request):
 @login_required()
 def UserRegistrationPreview(request):
     now_user = request.user
-    is_allowed = now_user.is_superuser
+    is_allowed = MemberRegisterPermission(now_user)
     if is_allowed:
         TmpMembers = TmpMember.objects.filter(session=request.session.session_key).order_by('id')
         params = {

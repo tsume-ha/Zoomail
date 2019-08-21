@@ -12,8 +12,8 @@ from .models import Performance, Song
 import datetime
 
 def RecordingPermisson(user):
-	return user.is_superuser or \
-	       user.groups.filter(name='RecordingGroup').exists()
+    return user.is_superuser or \
+           user.groups.filter(name='RecordingGroup').exists()
 
 
 @login_required()
