@@ -2,6 +2,7 @@ from django import forms
 from django.forms.utils import ErrorList
 import datetime
 from django.core import validators
+from .models import Message
 
 kaisei = [
 (2019,"2019 25期",),
@@ -73,8 +74,6 @@ class SendMessage(forms.Form):
     )
 
 
-
-
 class Search(forms.Form):
     text = forms.CharField(
         label = "",
@@ -83,3 +82,13 @@ class Search(forms.Form):
             'placeholder': '件名・本文で検索'
         })
     )
+
+class Edit(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['title', 'content']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['title'].widget = forms.TextInput(attrs={'class': 'form-control',})
+        self.fields['content'].widget = forms.Textarea(attrs={'class': 'form-control',})

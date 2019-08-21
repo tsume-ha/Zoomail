@@ -6,8 +6,14 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from .models import Message, MessageYear
-from .forms import SendMessage, Search, DivErrorList
+from .forms import SendMessage, Search, Edit, DivErrorList
 import datetime
+
+def EditPermisson(user, content_id):
+    return user.is_superuser or\
+           Message.objects.get(id=content_id).sender == user or\
+           Message.objects.get(id=content_id).writer == user
+
 
 @login_required()
 def index(request):
@@ -54,7 +60,8 @@ def content(request, id):
     )
     params = {
         'message': message,
-        'attachments': attachments
+        'attachments': attachments,
+        'edit_allowed': EditPermisson(user=request.user, content_id=id)
     }
     return render(request, 'board/content.html', params)
 
@@ -99,3 +106,24 @@ def send(request):
             params['JSstop'] = True
 
     return render(request, 'board/send.html', params)
+
+
+@login_required()
+def edit(request, id):
+    content = get_object_or_404(Message, id=id)
+    if EditPermisson(user=request.user, content_id=id):
+        editForm = Edit(request.POST or None, instance=content)
+        if (request.method == 'POST'):
+            if editForm.is_valid:
+                editForm.save()
+                django_messages.success(request, '更新しました')
+                return redirect('/read/content/' + str(id))
+            else:
+                django_messages.error(request, '更新できませんでした')
+        params = {
+            'EditForm': editForm,
+        }
+        return render(request, 'board/edit.html', params)
+    else:
+        return redirect('/read/content/' + str(id))
+

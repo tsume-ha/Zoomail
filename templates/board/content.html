@@ -2,24 +2,34 @@
 {% block title %}{{title}} | Unplugged Message{% endblock %}
 
 {% block body %}
-	<div class="row my-3">
-		<span class="col tag">{{tag}}</span>
-	</div>
-	<h3 class="my-1">{{message.title}}</h3>
-	<div class="col-sm-12 col-md-8 mt-1 pl-0">
-		<span class="date">{{data.created_at|date:"Y/m/d D H:i"}}</span>
-		<span class="ml-4 whosent" data-userid="609">{{message.whosend}}</span>
-		<span class="float-right star">☆</span>
-	</div>
-	<p class="content col-sm-12 col-md-9 mt-4">
-		{{message.content | linebreaks | urlize}}
-	</p>
-	{% for attachment in attachments %}
-	{% if attachment.isImage %}
-	<img src="/private-media/{{attachment.path}}" width="100%">
-	{% else %}
-	<a href="/private-media/{{attachment.path}}" download="{{attachment.fileName}}">{{attachment.fileName}}</a>
-	{% endif %}
-	{% endfor %}
-	
+<div class="row my-3">
+	<span class="col tag">{{tag}}</span>
+</div>
+<h3 class="my-1">{{message.title}}</h3>
+<div class="col-sm-12 col-md-8 mt-1 pl-0">
+	<span class="date">{{data.created_at|date:"Y/m/d D H:i"}}</span>
+	<span class="ml-4 whosent" data-userid="609">{{message.whosend}}</span>
+	<span class="float-right star">☆</span>
+</div>
+<p class="content col-sm-12 col-md-9 mt-4">
+	{{message.content | linebreaks | urlize}}
+</p>
+{% for attachment in attachments %}
+{% if attachment.isImage %}
+<img src="/private-media/{{attachment.path}}" width="100%">
+{% else %}
+<a href="/private-media/{{attachment.path}}" download="{{attachment.fileName}}">{{attachment.fileName}}</a>
+{% endif %}
+{% endfor %}
+
+{% if edit_allowed %}
+<hr>
+<a href="{% url 'message_edit' message.id %}">メッセージを更新する</a>
+<p class="small text-secondary">
+	現在、タイトルと本文のみ修正可能となっています。<br>
+	添付ファイル、宛先の更新については、今後更新予定です。<br>
+	お急ぎの場合は開発者まで連絡してください。
+</p>
+{% endif %}
+
 {% endblock %}
