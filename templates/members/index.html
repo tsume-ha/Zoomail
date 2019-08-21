@@ -21,9 +21,16 @@
 <!-- <section id="midoku"　class="mypage_message">
 	<h5>未読メッセージ</h5>
 </section> -->
-<section id="yousend"　class="mypage_message">
+<section id="yousend"　class="mypage_message mb-4">
 	<h5>あなたが送信したメッセージ</h5>
-
+	<ul class="list-unstyled">
+		{% for message in yousend %}
+		<li class="mb-2">
+			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
+			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+		</li>
+		{% endfor %}
+	</ul>
 	<p class="small">これらのメッセージは送信後にあなたが編集することができます。</p>
 </section>
 

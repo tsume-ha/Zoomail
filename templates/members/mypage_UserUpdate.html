@@ -4,11 +4,17 @@
 {% block title %}Unplugged Message{% endblock %}
 
 
-
 {% block body %}
-	<form>
+<h3>登録情報変更</h3>
+	<form method="post">
 		{% csrf_token %}
-		{{form.as_p}}
-		<input type="submit" name="UPDATE">
+		{% for field in form %}
+		<div class="form-group">
+			{{ field.label_tag }}
+			{{ field }}
+			{{ field.errors }}
+		</div>
+		{% endfor %}
+		<input type="submit" name="search" value="更新" class="btn btn-info mx-2 my-3">
 	</form>
 {% endblock %}

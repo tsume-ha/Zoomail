@@ -4,25 +4,21 @@ from django.core import validators
 from .models import User
 
 
-class DivErrorList(ErrorList):
-    def __str__(self):
-        return self.as_divs()
-    def as_divs(self):
-        if not self: 
-        	return ''
-        return '<div class="errorlist">%s</div>' % ''.join(['<div class="error alert alert-danger">%s</div>' % e for e in self])
-
-
 
 class UserUpdateForm(forms.ModelForm):
-	class Meta:
-		model = User
-		fields = ('email', 'last_name', 'first_name', 'nickname', 'furigana') # changed from google_account
+    class Meta:
+        model = User
+        fields = ['email', 'last_name', 'first_name', 'furigana', 'nickname']
 
-	def __init__(self, *args, **kwargs):
-		super().__init__(*args, **kwargs)
-		for field in self.fields.values():
-			field.widget.attrs['class'] = 'form-control'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+
+    def get_object(self):
+        return self.request.user
+
+
 
 class RegisterForm(forms.Form):
     email = forms.EmailField(

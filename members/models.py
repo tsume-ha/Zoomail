@@ -3,6 +3,8 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
 from social_django.models import UserSocialAuth
+from django.core import validators
+from django.core.validators import RegexValidator
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, year=0):
@@ -33,12 +35,14 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True) # changed from google_account
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    nickname = models.CharField(max_length=255)
-    furigana = models.CharField(max_length=255, default="")
-    year = models.IntegerField()
+    email = models.EmailField(unique=True, verbose_name="Googleアカウント") # changed from google_account
+    first_name = models.CharField(max_length=255, verbose_name='名前')
+    last_name = models.CharField(max_length=255, verbose_name='名字')
+    nickname = models.CharField(max_length=255, verbose_name='ニックネーム')
+    furigana = models.CharField(max_length=255, default="", verbose_name='ふりがな',
+                                validators=[RegexValidator(regex=u'^[ぁ-ん]+$',
+                                                           message='ふりがなは全角ひらがなのみで入力してください。')])
+    year = models.IntegerField(verbose_name='入部年度')
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)

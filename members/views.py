@@ -9,13 +9,17 @@ from .forms import UserUpdateForm
 import csv
 from io import TextIOWrapper
 from .create_google_user import DuplicateGmailAccountError
+from board.models import Message
 
 @login_required()
 def index(request):
     now_user = request.user
-    #User.objects.get(now_user)
+    messages_you_write = Message.objects.filter(writer=now_user)
+    messages_you_send = Message.objects.filter(sender=now_user).exclude(writer=now_user)
     params = {
         'user_pk': now_user.pk,
+        'yousend': messages_you_write,
+        'yourmessage_otherssend': messages_you_send,
     }
     return render(request, 'members/index.html', params)
 
@@ -23,15 +27,28 @@ def index(request):
 @login_required()
 def UserUpdate(request):
     now_user = request.user
+    form = UserUpdateForm(request.POST or None, instance=now_user)
+    if (request.method == 'POST'):
+        if form.is_valid():
+            content = form
+            try:
+                content.save()
+                messages.success(request, '更新しました')
+            except DuplicateGmailAccountError:
+                messages.error(request, request.POST["email"]+'はすでに登録されているアカウントのため登録できませんでした。')
+                return render(request, 'members/mypage_UserUpdate.html', params)
+            return redirect('/members')
+        else:
+            messages.error(request, '更新できませんでした')
     params = {
-        'form': UserUpdateForm,
+        'form': form,
     }
     return render(request, 'members/mypage_UserUpdate.html', params)
 
 
 from .create_google_user import Create_Google_User as register
 from django.shortcuts import redirect
-from .forms import RegisterForm, RegisterCSV, DivErrorList
+from .forms import RegisterForm, RegisterCSV
 
 @login_required()
 def UserRegistration(request):
