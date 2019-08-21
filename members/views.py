@@ -14,12 +14,12 @@ from board.models import Message
 @login_required()
 def index(request):
     now_user = request.user
-    messages_you_write = Message.objects.filter(writer=now_user)
-    messages_you_send = Message.objects.filter(sender=now_user).exclude(writer=now_user)
+    messages_you_send = Message.objects.filter(sender=now_user)
+    messages_you_wrote = Message.objects.filter(writer=now_user).exclude(sender=now_user)
     params = {
         'user_pk': now_user.pk,
-        'yousend': messages_you_write,
-        'yourmessage_otherssend': messages_you_send,
+        'yousend': messages_you_send,
+        'yourmessage_otherssend': messages_you_wrote,
     }
     return render(request, 'members/index.html', params)
 

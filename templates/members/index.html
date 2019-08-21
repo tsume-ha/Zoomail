@@ -18,26 +18,41 @@
 		{% endif %}
 	</p>
 </section>
-<!-- <section id="midoku"　class="mypage_message">
+<!-- <section id="midoku" class="mypage_message mb-4 pt-3 border-top">
 	<h5>未読メッセージ</h5>
 </section> -->
-<section id="yousend"　class="mypage_message mb-4">
+<section id="yousend" class="mypage_message mb-4 pt-3 border-top">
 	<h5>あなたが送信したメッセージ</h5>
+	{% if yousend %}
 	<ul class="list-unstyled">
 		{% for message in yousend %}
-		<li class="mb-2">
+		<li class="mb-2 ml-3">
 			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
 			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
 		</li>
 		{% endfor %}
 	</ul>
-	<p class="small">これらのメッセージは送信後にあなたが編集することができます。</p>
+	<p class="small alert alert-secondary m-0 p-2">これらのメッセージは送信後にあなたが編集することができます。</p>
+	{% else %}
+	メッセージ：0件
+	{% endif %}
 </section>
 
-<section id="yourmessage_otherssend"　class="mypage_message">
+<section id="yourmessage_otherssend" class="mypage_message mb-4 pt-3 border-top">
 	<h5>あなたの代わりに送信されたメッセージ</h5>
-
-	<p class="small">これらのメッセージは送信後にあなたが編集することができます。</p>
+	{% if yourmessage_otherssend %}
+	<ul class="list-unstyled">
+		{% for message in yourmessage_otherssend %}
+		<li class="mb-2 ml-3">
+			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
+			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+		</li>
+		{% endfor %}
+	</ul>
+	<p class="small alert alert-secondary m-0 p-2">これらのメッセージは送信後にあなたが編集することができます。</p>
+	{% else %}
+	メッセージ：0件
+	{% endif %}
 </section>
 
 {% endblock %}
