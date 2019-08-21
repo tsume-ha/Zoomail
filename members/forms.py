@@ -14,6 +14,7 @@ class UserUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
+        self.fields['nickname'].required = False
 
     def get_object(self):
         return self.request.user

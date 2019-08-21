@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from .models import User, TmpMember
+from social_django.models import UserSocialAuth
 from .forms import UserUpdateForm
 import csv
 from io import TextIOWrapper
@@ -33,6 +34,9 @@ def UserUpdate(request):
             content = form
             try:
                 content.save()
+                social_user = UserSocialAuth.objects.get(user=request.user)
+                social_user.uid = request.user.email
+                social_user.save()
                 messages.success(request, '更新しました')
             except DuplicateGmailAccountError:
                 messages.error(request, request.POST["email"]+'はすでに登録されているアカウントのため登録できませんでした。')
@@ -81,7 +85,7 @@ def UserRegistrationCSV(request):
     now_user = request.user
     is_allowed = now_user.is_superuser
     if is_allowed:
-        csvform = RegisterCSV(request.POST or None, request.FILES or None, error_class=DivErrorList)
+        csvform = RegisterCSV(request.POST or None, request.FILES or None)
         params = {
             'RegisterCSV': csvform,
         }
