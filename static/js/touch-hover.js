@@ -1,4 +1,4 @@
-const selectors = 'a,div'
+const selectors = 'a,div,label'
 
 $(function(){
 	$(selectors)

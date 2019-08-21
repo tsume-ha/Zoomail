@@ -121,10 +121,14 @@ header div label#nav_SW{
 	border: 1px #666 solid;
 	border-radius: 8px;
 }
-nav{
+header div label#nav_SW.hover{
+	background-color: #bbe3ee;
+}
+header div nav{
 	padding: 0.5rem 0 0 1.5rem;
 	max-height: 0;
 	opacity: 0;
+	overflow: hidden;
 	transition: 0.5s;
 }
 
