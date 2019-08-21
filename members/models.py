@@ -38,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name="Googleアカウント") # changed from google_account
     first_name = models.CharField(max_length=255, verbose_name='名前')
     last_name = models.CharField(max_length=255, verbose_name='名字')
-    nickname = models.CharField(max_length=255, null=True, verbose_name='ニックネーム')
+    nickname = models.CharField(max_length=255, blank=True, verbose_name='ニックネーム')
     furigana = models.CharField(max_length=255, default="", verbose_name='ふりがな',
                                 validators=[RegexValidator(regex=u'^[ぁ-ん]+$',
                                                            message='ふりがなは全角ひらがなのみで入力してください。')])
