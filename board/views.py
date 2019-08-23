@@ -110,13 +110,16 @@ def send(request):
 
 @login_required()
 def edit(request, id):
-    content = get_object_or_404(Message, id=id)
+    before_edit = get_object_or_404(Message, id=id)
     if EditPermisson(user=request.user, content_id=id):
-        editForm = Edit(request.POST or None, instance=content)
+        editForm = Edit(request.POST or None, instance=before_edit)
         if (request.method == 'POST'):
             if editForm.is_valid:
-                editForm.save()
-                django_messages.success(request, '更新しました')
+                if request.POST['title'] != before_edit.title or request.POST['content'] != before_edit.content:
+                    editForm.save()
+                    django_messages.success(request, '更新しました')
+                else:
+                    django_messages.success(request, '変更はありませんでした')
                 return redirect('/read/content/' + str(id))
             else:
                 django_messages.error(request, '更新できませんでした')
