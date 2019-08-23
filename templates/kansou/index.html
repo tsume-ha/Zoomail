@@ -9,7 +9,10 @@
 
 {% block body %}
 <h3>感想用紙</h3>
-<p>
+{% if kansou_allowed %}
+<a href="{% url 'register_form' %}" class="btn btn-warning m-2">感想用紙をアップロードする</a>
+{% endif %}
+<p class="py-2">
 	ライブごとの感想用紙をPDF形式でアップしています。<br>
 	ファイルサイズが大きいものもありますのでご注意下さい。
 </p>

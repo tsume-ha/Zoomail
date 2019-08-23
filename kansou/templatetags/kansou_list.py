@@ -9,7 +9,8 @@ register = template.Library()
 @register.simple_tag
 def GetKansouList(year):
     records = Kansouyoushi.objects.filter(performed_at__gte=datetime.date(year, 4, 1))\
-                                  .filter(performed_at__lt=datetime.date(year + 1, 4, 1))
+                                  .filter(performed_at__lt=datetime.date(year + 1, 4, 1))\
+                                  .order_by('performed_at').reverse()
 
     def readable_size(num, suffix='B'):
         for unit in ['','K','M','G','T']:
