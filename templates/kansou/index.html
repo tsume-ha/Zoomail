@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}感想用紙 | UnpluggedMessage{% endblock %}
+
+{% block extrastyle %}
+{% endblock %}
+
+{% block body %}
+<h3>感想用紙</h3>
+<p>
+	ライブごとの感想用紙をPDF形式でアップしています。<br>
+	ファイルサイズが大きいものもありますのでご注意下さい。
+</p>
+
+<section>
+	<h5>2018年度</h5>
+	<ul>
+		<li>
+			<a href="">新人ライブ</a><span class="small m-2 p-1">{{record.created_at|date:"Y/m/d (D) H:i"}}</span>
+			<p>details</p>
+		</li>
+	</ul>
+</section>
+
+{% endblock %}

@@ -33,4 +33,5 @@ urlpatterns = [
     path('read/', include('board.urls'), name="read"),
     path('send/', board.send, name="send"),
     path('player/', include('player.urls')),
+    path('kansou/', include('kansou.urls')),
 ]

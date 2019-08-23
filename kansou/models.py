@@ -2,7 +2,7 @@ from django.db import models
 from members.models import User
 from private_storage.fields import PrivateFileField
 
-class Attachment(models.Model):
+class Kansouyoushi(models.Model):
     title = models.CharField(max_length=200)
     detail = models.CharField(max_length=200, blank=True)
     live = models.IntegerField()
