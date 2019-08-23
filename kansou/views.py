@@ -52,35 +52,13 @@ def KansouUpload(request):
             'form': form,
         }
         if (request.method == 'POST'):
-            detail = request.POST["detail"]
-            live = request.POST["live"] # junelive (str)
-            numbering = request.POST["numbering"]
-            performed_at = request.POST["performed_at"] # 2018-01-01 (str)
-            try:
-                file = request.FILES["file"]
-            except MultiValueDictKeyError:
-                pass
-
-            filename = performed_at + '-' + live
-            if numbering != "":
-                filename += '-' + numbering
-            filename += '.pdf'
-            filename.replace('-','_')
-            file.name = filename
-
-            if numbering == '':
-            	numbering = '1'
-
-            data_content = Kansouyoushi(
-                live = live,
-                detail = detail,
-                numbering = int(numbering),
-                file = file,
-                performed_at = datetime.datetime.strptime(performed_at, "%Y-%m-%d"),
-                created_by = now_user
-            )
-            data_content.save()
-            messages.success(request, '登録しました。')
+            if form.is_valid():
+                form.save(commit=False)
+                form.created_by = now_user
+                form.save()
+                messages.success(request, '登録しました。')
+            else:
+                print('invalid')
         return render(request, 'kansou/upload.html', params)
     else:
         return redirect('/members')

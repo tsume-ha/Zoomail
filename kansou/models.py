@@ -3,11 +3,11 @@ from members.models import User
 from private_storage.fields import PrivateFileField
 
 class Kansouyoushi(models.Model):
-    live = models.CharField(max_length=200)
-    detail = models.CharField(max_length=200, blank=True)
-    numbering = models.IntegerField(default=1)
-    file = PrivateFileField(upload_to='kansoyoshi/', null=True) # filename = '2019_6_22_newlive_1.pdf'
-    performed_at = models.DateField()
+    live = models.CharField(max_length=200, verbose_name='ライブ名')
+    detail = models.CharField(max_length=200, blank=True, verbose_name='その他特記事項')
+    numbering = models.IntegerField(default=1, verbose_name='ナンバリング')
+    file = PrivateFileField(upload_to='kansoyoshi/', null=True, verbose_name='PDFファイル')
+    performed_at = models.DateField(verbose_name='ライブ日')
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='kansou_creater')
     def __str__(self):
