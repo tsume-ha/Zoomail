@@ -12,7 +12,7 @@ class Kansouyoushi(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='kansou_creater')
     def __str__(self):
-        return self.message.title
+        return self.performed_at.strftime('%Y-%m-%d') + ' : ' + self.title
 
     livename = (#            index     名称
         'other',#            0          その他
