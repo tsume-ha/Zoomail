@@ -19,7 +19,7 @@ class KansouUploadForm(forms.ModelForm):
 
     class Meta:
         model = Kansouyoushi
-        fields = ['live', 'detail', 'numbering', 'file', 'performed_at']
+        fields = ['live', 'performed_at', 'numbering', 'file', 'detail']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -33,6 +33,7 @@ class KansouUploadForm(forms.ModelForm):
             )
         self.fields['file'].widget.attrs["class"] = "m-2"
         self.fields['detail'].required = False
+        self.fields['detail'].widget.attrs['placeholder'] = '例）1回生の分です'
         self.fields['numbering'].required = False
         self.fields['performed_at'].initial = datetime.date.today()
         self.fields['performed_at'].widget = forms.DateInput(attrs={'type': 'date', 'class': 'form-control',})
