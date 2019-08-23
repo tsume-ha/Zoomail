@@ -69,7 +69,6 @@ def content(request, id):
 def send(request):
     messageForm = SendMessage(request.POST or None, request.FILES or None, error_class=DivErrorList)
     params = {
-        'title': 'Send a Message',
         'message_form': messageForm,
     }
     if (request.method == 'POST'):
@@ -124,6 +123,7 @@ def edit(request, id):
             else:
                 django_messages.error(request, '更新できませんでした')
         params = {
+            'before_edit': before_edit,
             'EditForm': editForm,
         }
         return render(request, 'board/edit.html', params)
