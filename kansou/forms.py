@@ -41,8 +41,8 @@ class KansouUploadForm(forms.ModelForm):
     def clean_numbering(self):
         numbering = self.cleaned_data['numbering']
         if numbering == None:
-            numbering = '1'
-        return int(numbering)
+            numbering = 1
+        return numbering
 
     def clean(self):
         cleaned_data = super().clean()
