@@ -30,7 +30,8 @@ urlpatterns = [
     path('auth/', include('social_django.urls', namespace='social')),
     path('private-media/', include(private_storage.urls), name="private_media"),
     path('members/', include('members.urls')),
-    path('read/', include('board.urls'), name="read"),
+    path('read/', include('board.urls')),
     path('send/', board.send, name="send"),
     path('player/', include('player.urls')),
+    path('kansou/', include('kansou.urls')),
 ]
