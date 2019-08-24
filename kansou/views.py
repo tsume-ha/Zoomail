@@ -9,8 +9,7 @@ import datetime
 
 def KansouPermission(user):
     return user.is_superuser or\
-           user.groups.filter(name='Administer').exists() or\
-           True
+           user.groups.filter(name='Administer').exists()
 
 def exist_years(records):
     if records.exists():
