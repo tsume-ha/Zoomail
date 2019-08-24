@@ -89,3 +89,22 @@ class KansouyoushiViewTest(TestCase):
             self.assertNotContains(response, str(day.year - 1)+'年度')
             self.assertContains(response, str(day.year)+'年度')
             self.assertNotContains(response, str(day.year + 1)+'年度')
+
+    def test_kansou_upload_logIN_POST(self):
+        User_LogIN(self)
+        filedir = os.path.join(BASE_DIR, 'kansou', 'test.pdf')
+        with open(filedir, 'rb') as file:
+            data = {
+                'live': livename[0][0],
+                'performed_at': datetime.date.today(),
+                'file': SimpleUploadedFile('test.pdf', file.read()),
+                }
+            request = self.client.post('/kansou/upload/', data)
+            self.assertEqual(request.status_code, 302)
+            url_redial_to = request.url
+            self.assertEqual(url_redial_to, '/kansou/')
+
+            response = self.client.get(url_redial_to)
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, data['live'])
+            self.assertContains(response, data['performed_at'].strftime('%Y/%m/%d'))

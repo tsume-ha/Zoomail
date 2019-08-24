@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Kansouyoushi
 from .forms import KansouUploadForm
@@ -60,8 +60,9 @@ def KansouUpload(request):
                 form.created_by = now_user
                 form.save()
                 messages.success(request, '登録しました。')
+                return redirect('/kansou/')
             else:
-                print('invalid')
+                messages.error(request, '登録できませんでした。')
         return render(request, 'kansou/upload.html', params)
     else:
-        return redirect('/members')
+        return redirect('/kansou/')
