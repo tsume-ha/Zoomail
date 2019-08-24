@@ -3,30 +3,196 @@
 header{
 	background-color: #d6eef5;
 }
-header h3{
+header div{
+	position: relative;
+}
+header div h1{
 	display: inline-block;
-	font-weight: 300;
 }
-header h3 a{
-	border-radius: 6px;
+header div h1 a{
+	color: #333;
+	border: 1px #d6eef5 soild;
+	border-radius: 8px;
 }
-header h3 a.hover{
+header div h1 a.hover{
+	color: #333;
 	background-color: #bbe3ee;
+	border: 1px #666 soild;
+	text-decoration: none;
 }
 
+input#nav_open{
+	display: none;
+}
 
 nav{
 	display: inline-block;
 }
 
+nav ul{
+	list-style: none;
+}
+
 nav a{
 	text-decoration: none;
 	color: #666;
-	font-size: 1.25rem;
-	font-weight: 200;
 }
 
 nav a.hover{
 	text-decoration: underline;
 	color: #333;
+}
+
+@media screen and (min-width: 992px) {
+/*　画面サイズ 992px以上から適用 col-md　*/
+header{
+	padding: 0.5rem 0 0;
+}
+header div{
+	padding: 0 0 0.75rem;
+}
+header div h1{
+	display: inline-block;
+	font-size: 1.8rem;
+	font-weight: 300;
+	margin: 0.25rem 0;
+}
+header div h1 a{
+	padding: 0.25rem 0.25rem 0.5rem 0.25rem;
+}
+header div label#nav_SW{
+	display: none;
+}
+
+nav ul{
+	padding: 0;
+	margin: 0 0 0 2rem;
+}
+nav ul li{
+	display: inline-block;
+	margin: 0 0.2rem;
+	padding: 0 0.2rem;
+}
+nav ul li:nth-child(7){
+	position: absolute;
+	top: 0.85rem;
+	right: 4.4rem;
+
+}
+
+nav ul li:last-child{
+	position: absolute;
+	top: 0.85rem;
+	right: 0;
+
+}
+
+
+}
+
+@media screen and (max-width: 991px) { 
+/*　画面サイズ 991pxまで適用　*/
+header{
+	padding: 0.25rem 0 0;
+	max-height: 3rem;
+	transition: 0.5s;
+}
+header div{
+	padding: 0 0 0.75rem;
+}
+header div h1{
+	display: block;
+	font-size: 1.5rem;
+	font-weight: 300;
+	margin: 0.25rem 0;
+}
+header div h1 a{
+	padding: 0.25rem 0.25rem 0.5rem 0.25rem;
+}
+header div label#nav_SW{
+	position: absolute;
+	top: 0;
+	right: 15px;
+	width: 36px;
+	height: 30px;
+	margin: 2px;
+	padding: 1px;
+	background-color: rgba(0,0,0,0);
+	border: 1px #666 solid;
+	border-radius: 8px;
+}
+header div label#nav_SW.hover{
+	background-color: #bbe3ee;
+}
+header div nav{
+	padding: 0.5rem 0 0 1.5rem;
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	transition: 0.5s;
+}
+
+input#nav_open:checked + header > div > nav{
+	max-height: 264px;
+	opacity: 1;
+}
+input#nav_open:checked + header{
+	max-height: 317px;
+}
+
+
+label#nav_SW span,
+label#nav_SW span:before,
+label#nav_SW span:after{
+	position:absolute;
+	content:'';
+	height:1px;
+	width:20px;
+	background:#666;
+	border-radius:2px;
+	display:block;
+	transition: .5s;
+}
+
+label#nav_SW span{
+	top:14px;
+	left:7px;
+}
+
+label#nav_SW span:before{
+	top:-6px;
+	left:0;
+}
+label#nav_SW span:after{
+	top:6px;
+	left:0;
+}
+
+input#nav_open:checked + header > div > label#nav_SW > span{
+	transform: rotate(-45deg);
+}
+input#nav_open:checked + header > div > label#nav_SW > span:before,
+input#nav_open:checked + header > div > label#nav_SW > span:after{
+	top: 0px;
+	left: 0px;
+	transform: rotate(90deg);
+	opacity: 0.5;
+}
+
+nav ul{
+	padding: 0;
+	margin: 0;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+nav ul li{
+	padding: 0.25rem 0;
+	margin: 0;
+	width: 150px;
+}
+
 }

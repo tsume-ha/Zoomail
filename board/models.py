@@ -10,15 +10,15 @@ class Message(models.Model):
 
     #添付ファイルの有無
     attachment = models.BooleanField(default=False)
-    sender_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='send_message')
+    sender = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='send_message')
 
     #転載時に使用。
     #文章を書いた人がwriter、アップロードした人がsender。
     #通常なら sender == writer で同じになる。
-    writer_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='write_message')    
+    writer = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='write_message')    
 
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return 'mes_ID=' + str(self.id) + ', title=' + self.title

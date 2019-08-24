@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ before_edit.title }} | メーリス編集 | Unplugged Message{% endblock %}
+{% block extrastyle %}
+{% endblock %}
+{% block body %}
+	<h1 class="mb-4">Edit Message</h1>
+	<form method="post">
+		{% csrf_token %}
+		{% for field in EditForm %}
+		<div class="form-group">
+			{{ field.label_tag }}
+			{{ field }}
+			{% if field.errors %}
+			<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>
+			{% endif %}
+		</div>
+		{% endfor %}
+		<input type="submit" value="更新" class="btn btn-info mx-2 my-3">
+	</form>
+	
+
+{% endblock %}

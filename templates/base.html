@@ -15,19 +15,41 @@
 	{% block extrastyle %}{% endblock %}
 </head>
 <body>
+<input type="checkbox" id="nav_open">
 <header>
-	<div class="container py-1 mb-2">
-		<h3 class="py-2"><a href="/" class="text-decoration-none text-dark px-1 pt-0 pb-2">U Message</a></h3>
-		<nav class="ml-4" id="nav">
-			<ul class="list-inline">
-				<li class="list-inline-item mx-2"><a href="/read/">Read</a></li>
-				<li class="list-inline-item mx-2"><a href="/members/">My Page</a></li>
-				<li class="list-inline-item mx-2"><a href="/player/">リハ音源</a></li>
+	<div class="container">
+		<h1><a href="{% url 'home' %}">U Message</a></h1>
+		<label id="nav_SW" for="nav_open"><span></span></label>
+		<nav id="nav">
+			<ul>
+				{% if user.is_authenticated %}
+				<li><a href="/read/">メーリス</a></li>
+				<li><a href="/">感想用紙</a></li>
+				<li><a href="/player/">リハ音源</a></li>
+				<li><a href="/">ライブ映像</a></li>
+				<li><a href="/">写真</a></li>
+				<li><a href="/">その他資料</a></li>
+				<li><a href="/members/">My Page</a></li>
+				<li><a href="/logout/">Logout</a></li>
+				{% else %}
+				<li><a href="/login/">Login with Google</a></li>
+				{% endif %}
 			</ul>
 		</nav>
 	</div>
 </header>
-<div id="container" class="container">
+{% if messages %}
+<div class="container mt-3">
+	<div class="messages my-3">
+		{% for message in messages %}
+			<p  class="alert 
+			{% if message.tags %}alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} ">{{ message }}</p>
+		{% endfor %}
+	</div>
+</div>
+{% endif %}
+
+<div id="container" class="container mt-3">
 	{% block body %}
 	{% endblock %}
 </div>
