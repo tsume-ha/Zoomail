@@ -13,23 +13,26 @@ def KansouPermission(user):
            True
 
 def exist_years(records):
-    # レコードが登録されている「年度」の範囲のリストを返します
-    data = [records.aggregate(Min('performed_at'))['performed_at__min'],
-            records.aggregate(Max('performed_at'))['performed_at__max']]
-    def nendo(date):
-        if date.month <= 3:
-            return date.year -1
-        else:
-            return date.year
-    year_between = list(map(nendo, data))
-    year_list = []
-    for year in range(year_between[0], year_between[1] + 1):
-        is_exist = records.filter(performed_at__gte=datetime.date(year, 4, 1),\
-                                  performed_at__lt=datetime.date(year + 1, 4, 1)).exists()
-        if is_exist:
-            year_list.append(year)
-    year_list.sort(reverse=True)
-    return year_list
+    if records.exists():
+        # レコードが登録されている「年度」の範囲のリストを返します
+        data = [records.aggregate(Min('performed_at'))['performed_at__min'],
+                records.aggregate(Max('performed_at'))['performed_at__max']]
+        def nendo(date):
+            if date.month <= 3:
+                return date.year -1
+            else:
+                return date.year
+        year_between = list(map(nendo, data))
+        year_list = []
+        for year in range(year_between[0], year_between[1] + 1):
+            is_exist = records.filter(performed_at__gte=datetime.date(year, 4, 1),\
+                                      performed_at__lt=datetime.date(year + 1, 4, 1)).exists()
+            if is_exist:
+                year_list.append(year)
+        year_list.sort(reverse=True)
+        return year_list
+    else:
+        return []
 
 @login_required()
 def index(request):

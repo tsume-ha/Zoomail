@@ -1,25 +1,49 @@
 from django.test import TestCase, Client
 from members.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
+from .models import Kansouyoushi
+import os
+from config.settings import BASE_DIR
+from .forms import KansouUploadForm
+import datetime
+
+livename = KansouUploadForm.livename
+
 
 def User_LogOUT(self):
     self.client = Client()
     self.client.logout()
 
-def Make_User_and_LogIN(self,year=2019):
-    self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year, password='hogehoge')
-    self.client = Client()
-    self.client.force_login(self.user)
+def Make_User(self,year=2019):
+    self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year)
+
 
 def User_LogIN(self,year=2019):
     self.client.force_login(User.objects.get(email=str(year) + 'mail@gmail.com'))
 
+def Make_KansouPDF(self, user_year=2019, performed_at=datetime.date.today()):
+    Kansouyoushi.objects.all().delete()
+    pdfdir = os.path.join(BASE_DIR, 'kansou', 'test.pdf')
+    for i in range(len(livename)):
+        live = livename[i][0]
+        filename = performed_at.strftime('%Y_%m_%d') + '_' + live + '.pdf'
+        with open(pdfdir, 'rb') as file:
+            Kansouyoushi.objects.create(
+                live = live,
+                detail = '',
+                numbering = 1,
+                file = SimpleUploadedFile(filename, file.read()),
+                performed_at = performed_at,
+                created_by = User.objects.get(email=str(user_year) + 'mail@gmail.com')
+                )
+
 class KansouyoushiViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        pass
+        Make_User(cls)
+        
 
-
-    def test_read_index_logOUT(self):
+    def test_kansou_index_logOUT(self):
         User_LogOUT(self)
         response = self.client.get('/kansou/')
         self.assertEqual(response.status_code, 302)
@@ -27,3 +51,41 @@ class KansouyoushiViewTest(TestCase):
         response = self.client.get(url_redial_to)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'admin/login.html')
+
+    def test_kansou_index_logIN(self):
+        User_LogIN(self)
+        Make_KansouPDF(self)
+        response = self.client.get('/kansou/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'kansou/index.html')
+        for i in range(len(livename)):
+            self.assertContains(response, livename[i][1])
+            self.assertContains(response, Kansouyoushi.objects.get(live=livename[i][0]).file.url)
+        
+    def test_kansou_index_logIN_3_31(self):
+        User_LogIN(self)
+        day = datetime.date(2018, 3, 31)
+        Make_KansouPDF(self, performed_at=day)
+        response = self.client.get('/kansou/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'kansou/index.html')
+        for i in range(len(livename)):
+            self.assertContains(response, livename[i][1])
+            self.assertContains(response, Kansouyoushi.objects.get(live=livename[i][0]).file.url)
+            self.assertContains(response, str(day.year - 1)+'年度')
+            self.assertNotContains(response, str(day.year)+'年度')
+            self.assertNotContains(response, str(day.year + 1)+'年度')
+
+    def test_kansou_index_logIN_4_1(self):
+        User_LogIN(self)
+        day = datetime.date(2018, 4, 1)
+        Make_KansouPDF(self, performed_at=day)
+        response = self.client.get('/kansou/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'kansou/index.html')
+        for i in range(len(livename)):
+            self.assertContains(response, livename[i][1])
+            self.assertContains(response, Kansouyoushi.objects.get(live=livename[i][0]).file.url)
+            self.assertNotContains(response, str(day.year - 1)+'年度')
+            self.assertContains(response, str(day.year)+'年度')
+            self.assertNotContains(response, str(day.year + 1)+'年度')
