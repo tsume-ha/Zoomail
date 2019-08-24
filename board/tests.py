@@ -63,7 +63,7 @@ def CreateMessages(self, TestYears):
 class AuthentificationReadViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.TestYears = [y for y in range(2015,2020)]
+        cls.TestYears = list(range(2015,2020))
         CreateMessages(cls, cls.TestYears)
         cls.MessageCount = Message.objects.aggregate(Count('pk'))['pk__count']
         # => 5学年*2通 = 合計10通
@@ -82,7 +82,7 @@ class AuthentificationReadViewTest(TestCase):
         User_LogIN(self)
         response = self.client.get('/read/')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, '<title>Read</title>')
+        self.assertTemplateUsed(response, 'board/index.html')
 
     def test_read_index_lonIN_with_content(self):
        for User_Year in self.TestYears:
