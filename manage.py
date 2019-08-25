@@ -2,8 +2,9 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from config import settings_local
 
-if config.settings_local.DEBUG != True:    
+if settings_local.DEBUG == False:    
     import pymysql
     pymysql.install_as_MySQLdb()
 
