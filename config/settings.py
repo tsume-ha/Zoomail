@@ -26,7 +26,7 @@ SECRET_KEY = settings_local.SECRET_KEY
 # imported from settings_local.py
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = settings_local.DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -87,12 +87,24 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEBUG == True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'unplugged_meesage', #　作成したデータベース名
+            'USER': 'unplugged_meesage', # ログインユーザー名
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
+
 
 
 # Password validation
