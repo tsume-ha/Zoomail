@@ -99,7 +99,8 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'unplugged_meesage', #　作成したデータベース名
-            'USER': 'unplugged_meesage', # ログインユーザー名
+            'USER': settings_local.DB_USER,
+            'PASSWORD': settings_local.DB_PASSWORD,
             'HOST': 'localhost',
             'PORT': '3306',
             'OPTIONS': {
