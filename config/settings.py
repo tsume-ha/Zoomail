@@ -98,7 +98,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'unplugged_meesage', #　作成したデータベース名
+            'NAME': 'unplugged_message', #　作成したデータベース名
             'USER': settings_local.DB_USER,
             'PASSWORD': settings_local.DB_PASSWORD,
             'HOST': 'localhost',
