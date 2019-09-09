@@ -102,6 +102,9 @@ else:
             'USER': 'unplugged_meesage', # ログインユーザー名
             'HOST': 'localhost',
             'PORT': '3306',
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+            }
         }
     }
 

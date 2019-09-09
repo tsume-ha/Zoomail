@@ -4,9 +4,9 @@ import os
 import sys
 from config import settings_local
 
-if settings_local.DEBUG == False:    
-    import pymysql
-    pymysql.install_as_MySQLdb()
+# if settings_local.DEBUG == False:    
+#     import pymysql
+#     pymysql.install_as_MySQLdb()
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
