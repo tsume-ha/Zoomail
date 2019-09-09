@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}感想用紙アップロード | Unplugged Message{% endblock %}
+{% block title %}アルバム登録 | Unplugged Message{% endblock %}
 
 
 
 {% block body %}
 
-<h3>感想用紙アップロード</h3>
+<h3>アルバム登録</h3>
 	<section id="form_upload" class="my-3">
 		<form method="post" enctype="multipart/form-data">
 			{% csrf_token %}
@@ -20,11 +20,7 @@
 				{% endif %}
 			</div>
 			{% endfor %}
-			<p>
-				感想用紙のPDFファイルはおよそ15MB以下になるようにしてアップロードしてください。<br>
-				感想用紙が複数のPDFファイルになるときには、ナンバリングの欄で番号を選択して、順番につけてください<br>
-				1回の投稿で複数のPDFファイルを送ることはできません。ご了承ください。
-			</p>
+
 			<input type="submit" name="search" value="登録" class="btn btn-info mx-2 my-3">
 		</form>
 	</section>

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min, Count
 from .models import Album
+from .forms import AlbumRegisterForm
 import datetime
 
 
@@ -36,3 +37,25 @@ def index(request):
         'exist_years': exist_years(records)
     }
     return render(request, 'pictures/index.html', params)
+
+@login_required()
+def PhotoRegister(request):
+    now_user = request.user
+    is_allowed = PicturesPermission(user=request.user)
+    if is_allowed:
+        form = AlbumRegisterForm(request.POST or None)
+        params = {
+            'form': form,
+        }
+        if (request.method == 'POST'):
+            if form.is_valid():
+                form.save(commit=False)
+                form.created_by = now_user
+                form.save()
+                messages.success(request, '登録しました。')
+                return redirect('/pictures/')
+            else:
+                messages.error(request, '登録できませんでした。')
+        return render(request, 'pictures/register.html', params)
+    else:
+        return redirect('/pictures/')

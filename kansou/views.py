@@ -14,18 +14,12 @@ def KansouPermission(user):
 def exist_years(records):
     if records.exists():
         # レコードが登録されている「年度」の範囲のリストを返します
-        data = [records.aggregate(Min('performed_at'))['performed_at__min'],
-                records.aggregate(Max('performed_at'))['performed_at__max']]
-        def nendo(date):
-            if date.month <= 3:
-                return date.year -1
-            else:
-                return date.year
-        year_between = list(map(nendo, data))
+        data_min = records.aggregate(Min('held_at'))['held_at__min']
+        data_max = records.aggregate(Max('held_at'))['held_at__max']
         year_list = []
-        for year in range(year_between[0], year_between[1] + 1):
-            is_exist = records.filter(performed_at__gte=datetime.date(year, 4, 1),\
-                                      performed_at__lt=datetime.date(year + 1, 4, 1)).exists()
+        for year in range(data_min.year - 1, data_min.year + 1):
+            is_exist = records.filter(held_at__gte=datetime.date(year, 4, 1),\
+                                      held_at__lt=datetime.date(year + 1, 4, 1)).exists()
             if is_exist:
                 year_list.append(year)
         year_list.sort(reverse=True)

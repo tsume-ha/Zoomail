@@ -10,6 +10,7 @@
 {% block body %}
 <h3>写真</h3>
 {% if pictures_allowed %}
+<a href="{% url 'pictures_register' %}" class="btn btn-warning m-2">アルバムを登録する</a>
 <a href="/admin/" class="btn btn-danger m-2">管理者管理ページへ</a>
 {% endif %}
 <p class="py-2">
