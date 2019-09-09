@@ -28,7 +28,7 @@ SECRET_KEY = settings_local.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = settings_local.DEBUG
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["message.ku-unplugged.net", "ku-unplugged.net"]
 
 
 # Application definition
