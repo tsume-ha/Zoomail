@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'members',
     'board',
     'player',
-    'kansou'
+    'kansou',
+    'pictures',
 ]
 
 MIDDLEWARE = [
