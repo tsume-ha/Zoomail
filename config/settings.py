@@ -161,11 +161,12 @@ PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_staff'
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static/"),
-]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+if DEBUG == True:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static/"),
+    ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 
