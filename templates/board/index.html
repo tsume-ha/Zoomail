@@ -8,7 +8,7 @@
 
 {% block body %}
 	<div id="sendlink">
-		<a>
+		<a href="{% url 'send' %}">
 			<span>メーリスを送信する</span>
 			<img src="{% static 'img/send.svg' %}" height="50" width="50">
 		</a>
