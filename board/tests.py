@@ -26,7 +26,7 @@ def User_LogOUT(self):
     self.client.logout()
 
 def Make_User_and_LogIN(self,year=2019):
-    self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year, password='hogehoge') # changed from google_account
+    self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year) # changed from google_account
     self.client = Client()
     self.client.force_login(self.user)
 

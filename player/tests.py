@@ -13,7 +13,7 @@ def User_LogOUT(self):
     self.client.logout()
 
 def Make_User(self,year=2019):
-    self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year, password='hogehoge') #changed from google_account
+    self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year) #changed from google_account
 
 def User_LogIN(self,year=2019):
     self.client.force_login(User.objects.get(email=str(year) + 'mail@gmail.com')) #changed from google_account
