@@ -7,7 +7,7 @@ from django.core import validators
 from django.core.validators import RegexValidator
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, year=0):
+    def create_user(self, email, year=0):
         if not email: # changed from google_account
             raise ValueError('Users must have a Google account')
         user = self.model(

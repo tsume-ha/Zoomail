@@ -64,7 +64,7 @@ def UserRegistration(request):
                 last_name = request.POST["last_name"]
                 first_name = request.POST["first_name"]
                 furigana = request.POST["furigana"]
-                register(email=email, year=year, last_name=last_name, first_name=first_name)
+                register(email=email, year=int(year), last_name=last_name, first_name=first_name, furigana=furigana)
                 messages.success(request, email + 'を登録しました。')
             else:
                 messages.error(request, '登録に失敗しました。')

@@ -29,6 +29,8 @@ SECRET_KEY = settings_local.SECRET_KEY
 DEBUG = settings_local.DEBUG
 
 ALLOWED_HOSTS = ["message.ku-unplugged.net", "ku-unplugged.net"]
+if DEBUG:
+    ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
 
 
 # Application definition
