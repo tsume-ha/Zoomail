@@ -7,6 +7,12 @@
 {% endblock %}
 
 {% block body %}
+	<div id="sendlink">
+		<a>
+			<span>メーリスを送信する</span>
+			<img src="{% static 'img/send.svg' %}" height="50" width="50">
+		</a>
+	</div>
 	<div class="searchform row container m-2 p-2">
 		<form method="post">
 			{% csrf_token %}
@@ -17,21 +23,21 @@
 		</form>
 	</div>
 	{% for message_letter in message_letters %}
-		<section class="row border border-left-0 border-right-0">
-				<h4 class="col-sm-12 my-1"><a href="content/{{message_letter.id}}" class="text-decoration-none">{{message_letter.title}}</a></h4>
-				<div class="col-sm-12 mt-1">
-					<span class="float-left date small mr-2 p-1">{{message_letter.created_at|date:"Y/m/d (D) H:i"}}</span>
-					{% if message_letter.created_at < message_letter.updated_at %}
-					<span class="updated float-left alert-warning small p-1">{{message_letter.updated_at|date:"Y/m/d (D) H:i"}} 更新</span>
-					{% endif %}
-					
-					<span class="float-left ml-4 whosent" data-userid="609">{{message_letter.writer.get_short_name}}</span>
-					<span class="float-right star">☆</span>
-				</div>
-				<article class="col-sm-12 my-2">
-					{{message_letter.content}}
-				</article>
-		</section>
+	<section class="row border border-left-0 border-right-0">
+			<h4 class="col-sm-12 my-1"><a href="content/{{message_letter.id}}" class="text-decoration-none">{{message_letter.title}}</a></h4>
+			<div class="col-sm-12 mt-1">
+				<span class="float-left date small mr-2 p-1">{{message_letter.created_at|date:"Y/m/d (D) H:i"}}</span>
+				{% if message_letter.created_at < message_letter.updated_at %}
+				<span class="updated float-left alert-warning small p-1">{{message_letter.updated_at|date:"Y/m/d (D) H:i"}} 更新</span>
+				{% endif %}
+				
+				<span class="float-left ml-4 whosent" data-userid="609">{{message_letter.writer.get_short_name}}</span>
+				<span class="float-right star">☆</span>
+			</div>
+			<article class="col-sm-12 my-2">
+				{{message_letter.content}}
+			</article>
+	</section>
 	{% endfor %}
 
 {% endblock %}
