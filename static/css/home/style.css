@@ -46,3 +46,11 @@ div#introduction{
 div#introduction h1{
 	font-weight: 400;
 }
+
+a#G-login{
+	color: #000;
+	text-decoration: none;
+}
+a#G-login.hover{
+	text-decoration: underline;
+}

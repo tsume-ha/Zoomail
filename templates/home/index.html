@@ -34,10 +34,22 @@
 	{% else %}
 	<div class="row center-block mt-3">
 		<p class="col-12 text-center">
-			ログインはこちらから<br>
-			<a href="{% url 'social:begin' 'google-oauth2' %}">
-			<img src="{% static 'img/btn_google_signin_light_normal_web@2x.png' %}" width="192" height="46" id="G-login"></a>
+			<a href="{% url 'social:begin' 'google-oauth2' %}" id="G-login">
+				<span>ログインはこちらから</span>
+				<img src="{% static 'img/btn_google_signin_light_normal_web@2x.png' %}" width="192" height="46">
+			</a>
 		</p>
 	</div>
+	<script type="text/javascript">
+	$(function(){
+		var img = document.createElement('img');
+		img.src = "{% static 'img/btn_google_signin_light_focus_web@2x.png' %}";
+		$('#G-login').bind('touchstart mouseenter', function(){
+			$('#G-login img').attr("src","{% static 'img/btn_google_signin_light_focus_web@2x.png' %}");
+		}).bind('touchend mouseleave', function(){
+			$('#G-login img').attr("src","{% static 'img/btn_google_signin_light_normal_web@2x.png' %}");
+		});
+	})
+	</script>
 	{% endif %}
 {% endblock %}
