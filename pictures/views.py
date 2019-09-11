@@ -8,6 +8,7 @@ from .forms import AlbumRegisterForm
 import datetime
 from imagekit import ImageSpec
 from imagekit.processors import ResizeToFill
+from django.utils.datastructures import MultiValueDictKeyError
 
 
 class Thumbnail(ImageSpec):
@@ -59,13 +60,16 @@ def PhotoRegister(request):
         if (request.method == 'POST'):
             if form.is_valid():
                 form.save(commit=False)
-                thum = request.FILES["thumbnail"]
-                source_file = open(thum.temporary_file_path(), 'rb')
-                image_generator = Thumbnail(source=source_file)
-                result = image_generator.generate()
-                dest = open(thum.temporary_file_path(), 'wb')
-                dest.write(result.read())
-                dest.close()
+                try:
+                    thum = request.FILES["thumbnail"]
+                    source_file = open(thum.temporary_file_path(), 'rb')
+                    image_generator = Thumbnail(source=source_file)
+                    result = image_generator.generate()
+                    dest = open(thum.temporary_file_path(), 'wb')
+                    dest.write(result.read())
+                    dest.close()
+                except MultiValueDictKeyError:
+                    pass
                 form.created_by = now_user
                 form.save()
                 messages.success(request, '登録しました。')
