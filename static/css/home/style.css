@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-div#readbox a,
+/*div#readbox a,
 div#sendbox a{
 	display: block;
 	transition: .3s;
@@ -33,10 +33,10 @@ div#readbox a:hover{
 	background: #bbe3ee;
 }
 
-
 div#sendbox a:hover{
 	background: #BBFF99;
 }
+*/
 
 div#introduction{
 	background-color: #d6eef5;
