@@ -5,6 +5,7 @@
 {% block title %}写真 | UnpluggedMessage{% endblock %}
 
 {% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pictures/index.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -25,6 +26,19 @@
 		{% GetAlbumList year %}
 	</div>
 	{% endfor %}
+</section>
+
+<section>
+	<h4>2018年度</h4>
+	<div class="cardwrap col-xs-6 col-sm-6 col-md-4 col-lg-3">
+		<article class="card m-2">
+			<img class="card-img-top" src="/private-media/album_one_image/20190308_3月ライブ.JPG">
+			<a href="" class="card-img-overlay">
+				<h5 class="card-title　float-left mb-2">新歓路上ライブ#4</h5>
+				<h6 class="card-subtitle float-right small">2019/03/08</h6>
+			</a>
+		</article>
+	</div>
 </section>
 
 {% endblock %}

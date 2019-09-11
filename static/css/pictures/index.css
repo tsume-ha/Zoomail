@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+a.card-img-overlay{
+	border-radius: 3px;
+	color: #fff;
+	background-color: rgba(0,0,0,0.2);
+	transition: 0.4s;
+}
+
+a.card-img-overlay:after{
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 3px;
+	box-shadow: inset 0 0 0px 4px rgba(255,255,255,0.6);
+}
+
+a.card-img-overlay.hover{
+	text-decoration: none;
+	color: #000;
+	background-color: rgba(255,255,255,0.5);
+}
