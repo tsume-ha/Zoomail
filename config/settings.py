@@ -44,11 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'private_storage',
     'social_django',
+    'imagekit',
     'home',
     'members',
     'board',
     'player',
-    'kansou'
+    'kansou',
+    'pictures',
 ]
 
 MIDDLEWARE = [
@@ -153,9 +155,8 @@ USE_TZ = False
 
 # Private uploaded files
 
-PRIVATE_STORAGE_ROOT = os.path.join(BASE_DIR, 'private_media')
+PRIVATE_STORAGE_ROOT = os.path.join(BASE_DIR, 'private_media/')
 PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_staff'
-
 
 
 # Static files (CSS, JavaScript, Images)

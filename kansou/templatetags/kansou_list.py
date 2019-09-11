@@ -30,7 +30,7 @@ def GetKansouList(year):
     for record in records:
         text_return += '<a href="'
         text_return += record.file.url
-        text_return += '" class="list-group-item list-group-item-action p-2"><h6 class="d-inline-block text-primary m-0">'
+        text_return += '" target="_blank" class="list-group-item list-group-item-action p-2"><h6 class="d-inline-block text-primary m-0">'
         text_return += translate_livename(record.live)
         if record.numbering > 1:
             text_return += '_' + str(record.numbering)

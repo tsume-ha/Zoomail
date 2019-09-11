@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load album_list %}
+
+{% block title %}写真 | UnpluggedMessage{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/pictures/index.css' %}">
+{% endblock %}
+
+{% block body %}
+<h3>写真</h3>
+{% if pictures_allowed %}
+<a href="{% url 'pictures_register' %}" class="btn btn-warning m-2">アルバムを登録する</a>
+<a href="/admin/" class="btn btn-danger m-2">管理者管理ページへ</a>
+{% endif %}
+<p class="py-2">
+	アンプラのイベントの写真を公開しています。<br>
+	LiveLogに登録されていないBBQやお花見のイベントの写真もあります！
+</p>
+
+{% for year in exist_years %}
+<h4>{{year}}年度</h4>
+<section class="row">
+	{% GetAlbumList year %}
+</section>
+{% endfor %}
+
+
+{% endblock %}

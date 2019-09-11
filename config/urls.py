@@ -34,4 +34,5 @@ urlpatterns = [
     path('send/', board.send, name="send"),
     path('player/', include('player.urls')),
     path('kansou/', include('kansou.urls')),
+    path('pictures/', include('pictures.urls')),
 ]

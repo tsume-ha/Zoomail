@@ -1,13 +1,24 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Kansouyoushi
-from .forms import KansouUploadForm
-from django.db.models import Max, Min, Count
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models import Max, Min, Count
+from .models import Album
+from .forms import AlbumRegisterForm
 import datetime
+from imagekit import ImageSpec
+from imagekit.processors import ResizeToFill
+from django.utils.datastructures import MultiValueDictKeyError
 
-def KansouPermission(user):
+
+class Thumbnail(ImageSpec):
+    processors = [ResizeToFill(400, 300)]
+    format = 'JPEG'
+    options = {'quality': 60}
+
+
+
+def PicturesPermission(user):
     return user.is_superuser or\
            user.groups.filter(name='Administer').exists()
 
@@ -29,33 +40,42 @@ def exist_years(records):
 
 @login_required()
 def index(request):
-    records = Kansouyoushi.objects.all()
+    records = Album.objects.all()
 
     params = {
-        'kansou_allowed': KansouPermission(user=request.user),
+        'pictures_allowed': PicturesPermission(user=request.user),
         'exist_years': exist_years(records)
     }
-    return render(request, 'kansou/index.html', params)
-
+    return render(request, 'pictures/index.html', params)
 
 @login_required()
-def KansouUpload(request):
+def PhotoRegister(request):
     now_user = request.user
-    is_allowed = KansouPermission(now_user)
+    is_allowed = PicturesPermission(user=request.user)
     if is_allowed:
-        form = KansouUploadForm(request.POST or None, request.FILES or None)
+        form = AlbumRegisterForm(request.POST or None, request.FILES or None)
         params = {
             'form': form,
         }
         if (request.method == 'POST'):
             if form.is_valid():
                 form.save(commit=False)
+                try:
+                    thum = request.FILES["thumbnail"]
+                    source_file = open(thum.temporary_file_path(), 'rb')
+                    image_generator = Thumbnail(source=source_file)
+                    result = image_generator.generate()
+                    dest = open(thum.temporary_file_path(), 'wb')
+                    dest.write(result.read())
+                    dest.close()
+                except MultiValueDictKeyError:
+                    pass
                 form.created_by = now_user
                 form.save()
                 messages.success(request, '登録しました。')
-                return redirect('/kansou/')
+                return redirect('/pictures/')
             else:
                 messages.error(request, '登録できませんでした。')
-        return render(request, 'kansou/upload.html', params)
+        return render(request, 'pictures/register.html', params)
     else:
-        return redirect('/kansou/')
+        return redirect('/pictures/')
