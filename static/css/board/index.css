@@ -26,7 +26,6 @@ div#sendlink{
 div#sendlink a{
 	display: block;
 	position: relative;
-	float: right;
 	height: 62px;
 	padding: 5px 16px;
 	border: 1px solid #3bc665;

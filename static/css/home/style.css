@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-div#readbox a,
+/*div#readbox a,
 div#sendbox a{
 	display: block;
 	transition: .3s;
@@ -33,12 +33,24 @@ div#readbox a:hover{
 	background: #bbe3ee;
 }
 
-
 div#sendbox a:hover{
 	background: #BBFF99;
 }
+*/
 
 div#introduction{
 	background-color: #d6eef5;
 	margin-top: 20px;
+}
+
+div#introduction h1{
+	font-weight: 400;
+}
+
+a#G-login{
+	color: #000;
+	text-decoration: none;
+}
+a#G-login.hover{
+	text-decoration: underline;
 }

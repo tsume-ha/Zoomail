@@ -9,19 +9,47 @@
 
 
 {% block body %}
-	<div class="row">
+<!-- 	<div class="row">
 		<div class="col-sm-6 text-center" id="readbox"><a class="text-decoration-none text-dark py-3" href="read/">READ<br><img src="{% static 'img/read.svg' %}" height="128" width="128"></a></div>
 		<div class="col-sm-6 text-center" id="sendbox"><a class="text-decoration-none text-dark py-3" href="send/">SEND<br><img src="{% static 'img/send.svg' %}" height="128" width="128"></a></div>
-	</div>
-	<div id="introduction" class="row center-block center-block">
+	</div> -->
+	<div id="introduction" class="row center-block">
 		<div class="col-sm-2"></div>
-		<div class="col-sm-8 text-center">
+		<div class="col-sm-8 text-center py-3">
 			<h1>Unplugged Message</h1><br>
 			<p>
 				京都大学を中心に活動するアコースティック軽音サークル<br>
-				「京大アンプラグド」の部内連絡管理アプリ
+				「<a href="https://ku-unplugged.net">京大アンプラグド</a>」の部内連絡管理アプリ
+			</p>
+			<p class="small border　rounded p-2">
+				利用するには事前に登録されたGoogleアカウントでのログインが必要です。<br>
+				まだ登録をしていないアンプラグダーはHP係を通して登録してください。
 			</p>
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
+	{% if user.is_authenticated %}
+	
+	
+	{% else %}
+	<div class="row center-block mt-3">
+		<p class="col-12 text-center">
+			<a href="{% url 'social:begin' 'google-oauth2' %}" id="G-login">
+				<span>ログインはこちらから</span>
+				<img src="{% static 'img/btn_google_signin_light_normal_web@2x.png' %}" width="192" height="46">
+			</a>
+		</p>
+	</div>
+	<script type="text/javascript">
+	$(function(){
+		var img = document.createElement('img');
+		img.src = "{% static 'img/btn_google_signin_light_focus_web@2x.png' %}";
+		$('#G-login').bind('touchstart mouseenter', function(){
+			$('#G-login img').attr("src","{% static 'img/btn_google_signin_light_focus_web@2x.png' %}");
+		}).bind('touchend mouseleave', function(){
+			$('#G-login img').attr("src","{% static 'img/btn_google_signin_light_normal_web@2x.png' %}");
+		});
+	})
+	</script>
+	{% endif %}
 {% endblock %}
