@@ -59,7 +59,7 @@ def PhotoRegister(request):
         }
         if (request.method == 'POST'):
             if form.is_valid():
-                form.save(commit=False)
+                content = form.save(commit=False)
                 try:
                     thum = request.FILES["thumbnail"]
                     source_file = open(thum.temporary_file_path(), 'rb')
@@ -70,8 +70,8 @@ def PhotoRegister(request):
                     dest.close()
                 except MultiValueDictKeyError:
                     pass
-                form.created_by = now_user
-                form.save()
+                content.created_by = now_user
+                content.save()
                 messages.success(request, '登録しました。')
                 return redirect('/pictures/')
             else:
