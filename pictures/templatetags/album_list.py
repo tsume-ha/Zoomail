@@ -15,7 +15,9 @@ def GetAlbumList(year):
     for record in records:
         text_return += '<div class="cardwrap col-6 col-xs-6 col-sm-6 col-md-4 col-lg-3"><article class="card"><img class="card-img-top" src="'
         text_return += record.thumbnail.url
-        text_return += '"><a href="" class="card-img-overlay"><h5 class="card-title">'
+        text_return += '"><a href="'
+        text_return += record.url
+        text_return += '" class="card-img-overlay" target="_blank"><h5 class="card-title">'
         text_return += record.title
         text_return += '</h5><h6 class="card-subtitle">'
         text_return += record.held_at.strftime('%Y/%m/%d')

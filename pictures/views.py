@@ -6,6 +6,15 @@ from django.db.models import Max, Min, Count
 from .models import Album
 from .forms import AlbumRegisterForm
 import datetime
+from imagekit import ImageSpec
+from imagekit.processors import ResizeToFill
+
+
+class Thumbnail(ImageSpec):
+    processors = [ResizeToFill(400, 300)]
+    format = 'JPEG'
+    options = {'quality': 60}
+
 
 
 def PicturesPermission(user):
@@ -50,6 +59,13 @@ def PhotoRegister(request):
         if (request.method == 'POST'):
             if form.is_valid():
                 form.save(commit=False)
+                thum = request.FILES["thumbnail"]
+                source_file = open(thum.temporary_file_path(), 'rb')
+                image_generator = Thumbnail(source=source_file)
+                result = image_generator.generate()
+                dest = open(thum.temporary_file_path(), 'wb')
+                dest.write(result.read())
+                dest.close()
                 form.created_by = now_user
                 form.save()
                 messages.success(request, '登録しました。')
