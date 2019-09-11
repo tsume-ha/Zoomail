@@ -42,3 +42,7 @@ div#introduction{
 	background-color: #d6eef5;
 	margin-top: 20px;
 }
+
+div#introduction h1{
+	font-weight: 400;
+}
