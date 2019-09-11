@@ -13,17 +13,13 @@ def GetAlbumList(year):
                            .order_by('held_at').reverse()
     text_return = ''
     for record in records:
-        text_return += '<a href="'
-        text_return += record.url
-        text_return += '" target="_blank" class="list-group-item list-group-item-action p-2"><h6 class="d-inline-block text-primary m-0">'
+        text_return += '<div class="cardwrap col-6 col-xs-6 col-sm-6 col-md-4 col-lg-3"><article class="card"><img class="card-img-top" src="'
+        text_return += record.thumbnail.url
+        text_return += '"><a href="" class="card-img-overlay"><h5 class="card-title">'
         text_return += record.title
-        text_return += '</h6><span class="small m-2 p-1 pl-2 text-dark">'
+        text_return += '</h5><h6 class="card-subtitle">'
         text_return += record.held_at.strftime('%Y/%m/%d')
-        text_return += '</span>'
-        if record.detail != "":
-            text_return += '<br><span class="small m-0 pl-2 text-dark">'
-            text_return += record.detail
-            text_return += '</span>'
-        text_return += '</a>'
+        text_return += '</h6></a></article></div>'
+
     return mark_safe(text_return)
 

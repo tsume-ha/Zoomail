@@ -43,7 +43,7 @@ def PhotoRegister(request):
     now_user = request.user
     is_allowed = PicturesPermission(user=request.user)
     if is_allowed:
-        form = AlbumRegisterForm(request.POST or None)
+        form = AlbumRegisterForm(request.POST or None, request.FILES or None)
         params = {
             'form': form,
         }
