@@ -59,7 +59,7 @@ div#sendlink a img{
 }
 
 #container{
-	padding-bottom: 8rem;
+	padding-bottom: 7rem;
 }
 
 #page_nav{
@@ -90,6 +90,7 @@ div#sendlink a img{
 .infinite-scroll-request{
 	max-height: 121px;
 	overflow: hidden;
+	display: none;
 }
 
 .loader,

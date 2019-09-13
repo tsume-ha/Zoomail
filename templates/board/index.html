@@ -3,86 +3,71 @@
 {% block title %}メーリス一覧 | UnpluggedMessage{% endblock %}
 
 {% block extrastyle %}
-	<link rel="stylesheet" type="text/css" href="{% static 'css/board/index.css' %}">
-	<script src="{% static 'js/infinite-scroll.pkgd.min.js' %}"></script>
-	
+    <link rel="stylesheet" type="text/css" href="{% static 'css/board/index.css' %}">
+    <script src="{% static 'js/infinite-scroll.pkgd.min.js' %}"></script>
+    
 {% endblock %}
 
 {% block body %}
-	<h3 class="my-1">メーリス一覧</h3>
+    <h3 class="my-1">メーリス一覧</h3>
 
-	<div id="sendlink">
-		<a href="{% url 'send' %}">
-			<span>メーリスを送信する</span>
-			<img src="{% static 'img/send.svg' %}" height="50" width="50">
-		</a>
-	</div>
+    <div id="sendlink">
+        <a href="{% url 'send' %}">
+            <span>メーリスを送信する</span>
+            <img src="{% static 'img/send.svg' %}" height="50" width="50">
+        </a>
+    </div>
 
-	<div class="searchform row container m-2 p-2">
-		<form method="post">
-			{% csrf_token %}
-			{{ search }}
-			<input type="submit" name="search" value="検索">
-		</form>
-	</div>
+    <div class="searchform row container m-2 p-2">
+        <form method="post">
+            {% csrf_token %}
+            {{ search }}
+            <input type="submit" name="search" value="検索">
+        </form>
+    </div>
 
-	<div class="content_wrapper">
-	{% for message_letter in message_letters %}
-		<section class="content row border border-left-0 border-right-0">
-			<h4 class="col-sm-12 my-1"><a href="content/{{message_letter.id}}" class="text-decoration-none">{{message_letter.title}}</a></h4>
-			<div class="col-sm-12 mt-1">
-				<span class="float-left date small mr-2 p-1">{{message_letter.created_at|date:"Y/m/d (D) H:i"}}</span>
-				{% if message_letter.created_at < message_letter.updated_at %}
-				<span class="updated float-left alert-warning small p-1">{{message_letter.updated_at|date:"Y/m/d (D) H:i"}} 更新</span>
-				{% endif %}
-				
-				<span class="float-left ml-4 whosent" data-userid="609">{{message_letter.writer.get_short_name}}</span>
-				<span class="float-right star">☆</span>
-			</div>
-			<article class="col-sm-12 my-2">
-				{{message_letter.content}}
-			</article>
-		</section>
-	{% endfor %}
-	</div>
-
-	<div class="page-load-status">
-		<!-- <div class="infinite-scroll-request"><p class="loader">Loading...</p></div> -->
-		<p class="infinite-scroll-last text-center alert alert-secondary my-2 p-2">これ以前のメーリスはありません</p>
-	</div>
-
-	<div id="page_nav" class="my-3">
-		<span id="pagination_nav" class="small text-secondary m-2">ページを移動する</span>
-		<ul id="pagination" class="pagination">
-            {% if message_letters.has_previous %}
-            <li>
-            	<a class="page-link text-primary d-inline-block" href="?page={{ message_letters.previous_page_number }}">前へ</a>
-            </li>
-            {% else %}
-            <li class="disabled">
-            	<div class="page-link text-secondary d-inline-block disabled">前へ</div>
-            </li>
-            {% endif %}
-
-            {% for link_page in message_letters.paginator.page_range %}
-                {% if link_page %}
-                    <li><a class="page-link text-primary d-inline-block" href="?page={{ link_page }}" data-page="{{ link_page }}">{{ link_page }}</a></li>
-                {% else %}
-                    <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted">・・・</a></li>
+    <div class="content_wrapper">
+    {% for message_letter in message_letters %}
+        <section class="content row border border-left-0 border-right-0">
+            <h4 class="col-sm-12 my-1"><a href="content/{{message_letter.id}}" class="text-decoration-none">{{message_letter.title}}</a></h4>
+            <div class="col-sm-12 mt-1">
+                <span class="float-left date small mr-2 p-1">{{message_letter.created_at|date:"Y/m/d (D) H:i"}}</span>
+                {% if message_letter.created_at < message_letter.updated_at %}
+                <span class="updated float-left alert-warning small p-1">{{message_letter.updated_at|date:"Y/m/d (D) H:i"}} 更新</span>
                 {% endif %}
-            {% endfor %}
+                
+                <span class="float-left ml-4 whosent" data-userid="609">{{message_letter.writer.get_short_name}}</span>
+                <span class="float-right star">☆</span>
+            </div>
+            <article class="col-sm-12 my-2">
+                {{message_letter.content}}
+            </article>
+        </section>
+    {% endfor %}
+    </div>
 
-            {% if message_letters.has_next %}
-            <li>
-            	<a class="next page-link text-primary d-inline-block" href="?page={{ message_letters.next_page_number }}">次へ</a>
-            </li>
-            {% else %}
-            <li class="disabled">
-            	<div class="page-link text-secondary d-inline-block disabled">次へ</div>
-            </li>
-            {% endif %}
-        </ul>
-	</div>
+    <div class="page-load-status">
+        <div class="infinite-scroll-request"><p class="loader">Loading...</p></div>
+        <p class="infinite-scroll-last text-center alert alert-secondary my-2 p-2">これ以前のメーリスはありません</p>
+    </div>
 
+    {% if message_letters.paginator.num_pages > 1 %}
+        <div id="page_nav" class="my-3">
+            <span id="pagination_nav" class="small text-secondary m-2">ページを移動する</span>
+            <ul id="pagination" class="pagination">
+                {% for link_page in message_letters.paginator.page_range %}
+                    {% if link_page %}
+                        <li><a class="page-link text-primary d-inline-block" href="?page={{ link_page }}" data-page="{{ link_page }}">{{ link_page }}</a></li>
+                    {% else %}
+                        <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted">・・・</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if message_letters.has_next %}
+                <a class="next d-none" href="?page={{ message_letters.next_page_number }}">次へ</a>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
 <script src="{% static 'js/read_paginator.js' %}"></script>
 {% endblock %}
