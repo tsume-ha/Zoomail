@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
+from django.core.paginator import Paginator
 from .models import Message, MessageYear
 from .forms import SendMessage, Search, Edit, DivErrorList
 import datetime
@@ -28,6 +29,7 @@ def index(request):
 
     message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
 
+
     textmax = 80
     for message_letter in message_letters:
         if len(message_letter.content) < textmax:
@@ -40,9 +42,17 @@ def index(request):
             continue
         message_letter.content = message_letter.content[:textmax] + ' ...'
 
+    page = Paginator(message_letters, 10)
+
+
+    if 'page' in request.GET:
+        num = request.GET['page']
+    else:
+        num = 1
+    
     params = {
         'search': Search(),
-        'message_letters': message_letters,
+        'message_letters': page.get_page(num),
     }
     return render(request, 'board/index.html', params)
 
@@ -90,8 +100,8 @@ def send(request):
                 attachment=is_attachment,
                 sender=now_user,
                 writer=now_user,
+                updated_at=nowtime,
                 created_at=nowtime,
-                updated_at=nowtime
             )
             content_data.save()
             content_data.years.create(year=to)

@@ -4,7 +4,7 @@
 {% block extrastyle %}
 {% endblock %}
 {% block body %}
-	<h1 class="mb-4">Edit Message</h1>
+	<h3 class="my-1">メーリス編集</h3>
 	<form method="post">
 		{% csrf_token %}
 		{% for field in EditForm %}

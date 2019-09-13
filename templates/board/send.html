@@ -5,7 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/board/send.css' %}">
 {% endblock %}
 {% block body %}
-	<h1 class="mb-4">Send a Message</h1>
+	<h3 class="mt-1 mb-3">メーリス送信</h3>
 	<section id="SaveDataInfo" class="alert alert-success alert-dismissible"></section>
 	<form method="post" enctype="multipart/form-data" id="SendMessageForm">
 		{% csrf_token %}
