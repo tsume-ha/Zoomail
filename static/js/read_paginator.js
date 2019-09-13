@@ -8,12 +8,11 @@ $(function(){
     });
 })
 
+
 var infScroll = new InfiniteScroll( '.content_wrapper', {
-	debug: true,
-    navSelector   : '.pagination',
-    nextSelector  : '.next',
-    itemSelector  : '.content',
+    debug: true,
     path: '.next',
     append: '.content',
+    checkLastPage: '.next',
     history: false,
 });

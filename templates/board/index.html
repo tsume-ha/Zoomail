@@ -4,8 +4,8 @@
 
 {% block extrastyle %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/board/index.css' %}">
-	<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
-	<script src="{% static 'js/read_paginator.js' %}"></script>
+	<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+	
 {% endblock %}
 
 {% block body %}
@@ -78,5 +78,6 @@
             {% endif %}
         </ul>
 	</div>
-
+	
+<script src="{% static 'js/read_paginator.js' %}"></script>
 {% endblock %}
