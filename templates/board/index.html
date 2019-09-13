@@ -5,27 +5,30 @@
 {% block extrastyle %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/board/index.css' %}">
 	<script src="{% static 'js/infinite-scroll.pkgd.min.js' %}"></script>
+	<script src="{% static 'js/read_paginator.js' %}"></script>
 {% endblock %}
 
 {% block body %}
 	<h3 class="my-1">メーリス一覧</h3>
+
 	<div id="sendlink">
 		<a href="{% url 'send' %}">
 			<span>メーリスを送信する</span>
 			<img src="{% static 'img/send.svg' %}" height="50" width="50">
 		</a>
 	</div>
+
 	<div class="searchform row container m-2 p-2">
 		<form method="post">
 			{% csrf_token %}
-
 			{{ search }}
-
 			<input type="submit" name="search" value="検索">
 		</form>
 	</div>
+
+	<div id="content_wrapper">
 	{% for message_letter in message_letters %}
-	<section class="row border border-left-0 border-right-0">
+		<section class="row border border-left-0 border-right-0">
 			<h4 class="col-sm-12 my-1"><a href="content/{{message_letter.id}}" class="text-decoration-none">{{message_letter.title}}</a></h4>
 			<div class="col-sm-12 mt-1">
 				<span class="float-left date small mr-2 p-1">{{message_letter.created_at|date:"Y/m/d (D) H:i"}}</span>
@@ -39,10 +42,13 @@
 			<article class="col-sm-12 my-2">
 				{{message_letter.content}}
 			</article>
-	</section>
+		</section>
 	{% endfor %}
+	</div>
+
 	<div id="page_nav" class="my-3">
-		<ul class="pagination">
+		<span id="pagination_nav" class="small text-secondary p2-">ページを移動する</span>
+		<ul id="pagination" class="pagination">
             {% if message_letters.has_previous %}
             <li>
             	<a class="page-link text-primary d-inline-block" href="?page={{ message_letters.previous_page_number }}">前へ</a>
@@ -55,20 +61,20 @@
 
             {% for link_page in message_letters.paginator.page_range %}
                 {% if link_page %}
-                    {% if link_page == message_letters.number %}
-                        <li class="disabled"><div class="page-link text-secondary d-inline-block disabled">{{ link_page }}</div></li>
-                    {% else %}
-                        <li><a class="page-link text-primary d-inline-block" href="?page={{ link_page }}">{{ link_page }}</a></li>
-                    {% endif %}
+                    <li><a class="page-link text-primary d-inline-block" href="?page={{ link_page }}" data-page="{{ link_page }}">{{ link_page }}</a></li>
                 {% else %}
                     <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted">・・・</a></li>
                 {% endif %}
             {% endfor %}
 
             {% if message_letters.has_next %}
-                <li><a class="page-link text-primary d-inline-block" href="?page={{ message_letters.next_page_number }}">次へ</a></li>
+            <li>
+            	<a class="page-link text-primary d-inline-block" href="?page={{ message_letters.next_page_number }}">次へ</a>
+            </li>
             {% else %}
-                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled">次へ</div></li>
+            <li class="disabled">
+            	<div class="page-link text-secondary d-inline-block disabled">次へ</div>
+            </li>
             {% endif %}
         </ul>
 	</div>

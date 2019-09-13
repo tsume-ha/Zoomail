@@ -42,7 +42,7 @@ def index(request):
             continue
         message_letter.content = message_letter.content[:textmax] + ' ...'
 
-    page = Paginator(message_letters, 50)
+    page = Paginator(message_letters, 2)
 
 
     if 'page' in request.GET:

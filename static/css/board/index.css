@@ -57,3 +57,30 @@ div#sendlink a img{
 	margin: 0 -4px 0 0;
 	padding: 0 -3px;
 }
+
+#container{
+	padding-bottom: 8rem;
+}
+
+#page_nav{
+	position: fixed;
+	bottom: 0.5rem;
+	left: 1rem;
+}
+
+#page_nav #pagination_nav{
+	display: block;
+	position: relative;
+}
+#page_nav.checked #pagination_nav{
+	display: none;
+}
+
+
+#page_nav #pagination{
+	display: none;
+	margin: 0;
+}
+#page_nav.checked #pagination{
+	display: flex;
+}
