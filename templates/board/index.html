@@ -57,7 +57,7 @@
             <ul id="pagination" class="pagination">
                 {% for link_page in message_letters.paginator.page_range %}
                     {% if link_page %}
-                        <li><a class="page-link text-primary d-inline-block" href="?page={{ link_page }}" data-page="{{ link_page }}">{{ link_page }}</a></li>
+                        <li data-page="{{ link_page }}"><a class="page-link text-primary d-inline-block" href="?page={{ link_page }}">{{ link_page }}</a></li>
                     {% else %}
                         <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted">・・・</a></li>
                     {% endif %}
