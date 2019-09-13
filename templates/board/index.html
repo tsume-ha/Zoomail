@@ -4,7 +4,7 @@
 
 {% block extrastyle %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/board/index.css' %}">
-	<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+	<script src="{% static 'js/infinite-scroll.pkgd.min.js' %}"></script>
 	
 {% endblock %}
 
@@ -46,6 +46,11 @@
 	{% endfor %}
 	</div>
 
+	<div class="page-load-status">
+		<p class="infinite-scroll-request">Loading...</p>
+		<p class="infinite-scroll-last text-center alert alert-secondary my-2 p-2">これ以前のメーリスはありません</p>
+	</div>
+
 	<div id="page_nav" class="my-3">
 		<span id="pagination_nav" class="small text-secondary m-2">ページを移動する</span>
 		<ul id="pagination" class="pagination">
@@ -78,6 +83,6 @@
             {% endif %}
         </ul>
 	</div>
-	
+
 <script src="{% static 'js/read_paginator.js' %}"></script>
 {% endblock %}

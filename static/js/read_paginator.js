@@ -13,6 +13,10 @@ var infScroll = new InfiniteScroll( '.content_wrapper', {
     debug: true,
     path: '.next',
     append: '.content',
-    checkLastPage: '.next',
-    history: false,
+    checkLastPage: true,
+    history: 'push',
+    historyTitle: false,
+    status: '.page-load-status',
+    scrollThreshold: 300,
+
 });
