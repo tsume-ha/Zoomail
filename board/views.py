@@ -42,7 +42,7 @@ def index(request):
             continue
         message_letter.content = message_letter.content[:textmax] + ' ...'
 
-    page = Paginator(message_letters, 2)
+    page = Paginator(message_letters, 10)
 
 
     if 'page' in request.GET:
@@ -100,8 +100,8 @@ def send(request):
                 attachment=is_attachment,
                 sender=now_user,
                 writer=now_user,
+                updated_at=nowtime,
                 created_at=nowtime,
-                updated_at=nowtime
             )
             content_data.save()
             content_data.years.create(year=to)
