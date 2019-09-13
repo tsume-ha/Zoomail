@@ -48,7 +48,13 @@
 
     <div class="page-load-status">
         <div class="infinite-scroll-request"><p class="loader">Loading...</p></div>
-        <p class="infinite-scroll-last text-center alert alert-secondary my-2 p-2">これ以前のメーリスはありません</p>
+        <p class="infinite-scroll-last text-center alert alert-secondary my-2 p-2">
+            {% if message_letters %}
+            これ以前のメーリスはありません
+            {% else %}
+            現在閲覧可能なメーリスはありません
+            {% endif %}
+        </p>
     </div>
 
     {% if message_letters.paginator.num_pages > 1 %}
