@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
+from django.core.paginator import Paginator
 from .models import Message, MessageYear
 from .forms import SendMessage, Search, Edit, DivErrorList
 import datetime
@@ -16,7 +17,7 @@ def EditPermisson(user, content_id):
 
 
 @login_required()
-def index(request):
+def index(request, num=1):
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(
         Q(years__year=request.user.year) | Q(years__year=0))
@@ -27,6 +28,7 @@ def index(request):
             years__year=0)).filter(Q(content__contains=str) | Q(title__contains=str))
 
     message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
+
 
     textmax = 80
     for message_letter in message_letters:
@@ -40,9 +42,11 @@ def index(request):
             continue
         message_letter.content = message_letter.content[:textmax] + ' ...'
 
+    page = Paginator(message_letters, 5)
+    
     params = {
         'search': Search(),
-        'message_letters': message_letters,
+        'message_letters': page.get_page(num),
     }
     return render(request, 'board/index.html', params)
 
