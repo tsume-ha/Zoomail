@@ -17,7 +17,7 @@ def EditPermisson(user, content_id):
 
 
 @login_required()
-def index(request, num=1):
+def index(request):
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(
         Q(years__year=request.user.year) | Q(years__year=0))
@@ -42,7 +42,13 @@ def index(request, num=1):
             continue
         message_letter.content = message_letter.content[:textmax] + ' ...'
 
-    page = Paginator(message_letters, 5)
+    page = Paginator(message_letters, 50)
+
+
+    if 'page' in request.GET:
+        num = request.GET['page']
+    else:
+        num = 1
     
     params = {
         'search': Search(),
