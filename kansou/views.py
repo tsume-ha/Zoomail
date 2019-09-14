@@ -17,7 +17,7 @@ def exist_years(records):
         data_min = records.aggregate(Min('performed_at'))['performed_at__min']
         data_max = records.aggregate(Max('performed_at'))['performed_at__max']
         year_list = []
-        for year in range(data_min.year - 1, data_min.year + 1):
+        for year in range(data_min.year - 1, data_max.year + 1):
             is_exist = records.filter(performed_at__gte=datetime.date(year, 4, 1),\
                                       performed_at__lt=datetime.date(year + 1, 4, 1)).exists()
             if is_exist:
