@@ -36,7 +36,7 @@
                 <span class="updated float-left alert-warning small p-1">{{message_letter.updated_at|date:"Y/m/d (D) H:i"}} 更新</span>
                 {% endif %}
                 
-                <span class="float-left ml-4 whosent" data-userid="609">{{message_letter.writer.get_short_name}}</span>
+                <span class="float-left ml-4 whosent" data-userid="{{message_letter.writer.id}}">{{message_letter.writer.get_short_name}}</span>
                 <span class="float-right star">☆</span>
             </div>
             <article class="col-sm-12 my-2">
