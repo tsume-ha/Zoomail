@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load message_abst %}
 {% block title %}メーリス一覧 | UnpluggedMessage{% endblock %}
 
 {% block extrastyle %}
@@ -40,7 +41,7 @@
                 <span class="float-right star">☆</span>
             </div>
             <article class="col-sm-12 my-2">
-                {{message_letter.content}}
+                {{message_letter.content | MakeMessageShort}}
             </article>
         </section>
     {% endfor %}
@@ -50,9 +51,17 @@
         <div class="infinite-scroll-request"><p class="loader">Loading...</p></div>
         <p class="infinite-scroll-last text-center alert alert-secondary my-2 p-2">
             {% if message_letters %}
-            これ以前のメーリスはありません
+            	{% if is_seached %}
+            	検索結果は以上です
+            	{% else %}
+            	これ以前のメーリスはありません
+            	{% endif %}
             {% else %}
-            現在閲覧可能なメーリスはありません
+            	{% if is_seached %}
+            	検索の結果、該当はありませんでした。
+            	{% else %}
+            	現在閲覧可能なメーリスはありません
+            	{% endif %}
             {% endif %}
         </p>
     </div>
