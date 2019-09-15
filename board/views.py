@@ -18,30 +18,20 @@ def EditPermisson(user, content_id):
 
 @login_required()
 def index(request):
+
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(
         Q(years__year=request.user.year) | Q(years__year=0))
 
+    searched = False
     if (request.method == 'POST'):
         str = request.POST['text']
-        query = query.filter(Q(years__year=request.user.year) | Q(
-            years__year=0)).filter(Q(content__contains=str) | Q(title__contains=str))
+        if (str != ''):            
+            query = query.filter(Q(years__year=request.user.year) | Q(
+                years__year=0)).filter(Q(content__contains=str) | Q(title__contains=str))
+            searched = True
 
     message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
-
-
-    textmax = 80
-    for message_letter in message_letters:
-        if len(message_letter.content) < textmax:
-            continue
-        count = message_letter.content.find('\n')
-        while message_letter.content[-2:-1] == '\n':
-            message_letter.content = message_letter.content[:-3]
-        message_letter.content = message_letter.content[count:].replace('\n', ' ')
-        if len(message_letter.content) < textmax + 5:
-            continue
-        message_letter.content = message_letter.content[:textmax] + ' ...'
-
     page = Paginator(message_letters, 10)
 
 
@@ -53,6 +43,7 @@ def index(request):
     params = {
         'search': Search(),
         'message_letters': page.get_page(num),
+        'is_seached': searched,
     }
     return render(request, 'board/index.html', params)
 
