@@ -4,14 +4,20 @@
 {% block title %}ライブ映像 | UnpluggedMessage{% endblock %}
 
 {% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie/index.css' %}">
 {% endblock %}
 
 {% block body %}
 <h3 class="my-1">ライブ映像</h3>
 
-<div class="contentwrapper">
-    <section class="list-group list-group-flush my-3">
-
-    </section>
-</div>
+<section class="contentwrapper">
+    <article class="row my-3">
+    	<div class="articleheader">
+    		<h5>2017 卒業ライブ</h5><span>2018/3/25</span>
+    	</div>
+    	<div class="content youtube">
+    		<iframe width="560" height="315" src="https://www.youtube.com/embed/ghvawDOUSqU?list=PLnef8kmQPUwUCEJH2AgY_x3M0oNV0vfLx" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    	</div>
+    </article>
+</section>
 {% endblock %}
