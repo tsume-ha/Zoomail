@@ -24,17 +24,36 @@
 	border-width: 0 0 2.8rem 2.4rem;
 	border-color: transparent transparent #d6eef5 transparent;
 	position: absolute;
-	z-index: -1;
+	z-index: -2;
 	transform: rotate(25deg);
 	top: -0.5rem;
 	left: 1rem;
 }
+.articleheader:after{
+	content: '';
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	background: repeating-linear-gradient(25deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 3px,
+	                                      rgba(255,255,255,1) 3px, rgba(255,255,255,1) 6px);
+}
+
 
 .youtube{
 	position: relative;
 	display: block;
 }
-
+.text{
+	position: relative;
+	display: block;
+	max-width: 600px;
+	padding: 1rem;
+	border: 2px solid #ddd;
+	border-radius: 0 0 1rem 1rem;
+}
 
 
 @media screen and (max-width: 767px) { 
