@@ -4,7 +4,7 @@ from .models import YoutubeURL
 
 @login_required()
 def index(request):
-    data = YoutubeURL.objects.all()
+    data = YoutubeURL.objects.all().order_by('held_at').reverse()
     params = {
     'movies': data,
     }

@@ -20,7 +20,7 @@
         </div>
         {% if movie.listid %}
         <div class="content youtube col-12">
-            <iframe width="560" height="315" src="http://www.youtube.com/embed?listType=playlist&list={{ movie.listid }}&rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="560" height="315" class="youtube_content" data-src="http://www.youtube.com/embed?listType=playlist&list={{ movie.listid }}&rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         {% endif %}
         {% if movie.textcontent %}
@@ -31,4 +31,15 @@
     </article>
     {% endfor %}
 </section>
+<script>
+function youtube_defer() {
+    var iframes = document.querySelectorAll('.youtube_content');
+    iframes.forEach(function(iframe){
+        if(iframe.getAttribute('data-src')) {
+            iframe.setAttribute('src',iframe.getAttribute('data-src'));
+        }
+    });
+}
+window.addEventListener('load', youtube_defer);
+</script>
 {% endblock %}

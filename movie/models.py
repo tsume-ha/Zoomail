@@ -3,7 +3,7 @@ from members.models import User
 
 class YoutubeURL(models.Model):
     title = models.CharField(max_length=200, verbose_name='イベント名')
-    listid = models.CharField(max_length=200, blank=True, verbose_name='Youtubeの再生リストURL')
+    listid = models.CharField(max_length=200, blank=True, verbose_name='Youtubeの再生リストID')
     textcontent = models.TextField(max_length=2000, blank=True, verbose_name='テキスト')
     held_at = models.DateField(verbose_name='イベントを行った日')
     created_at = models.DateTimeField(auto_now_add=True)
