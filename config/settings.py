@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'player',
     'kansou',
     'pictures',
+    'movie',
     'otherdocs',
 ]
 
