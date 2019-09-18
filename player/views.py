@@ -99,19 +99,17 @@ def songupload(request):
         raise PermissionDenied
 
 
-
-@login_required()
-def download2(request):
-    import os
-    from io import BytesIO
-    from config.settings import BASE_DIR
-    import urllib.parse
-    file = open(os.path.join(BASE_DIR, 'player', 'test2.mp3'), 'rb')
-    response = HttpResponse(
-        file,
-        status=200, 
-        content_type='audio/mp3',
-        )
-    filename = 'ほげほげ.mp3'
-    response['Content-Disposition'] = 'attachment; filename="{fn}"'.format(fn=urllib.parse.quote(filename))
+from utils.commom import download
+def FileDownloadView(request, live_id, song_pk):
+    try:
+        song = Song.objects.get(pk=song_pk)
+    except ObjectDoesNotExist:
+        return redirect('/player/playlist/' + str(live_id))
+    filename = str(song.track_num).zfill(2) + ' ' + song.song_name + '.mp3'
+    print(song.file.path)
+    response = download(
+        filepath = song.file.path,
+        filename = filename,
+        mimetype = 'audio/mp3'
+    )
     return response
