@@ -97,3 +97,21 @@ def songupload(request):
         return render(request, 'player/songupload.html', params)
     else:
         raise PermissionDenied
+
+
+
+@login_required()
+def download2(request):
+    import os
+    from io import BytesIO
+    from config.settings import BASE_DIR
+    import urllib.parse
+    file = open(os.path.join(BASE_DIR, 'player', 'test2.mp3'), 'rb')
+    response = HttpResponse(
+        file,
+        status=200, 
+        content_type='audio/mp3',
+        )
+    filename = 'ほげほげ.mp3'
+    response['Content-Disposition'] = 'attachment; filename="{fn}"'.format(fn=urllib.parse.quote(filename))
+    return response
