@@ -2,6 +2,15 @@ from django.db import models
 from django.utils import timezone
 from members.models import User
 from private_storage.fields import PrivateFileField
+import datetime
+import os
+
+def custom_upload_to(instance, filename):
+    now = datetime.datetime.now()
+    path = 'music/' + now.strftime('%Y/%m/%d/') + now.strftime('%Y_%m_%d__%H_%M_%S')
+    extension = os.path.splitext(filename)[-1]
+    return path + extension
+
 
 class Performance(models.Model):
 	live_name = models.CharField(max_length=255)
@@ -16,7 +25,7 @@ class Song(models.Model):
 	performance = models.ForeignKey(Performance, on_delete=models.CASCADE)	
 	track_num = models.IntegerField()
 	song_name = models.CharField(max_length=500)
-	file = PrivateFileField(upload_to='music/%Y/%m/%d', null=True)
+	file = PrivateFileField(upload_to=custom_upload_to, null=True)
 	created_at = models.DateTimeField(default=timezone.now)
 	updated_at = models.DateTimeField(default=timezone.now)
 	updated_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='song_updated_by')
