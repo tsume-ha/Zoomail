@@ -35,5 +35,6 @@ urlpatterns = [
     path('player/', include('player.urls')),
     path('kansou/', include('kansou.urls')),
     path('pictures/', include('pictures.urls')),
+    path('movie/', include('movie.urls')),
     path('others/', include('otherdocs.urls')),
 ]
