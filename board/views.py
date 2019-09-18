@@ -6,7 +6,7 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .models import Message, MessageYear
+from .models import Message, MessageYear, Attachment, MessageYear
 from .forms import SendMessage, Search, Edit, DivErrorList
 import datetime
 
@@ -56,7 +56,7 @@ def content(request, id):
         return redirect('/read')
 
     attachments = map(
-        lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName()},
+        lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName(), "pk": file.pk, "fileext": file.extension()},
         message.attachments.all()
     )
     params = {
@@ -131,3 +131,26 @@ def edit(request, id):
     else:
         return redirect('/read/content/' + str(id))
 
+
+
+from utils.commom import download
+@login_required()
+def FileDownloadView(request, message_pk, file_pk):
+    try:
+        message = Message.objects.get(pk=message_pk)
+        file = Attachment.objects.get(pk=file_pk)
+        year = MessageYear.objects.get(message=message).year
+    except ObjectDoesNotExist:
+        return redirect('/read/content/' + str(message_pk))
+
+    can_read = year == 0 or year == request.user.year
+    if not can_read:
+        return redirect('/read/content/' + str(message_pk))
+
+    filename = message.title + '_添付' + file.extension()
+    response = download(
+        filepath = file.attachment_file.path,
+        filename = filename,
+        mimetype = 'application/octet-stream'
+    )
+    return response
