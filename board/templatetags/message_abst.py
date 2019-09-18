@@ -1,4 +1,5 @@
 from django import template
+from django.utils.safestring import mark_safe
 import datetime
 
 register = template.Library()
@@ -23,3 +24,11 @@ def MakeMessageShort(content):
     content = content[:textmax] + ' ...'
     return content
 
+@register.simple_tag
+def is_updated(message):
+    text_return = ''
+    if message.created_at + datetime.timedelta(seconds=5) < message.updated_at:
+        text_return += '<span class="updated float-left alert-warning small p-1">'
+        text_return += message.updated_at.strftime('%Y/%m/%d %H:%M')
+        text_return += ' 更新</span>'
+    return mark_safe(text_return)

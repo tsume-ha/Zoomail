@@ -15,6 +15,8 @@ def EditPermisson(user, content_id):
            Message.objects.get(id=content_id).sender == user or\
            Message.objects.get(id=content_id).writer == user
 
+def is_updated(created_at, updated_at):
+    return created_at + datetime.timedelta(seconds=5) < updated_at
 
 @login_required()
 def index(request):
@@ -62,7 +64,8 @@ def content(request, id):
     params = {
         'message': message,
         'attachments': attachments,
-        'edit_allowed': EditPermisson(user=request.user, content_id=id)
+        'edit_allowed': EditPermisson(user=request.user, content_id=id),
+        'is_updated': is_updated(message.created_at, message.updated_at),
     }
     return render(request, 'board/content.html', params)
 
