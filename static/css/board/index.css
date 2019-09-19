@@ -21,6 +21,7 @@ div#sendlink{
 	position: fixed;
 	bottom: 3rem;
 	right: 8vw;
+	z-index: 10;
 }
 
 div#sendlink a{
@@ -31,6 +32,7 @@ div#sendlink a{
 	border: 1px solid #3bc665;
 	border-radius: 33px;
 	text-decoration: none;
+	background-color: rgba(255,255,255,0.5);
 	transition: 0.4s;
 	overflow: hidden;
 }
