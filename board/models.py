@@ -1,4 +1,5 @@
 import os
+import datetime
 from django.db import models
 from django.utils import timezone
 from members.models import User
@@ -17,8 +18,8 @@ class Message(models.Model):
     #通常なら sender == writer で同じになる。
     writer = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='write_message')    
 
-    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return 'mes_ID=' + str(self.id) + ', title=' + self.title
@@ -35,9 +36,15 @@ class MessageYear(models.Model):
         
         return self.year
 
+def custom_upload_to(instance, filename):
+    now = datetime.datetime.now()
+    path = 'document/' + now.strftime('%Y/%m/%d/') + now.strftime('%Y_%m_%d__%H_%M_%S')
+    extension = os.path.splitext(filename)[-1]
+    return path + extension
+
 class Attachment(models.Model):
     message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name='attachments')
-    attachment_file = PrivateFileField(upload_to='document/%Y/%m/%d', null=True)
+    attachment_file = PrivateFileField(upload_to=custom_upload_to, null=True)
     def __str__(self):
         return self.message.title
     

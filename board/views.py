@@ -6,7 +6,7 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .models import Message, MessageYear
+from .models import Message, MessageYear, Attachment, MessageYear
 from .forms import SendMessage, Search, Edit, DivErrorList
 import datetime
 
@@ -15,6 +15,8 @@ def EditPermisson(user, content_id):
            Message.objects.get(id=content_id).sender == user or\
            Message.objects.get(id=content_id).writer == user
 
+def is_updated(created_at, updated_at):
+    return created_at + datetime.timedelta(seconds=5) < updated_at
 
 @login_required()
 def index(request):
@@ -56,13 +58,14 @@ def content(request, id):
         return redirect('/read')
 
     attachments = map(
-        lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName()},
+        lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName(), "pk": file.pk, "fileext": file.extension()},
         message.attachments.all()
     )
     params = {
         'message': message,
         'attachments': attachments,
-        'edit_allowed': EditPermisson(user=request.user, content_id=id)
+        'edit_allowed': EditPermisson(user=request.user, content_id=id),
+        'is_updated': is_updated(message.created_at, message.updated_at),
     }
     return render(request, 'board/content.html', params)
 
@@ -131,3 +134,26 @@ def edit(request, id):
     else:
         return redirect('/read/content/' + str(id))
 
+
+
+from utils.commom import download
+@login_required()
+def FileDownloadView(request, message_pk, file_pk):
+    try:
+        message = Message.objects.get(pk=message_pk)
+        file = Attachment.objects.get(pk=file_pk)
+        year = MessageYear.objects.get(message=message).year
+    except ObjectDoesNotExist:
+        return redirect('/read/content/' + str(message_pk))
+
+    can_read = year == 0 or year == request.user.year
+    if not can_read:
+        return redirect('/read/content/' + str(message_pk))
+
+    filename = message.title + '_添付' + file.extension()
+    response = download(
+        filepath = file.attachment_file.path,
+        filename = filename,
+        mimetype = 'application/octet-stream'
+    )
+    return response

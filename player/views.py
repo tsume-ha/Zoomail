@@ -97,3 +97,19 @@ def songupload(request):
         return render(request, 'player/songupload.html', params)
     else:
         raise PermissionDenied
+
+
+from utils.commom import download
+def FileDownloadView(request, live_id, song_pk):
+    try:
+        song = Song.objects.get(pk=song_pk)
+    except ObjectDoesNotExist:
+        return redirect('/player/playlist/' + str(live_id))
+    filename = str(song.track_num).zfill(2) + ' ' + song.song_name + '.mp3'
+    print(song.file.path)
+    response = download(
+        filepath = song.file.path,
+        filename = filename,
+        mimetype = 'audio/mp3'
+    )
+    return response

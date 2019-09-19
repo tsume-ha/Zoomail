@@ -8,7 +8,7 @@
 <h3 class="my-1">{{message.title}}</h3>
 <div class="col-sm-12 col-md-8 mt-1 pl-0">
 	<span class="date d-inline-block">{{message.created_at|date:"Y/m/d (D) H:i"}}</span>
-	{% if message.created_at < message.updated_at %}
+	{% if is_updated %}
 	<span class="updated alert-warning d-inline-block">{{message.updated_at|date:"m/d (D) H:i"}} 更新</span>
 	{% endif %}
 	<span class="ml-4 whosent" data-userid="{{message.writer.id}}">{{message.writer.get_short_name}}</span>
@@ -22,7 +22,7 @@
 {% if attachment.isImage %}
 <img src="/private-media/{{attachment.path}}" width="100%">
 {% else %}
-<a href="/private-media/{{attachment.path}}" download="{{attachment.fileName}}">{{attachment.fileName}}</a>
+<a href="/read/download/{{message.pk}}/{{attachment.pk}}">{{message.title}}_添付{{attachment.fileext}}</a>
 {% endif %}
 {% endfor %}
 

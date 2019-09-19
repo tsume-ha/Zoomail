@@ -68,6 +68,7 @@ def PhotoRegister(request):
                     dest = open(thum.temporary_file_path(), 'wb')
                     dest.write(result.read())
                     dest.close()
+                    #datetime.datetime.now().strftime('%Y_%m_%d__%H_%M_%S')
                 except MultiValueDictKeyError:
                     pass
                 content.created_by = now_user
