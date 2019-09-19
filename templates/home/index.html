@@ -9,10 +9,6 @@
 
 
 {% block body %}
-<!-- 	<div class="row">
-		<div class="col-sm-6 text-center" id="readbox"><a class="text-decoration-none text-dark py-3" href="read/">READ<br><img src="{% static 'img/read.svg' %}" height="128" width="128"></a></div>
-		<div class="col-sm-6 text-center" id="sendbox"><a class="text-decoration-none text-dark py-3" href="send/">SEND<br><img src="{% static 'img/send.svg' %}" height="128" width="128"></a></div>
-	</div> -->
 	<div id="introduction" class="row center-block">
 		<div class="col-sm-2"></div>
 		<div class="col-sm-8 text-center py-3">
@@ -27,6 +23,7 @@
 			</p>
 		</div>
 		<div class="col-sm-2"></div>
+		<div class="col-12 varsion" data-var="0.0.1">Var. β (0.0.1)</div>
 	</div>
 	{% if user.is_authenticated %}
 	

@@ -1,43 +1,5 @@
 @charset "utf-8";
 
-/*div#readbox a,
-div#sendbox a{
-	display: block;
-	transition: .3s;
-	color: #333;
-}
-div#readbox,
-div#sendbox{
-	padding: 0;
-}
-
-div#readbox,
-div#sendbox,
-div#readbox a,
-div#sendbox a{
-	height: 300px;
-	font-size: 80px;
-	font-weight: 100;
-}
-
-div#readbox{
-	background: #5cbfe4;
-	background: linear-gradient(90deg, #fff, #bbe3ee);
-}
-div#sendbox{
-	background: #8aef75;
-	background: linear-gradient(90deg, #BBFF99, #fff);
-}
-
-div#readbox a:hover{
-	background: #bbe3ee;
-}
-
-div#sendbox a:hover{
-	background: #BBFF99;
-}
-*/
-
 div#introduction{
 	background-color: #d6eef5;
 	margin-top: 20px;
@@ -53,4 +15,14 @@ a#G-login{
 }
 a#G-login.hover{
 	text-decoration: underline;
+}
+
+.varsion{
+	background-color: #d6eef5;
+	position: relative;
+	display: block;
+	font-size: 0.75rem;
+	text-align: right;
+	margin-top: 0;
+	padding-bottom: 0.5rem;
 }
