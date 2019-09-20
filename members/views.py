@@ -116,7 +116,12 @@ def UserRegistrationPreview(request):
             is_error = False
             for member in MembersToRegister:
                 try:
-                    register(email=member.email, year=member.year, last_name=member.last_name, first_name=member.first_name)
+                    register(
+                        email=member.email,
+                        year=member.year,
+                        last_name=member.last_name,
+                        first_name=member.first_name,
+                        furigana=member.furigana)
                     member.delete()
                 except DuplicateGmailAccountError:
                     messages.error(request, member.email+' はすでに登録されているアカウントのため登録できませんでした。')
