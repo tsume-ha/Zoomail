@@ -8,7 +8,6 @@ from .forms import AlbumRegisterForm
 import datetime
 from imagekit import ImageSpec
 from imagekit.processors import ResizeToFill
-from django.utils.datastructures import MultiValueDictKeyError
 
 
 class Thumbnail(ImageSpec):
