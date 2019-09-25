@@ -28,11 +28,10 @@ def User_LogIN(self,year=2019):
     return self.user
 
 
-class MemberRegisterFormTest(TestCase):
+class MemberUpdateFormTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Make_User(cls)
-
 
     def test_members_index_logOUT(self):
         User_LogOUT(self)
@@ -109,8 +108,39 @@ class MemberRegisterFormTest(TestCase):
         self.assertTrue(updated_user.furigana == data['furigana'])
         self.assertTrue(updated_user.nickname == data['nickname'])
 
+
+
+class MemberRegisterFormTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User(cls)
+
+    def test_members_Register_FORM_POST_NoSuperuser_logIN(self):
+        data = {
+            'email': '2019tryaddinguser@gmail.com',
+            'year': 2019,
+            'last_name': '京大',
+            'first_name': '太郎',
+            'furigana': 'きょうだいたろう',
+            'nickname': 'タロー',
+        }
+        User_LogIN(self)
+        request = self.client.post('/members/register/', data)
+        self.assertEqual(request.status_code, 302)
+        url_redial_to = request.url
+        self.assertEqual(url_redial_to, '/members')        
+        response = self.client.get(url_redial_to)
+        # print(response)
+        # self.assertEqual(response.status_code, 301)
+        # self.assertTemplateUsed(response, 'members/index.html')
+        try:
+            saved_content = User.objects.get(email=data['email'])
+            self.assertTrue(False)
+        except ObjectDoesNotExist:
+            self.assertTrue(True)
+
+
     def test_members_Register_FORM_POST_logIN(self):
-        User_LogIN_and_Add_AdministerGroup(self)
         data = {
         	'email': '2019addeduser@gmail.com',
         	'year': 2019,
@@ -119,7 +149,7 @@ class MemberRegisterFormTest(TestCase):
             'furigana': 'きょうだいたろう',
             'nickname': 'タロー',
         }
-        self.user = User_LogIN(self)
+        self.user = User_LogIN_and_Add_AdministerGroup(self)
         request = self.client.post('/members/register/', data)
 
         self.assertEqual(request.status_code, 200)
@@ -131,3 +161,16 @@ class MemberRegisterFormTest(TestCase):
         self.assertTrue(created_user.first_name == data['first_name'])
         self.assertTrue(created_user.furigana == data['furigana'])
         self.assertTrue(created_user.nickname == '')
+
+
+class MemberRegisterCSVFileTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User(cls)
+
+        def test_members_Register_CSV_Register_logOUT(self):
+            pass
+        def test_members_Register_CSV_Register_NoSuperuser_logIN(self):
+            pass
+        def test_members_Register_CSV_Register_Superuser_LogIN(self):
+            pass
