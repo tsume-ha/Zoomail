@@ -20,7 +20,9 @@ class Thumbnail(ImageSpec):
 
 def PicturesPermission(user):
     return user.is_superuser or\
-           user.groups.filter(name='Administer').exists()
+           user.groups.filter(name='Administer').exists() or\
+           user.groups.filter(name='HomepageGroup').exists() or\
+           user.groups.filter(name='PhotographersGroup').exists()
 
 def exist_years(records):
     if records.exists():
