@@ -46,6 +46,12 @@ class PicturesViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'pictures/index.html')
 
+
+class PicturesTestwithModel(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User(cls)
+
     def test_pictures_index_with_records_logIN(self):
         user = User_LogIN(self)
         record_dates = [
@@ -65,4 +71,42 @@ class PicturesViewTest(TestCase):
         for date in record_dates:
             self.assertContains(response, 'album' +date[5])
 
+    def test_pictures_Register_POST_LogOUT(self):
+        data = {
+            'title': 'n月ライブ',
+            'held_at': '2019-04-01',
+            'url': 'https://example.com',
+        }
+        User_LogOUT(self)
+        request = self.client.post('/pictures/register/', data)
+        self.assertEqual(request.status_code, 302)
+        url_redial_to = request.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin/login.html')
 
+        try:
+            saved_content = User.objects.get(last_name=data['title'])
+            self.assertTrue(False)
+        except ObjectDoesNotExist:
+            self.assertTrue(True)
+
+    def test_pictures_Register_POST_No_AUTH_LogIN(self):
+        data = {
+            'title': 'n月ライブ',
+            'held_at': '2019-04-01',
+            'url': 'https://example.com',
+        }
+        User_LogIN(self)
+        request = self.client.post('/pictures/register/', data)
+        self.assertEqual(request.status_code, 302)
+        url_redial_to = request.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'pictures/index.html')
+
+        try:
+            saved_content = User.objects.get(last_name=data['title'])
+            self.assertTrue(False)
+        except ObjectDoesNotExist:
+            self.assertTrue(True)
