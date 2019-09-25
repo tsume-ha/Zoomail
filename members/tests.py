@@ -1,5 +1,4 @@
 from django.test import TestCase, Client
-from django.db.models import Count
 from members.models import User
 from django.contrib.auth.models import Group
 import os
