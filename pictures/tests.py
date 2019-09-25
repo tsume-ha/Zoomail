@@ -3,7 +3,7 @@ from members.models import User
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Album
-
+import datetime
 
 def User_LogOUT(self):
     self.client = Client()
@@ -47,4 +47,22 @@ class PicturesViewTest(TestCase):
         self.assertTemplateUsed(response, 'pictures/index.html')
 
     def test_pictures_index_with_records_logIN(self):
-    	pass
+        user = User_LogIN(self)
+        record_dates = [
+            '2019-03-30',
+            '2019-04-01'
+        ]
+        for date in record_dates:
+            Album.objects.create(
+                title = 'album' +date[5],
+                url = 'http://example.com',
+                held_at = date,
+                created_by = user
+                )
+        response = self.client.get('/pictures/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'pictures/index.html')
+        for date in record_dates:
+            self.assertContains(response, 'album' +date[5])
+
+
