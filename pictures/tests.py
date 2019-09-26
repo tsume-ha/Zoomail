@@ -106,7 +106,38 @@ class PicturesTestwithModel(TestCase):
         self.assertTemplateUsed(response, 'pictures/index.html')
 
         try:
-            saved_content = User.objects.get(last_name=data['title'])
+            saved_content = Album.objects.get(title=data['title'])
             self.assertTrue(False)
         except ObjectDoesNotExist:
             self.assertTrue(True)
+
+    def test_pictures_Register_POST_AUTH_LogIN(self):
+        data = {
+            'title': 'n月ライブ',
+            'held_at': '2019-04-01',
+            'url': 'https://example.com',
+        }
+        User_LogIN_and_Add_a_Group(self, 'PhotographersGroup')
+        request = self.client.post('/pictures/register/', data)
+        self.assertEqual(request.status_code, 302)
+        url_redial_to = request.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'pictures/index.html')
+
+        try:
+            saved_content = Album.objects.get(title=data['title'])
+            self.assertTrue(True)
+        except ObjectDoesNotExist:
+            self.assertTrue(False)
+        User_LogOUT(self)
+
+        # Other User Login
+        other_users_year = list(range(2000,2010))
+        for user_year in other_users_year:
+            Make_User(self, year=user_year)
+            User_LogIN(self, year=user_year)
+            response = self.client.get('/pictures/')        
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'pictures/index.html')
+            self.assertContains(response, data['title'])
