@@ -10,8 +10,6 @@ oauthlib==3.1.0
 pilkit==2.0
 Pillow==6.1.0
 PyJWT==1.7.1
-python-magic==0.4.15
-python-magic-bin==0.4.14
 python3-openid==3.1.0
 pytz==2019.1
 requests==2.22.0
