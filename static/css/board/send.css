@@ -4,7 +4,7 @@
 	display: none;
 }
 
-form label{
+form label:not([for="id_year_choice"]){
 	display: none;
 }
 
@@ -17,4 +17,34 @@ form textarea{
 form select{
 	width: 100%;
 	max-width: 300px;
+}
+#message_form > p:nth-child(2){
+	position: relative;
+	display: inline-block;
+	width: 9.5rem;
+}
+label[for="id_year_choice"]{
+	position: relative;
+	display: inline-block;
+	padding: 0 0.25rem;
+}
+select#id_year_choice{
+	position: relative;
+	display: inline-block;
+	width: 5rem;
+	padding: 6px;
+	margin: 0;
+}
+
+#message_form > p:nth-child(3){
+	position: relative;
+	display: inline-block;
+	width: 10rem;
+}
+select#id_written_by{
+	position: relative;
+	display: block;
+	width: 10rem;
+	padding: 6px 12px;
+
 }
