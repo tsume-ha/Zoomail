@@ -20,11 +20,16 @@
 </p>
 {% for attachment in attachments %}
 {% if attachment.isImage %}
-<img src="/private-media/{{attachment.path}}" width="100%">
+<img src="/private-media/{{attachment.path}}" style="width: 100%;max-width: 560px;">
 {% else %}
 <a href="/read/download/{{message.pk}}/{{attachment.pk}}">{{message.title}}_添付{{attachment.fileext}}</a>
 {% endif %}
 {% endfor %}
+
+{% if message.sender != message.writer %}
+<hr>
+<p class="small">このメーリスは {{ message.sender.get_full_name }} によって代理送信されました。</p>
+{% endif %}
 
 {% if edit_allowed %}
 <hr>
