@@ -76,7 +76,9 @@ def send(request):
         request.POST or None,
         request.FILES or None,
         error_class = DivErrorList,
-        initial={'written_by': str(request.user.year)+'-'+str(request.user.pk)})
+        initial={'written_by': str(request.user.year)+'-'+str(request.user.pk),
+                 'year_choice': request.user.year}
+    )
     params = {
         'message_form': messageForm,
     }

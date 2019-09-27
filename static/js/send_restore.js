@@ -59,3 +59,4 @@ $('#SendMessageForm').submit(function(){
 	localStorage.clear();// DBにデータを複製するためにOFFにしていました
 
 })
+
