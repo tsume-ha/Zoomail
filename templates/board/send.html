@@ -12,15 +12,17 @@
 		<div id="message_form">
 			{{ message_form.as_p }}
 		</div>
-		<input type="submit" name="SEND">
+		<input type="submit" name="SEND" value="送信" class="btn btn-info mb-3">
 	</form>
 	
 
 <script type="text/javascript">
+	const user_year = {{ user.year }};
 	let JSstop = false;
 	{% if JSstop %}
 	JSstop = true;
 	{% endif %}
 </script>
-<script src="{% static 'js/send.js' %}"></script>
+<script src="{% static 'js/send_choiceform.js' %}"></script>
+<script src="{% static 'js/send_restore.js' %}"></script>
 {% endblock %}

@@ -55,8 +55,8 @@ $('#SendMessageForm').submit(function(){
 	}
 
 	// when everything is successed
-	// delete local storage
-	
-	// localStorage.clear();// DBにデータを複製するためにOFFにしておきます
+	// delete local storage	
+	localStorage.clear();// DBにデータを複製するためにOFFにしていました
 
 })
+

@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from .models import Message, MessageYear, Attachment, MessageYear
 from .forms import SendMessage, Search, Edit, DivErrorList
+from members.models import User
 import datetime
 
 def EditPermisson(user, content_id):
@@ -71,13 +72,20 @@ def content(request, id):
 
 @login_required()
 def send(request):
-    messageForm = SendMessage(request.POST or None, request.FILES or None, error_class=DivErrorList)
+    messageForm = SendMessage(
+        request.POST or None,
+        request.FILES or None,
+        error_class = DivErrorList,
+        initial={'written_by': str(request.user.year)+'-'+str(request.user.pk),
+                 'year_choice': request.user.year}
+    )
     params = {
         'message_form': messageForm,
     }
     if (request.method == 'POST'):
         if messageForm.is_valid():
             to = request.POST["to"]
+            writer_pk = request.POST["written_by"]
             title = request.POST["title"]
             content = request.POST["content"]
             nowtime = datetime.datetime.now()
@@ -93,7 +101,7 @@ def send(request):
                 content=content,
                 attachment=is_attachment,
                 sender=now_user,
-                writer=now_user,
+                writer=User.objects.get(pk=int(writer_pk[5:])),
                 updated_at=nowtime,
                 created_at=nowtime,
             )
