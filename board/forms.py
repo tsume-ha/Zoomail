@@ -59,7 +59,7 @@ class SendMessage(forms.Form):
     year_choice = forms.ChoiceField(# No POSTed DATA is USED in VIEW.PY, This Form is used only for JS
         choices = [(year['year'],year['year']) for year in User.objects.all().order_by('year').reverse().values('year').distinct()],
         widget = forms.Select(attrs={'class': 'form-control'}),
-        label = "送信者"
+        label = "From"
     )
     written_by = forms.ChoiceField(
         choices = lambda: [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')],
@@ -68,7 +68,7 @@ class SendMessage(forms.Form):
     )
     to = forms.ChoiceField(
         choices = [("error","宛先を選択してください"),(0,"全回メーリス" + "（" + now_kaisei() + "～21期）",)] + kaisei,
-        label = "宛先",
+        label = "To",
         widget = forms.Select(attrs={'class': 'form-control'}),
         validators = [validate_to],
     )
