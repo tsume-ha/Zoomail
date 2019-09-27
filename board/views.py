@@ -71,7 +71,11 @@ def content(request, id):
 
 @login_required()
 def send(request):
-    messageForm = SendMessage(request.POST or None, request.FILES or None, error_class=DivErrorList)
+    messageForm = SendMessage(
+        request.POST or None,
+        request.FILES or None,
+        error_class = DivErrorList,
+        initial={'written_by': str(request.user.year)+'-'+str(request.user.pk)})
     params = {
         'message_form': messageForm,
     }
