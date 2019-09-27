@@ -57,7 +57,7 @@ class SendMessage(forms.Form):
         error_messages={'required': validation_error_messages['no_title']}
     )
     written_by = forms.ChoiceField(
-        choices = lambda: [(str(user.year)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')],
+        choices = lambda: [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')],
         label = "送信元",
         widget = forms.Select(attrs={'class': 'form-control'}),
     )

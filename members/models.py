@@ -54,7 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['year']
 
     def __str__(self):
-        return str(self.id) + self.last_name + self.first_name + self.email # changed from google_account
+        return str(self.year) + ' : ' + self.last_name + self.first_name + '(' + self.email + ')'
 
     def get_short_name(self):
         if self.nickname == "":
