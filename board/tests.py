@@ -31,7 +31,9 @@ def Make_User_and_LogIN(self,year=2019):
     self.client.force_login(self.user)
 
 def User_LogIN(self,year=2019):
-    self.client.force_login(User.objects.get(email=str(year) + 'mail@gmail.com')) # changed from google_account
+    user = User.objects.get(email=str(year) + 'mail@gmail.com')
+    self.client.force_login(user)
+    return user
 
 def CreateMessage(self, year, is_attachment=False):
     nowtime = datetime.datetime.now()
@@ -162,12 +164,14 @@ class AuthentificationSendTest(TestCase):
         
 
     def test_send_POST_logIN(self):
+        user = User_LogIN(self)
         data = {
             'title': 'LogIN POST test',
+            'year_choice': user.year,
+            'written_by': str(user.year).zfill(4) + '-' + str(user.pk),
             'to': 0,
             'content': 'LogIN POST test message',
         }
-        User_LogIN(self)
         request = self.client.post('/send/', data)
         self.assertEqual(request.status_code, 302)
         url_redial_to = request.url
@@ -186,6 +190,7 @@ class AuthentificationSendTest(TestCase):
     def test_send_POST_logIN_missing_YEAR(self):
         data = {
             'title': 'LogIN POST test missing YEAR',
+            'written_by': '2019-1',
             'to': 'error',
             'content': 'LogIN POST test message missing YEAR',
         }
@@ -204,6 +209,7 @@ class AuthentificationSendTest(TestCase):
     def test_send_POST_logIN_missing_TITLE(self):
         data = {
             'title': '',
+            'written_by': '2019-1',
             'to': 'error',
             'content': 'LogIN POST test message missing TITLE',
         }
@@ -221,6 +227,7 @@ class AuthentificationSendTest(TestCase):
     def test_send_POST_logIN_missing_CONTENT(self):
         data = {
             'title': 'LogIN POST test missing CONTENT',
+            'written_by': '2019-1',
             'to': 'error',
             'content': '',
         }
@@ -237,12 +244,14 @@ class AuthentificationSendTest(TestCase):
 
     def test_send_POST_logIN_with_TextFile(self):
         self.testfiles = [['29MB.txt', 29*1024*1024], ['31MB.txt', 31*1024*1024]]
-        User_LogIN(self)
+        user = User_LogIN(self)
         for textfile in self.testfiles:
             filedir = os.path.join(BASE_DIR, 'board', textfile[0])
             with open(filedir, 'rb') as file:
                 data = {
                     'title': 'LogIN POST test with' + textfile[0],
+                    'year_choice': user.year,
+                    'written_by': str(user.year).zfill(4) + '-' + str(user.pk),
                     'to': 0,
                     'content': 'LogIN POST test message',
                     'attachmentfile': SimpleUploadedFile(textfile[0], file.read()),
