@@ -82,4 +82,15 @@
         </div>
     {% endif %}
 <script src="{% static 'js/read_paginator.js' %}"></script>
+<script type="text/javascript">
+$(function(){
+    var img = document.createElement('img');
+    img.src = "{% static 'img/star_yl.png' %}";
+    $('.star img').bind('touchstart mouseenter', function(){
+        $(this).attr("src","{% static 'img/star_yl.png' %}");
+    }).bind('touchend mouseleave', function(){
+        $(this).attr("src","{% static 'img/star_bk.png' %}");
+    });
+})
+</script>
 {% endblock %}
