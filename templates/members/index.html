@@ -21,9 +21,22 @@
 		{% endif %}
 	</p>
 </section>
-<!-- <section id="midoku" class="mypage_message p-3 border-top">
+<section id="midoku" class="mypage_message p-3 border-top">
 	<h5>未読メッセージ</h5>
-</section> -->
+	{% if midoku %}
+	<ul class="list-unstyled">
+		{% for message in midoku %}
+		<li class="mb-2 ml-3">
+			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
+			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+		</li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<p class="alert alert-secondary m-0 p-2">すべてのメッセージをすでに読んています。</p>
+	
+	{% endif %}
+</section>
 <section id="yousend" class="mypage_message p-3 border-top">
 	<h5>あなたが送信したメッセージ</h5>
 	{% if yousend %}

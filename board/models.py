@@ -71,4 +71,4 @@ class Kidoku(models.Model):
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE, related_name='kidoku_user')
     have_read = models.BooleanField(default=True)
     def __str__(self):
-        return self.user + ' - ' + self.message
+        return self.user.get_full_name() + ' - ' + self.message.title

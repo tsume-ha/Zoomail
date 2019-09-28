@@ -4,28 +4,31 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
+from django.db.models import Q
 from .models import User, TmpMember
 from social_django.models import UserSocialAuth
 from .forms import UserUpdateForm, RegisterForm, RegisterCSV
 import csv
 from io import TextIOWrapper
 from .create_google_user import DuplicateGmailAccountError
-from board.models import Message
+from board.models import Message, Kidoku
 from .create_google_user import Create_Google_User as register
 
 
 def MemberRegisterPermission(user):
     return user.is_superuser or\
-        user.groups.filter(name='Administer').exists()
+           user.groups.filter(name='Administer').exists()
 
 @login_required()
 def index(request):
     now_user = request.user
     register_allowed = MemberRegisterPermission(now_user)
+    midoku = Message.objects.filter(Q(years__year=request.user.year)|Q(years__year=0)).exclude(kidoku_message__user=now_user)
     messages_you_send = Message.objects.filter(sender=now_user)
     messages_you_wrote = Message.objects.filter(writer=now_user).exclude(sender=now_user)
     params = {
         'register_allowed': register_allowed,
+        'midoku': midoku,
         'yousend': messages_you_send,
         'yourmessage_otherssend': messages_you_wrote,
     }

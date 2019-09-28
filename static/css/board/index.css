@@ -17,6 +17,13 @@ article p br{
 	position: relative;
 }
 
+section.midoku h4 a{
+	color: #0645AD;
+}
+section.midoku.hover h4 a{
+	color: #0645AD;
+}
+
 div#sendlink{
 	position: fixed;
 	bottom: 3rem;
