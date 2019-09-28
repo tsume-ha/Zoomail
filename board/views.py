@@ -6,9 +6,10 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .models import Message, MessageYear, Attachment, MessageYear
+from .models import Message, MessageYear, Attachment
 from .forms import SendMessage, Search, Edit, DivErrorList
 from members.models import User
+from django.core.mail import send_mail
 import datetime
 
 def EditPermisson(user, content_id):
@@ -110,6 +111,23 @@ def send(request):
             if is_attachment == True:
                 content_data.attachments.create(attachment_file=file)
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
+
+
+            year = MessageYear.objects.get(message=content_data).year
+            if year == 0:
+                mail_list = [user.email for user in User.objects.all()]
+            else:
+                mail_list = [user.email for user in User.objects.filter(year=year)]
+            # send_mail(
+            #     content_data.title,
+            #     content_data.content,
+            #     content_data.writer.email,
+            #     mail_list,
+            #     fail_silently=False
+            #     )
+
+
+
             return redirect(to='../read/')
 
         else:

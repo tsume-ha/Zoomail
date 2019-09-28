@@ -2,7 +2,6 @@ from members.models import User
 from social_django.models import UserSocialAuth
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
-send_mail('Subject here', 'Here is the message.', 'from@example.com', ['to@example.com'], fail_silently=False)
 
 
 class DuplicateGmailAccountError(Exception):
