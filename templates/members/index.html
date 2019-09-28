@@ -27,6 +27,10 @@
 	<h5 class="d-inline-block">未読メッセージ</h5>
 	{% if midoku %}
 	<button type="submit" onclick="kidoku()" class="btn btn-outline-secondary btn-sm d-inline-block mb-1 ml-2">すべて既読にする</button>
+	<form id="kidoku_form">
+		{% csrf_token %}
+		<input type="hidden" name="kidoku" value="true">
+	</form>
 	<ul class="list-unstyled">
 		{% for message in midoku %}
 		<li class="mb-2 ml-3">
