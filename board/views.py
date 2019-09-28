@@ -6,7 +6,7 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .models import Message, MessageYear, Attachment, MessageYear, Kidoku
+from .models import Message, MessageYear, Attachment, Kidoku
 from .forms import SendMessage, Search, Edit, DivErrorList
 from members.models import User
 import datetime
