@@ -35,7 +35,7 @@
                 <span class="float-left date small p-1">{{message_letter.created_at|date:"Y/m/d (D) H:i"}}</span>
                 {% is_updated message_letter %}
                 <span class="float-left ml-4 whosent" data-userid="{{message_letter.writer.id}}">{{message_letter.writer.get_short_name}}</span>
-                <span class="float-right star">☆</span>
+                <span class="float-right star"><img src="{% static 'img/star_bk.png' %}" width="16" height="16"></span>
             </div>
             <article class="col-sm-12 my-2">
                 {{message_letter.content | MakeMessageShort}}
