@@ -7,7 +7,9 @@ a h6{
 	text-decoration: none;
 }
 a.hover,
-a.hover h6{
+a:hover,
+a.hover h6
+a:hover h6{
 	color: #001a31;
 	text-decoration: underline;
 }
