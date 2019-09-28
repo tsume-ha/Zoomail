@@ -65,3 +65,10 @@ class Tag(models.Model):
     messages = models.ManyToManyField(Message)
     def __str__(self):
         return self.name
+
+class Kidoku(models.Model):
+    message = models.ForeignKey(Message, null=False, on_delete=models.CASCADE, related_name='kidoku_message')
+    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE, related_name='kidoku_user')
+    have_read = models.BooleanField(default=True)
+    def __str__(self):
+        return self.user.get_full_name() + ' - ' + self.message.title

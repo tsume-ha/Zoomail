@@ -6,7 +6,7 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .models import Message, MessageYear, Attachment, MessageYear
+from .models import Message, MessageYear, Attachment, Kidoku
 from .forms import SendMessage, Search, Edit, DivErrorList
 from members.models import User
 import datetime
@@ -53,9 +53,10 @@ def index(request):
 @login_required()
 def content(request, id):
     message = get_object_or_404(Message, id=id)
+    now_user = request.user
 
     # 閲覧できないならば/read にリダイレクトする
-    if not message.years.all().filter(Q(year=request.user.year)|Q(year=0)).exists():
+    if not message.years.all().filter(Q(year=now_user.year)|Q(year=0)).exists():
         return redirect('/read')
 
     attachments = map(
@@ -65,9 +66,14 @@ def content(request, id):
     params = {
         'message': message,
         'attachments': attachments,
-        'edit_allowed': EditPermisson(user=request.user, content_id=id),
+        'edit_allowed': EditPermisson(user=now_user, content_id=id),
         'is_updated': is_updated(message.created_at, message.updated_at),
     }
+
+    if not Kidoku.objects.filter(message=message).filter(user=now_user).exists():
+        kidoku_content = Kidoku(message=message, user=now_user, have_read=True)
+        kidoku_content.save()
+
     return render(request, 'board/content.html', params)
 
 @login_required()
