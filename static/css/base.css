@@ -1,5 +1,20 @@
 @charset "utf-8";
 
+/*共通設定*/
+a,
+a h6{
+	color: #0a0a31;
+	text-decoration: none;
+}
+a.hover,
+a.hover h6{
+	color: #0a0a31;
+	text-decoration: underline;
+}
+
+
+/*上部メニュー設定*/
+
 header{
 	background-color: #d6eef5;
 }
