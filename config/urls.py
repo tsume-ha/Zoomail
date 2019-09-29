@@ -37,4 +37,5 @@ urlpatterns = [
     path('pictures/', include('pictures.urls')),
     path('movie/', include('movie.urls')),
     path('others/', include('otherdocs.urls')),
+    path('awase/', include('awase.urls')),
 ]
