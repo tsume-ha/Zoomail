@@ -80,8 +80,8 @@ def content(request, id):
 def ajax_bookmark(request, pk):
     if (request.method == 'POST'):
         print('post')
-        pk_bookmark = 'true'
-        return HttpResponse('pk_bookmark='+pk_bookmark)
+        bookmark = 'true'
+        return HttpResponse('bookmark='+bookmark)
 
 @login_required()
 def send(request):

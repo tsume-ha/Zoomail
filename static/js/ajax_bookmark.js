@@ -11,7 +11,12 @@ function bookmark(message_pk) {
          dataType: "text",
     })
     .done( function(data) {
-        alert(data);
+    	pk = data.replace('bookmark=', '')
+		if (pk) {
+			$('img#img_'+message_pk).attr('src', '/static/img/star_yl.png');
+		} else {
+			$('img#img_'+message_pk).attr('src', '/static/img/star_bk.png');
+		}
     })
     .fail(function() {
         // 通信失敗時の処理を記述
