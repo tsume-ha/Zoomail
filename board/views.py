@@ -6,7 +6,7 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .models import Message, MessageYear, Attachment, Kidoku
+from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, Search, Edit, DivErrorList
 from members.models import User
 import datetime
@@ -78,9 +78,17 @@ def content(request, id):
 
 @login_required()
 def ajax_bookmark(request, pk):
+    now_user = request.user
     if (request.method == 'POST'):
-        print('post')
-        bookmark = 'true'
+        if Bookmark.objects.filter(message_id__pk=pk).filter(user=now_user).exists():
+            content = Bookmark.objects.filter(message_id__pk=pk).filter(user=now_user)
+            content.delete()
+            bookmark = 'false'
+        else:
+            message = get_object_or_404(Message, pk=pk)
+            content = Bookmark(message=message, user=now_user)
+            content.save()
+            bookmark = 'true'
         return HttpResponse('bookmark='+bookmark)
 
 @login_required()
