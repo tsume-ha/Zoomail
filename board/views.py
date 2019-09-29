@@ -77,6 +77,11 @@ def content(request, id):
     return render(request, 'board/content.html', params)
 
 @login_required()
+def ajax_bookmark(request):
+    print('post')
+    return ''
+    
+@login_required()
 def send(request):
     messageForm = SendMessage(
         request.POST or None,
