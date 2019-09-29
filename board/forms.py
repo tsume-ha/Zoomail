@@ -97,6 +97,38 @@ class Search(forms.Form):
         })
     )
 
+class SearchAdvanced(forms.Form):
+    title = forms.CharField(
+        label = "",
+        required = False,
+        widget = forms.TextInput(attrs = {
+            'placeholder': '件名'
+        })
+    )
+    content = forms.CharField(
+        label = "",
+        required = False,
+        widget = forms.TextInput(attrs = {
+            'placeholder': '本文'
+        })
+    )
+    is_kaisei = forms.BoolianField(
+        label = "回生メーリスのみ",
+        required = False,
+    )
+    is_zenkai = forms.BoolianField(
+        label = "全回メーリスのみ",
+        required = False,
+    )
+    is_midoku = forms.BoolianField(
+        label = "未読メーリスのみ",
+        required = False,
+    )
+    is_marked = forms.BoolianField(
+        label = "ブックマークのみ",
+        required = False,
+    )
+
 class Edit(forms.ModelForm):
     class Meta:
         model = Message
