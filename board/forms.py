@@ -112,19 +112,19 @@ class SearchAdvanced(forms.Form):
             'placeholder': '本文'
         })
     )
-    is_kaisei = forms.BoolianField(
+    is_kaisei = forms.BooleanField(
         label = "回生メーリスのみ",
         required = False,
     )
-    is_zenkai = forms.BoolianField(
+    is_zenkai = forms.BooleanField(
         label = "全回メーリスのみ",
         required = False,
     )
-    is_midoku = forms.BoolianField(
+    is_midoku = forms.BooleanField(
         label = "未読メーリスのみ",
         required = False,
     )
-    is_marked = forms.BoolianField(
+    is_marked = forms.BooleanField(
         label = "ブックマークのみ",
         required = False,
     )
