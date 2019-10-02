@@ -34,7 +34,7 @@ $('input, select, textarea').change(function(){
 		$('#selected_year').text(value);
 	} else {
 		var html_output = '<p id="selected_year" class="ml-5">'
-		html_output += [2018,2019];
+		html_output += value;
 		html_output += '</p>';
 		$('#message_form > p:nth-child(4)').append(html_output);
 	}
