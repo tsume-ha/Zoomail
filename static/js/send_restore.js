@@ -48,12 +48,6 @@ $('input, select, textarea').change(function(){
 
 
 $('#SendMessageForm').submit(function(){
-	var is_error = $('#id_to').val() == 'error';
-	if (is_error) {
-		$('#id_to').addClass("is-invalid");
-		return false;
-	}
-
 	// when everything is successed
 	// delete local storage	
 	localStorage.clear();// DBにデータを複製するためにOFFにしていました
