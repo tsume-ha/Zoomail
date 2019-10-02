@@ -22,12 +22,12 @@
     <input type="checkbox" id="search_switch">
     <div class="searchform row mb-3">
         <label id="search_label" for="search_switch" class="col-12">検索</label>
-        <form method="post" id="nomal_search" class="row">
+        <form method="post" id="nomal_search">
             {% csrf_token %}
             {{ search }}
             <input type="submit" name="search" value="検索">
         </form>
-        <form method="post" id="advanced_search">
+        <form method="post" id="advanced_search" class="row mx-0">
             {% csrf_token %}
             {{ search_advanced }}
             <input type="submit" name="search" value="検索">

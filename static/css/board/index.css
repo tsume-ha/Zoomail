@@ -106,7 +106,7 @@ label#search_label{
 }
 
 #search_switch + div.searchform form#nomal_search{
-	display: block;
+	display: flex;
 }
 #search_switch:checked + div.searchform form#nomal_search{
 	display: none;
@@ -115,7 +115,7 @@ label#search_label{
 	display: none;
 }
 #search_switch:checked + div.searchform form#advanced_search{
-	display: block;
+	display: flex;
 }
 
 

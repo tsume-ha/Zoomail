@@ -100,36 +100,31 @@ class Search(forms.Form):
 class SearchAdvanced(forms.Form):
     title = forms.CharField(
         label = "",
-        required = False,
-        widget = forms.TextInput(attrs = {
-            'placeholder': '件名',
-            'class': 'form-control col-5',
-        })
     )
     content = forms.CharField(
         label = "",
-        required = False,
-        widget = forms.TextInput(attrs = {
-            'placeholder': '本文',
-            'class': 'form-control col-5',
-        })
     )
     is_kaisei = forms.BooleanField(
         label = "回生メーリスのみ",
-        required = False,
     )
     is_zenkai = forms.BooleanField(
         label = "全回メーリスのみ",
-        required = False,
     )
     is_midoku = forms.BooleanField(
         label = "未読メーリスのみ",
-        required = False,
     )
     is_marked = forms.BooleanField(
         label = "ブックマークのみ",
-        required = False,
     )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.required = False
+            field.widget.attrs["class"] = "toggle"
+        self.fields['title'].widget = forms.TextInput(attrs={'placeholder': '件名','class': 'form-control col-5',})
+        self.fields['content'].widget = forms.TextInput(attrs={'placeholder': '本文','class': 'form-control col-5',})
+
+
 
 class Edit(forms.ModelForm):
     class Meta:
