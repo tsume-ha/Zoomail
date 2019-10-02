@@ -96,6 +96,33 @@ div#sendlink a img{
 }
 
 
+
+#search_switch{
+	display: none;
+}
+
+label#search_label{
+	display: block;
+}
+
+#search_switch + div.searchform form#nomal_search{
+	display: block;
+}
+#search_switch:checked + div.searchform form#nomal_search{
+	display: none;
+}
+#search_switch + div.searchform form#advanced_search{
+	display: none;
+}
+#search_switch:checked + div.searchform form#advanced_search{
+	display: block;
+}
+
+
+
+
+
+
 .infinite-scroll-request{
 	max-height: 121px;
 	overflow: hidden;

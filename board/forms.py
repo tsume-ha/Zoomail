@@ -102,14 +102,16 @@ class SearchAdvanced(forms.Form):
         label = "",
         required = False,
         widget = forms.TextInput(attrs = {
-            'placeholder': '件名'
+            'placeholder': '件名',
+            'class': 'form-control col-5',
         })
     )
     content = forms.CharField(
         label = "",
         required = False,
         widget = forms.TextInput(attrs = {
-            'placeholder': '本文'
+            'placeholder': '本文',
+            'class': 'form-control col-5',
         })
     )
     is_kaisei = forms.BooleanField(

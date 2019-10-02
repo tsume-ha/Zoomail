@@ -7,7 +7,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
-from .forms import SendMessage, Search, Edit, DivErrorList
+from .forms import SendMessage, Search, SearchAdvanced, Edit, DivErrorList
 from members.models import User
 import datetime
 
@@ -45,6 +45,7 @@ def index(request):
     
     params = {
         'search': Search(),
+        'search_advanced': SearchAdvanced(),
         'message_letters': page.get_page(num),
         'is_seached': searched,
     }
