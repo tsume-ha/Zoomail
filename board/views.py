@@ -105,7 +105,7 @@ def send(request):
     }
     if (request.method == 'POST'):
         if messageForm.is_valid():
-            to = request.POST["to"]
+            to_list = request.POST.getlist("to")
             writer_pk = request.POST["written_by"]
             title = request.POST["title"]
             content = request.POST["content"]
@@ -127,7 +127,8 @@ def send(request):
                 created_at=nowtime,
             )
             content_data.save()
-            content_data.years.create(year=to)
+            for to in to_list:
+                content_data.years.create(year=to)            
             if is_attachment == True:
                 content_data.attachments.create(attachment_file=file)
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)

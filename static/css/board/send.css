@@ -59,4 +59,10 @@ select#id_to{
 	position: relative;
 	display: inline-block;
 	width: 16.5rem;
+	max-height: 2rem;
+	overflow-y: scroll;
+}
+
+select#id_to:focus{
+	max-height: 30rem;
 }

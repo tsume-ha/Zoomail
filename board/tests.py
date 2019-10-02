@@ -187,30 +187,11 @@ class AuthentificationSendTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, data['content'])
 
-    def test_send_POST_logIN_missing_YEAR(self):
-        data = {
-            'title': 'LogIN POST test missing YEAR',
-            'written_by': '2019-1',
-            'to': 'error',
-            'content': 'LogIN POST test message missing YEAR',
-        }
-        User_LogIN(self)
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 200)
-        self.assertTemplateUsed(request, 'board/send.html')
-        self.assertContains(request, data['title'])
-        self.assertContains(request, validation_error_messages['no_year'])
-        try:
-            saved_content = Message.objects.get(title=data['title'])
-            self.assertTrue(False)
-        except ObjectDoesNotExist:
-            self.assertTrue(True)
-
     def test_send_POST_logIN_missing_TITLE(self):
         data = {
             'title': '',
             'written_by': '2019-1',
-            'to': 'error',
+            'to': 0,
             'content': 'LogIN POST test message missing TITLE',
         }
         User_LogIN(self)
@@ -228,7 +209,7 @@ class AuthentificationSendTest(TestCase):
         data = {
             'title': 'LogIN POST test missing CONTENT',
             'written_by': '2019-1',
-            'to': 'error',
+            'to': 0,
             'content': '',
         }
         User_LogIN(self)
