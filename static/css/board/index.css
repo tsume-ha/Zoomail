@@ -119,9 +119,46 @@ label#search_label{
 }
 
 
+input.toggle{
+    display: none;
+}
 
 
-
+#advanced_search label{
+    display: inline-block;
+    position: relative;
+    height: 1rem;
+    padding: 0.5rem 5rem 1rem 0;
+    margin: 0.5rem 0;
+}
+#advanced_search label:before{
+	display: inline-block;
+	content: "";
+	position: absolute;
+    right: 0.75rem;
+	width: 4rem;
+	height: 2rem;
+	border: 1px solid #999;
+	border-radius: 1rem;
+}
+#advanced_search label:after{
+	display: block;
+	content: "";
+	position: absolute;
+	top: 0.75rem;
+	right: 2.9rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 0.75rem;
+	background-color: #999;
+}
+#advanced_search  label.checked:before{
+	border-color: #8ce196;
+}
+#advanced_search label.checked:after{
+	right: 0.9rem;
+	background-color: #8ce196;
+}
 
 .infinite-scroll-request{
 	max-height: 121px;
