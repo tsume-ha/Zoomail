@@ -128,36 +128,39 @@ input.toggle{
     display: inline-block;
     position: relative;
     height: 1rem;
-    padding: 0.5rem 5rem 1rem 0;
+    padding: 0.5rem 4rem 1rem 0;
     margin: 0.5rem 0;
+    font-size: 0.8rem;
 }
 #advanced_search label:before{
 	display: inline-block;
 	content: "";
 	position: absolute;
     right: 0.75rem;
-	width: 4rem;
-	height: 2rem;
+	width: 2.8rem;
+	height: 1.5rem;
 	border: 1px solid #999;
 	border-radius: 1rem;
+	transition: 0.2s;
 }
 #advanced_search label:after{
 	display: block;
 	content: "";
 	position: absolute;
-	top: 0.75rem;
-	right: 2.9rem;
-	width: 1.5rem;
-	height: 1.5rem;
+	top: 0.65rem;
+	right: 2.15rem;
+	width: 1.2rem;
+	height: 1.2rem;
 	border-radius: 0.75rem;
 	background-color: #999;
+	transition: 0.2s;
 }
-#advanced_search  label.checked:before{
-	border-color: #8ce196;
+#advanced_search input:checked + label:before{
+	border-color: #0ee08a;
 }
-#advanced_search label.checked:after{
-	right: 0.9rem;
-	background-color: #8ce196;
+#advanced_search input:checked + label:after{
+	right: 0.95rem;
+	background-color: #0ee08a;
 }
 
 .infinite-scroll-request{

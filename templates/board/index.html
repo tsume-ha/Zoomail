@@ -22,15 +22,25 @@
     <input type="checkbox" id="search_switch">
     <div class="searchform row mb-3">
         <label id="search_label" for="search_switch" class="col-12">検索</label>
-        <form method="post" id="nomal_search">
+        <form method="post" id="nomal_search" class="mx-2">
             {% csrf_token %}
             {{ search }}
-            <input type="submit" name="search" value="検索">
+            <input type="submit" name="search" value="検索" class="btn btn-info btn-sm ml-2">
         </form>
-        <form method="post" id="advanced_search" class="row mx-0">
+        <form method="post" id="advanced_search" class="row mx-2">
             {% csrf_token %}
-            {{ search_advanced }}
-            <input type="submit" name="search" value="検索">
+            {{ search_advanced.title }}
+            {{ search_advanced.content }}
+            {{ search_advanced.is_kaisei }}
+            {{ search_advanced.is_kaisei.label_tag }}
+            {{ search_advanced.is_zenkai }}
+            {{ search_advanced.is_zenkai.label_tag }}
+            {{ search_advanced.is_midoku }}
+            {{ search_advanced.is_midoku.label_tag }}
+            {{ search_advanced.is_marked }}
+            {{ search_advanced.is_marked.label_tag }}
+            <div class="col-sm-12 mx-0 px-0"><input type="submit" name="search" value="検索" class="btn btn-info btn-sm"></div>
+            
         </form>
 
     </div>
@@ -99,13 +109,6 @@ $(function(){
     const yellow_src = "{% static 'img/star_yl.png' %}";
     img.src = yellow_src;
 })
-
-
-$('.toggle').change(function(){
-    //
-})
-
-
 </script>
 <script src="{% static 'js/ajax_bookmark.js' %}"></script>
 {% endblock %}

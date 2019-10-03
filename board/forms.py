@@ -93,7 +93,8 @@ class Search(forms.Form):
         label = "",
         required = False,
         widget = forms.TextInput(attrs = {
-            'placeholder': '件名・本文で検索'
+            'placeholder': '件名・本文で検索',
+            'class': 'form-control'
         })
     )
 
@@ -121,7 +122,7 @@ class SearchAdvanced(forms.Form):
         for field in self.fields.values():
             field.required = False
             field.widget.attrs["class"] = "toggle"
-        self.fields['title'].widget = forms.TextInput(attrs={'placeholder': '件名','class': 'form-control col-5',})
+        self.fields['title'].widget = forms.TextInput(attrs={'placeholder': '件名','class': 'form-control col-5 mr-3',})
         self.fields['content'].widget = forms.TextInput(attrs={'placeholder': '本文','class': 'form-control col-5',})
 
 
