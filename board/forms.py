@@ -99,10 +99,7 @@ class Search(forms.Form):
     )
 
 class SearchAdvanced(forms.Form):
-    title = forms.CharField(
-        label = "",
-    )
-    content = forms.CharField(
+    text = forms.CharField(
         label = "",
     )
     is_kaisei = forms.BooleanField(
@@ -122,8 +119,10 @@ class SearchAdvanced(forms.Form):
         for field in self.fields.values():
             field.required = False
             field.widget.attrs["class"] = "toggle"
-        self.fields['title'].widget = forms.TextInput(attrs={'placeholder': '件名','class': 'form-control col-5 mr-3',})
-        self.fields['content'].widget = forms.TextInput(attrs={'placeholder': '本文','class': 'form-control col-5',})
+        self.fields['text'].widget = forms.TextInput(attrs={
+            'placeholder': '件名・本文で検索',
+            'class': 'form-control col-12 formtext',
+            })
 
 
 

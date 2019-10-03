@@ -118,6 +118,9 @@ label#search_label{
 	display: flex;
 }
 
+.formtext{
+/*	max-width: 500px;*/
+}
 
 input.toggle{
     display: none;

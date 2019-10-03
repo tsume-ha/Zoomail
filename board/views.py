@@ -21,18 +21,37 @@ def is_updated(created_at, updated_at):
 
 @login_required()
 def index(request):
-
+    now_user = request.user
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(
-        Q(years__year=request.user.year) | Q(years__year=0))
+        Q(years__year=now_user.year) | Q(years__year=0))
 
     searched = False
     if (request.method == 'POST'):
-        str = request.POST['text']
-        if (str != ''):            
-            query = query.filter(Q(years__year=request.user.year) | Q(
-                years__year=0)).filter(Q(content__contains=str) | Q(title__contains=str))
-            searched = True
+        form_names = ['text', 'is_kaisei', 'is_zenkai', 'is_midoku', 'is_marked']
+        for name in form_names:
+            try:
+                inputdata = request.POST[name]
+            except MultiValueDictKeyError:
+                continue
+            if name == 'text':
+                if (inputdata != ''):
+                    query = query.filter(Q(content__contains=str) | Q(title__contains=str))
+                    searched = True
+            else:
+                if inputdata == 'on':
+                    if name == 'is_kaisei':
+                        query = query.filter(years__year=now_user.year)
+                        searched = True
+                    elif name == 'is_zenkai':
+                        query = query.filter(years__year=0)
+                        searched = True
+                    elif name == 'is_midoku':
+                        query = query.exclude(kidoku_message__user=now_user)
+                        searched = True
+                    elif name == 'is_marked':
+                        query = query.filter(bookmark_message__user=now_user)
+                        searched = True
 
     message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
     page = Paginator(message_letters, 10)

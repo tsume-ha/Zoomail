@@ -29,8 +29,7 @@
         </form>
         <form method="post" id="advanced_search" class="row mx-2">
             {% csrf_token %}
-            {{ search_advanced.title }}
-            {{ search_advanced.content }}
+            {{ search_advanced.text }}
             {{ search_advanced.is_kaisei }}
             {{ search_advanced.is_kaisei.label_tag }}
             {{ search_advanced.is_zenkai }}
