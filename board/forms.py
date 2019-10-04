@@ -87,15 +87,33 @@ class SendMessage(forms.Form):
         validators = [validate_attachmentfile],
     )
 
-
-class Search(forms.Form):
+class SearchAdvanced(forms.Form):
     text = forms.CharField(
         label = "",
-        required = False,
-        widget = forms.TextInput(attrs = {
-            'placeholder': '件名・本文で検索'
-        })
     )
+    is_kaisei = forms.BooleanField(
+        label = "回生メーリスのみ",
+    )
+    is_zenkai = forms.BooleanField(
+        label = "全回メーリスのみ",
+    )
+    is_midoku = forms.BooleanField(
+        label = "未読メーリスのみ",
+    )
+    is_marked = forms.BooleanField(
+        label = "ブックマークのみ",
+    )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.required = False
+            field.widget.attrs["class"] = "toggle"
+        self.fields['text'].widget = forms.TextInput(attrs={
+            'placeholder': '件名・本文で検索',
+            'class': 'form-control formtext',
+            })
+
+
 
 class Edit(forms.ModelForm):
     class Meta:
