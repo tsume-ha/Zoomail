@@ -1,0 +1,24 @@
+section{
+	margin: 1rem 0;
+}
+
+section#calendar table thead tr th{
+	padding: 3px;
+	text-align: center;
+	font-size: 0.75rem;
+}
+section#calendar table tbody{
+	position: relative;
+}
+
+section#calendar table tbody div.time{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: none;
+}
+td{
+	width: 14.285%;
+	height: 50px;
+}

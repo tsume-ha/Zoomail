@@ -1,48 +1,99 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}その他・各種書類 | UnpluggedMessage{% endblock %}
+{% block title %}あわせのあわせ | UnpluggedMessage{% endblock %}
 
 {% block extrastyle %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/awase/calendar.css' %}">
 {% endblock %}
 
 {% block body %}
-<h3 class="my-1">その他・各種書類</h3>
-<p class="py-2">
-	その他のファイルはこちらです。
-</p>
+<h3 class="my-1">あわせのあわせ</h3>
 
-<section class="list-group list-group-flush mb-3">
-	<a href="/private-media/others/notes_of_rehearsal_comment.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
-		<h6 class="d-inline-block m-0">リハーサル コメントの注意点</h6>
-	</a>
-	<a href="/private-media/others/meibo_template_2019.pdf" target="_blank" class="list-group-item list-group-item-action p-2 mb-3">
-		<h6 class="d-inline-block m-0">2019年度 アンプラ名簿 テンプレート</h6>
-	</a>
-	<a href="/private-media/others/setting_2017.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
-		<h6 class="d-inline-block m-0">セッティング覚え書き</h6>
-		<span class="small m-0 pl-2 text-dark">番号の変更などが行われたため, 2017/11/17 更新しました</span>
-	</a>
-	<a href="/private-media/others/setlist_template.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
-		<h6 class="d-inline-block m-0">セットリスト テンプレート</h6>
-		<span class="small m-0 pl-2 text-dark">2017/3/25 更新しました</span>
-	</a>
-	<a href="/private-media/others/setlist_sample.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
-		<h6 class="d-inline-block m-0">セットリスト 見本</h6>
-		<span class="small m-0 pl-2 text-dark">2017/5/28 更新しました</span>
-	</a>
-	<a href="/private-media/others/notes_of_classroom_2010.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
-		<h6 class="d-inline-block m-0">教室を使うときの注意</h6>
-	</a>
-	<a href="/private-media/others/notes_of_passage_2010.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
-		<h6 class="d-inline-block m-0">廊下の使用・教室の追加申請について</h6>
-	</a>
-	<a href="/private-media/others/instructions_for_freshmen_1of2_plactice.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
-		<h6 class="d-inline-block m-0">新人ライブ説明会資料1(合わせ編)</h6>
-	</a>
-	<a href="/private-media/others/instructions_for_freshmen_2of2_set_equipment.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
-		<h6 class="d-inline-block m-0">新人ライブ説明会資料2(リハ・本番機材出し編)</h6>
-	</a>
+<section id="calendar">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>10/1<br>(火)</th>
+				<th>10/2<br>(水)</th>
+				<th>10/3<br>(木)</th>
+				<th>10/4<br>(金)</th>
+				<th>10/5<br>(土)</th>
+				<th>10/6<br>(日)</th>
+				<th>10/7<br>(月)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<div id="time">
+				18:00<br>
+				19:00<br>
+			</div>
+		</tbody>
+	</table>
 </section>
 
 {% endblock %}
