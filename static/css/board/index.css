@@ -95,32 +95,9 @@ div#sendlink a img{
 	display: flex;
 }
 
-
-
-#search_switch{
-	display: none;
-}
-
-label#search_label{
-	display: block;
-}
-
-#search_switch + div.searchform form#nomal_search{
-	display: flex;
-}
-#search_switch:checked + div.searchform form#nomal_search{
-	display: none;
-}
-#search_switch + div.searchform form#advanced_search{
-	display: none;
-}
-#search_switch:checked + div.searchform form#advanced_search{
-	display: flex;
-}
-
-.formtext{
-	max-width: 500px;
-	display: block;
+input.formtext{
+	width: calc(100% - 62px);
+	max-width: 400px;
 }
 
 input.toggle{

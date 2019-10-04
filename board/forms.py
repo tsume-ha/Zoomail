@@ -87,17 +87,6 @@ class SendMessage(forms.Form):
         validators = [validate_attachmentfile],
     )
 
-
-class Search(forms.Form):
-    text = forms.CharField(
-        label = "",
-        required = False,
-        widget = forms.TextInput(attrs = {
-            'placeholder': '件名・本文で検索',
-            'class': 'form-control'
-        })
-    )
-
 class SearchAdvanced(forms.Form):
     text = forms.CharField(
         label = "",
@@ -121,7 +110,7 @@ class SearchAdvanced(forms.Form):
             field.widget.attrs["class"] = "toggle"
         self.fields['text'].widget = forms.TextInput(attrs={
             'placeholder': '件名・本文で検索',
-            'class': 'form-control col-12 formtext',
+            'class': 'form-control formtext',
             })
 
 

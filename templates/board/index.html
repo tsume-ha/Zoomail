@@ -19,17 +19,13 @@
             <img src="{% static 'img/send.svg' %}" height="50" width="50">
         </a>
     </div>
-    <input type="checkbox" id="search_switch">
     <div class="searchform row mb-3">
-        <label id="search_label" for="search_switch" class="col-12">検索</label>
-        <form method="post" id="nomal_search" class="mx-2">
+        <form method="post" id="advanced_search" class="row mx-2 mt-2">
             {% csrf_token %}
-            {{ search }}
-            <input type="submit" name="search" value="検索" class="btn btn-info btn-sm ml-2">
-        </form>
-        <form method="post" id="advanced_search" class="row mx-2">
-            {% csrf_token %}
-            <div class="col-sm-12 mx-0 px-0">{{ search_advanced.text }}</div>
+            <div class="col-sm-12 row mx-0 px-0">
+                {{ search_advanced.text }}
+                <input type="submit" name="search" value="検索" class="submit btn btn-info btn-sm ml-3">
+            </div>
             {{ search_advanced.is_kaisei }}
             {{ search_advanced.is_kaisei.label_tag }}
             {{ search_advanced.is_zenkai }}
@@ -38,7 +34,6 @@
             {{ search_advanced.is_midoku.label_tag }}
             {{ search_advanced.is_marked }}
             {{ search_advanced.is_marked.label_tag }}
-            <div class="col-sm-12 mx-0 my-2 p-0"><input type="submit" name="search" value="検索" class="btn btn-info btn-sm"></div>
             
         </form>
 
