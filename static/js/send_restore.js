@@ -33,7 +33,7 @@ $('input, select, textarea').change(function(){
 	if ($('#selected_year').length) {
 		$('#selected_year').text(value);
 	} else {
-		var html_output = '<p id="selected_year" class="ml-5">'
+		var html_output = '<p id="selected_year">'
 		html_output += value;
 		html_output += '</p>';
 		$('#message_form > p:nth-child(4)').append(html_output);
