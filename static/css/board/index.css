@@ -119,7 +119,8 @@ label#search_label{
 }
 
 .formtext{
-/*	max-width: 500px;*/
+	max-width: 500px;
+	display: block;
 }
 
 input.toggle{
