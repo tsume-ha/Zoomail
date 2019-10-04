@@ -109,17 +109,19 @@ input.toggle{
     display: inline-block;
     position: relative;
     height: 1rem;
-    padding: 0.5rem 4rem 1rem 0;
-    margin: 0.5rem 0;
-    font-size: 0.8rem;
+    padding: 0.5rem 3rem 1rem 0;
+    margin: 0 0 0.5rem;
+    font-size: 0.7rem;
+    line-height: 0.7rem;
 }
 #advanced_search label:before{
 	display: inline-block;
 	content: "";
 	position: absolute;
-    right: 0.75rem;
-	width: 2.8rem;
-	height: 1.5rem;
+    right: 0.4rem;
+    top: 0.3rem;
+	width: 2.4rem;
+	height: 1.3rem;
 	border: 1px solid #999;
 	border-radius: 1rem;
 	transition: 0.2s;
@@ -128,10 +130,10 @@ input.toggle{
 	display: block;
 	content: "";
 	position: absolute;
-	top: 0.65rem;
-	right: 2.15rem;
-	width: 1.2rem;
-	height: 1.2rem;
+	top: 0.45rem;
+	right: 1.6rem;
+	width: 1.05rem;
+	height: 1.05rem;
 	border-radius: 0.75rem;
 	background-color: #999;
 	transition: 0.2s;
@@ -140,7 +142,7 @@ input.toggle{
 	border-color: #0ee08a;
 }
 #advanced_search input:checked + label:after{
-	right: 0.95rem;
+	right: 0.55rem;
 	background-color: #0ee08a;
 }
 

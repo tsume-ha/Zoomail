@@ -23,8 +23,7 @@ def is_updated(created_at, updated_at):
 def index(request):
     now_user = request.user
     # ログインしているユーザーの年度だけ含める
-    query = Message.objects.filter(
-        Q(years__year=now_user.year) | Q(years__year=0))
+    query = Message.objects.filter(Q(years__year=now_user.year) | Q(years__year=0))
 
     searched = False
     if (request.method == 'POST'):
