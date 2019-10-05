@@ -76,46 +76,33 @@ class SendMessage(forms.Form):
             field.widget.attrs["class"] = "form-control"
         self.fields['attachmentfile'].widget.attrs["class"] = ""
 
-class Search(forms.Form):
+class SearchAdvanced(forms.Form):
     text = forms.CharField(
         label = "",
-        required = False,
-        widget = forms.TextInput(attrs = {
-            'placeholder': '件名・本文で検索'
-        })
-    )
-
-class SearchAdvanced(forms.Form):
-    title = forms.CharField(
-        label = "",
-        required = False,
-        widget = forms.TextInput(attrs = {
-            'placeholder': '件名'
-        })
-    )
-    content = forms.CharField(
-        label = "",
-        required = False,
-        widget = forms.TextInput(attrs = {
-            'placeholder': '本文'
-        })
     )
     is_kaisei = forms.BooleanField(
         label = "回生メーリスのみ",
-        required = False,
     )
     is_zenkai = forms.BooleanField(
         label = "全回メーリスのみ",
-        required = False,
     )
     is_midoku = forms.BooleanField(
         label = "未読メーリスのみ",
-        required = False,
     )
     is_marked = forms.BooleanField(
         label = "ブックマークのみ",
-        required = False,
     )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.required = False
+            field.widget.attrs["class"] = "toggle"
+        self.fields['text'].widget = forms.TextInput(attrs={
+            'placeholder': '件名・本文で検索',
+            'class': 'form-control formtext',
+            })
+
+
 
 class Edit(forms.ModelForm):
     class Meta:

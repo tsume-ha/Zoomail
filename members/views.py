@@ -26,6 +26,15 @@ def index(request):
     midoku = Message.objects.filter(Q(years__year=request.user.year)|Q(years__year=0)).exclude(kidoku_message__user=now_user)
     messages_you_send = Message.objects.filter(sender=now_user)
     messages_you_wrote = Message.objects.filter(writer=now_user).exclude(sender=now_user)
+
+    if (request.method == 'POST'):
+        is_kidoku = request.POST["kidoku"]
+        if is_kidoku == 'true':
+            for message in midoku:
+                content = Kidoku(message=message, user=now_user, have_read=True)
+                content.save()
+
+
     params = {
         'register_allowed': register_allowed,
         'midoku': midoku,
