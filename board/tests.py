@@ -140,12 +140,12 @@ class AuthentificationSendTest(TestCase):
         url_redial_to = response.url
         response = self.client.get(url_redial_to)
         self.assertEqual(response.status_code, 200)
-        # self.assertContains(response, 'Google account')
+        self.assertTemplateUsed(response, 'admin/login.html')
 
     def test_send_POST_logOUT(self):
         data = {
             'title': 'LogOUT POST test',
-            'to': 0,
+            'to': [0],
             'content': 'LogOUT POST test message',
         }
         User_LogOUT(self)
@@ -154,7 +154,7 @@ class AuthentificationSendTest(TestCase):
         url_redial_to = request.url
         response = self.client.get(url_redial_to)
         self.assertEqual(response.status_code, 200)
-        # self.assertContains(response, 'Google account')
+        self.assertTemplateUsed(response, 'admin/login.html')
 
         try:
             saved_content = Message.objects.get(title=data['title'])
@@ -169,10 +169,11 @@ class AuthentificationSendTest(TestCase):
             'title': 'LogIN POST test',
             'year_choice': user.year,
             'written_by': str(user.year).zfill(4) + '-' + str(user.pk),
-            'to': 0,
+            'to': ['0'],
             'content': 'LogIN POST test message',
         }
         request = self.client.post('/send/', data)
+        # print(request.content.decode('utf-8'))
         self.assertEqual(request.status_code, 302)
         url_redial_to = request.url
         self.assertEqual(url_redial_to, '../read/')
@@ -191,7 +192,7 @@ class AuthentificationSendTest(TestCase):
         data = {
             'title': '',
             'written_by': '2019-1',
-            'to': 0,
+            'to': [0],
             'content': 'LogIN POST test message missing TITLE',
         }
         User_LogIN(self)
@@ -209,7 +210,7 @@ class AuthentificationSendTest(TestCase):
         data = {
             'title': 'LogIN POST test missing CONTENT',
             'written_by': '2019-1',
-            'to': 0,
+            'to': [0],
             'content': '',
         }
         User_LogIN(self)

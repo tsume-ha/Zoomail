@@ -47,11 +47,9 @@ class SendMessage(forms.Form):
         error_messages={'required': validation_error_messages['no_title']}
     )
     year_choice = forms.ChoiceField(# No POSTed DATA is USED in VIEW.PY, This Form is used only for JS
-        choices = [(year['year'],year['year']) for year in User.objects.all().order_by('year').reverse().values('year').distinct()],
         label = "From"
     )
     written_by = forms.ChoiceField(
-        choices = lambda: [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')],
         label = "送信元",
     )
     to = forms.MultipleChoiceField(
