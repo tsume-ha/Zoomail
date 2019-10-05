@@ -118,12 +118,15 @@ def send(request):
         initial={'written_by': str(request.user.year)+'-'+str(request.user.pk),
                  'year_choice': request.user.year}
     )
+    years = User.objects.order_by().values('year').distinct()
+    messageForm.fields['year_choice'].choices = [(q['year'],q['year']) for q in years]
+    messageForm.fields['written_by'].choices = [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')]
     params = {
         'message_form': messageForm,
     }
     if (request.method == 'POST'):
         if messageForm.is_valid():
-            to = request.POST["to"]
+            to_list = request.POST.getlist("to")
             writer_pk = request.POST["written_by"]
             title = request.POST["title"]
             content = request.POST["content"]
@@ -145,14 +148,15 @@ def send(request):
                 created_at=nowtime,
             )
             content_data.save()
-            content_data.years.create(year=to)
+            for to in to_list:
+                content_data.years.create(year=to)            
             if is_attachment == True:
                 content_data.attachments.create(attachment_file=file)
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
             return redirect(to='../read/')
 
         else:
-            # validation error
+            # print('validation error')
             params['JSstop'] = True
 
     return render(request, 'board/send.html', params)
