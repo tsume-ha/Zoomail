@@ -23,13 +23,22 @@ function cancel_restore(){
 }
 
 $('input, select, textarea').change(function(){
-	// 宛先を未選択のとき
-	var is_error = $('#id_to').val() == 'error';
-	if (is_error) {
-		$('#id_to').addClass("is-invalid");
-	}　else {
-		$('#id_to').removeClass("is-invalid");
+	// 宛先の選択を表示
+	var value = $('#id_to').val();
+	for (var i = 0; i < value.length; i++) {
+		if (value[i] == 0) {
+			value[i] = '全回';
+		}
 	}
+	if ($('#selected_year').length) {
+		$('#selected_year').text(value);
+	} else {
+		var html_output = '<p id="selected_year">'
+		html_output += value;
+		html_output += '</p>';
+		$('#message_form > p:nth-child(4)').append(html_output);
+	}
+
 
 	// title storage保存
 	var title = $('#id_title').val();
@@ -48,12 +57,6 @@ $('input, select, textarea').change(function(){
 
 
 $('#SendMessageForm').submit(function(){
-	var is_error = $('#id_to').val() == 'error';
-	if (is_error) {
-		$('#id_to').addClass("is-invalid");
-		return false;
-	}
-
 	// when everything is successed
 	// delete local storage	
 	localStorage.clear();// DBにデータを複製するためにOFFにしていました

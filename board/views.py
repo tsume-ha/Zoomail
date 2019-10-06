@@ -6,8 +6,8 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .models import Message, MessageYear, Attachment, Kidoku
-from .forms import SendMessage, Search, Edit, DivErrorList
+from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
+from .forms import SendMessage, SearchAdvanced, Edit, DivErrorList
 from members.models import User
 import datetime
 
@@ -21,18 +21,36 @@ def is_updated(created_at, updated_at):
 
 @login_required()
 def index(request):
-
+    now_user = request.user
     # ログインしているユーザーの年度だけ含める
-    query = Message.objects.filter(
-        Q(years__year=request.user.year) | Q(years__year=0))
+    query = Message.objects.filter(Q(years__year=now_user.year) | Q(years__year=0))
 
     searched = False
     if (request.method == 'POST'):
-        str = request.POST['text']
-        if (str != ''):            
-            query = query.filter(Q(years__year=request.user.year) | Q(
-                years__year=0)).filter(Q(content__contains=str) | Q(title__contains=str))
-            searched = True
+        form_names = ['text', 'is_kaisei', 'is_zenkai', 'is_midoku', 'is_marked']
+        for name in form_names:
+            try:
+                inputdata = request.POST[name]
+            except MultiValueDictKeyError:
+                continue
+            if name == 'text':
+                if (inputdata != ''):
+                    query = query.filter(Q(content__contains=str) | Q(title__contains=str))
+                    searched = True
+            else:
+                if inputdata == 'on':
+                    if name == 'is_kaisei':
+                        query = query.filter(years__year=now_user.year)
+                        searched = True
+                    elif name == 'is_zenkai':
+                        query = query.filter(years__year=0)
+                        searched = True
+                    elif name == 'is_midoku':
+                        query = query.exclude(kidoku_message__user=now_user)
+                        searched = True
+                    elif name == 'is_marked':
+                        query = query.filter(bookmark_message__user=now_user)
+                        searched = True
 
     message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
     page = Paginator(message_letters, 10)
@@ -44,7 +62,7 @@ def index(request):
         num = 1
     
     params = {
-        'search': Search(),
+        'search_advanced': SearchAdvanced(),
         'message_letters': page.get_page(num),
         'is_seached': searched,
     }
@@ -77,6 +95,21 @@ def content(request, id):
     return render(request, 'board/content.html', params)
 
 @login_required()
+def ajax_bookmark(request, pk):
+    now_user = request.user
+    if (request.method == 'POST'):
+        if Bookmark.objects.filter(message_id__pk=pk).filter(user=now_user).exists():
+            content = Bookmark.objects.filter(message_id__pk=pk).filter(user=now_user)
+            content.delete()
+            bookmark = 'false'
+        else:
+            message = get_object_or_404(Message, pk=pk)
+            content = Bookmark(message=message, user=now_user)
+            content.save()
+            bookmark = 'true'
+        return HttpResponse('bookmark='+bookmark)
+
+@login_required()
 def send(request):
     messageForm = SendMessage(
         request.POST or None,
@@ -85,12 +118,15 @@ def send(request):
         initial={'written_by': str(request.user.year)+'-'+str(request.user.pk),
                  'year_choice': request.user.year}
     )
+    years = User.objects.order_by().values('year').distinct()
+    messageForm.fields['year_choice'].choices = [(q['year'],q['year']) for q in years]
+    messageForm.fields['written_by'].choices = [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')]
     params = {
         'message_form': messageForm,
     }
     if (request.method == 'POST'):
         if messageForm.is_valid():
-            to = request.POST["to"]
+            to_list = request.POST.getlist("to")
             writer_pk = request.POST["written_by"]
             title = request.POST["title"]
             content = request.POST["content"]
@@ -112,14 +148,15 @@ def send(request):
                 created_at=nowtime,
             )
             content_data.save()
-            content_data.years.create(year=to)
+            for to in to_list:
+                content_data.years.create(year=to)            
             if is_attachment == True:
                 content_data.attachments.create(attachment_file=file)
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
             return redirect(to='../read/')
 
         else:
-            # validation error
+            # print('validation error')
             params['JSstop'] = True
 
     return render(request, 'board/send.html', params)
