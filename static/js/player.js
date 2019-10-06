@@ -44,7 +44,7 @@ function music_start(){
 function load(href,number,title) {
 	music_pause();
 	$('#waveloading').css('display','block');
-	$('#waveloading').html('Now Loading... ' + title + '<span class="nowloading"> </span>');
+	$('#loadtext').text('Now Loading... ' + title);
 	$('#songtitle').html('<h4><span>' + number + '.</span>' + title + '</h4>');
 	wavesurfer.load(href);
 	PlayingFileNum = number;
@@ -55,8 +55,15 @@ wavesurfer.on('ready', function () {
 });
 
 
-
-
+wavesurfer.on('loading', function (value) {
+	console.log(value);
+	if (value >= 100) {
+		$('#loadprogress').text(' ...' + String(value) + ' % 波形絵画中');
+	} else {
+		$('#loadprogress').text(' ...' + String(value) + ' %');
+	}
+	
+});
 
 
 
