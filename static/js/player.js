@@ -58,7 +58,7 @@ wavesurfer.on('ready', function () {
 wavesurfer.on('loading', function (value) {
 	console.log(value);
 	if (value >= 100) {
-		$('#loadprogress').text(' ...' + String(value) + ' % 波形絵画中');
+		$('#loadprogress').text(' ...' + String(value) + ' % 波形出力中');
 	} else {
 		$('#loadprogress').text(' ...' + String(value) + ' %');
 	}

@@ -24,7 +24,7 @@
 	</div>
 </div>
 <div id="waveloading" class="p-4">
-	<span id="loadtext">下のリストからロードする曲を選択してください</span>
+	<span id="loadtext">下のリストでロードする曲をクリックしてください</span>
 	<span id="loadprogress"></span>
 </div>
 <div id="waveform"></div>
@@ -40,7 +40,7 @@
 
 <div id="songlist" class="row my-3">
 	{% for Song in Songs %}
-	<div class="col-sm-12  border-bottom py-1" onclick="load('{{Song.file.url}}','{{Song.track_num}}','{{Song.song_name}}')"
+	<div class="songselect col-sm-12  border-bottom py-1" onclick="load('{{Song.file.url}}','{{Song.track_num}}','{{Song.song_name}}')"
 	data-track="{{Song.track_num}}" data-url="{{Song.file.url}}" data-name="{{Song.song_name}}">
 		<span class="songnum float-left ml-1 mr-2">{{Song.track_num}}.</span>
 		<span class="songname float-left ml-0 pl-0">{{Song.song_name}}</span>
@@ -53,7 +53,7 @@
 </div>
 
 
-<script src="https://unpkg.com/wavesurfer.js"></script>
+<script src="{% static 'js/wavesurfer.min.js' %}"></script>
 <!-- <script src="{% static 'js/wavesurfer.timeline.js' %}"></script> -->
 <script src="{% static 'js/player.js' %}"></script>
 <script type="text/javascript">
