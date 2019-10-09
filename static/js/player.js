@@ -47,12 +47,12 @@ function load(href,number,title) {
 	$('#loadtext').text('Now Loading... ' + title);
 	$('#songtitle').html('<h4><span>' + number + '.</span>' + title + '</h4>');
 	wavesurfer.load(href);
-	PlayingFileNum = number;
+	PlayingFileNum = Number(number);
 }
 
 wavesurfer.on('ready', function () {
 	$('#waveloading').css('display','none');
-	
+
     var timeline = Object.create(WaveSurfer.Timeline);
     timeline.init({
         wavesurfer: wavesurfer,
@@ -62,7 +62,6 @@ wavesurfer.on('ready', function () {
 
 
 wavesurfer.on('loading', function (value) {
-	console.log(value);
 	if (value >= 100) {
 		$('#loadprogress').text(' ...' + String(value) + ' % 波形出力中');
 	} else {
@@ -87,7 +86,7 @@ $(document).on('click',"#forward",function(){
 })
 $(document).on('click',"#next",function(){
 	music_pause();
-	NextNum = (PlayingFileNum % AllFileNum) + 1;
+	NextNum = (Number(PlayingFileNum) % Number(AllFileNum)) + 1;
 	target = '#songlist>div:nth-child(' + NextNum + ')';
 	url = $(target).data('url');
 	title = $(target).data('name');
@@ -97,15 +96,20 @@ $(document).on('click',"#next",function(){
 	});
 })
 $(document).on('click',"#prev",function(){
-	music_pause();
-	NextNum = (PlayingFileNum + AllFileNum - 2) % AllFileNum + 1;
-	target = '#songlist>div:nth-child(' + NextNum + ')';
-	url = $(target).data('url');
-	title = $(target).data('name');
-	load(url,NextNum,title);
-	wavesurfer.on('ready', function(){
-		music_start();
-	});
+	var currenttime = wavesurfer.getCurrentTime();
+	if (currenttime < 10) {
+		NextNum = (Number(PlayingFileNum) + Number(AllFileNum) - 2) % Number(AllFileNum) + 1;
+		target = '#songlist>div:nth-child(' + NextNum + ')';
+		url = $(target).data('url');
+		title = $(target).data('name');
+		load(url,NextNum,title);
+		wavesurfer.on('ready', function(){
+			music_start();
+		});
+	} else {
+		wavesurfer.stop();
+		music_pause();
+	}
 })
 
 
