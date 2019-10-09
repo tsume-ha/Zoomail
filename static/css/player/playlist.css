@@ -32,6 +32,11 @@
 	left:3px;
 }
 
+
+div.songselect{
+	cursor: pointer;
+}
+
 #songtitle h4 span{
 	margin-right: 0.5rem;
 	font-size: 1.25rem;
