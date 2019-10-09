@@ -52,6 +52,12 @@ function load(href,number,title) {
 
 wavesurfer.on('ready', function () {
 	$('#waveloading').css('display','none');
+	
+    var timeline = Object.create(WaveSurfer.Timeline);
+    timeline.init({
+        wavesurfer: wavesurfer,
+        container: '#wavetimeline'
+    });
 });
 
 
