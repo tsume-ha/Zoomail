@@ -118,13 +118,10 @@ def send(request):
                 mail_list = [user.email for user in User.objects.all()]
             else:
                 mail_list = [user.email for user in User.objects.filter(year=year)]
-            # send_mail(
-            #     content_data.title,
-            #     content_data.content,
-            #     content_data.writer.email,
-            #     mail_list,
-            #     fail_silently=False
-            #     )
+            datatuple = ((content_data.title, content_data.content, content_data.writer.email, [subject_to])\
+                for subject_to in mail_list)
+            # success_num = send_mass_mail(datatuple)
+            # django_messages.success(request, 'メール送信件数 : '+success_num)
 
 
 
