@@ -26,7 +26,7 @@
 	{% for calendar in calendars %}
 	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
 		<article class="card m-2">
-			<a href="{% url 'awase_calendar' calendar.pk %}" class="card-body pb-1">
+			<a href="{% url 'awase_calendar' calendar.pk %}" class="card-body">
 				<h5 class="card-title　float-left mb-2">{{ calendar.title }}</h5>
 				<h6 class="card-subtitle float-right small">Created : {{ calendar.created_at | date:"Y/m/d D" }}</h6>
 			</a>

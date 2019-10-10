@@ -1,12 +1,13 @@
 from django.db import models
 from members.models import User
-from django.utils import timezone
+import datetime
 
 class Calendar(models.Model):
     title = models.CharField(max_length=200, verbose_name='Title')
+    text = models.CharField(max_length=400, blank=True, verbose_name='Description')
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='calendar_creater')
-    days_begin = models.DateField(default=timezone.datetime.today())
-    days_end = models.DateField(default=timezone.datetime.today() + timezone.timedelta(days=100))
+    days_begin = models.DateField(default=datetime.date.today())
+    days_end = models.DateField(default=datetime.date.today()+datetime.timedelta(days=60))
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
