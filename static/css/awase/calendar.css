@@ -15,12 +15,14 @@ section{
 
 #calendar div.leftside{
 	width: 40px;
-	padding: 3px 5px;
+	padding: 0 5px;
 	font-size: 10px;
+	border-left: 1px solid #eee;
 }
 
 #calendar div div{
-	border: 0.5px solid #eee;
+	border-bottom: 1px solid #eee;
+	border-right: 1px solid #eee;
 }
 
 #calendar div.date div{
@@ -28,6 +30,7 @@ section{
 	text-align: center;
 	width: calc((100% - 40px) / 7);
 	padding: 5px 0;
+	border-top: 1px solid #eee;
 }
 
 #calendar div.room div{

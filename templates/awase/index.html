@@ -14,13 +14,9 @@
 <section id="calendar">
 	<div class="date">
 		<div class="leftside"> </div>
-		<div>10/10<br>(月)</div>
-		<div>10/11<br>(火)</div>
-		<div>10/12<br>(水)</div>
-		<div>10/13<br>(木)</div>
-		<div>10/14<br>(金)</div>
-		<div>10/15<br>(土)</div>
-		<div>10/16<br>(日)</div>
+		{% for date in datetuple %}
+		<div>{{date | date:"n/j"}}<br>{{date | date:"D"}}</div>
+		{% endfor %}
 	</div>
 	<div class="room">
 		<div class="leftside">例会教室</div>
@@ -32,26 +28,18 @@
 		<div>4共21</div>
 		<div>4共31</div>
 	</div>
-	{% for time in display_time %}
+	{% for time in timetuple %}
 	<div class="time zero {{time}}">
 		<div class="leftside">{{time}}:00</div>
-		<div></div>
-		<div></div>
-		<div></div>
-		<div></div>
-		<div></div>
-		<div></div>
-		<div></div>
+		{% for date in datetuple %}
+		<div class="{{date| date:'Y-m-d'}}"></div>
+		{% endfor %}
 	</div>
 	<div class="time half {{time}}">
 		<div class="leftside"></div>
-		<div></div>
-		<div></div>
-		<div></div>
-		<div></div>
-		<div></div>
-		<div></div>
-		<div></div>
+		{% for date in datetuple %}
+		<div class="{{date| date:'Y-m-d'}}"></div>
+		{% endfor %}
 	</div>
 	{% endfor %}
 </section>
