@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from .models import Message, MessageYear, Attachment
 from .forms import SendMessage, Search, Edit, DivErrorList
 from members.models import User
-from django.core.mail import send_mail
+from django.core.mail import send_mass_mail
 import datetime
 
 def EditPermisson(user, content_id):
@@ -110,7 +110,6 @@ def send(request):
             content_data.years.create(year=to)
             if is_attachment == True:
                 content_data.attachments.create(attachment_file=file)
-            django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
 
 
             year = MessageYear.objects.get(message=content_data).year
@@ -118,10 +117,12 @@ def send(request):
                 mail_list = [user.email for user in User.objects.all()]
             else:
                 mail_list = [user.email for user in User.objects.filter(year=year)]
-            datatuple = ((content_data.title, content_data.content, content_data.writer.email, [subject_to])\
+            datatuple = ((content_data.title, content_data.content, 'message@ku-unplugged.net', [subject_to])\
                 for subject_to in mail_list)
-            # success_num = send_mass_mail(datatuple)
-            # django_messages.success(request, 'メール送信件数 : '+success_num)
+            success_num = send_mass_mail(datatuple)
+
+            django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
+            django_messages.success(request, 'メール送信件数 : '+str(success_num))
 
 
 
