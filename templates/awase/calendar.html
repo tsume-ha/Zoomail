@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}あわせのあわせ | UnpluggedMessage{% endblock %}
+
+{% block extrastyle %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/awase/calendar.css' %}">
+{% endblock %}
+
+{% block body %}
+<h3 class="my-1">あわせのあわせ</h3>
+
+<section id="calendar">
+	<div class="date">
+		<div class="leftside"> </div>
+		{% for date in datetuple %}
+		<div>{{date | date:"n/j"}}<br>{{date | date:"D"}}</div>
+		{% endfor %}
+	</div>
+	<div class="room">
+		<div class="leftside">例会教室</div>
+		<div>4共21</div>
+		<div>4共31</div>
+		<div>使用不可</div>
+		<div>4共21</div>
+		<div>4共21</div>
+		<div>4共21</div>
+		<div>4共31</div>
+	</div>
+	{% for time in timetuple %}
+	<div class="time zero" data-time="{{time}}">
+		<div class="leftside">{{time}}:00</div>
+		{% for date in datetuple %}
+		<div data-date="{{date| date:'Y-m-d'}}"></div>
+		{% endfor %}
+	</div>
+	<div class="time half" data-time="{{time}}">
+		<div class="leftside"></div>
+		{% for date in datetuple %}
+		<div data-date="{{date| date:'Y-m-d'}}"></div>
+		{% endfor %}
+	</div>
+	{% endfor %}
+<style type="text/css">
+{% for value in NG_0_list %}
+.time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
+{% endfor %}{
+	background-color: #08be58;
+}
+
+{% for value in NG_1_list %}
+.time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
+{% endfor %}{
+	background-color: #f8f272;
+}
+
+{% for value in NG_2_list %}
+.time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
+{% endfor %}{
+	background-color: #ff3d33;
+}
+{% for value in NG_3over_list %}
+.time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
+{% endfor %}{
+	background-color: #444;
+}
+
+</style>
+
+</section>
+
+
+{% endblock %}
