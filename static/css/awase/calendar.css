@@ -2,23 +2,49 @@ section{
 	margin: 1rem 0;
 }
 
-section#calendar table thead tr th{
-	padding: 3px;
-	text-align: center;
-	font-size: 0.75rem;
-}
-section#calendar table tbody{
+#calendar div{
 	position: relative;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-section#calendar table tbody div.time{
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	border: none;
+#calendar > div{
+	display: flex;
 }
-td{
-	width: 14.285%;
-	height: 50px;
+
+#calendar div.leftside{
+	width: 40px;
+	padding: 3px 5px;
+	font-size: 10px;
+}
+
+#calendar div div{
+	border: 0.5px solid #eee;
+}
+
+#calendar div.date div{
+	font-size: 12px;
+	text-align: center;
+	width: calc((100% - 40px) / 7);
+	padding: 5px 0;
+}
+
+#calendar div.room div{
+	font-size: 10px;
+	text-align: center;
+	width: calc((100% - 40px) / 7);
+	padding: 5px 0;
+}
+
+
+#calendar div.time div{
+	height: 1rem;
+	width: calc((100% - 40px) / 7);
+}
+#calendar div.time.zero div{
+	border-bottom: none;
+}
+#calendar div.time.half div{
+	border-top: none;
 }

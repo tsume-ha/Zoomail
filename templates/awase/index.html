@@ -12,88 +12,48 @@
 <h3 class="my-1">あわせのあわせ</h3>
 
 <section id="calendar">
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>10/1<br>(火)</th>
-				<th>10/2<br>(水)</th>
-				<th>10/3<br>(木)</th>
-				<th>10/4<br>(金)</th>
-				<th>10/5<br>(土)</th>
-				<th>10/6<br>(日)</th>
-				<th>10/7<br>(月)</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<div id="time">
-				18:00<br>
-				19:00<br>
-			</div>
-		</tbody>
-	</table>
+	<div class="date">
+		<div class="leftside"> </div>
+		<div>10/10<br>(月)</div>
+		<div>10/11<br>(火)</div>
+		<div>10/12<br>(水)</div>
+		<div>10/13<br>(木)</div>
+		<div>10/14<br>(金)</div>
+		<div>10/15<br>(土)</div>
+		<div>10/16<br>(日)</div>
+	</div>
+	<div class="room">
+		<div class="leftside">例会教室</div>
+		<div>4共21</div>
+		<div>4共31</div>
+		<div>使用不可</div>
+		<div>4共21</div>
+		<div>4共21</div>
+		<div>4共21</div>
+		<div>4共31</div>
+	</div>
+	{% for time in display_time %}
+	<div class="time zero {{time}}">
+		<div class="leftside">{{time}}:00</div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+	<div class="time half {{time}}">
+		<div class="leftside"></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+	{% endfor %}
 </section>
 
 {% endblock %}
