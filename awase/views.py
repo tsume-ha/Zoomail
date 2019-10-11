@@ -78,7 +78,7 @@ def create(request):
 
     years = User.objects.order_by().values('year').distinct()
     InviteForm.fields['year_choice'].choices = [(q['year'],q['year']) for q in years]
-    InviteForm.fields['invite_user'].choices = [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')]
+    InviteForm.fields['invite_user'].choices = [(str(user.year).zfill(4)+'_'+str(user.pk), user.get_short_name) for user in User.objects.all().order_by('year').order_by('furigana')]
 
     params = {
         'CreateForm': CreateForm,

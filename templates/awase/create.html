@@ -28,7 +28,7 @@
 		<div class="form-group row mx-0">
 			{{ InviteForm.year_choice }}
 			{{ InviteForm.invite_user }}
-			<button class="btn btn-primary py-1 mb-2">追加</button>
+			<a href="javascript: adduser()" class="btn btn-primary py-1 mb-2">追加</a>
 		</div>
 		<div id="invited_user">
 			
@@ -44,5 +44,9 @@
 
 </section>
 
+<script type="text/javascript">
+	const user_year = {{ user.year }};
+</script>
 
+<script src="{% static 'js/awase_create_user_choice.js' %}"></script>
 {% endblock %}
