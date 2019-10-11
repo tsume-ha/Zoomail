@@ -18,12 +18,12 @@ class InviteUserForm(forms.Form):
     year_choice = forms.ChoiceField(# No POSTed DATA is USED in VIEW.PY, This Form is used only for JS
         label = "Year"
     )
-    written_by = forms.ChoiceField(
+    invite_user = forms.ChoiceField(
     )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs["class"] = "form-control"
+        self.fields['year_choice'].widget.attrs["class"] = "form-control"
+        self.fields['invite_user'].widget.attrs["class"] = "form-control"
 
 class InputScheduleForm(forms.Form):
     can_attend = forms.BooleanField(

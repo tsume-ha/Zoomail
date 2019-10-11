@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 import datetime
+from members.models import User
 from .models import Calendar, CalendarUser, Schedule
 from .forms import CreateCalendarForm, InviteUserForm, InputScheduleForm
 
@@ -73,8 +74,15 @@ def calendar(request, pk):
 def create(request):
     now_user = request.user
     CreateForm = CreateCalendarForm()
+    InviteForm = InviteUserForm()
+
+    years = User.objects.order_by().values('year').distinct()
+    InviteForm.fields['year_choice'].choices = [(q['year'],q['year']) for q in years]
+    InviteForm.fields['invite_user'].choices = [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')]
+
     params = {
         'CreateForm': CreateForm,
+        'InviteForm': InviteForm,
 
     }
 

@@ -1,0 +1,11 @@
+#id_year_choice{
+	display: inline-flex;
+	width: 90px;
+	margin-right: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+#id_invite_user{
+	width: 150px;
+	margin-right: 0.5rem;
+	margin-bottom: 0.5rem;
+}

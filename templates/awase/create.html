@@ -4,6 +4,7 @@
 
 {% block title %}日程調整を作成 | Unplugged Message{% endblock %}
 {% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
 {% endblock %}
 
 
@@ -22,7 +23,16 @@
 			{% endif %}
 		</div>
 		{% endfor %}
-		
+
+		<h6 class="mt-4">招待するユーザーを選択してください</h6>
+		<div class="form-group row mx-0">
+			{{ InviteForm.year_choice }}
+			{{ InviteForm.invite_user }}
+			<button class="btn btn-primary py-1 mb-2">追加</button>
+		</div>
+		<div id="invited_user">
+			
+		</div>
 
 
 		<input type="submit" name="search" value="登録" class="btn btn-info mx-2 my-3">
