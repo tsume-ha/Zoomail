@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 import datetime
 from .models import Calendar, CalendarUser, Schedule
+from .forms import CreateCalendarForm, InviteUserForm, InputScheduleForm
 
 
 @login_required()
@@ -70,8 +71,10 @@ def calendar(request, pk):
 
 @login_required()
 def create(request):
-
+    now_user = request.user
+    CreateForm = CreateCalendarForm()
     params = {
+        'CreateForm': CreateForm,
 
     }
 
