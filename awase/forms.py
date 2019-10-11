@@ -1,6 +1,7 @@
 from django import forms
 from .models import Calendar
 import os
+import datetime
 
 class CreateCalendarForm(forms.ModelForm):
     class Meta:
@@ -9,8 +10,12 @@ class CreateCalendarForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['days_begin'].widget=forms.SelectDateWidget()
-        self.fields['days_end'].widget=forms.SelectDateWidget()
+        self.fields['days_begin'].widget=forms.SelectDateWidget(
+            years=[datetime.datetime.now().year, datetime.datetime.now().year +1]
+        )
+        self.fields['days_end'].widget=forms.SelectDateWidget(
+            years=[datetime.datetime.now().year, datetime.datetime.now().year +1]
+        )
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
 

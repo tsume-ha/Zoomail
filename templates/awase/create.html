@@ -15,7 +15,7 @@
 	<form method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 		{% for field in CreateForm %}
-		<div class="form-group">
+		<div class="form-group row mx-0">
 			{{ field.label_tag }}
 			{{ field }}
 			{% if field.errors %}
