@@ -110,6 +110,6 @@ def FileDownloadView(request, live_id, song_pk):
     response = download(
         filepath = song.file.path,
         filename = filename,
-        mimetype = 'audio/mp3'
+        mimetype = 'audio/mpeg'
     )
     return response
