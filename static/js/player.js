@@ -6,11 +6,9 @@ var wavesurfer = WaveSurfer.create({
 	progressColor: '#144552',
 	scrollParent: false,
 	skipLength: 10,
-	// plugins: [
-	// 	WaveSurfer.timeline.create({
-	// 		container: "#wavetimeline"
-	// 	})
-	// ]
+	minPxPerSec: 4,
+	normalize: true,
+	scrollParent: true,
 
 });
 
