@@ -158,22 +158,26 @@ def send(request):
                 content_data.attachments.create(attachment_file=file)
 
 
-            year = MessageYear.objects.get(message=content_data).year
-            if year == 0:
-                to_list = [user.email for user in User.objects.all()]
-            else:
-                to_list = [user.email for user in User.objects.filter(year=year)]
-
             # sendgrid mail
+            year_query = MessageYear.objects.filter(message=content_data).values('year')
+            if year_query.filter(year=0).exists():
+                to_user_query = User.objects.all()
+            else:
+                to_query_list = [User.objects.filter(year=year['year']) for year in year_query]
+                to_user_query = User.objects.none()
+                for to_query in to_query_list:
+                    to_user_query = to_user_query.union(to_query)
+            mail_to_list = [user_q.email for user_q in to_user_query]
+            print(mail_to_list)
             sg = sendgrid.SendGridAPIClient(SENDGRID_API_KEY)
             sendgrid_message = Mail(
                 from_email = '"全回メーリス" <zenkai@message.ku-unplugged.net>',
-                to_emails = ','.join(to_list),
+                to_emails = ','.join(mail_to_list),
                 subject = content_data.title,
                 plain_text_content = content_data.content,
                 )
-            response = sg.send(sendgrid_message)
-            print(','.join(to_list))
+            # response = sg.send(sendgrid_message)
+            print(','.join(mail_to_list))
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
             # django_messages.success(request, 'メール送信件数 : '+str(success_num))
 
