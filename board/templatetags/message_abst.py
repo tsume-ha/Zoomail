@@ -1,6 +1,8 @@
 from django import template
 from django.utils.safestring import mark_safe
+from board.models import Kidoku, Bookmark
 import datetime
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 register = template.Library()
 
@@ -32,3 +34,19 @@ def is_updated(message):
         text_return += message.updated_at.strftime('%Y/%m/%d %H:%M')
         text_return += ' 更新</span>'
     return mark_safe(text_return)
+
+@register.simple_tag
+def no_kidoku_css_class(message, user):
+    if not Kidoku.objects.filter(message=message).filter(user=user).exists():
+        return " midoku"
+    else:
+        if not Kidoku.objects.filter(message=message).get(user=user).have_read:
+            return " midoku"
+        return ''
+
+@register.simple_tag
+def is_marked(message, user):
+    if Bookmark.objects.filter(message=message).filter(user=user).exists():
+        return static('img/star_yl.png')
+    else:
+        return static('img/star_bk.png')

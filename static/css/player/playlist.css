@@ -32,6 +32,21 @@
 	left:3px;
 }
 
+#waveform{
+	position: relative;
+}
+#wavetimeline{
+	position: relative;
+	display: block;
+	z-index: 6;
+	background-color: rgba(255,255,255,0.3);
+	margin-top: -14px;
+}
+
+div.songselect{
+	cursor: pointer;
+}
+
 #songtitle h4 span{
 	margin-right: 0.5rem;
 	font-size: 1.25rem;

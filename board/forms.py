@@ -7,10 +7,11 @@ from members.models import User
 
 kaisei = [
 (2019,"2019 25期",),
-(2018,"2018 24期（会長 : 成基人）",),
+(2018,"2018 24期（会長 : 成基進）",),
 (2017,"2017 23期（会長 : 宮武功貴）",),
 (2016,"2016 22期（会長 : 木内幹也）",),
 (2015,"2015 21期（会長 : 飯干歩）",),
+(2014,"2014 20期（会長 : 緒方悠介）",),
 ]
 
 validation_error_messages = {
@@ -20,17 +21,8 @@ validation_error_messages = {
     'filesize_limit': 'ファイルサイズが30MB以上のため、アップロードできません',
 }
 
-def now_kaisei():
-    year = datetime.datetime.now().year
-    return str(year - 1994) + "期"
-
 def get_user_choice_list():
     return [(str(user.year)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')]
-
-def validate_to(value):
-    if value == 'error':
-        raise forms.ValidationError(validation_error_messages['no_year'])
-    return value
 
 def validate_attachmentfile(value):
     if value.size > 30 * 1024 * 1024: # 30MB
@@ -51,32 +43,24 @@ class SendMessage(forms.Form):
         label="件名",
         widget=forms.TextInput(attrs={
             'placeholder': '件名',
-            'class': 'form-control',
         }),
         required = True,
         error_messages={'required': validation_error_messages['no_title']}
     )
     year_choice = forms.ChoiceField(# No POSTed DATA is USED in VIEW.PY, This Form is used only for JS
-        choices = [(year['year'],year['year']) for year in User.objects.all().order_by('year').reverse().values('year').distinct()],
-        widget = forms.Select(attrs={'class': 'form-control'}),
         label = "From"
     )
     written_by = forms.ChoiceField(
-        choices = lambda: [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')],
         label = "送信元",
-        widget = forms.Select(attrs={'class': 'form-control'}),
     )
-    to = forms.ChoiceField(
-        choices = [("error","宛先を選択してください"),(0,"全回メーリス" + "（" + now_kaisei() + "～21期）",)] + kaisei,
+    to = forms.MultipleChoiceField(
+        choices = [(0,"全回メーリス")] + kaisei,
         label = "To",
-        widget = forms.Select(attrs={'class': 'form-control'}),
-        validators = [validate_to],
     )
     content = forms.CharField(
         label="本文",
         widget=forms.Textarea(attrs={
             'placeholder': '本文を入力',
-            'class': 'form-control',
         }),
         required = True,
         error_messages={'required': validation_error_messages['no_content']}
@@ -87,15 +71,39 @@ class SendMessage(forms.Form):
         validators = [validate_attachmentfile],
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+        self.fields['attachmentfile'].widget.attrs["class"] = ""
 
-class Search(forms.Form):
+class SearchAdvanced(forms.Form):
     text = forms.CharField(
         label = "",
-        required = False,
-        widget = forms.TextInput(attrs = {
-            'placeholder': '件名・本文で検索'
-        })
     )
+    is_kaisei = forms.BooleanField(
+        label = "回生メーリスのみ",
+    )
+    is_zenkai = forms.BooleanField(
+        label = "全回メーリスのみ",
+    )
+    is_midoku = forms.BooleanField(
+        label = "未読メーリスのみ",
+    )
+    is_marked = forms.BooleanField(
+        label = "ブックマークのみ",
+    )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.required = False
+            field.widget.attrs["class"] = "toggle"
+        self.fields['text'].widget = forms.TextInput(attrs={
+            'placeholder': '件名・本文で検索',
+            'class': 'form-control formtext',
+            })
+
+
 
 class Edit(forms.ModelForm):
     class Meta:

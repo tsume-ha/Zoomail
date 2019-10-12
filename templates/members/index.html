@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block title %}マイページ | Unplugged Message{% endblock %}
-
+{% block extrastyle %}
+	<script src="{% static 'js/all_kidoku.js' %}"></script>
+{% endblock %}
 
 
 {% block body %}
@@ -21,9 +23,27 @@
 		{% endif %}
 	</p>
 </section>
-<!-- <section id="midoku" class="mypage_message p-3 border-top">
-	<h5>未読メッセージ</h5>
-</section> -->
+<section id="midoku" class="mypage_message py-3 pl-3 border-top">
+	<h5 class="d-inline-block">未読メッセージ</h5>
+	{% if midoku %}
+	<button type="submit" onclick="kidoku()" class="btn btn-outline-secondary btn-sm d-inline-block mb-1 ml-2">すべて既読にする</button>
+	<form id="kidoku_form">
+		{% csrf_token %}
+		<input type="hidden" name="kidoku" value="true">
+	</form>
+	<ul class="list-unstyled">
+		{% for message in midoku %}
+		<li class="mb-2 ml-3">
+			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
+			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+		</li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<p class="alert alert-secondary m-0 p-2">すべてのメッセージをすでに読んています。</p>
+	
+	{% endif %}
+</section>
 <section id="yousend" class="mypage_message p-3 border-top">
 	<h5>あなたが送信したメッセージ</h5>
 	{% if yousend %}

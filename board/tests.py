@@ -140,12 +140,12 @@ class AuthentificationSendTest(TestCase):
         url_redial_to = response.url
         response = self.client.get(url_redial_to)
         self.assertEqual(response.status_code, 200)
-        # self.assertContains(response, 'Google account')
+        self.assertTemplateUsed(response, 'admin/login.html')
 
     def test_send_POST_logOUT(self):
         data = {
             'title': 'LogOUT POST test',
-            'to': 0,
+            'to': [0],
             'content': 'LogOUT POST test message',
         }
         User_LogOUT(self)
@@ -154,7 +154,7 @@ class AuthentificationSendTest(TestCase):
         url_redial_to = request.url
         response = self.client.get(url_redial_to)
         self.assertEqual(response.status_code, 200)
-        # self.assertContains(response, 'Google account')
+        self.assertTemplateUsed(response, 'admin/login.html')
 
         try:
             saved_content = Message.objects.get(title=data['title'])
@@ -169,10 +169,11 @@ class AuthentificationSendTest(TestCase):
             'title': 'LogIN POST test',
             'year_choice': user.year,
             'written_by': str(user.year).zfill(4) + '-' + str(user.pk),
-            'to': 0,
+            'to': ['0'],
             'content': 'LogIN POST test message',
         }
         request = self.client.post('/send/', data)
+        # print(request.content.decode('utf-8'))
         self.assertEqual(request.status_code, 302)
         url_redial_to = request.url
         self.assertEqual(url_redial_to, '../read/')
@@ -187,30 +188,11 @@ class AuthentificationSendTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, data['content'])
 
-    def test_send_POST_logIN_missing_YEAR(self):
-        data = {
-            'title': 'LogIN POST test missing YEAR',
-            'written_by': '2019-1',
-            'to': 'error',
-            'content': 'LogIN POST test message missing YEAR',
-        }
-        User_LogIN(self)
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 200)
-        self.assertTemplateUsed(request, 'board/send.html')
-        self.assertContains(request, data['title'])
-        self.assertContains(request, validation_error_messages['no_year'])
-        try:
-            saved_content = Message.objects.get(title=data['title'])
-            self.assertTrue(False)
-        except ObjectDoesNotExist:
-            self.assertTrue(True)
-
     def test_send_POST_logIN_missing_TITLE(self):
         data = {
             'title': '',
             'written_by': '2019-1',
-            'to': 'error',
+            'to': [0],
             'content': 'LogIN POST test message missing TITLE',
         }
         User_LogIN(self)
@@ -228,7 +210,7 @@ class AuthentificationSendTest(TestCase):
         data = {
             'title': 'LogIN POST test missing CONTENT',
             'written_by': '2019-1',
-            'to': 'error',
+            'to': [0],
             'content': '',
         }
         User_LogIN(self)

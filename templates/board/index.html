@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/board/index.css' %}">
     <script src="{% static 'js/infinite-scroll.pkgd.min.js' %}"></script>
     
+    
 {% endblock %}
 
 {% block body %}
@@ -18,24 +19,38 @@
             <img src="{% static 'img/send.svg' %}" height="50" width="50">
         </a>
     </div>
-
-    <div class="searchform row container m-2 p-2">
-        <form method="post">
+    <div class="searchform row mb-2">
+        <form method="post" id="advanced_search" class="row mx-2">
             {% csrf_token %}
-            {{ search }}
-            <input type="submit" name="search" value="検索">
+            {{ search_advanced.is_kaisei }}
+            {{ search_advanced.is_kaisei.label_tag }}
+            {{ search_advanced.is_zenkai }}
+            {{ search_advanced.is_zenkai.label_tag }}
+            {{ search_advanced.is_midoku }}
+            {{ search_advanced.is_midoku.label_tag }}
+            {{ search_advanced.is_marked }}
+            {{ search_advanced.is_marked.label_tag }}
+            <div class="col-sm-12 mx-0 px-0">
+                {{ search_advanced.text }}
+                <input type="submit" name="search" value="検索" class="submit btn btn-info btn-sm ml-2">
+            </div>
+            
         </form>
+
     </div>
 
     <div class="content_wrapper">
+    <form method="post" id="bookmark">
+        {% csrf_token %}
+    </form>
     {% for message_letter in message_letters %}
-        <section class="content row border border-left-0 border-right-0">
+        <section class="content{% no_kidoku_css_class message_letter request.user %} row border border-left-0 border-right-0">
             <h4 class="col-sm-12 my-1"><a href="content/{{message_letter.id}}">{{message_letter.title}}</a></h4>
             <div class="col-sm-12 mt-1">
                 <span class="float-left date small p-1">{{message_letter.created_at|date:"Y/m/d (D) H:i"}}</span>
-                {% is_updated message_letter %}                                
+                {% is_updated message_letter %}
                 <span class="float-left ml-4 whosent" data-userid="{{message_letter.writer.id}}">{{message_letter.writer.get_short_name}}</span>
-                <span class="float-right star">☆</span>
+                <span class="float-right star"><img src="{% is_marked message_letter request.user %}" onclick="bookmark('{{message_letter.pk}}')" id="img_{{message_letter.pk}}" width="16" height="16"></span>
             </div>
             <article class="col-sm-12 my-2">
                 {{message_letter.content | MakeMessageShort}}
@@ -82,4 +97,12 @@
         </div>
     {% endif %}
 <script src="{% static 'js/read_paginator.js' %}"></script>
+<script type="text/javascript">
+$(function(){
+    var img = document.createElement('img');
+    const yellow_src = "{% static 'img/star_yl.png' %}";
+    img.src = yellow_src;
+})
+</script>
+<script src="{% static 'js/ajax_bookmark.js' %}"></script>
 {% endblock %}

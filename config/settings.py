@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'private_storage',
     'social_django',
     'imagekit',
+    'django_extensions',
     'home',
     'members',
     'board',
