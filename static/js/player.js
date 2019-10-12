@@ -6,9 +6,7 @@ var wavesurfer = WaveSurfer.create({
 	progressColor: '#144552',
 	scrollParent: false,
 	skipLength: 10,
-	minPxPerSec: 4,
 	normalize: true,
-	scrollParent: true,
 
 });
 
@@ -51,11 +49,11 @@ function load(href,number,title) {
 wavesurfer.on('ready', function () {
 	$('#waveloading').css('display','none');
 
-    var timeline = Object.create(WaveSurfer.Timeline);
-    timeline.init({
-        wavesurfer: wavesurfer,
-        container: '#wavetimeline'
-    });
+    // var timeline = Object.create(WaveSurfer.Timeline);
+    // timeline.init({
+    //     wavesurfer: wavesurfer,
+    //     container: '#wavetimeline'
+    // });
 });
 
 
