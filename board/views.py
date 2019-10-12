@@ -9,7 +9,10 @@ from django.core.paginator import Paginator
 from .models import Message, MessageYear, Attachment
 from .forms import SendMessage, Search, Edit, DivErrorList
 from members.models import User
-from django.core.mail import send_mass_mail
+from config.settings_local import SENDGRID_API_KEY
+import sendgrid
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Content, MimeType
 import datetime
 
 def EditPermisson(user, content_id):
@@ -114,15 +117,22 @@ def send(request):
 
             year = MessageYear.objects.get(message=content_data).year
             if year == 0:
-                mail_list = [user.email for user in User.objects.all()]
+                to_list = [user.email for user in User.objects.all()]
             else:
-                mail_list = [user.email for user in User.objects.filter(year=year)]
-            datatuple = ((content_data.title, content_data.content, 'message@ku-unplugged.net', [subject_to])\
-                for subject_to in mail_list)
-            success_num = send_mass_mail(datatuple)
+                to_list = [user.email for user in User.objects.filter(year=year)]
 
+            # sendgrid mail
+            sg = sendgrid.SendGridAPIClient(SENDGRID_API_KEY)
+            sendgrid_message = Mail(
+                from_email = '"全回メーリス" <zenkai@message.ku-unplugged.net>',
+                to_emails = ','.join(to_list),
+                subject = content_data.title,
+                plain_text_content = content_data.content,
+                )
+            response = sg.send(sendgrid_message)
+            print(','.join(to_list))
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
-            django_messages.success(request, 'メール送信件数 : '+str(success_num))
+            # django_messages.success(request, 'メール送信件数 : '+str(success_num))
 
 
 
