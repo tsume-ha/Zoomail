@@ -159,27 +159,38 @@ def send(request):
 
 
             # sendgrid mail
+            sg = sendgrid.SendGridAPIClient(SENDGRID_API_KEY)
             year_query = MessageYear.objects.filter(message=content_data).values('year')
             if year_query.filter(year=0).exists():
-                to_user_query = User.objects.all()
-            else:
-                to_query_list = [User.objects.filter(year=year['year']) for year in year_query]
-                to_user_query = User.objects.none()
-                for to_query in to_query_list:
-                    to_user_query = to_user_query.union(to_query)
-            mail_to_list = [user_q.email for user_q in to_user_query]
-            print(mail_to_list)
-            sg = sendgrid.SendGridAPIClient(SENDGRID_API_KEY)
-            sendgrid_message = Mail(
-                from_email = '"全回メーリス" <zenkai@message.ku-unplugged.net>',
+                mail_to_list = [user.email for user in User.objects.all()]
+                from_email = '"' + content_data.writer.get_short_name() + '" <zenkai@message.ku-unplugged.net>'
+                sendgrid_message = Mail(
+                from_email = from_email,
                 to_emails = ','.join(mail_to_list),
                 subject = content_data.title,
                 plain_text_content = content_data.content,
                 )
-            # response = sg.send(sendgrid_message)
-            print(','.join(mail_to_list))
+                # response = sg.send(sendgrid_message)
+            else:
+                subject = content_data.title
+                text_content = content_data.content
+                for year in year_query:
+                    to_user_query = User.objects.filter(year=year['year'])
+                    mail_to_list = [user_q.email for user_q in to_user_query]
+                    ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
+                    from_email = '"' + content_data.writer.get_short_name()
+                    from_email += '" <' + ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net>'
+                    print(from_email)
+                    sendgrid_message = Mail(
+                        from_email = from_email,
+                        to_emails = ','.join(mail_to_list),
+                        subject = subject,
+                        plain_text_content = text_content,
+                        )
+                    # response = sg.send(sendgrid_message)
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
-            # django_messages.success(request, 'メール送信件数 : '+str(success_num))
+            
+            # # django_messages.success(request, 'メール送信件数 : '+str(success_num))
 
 
 
