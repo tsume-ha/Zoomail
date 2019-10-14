@@ -40,6 +40,7 @@ function music_start(){
 function load(href,number,title) {
 	music_pause();
 	$('#waveloading').css('display','block');
+	$('#timedisplay').css('display','none');
 	$('#loadtext').text('Now Loading... ' + title);
 	$('#songtitle').html('<h4><span>' + number + '.</span>' + title + '</h4>');
 	wavesurfer.load(href);
@@ -48,12 +49,8 @@ function load(href,number,title) {
 
 wavesurfer.on('ready', function () {
 	$('#waveloading').css('display','none');
-
-    // var timeline = Object.create(WaveSurfer.Timeline);
-    // timeline.init({
-    //     wavesurfer: wavesurfer,
-    //     container: '#wavetimeline'
-    // });
+	$('#timedisplay').css('display','block');
+	$('#totaltime').text(get_readable_time(wavesurfer.getDuration()));
 });
 
 
@@ -108,4 +105,30 @@ $(document).on('click',"#prev",function(){
 	}
 })
 
+function get_readable_time(second_time){
+	var mitutes = Math.floor(second_time / 60);
+	var seconds = Math.floor(second_time - mitutes * 60);
+	var zero_seconds = ('0' + String(seconds)).slice(-2);
+	return String(mitutes) + ':' + zero_seconds;
+}
 
+function when_bar_moved(){
+	var currentime = get_readable_time(wavesurfer.getCurrentTime());
+	var totaltime = get_readable_time(wavesurfer.getDuration());
+	$('#currenttime').text(currentime);
+	$('#totaltime').text(totaltime);
+	var max_width = $('#waveform > wave').width();
+	var bar_width = $('#waveform > wave > wave').width();
+	if (bar_width + 80 < max_width) {
+		$('#timedisplay').css('margin-left', bar_width);
+	} else {
+		$('#timedisplay').css('margin-left', bar_width - 80);
+	}	
+}
+
+wavesurfer.on('audioprocess', function() {
+	when_bar_moved();
+})
+wavesurfer.on('seek', function() {
+	when_bar_moved();
+})
