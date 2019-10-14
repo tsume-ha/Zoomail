@@ -36,16 +36,14 @@ function display(selected_user){
         var target = '#id_invite_user option[value=' + selected_user[i] + ']'
         var user_name = $(target).text();
         display_html += '<p data-user="selected_user[i]" class="my-0 mb-1">' + user_name;
-        display_html += '<a href="javascript: user_delete("' + selected_user[i] + '")" class="ml-5">削除</a></p>';
+        display_html += '<a href="javascript: user_delete(' + selected_user[i].slice(5) + ');" class="ml-5">削除</a></p>';
     }
     $('#invited_user').html(display_html);
 }
 
 function user_delete(user_vaule){
     for(i=0; i<selected_user.length; i++){
-        console.log(selected_user[i]);
-        console.log(user_vaule);
-        if(selected_user[i] == user_vaule){
+        if(selected_user[i].slice(5) == user_vaule){
             selected_user.splice(i, 1);
         }
     }
