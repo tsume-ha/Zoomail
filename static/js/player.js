@@ -132,3 +132,64 @@ wavesurfer.on('audioprocess', function() {
 wavesurfer.on('seek', function() {
 	when_bar_moved();
 })
+
+
+$(function(){
+	const wavediv = document.querySelector('#waveform');
+	var x;
+	var div_width = wavediv.clientWidth;
+    wavediv.addEventListener("mousedown", mdown, false);
+    wavediv.addEventListener("touchstart", mdown, false);
+
+    function mdown(e) {
+        if(e.type === "mousedown") {
+            var event = e;
+        } else {
+            var event = e.changedTouches[0];
+        }
+
+        x = event.pageX - this.offsetLeft;
+        console.log(x);
+        wavesurfer.seekTo(x / div_width);
+        when_bar_moved();
+
+        wavediv.addEventListener("mousemove", mmove, false);
+        wavediv.addEventListener("touchmove", mmove, false);
+    }
+
+    function mmove(e) {
+        if(e.type === "mousemove") {
+            var event = e;
+        } else {
+            var event = e.changedTouches[0];
+        }
+        x = event.pageX - this.offsetLeft;
+        console.log(x);
+        wavesurfer.seekTo(x / div_width);
+        when_bar_moved();
+
+        wavediv.addEventListener("mouseup", mup, false);
+        wavediv.addEventListener("mouseleave", mup, false);
+        wavediv.addEventListener("touchend", mup, false);
+        wavediv.addEventListener("touchleave", mup, false);
+
+    }
+
+    function mup(e) {
+        wavediv.removeEventListener("mousemove", mmove, false);
+        wavediv.removeEventListener("mouseup", mup, false);
+        wavediv.removeEventListener("touchmove", mmove, false);
+        wavediv.removeEventListener("touchend", mup, false);
+
+        if (wavesurfer.isPlaying()) {
+			wavesurfer.play();
+			$('#start').removeClass('getstart');
+			$('#start').addClass('getstop');
+        } else {
+        	
+        }
+
+    }
+})
+
+
