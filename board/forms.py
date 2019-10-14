@@ -18,6 +18,7 @@ validation_error_messages = {
     'no_title': 'タイトルを入力してください',
     'no_year': '宛先を選択してください',
     'no_content': '本文を入力してください',
+    'no_writer': '送信者を確定してください',
     'filesize_limit': 'ファイルサイズが30MB以上のため、アップロードできません',
 }
 
@@ -48,10 +49,12 @@ class SendMessage(forms.Form):
         error_messages={'required': validation_error_messages['no_title']}
     )
     year_choice = forms.ChoiceField(# No POSTed DATA is USED in VIEW.PY, This Form is used only for JS
-        label = "From"
+        label = "From",
+        required = False,
     )
     written_by = forms.ChoiceField(
         label = "送信元",
+        error_messages={'required': validation_error_messages['no_writer']}
     )
     to = forms.MultipleChoiceField(
         choices = [(0,"全回メーリス")] + kaisei,
