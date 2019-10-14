@@ -149,7 +149,6 @@ $(function(){
         }
 
         x = event.pageX - this.offsetLeft;
-        console.log(x);
         wavesurfer.setMute(true);
         wavesurfer.seekTo(x / div_width);
         when_bar_moved();
@@ -169,7 +168,6 @@ $(function(){
             var event = e.changedTouches[0];
         }
         x = event.pageX - this.offsetLeft;
-        console.log(x);
         wavesurfer.seekTo(x / div_width);
         when_bar_moved();
 
