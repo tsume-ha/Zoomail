@@ -156,6 +156,10 @@ $(function(){
 
         wavediv.addEventListener("mousemove", mmove, false);
         wavediv.addEventListener("touchmove", mmove, false);
+        wavediv.addEventListener("mouseup", mup, false);
+        wavediv.addEventListener("mouseleave", mup, false);
+        wavediv.addEventListener("touchend", mup, false);
+        wavediv.addEventListener("touchleave", mup, false);
     }
 
     function mmove(e) {
