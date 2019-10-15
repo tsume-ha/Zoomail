@@ -66,10 +66,10 @@ class RegisterForm(forms.Form):
             message='ふりがなは全角ひらがなのみで入力してください。',
         )]
     )
-    
+
     def clean_year(self):
         year = self.cleaned_data['year']
-        if not ( year == 0 or 1990 < year < 2100):
+        if not ( year == 0 or 1990 < year < 2100 ):
             raise forms.ValidationError('無効な入部年度です。第24期などでなく、入部年度（2018）を入力してください。')
         return year
 
