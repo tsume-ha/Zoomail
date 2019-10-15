@@ -109,7 +109,7 @@ div.songselect{
 	position: absolute;
 	display: none;
 	height: 18px;
-	width: 80px;
+	width: 90px;
 	line-height: 16px;
 	padding: 1px 2px;
 	margin: 110px 0 0;
@@ -117,4 +117,5 @@ div.songselect{
 	font-size: 16px;
 	background-color: #333;
 	color: #eee;
+	z-index: 8;
 }
