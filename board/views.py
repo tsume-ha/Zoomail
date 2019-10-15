@@ -10,6 +10,7 @@ from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit, DivErrorList
 from members.models import User
 import datetime
+import urllib.parse
 
 def EditPermisson(user, content_id):
     return user.is_superuser or\
@@ -26,31 +27,32 @@ def index(request):
     query = Message.objects.filter(Q(years__year=now_user.year) | Q(years__year=0))
 
     searched = False
-    if (request.method == 'POST'):
-        form_names = ['text', 'is_kaisei', 'is_zenkai', 'is_midoku', 'is_marked']
-        for name in form_names:
-            try:
-                inputdata = request.POST[name]
-            except MultiValueDictKeyError:
-                continue
-            if name == 'text':
-                if (inputdata != ''):
-                    query = query.filter(Q(content__contains=str) | Q(title__contains=str))
-                    searched = True
-            else:
-                if inputdata == 'on':
-                    if name == 'is_kaisei':
-                        query = query.filter(years__year=now_user.year)
-                        searched = True
-                    elif name == 'is_zenkai':
-                        query = query.filter(years__year=0)
-                        searched = True
-                    elif name == 'is_midoku':
-                        query = query.exclude(kidoku_message__user=now_user)
-                        searched = True
-                    elif name == 'is_marked':
-                        query = query.filter(bookmark_message__user=now_user)
-                        searched = True
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != '':
+            print(q)
+            query = query.filter(Q(content__contains=q) | Q(title__contains=q))
+            searched = True
+    if 'is_kaisei' in request.GET:
+        is_kaisei = request.GET['is_kaisei']
+        if is_kaisei == 'true':
+            query = query.filter(years__year=now_user.year)
+            searched = True
+    if 'is_zenkai' in request.GET:
+        is_zenkai = request.GET['is_zenkai']
+        if is_zenkai == 'true':
+            query = query.filter(years__year=0)
+            searched = True
+    if 'is_midoku' in request.GET:
+        is_midoku = request.GET['is_midoku']
+        if is_midoku == 'true':
+            query = query.exclude(kidoku_message__user=now_user)
+            searched = True
+    if 'is_marked' in request.GET:
+        is_marked = request.GET['is_marked']
+        if is_marked == 'true':
+            query = query.filter(bookmark_message__user=now_user)
+            searched = True
 
     message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
     page = Paginator(message_letters, 10)
