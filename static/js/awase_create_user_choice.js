@@ -32,6 +32,7 @@ function adduser(){
 
 function display(selected_user){
     var display_html = '';
+    $('#id_user_post_data').val(selected_user);
     for (var i = 0; i < selected_user.length; i++) {
         var target = '#id_invite_user option[value=' + selected_user[i] + ']'
         var user_name = $(target).text();
@@ -49,3 +50,4 @@ function user_delete(user_vaule){
     }
     display(selected_user);
 }
+

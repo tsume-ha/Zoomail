@@ -25,6 +25,9 @@ class InviteUserForm(forms.Form):
     )
     invite_user = forms.ChoiceField(
     )
+    user_post_data = forms.CharField(
+        widget=forms.HiddenInput()
+    )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['year_choice'].widget.attrs["class"] = "form-control"
