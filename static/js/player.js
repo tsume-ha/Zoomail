@@ -50,7 +50,7 @@ function load(href,number,title) {
 wavesurfer.on('ready', function () {
     $('#waveloading').css('display','none');
     $('#timedisplay').css('display','block');
-    $('#totaltime').text(get_readable_time(wavesurfer.getDuration()));
+    when_bar_moved();
 });
 
 
