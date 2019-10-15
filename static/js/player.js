@@ -119,10 +119,10 @@ function when_bar_moved(){
     $('#totaltime').text(totaltime);
     var max_width = $('#waveform > wave').width();
     var bar_width = $('#waveform > wave > wave').width();
-    if (bar_width + 80 < max_width) {
+    if (bar_width + 90 < max_width) {
         $('#timedisplay').css('margin-left', bar_width);
     } else {
-        $('#timedisplay').css('margin-left', bar_width - 80);
+        $('#timedisplay').css('margin-left', bar_width - 90);
     }    
 }
 
