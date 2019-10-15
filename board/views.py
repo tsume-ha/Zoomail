@@ -27,30 +27,25 @@ def index(request):
     query = Message.objects.filter(Q(years__year=now_user.year) | Q(years__year=0))
 
     searched = False
-    if 'q' in request.GET:
-        q = request.GET['q']
+    if 'text' in request.GET:
+        q = request.GET['text']
         if q != '':
-            print(q)
             query = query.filter(Q(content__contains=q) | Q(title__contains=q))
             searched = True
     if 'is_kaisei' in request.GET:
-        is_kaisei = request.GET['is_kaisei']
-        if is_kaisei == 'true':
+        if request.GET['is_kaisei'] == 'on':
             query = query.filter(years__year=now_user.year)
             searched = True
     if 'is_zenkai' in request.GET:
-        is_zenkai = request.GET['is_zenkai']
-        if is_zenkai == 'true':
+        if request.GET['is_zenkai'] == 'on':
             query = query.filter(years__year=0)
             searched = True
     if 'is_midoku' in request.GET:
-        is_midoku = request.GET['is_midoku']
-        if is_midoku == 'true':
+        if request.GET['is_midoku'] == 'on':
             query = query.exclude(kidoku_message__user=now_user)
             searched = True
     if 'is_marked' in request.GET:
-        is_marked = request.GET['is_marked']
-        if is_marked == 'true':
+        if request.GET['is_marked'] == 'on':
             query = query.filter(bookmark_message__user=now_user)
             searched = True
 
@@ -64,7 +59,7 @@ def index(request):
         num = 1
     
     params = {
-        'search_advanced': SearchAdvanced(),
+        'search_advanced': SearchAdvanced(request.GET),
         'message_letters': page.get_page(num),
         'is_seached': searched,
     }

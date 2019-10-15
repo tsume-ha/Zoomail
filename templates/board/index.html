@@ -20,8 +20,7 @@
         </a>
     </div>
     <div class="searchform row mb-2">
-        <form method="post" id="advanced_search" name="advanced_search" onsubmit="return searchformsubmit()"; class="row mx-2">
-            {% csrf_token %}
+        <form method="get" action="/read/" id="advanced_search" class="row mx-2">
             {{ search_advanced.is_kaisei }}
             {{ search_advanced.is_kaisei.label_tag }}
             {{ search_advanced.is_zenkai }}
@@ -32,11 +31,9 @@
             {{ search_advanced.is_marked.label_tag }}
             <div class="col-sm-12 mx-0 px-0">
                 {{ search_advanced.text }}
-                <input type="submit" name="search" value="検索" method="get" class="submit btn btn-info btn-sm ml-2">
+                <input type="submit" value="検索" class="submit btn btn-info btn-sm ml-2">
             </div>
-            
         </form>
-
     </div>
 
     <div class="content_wrapper">
