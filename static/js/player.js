@@ -128,6 +128,7 @@ function when_bar_moved(){
 
 wavesurfer.on('audioprocess', function() {
     when_bar_moved();
+    wavesurfer.setMute(false);
 })
 wavesurfer.on('seek', function() {
     when_bar_moved();
