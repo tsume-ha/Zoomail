@@ -76,11 +76,15 @@ def UserRegistration(request):
                 last_name = request.POST["last_name"]
                 first_name = request.POST["first_name"]
                 furigana = request.POST["furigana"]
-                register(email=email, year=int(year), last_name=last_name, first_name=first_name, furigana=furigana)
-                messages.success(request, email + 'を登録しました。')
+                try:
+                    register(email=email, year=int(year), last_name=last_name, first_name=first_name, furigana=furigana)
+                    messages.success(request, email + 'を登録しました。')
+                    params['RegisterForm'] = RegisterForm(None)
+                except DuplicateGmailAccountError:
+                    messages.error(request, email+' はすでに登録されているアカウントのため登録できませんでした。')
             else:
-                messages.error(request, '登録に失敗しました。')
-                params['RegisterForm'] = RegisterForm(None)
+                messages.error(request, '登録に失敗しました。入力した値を確かめてください。')
+                params['RegisterForm'] = RegisterForm(request.POST)
         return render(request, 'members/register.html', params)
     else:
         return redirect('/members')
