@@ -16,14 +16,18 @@ class CreateCalendarForm(forms.ModelForm):
         self.fields['days_end'].widget=forms.SelectDateWidget(
             years=[datetime.datetime.now().year, datetime.datetime.now().year +1]
         )
+        self.fields['text'].required = False
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
 
+
 class InviteUserForm(forms.Form):
     year_choice = forms.ChoiceField(# No POSTed DATA is USED in VIEW.PY, This Form is used only for JS
-        label = "Year"
+        label = "Year",
+        required = False,
     )
     invite_user = forms.ChoiceField(
+        required = False
     )
     user_post_data = forms.CharField(
         widget=forms.HiddenInput()
