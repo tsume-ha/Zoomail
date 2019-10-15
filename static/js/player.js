@@ -128,12 +128,15 @@ function when_bar_moved(){
 
 wavesurfer.on('audioprocess', function() {
     when_bar_moved();
-    wavesurfer.setMute(false);
 })
 wavesurfer.on('seek', function() {
     when_bar_moved();
 })
 
+wavesurfer.on('finish', function() {
+    $('#start').removeClass('getstop');
+    $('#start').addClass('getstart');
+})
 
 $(function(){
     const wavediv = document.querySelector('#waveform');
@@ -150,7 +153,7 @@ $(function(){
         }
 
         x = event.pageX - this.offsetLeft;
-        wavesurfer.setMute(true);
+        wavesurfer.setVolume(0);
         wavesurfer.seekTo(x / div_width);
         when_bar_moved();
 
@@ -169,6 +172,7 @@ $(function(){
             var event = e.changedTouches[0];
         }
         x = event.pageX - this.offsetLeft;
+        wavesurfer.setVolume(0);
         wavesurfer.seekTo(x / div_width);
         when_bar_moved();
 
@@ -184,8 +188,7 @@ $(function(){
         wavediv.removeEventListener("mouseup", mup, false);
         wavediv.removeEventListener("touchmove", mmove, false);
         wavediv.removeEventListener("touchend", mup, false);
-        
-        wavesurfer.setMute(false);
+        wavesurfer.setVolume(1);
         if (wavesurfer.isPlaying()) {
             wavesurfer.play();
             $('#start').removeClass('getstart');
