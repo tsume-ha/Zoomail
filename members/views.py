@@ -13,6 +13,7 @@ from io import TextIOWrapper
 from .create_google_user import DuplicateGmailAccountError
 from board.models import Message, Kidoku
 from .create_google_user import Create_Google_User as register
+from django.core.exceptions import ValidationError
 
 
 def MemberRegisterPermission(user):
@@ -104,15 +105,23 @@ def UserRegistrationCSV(request):
             reader = csv.reader(form_data)
             session = request.session.session_key
             for row in reader:
-                content = TmpMember(
-                    session = session,
-                    last_name = row[0],
-                    first_name = row[1],
-                    furigana = row[2],
-                    email = row[3],
-                    year = int(row[4]),
-                    )
-                content.save()
+                if int(row[4]) == 0 or 1990 < int(row[4]) < 2100:
+                    try:
+                        content = TmpMember(
+                            session = session,
+                            last_name = row[0],
+                            first_name = row[1],
+                            furigana = row[2],
+                            email = row[3],
+                            year = int(row[4]),
+                            )
+                        content.full_clean()
+                        content.save()
+                    except ValidationError:
+                        messages.error(request, ','.join(row) + 'の入力情報が正しくないため、以下のリストから外れました。')
+                        continue
+                else:
+                    messages.error(request, ','.join(row) + 'の入部年度情報が正しくないため、以下のリストから外れました。')
             return redirect('preview/')
         return render(request, 'members/registerCSV.html', params)
     else:
