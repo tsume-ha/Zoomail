@@ -100,7 +100,7 @@ def UserRegistrationCSV(request):
         params = {
             'RegisterCSV': csvform,
         }
-        if (request.method == 'POST'):
+        if (request.method == 'POST' and csvform.is_valid()):
             form_data = TextIOWrapper(request.FILES['csv_file'].file, encoding='utf_8')
             reader = csv.reader(form_data)
             session = request.session.session_key
@@ -115,7 +115,6 @@ def UserRegistrationCSV(request):
                             email = row[3],
                             year = int(row[4]),
                             )
-                        content.full_clean()
                         content.save()
                     except ValidationError:
                         messages.error(request, ','.join(row) + 'の入力情報が正しくないため、以下のリストから外れました。')

@@ -2,6 +2,8 @@ from django import forms
 from django.forms.utils import ErrorList
 from django.core import validators
 from .models import User
+import csv
+from io import TextIOWrapper
 
 
 
@@ -76,7 +78,19 @@ class RegisterForm(forms.Form):
 
 class RegisterCSV(forms.Form):
     csv_file = forms.FileField(
-    	label="",
-    	required =True,
-    	)
-		
+        label="",
+        required =True,
+        )
+    def clean_csv_file(self):
+        file = self.cleaned_data['csv_file']
+        if not file.name.endswith('.csv'):
+            raise forms.ValidationError('拡張子がcsvのファイルをアップロードしてください')
+        csv_file = TextIOWrapper(file, encoding='utf-8')
+        reader = csv.reader(csv_file)
+        try:
+            for row in reader:
+                content = row
+        except UnicodeDecodeError:
+            raise forms.ValidationError('ファイルのエンコーディングや、正しいCSVファイルか確認ください。')
+
+        return reader
