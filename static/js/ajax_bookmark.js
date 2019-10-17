@@ -13,7 +13,7 @@ function bookmark(message_pk) {
          timeout: 5000,
          dataType: "text",
     })
-    .done( function(data) {
+    .done(function(data){
         var is_marked = data.replace('bookmark=', '')
         if (is_marked == 'true') {
             $('img#img_'+message_pk).attr('src', '/static/img/star_yl.png');
@@ -21,8 +21,14 @@ function bookmark(message_pk) {
             $('img#img_'+message_pk).attr('src', '/static/img/star_bk.png');
         }
     })
-    .fail(function() {
+    .fail(function(){
         $('img#img_'+message_pk).attr('src', before_ajax);
         console.log('通信失敗：ブックマーク処理');
+        $('.popup').html('<p>ブックマークの通信ができませんでした。<br>時間をおいて再度行ってください。</p>');
+        $('.popup').fadeIn(1000, function(){
+            setTimeout(function(){
+                $(this).fadeOut(500);
+            },3000);
+        });
     });
 }
