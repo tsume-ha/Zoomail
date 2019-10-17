@@ -109,28 +109,27 @@ def UserRegistrationCSV(request):
             reader = csv.reader(form_data)
             session = request.session.session_key
             try:
-                data_for_validation = [row for row in reader]
+                for row in reader:
+                    if int(row[4]) == 0 or 1990 < int(row[4]) < 2100:
+                        try:
+                            content = TmpMember(
+                                session = session,
+                                last_name = row[0],
+                                first_name = row[1],
+                                furigana = row[2],
+                                email = row[3],
+                                year = int(row[4]),
+                                )
+                            content.save()
+                        except ValidationError:
+                            messages.error(request, ','.join(row) + 'の入力情報が正しくないため、以下のリストから外れました。')
+                            continue
+                    else:
+                        messages.error(request, ','.join(row) + 'の入部年度情報が正しくないため、以下のリストから外れました。')
+                return redirect('preview/')
             except UnicodeDecodeError:
                 messages.error(request, 'ファイルのエンコーディングや、正しいCSVファイルか確認ください。')
                 return render(request, 'members/registerCSV.html', params)
-            for row in reader:
-                if int(row[4]) == 0 or 1990 < int(row[4]) < 2100:
-                    try:
-                        print('in try')
-                        content = TmpMember(
-                            session = session,
-                            last_name = row[0],
-                            first_name = row[1],
-                            furigana = row[2],
-                            email = row[3],
-                            year = int(row[4]),
-                            )
-                        content.save()
-                    except ValidationError:
-                        messages.error(request, ','.join(row) + 'の入力情報が正しくないため、以下のリストから外れました。')
-                        continue
-                else:
-                    messages.error(request, ','.join(row) + 'の入部年度情報が正しくないため、以下のリストから外れました。')
             return redirect('preview/')
         return render(request, 'members/registerCSV.html', params)
     else:
