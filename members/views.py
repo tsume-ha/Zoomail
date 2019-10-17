@@ -1,12 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
-from django.http import Http404
 from django.db.models import Q
 from .models import User, TmpMember
-from social_django.models import UserSocialAuth
 from .forms import UserUpdateForm, RegisterForm, RegisterCSV
 import csv
 from io import TextIOWrapper

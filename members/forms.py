@@ -1,9 +1,6 @@
 from django import forms
-from django.forms.utils import ErrorList
 from django.core import validators
 from .models import User
-import csv
-from io import TextIOWrapper
 
 
 
