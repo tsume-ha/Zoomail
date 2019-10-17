@@ -213,3 +213,20 @@ nav ul li{
 }
 
 }
+
+
+/*Validation Error Style*/
+ul.errorlist{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+ul.errorlist li{
+	display: block;
+	padding: 0.5rem 1rem;
+	margin: 0.5rem 0;
+	color: #721c24;
+	background-color: #f8d7da;
+	border: 1px solid #f5c6cb;
+	border-radius: 3px;
+}

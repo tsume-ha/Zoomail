@@ -1,5 +1,4 @@
 from django import forms
-from django.forms.utils import ErrorList
 from django.core import validators
 from .models import User
 
@@ -67,9 +66,15 @@ class RegisterForm(forms.Form):
         )]
     )
 
+    def clean_year(self):
+        year = self.cleaned_data['year']
+        if not ( year == 0 or 1990 < year < 2100 ):
+            raise forms.ValidationError('無効な入部年度です。第24期などでなく、入部年度（2018）を入力してください。')
+        return year
+
+
 class RegisterCSV(forms.Form):
     csv_file = forms.FileField(
-    	label="",
-    	required =True,
-    	)
-		
+        label="",
+        required =True,
+        )

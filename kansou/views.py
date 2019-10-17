@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Kansouyoushi
 from .forms import KansouUploadForm
-from django.db.models import Max, Min, Count
-from django.utils.datastructures import MultiValueDictKeyError
+from django.db.models import Max, Min
 from django.contrib import messages
 import datetime
 

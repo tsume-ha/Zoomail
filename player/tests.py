@@ -1,8 +1,7 @@
-from django.test import TestCase, Client, RequestFactory
+from django.test import TestCase, Client
 from django.db.models import Count
 from django.core.files.uploadedfile import SimpleUploadedFile
 from members.models import User
-import datetime
 import os
 from .models import Performance, Song
 from config.settings import BASE_DIR

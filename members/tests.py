@@ -1,8 +1,6 @@
 from django.test import TestCase, Client
 from members.models import User
 from django.contrib.auth.models import Group
-import os
-import datetime
 from django.core.exceptions import ObjectDoesNotExist
 
 

@@ -70,7 +70,9 @@ class TmpMember(models.Model):
     session = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
-    furigana = models.CharField(max_length=255)
+    furigana = models.CharField(max_length=255,
+                                validators=[RegexValidator(regex=u'^[ぁ-ん]+$',
+                                                           message='ふりがなは全角ひらがなのみで入力してください。')])
     year = models.IntegerField(default=0)
     email = models.EmailField()
     def __str__(self):

@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from config import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
@@ -110,6 +108,6 @@ def FileDownloadView(request, live_id, song_pk):
     response = download(
         filepath = song.file.path,
         filename = filename,
-        mimetype = 'audio/mp3'
+        mimetype = 'audio/mpeg'
     )
     return response
