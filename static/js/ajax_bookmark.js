@@ -27,7 +27,7 @@ function bookmark(message_pk) {
         $('.popup').html('<p>ブックマークの通信ができませんでした。<br>時間をおいて再度行ってください。</p>');
         $('.popup').fadeIn(1000, function(){
             setTimeout(function(){
-                $(this).fadeOut(500);
+                $('.popup').fadeOut(500);
             },3000);
         });
     });
