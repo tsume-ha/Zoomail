@@ -81,16 +81,3 @@ class RegisterCSV(forms.Form):
         label="",
         required =True,
         )
-    def clean_csv_file(self):
-        file = self.cleaned_data['csv_file']
-        if not file.name.endswith('.csv'):
-            raise forms.ValidationError('拡張子がcsvのファイルをアップロードしてください')
-        csv_file = TextIOWrapper(file, encoding='utf-8')
-        reader = csv.reader(csv_file)
-        try:
-            for row in reader:
-                content = row
-        except UnicodeDecodeError:
-            raise forms.ValidationError('ファイルのエンコーディングや、正しいCSVファイルか確認ください。')
-
-        return reader

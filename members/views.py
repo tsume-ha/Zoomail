@@ -101,12 +101,22 @@ def UserRegistrationCSV(request):
             'RegisterCSV': csvform,
         }
         if (request.method == 'POST' and csvform.is_valid()):
-            form_data = TextIOWrapper(request.FILES['csv_file'].file, encoding='utf_8')
+            form_file = request.FILES['csv_file']
+            if not form_file.name.endswith('.csv'):
+                messages.error(request, '拡張子がcsvのファイルをアップロードしてください')
+                return render(request, 'members/registerCSV.html', params)
+            form_data = TextIOWrapper(form_file, encoding='utf_8')
             reader = csv.reader(form_data)
             session = request.session.session_key
+            try:
+                data_for_validation = [row for row in reader]
+            except UnicodeDecodeError:
+                messages.error(request, 'ファイルのエンコーディングや、正しいCSVファイルか確認ください。')
+                return render(request, 'members/registerCSV.html', params)
             for row in reader:
                 if int(row[4]) == 0 or 1990 < int(row[4]) < 2100:
                     try:
+                        print('in try')
                         content = TmpMember(
                             session = session,
                             last_name = row[0],
