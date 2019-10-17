@@ -130,6 +130,12 @@ def UserRegistrationCSV(request):
             except UnicodeDecodeError:
                 messages.error(request, 'ファイルのエンコーディングや、正しいCSVファイルか確認ください。')
                 return render(request, 'members/registerCSV.html', params)
+            except ValueError:
+                messages.error(request, 'ファイルのエンコーディングや、正しいCSVファイルか確認ください。')
+                return render(request, 'members/registerCSV.html', params)
+            except:
+                messages.error(request, 'ファイルのエンコーディングや、正しいCSVファイルか確認ください。直らない場合は、管理者に連絡してください。')
+                return render(request, 'members/registerCSV.html', params)
             return redirect('preview/')
         return render(request, 'members/registerCSV.html', params)
     else:
