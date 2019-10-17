@@ -1,9 +1,6 @@
 from django import forms
-from django.forms.utils import ErrorList
-import datetime
 from django.core import validators
 from .models import Message
-from members.models import User
 
 kaisei = [
 (2019,"2019 25期",),

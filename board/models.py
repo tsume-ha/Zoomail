@@ -1,7 +1,6 @@
 import os
 import datetime
 from django.db import models
-from django.utils import timezone
 from members.models import User
 from private_storage.fields import PrivateFileField
 

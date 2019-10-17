@@ -5,7 +5,7 @@ import os
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import SimpleUploadedFile
-from .models import Message, MessageYear, Attachment
+from .models import Message, MessageYear
 from .forms import validation_error_messages
 from config.settings import BASE_DIR
 
