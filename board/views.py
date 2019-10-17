@@ -7,7 +7,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
-from .forms import SendMessage, SearchAdvanced, Edit, DivErrorList
+from .forms import SendMessage, SearchAdvanced, Edit
 from members.models import User
 import datetime
 import urllib.parse
@@ -111,7 +111,6 @@ def send(request):
     messageForm = SendMessage(
         request.POST or None,
         request.FILES or None,
-        error_class = DivErrorList,
         initial={'written_by': str(request.user.year)+'-'+str(request.user.pk),
                  'year_choice': request.user.year}
     )

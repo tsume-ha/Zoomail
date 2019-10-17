@@ -22,22 +22,10 @@ validation_error_messages = {
     'filesize_limit': 'ファイルサイズが30MB以上のため、アップロードできません',
 }
 
-def get_user_choice_list():
-    return [(str(user.year)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')]
-
 def validate_attachmentfile(value):
     if value.size > 30 * 1024 * 1024: # 30MB
         raise forms.ValidationError(validation_error_messages['filesize_limit'])
     return value
-
-class DivErrorList(ErrorList):
-    def __str__(self):
-        return self.as_divs()
-    def as_divs(self):
-        if not self: 
-        	return ''
-        return '<div class="errorlist">%s</div>' % ''.join(['<div class="error alert alert-danger">%s</div>' % e for e in self])
-
 
 class SendMessage(forms.Form):
     title = forms.CharField(
