@@ -1,18 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
-from django.http import Http404
 from django.db.models import Q
 from .models import User, TmpMember
-from social_django.models import UserSocialAuth
 from .forms import UserUpdateForm, RegisterForm, RegisterCSV
 import csv
 from io import TextIOWrapper
 from .create_google_user import DuplicateGmailAccountError
 from board.models import Message, Kidoku
 from .create_google_user import Create_Google_User as register
+from django.core.exceptions import ValidationError
 
 
 def MemberRegisterPermission(user):
@@ -76,11 +73,15 @@ def UserRegistration(request):
                 last_name = request.POST["last_name"]
                 first_name = request.POST["first_name"]
                 furigana = request.POST["furigana"]
-                register(email=email, year=int(year), last_name=last_name, first_name=first_name, furigana=furigana)
-                messages.success(request, email + 'を登録しました。')
+                try:
+                    register(email=email, year=int(year), last_name=last_name, first_name=first_name, furigana=furigana)
+                    messages.success(request, email + 'を登録しました。')
+                    params['RegisterForm'] = RegisterForm(None)
+                except DuplicateGmailAccountError:
+                    messages.error(request, email+' はすでに登録されているアカウントのため登録できませんでした。')
             else:
-                messages.error(request, '登録に失敗しました。')
-                params['RegisterForm'] = RegisterForm(None)
+                messages.error(request, '登録に失敗しました。入力した値を確かめてください。')
+                params['RegisterForm'] = RegisterForm(request.POST)
         return render(request, 'members/register.html', params)
     else:
         return redirect('/members')
@@ -95,20 +96,42 @@ def UserRegistrationCSV(request):
         params = {
             'RegisterCSV': csvform,
         }
-        if (request.method == 'POST'):
-            form_data = TextIOWrapper(request.FILES['csv_file'].file, encoding='utf_8')
+        if (request.method == 'POST' and csvform.is_valid()):
+            form_file = request.FILES['csv_file']
+            if not form_file.name.endswith('.csv'):
+                messages.error(request, '拡張子がcsvのファイルをアップロードしてください')
+                return render(request, 'members/registerCSV.html', params)
+            form_data = TextIOWrapper(form_file, encoding='utf_8')
             reader = csv.reader(form_data)
             session = request.session.session_key
-            for row in reader:
-                content = TmpMember(
-                    session = session,
-                    last_name = row[0],
-                    first_name = row[1],
-                    furigana = row[2],
-                    email = row[3],
-                    year = int(row[4]),
-                    )
-                content.save()
+            try:
+                for row in reader:
+                    if int(row[4]) == 0 or 1990 < int(row[4]) < 2100:
+                        try:
+                            content = TmpMember(
+                                session = session,
+                                last_name = row[0],
+                                first_name = row[1],
+                                furigana = row[2],
+                                email = row[3],
+                                year = int(row[4]),
+                                )
+                            content.save()
+                        except ValidationError:
+                            messages.error(request, ','.join(row) + 'の入力情報が正しくないため、以下のリストから外れました。')
+                            continue
+                    else:
+                        messages.error(request, ','.join(row) + 'の入部年度情報が正しくないため、以下のリストから外れました。')
+                return redirect('preview/')
+            except UnicodeDecodeError:
+                messages.error(request, 'ファイルのエンコーディングや、正しいCSVファイルか確認ください。')
+                return render(request, 'members/registerCSV.html', params)
+            except ValueError:
+                messages.error(request, 'ファイルのエンコーディングや、正しいCSVファイルか確認ください。')
+                return render(request, 'members/registerCSV.html', params)
+            except:
+                messages.error(request, 'ファイルのエンコーディングや、正しいCSVファイルか確認ください。直らない場合は、管理者に連絡してください。')
+                return render(request, 'members/registerCSV.html', params)
             return redirect('preview/')
         return render(request, 'members/registerCSV.html', params)
     else:
