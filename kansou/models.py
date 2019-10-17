@@ -23,5 +23,4 @@ class Kansouyoushi(models.Model):
         'christmaslive',#    6          クリスマス
         'newyearlive',#      7          あけおめ
         'marchlive',#        8          3月
-
     )

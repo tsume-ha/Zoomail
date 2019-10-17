@@ -1,5 +1,4 @@
 from django import forms
-from django.core import validators
 from .models import Kansouyoushi
 import datetime
 
