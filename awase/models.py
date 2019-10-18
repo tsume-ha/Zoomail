@@ -19,6 +19,15 @@ class CalendarUser(models.Model):
     def __str__(self):
         return self.calender.title + ' : ' + self.user.get_full_name()
 
+class CollectHour(models.Model):
+    calender = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_hour')
+    date = models.DateField(verbose_name='日付')
+    hour_begin = models.PositiveSmallIntegerField(default=9, verbose_name='開始時間')
+    hour_end = models.PositiveSmallIntegerField(default=26, verbose_name='終了時間')
+    def __str__(self):
+        return self.calender.title + ' : ' + self.date.strftime('%Y-%m-%d') + ' ' + str(self.hour_begin) + '-' + str(self.hour_end)
+
+
 class Schedule(models.Model):
     calender = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_schedule')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='schedule_user')

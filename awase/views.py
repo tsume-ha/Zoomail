@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 import datetime
 from members.models import User
-from .models import Calendar, CalendarUser, Schedule
+from .models import Calendar, CalendarUser, Schedule, CollectHour
 from .forms import CreateCalendarForm, InviteUserForm, InputScheduleForm
 from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist
@@ -101,6 +101,16 @@ def create(request):
                         user = user
                         )
                     calendar_user_content.save()
+                date = content.days_begin
+                while date <= content.days_end:
+                    date_content = CollectHour(
+                        calender=content,
+                        date=date,
+                        hour_begin=9,
+                        hour_end=26,
+                        )
+                    date_content.save()
+                    date = date + datetime.timedelta(days=1)
                 return redirect(to='../')
 
         else:
