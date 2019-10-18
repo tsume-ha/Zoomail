@@ -137,8 +137,8 @@ def input(request, pk):
     if can_edit:
         from django.forms import formset_factory
         initial_data = [
-            {'form-0-can_attend': 'True'},
-            {'form-1-can_attend': 'True'}
+            {'can_attend': True, 'datetime': datetime.datetime(2019,10,19,22,00,00)},
+            {'can_attend': True, 'datetime': datetime.datetime(2019,10,19,23,00,00)}
             ]
         InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0,)
         formset = InputScheduleFormSet(initial=initial_data)

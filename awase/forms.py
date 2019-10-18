@@ -41,8 +41,8 @@ class InputScheduleForm(forms.Form):
     can_attend = forms.ChoiceField(
         widget=forms.RadioSelect(),
         required = False,
-        choices = {('True', '○'),('False', '×')}
+        choices = {(True, '○'),(False, '×')}
     )
-    user_post_data = forms.DateTimeField(
+    datetime = forms.DateTimeField(
         widget=forms.HiddenInput()
     )
