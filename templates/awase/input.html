@@ -14,12 +14,7 @@
 <section id="" class="my-3">
 	<form method="post" enctype="multipart/form-data">
 		{% csrf_token %}
-		<div class="form-group row mx-0">
-			{% for radio in forms.can_attend %}
-				{{ radio.tag }}
-			{% endfor %}
-		</div>
-
+		{{formset}}
 		<input type="submit" id="" value="登録" class="btn btn-info mx-2 my-3">
 	</form>
 </section>

@@ -135,10 +135,16 @@ def input(request, pk):
     calender = get_object_or_404(Calendar, pk=pk)
     can_edit = calendar_permission(calender, now_user)
     if can_edit:
-        form = InputScheduleForm(request.POST or None)
+        from django.forms import formset_factory
+        initial_data = [
+            {'form-0-can_attend': 'True'},
+            {'form-1-can_attend': 'True'}
+            ]
+        InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0,)
+        formset = InputScheduleFormSet(initial=initial_data)
         params = {
             'calender': calender,
-            'forms': form,
+            'formset': formset,
         }
 
         return render(request, 'awase/input.html', params)
