@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}{{ calender.title }} に回答 | Unplugged Message{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
+{% endblock %}
+
+
+{% block body %}
+<h3>{{ calender.title }} に回答</h3>
+
+<section id="" class="my-3">
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="form-group row mx-0">
+			{% for radio in forms.can_attend %}
+				{{ radio.tag }}
+			{% endfor %}
+		</div>
+
+		<input type="submit" id="" value="登録" class="btn btn-info mx-2 my-3">
+	</form>
+</section>
+
+
+
+
+</section>
+
+{% endblock %}

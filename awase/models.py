@@ -14,27 +14,27 @@ class Calendar(models.Model):
         return self.created_at.strftime('%Y-%m-%d') + self.title
 
 class CalendarUser(models.Model):
-    calender = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_content')
+    calendar = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_content')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='calendar_user')
     def __str__(self):
-        return self.calender.title + ' : ' + self.user.get_full_name()
+        return self.calendar.title + ' : ' + self.user.get_full_name()
 
 class CollectHour(models.Model):
-    calender = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_hour')
+    calendar = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_hour')
     date = models.DateField(verbose_name='日付')
     hour_begin = models.PositiveSmallIntegerField(default=9, verbose_name='開始時間')
     hour_end = models.PositiveSmallIntegerField(default=26, verbose_name='終了時間')
     def __str__(self):
-        return self.calender.title + ' : ' + self.date.strftime('%Y-%m-%d') + ' ' + str(self.hour_begin) + '-' + str(self.hour_end)
+        return self.calendar.title + ' : ' + self.date.strftime('%Y-%m-%d') + ' ' + str(self.hour_begin) + '-' + str(self.hour_end)
 
 
 class Schedule(models.Model):
-    calender = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_schedule')
+    calendar = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_schedule')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='schedule_user')
     starttime = models.DateTimeField()
     duration = models.IntegerField(default=30)
     canattend = models.BooleanField()
     def __str__(self):
-        return self.calender.title + ' ' + self.user.get_full_name + self.starttime.strftime(' %Y-%m-%d %H:%M') + ' ' + self.canattend
+        return self.calendar.title + ' ' + self.user.get_full_name + self.starttime.strftime(' %Y-%m-%d %H:%M') + ' ' + self.canattend
 
 

@@ -6,8 +6,10 @@ from .models import Calendar, CalendarUser, Schedule, CollectHour
 from .forms import CreateCalendarForm, InviteUserForm, InputScheduleForm
 from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 
+def calendar_permission(calendar, user):
+    return CalendarUser.objects.filter(calendar=calendar).filter(user=user).exists()
 
 @login_required()
 def index(request):
@@ -129,9 +131,16 @@ def create(request):
 
 @login_required()
 def input(request, pk):
+    now_user = request.user
+    calender = get_object_or_404(Calendar, pk=pk)
+    can_edit = calendar_permission(calender, now_user)
+    if can_edit:
+        form = InputScheduleForm(request.POST or None)
+        params = {
+            'calender': calender,
+            'forms': form,
+        }
 
-    params = {
-    
-    }
-
-    return render(request, 'awase/create.html', params)
+        return render(request, 'awase/input.html', params)
+    else:
+        return redirect('/awase/')

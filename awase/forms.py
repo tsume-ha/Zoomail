@@ -38,9 +38,11 @@ class InviteUserForm(forms.Form):
         self.fields['invite_user'].widget.attrs["class"] = "form-control"
 
 class InputScheduleForm(forms.Form):
-    can_attend = forms.BooleanField(
-        widget=forms.RadioSelect(
-            attrs={'class': 'form-control'},
-            ),
+    can_attend = forms.ChoiceField(
+        widget=forms.RadioSelect(),
         required = False,
+        choices = {('True', '○'),('False', '×')}
+    )
+    user_post_data = forms.DateTimeField(
+        widget=forms.HiddenInput()
     )
