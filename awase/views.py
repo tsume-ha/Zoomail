@@ -8,6 +8,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, get_object_or_404
 from django.forms import formset_factory
+from django.db.models import Count
 
 def calendar_permission(calendar, user):
     return CalendarUser.objects.filter(calendar=calendar).filter(user=user).exists()
@@ -22,56 +23,54 @@ def index(request):
     return render(request, 'awase/index.html', params)
 
 @login_required()
-def calendar(request, pk):
-    display_date = (
-        datetime.date(2019,10,10),
-        datetime.date(2019,10,11),
-        datetime.date(2019,10,12),
-        datetime.date(2019,10,13),
-        datetime.date(2019,10,14),
-        datetime.date(2019,10,15),
-        datetime.date(2019,10,16),
-        )
-    NG_0_list = [
-        {'date' : datetime.date(2019,10,10), 'time' : 14, 'half' : False},
-        {'date' : datetime.date(2019,10,11), 'time' : 14, 'half' : False},
-        {'date' : datetime.date(2019,10,12), 'time' : 14, 'half' : False},
-        {'date' : datetime.date(2019,10,13), 'time' : 14, 'half' : False},
-        {'date' : datetime.date(2019,10,14), 'time' : 14, 'half' : True},
-        {'date' : datetime.date(2019,10,15), 'time' : 14, 'half' : True},
-        {'date' : datetime.date(2019,10,16), 'time' : 14, 'half' : True},
-    ]
-    NG_1_list = [
-        {'date' : datetime.date(2019,10,10), 'time' : 15, 'half' : False},
-        {'date' : datetime.date(2019,10,13), 'time' : 15, 'half' : True},
-        {'date' : datetime.date(2019,10,14), 'time' : 15, 'half' : True},
-        {'date' : datetime.date(2019,10,15), 'time' : 15, 'half' : True},
-        {'date' : datetime.date(2019,10,16), 'time' : 15, 'half' : True},
-    ]
+def CalendarView(request, pk):
+    now_user = request.user
+    calendar = Calendar.objects.get(pk=pk)
+    pagenum = 0
+    if (calendar.days_end - calendar.days_begin).days < 7:
+        displaydays = (calendar.days_end - calendar.days_begin).days
+    else:
+        displaydays = 7
+    display_date = [calendar.days_begin + datetime.timedelta(days=d+pagenum*7) for d in range(displaydays)]
+    NG = [
+        [],#0
+        [],#1
+        [],#2
+        [],#over3
+        ]
+    NG_1_list = []
     NG_2_list = [
         {'date' : datetime.date(2019,10,10), 'time' : 18, 'half' : False},
-        {'date' : datetime.date(2019,10,11), 'time' : 18, 'half' : False},
-        {'date' : datetime.date(2019,10,12), 'time' : 18, 'half' : False},
-        {'date' : datetime.date(2019,10,13), 'time' : 18, 'half' : False},
-        {'date' : datetime.date(2019,10,14), 'time' : 18, 'half' : False},
-        {'date' : datetime.date(2019,10,14), 'time' : 18, 'half' : True},
-        {'date' : datetime.date(2019,10,15), 'time' : 18, 'half' : True},
-        {'date' : datetime.date(2019,10,16), 'time' : 18, 'half' : True},
     ]
-    NG_3over_list = [
-        {'date' : datetime.date(2019,10,10), 'time' : 20, 'half' : False},
-        {'date' : datetime.date(2019,10,11), 'time' : 20, 'half' : False},
-        {'date' : datetime.date(2019,10,12), 'time' : 20, 'half' : False},
-        {'date' : datetime.date(2019,10,13), 'time' : 20, 'half' : False},
-        {'date' : datetime.date(2019,10,14), 'time' : 20, 'half' : False},
-    ]
+    NG_3over_list = []
+    for day in display_date:
+        hours = CollectHour.objects.filter(calendar=calendar).get(date=day)
+        timelist = [datetime.datetime.combine(day, datetime.time(0)) + datetime.timedelta(minutes=30*h) for h in range(hours.hour_begin*2,hours.hour_end*2)]
+        for time in timelist:
+            num = Schedule.objects.filter(calendar=calendar, starttime=time, canattend=False).aggregate(Count('starttime'))['starttime__count']
+            data = {'date' : day}
+            if 0 <= time.hour <= 5:
+                data['time'] = time.hour + 24
+            else:
+                data['time'] = time.hour
+            if time.minute == 0:
+                data['half'] = False
+            else:
+                data['half'] = True
+            if num < 4:
+                NG[num].append(data)
+            else:
+                NG[3].append(data)
+            
+
+            NG[num]
     params = {
         'timetuple': (n for n in range(9,27)),
         'datetuple': display_date,
-        'NG_0_list' : NG_0_list,
-        'NG_1_list' : NG_1_list,
-        'NG_2_list' : NG_2_list,
-        'NG_3over_list' : NG_3over_list,
+        'NG_0_list' : NG[0],
+        'NG_1_list' : NG[1],
+        'NG_2_list' : NG[2],
+        'NG_3over_list' : NG[3],
     }
     return render(request, 'awase/calendar.html', params)
 
