@@ -4,7 +4,7 @@
 
 {% block title %}{{ calendar.title }} に回答 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/input.css' %}">
 {% endblock %}
 
 
@@ -12,13 +12,27 @@
 <h3>{{ calendar.title }} に回答</h3>
 
 <section id="" class="my-3">
-	<form method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		{% for formset in formsets %}
-		{{formset}}
-		{% endfor %}
-		<input type="submit" id="" value="登録" class="btn btn-info mx-2 my-3">
-	</form>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for formset in formsets %}
+        <div class="form_one_day col-sm-12 col-md-6 m-0 p-0">
+            {% for form in formset %}
+                <div class="form-group p-0 my-1">
+                {{ form.non_field_errors }}
+                {{ form.displaytime }}
+                {% for radio in form.can_attend %}
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                {% endfor %}
+                {% for field in form.hidden_fields %}
+                    {{ field }}
+                {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <input type="submit" id="" value="登録" class="btn btn-info mx-2 my-3">
+    </form>
 </section>
 
 

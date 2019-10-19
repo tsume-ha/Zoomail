@@ -148,9 +148,16 @@ def input(request, pk):
                 datetime_data = datetime_data + datetime.timedelta(hours=t)
                 try:
                     schedule_query = schedule_calendar_query.get(starttime=datetime_data)
-                    initial_data.append({'datetime':datetime_data, 'can_attend': schedule_query.canattend})
+                    initial_data.append({
+                        'displaytime':datetime_data.strftime('%m/%d %H:%M'),
+                        'datetime':datetime_data,
+                        'can_attend': schedule_query.canattend
+                        })
                 except ObjectDoesNotExist:
-                    initial_data.append({'datetime':datetime_data})
+                    initial_data.append({
+                        'displaytime':datetime_data.strftime('%m/%d %H:%M'),
+                        'datetime':datetime_data
+                        })
             formsets.append(InputScheduleFormSet(initial=initial_data))
             date = date + datetime.timedelta(days=1)
         params = {

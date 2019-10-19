@@ -38,6 +38,7 @@ class InviteUserForm(forms.Form):
         self.fields['invite_user'].widget.attrs["class"] = "form-control"
 
 class InputScheduleForm(forms.Form):
+    displaytime = forms.CharField(required=False)
     can_attend = forms.ChoiceField(
         widget=forms.RadioSelect(),
         required = False,
@@ -46,3 +47,7 @@ class InputScheduleForm(forms.Form):
     datetime = forms.DateTimeField(
         widget=forms.HiddenInput()
     )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['displaytime'].widget.attrs["readonly"] = "readonly"
+        self.fields['displaytime'].widget.attrs["class"] = "form-control-plaintext displaytime"

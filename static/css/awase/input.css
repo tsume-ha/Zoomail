@@ -1,0 +1,13 @@
+.form_one_day input[type='text']{
+	display: inline;
+	width: 8rem;
+	margin: 0;
+	padding: 0;
+}
+.form_one_day input[type='radio']{
+	display: none;
+}
+
+.form_one_day input[type='radio']:checked + label{
+	color: #d01137;
+}
