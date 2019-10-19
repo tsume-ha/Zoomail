@@ -31,8 +31,7 @@ class CollectHour(models.Model):
 class Schedule(models.Model):
     calendar = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_schedule')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='schedule_user')
-    date = models.DateField(null=False)
-    starttime = models.PositiveSmallIntegerField(null=False)
+    starttime = models.DateTimeField()
     duration = models.IntegerField(default=30)
     canattend = models.BooleanField()
     def __str__(self):

@@ -100,14 +100,14 @@ def create(request):
                     except ObjectDoesNotExist:
                         continue
                     calendar_user_content = CalendarUser(
-                        calender = content,
+                        calendar = content,
                         user = user
                         )
                     calendar_user_content.save()
                 date = content.days_begin
                 while date <= content.days_end:
                     date_content = CollectHour(
-                        calender=content,
+                        calendar=content,
                         date=date,
                         hour_begin=9,
                         hour_end=26,
@@ -133,8 +133,8 @@ def create(request):
 @login_required()
 def input(request, pk):
     now_user = request.user
-    calender = get_object_or_404(Calendar, pk=pk)
-    can_edit = calendar_permission(calender, now_user)
+    calendar = get_object_or_404(Calendar, pk=pk)
+    can_edit = calendar_permission(calendar, now_user)
     if can_edit:
         # initial_data = [
         #     {'can_attend': True, 'datetime': datetime.datetime(2019,10,19,22,00,00)},
@@ -143,22 +143,21 @@ def input(request, pk):
         # InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
         # formset = [InputScheduleFormSet(initial=initial_data), InputScheduleFormSet(initial=initial_data)]
         formsets = []
-        
-        date = calender.days_begin
-        hour_calendar_query = CollectHour.objects.filter(calendar=calendar)
         schedule_calendar_query = Schedule.objects.filter(calendar=calendar).filter(user=now_user)
-        while date <= calender.days_end:
-            hour_query = hour_calendar_query.get(date=date)
+        date = calendar.days_begin
+        while date <= calendar.days_end:
+            hour_query = CollectHour.objects.filter(calendar=calendar).get(date=date)
             initial_data = []
             for t in range(hour_query.hour_begin, hour_query.hour_end):
                 try:
                     schedule_query = schedule_calendar_query.get(starttime=datetime.datetime(date.year,date.month,date.day,t,00,00))
+                    print(schedule_query)
                 except ObjectDoesNotExist:
                     pass
                 
             date = date + datetime.timedelta(days=1)
         params = {
-            'calender': calender,
+            'calendar': calendar,
             'formset': formset,
         }
 
