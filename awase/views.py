@@ -136,12 +136,6 @@ def input(request, pk):
     calendar = get_object_or_404(Calendar, pk=pk)
     can_edit = calendar_permission(calendar, now_user)
     if can_edit:
-        # initial_data = [
-        #     {'can_attend': True, 'datetime': datetime.datetime(2019,10,19,22,00,00)},
-        #     {'can_attend': True, 'datetime': datetime.datetime(2019,10,19,23,00,00)}
-        #     ]
-        # InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
-        # formset = [InputScheduleFormSet(initial=initial_data), InputScheduleFormSet(initial=initial_data)]
         formsets = []
         InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
         schedule_calendar_query = Schedule.objects.filter(calendar=calendar).filter(user=now_user)
@@ -159,7 +153,6 @@ def input(request, pk):
                     initial_data.append({'datetime':datetime_data})
             formsets.append(InputScheduleFormSet(initial=initial_data))
             date = date + datetime.timedelta(days=1)
-        print(formsets)
         params = {
             'calendar': calendar,
             'formsets': formsets,

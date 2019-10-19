@@ -2,14 +2,14 @@
 {% load static %}
 {% load getsongdetail %}
 
-{% block title %}{{ calender.title }} に回答 | Unplugged Message{% endblock %}
+{% block title %}{{ calendar.title }} に回答 | Unplugged Message{% endblock %}
 {% block extrastyle %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
 {% endblock %}
 
 
 {% block body %}
-<h3>{{ calender.title }} に回答</h3>
+<h3>{{ calendar.title }} に回答</h3>
 
 <section id="" class="my-3">
 	<form method="post" enctype="multipart/form-data">
