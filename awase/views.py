@@ -136,10 +136,14 @@ def input(request, pk):
     calendar = get_object_or_404(Calendar, pk=pk)
     can_edit = calendar_permission(calendar, now_user)
     if can_edit:
+        if (request.method == 'POST'):
+            print(request.POST)
+            return redirect(to='../')
         formsets = []
         InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
         schedule_calendar_query = Schedule.objects.filter(calendar=calendar).filter(user=now_user)
         date = calendar.days_begin
+        count = 0
         while date <= calendar.days_end:
             hour_query = CollectHour.objects.filter(calendar=calendar).get(date=date)
             initial_data = []
@@ -171,12 +175,14 @@ def input(request, pk):
                         'displaytime':datetime_data.strftime('%H:%M'),
                         'datetime':datetime_data
                         })
-            formsets.append({'date':date, 'InputScheduleFormSet':InputScheduleFormSet(initial=initial_data)})
+            formsets.append({'date':date, 'InputScheduleFormSet':InputScheduleFormSet(initial=initial_data,prefix=str(count))})
+            count += 1
             date = date + datetime.timedelta(days=1)
         params = {
             'calendar': calendar,
             'formsets': formsets,
         }
+
 
         return render(request, 'awase/input.html', params)
     else:

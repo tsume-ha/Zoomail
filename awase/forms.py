@@ -50,4 +50,5 @@ class InputScheduleForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['displaytime'].widget.attrs["readonly"] = "readonly"
+        self.fields['displaytime'].widget.attrs["disabled"] = "True"
         self.fields['displaytime'].widget.attrs["class"] = "form-control-plaintext displaytime"
