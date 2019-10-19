@@ -7,6 +7,7 @@ from .forms import CreateCalendarForm, InviteUserForm, InputScheduleForm
 from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, get_object_or_404
+from django.forms import formset_factory
 
 def calendar_permission(calendar, user):
     return CalendarUser.objects.filter(calendar=calendar).filter(user=user).exists()
@@ -135,13 +136,27 @@ def input(request, pk):
     calender = get_object_or_404(Calendar, pk=pk)
     can_edit = calendar_permission(calender, now_user)
     if can_edit:
-        from django.forms import formset_factory
-        initial_data = [
-            {'can_attend': True, 'datetime': datetime.datetime(2019,10,19,22,00,00)},
-            {'can_attend': True, 'datetime': datetime.datetime(2019,10,19,23,00,00)}
-            ]
-        InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0,)
-        formset = InputScheduleFormSet(initial=initial_data)
+        # initial_data = [
+        #     {'can_attend': True, 'datetime': datetime.datetime(2019,10,19,22,00,00)},
+        #     {'can_attend': True, 'datetime': datetime.datetime(2019,10,19,23,00,00)}
+        #     ]
+        # InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
+        # formset = [InputScheduleFormSet(initial=initial_data), InputScheduleFormSet(initial=initial_data)]
+        formsets = []
+        
+        date = calender.days_begin
+        hour_calendar_query = CollectHour.objects.filter(calendar=calendar)
+        schedule_calendar_query = Schedule.objects.filter(calendar=calendar).filter(user=now_user)
+        while date <= calender.days_end:
+            hour_query = hour_calendar_query.get(date=date)
+            initial_data = []
+            for t in range(hour_query.hour_begin, hour_query.hour_end):
+                try:
+                    schedule_query = schedule_calendar_query.get(starttime=datetime.datetime(date.year,date.month,date.day,t,00,00))
+                except ObjectDoesNotExist:
+                    pass
+                
+            date = date + datetime.timedelta(days=1)
         params = {
             'calender': calender,
             'formset': formset,
