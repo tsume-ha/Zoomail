@@ -17,7 +17,7 @@
         {% for formset in formsets %}
         <div class="form_one_day col-sm-12 col-md-6 m-0 p-0">
             {% for form in formset %}
-                <div class="form-group py-1 m-0">
+                <div class="form-group p-0 m-0">
                 {{ form.non_field_errors }}
                 {{ form.displaytime }}
                 {% for radio in form.can_attend %}
