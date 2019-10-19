@@ -1,13 +1,41 @@
-.form_one_day input[type='text']{
+.form_one_day .form-group:nth-child(even){
+	background-color: #f3f3f3;
+}
+.form_one_day input[type="text"]{
 	display: inline;
 	width: 8rem;
 	margin: 0;
 	padding: 0;
 }
-.form_one_day input[type='radio']{
+.form_one_day input[type="radio"]{
 	display: none;
 }
 
-.form_one_day input[type='radio']:checked + label{
-	color: #d01137;
+.form_one_day input[type="radio"] + label{
+	display: inline-block;
+	position: relative;
+	width: 4rem;
+	text-align: center;
+	padding: 0.3rem;
+	margin: 0;
+	border-radius: 1rem;
+	font-size: 1.4rem;
+	line-height: 2rem;
+	}
+.form_one_day input[type="radio"][value="True"] + label{
+	border: 1px solid transparent;
+	color: #4cd964;
+}
+.form_one_day input[type="radio"][value="True"]:checked + label{
+	background-color: #4cd964;
+	color: #fff;
+}
+
+.form_one_day input[type="radio"][value="False"] + label{
+	border: 1px solid transparent;
+	color: #ff3b30;
+}
+.form_one_day input[type="radio"][value="False"]:checked + label{
+	background-color: #ff3b30;
+	color: #fff;
 }
