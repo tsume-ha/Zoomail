@@ -137,7 +137,17 @@ def input(request, pk):
     can_edit = calendar_permission(calendar, now_user)
     if can_edit:
         if (request.method == 'POST'):
-            print(request.POST)
+            keys = [k for k in request.POST if 'can_attend' in k]
+            for key in keys:
+                time_name = key.replace('can_attend', 'datetime')
+                time = request.POST[time_name]
+                can_attend = request.POST[key]
+                Schedule.objects.update_or_create(
+                    calendar = calendar,
+                    user = now_user,
+                    starttime = time,
+                    defaults = {'duration': 30, 'canattend': can_attend}
+                )
             return redirect(to='../')
         formsets = []
         InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)

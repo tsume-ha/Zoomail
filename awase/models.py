@@ -35,6 +35,6 @@ class Schedule(models.Model):
     duration = models.IntegerField(default=30)
     canattend = models.BooleanField()
     def __str__(self):
-        return self.calendar.title + ' ' + self.user.get_full_name + self.starttime.strftime(' %Y-%m-%d %H:%M') + ' ' + self.canattend
+        return self.calendar.title
 
 
