@@ -143,22 +143,26 @@ def input(request, pk):
         # InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
         # formset = [InputScheduleFormSet(initial=initial_data), InputScheduleFormSet(initial=initial_data)]
         formsets = []
+        InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
         schedule_calendar_query = Schedule.objects.filter(calendar=calendar).filter(user=now_user)
         date = calendar.days_begin
         while date <= calendar.days_end:
             hour_query = CollectHour.objects.filter(calendar=calendar).get(date=date)
             initial_data = []
             for t in range(hour_query.hour_begin, hour_query.hour_end):
+                datetime_data = datetime.datetime.combine(date, datetime.time(00,00,00))
+                datetime_data = datetime_data + datetime.timedelta(hours=t)
                 try:
-                    schedule_query = schedule_calendar_query.get(starttime=datetime.datetime(date.year,date.month,date.day,t,00,00))
-                    print(schedule_query)
+                    schedule_query = schedule_calendar_query.get(starttime=datetime_data)
+                    initial_data.append({'datetime':datetime_data, 'can_attend': schedule_query.canattend})
                 except ObjectDoesNotExist:
-                    pass
-                
+                    initial_data.append({'datetime':datetime_data})
+            formsets.append(InputScheduleFormSet(initial=initial_data))
             date = date + datetime.timedelta(days=1)
+        print(formsets)
         params = {
             'calendar': calendar,
-            'formset': formset,
+            'formsets': formsets,
         }
 
         return render(request, 'awase/input.html', params)

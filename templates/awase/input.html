@@ -14,8 +14,8 @@
 <section id="" class="my-3">
 	<form method="post" enctype="multipart/form-data">
 		{% csrf_token %}
-		{% for formsets in formset %}
-		{{formsets}}
+		{% for formset in formsets %}
+		{{formset}}
 		{% endfor %}
 		<input type="submit" id="" value="登録" class="btn btn-info mx-2 my-3">
 	</form>
