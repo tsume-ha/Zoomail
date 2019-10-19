@@ -149,29 +149,29 @@ def input(request, pk):
                 try:
                     schedule_query = schedule_calendar_query.get(starttime=datetime_data)
                     initial_data.append({
-                        'displaytime':datetime_data.strftime('%m/%d %H:%M'),
+                        'displaytime':datetime_data.strftime('%H:%M'),
                         'datetime':datetime_data,
                         'can_attend': schedule_query.canattend
                         })
                 except ObjectDoesNotExist:
                     initial_data.append({
-                        'displaytime':datetime_data.strftime('%m/%d %H:%M'),
+                        'displaytime':datetime_data.strftime('%H:%M'),
                         'datetime':datetime_data
                         })
                 datetime_data = datetime_data + datetime.timedelta(minutes=30)
                 try:
                     schedule_query = schedule_calendar_query.get(starttime=datetime_data)
                     initial_data.append({
-                        'displaytime':datetime_data.strftime('%m/%d %H:%M'),
+                        'displaytime':datetime_data.strftime('%H:%M'),
                         'datetime':datetime_data,
                         'can_attend': schedule_query.canattend
                         })
                 except ObjectDoesNotExist:
                     initial_data.append({
-                        'displaytime':datetime_data.strftime('%m/%d %H:%M'),
+                        'displaytime':datetime_data.strftime('%H:%M'),
                         'datetime':datetime_data
                         })
-            formsets.append(InputScheduleFormSet(initial=initial_data))
+            formsets.append({'date':date, 'InputScheduleFormSet':InputScheduleFormSet(initial=initial_data)})
             date = date + datetime.timedelta(days=1)
         params = {
             'calendar': calendar,

@@ -1,51 +1,61 @@
-.form_one_day .form-group:nth-child(2n+1){
-	padding: 0.25rem 0;
-	margin: 0;
+.form_one_day h5{
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    padding: 0.5rem 0;
+    margin: 0.25rem 0;
+    font-weight: 400;
+    background-color: #fff;
 }
-.form_one_day .form-group:nth-child(2n){
-	padding: 0;
-	margin: 0;
-	height: 0;
-	visibility: hidden;
+
+.form_one_day .form-group:nth-of-type(2n+1){
+    padding: 0.25rem 0;
+    margin: 0;
 }
-.form_one_day .form-group:nth-child(4n+3){
-	background-color: #f3f3f3;
+.form_one_day .form-group:nth-of-type(2n){
+    padding: 0;
+    margin: 0;
+    height: 0;
+    visibility: hidden;
+}
+.form_one_day .form-group:nth-of-type(4n+3){
+    background-color: #f3f3f3;
 }
 .form_one_day input[type="text"]{
-	display: inline;
-	width: 6rem;
-	margin: 0 1rem 0;
-	padding: 0;
+    display: inline;
+    width: 6rem;
+    margin: 0 1rem 0;
+    padding: 0;
 }
 .form_one_day input[type="radio"]{
-	display: none;
+    display: none;
 }
 
 .form_one_day input[type="radio"] + label{
-	display: inline-block;
-	position: relative;
-	width: 4rem;
-	text-align: center;
-	padding: 0.3rem;
-	margin: 0;
-	border-radius: 1rem;
-	font-size: 1.4rem;
-	line-height: 2rem;
-	}
+    display: inline-block;
+    position: relative;
+    width: 4rem;
+    text-align: center;
+    padding: 0.3rem;
+    margin: 0;
+    border-radius: 1rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    }
 .form_one_day input[type="radio"][value="True"] + label{
-	border: 1px solid transparent;
-	color: #4cd964;
+    border: 1px solid transparent;
+    color: #4cd964;
 }
 .form_one_day input[type="radio"][value="True"]:checked + label{
-	background-color: #4cd964;
-	color: #fff;
+    background-color: #4cd964;
+    color: #fff;
 }
 
 .form_one_day input[type="radio"][value="False"] + label{
-	border: 1px solid transparent;
-	color: #ff3b30;
+    border: 1px solid transparent;
+    color: #ff3b30;
 }
 .form_one_day input[type="radio"][value="False"]:checked + label{
-	background-color: #ff3b30;
-	color: #fff;
+    background-color: #ff3b30;
+    color: #fff;
 }
