@@ -38,16 +38,13 @@ def CalendarView(request, pk):
         [],#2
         [],#over3
         ]
-    NG_1_list = []
-    NG_2_list = [
-        {'date' : datetime.date(2019,10,10), 'time' : 18, 'half' : False},
-    ]
-    NG_3over_list = []
     for day in display_date:
         hours = CollectHour.objects.filter(calendar=calendar).get(date=day)
-        timelist = [datetime.datetime.combine(day, datetime.time(0)) + datetime.timedelta(minutes=30*h) for h in range(hours.hour_begin*2,hours.hour_end*2)]
+        timelist = [datetime.datetime.combine(day, datetime.time(0)) + datetime.timedelta(minutes=30*h)
+            for h in range(hours.hour_begin*2,hours.hour_end*2)]
         for time in timelist:
-            num = Schedule.objects.filter(calendar=calendar, starttime=time, canattend=False).aggregate(Count('starttime'))['starttime__count']
+            num = Schedule.objects.filter(calendar=calendar, starttime=time, canattend=False)\
+                .aggregate(Count('starttime'))['starttime__count']
             data = {'date' : day}
             if 0 <= time.hour <= 5:
                 data['time'] = time.hour + 24
@@ -62,8 +59,6 @@ def CalendarView(request, pk):
             else:
                 NG[3].append(data)
             
-
-            NG[num]
     params = {
         'timetuple': (n for n in range(9,27)),
         'datetuple': display_date,
