@@ -15,7 +15,10 @@
 .form_one_day .form-group:nth-of-type(2n){
     padding: 0;
     margin: 0;
-    height: 0;
+    height: 8px;
+    background-color: #ffeede;
+}
+.form_one_day .form-group:nth-of-type(2n) *{
     visibility: hidden;
 }
 .form_one_day .form-group:nth-of-type(4n+3){

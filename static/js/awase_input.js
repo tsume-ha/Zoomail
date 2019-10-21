@@ -9,3 +9,8 @@ $('label[for*=can_attend]').click(function(){
 		$('#'+target.slice(0.-2)).val(val);
 	}
 })
+
+$('.form_one_day .form-group:nth-of-type(2n)').click(function(){
+	$(this).css('height', 'auto');
+	$(this).find('*').css('visibility','visible');
+})
