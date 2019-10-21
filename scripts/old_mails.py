@@ -7,10 +7,9 @@ from members.models import User
 
 def run():
     admin = User.objects.get(email='developer@ku-unplugged.net')
-    for i in range(1,5):
+    for i in range(3000):
         name = str(i) + '.eml'
         target = os.path.join(BASE_DIR, 'scripts', 'emails', name)
-        print(target)
         try:
             with open(target, 'rb') as file:
                 raw_email = file.read()
@@ -22,11 +21,15 @@ def run():
                 send_at = parsed_eml['header']['date']
                 message_title = parsed_eml['header']['header']['subject'][0]
                 message_content = parsed_eml['body'][0]['content']
-                print(send_at.hour)
-                send_at = datetime.datetime(send_at.year, send_at.month, send_at.day, send_at.hour + 9, send_at.minute, send_at.second)
-                print(send_at)
-                print(from_mail_address)
-                print(message_title)
+                send_at = datetime.datetime(
+                    send_at.year,
+                    send_at.month,
+                    send_at.day,
+                    send_at.hour,
+                    send_at.minute,
+                    send_at.second)
+                send_at = send_at + datetime.timedelta(hours=9)
+                print(i, send_at, from_mail_address, message_title)
                 content = Message(
                     title = message_title,
                     content = message_content,
