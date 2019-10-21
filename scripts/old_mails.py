@@ -29,7 +29,7 @@ def run():
                     send_at.minute,
                     send_at.second)
                 send_at = send_at + datetime.timedelta(hours=9)
-                print(i, send_at, from_mail_address, message_title)
+                print(i)
                 content = Message(
                     title = message_title,
                     content = message_content,
