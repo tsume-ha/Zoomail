@@ -46,19 +46,19 @@
 {% for value in NG_0_list %}
 .time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
 {% endfor %}{
-	background-color: #08be58;
+	background-color: #99ffcc;
 }
 
 {% for value in NG_1_list %}
 .time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
 {% endfor %}{
-	background-color: #f8f272;
+	background-color: #ffff84;
 }
 
 {% for value in NG_2_list %}
 .time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
 {% endfor %}{
-	background-color: #ff3d33;
+	background-color: #ff9999;
 }
 {% for value in NG_3over_list %}
 .time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
@@ -70,6 +70,7 @@
 
 <section id="menu">
 	<a href="input/">入力する</a>
+	<a href="">調節期間を変更</a>
 </section>
 
 {% endblock %}

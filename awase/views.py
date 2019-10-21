@@ -28,7 +28,7 @@ def CalendarView(request, pk):
     calendar = Calendar.objects.get(pk=pk)
     pagenum = 0
     if (calendar.days_end - calendar.days_begin).days < 7:
-        displaydays = (calendar.days_end - calendar.days_begin).days
+        displaydays = (calendar.days_end - calendar.days_begin).days + 1
     else:
         displaydays = 7
     display_date = [calendar.days_begin + datetime.timedelta(days=d+pagenum*7) for d in range(displaydays)]
@@ -43,6 +43,9 @@ def CalendarView(request, pk):
         timelist = [datetime.datetime.combine(day, datetime.time(0)) + datetime.timedelta(minutes=30*h)
             for h in range(hours.hour_begin*2,hours.hour_end*2)]
         for time in timelist:
+            is_answered = Schedule.objects.filter(calendar=calendar, starttime=time).exists()
+            if not is_answered:
+                continue
             num = Schedule.objects.filter(calendar=calendar, starttime=time, canattend=False)\
                 .aggregate(Count('starttime'))['starttime__count']
             data = {'date' : day}
@@ -58,7 +61,6 @@ def CalendarView(request, pk):
                 NG[num].append(data)
             else:
                 NG[3].append(data)
-            
     params = {
         'timetuple': (n for n in range(9,26)),
         'datetuple': display_date,
