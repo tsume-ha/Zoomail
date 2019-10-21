@@ -2,7 +2,9 @@
 {% load static %}
 {% load message_abst %}
 {% block title %}{{message.title}} | メーリス | Unplugged Message{% endblock %}
-
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/board/content.css' %}">
+{% endblock %}
 {% block body %}
 <div class="row my-3">
 	<span class="col tag">{{tag}}</span>
@@ -53,4 +55,8 @@ $(function(){
 })
 </script>
 <script src="{% static 'js/ajax_bookmark.js' %}"></script>
+{% endblock %}
+{% block popup %}
+<div class="popup">
+</div>
 {% endblock %}
