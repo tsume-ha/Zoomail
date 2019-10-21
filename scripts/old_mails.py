@@ -1,7 +1,8 @@
 from config.settings import BASE_DIR
 import os
 import eml_parser
-from board.models import Message
+import datetime
+from board.models import Message, MessageYear
 
 def run():
     target = os.path.join(BASE_DIR, 'scripts', 'emails', '2917.eml')
@@ -16,10 +17,29 @@ def run():
         send_at = parsed_eml['header']['date']
         message_title = parsed_eml['header']['header']['subject'][0]
         message_content = parsed_eml['body'][0]['content']
-        print(from_mail_address)
+        print(send_at.hour)
+        send_at = datetime.datetime(
+        	send_at.year,
+        	send_at.month,
+        	send_at.day,
+        	send_at.hour + 9,
+        	send_at.minute,
+        	send_at.second)
         print(send_at)
+        print(from_mail_address)
         print(message_title)
-        print(message_content)
+        # print(message_content)
+        content = Message(
+            title = message_title,
+            content = message_content,
+            updated_at = send_at,
+            created_at = send_at
+            )
+        content.save()
+        content_year = MessageYear(
+        	message = content,
+        	year = 0)
+        content_year.save()
 
 # {'body': [
 #     {'content_header': {'content-type': ['text/plain; charset="iso-2022-jp"']},
