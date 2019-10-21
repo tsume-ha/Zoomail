@@ -59,3 +59,18 @@
     background-color: #ff3b30;
     color: #fff;
 }
+
+.form_submit{
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    bottom: 0;
+    background-color: #fff;
+    padding: 1rem auto 0.5rem;
+}
+
+.form_submit input{
+    display: inline-block;
+}
+.form_submit p{
+    display: inline-block;
+}
