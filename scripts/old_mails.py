@@ -3,43 +3,46 @@ import os
 import eml_parser
 import datetime
 from board.models import Message, MessageYear
+from members.models import User
 
 def run():
-    target = os.path.join(BASE_DIR, 'scripts', 'emails', '2917.eml')
-    print(target)
-    with open(target, 'rb') as file:
-        raw_email = file.read()
-        parsed_eml = eml_parser.eml_parser.decode_email_b(
-            eml_file = raw_email,
-            include_raw_body = True,
-            )
-        from_mail_address = parsed_eml['header']['from']
-        send_at = parsed_eml['header']['date']
-        message_title = parsed_eml['header']['header']['subject'][0]
-        message_content = parsed_eml['body'][0]['content']
-        print(send_at.hour)
-        send_at = datetime.datetime(
-        	send_at.year,
-        	send_at.month,
-        	send_at.day,
-        	send_at.hour + 9,
-        	send_at.minute,
-        	send_at.second)
-        print(send_at)
-        print(from_mail_address)
-        print(message_title)
-        # print(message_content)
-        content = Message(
-            title = message_title,
-            content = message_content,
-            updated_at = send_at,
-            created_at = send_at
-            )
-        content.save()
-        content_year = MessageYear(
-        	message = content,
-        	year = 0)
-        content_year.save()
+    admin = User.objects.get(email='developer@ku-unplugged.net')
+    for i in range(1,5):
+        name = str(i) + '.eml'
+        target = os.path.join(BASE_DIR, 'scripts', 'emails', name)
+        print(target)
+        try:
+            with open(target, 'rb') as file:
+                raw_email = file.read()
+                parsed_eml = eml_parser.eml_parser.decode_email_b(
+                    eml_file = raw_email,
+                    include_raw_body = True,
+                    )
+                from_mail_address = parsed_eml['header']['from']
+                send_at = parsed_eml['header']['date']
+                message_title = parsed_eml['header']['header']['subject'][0]
+                message_content = parsed_eml['body'][0]['content']
+                print(send_at.hour)
+                send_at = datetime.datetime(send_at.year, send_at.month, send_at.day, send_at.hour + 9, send_at.minute, send_at.second)
+                print(send_at)
+                print(from_mail_address)
+                print(message_title)
+                content = Message(
+                    title = message_title,
+                    content = message_content,
+                    updated_at = send_at,
+                    created_at = send_at,
+                    sender = admin,
+                    writer = admin
+                    )
+                content.save()
+                content_year = MessageYear(
+                    message = content,
+                    year = 0)
+                content_year.save()
+        except FileNotFoundError:
+            continue
+    
 
 # {'body': [
 #     {'content_header': {'content-type': ['text/plain; charset="iso-2022-jp"']},
