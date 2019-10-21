@@ -14,7 +14,7 @@ section{
 }
 
 #calendar div.leftside{
-	width: 40px;
+	width: 50px !important;
 	padding: 0 5px;
 	font-size: 10px;
 	border-left: 1px solid #eee;
@@ -28,7 +28,7 @@ section{
 #calendar div.date div{
 	font-size: 12px;
 	text-align: center;
-	width: calc((100% - 40px) / 7);
+	width: calc((100% - 50px) / 7);
 	padding: 5px 0;
 	border-top: 1px solid #eee;
 }
@@ -36,14 +36,14 @@ section{
 #calendar div.room div{
 	font-size: 10px;
 	text-align: center;
-	width: calc((100% - 40px) / 7);
+	width: calc((100% - 50px) / 7);
 	padding: 5px 0;
 }
 
 
 #calendar div.time div{
 	height: 1rem;
-	width: calc((100% - 40px) / 7);
+	width: calc((100% - 50px) / 7);
 }
 #calendar div.time.zero div{
 	border-bottom: none;
