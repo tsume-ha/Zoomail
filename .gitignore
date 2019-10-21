@@ -10,3 +10,5 @@ u_message/settings_local.py
 config/settings_local.py
 
 player/test.mp3
+
+scripts/emails/*

@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from members.models import User
 from private_storage.fields import PrivateFileField
+from django.utils import timezone
 
 class Message(models.Model):
     title = models.CharField(max_length=200)
@@ -17,8 +18,8 @@ class Message(models.Model):
     #通常なら sender == writer で同じになる。
     writer = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='write_message')    
 
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now)
     
     def __str__(self):
         return 'mes_ID=' + str(self.id) + ', title=' + self.title
