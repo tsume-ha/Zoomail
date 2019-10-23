@@ -79,17 +79,66 @@
         <div id="page_nav" class="my-3">
             <span id="pagination_nav" class="small text-secondary m-2">ページを移動する</span>
             <ul id="pagination" class="pagination">
-                {% for link_page in message_letters.paginator.page_range %}
+<!--                 {% for link_page in message_letters.paginator.page_range %}
                     {% if link_page %}
                         <li data-page="{{ link_page }}"><a class="page-link text-primary d-inline-block" href="{% url 'read_page' link_page %}">{{ link_page }}</a></li>
                     {% else %}
                         <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted">・・・</a></li>
                     {% endif %}
-                {% endfor %}
+                {% endfor %} -->
 
-                {% if message_letters.has_next %}
-                <a class="next d-none" href="{% url 'read_page' message_letters.next_page_number %}">次へ</a>
-                {% endif %}
+{% if message_letters.has_previous %}
+<li>
+    <a class="page-link text-primary d-inline-block" href="{% url 'read_page' message_letters.previous_page_number %}" aria-label="Previous">
+    <span aria-hidden="true">&lt;</span>
+</a>
+</li>
+{% endif %}
+
+{% if message_letters.number > 3 %}
+<li>
+    <a class="page-link text-primary d-inline-block" href="{% url 'read_page' 1 %}" aria-label="First">1</a>
+</li>
+{% endif %}
+
+{% if message_letters.number > 4 %}
+<li><span class="page-link" aria-hidden="true">...</span></li>
+{% endif %}
+
+{% for link_page in message_letters.paginator.page_range %}
+{% if link_page == message_letters.number %}
+<li class="disabled">
+    <a class="page-link text-secondary disabled" href="{% url 'read_page' link_page %}">
+    {{ link_page }}
+    </a>
+</li>
+{% elif link_page < message_letters.number|add:3 and link_page > message_letters.number|add:-3 %}
+<li>
+    <a class="page-link text-primary d-inline-block" href="{% url 'read_page' link_page %}">
+    {{ link_page }}
+    </a>
+</li>
+{% endif %}
+{% endfor %}
+
+{% if message_letters.number < message_letters.paginator.num_pages|add:-3 %}
+<li><span class="page-link" aria-hidden="true">...</span></li>
+{% endif %}
+
+{% if message_letters.number < message_letters.paginator.num_pages|add:-2 %}
+<li>
+    <a class="page-link text-primary d-inline-block" href="{% url 'read_page' message_letters.paginator.num_pages %}" aria-label="Last">{{ message_letters.paginator.num_pages}}</a>
+</li>
+{% endif%}
+
+{% if message_letters.has_next %}
+<li>
+    <a class="next page-link" href="{% url 'read_page' message_letters.next_page_number %}" aria-label="Next">
+        <span aria-hidden="true">&gt;</span>
+    </a>
+</li>
+{% endif %}
+
             </ul>
         </div>
     {% endif %}

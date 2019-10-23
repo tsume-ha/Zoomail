@@ -23,19 +23,19 @@ var infScroll = new InfiniteScroll( '.content_wrapper', {
 
 
 
-$(window).on('load scroll resize',function(){
-    var page = location.pathname.slice(6, -1);
-    if (page == '') {
-        page = 1;
-    }
-    var target = "li[data-page=" + page + "]"
-    $('ul.pagination li').each(function(){
-        $(this).removeClass('disabled')
-        $(this).children('a').addClass('text-primary')
-        $(this).children('a').removeClass('text-secondary disabled')
-    });
-    $(target).addClass('disabled')
-    $(target).children('a').addClass('text-secondary disabled')
-    $(target).children('a').removeClass('text-primary')
-});      
+// $(window).on('load scroll resize',function(){
+//     var page = location.pathname.slice(6, -1);
+//     if (page == '') {
+//         page = 1;
+//     }
+//     var target = "li[data-page=" + page + "]"
+//     $('ul.pagination li').each(function(){
+//         $(this).removeClass('disabled')
+//         $(this).children('a').addClass('text-primary')
+//         $(this).children('a').removeClass('text-secondary disabled')
+//     });
+//     $(target).addClass('disabled')
+//     $(target).children('a').addClass('text-secondary disabled')
+//     $(target).children('a').removeClass('text-primary')
+// });      
 
