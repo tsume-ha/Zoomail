@@ -8,7 +8,6 @@ $(function(){
     });
 })
 
-
 var infScroll = new InfiniteScroll( '.content_wrapper', {
     debug: true,
     path: '.next',
