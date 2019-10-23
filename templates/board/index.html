@@ -88,7 +88,7 @@
                 {% endfor %}
 
                 {% if message_letters.has_next %}
-                <a class="next d-none" href="?page={{ message_letters.next_page_number }}">次へ</a>
+                <a class="next d-none" href="{% url 'read_page' message_letters.next_page_number %}">次へ</a>
                 {% endif %}
             </ul>
         </div>

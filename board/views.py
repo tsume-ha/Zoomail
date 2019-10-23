@@ -20,7 +20,7 @@ def is_updated(created_at, updated_at):
     return created_at + datetime.timedelta(seconds=5) < updated_at
 
 @login_required()
-def index(request):
+def index(request, page_num=1):
     now_user = request.user
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(Q(years__year=now_user.year) | Q(years__year=0))
@@ -51,15 +51,10 @@ def index(request):
     message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
     page = Paginator(message_letters, 10)
 
-
-    if 'page' in request.GET:
-        num = request.GET['page']
-    else:
-        num = 1
     
     params = {
         'search_advanced': SearchAdvanced(request.GET),
-        'message_letters': page.get_page(num),
+        'message_letters': page.get_page(page_num),
         'is_seached': searched,
     }
     return render(request, 'board/index.html', params)
