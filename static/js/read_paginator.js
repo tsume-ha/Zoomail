@@ -24,12 +24,11 @@ var infScroll = new InfiniteScroll( '.content_wrapper', {
 
 
 $(window).on('load scroll resize',function(){
-    var path = location.search;
-    var now_page = path.slice(path.indexOf("?page=")+6)
-    if (now_page == '') {
-        now_page = 1;
+    var page = location.pathname.slice(6, -1);
+    if (page == '') {
+        page = 1;
     }
-    var target = "li[data-page=" + now_page + "]"
+    var target = "li[data-page=" + page + "]"
     $('ul.pagination li').each(function(){
         $(this).removeClass('disabled')
         $(this).children('a').addClass('text-primary')
