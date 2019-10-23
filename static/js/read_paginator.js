@@ -20,7 +20,7 @@ var infScroll = new InfiniteScroll( '.content_wrapper', {
 
 });
 
-$(window).on('scroll',function(){
+$(window).on('scroll load',function(){
     var page = window.location.pathname.replace('/read/', '').replace('/', '');
     console.log(page);
     $('ul.pagination li').each(function(){
@@ -31,7 +31,7 @@ $(window).on('scroll',function(){
     $('li[data-num=' + String(page) + ']').addClass('disabled');
     $('li[data-num=' + String(page) + ']').children('a').addClass('text-secondary disabled');
     $('li[data-num=' + String(page) + ']').children('a').removeClass('text-primary');
-    if (Number(page) < 4) {
+    if (Number(page) < 5) {
         $('.first').css('display', 'none');
         $('#omit1').css('display', 'none');
         $('#omit2').css('display', 'inline-block');
@@ -42,7 +42,7 @@ $(window).on('scroll',function(){
         for (var i = 6; i <= page_num; i++) {
             $('li[data-num=' + i + ']').css('display', 'none');
         }
-    } else if (4 <= Number(page) < page_num - 5) {
+    } else if (5 <= Number(page) < page_num - 5) {
         $('.first').css('display', 'inline-block');
         $('#omit1').css('display', 'inline-block');
         $('#omit2').css('display', 'inline-block');
