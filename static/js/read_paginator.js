@@ -20,17 +20,18 @@ var infScroll = new InfiniteScroll( '.content_wrapper', {
 
 });
 
-$(window).on('load scroll resize',function(){
-    var page = infScroll.pageIndex;
+$(window).on('scroll',function(){
+    var page = window.location.pathname.replace('/read/', '').replace('/', '');
+    console.log(page);
     $('ul.pagination li').each(function(){
-        $(this).removeClass('disabled')
-        $(this).children('a').addClass('text-primary')
-        $(this).children('a').removeClass('text-secondary disabled')
+        $(this).removeClass('disabled');
+        $(this).children('a').addClass('text-primary');
+        $(this).children('a').removeClass('text-secondary disabled');
     });
-    $('li[data-num=' + page + ']').addClass('disabled')
-    $('li[data-num=' + page + ']').children('a').addClass('text-secondary disabled')
-    $('li[data-num=' + page + ']').children('a').removeClass('text-primary')
-    if (page < 4) {
+    $('li[data-num=' + String(page) + ']').addClass('disabled');
+    $('li[data-num=' + String(page) + ']').children('a').addClass('text-secondary disabled');
+    $('li[data-num=' + String(page) + ']').children('a').removeClass('text-primary');
+    if (Number(page) < 4) {
         $('.first').css('display', 'none');
         $('#omit1').css('display', 'none');
         $('#omit2').css('display', 'inline-block');
@@ -41,29 +42,25 @@ $(window).on('load scroll resize',function(){
         for (var i = 6; i <= page_num; i++) {
             $('li[data-num=' + i + ']').css('display', 'none');
         }
-    } else if (4 <= page < page_num - 3) {
+    } else if (4 <= Number(page) < page_num - 5) {
         $('.first').css('display', 'inline-block');
         $('#omit1').css('display', 'inline-block');
         $('#omit2').css('display', 'inline-block');
         $('.last').css('display', 'inline-block');
-        for (var i = 1; i < page - 2; i++) {
+        for (var i = 1; i < Number(page) - 2; i++) {
             $('li[data-num=' + i + ']').css('display', 'none');
         }
-        for (var i = page - 2; i < page + 3; i++) {
+        for (var i = Number(page) - 2; i < Number(page) + 3; i++) {
             $('li[data-num=' + i + ']').css('display', 'inline-block');
         }
-        for (var i = page + 3; i <= page_num; i++) {
+        for (var i = Number(page) + 3; i <= page_num; i++) {
             $('li[data-num=' + i + ']').css('display', 'none');
         }
-
     } else {
         $('.first').css('display', 'inline-block');
         $('#omit1').css('display', 'inline-block');
         $('#omit2').css('display', 'none');
         $('.last').css('display', 'none');
-        for (var i = 1; i < page - 4; i++) {
-            $('li[data-num=' + i + ']').css('display', 'none');
-        }
     }
 });      
 
