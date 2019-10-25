@@ -35,7 +35,8 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True, verbose_name="Googleアカウント") # changed from google_account
+    email = models.EmailField(unique=True, verbose_name="Googleアカウント")
+    receive_email = models.EmailField(null= True, blank=True, verbose_name="受信用メールアドレス")
     first_name = models.CharField(max_length=255, verbose_name='名前')
     last_name = models.CharField(max_length=255, verbose_name='名字')
     nickname = models.CharField(max_length=255, blank=True, verbose_name='ニックネーム')
@@ -64,6 +65,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         return self.last_name + self.first_name
+
+    def get_receive_email(self):
+        if self.receive_email == "" or self.receive_email == None:
+            return self.email
+        else:
+            return self.receive_email
 
 
 class TmpMember(models.Model):

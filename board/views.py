@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit
 from members.models import User
+from django.core.mail import send_mass_mail
 import datetime
 
 def EditPermisson(user, content_id):
@@ -147,7 +148,27 @@ def send(request):
                 content_data.years.create(year=to)            
             if is_attachment == True:
                 content_data.attachments.create(attachment_file=file)
+
+
+            # sendgrid mail
+            subject = content_data.title
+            text_content = content_data.content
+            text_content += '\n\n\nこのメッセージをHPで読むにはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
+            year_query = MessageYear.objects.filter(message=content_data).values('year')
+            if year_query.filter(year=0).exists():
+                from_email = '"' + content_data.writer.get_short_name() + '" <zenkai@message.ku-unplugged.net>'
+                message_list = [(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.all()]
+            else:
+                message_list = []
+                for year in year_query:
+                    ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
+                    from_email = '"' + content_data.writer.get_short_name()
+                    from_email += '" <' + ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net>'
+                    message_list.extend([(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.filter(year=year['year'])])
+            success_num = send_mass_mail(message_list, fail_silently=False)
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
+            django_messages.success(request, 'メール送信件数 : '+str(success_num))
+
             return redirect(to='../read/')
 
         else:
