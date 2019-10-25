@@ -9,10 +9,7 @@ from django.core.paginator import Paginator
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit, DivErrorList
 from members.models import User
-from config.settings_local import SENDGRID_API_KEY
-import sendgrid
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, Content, MimeType
+from django.core.mail import send_mass_mail
 import datetime
 
 def EditPermisson(user, content_id):
@@ -159,7 +156,6 @@ def send(request):
 
 
             # sendgrid mail
-            from django.core.mail import send_mass_mail
             subject = content_data.title
             text_content = content_data.content
             text_content += '\n\nこのメッセージをHPで読むにはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
