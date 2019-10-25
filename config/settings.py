@@ -244,7 +244,7 @@ SOCIAL_AUTH_PIPELINE = (
 # Send Grid Mail Settings
 
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = settings_local.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = settings_local.EMAIL_HOST_PASSWORD
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = settings_local.SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

@@ -159,40 +159,27 @@ def send(request):
 
 
             # sendgrid mail
-            sg = sendgrid.SendGridAPIClient(SENDGRID_API_KEY)
+            from django.core.mail import send_mass_mail
+            subject = content_data.title
+            text_content = content_data.content
+            text_content += '\n\nこのメッセージをHPで読むにはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
             year_query = MessageYear.objects.filter(message=content_data).values('year')
             if year_query.filter(year=0).exists():
                 mail_to_list = [user.email for user in User.objects.all()]
                 from_email = '"' + content_data.writer.get_short_name() + '" <zenkai@message.ku-unplugged.net>'
-                sendgrid_message = Mail(
-                from_email = from_email,
-                to_emails = ','.join(mail_to_list),
-                subject = content_data.title,
-                plain_text_content = content_data.content,
-                )
-                # response = sg.send(sendgrid_message)
+                message_list = [(subject, text_content, from_email, [user_email]) for user_email in mail_to_list]
             else:
-                subject = content_data.title
-                text_content = content_data.content
+                message_list = []
                 for year in year_query:
                     to_user_query = User.objects.filter(year=year['year'])
                     mail_to_list = [user_q.email for user_q in to_user_query]
                     ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
                     from_email = '"' + content_data.writer.get_short_name()
                     from_email += '" <' + ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net>'
-                    print(from_email)
-                    sendgrid_message = Mail(
-                        from_email = from_email,
-                        to_emails = ','.join(mail_to_list),
-                        subject = subject,
-                        plain_text_content = text_content,
-                        )
-                    # response = sg.send(sendgrid_message)
+                    message_list.extend([(subject, text_content, from_email, [user_email]) for user_email in mail_to_list])
+            success_num = send_mass_mail(message_list, fail_silently=False)
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
-            
-            # # django_messages.success(request, 'メール送信件数 : '+str(success_num))
-
-
+            django_messages.success(request, 'メール送信件数 : '+str(success_num))
 
             return redirect(to='../read/')
 
