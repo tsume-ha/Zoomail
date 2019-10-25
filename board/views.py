@@ -161,18 +161,15 @@ def send(request):
             text_content += '\n\nこのメッセージをHPで読むにはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
             year_query = MessageYear.objects.filter(message=content_data).values('year')
             if year_query.filter(year=0).exists():
-                mail_to_list = [user.email for user in User.objects.all()]
                 from_email = '"' + content_data.writer.get_short_name() + '" <zenkai@message.ku-unplugged.net>'
-                message_list = [(subject, text_content, from_email, [user_email]) for user_email in mail_to_list]
+                message_list = [(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.all()]
             else:
                 message_list = []
                 for year in year_query:
-                    to_user_query = User.objects.filter(year=year['year'])
-                    mail_to_list = [user_q.email for user_q in to_user_query]
                     ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
                     from_email = '"' + content_data.writer.get_short_name()
                     from_email += '" <' + ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net>'
-                    message_list.extend([(subject, text_content, from_email, [user_email]) for user_email in mail_to_list])
+                    message_list.extend([(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.filter(year=year['year'])])
             success_num = send_mass_mail(message_list, fail_silently=False)
             django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
             django_messages.success(request, 'メール送信件数 : '+str(success_num))
