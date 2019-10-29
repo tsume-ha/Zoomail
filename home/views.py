@@ -28,7 +28,6 @@ def logoutview(request):
 def special(request, url):
     # keyは平文なので安全性は確保できないので注意
     # Google DriveとかでURLシェアするときと同等のセキュリティーだと考えたい。
-    print(url)
     page = get_object_or_404(SpecialPage, url=url)    
     if 'k' in request.GET:
         k = request.GET['k']
