@@ -51,11 +51,18 @@ def index(request, page_num=1):
     message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
     page = Paginator(message_letters, 10)
 
-    
+    querydict = dict(request.GET)
+    getquery = ''
+    for key, value in querydict.items():
+        if value[0] == "":
+            continue
+        tmp = key + '=' + value[0]
+        getquery += '&' + tmp
     params = {
         'search_advanced': SearchAdvanced(request.GET),
         'message_letters': page.get_page(page_num),
         'is_seached': searched,
+        'getquery': getquery,
     }
     return render(request, 'board/index.html', params)
 
