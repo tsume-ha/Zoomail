@@ -6,6 +6,12 @@ $(function(){
     $(document).on('click', function(){
         $('#page_nav').removeClass('checked');
     });
+
+    var page = window.location.pathname.replace('/read/', '').replace('/', '');  
+    if (page == "") {
+        page = 1;
+    }
+    nav_display(page);
 })
 
 var infScroll = new InfiniteScroll( '.content_wrapper', {
@@ -20,9 +26,8 @@ var infScroll = new InfiniteScroll( '.content_wrapper', {
 
 });
 
-$(window).on('scroll load',function(){
-    var page = window.location.pathname.replace('/read/', '').replace('/', '');
-    console.log(page);
+
+function nav_display(page=1){
     $('ul.pagination li').each(function(){
         $(this).removeClass('disabled');
         $(this).children('a').addClass('text-primary');
@@ -62,5 +67,14 @@ $(window).on('scroll load',function(){
         $('#omit2').css('display', 'none');
         $('.last').css('display', 'none');
     }
+
+}
+
+infScroll.on('history', function( title, path ) {
+    var page = path.slice(path.indexOf('/read')+5).split('/').join('');
+    if (page == "") {
+        page = 1;
+    }
+    nav_display(page);
 });      
 
