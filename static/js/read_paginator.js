@@ -47,7 +47,7 @@ function nav_display(page=1){
         for (var i = 6; i <= page_num; i++) {
             $('li[data-num=' + i + ']').css('display', 'none');
         }
-    } else if (5 <= Number(page) < page_num - 5) {
+    } else if (5 <= Number(page) && Number(page) < page_num - 4) {
         $('.first').css('display', 'inline-block');
         $('#omit1').css('display', 'inline-block');
         $('#omit2').css('display', 'inline-block');
@@ -66,6 +66,12 @@ function nav_display(page=1){
         $('#omit1').css('display', 'inline-block');
         $('#omit2').css('display', 'none');
         $('.last').css('display', 'none');
+        for (var i = 1; i < page_num - 4; i++) {
+            $('li[data-num=' + i + ']').css('display', 'none');
+        }
+        for (var i = page_num - 4; i <= page_num; i++) {
+            $('li[data-num=' + i + ']').css('display', 'inline-block');
+        }
     }
 
 }
