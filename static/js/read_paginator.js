@@ -7,7 +7,8 @@ $(function(){
         $('#page_nav').removeClass('checked');
     });
 
-    var page = window.location.pathname.replace('/read/', '').replace('/', '');  
+    var path = window.location.pathname.replace('/read/', '');
+    var page = path.slice(0, path.indexOf('/'));
     if (page == "") {
         page = 1;
     }
@@ -77,7 +78,8 @@ function nav_display(page=1){
 }
 
 infScroll.on('history', function( title, path ) {
-    var page = path.slice(path.indexOf('/read')+5).split('/').join('');
+    var path_ = path.slice(path.indexOf('/read')+6);
+    var page = path_.slice(0, path_.indexOf('/'));
     if (page == "") {
         page = 1;
     }
