@@ -42,7 +42,7 @@
     </form>
     {% for message_letter in message_letters %}
         <section class="content{% no_kidoku_css_class message_letter request.user %} row border border-left-0 border-right-0">
-            <h4 class="col-sm-12 my-1"><a href="content/{{message_letter.id}}">{{message_letter.title}}</a></h4>
+            <h4 class="col-sm-12 my-1"><a href="{% url 'content' message_letter.id %}">{{message_letter.title}}</a></h4>
             <div class="col-sm-12 mt-1">
                 <span class="float-left date small p-1">{{message_letter.created_at|date:"Y/m/d (D) H:i"}}</span>
                 {% is_updated message_letter %}
@@ -60,17 +60,17 @@
         <div class="infinite-scroll-request"><p class="loader">Loading...</p></div>
         <p class="infinite-scroll-last text-center alert alert-secondary my-2 p-2">
             {% if message_letters %}
-            	{% if is_seached %}
-            	検索結果は以上です
-            	{% else %}
-            	これ以前のメーリスはありません
-            	{% endif %}
+                {% if is_seached %}
+                検索結果は以上です
+                {% else %}
+                これ以前のメーリスはありません
+                {% endif %}
             {% else %}
-            	{% if is_seached %}
-            	検索の結果、該当はありませんでした。
-            	{% else %}
-            	現在閲覧可能なメーリスはありません
-            	{% endif %}
+                {% if is_seached %}
+                検索の結果、該当はありませんでした。
+                {% else %}
+                現在閲覧可能なメーリスはありません
+                {% endif %}
             {% endif %}
         </p>
     </div>
@@ -79,17 +79,28 @@
         <div id="page_nav" class="my-3">
             <span id="pagination_nav" class="small text-secondary m-2">ページを移動する</span>
             <ul id="pagination" class="pagination">
+                <li class="first">
+                    <a class="page-link text-primary d-inline-block" href="{% url 'read_page' 1 %}{% if getquery %}?{{getquery}}{% endif %}">1</a>
+                </li>
+                <li id="omit1"><span class="page-link">...</span></li>
                 {% for link_page in message_letters.paginator.page_range %}
-                    {% if link_page %}
-                        <li data-page="{{ link_page }}"><a class="page-link text-primary d-inline-block" href="?page={{ link_page }}">{{ link_page }}</a></li>
-                    {% else %}
-                        <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted">・・・</a></li>
-                    {% endif %}
+                <li data-num="{{ link_page }}">
+                    <a class="page-link text-primary d-inline-block" href="{% url 'read_page' link_page %}{% if getquery %}?{{getquery}}{% endif %}">
+                    {{ link_page }}
+                    </a>
+                </li>
                 {% endfor %}
+                <li id="omit2"><span class="page-link">...</span></li>
+                <li class="last">
+                    <a class="page-link text-primary d-inline-block" href="{% url 'read_page' message_letters.paginator.num_pages %}{% if getquery %}?{{getquery}}{% endif %}">{{ message_letters.paginator.num_pages}}</a>
+                </li>
 
                 {% if message_letters.has_next %}
-                <a class="next d-none" href="?page={{ message_letters.next_page_number }}">次へ</a>
+                <li>
+                    <a class="next d-none" href="{% url 'read_page' message_letters.next_page_number %}{% if getquery %}?{{getquery}}{% endif %}">
+                </li>
                 {% endif %}
+
             </ul>
         </div>
     {% endif %}
@@ -102,6 +113,9 @@ $(function(){
 })
 </script>
 <script src="{% static 'js/ajax_bookmark.js' %}"></script>
+<script type="text/javascript">
+    const page_num = {{ message_letters.paginator.num_pages}};
+</script>
 {% endblock %}
 
 {% block popup %}

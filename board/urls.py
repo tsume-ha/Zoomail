@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='read'),
+    path('<int:page_num>/', views.index, name='read_page'),
     path('content/<int:id>', views.content, name='content'),
     path('content/<int:id>/edit/', views.edit, name='message_edit'),
     path('ajax_bookmark/<int:pk>/', views.ajax_bookmark, name='message_ajax_bookmark'),
