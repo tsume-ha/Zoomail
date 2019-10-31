@@ -44,7 +44,7 @@
 	
 	{% endif %}
 </section>
-<section id="yousend" class="mypage_message p-3 border-top">
+<section id="yousend" class="mypage_message py-3 pl-3 border-top">
 	<h5>あなたが送信したメッセージ</h5>
 	{% if yousend %}
 	<ul class="list-unstyled">
@@ -61,7 +61,7 @@
 	{% endif %}
 </section>
 
-<section id="yourmessage_otherssend" class="mypage_message p-3 border-top">
+<section id="yourmessage_otherssend" class="mypage_message py-3 pl-3 border-top">
 	<h5>あなたの代わりに送信されたメッセージ</h5>
 	{% if yourmessage_otherssend %}
 	<ul class="list-unstyled">
@@ -77,5 +77,10 @@
 	メッセージ：0件
 	{% endif %}
 </section>
-
+<style type="text/css">
+	.container section ul{
+		max-height: 20rem;
+		overflow-y: scroll;
+	}
+</style>
 {% endblock %}

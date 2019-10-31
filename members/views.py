@@ -20,9 +20,9 @@ def MemberRegisterPermission(user):
 def index(request):
     now_user = request.user
     register_allowed = MemberRegisterPermission(now_user)
-    midoku = Message.objects.filter(Q(years__year=request.user.year)|Q(years__year=0)).exclude(kidoku_message__user=now_user)
-    messages_you_send = Message.objects.filter(sender=now_user)
-    messages_you_wrote = Message.objects.filter(writer=now_user).exclude(sender=now_user)
+    midoku = Message.objects.filter(Q(years__year=request.user.year)|Q(years__year=0)).exclude(kidoku_message__user=now_user).order_by('updated_at').reverse()
+    messages_you_send = Message.objects.filter(sender=now_user).order_by('updated_at').reverse()
+    messages_you_wrote = Message.objects.filter(writer=now_user).exclude(sender=now_user).order_by('updated_at').reverse()
 
     if (request.method == 'POST'):
         is_kidoku = request.POST["kidoku"]
