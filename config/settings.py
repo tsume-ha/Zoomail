@@ -176,7 +176,8 @@ else:
 
 
 
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1014
+# 20 KB
 
 
 
