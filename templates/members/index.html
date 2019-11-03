@@ -3,6 +3,7 @@
 
 {% block title %}マイページ | Unplugged Message{% endblock %}
 {% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/members/index.css' %}">
 	<script src="{% static 'js/all_kidoku.js' %}"></script>
 {% endblock %}
 
@@ -33,9 +34,9 @@
 	</form>
 	<ul class="list-unstyled">
 		{% for message in midoku %}
-		<li class="mb-2 ml-3">
+		<li>
 			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
-			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+			<span class="small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
 		</li>
 		{% endfor %}
 	</ul>
@@ -49,9 +50,9 @@
 	{% if yousend %}
 	<ul class="list-unstyled">
 		{% for message in yousend %}
-		<li class="mb-2 ml-3">
+		<li>
 			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
-			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+			<span class="small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
 		</li>
 		{% endfor %}
 	</ul>
@@ -66,9 +67,9 @@
 	{% if yourmessage_otherssend %}
 	<ul class="list-unstyled">
 		{% for message in yourmessage_otherssend %}
-		<li class="mb-2 ml-3">
+		<li>
 			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
-			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+			<span class="small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
 		</li>
 		{% endfor %}
 	</ul>
@@ -77,10 +78,4 @@
 	メッセージ：0件
 	{% endif %}
 </section>
-<style type="text/css">
-	.container section ul{
-		max-height: 20rem;
-		overflow-y: scroll;
-	}
-</style>
 {% endblock %}
