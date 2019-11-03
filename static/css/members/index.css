@@ -1,0 +1,37 @@
+.container section ul{
+	max-height: 20rem;
+	overflow-y: scroll;
+}
+
+.container section ul li{
+	position: relative;
+	padding: 0.25rem 0.5rem;
+	margin: 0;
+	border-bottom: 1px solid #aaa;
+}
+
+@media screen and (min-width: 992px) {
+/*　画面サイズ 992px以上から適用 col-md　*/
+.container section ul li a{
+	display: inline-block;
+	width: 60%;
+}
+.container section ul li span{
+	display: inline-block;
+}
+
+}
+
+@media screen and (max-width: 991px) {
+.container section ul li a{
+	display: block;
+}
+.container section ul li span{
+	display: block;
+	font-size: 13px;
+	font-weight: 400;
+	width: 160px;
+	margin-left: calc(100% - 160px);
+}
+
+}

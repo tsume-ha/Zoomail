@@ -6,9 +6,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/board/content.css' %}">
 {% endblock %}
 {% block body %}
-<div class="row my-3">
+<!-- <div class="row my-3">
 	<span class="col tag">{{tag}}</span>
-</div>
+</div> -->
 <h3 class="my-1">{{message.title}}</h3>
 <form method="post" id="bookmark">
     {% csrf_token %}
