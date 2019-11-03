@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}403 アクセス権限がありません | Unplugged Message{% endblock %}
+
+{% block extrastyle %}
+
+{% endblock %}
+
+
+{% block body %}
+<h1>403 アクセス権限がありません</h1>
+<p>
+	リクエストされたページを表示する権限がありません。<br>
+	権限をもらいたい場合は、message「@」ku-unplugged.netまでメールしてください。<br>
+	（「@」は前後の「」を外してください。）<br>
+	<a href="{% url 'home' %}">トップに戻る</a>
+</p>
+{% endblock %}
