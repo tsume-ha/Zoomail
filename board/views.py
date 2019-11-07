@@ -7,7 +7,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
-from .forms import SendMessage, SearchAdvanced, Edit
+from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
 from django.core.mail import send_mass_mail
 import datetime
@@ -121,6 +121,7 @@ def send(request):
     messageForm.fields['written_by'].choices = [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')]
     params = {
         'message_form': messageForm,
+        'attachment_form': AttachmentFileFormset(),
     }
     if (request.method == 'POST'):
         if messageForm.is_valid():
@@ -130,49 +131,43 @@ def send(request):
             content = request.POST["content"]
             nowtime = datetime.datetime.now()
             now_user = request.user
-            try:
-                file = request.FILES["attachmentfile"]
-                is_attachment = True
-            except MultiValueDictKeyError:
-                is_attachment = False
-
             content_data = Message(
                 title=title,
                 content=content,
-                attachment=is_attachment,
                 sender=now_user,
                 writer=User.objects.get(pk=int(writer_pk[5:])),
                 updated_at=nowtime,
                 created_at=nowtime,
             )
-            content_data.save()
-            for to in to_list:
-                content_data.years.create(year=to)            
-            if is_attachment == True:
-                content_data.attachments.create(attachment_file=file)
+            formset = AttachmentFileFormset(request.POST, files=request.FILES, instance=content_data)
+            if formset.is_valid():
+                content_data.save()
+                formset.save()
+                for to in to_list:
+                    content_data.years.create(year=to)
 
+                # sendgrid mail
+                subject = content_data.title
+                text_content = content_data.content
+                text_content += '\n\n\nこのメッセージをHPで読むにはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
+                year_query = MessageYear.objects.filter(message=content_data).values('year')
+                if year_query.filter(year=0).exists():
+                    from_email = '"' + content_data.writer.get_short_name() + '" <zenkai@message.ku-unplugged.net>'
+                    message_list = [(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.all()]
+                else:
+                    message_list = []
+                    for year in year_query:
+                        ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
+                        from_email = '"' + content_data.writer.get_short_name()
+                        from_email += '" <' + ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net>'
+                        message_list.extend([(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.filter(year=year['year'])])
+                # success_num = send_mass_mail(message_list, fail_silently=False)
+                # django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
+                # django_messages.success(request, 'メール送信件数 : '+str(success_num))
 
-            # sendgrid mail
-            subject = content_data.title
-            text_content = content_data.content
-            text_content += '\n\n\nこのメッセージをHPで読むにはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
-            year_query = MessageYear.objects.filter(message=content_data).values('year')
-            if year_query.filter(year=0).exists():
-                from_email = '"' + content_data.writer.get_short_name() + '" <zenkai@message.ku-unplugged.net>'
-                message_list = [(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.all()]
+                return redirect(to='../read/')
             else:
-                message_list = []
-                for year in year_query:
-                    ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
-                    from_email = '"' + content_data.writer.get_short_name()
-                    from_email += '" <' + ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net>'
-                    message_list.extend([(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.filter(year=year['year'])])
-            success_num = send_mass_mail(message_list, fail_silently=False)
-            django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
-            django_messages.success(request, 'メール送信件数 : '+str(success_num))
-
-            return redirect(to='../read/')
-
+                django_messages.error(request, 'どの添付ファイルのサイズも30MB未満にしてください')
         else:
             # print('validation error')
             params['JSstop'] = True

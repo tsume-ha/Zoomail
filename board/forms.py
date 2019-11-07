@@ -1,6 +1,6 @@
 from django import forms
 from django.core import validators
-from .models import Message
+from .models import Message, Attachment
 
 kaisei = [
 (2019,"2019 25期",),
@@ -53,17 +53,17 @@ class SendMessage(forms.Form):
         required = True,
         error_messages={'required': validation_error_messages['no_content']}
     )
-    attachmentfile = forms.FileField(
-        label = "ファイルを選択してください",
-        required = False,
-        validators = [validate_attachmentfile],
-    )
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
-        self.fields['attachmentfile'].widget.attrs["class"] = ""
+
+AttachmentFileFormset = forms.inlineformset_factory(
+    Message, Attachment, fields=('attachment_file',),
+    extra=3, max_num=6, can_delete=False
+)
+        
+
 
 class SearchAdvanced(forms.Form):
     text = forms.CharField(

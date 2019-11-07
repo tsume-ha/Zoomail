@@ -9,10 +9,7 @@ class Message(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
 
-    #添付ファイルの有無
-    attachment = models.BooleanField(default=False)
     sender = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='send_message')
-
     #転載時に使用。
     #文章を書いた人がwriter、アップロードした人がsender。
     #通常なら sender == writer で同じになる。
@@ -44,7 +41,12 @@ def custom_upload_to(instance, filename):
 
 class Attachment(models.Model):
     message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name='attachments')
-    attachment_file = PrivateFileField(upload_to=custom_upload_to, null=True)
+    attachment_file = PrivateFileField(
+        upload_to = custom_upload_to,
+        max_file_size = 30*1024*1024,
+        null = True,
+        blank = True
+        )
     def __str__(self):
         return self.message.title
     
