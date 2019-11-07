@@ -16,13 +16,7 @@ validation_error_messages = {
     'no_year': '宛先を選択してください',
     'no_content': '本文を入力してください',
     'no_writer': '送信者を確定してください',
-    'filesize_limit': 'ファイルサイズが30MB以上のため、アップロードできません',
 }
-
-def validate_attachmentfile(value):
-    if value.size > 30 * 1024 * 1024: # 30MB
-        raise forms.ValidationError(validation_error_messages['filesize_limit'])
-    return value
 
 class SendMessage(forms.Form):
     title = forms.CharField(
