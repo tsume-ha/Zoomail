@@ -7,7 +7,7 @@ from members.models import User
 
 def run():
     admin = User.objects.get(email='developer@ku-unplugged.net')
-    for i in range(700,800):
+    for i in range(800,900):
         name = str(i) + '.eml'
         target = os.path.join(BASE_DIR, 'scripts', 'emails', name)
         try:
