@@ -15,7 +15,7 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2', 'year')
         }),
     )
-    list_display = ('year', 'last_name', 'first_name', 'email',)
+    list_display = ('year', 'last_name', 'first_name', 'email', 'receive_email')
     list_filter = ('year',)
     search_fields = ('last_name', 'first_name',)
     ordering = ('year', 'furigana',)
