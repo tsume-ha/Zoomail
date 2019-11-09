@@ -27,12 +27,6 @@ form label[for="id_to"]{
 	width: 3rem;
 }
 
-#message_form > p:nth-child(2){
-	position: relative;
-	display: inline-block;
-	width: 9.5rem;
-	margin-bottom: 0.25rem;
-}
 select#id_year_choice{
 	position: relative;
 	display: inline-block;
@@ -41,25 +35,20 @@ select#id_year_choice{
 	margin: 0;
 }
 
-#message_form > p:nth-child(3){
+select#id_written_by{
 	position: relative;
 	display: inline-block;
 	width: 10rem;
-	margin-bottom: 0.25rem;
-}
-select#id_written_by{
-	position: relative;
-	display: block;
-	width: 10rem;
 	padding: 6px 12px;
-
+    margin: 0;
 }
 
 select#id_to{
 	position: relative;
 	display: inline-block;
-	width: 16.5rem;
+	width: 15.3rem;
 	max-height: 2rem;
+	padding: 6px;
 	overflow-y: scroll;
 }
 

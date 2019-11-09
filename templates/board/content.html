@@ -29,7 +29,7 @@
 {% if attachment.isImage %}
 <img src="/private-media/{{attachment.path}}" style="width: 100%;max-width: 560px;">
 {% else %}
-<a href="/read/download/{{message.pk}}/{{attachment.pk}}">{{message.title}}_添付{{attachment.fileext}}</a>
+<a href="/read/download/{{message.pk}}/{{attachment.pk}}">{{message.title}}_添付{{forloop.counter}}{{attachment.fileext}}</a><br>
 {% endif %}
 {% endfor %}
 

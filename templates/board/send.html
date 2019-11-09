@@ -2,26 +2,62 @@
 {% load static %}
 {% block title %}メーリス送信 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-	<link rel="stylesheet" type="text/css" href="{% static 'css/board/send.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/board/send.css' %}">
 {% endblock %}
 {% block body %}
-	<h3 class="mt-1 mb-3">メーリス送信</h3>
-	<section id="SaveDataInfo" class="alert alert-success alert-dismissible"></section>
-	<form method="post" enctype="multipart/form-data" id="SendMessageForm">
-		{% csrf_token %}
-		<div id="message_form">
-			{{ message_form.as_p }}
-		</div>
-		<input type="submit" name="SEND" value="送信" class="btn btn-info mb-3">
-	</form>
-	
+    <h3 class="mt-1 mb-3">メーリス送信</h3>
+    <section id="SaveDataInfo" class="alert alert-success alert-dismissible"></section>
+    <form method="post" enctype="multipart/form-data" id="SendMessageForm">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ message_form.title }}
+            {% if message_form.title.errors %}
+            <p class="small text-danger pl-2">{{ message_form.title.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ message_form.year_choice.label_tag }}
+            {{ message_form.year_choice }}
+            {% if message_form.year_choice.errors %}
+            <p class="small text-danger pl-2">{{ message_form.year_choice.errors.as_text }}</p>
+            {% endif %}
+            {{ message_form.written_by }}
+            {% if message_form.written_by.errors %}
+            <p class="small text-danger pl-2">{{ message_form.written_by.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ message_form.to.label_tag }}
+            {{ message_form.to }}
+            {% if message_form.to.errors %}
+            <p class="small text-danger pl-2">{{ message_form.to.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ message_form.content }}
+            {% if message_form.content.errors %}
+            <p class="small text-danger pl-2">{{ message_form.content.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        {{ attachment_form.management_form }}
+        {% for field in attachment_form %}
+        <div class="form-group">
+            {{ field }}
+            {% if field.errors %}
+            <p class="small text-danger pl-2">{{ field.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <input type="submit" name="SEND" value="送信" class="btn btn-info mb-3">
+    </form>
+    
 
 <script type="text/javascript">
-	const user_year = {{ user.year }};
-	let JSstop = false;
-	{% if JSstop %}
-	JSstop = true;
-	{% endif %}
+    const user_year = {{ user.year }};
+    let JSstop = false;
+    {% if JSstop %}
+    JSstop = true;
+    {% endif %}
 </script>
 <script src="{% static 'js/send_choiceform.js' %}"></script>
 <script src="{% static 'js/send_restore.js' %}"></script>
