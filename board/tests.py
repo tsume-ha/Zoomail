@@ -42,7 +42,6 @@ def CreateMessage(self, year, is_attachment=False):
         content_data = Message(
             title='Title Example ' + str(messageyear),
             content='Content Example \n'*10,
-            attachment=is_attachment,
             sender=user,
             writer=user,
             created_at=nowtime,
@@ -142,14 +141,50 @@ class AuthentificationSendTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'admin/login.html')
 
+# {
+# 'csrfmiddlewaretoken': ['BPe33gaRWSrrfJYJJAN3v0h5De8yxBQIDzigof4dAaJXmpF8vjEpk1qxb67N9Gn4'],
+# 'title': ['テストメーリス'],
+# 'year_choice': ['2019'],
+# 'written_by': ['2019-1'],
+# 'to': ['0'],
+# 'content': ['POSTテスト'],
+# 'attachments-TOTAL_FORMS': ['3'],
+# 'attachments-INITIAL_FORMS': ['0'],
+# 'attachments-MIN_NUM_FORMS': ['0'],
+# 'attachments-MAX_NUM_FORMS': ['6'],
+# 'attachments-0-attachment_file': [''],
+# 'attachments-0-id': [''],
+# 'attachments-0-message': [''],
+# 'attachments-1-attachment_file': [''],
+# 'attachments-1-id': [''],
+# 'attachments-1-message': [''],
+# 'attachments-2-attachment_file': [''],
+# 'attachments-2-id': [''],
+# 'attachments-2-message': [''],
+# 'SEND': ['送信']
+# }
+
     def test_send_POST_logOUT(self):
         data = {
-            'title': 'LogOUT POST test',
-            'year_choice': 2019,
-            'written_by': '2019-1',
+            'title': ['LogOUT POST test'],
+            'year_choice': ['2019'],
+            'written_by': ['2019-1'],
             'to': ['0'],
-            'content': 'LogOUT POST test message',
-        }
+            'content': ['LogOUT POST test message'],
+            'attachments-TOTAL_FORMS': ['3'],
+            'attachments-INITIAL_FORMS': ['0'],
+            'attachments-MIN_NUM_FORMS': ['0'],
+            'attachments-MAX_NUM_FORMS': ['6'],
+            'attachments-0-attachment_file': [''],
+            'attachments-0-id': [''],
+            'attachments-0-message': [''],
+            'attachments-1-attachment_file': [''],
+            'attachments-1-id': [''],
+            'attachments-1-message': [''],
+            'attachments-2-attachment_file': [''],
+            'attachments-2-id': [''],
+            'attachments-2-message': [''],
+            }
         User_LogOUT(self)
         request = self.client.post('/send/', data)
         self.assertEqual(request.status_code, 302)
@@ -159,7 +194,7 @@ class AuthentificationSendTest(TestCase):
         self.assertTemplateUsed(response, 'admin/login.html')
 
         try:
-            saved_content = Message.objects.get(title=data['title'])
+            saved_content = Message.objects.get(title=data['title'][0])
             self.assertTrue(False)
         except ObjectDoesNotExist:
             self.assertTrue(True)
@@ -168,11 +203,24 @@ class AuthentificationSendTest(TestCase):
     def test_send_POST_logIN(self):
         user = User_LogIN(self)
         data = {
-            'title': 'LogIN POST test',
-            'year_choice': user.year,
-            'written_by': str(user.year).zfill(4) + '-' + str(user.pk),
+            'title': ['LogIN POST test'],
+            'year_choice': [str(user.year)],
+            'written_by': [str(user.year).zfill(4) + '-' + str(user.pk)],
             'to': ['0'],
-            'content': 'LogIN POST test message',
+            'content': ['LogIN POST test message'],
+            'attachments-TOTAL_FORMS': ['3'],
+            'attachments-INITIAL_FORMS': ['0'],
+            'attachments-MIN_NUM_FORMS': ['0'],
+            'attachments-MAX_NUM_FORMS': ['6'],
+            'attachments-0-attachment_file': [''],
+            'attachments-0-id': [''],
+            'attachments-0-message': [''],
+            'attachments-1-attachment_file': [''],
+            'attachments-1-id': [''],
+            'attachments-1-message': [''],
+            'attachments-2-attachment_file': [''],
+            'attachments-2-id': [''],
+            'attachments-2-message': [''],
         }
         request = self.client.post('/send/', data)
         self.assertEqual(request.status_code, 302)
@@ -181,21 +229,34 @@ class AuthentificationSendTest(TestCase):
 
         response = self.client.get('/read/')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['title'])
+        self.assertContains(response, data['title'][0])
         
-        saved_content = Message.objects.get(title=data['title'])
+        saved_content = Message.objects.get(title=data['title'][0])
         target = '/read/content/' + str(saved_content.pk)
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['content'])
+        self.assertContains(response, data['content'][0])
 
     def test_send_POST_logIN_missing_TITLE(self):
         data = {
-            'title': '',
-            'year_choice': '2019',
-            'written_by': '2019-1',
+            'title': [''],
+            'year_choice': ['2019'],
+            'written_by': ['2019-1'],
             'to': ['0'],
-            'content': 'LogIN POST test message missing TITLE',
+            'content': ['LogIN POST test message missing TITLE'],
+            'attachments-TOTAL_FORMS': ['3'],
+            'attachments-INITIAL_FORMS': ['0'],
+            'attachments-MIN_NUM_FORMS': ['0'],
+            'attachments-MAX_NUM_FORMS': ['6'],
+            'attachments-0-attachment_file': [''],
+            'attachments-0-id': [''],
+            'attachments-0-message': [''],
+            'attachments-1-attachment_file': [''],
+            'attachments-1-id': [''],
+            'attachments-1-message': [''],
+            'attachments-2-attachment_file': [''],
+            'attachments-2-id': [''],
+            'attachments-2-message': [''],
         }
         User_LogIN(self)
         request = self.client.post('/send/', data)
@@ -203,18 +264,22 @@ class AuthentificationSendTest(TestCase):
         self.assertTemplateUsed(request, 'board/send.html')
         self.assertContains(request, validation_error_messages['no_title'])
         try:
-            saved_content = Message.objects.get(title=data['title'])
+            saved_content = Message.objects.get(title=data['title'][0])
             self.assertTrue(False)
         except ObjectDoesNotExist:
             self.assertTrue(True)
 
     def test_send_POST_logIN_missing_CONTENT(self):
         data = {
-            'title': 'LogIN POST test missing CONTENT',
-            'year_choice': '2019',
-            'written_by': '2019-1',
+            'title': ['LogIN POST test missing CONTENT'],
+            'year_choice': ['2019'],
+            'written_by': ['2019-1'],
             'to': ['0'],
-            'content': '',
+            'content': [''],
+            'attachments-TOTAL_FORMS': ['3'],
+            'attachments-INITIAL_FORMS': ['0'],
+            'attachments-MIN_NUM_FORMS': ['0'],
+            'attachments-MAX_NUM_FORMS': ['6'],
         }
         User_LogIN(self)
         request = self.client.post('/send/', data)
@@ -222,18 +287,22 @@ class AuthentificationSendTest(TestCase):
         self.assertTemplateUsed(request, 'board/send.html')
         self.assertContains(request, validation_error_messages['no_content'])
         try:
-            saved_content = Message.objects.get(title=data['title'])
+            saved_content = Message.objects.get(title=data['title'][0])
             self.assertTrue(False)
         except ObjectDoesNotExist:
             self.assertTrue(True)
 
     def test_send_POST_logIN_missing_writtenby(self):
         data = {
-            'title': 'LogIN POST test missing Written By',
-            'year_choice': '2019',
-            'written_by': '',
+            'title': ['LogIN POST test missing Written By'],
+            'year_choice': ['2019'],
+            'written_by': [''],
             'to': ['0'],
-            'content': 'LogIN POST test missing Written By content',
+            'content': ['LogIN POST test missing Written By content'],
+            'attachments-TOTAL_FORMS': ['3'],
+            'attachments-INITIAL_FORMS': ['0'],
+            'attachments-MIN_NUM_FORMS': ['0'],
+            'attachments-MAX_NUM_FORMS': ['6'],
         }
         User_LogIN(self)
         request = self.client.post('/send/', data)
@@ -241,18 +310,22 @@ class AuthentificationSendTest(TestCase):
         self.assertTemplateUsed(request, 'board/send.html')
         self.assertContains(request, validation_error_messages['no_writer'])
         try:
-            saved_content = Message.objects.get(title=data['title'])
+            saved_content = Message.objects.get(title=data['title'][0])
             self.assertTrue(False)
         except ObjectDoesNotExist:
             self.assertTrue(True)
 
     def test_send_POST_logIN_no_year_choice(self):
         data = {
-            'title': 'LogIN POST test no year choice',
-            'year_choice': '',
-            'written_by': '2019-1',
+            'title': ['LogIN POST test no year choice'],
+            'year_choice': [''],
+            'written_by': ['2019-1'],
             'to': ['0'],
-            'content': 'LogIN POST test no year choice content',
+            'content': ['LogIN POST test no year choice content'],
+            'attachments-TOTAL_FORMS': ['3'],
+            'attachments-INITIAL_FORMS': ['0'],
+            'attachments-MIN_NUM_FORMS': ['0'],
+            'attachments-MAX_NUM_FORMS': ['6'],
         }
         User_LogIN(self)
         request = self.client.post('/send/', data)
@@ -262,13 +335,13 @@ class AuthentificationSendTest(TestCase):
 
         response = self.client.get('/read/')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['title'])
+        self.assertContains(response, data['title'][0])
         
-        saved_content = Message.objects.get(title=data['title'])
+        saved_content = Message.objects.get(title=data['title'][0])
         target = '/read/content/' + str(saved_content.pk)
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['content'])
+        self.assertContains(response, data['content'][0])
 
 
     def test_send_POST_logIN_with_TextFile(self):
@@ -278,12 +351,16 @@ class AuthentificationSendTest(TestCase):
             filedir = os.path.join(BASE_DIR, 'board', textfile[0])
             with open(filedir, 'rb') as file:
                 data = {
-                    'title': 'LogIN POST test with' + textfile[0],
-                    'year_choice': user.year,
-                    'written_by': str(user.year).zfill(4) + '-' + str(user.pk),
-                    'to': 0,
-                    'content': 'LogIN POST test message',
-                    'attachmentfile': SimpleUploadedFile(textfile[0], file.read()),
+                    'title': ['LogIN POST test with' + textfile[0]],
+                    'year_choice': [str(user.year)],
+                    'written_by': [str(user.year).zfill(4) + '-' + str(user.pk)],
+                    'to': ['0'],
+                    'content': ['LogIN POST test with' + textfile[0]],
+                    'attachments-TOTAL_FORMS': ['3'],
+                    'attachments-INITIAL_FORMS': ['0'],
+                    'attachments-MIN_NUM_FORMS': ['0'],
+                    'attachments-MAX_NUM_FORMS': ['6'],
+                    'attachments-0-attachment_file': [SimpleUploadedFile(textfile[0], file.read())],
                 }
                 request = self.client.post('/send/', data)
                 if textfile[1] < 30*1024*1024:
@@ -293,22 +370,22 @@ class AuthentificationSendTest(TestCase):
 
                     response = self.client.get('/read/')
                     self.assertEqual(response.status_code, 200)
-                    self.assertContains(response, data['title'])
+                    self.assertContains(response, data['title'][0])
                     
-                    saved_content = Message.objects.get(title=data['title'])
+                    saved_content = Message.objects.get(title=data['title'][0])
                     target = '/read/content/' + str(saved_content.pk)
                     response = self.client.get(target)
                     self.assertEqual(response.status_code, 200)
-                    self.assertContains(response, data['content'])
-                    self.assertContains(response, textfile[0])
+                    self.assertContains(response, data['content'][0])
+                    self.assertContains(response, data['title'][0] + '_添付')
 
                 else:
                     self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
                     self.assertTemplateUsed(request, 'board/send.html')
-                    self.assertContains(request, data['title'])
-                    self.assertContains(request, validation_error_messages['filesize_limit'])
+                    self.assertContains(request, data['title'][0])
+                    self.assertContains(request, 'どの添付ファイルのサイズも30MB未満にしてください')
                     try:
-                        saved_content = Message.objects.get(title=data['title'])
+                        saved_content = Message.objects.get(title=data['title'][0])
                         self.assertTrue(False)
                     except ObjectDoesNotExist:
                         self.assertTrue(True)
@@ -316,11 +393,15 @@ class AuthentificationSendTest(TestCase):
     def test_send_POST_logIN_multiple_send_to(self):
         send_to = ['2018', '2019']
         data = {
-            'title': 'LogIN POST test mutiple send to',
-            'year_choice': '',
-            'written_by': '2019-1',
+            'title': ['LogIN POST test mutiple send to'],
+            'year_choice': [''],
+            'written_by': ['2019-1'],
             'to': send_to,
-            'content': 'LogIN POST test mutiple send to content',
+            'content': ['LogIN POST test mutiple send to content'],
+            'attachments-TOTAL_FORMS': ['3'],
+            'attachments-INITIAL_FORMS': ['0'],
+            'attachments-MIN_NUM_FORMS': ['0'],
+            'attachments-MAX_NUM_FORMS': ['6'],
         }
         User_LogIN(self)
         request = self.client.post('/send/', data)
@@ -330,10 +411,83 @@ class AuthentificationSendTest(TestCase):
 
         response = self.client.get('/read/')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['title'])
+        self.assertContains(response, data['title'][0])
         
-        saved_content = Message.objects.get(title=data['title'])
+        saved_content = Message.objects.get(title=data['title'][0])
         target = '/read/content/' + str(saved_content.pk)
         response = self.client.get(target)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['content'])
+        self.assertContains(response, data['content'][0])
+
+    def test_send_POST_logIN_with_multiple_TextFile(self):
+        self.testfiles = ['1KB.txt', '2KB.txt', '4KB.txt']
+        user = User_LogIN(self)
+        filedir = [os.path.join(BASE_DIR, 'board', testfile) for testfile in self.testfiles]
+        with open(filedir[0], 'rb') as file0:
+            with open(filedir[1], 'rb') as file1:
+                with open(filedir[2], 'rb') as file2:
+                    data = {
+                        'title': ['LogIN POST test with multiple TextFile'],
+                        'year_choice': [str(user.year)],
+                        'written_by': [str(user.year).zfill(4) + '-' + str(user.pk)],
+                        'to': ['0'],
+                        'content': ['LogIN POST test with multiple TextFile'],
+                        'attachments-TOTAL_FORMS': ['3'],
+                        'attachments-INITIAL_FORMS': ['0'],
+                        'attachments-MIN_NUM_FORMS': ['0'],
+                        'attachments-MAX_NUM_FORMS': ['6'],
+                        'attachments-0-attachment_file': [SimpleUploadedFile(self.testfiles[0], file0.read())],
+                        'attachments-1-attachment_file': [SimpleUploadedFile(self.testfiles[1], file1.read())],
+                        'attachments-2-attachment_file': [SimpleUploadedFile(self.testfiles[2], file2.read())],
+                    }
+                    request = self.client.post('/send/', data)
+
+        self.assertEqual(request.status_code, 302) # => 成功、read/へ転送
+        url_redial_to = request.url
+        self.assertEqual(url_redial_to, '../read/')
+
+        response = self.client.get('/read/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, data['title'][0])
+        
+        saved_content = Message.objects.get(title=data['title'][0])
+        target = '/read/content/' + str(saved_content.pk)
+        response = self.client.get(target)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, data['content'][0])
+        self.assertContains(response, data['title'][0] + '_添付1')
+        self.assertContains(response, data['title'][0] + '_添付2')
+        self.assertContains(response, data['title'][0] + '_添付3')
+
+    def test_send_POST_logIN_with_multiple_TextFile_FileSizeOVER(self):
+        self.testfiles = ['1KB.txt', '2KB.txt', '31MB.txt']
+        user = User_LogIN(self)
+        filedir = [os.path.join(BASE_DIR, 'board', testfile) for testfile in self.testfiles]
+        with open(filedir[0], 'rb') as file0:
+            with open(filedir[1], 'rb') as file1:
+                with open(filedir[2], 'rb') as file2:
+                    data = {
+                        'title': ['LogIN POST test with multiple TextFile'],
+                        'year_choice': [str(user.year)],
+                        'written_by': [str(user.year).zfill(4) + '-' + str(user.pk)],
+                        'to': ['0'],
+                        'content': ['LogIN POST test with multiple TextFile'],
+                        'attachments-TOTAL_FORMS': ['3'],
+                        'attachments-INITIAL_FORMS': ['0'],
+                        'attachments-MIN_NUM_FORMS': ['0'],
+                        'attachments-MAX_NUM_FORMS': ['6'],
+                        'attachments-0-attachment_file': [SimpleUploadedFile(self.testfiles[0], file0.read())],
+                        'attachments-1-attachment_file': [SimpleUploadedFile(self.testfiles[1], file1.read())],
+                        'attachments-2-attachment_file': [SimpleUploadedFile(self.testfiles[2], file2.read())],
+                    }
+                    request = self.client.post('/send/', data)
+
+        self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
+        self.assertTemplateUsed(request, 'board/send.html')
+        self.assertContains(request, data['title'][0])
+        self.assertContains(request, 'どの添付ファイルのサイズも30MB未満にしてください')
+        try:
+            saved_content = Message.objects.get(title=data['title'][0])
+            self.assertTrue(False)
+        except ObjectDoesNotExist:
+            self.assertTrue(True)
