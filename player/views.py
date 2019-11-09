@@ -44,14 +44,12 @@ def playlist(request, live_id):
             pass
     return render(request, 'player/playlist.html', params)
 
-FormSetExtraNum = 20
-CreateSongFormSet = formset_factory(CreateSongForm, extra=FormSetExtraNum)
-
 @login_required()
-def songupload(request):
+def songupload(request, FormSetExtraNum=20):
     now_user = request.user
     is_allowed = RecordingPermisson(now_user)
     if is_allowed:
+        CreateSongFormSet = formset_factory(CreateSongForm, extra=FormSetExtraNum)
         params = {
             'CreateRehasalForm': CreateRehasalForm(),
             'CreateSongFormSet': CreateSongFormSet,
