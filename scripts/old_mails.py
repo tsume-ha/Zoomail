@@ -2,12 +2,12 @@ from config.settings import BASE_DIR
 import os
 import eml_parser
 import datetime
-from board.models import Message, MessageYear
+from board.models import Message, MessageYear, Kidoku
 from members.models import User
 
 def run():
     admin = User.objects.get(email='developer@ku-unplugged.net')
-    for i in range(3000):
+    for i in range(500):
         name = str(i) + '.eml'
         target = os.path.join(BASE_DIR, 'scripts', 'emails', name)
         try:
@@ -43,6 +43,9 @@ def run():
                     message = content,
                     year = 0)
                 content_year.save()
+
+                for user in User.objects.all():
+                    Kidoku.objects.get_or_create(message=content, user=user)
         except FileNotFoundError:
             continue
     
