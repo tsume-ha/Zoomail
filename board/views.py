@@ -161,9 +161,9 @@ def send(request):
                         from_email = '"' + content_data.writer.get_short_name()
                         from_email += '" <' + ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net>'
                         message_list.extend([(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.filter(year=year['year'])])
-                success_num = send_mass_mail(message_list, fail_silently=False)
-                django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
-                django_messages.success(request, 'メール送信件数 : '+str(success_num))
+                # success_num = send_mass_mail(message_list, fail_silently=False)
+                # django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
+                # django_messages.success(request, 'メール送信件数 : '+str(success_num))
 
                 return redirect(to='../read/')
             else:
