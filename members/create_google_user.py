@@ -37,7 +37,7 @@ def Create_Google_User(email, year=0, first_name='', last_name='', furigana=''):
         content += '\n\nログインできないなどの不具合があった場合は、「message@ku-unplugged.net」まで連絡をお願いします。'
         content += '\n\n京大アンプラグドHP係開発部'
 
-        send_mail(subject, content, 'register@message.ku-unplugged.net', [user.email], fail_silently=False)
+        # send_mail(subject, content, 'register@message.ku-unplugged.net', [user.email], fail_silently=False)
 
     except IntegrityError:
         raise DuplicateGmailAccountError('すでに登録されているGoogleアカウントです')
