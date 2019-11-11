@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load kansou_list %}
+
+{% block title %}新メーリスの使い方 | UnpluggedMessage{% endblock %}
+
+{% block extrastyle %}
+{% endblock %}
+
+{% block body %}
+<h3 class="my-1">新メーリスの使い方</h3>
+<p class="py-2">
+	新メーリスの仕様、使い方について載せていきます。<br>
+	
+</p>
+<div class="row">
+	<section class="col-sm-6 col-lg-4">
+		<h4>ユーザー情報の設定</h4>
+		<ul>
+			<li>名前、ニックネームの設定</li>
+			<li>受信用メールアドレスの設定</li>
+		</ul>
+	</section>
+	<section class="col-sm-6 col-lg-4">
+		<h4>メーリスを読む</h4>
+		<ul>
+			<li>全回、回生の表示について</li>
+			<li>検索機能を使う</li>
+			<li>既読の機能について</li>
+			<li>ブックマーク機能について</li>
+		</ul>
+	</section>
+	<section class="col-sm-6 col-lg-4">
+		<h4>メーリスを送信する</h4>
+		<ul>
+			<li>送信するにはどこから？</li>
+			<li>件名、本文を入力する</li>
+			<li>宛先を選択する</li>
+			<li>送信者を選択する（代理送信機能を使う）</li>
+			<li>送信を行うときの注意点</li>
+		</ul>
+	</section>
+	<section class="col-sm-6 col-lg-4">
+		<h4>音源を聞く</h4>
+		<ul>
+			<li>音源の一覧画面</li>
+			<li>プレーヤーの機能</li>
+		</ul>
+	</section>
+</div>
+{% endblock %}
