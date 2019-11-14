@@ -149,7 +149,11 @@ def send(request):
                 # sendgrid mail
                 subject = content_data.title
                 text_content = content_data.content
-                text_content += '\n\n\nこのメッセージをHPで読むにはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
+                is_attachment = Attachment.objects.filter(message=content_data).exists()
+                if is_attachment:
+                    text_content += '\n\n--------------------------------\n※このメッセージには添付ファイルがあります。\n※添付ファイルはメーリスHPにアクセスして見てください。\n\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
+                else:
+                    text_content += '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
                 year_query = MessageYear.objects.filter(message=content_data).values('year')
                 if year_query.filter(year=0).exists():
                     from_email = '"' + content_data.writer.get_short_name() + '" <zenkai@message.ku-unplugged.net>'
