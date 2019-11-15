@@ -38,4 +38,5 @@ urlpatterns = [
     path('movie/', include('movie.urls')),
     path('others/', include('otherdocs.urls')),
     path('special/<str:url>/', home.special),
+    path('howto/', include('howto.urls')),
 ]
