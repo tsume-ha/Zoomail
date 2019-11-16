@@ -23,21 +23,22 @@
 			</p>
 		</div>
 		<div class="col-sm-2"></div>
-		<div class="col-12 varsion" data-var="1.1.0">Varsion 1.1.0</div>
-	</div>
-	<div class="row center-block my-3">
-		<div class="col-sm-6">
-			<h5>不具合の報告</h5>
-			<p class="small">
-				メーリスの登録メンバーが多いことが予想以上に負荷を掛けてしまったため、<br>
-				過去のメーリスに既読の印つける際、いくつかタイムアウトエラーが発生してしましました。<br>
-				このため、[k-u-unplugged:2192]、[k-u-unplugged:1787]、[k-u-unplugged:1499]などのメーリスに未読扱いになってしまっているものがある様子です。<br>
-				ご自身で既読をつけていただくと問題なく処理されますが、ご迷惑をおかけして申し訳ありません。
-			</p>
-		</div>
+		<div class="col-12 varsion" data-var="1.1.1">Varsion 1.1.1</div>
 	</div>
 	{% if user.is_authenticated %}
-	
+	<div class="row center-block my-3">
+		<div class="col-sm-6">
+			<h5>HP係からのおしらせ</h5>
+			<article>
+				<h6>セットリスト確認用のPDFをアップロードしました</h6>
+				<p class="small">
+					<a href="{% url 'others_index' %}">その他資料</a>のページに、セットリスト確認用のPDFをアップロードしました。<br>
+					各バンドは本番前にもう一度セットリストを確認してください。<br>
+					詳しくはメーリスで。<br>
+				</p>
+			</article>
+		</div>
+	</div>
 	
 	{% else %}
 	<div class="row center-block mt-3">
