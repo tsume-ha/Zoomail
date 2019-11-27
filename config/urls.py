@@ -23,7 +23,6 @@ import private_storage.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', include('home.urls')),
     path('', include('home.urls')),
     path('login/', home.login, name='login'),
     path('logout/', home.logoutview, name='logout'),
