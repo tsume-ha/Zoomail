@@ -13,7 +13,7 @@
 
 <div class="row border-bottom pb-1 mb-2"><!-- Live Title -->
 	<div class="col-sm-12">
-		<a href="{% url 'player_index' %}" class="float-left col-xs-2" id="return"> </a>
+		<a href="{% url 'player:index' %}" class="float-left col-xs-2" id="return"> </a>
 		<h5 class="float-left col-xs-7 ml-2">{{Performances.live_name}}</h5>
 		<span class="float-right col-xs-3 small">{{Performances.recorded_at|date:"Y/m/d D"}}</span>
 	</div>
@@ -47,7 +47,7 @@
 	data-track="{{Song.track_num}}" data-url="{{Song.file.url}}" data-name="{{Song.song_name}}">
 		<span class="songnum float-left ml-1 mr-2">{{Song.track_num}}.</span>
 		<span class="songname float-left ml-0 pl-0">{{Song.song_name}}</span>
-		<span class="download float-right mx-2"><a href="{% url 'download' Performances.pk Song.pk %}">　</a></span>
+		<span class="download float-right mx-2"><a href="{% url 'player:download' Performances.pk Song.pk %}">　</a></span>
 		<!-- <span class="songtime float-right mx-2" data-tnum="{{Song.track_num}}">0:00</span> -->
 	</div>
 	{% endfor %}
