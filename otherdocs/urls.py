@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+app_name = 'otherdocs'
 urlpatterns = [
-    path('', views.index, name='others_index'),
+    path('', views.index, name='index'),
 ]

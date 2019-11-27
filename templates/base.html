@@ -23,13 +23,13 @@
 		<nav id="nav">
 			<ul>
 				{% if user.is_authenticated %}
-				<li><a href="{% url 'read' %}">メーリス</a></li>
+				<li><a href="{% url 'board:read' %}">メーリス</a></li>
 				<li><a href="{% url 'kansou:index' %}">感想用紙</a></li>
 				<li><a href="{% url 'player:index' %}">リハ音源</a></li>
-				<li><a href="{% url 'movie_index' %}">ライブ映像</a></li>
-				<li><a href="{% url 'pictures_index' %}">写真</a></li>
-				<li><a href="{% url 'others_index' %}">その他資料</a></li>
-				<li><a href="{% url 'mypage_index' %}">My Page</a></li>
+				<li><a href="{% url 'movie:index' %}">ライブ映像</a></li>
+				<li><a href="{% url 'pictures:index' %}">写真</a></li>
+				<li><a href="{% url 'otherdocs:index' %}">その他資料</a></li>
+				<li><a href="{% url 'members:index' %}">My Page</a></li>
 				<li><a href="{% url 'howto:index' %}">使い方</a></li>
 				{% else %}
 				<li><a href="/login/">Login with Google</a></li>

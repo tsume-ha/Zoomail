@@ -40,7 +40,7 @@
 
 {% if edit_allowed %}
 <hr>
-<a href="{% url 'message_edit' message.id %}">メッセージを修正する</a>
+<a href="{% url 'board:content_edit' message.id %}">メッセージを修正する</a>
 <p class="small text-secondary">
 	現在、タイトルと本文のみ修正可能となっています。<br>
 	添付ファイル、宛先の修正については、今後更新予定です。<br>
