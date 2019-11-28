@@ -10,6 +10,7 @@ from .create_google_user import DuplicateGmailAccountError
 from board.models import Message, Kidoku
 from .create_google_user import Create_Google_User as register
 from django.core.exceptions import ValidationError
+import datetime
 
 
 def MemberRegisterPermission(user):
@@ -46,7 +47,10 @@ def UserUpdate(request):
     form = UserUpdateForm(request.POST or None, instance=now_user)
     if (request.method == 'POST'):
         if form.is_valid():
-            content = form
+            content = form.save(commit=False)
+            if content.receive_email == '':
+                content.receive_email = now_user.email
+            content.updated_at = datetime.datetime.now()
             content.save()
             messages.success(request, '更新しました')
             return redirect('/members')
