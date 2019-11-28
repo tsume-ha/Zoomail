@@ -7,4 +7,4 @@ def run():
     for user in users:
         messages_this_user_can_read = Message.objects.filter(Q(years__year=user.year) | Q(years__year=0))
         for message in messages_this_user_can_read:
-            c = Kidoku.objects.get_or_create(message=message, user=user, have_read=True)
+            c = Kidoku.objects.get_or_create(message=message, user=user)

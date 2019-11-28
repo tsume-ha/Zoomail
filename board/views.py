@@ -88,7 +88,7 @@ def content(request, id):
     }
 
     if not Kidoku.objects.filter(message=message).filter(user=now_user).exists():
-        kidoku_content = Kidoku(message=message, user=now_user, have_read=True)
+        kidoku_content = Kidoku(message=message, user=now_user)
         kidoku_content.save()
 
     return render(request, 'board/content.html', params)

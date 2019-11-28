@@ -29,7 +29,7 @@ def index(request):
         is_kidoku = request.POST["kidoku"]
         if is_kidoku == 'true':
             for message in midoku:
-                content = Kidoku(message=message, user=now_user, have_read=True)
+                content = Kidoku(message=message, user=now_user)
                 content.save()
 
 
