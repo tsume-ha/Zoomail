@@ -146,6 +146,8 @@ def send(request):
                 for to in to_list:
                     content_data.years.create(year=to)
 
+
+         # print(list(User.objects.all().values_list('receive_email', flat=True)))
                 # sendgrid mail
                 subject = content_data.title
                 text_content = content_data.content
@@ -157,14 +159,19 @@ def send(request):
                 year_query = MessageYear.objects.filter(message=content_data).values('year')
                 if year_query.filter(year=0).exists():
                     from_email = '"' + content_data.writer.get_short_name() + '" <zenkai@message.ku-unplugged.net>'
-                    message_list = [(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.all()]
+                    to_list = User.objects.all().values_list('receive_email', flat=True)
+                    message_list = list(map(lambda to: (subject, text_content, from_email, [to]), to_list))
+                    print(message_list)
+
                 else:
                     message_list = []
                     for year in year_query:
                         ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
                         from_email = '"' + content_data.writer.get_short_name()
                         from_email += '" <' + ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net>'
-                        message_list.extend([(subject, text_content, from_email, [user_q.get_receive_email()]) for user_q in User.objects.filter(year=year['year'])])
+                        to_list = User.objects.filter(year=year['year']).values_list('receive_email', flat=True)
+                        message_list += list(map(lambda to: (subject, text_content, from_email, [to]), to_list))
+                    print(message_list)
                 success_num = send_mass_mail(message_list, fail_silently=False)
                 django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
                 django_messages.success(request, 'メール送信件数 : '+str(success_num))
