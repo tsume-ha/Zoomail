@@ -3,14 +3,12 @@
 /*共通設定*/
 a,
 a h6{
-	color: #001a31;
 	text-decoration: none;
 }
 a.hover,
 a:hover,
 a.hover h6
 a:hover h6{
-	color: #001a31;
 	text-decoration: underline;
 }
 

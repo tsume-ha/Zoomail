@@ -10,6 +10,7 @@ from .create_google_user import DuplicateGmailAccountError
 from board.models import Message, Kidoku
 from .create_google_user import Create_Google_User as register
 from django.core.exceptions import ValidationError
+import datetime
 
 
 def MemberRegisterPermission(user):
@@ -20,15 +21,15 @@ def MemberRegisterPermission(user):
 def index(request):
     now_user = request.user
     register_allowed = MemberRegisterPermission(now_user)
-    midoku = Message.objects.filter(Q(years__year=request.user.year)|Q(years__year=0)).exclude(kidoku_message__user=now_user)
-    messages_you_send = Message.objects.filter(sender=now_user)
-    messages_you_wrote = Message.objects.filter(writer=now_user).exclude(sender=now_user)
+    midoku = Message.objects.filter(Q(years__year=request.user.year)|Q(years__year=0)).exclude(kidoku_message__user=now_user).order_by('updated_at').reverse()
+    messages_you_send = Message.objects.filter(sender=now_user).order_by('updated_at').reverse()
+    messages_you_wrote = Message.objects.filter(writer=now_user).exclude(sender=now_user).order_by('updated_at').reverse()
 
     if (request.method == 'POST'):
         is_kidoku = request.POST["kidoku"]
         if is_kidoku == 'true':
             for message in midoku:
-                content = Kidoku(message=message, user=now_user, have_read=True)
+                content = Kidoku(message=message, user=now_user)
                 content.save()
 
 
@@ -46,7 +47,10 @@ def UserUpdate(request):
     form = UserUpdateForm(request.POST or None, instance=now_user)
     if (request.method == 'POST'):
         if form.is_valid():
-            content = form
+            content = form.save(commit=False)
+            if content.receive_email == '':
+                content.receive_email = now_user.email
+            content.updated_at = datetime.datetime.now()
             content.save()
             messages.success(request, '更新しました')
             return redirect('/members')

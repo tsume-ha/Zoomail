@@ -3,6 +3,7 @@
 
 {% block title %}マイページ | Unplugged Message{% endblock %}
 {% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/members/index.css' %}">
 	<script src="{% static 'js/all_kidoku.js' %}"></script>
 {% endblock %}
 
@@ -14,9 +15,10 @@
 	<h4 class="d-inline-block">({{ user.nickname }})</h4>
 	{% endif %}
 	<p>
-		<a href="{% url 'user_update' %}" class="btn btn-info m-2">登録情報確認・変更</a>
+		<a href="{% url 'members:update' %}" class="btn btn-info m-2">登録情報確認・変更</a>
+		<a href="{% url 'logout' %}" class="btn btn-outline-secondary m-2">ログアウト</a>
 		{% if register_allowed %}
-		<a href="{% url 'register_form' %}" class="btn btn-warning m-2">ユーザー登録へ</a>
+		<a href="{% url 'members:register_form' %}" class="btn btn-warning m-2">ユーザー登録へ</a>
 		{% endif %}
 		{% if user.is_superuser %}
 		<a href="/admin/" class="btn btn-danger m-2">管理者管理ページへ</a>
@@ -33,9 +35,9 @@
 	</form>
 	<ul class="list-unstyled">
 		{% for message in midoku %}
-		<li class="mb-2 ml-3">
-			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
-			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+		<li>
+			<a href="{% url 'board:content' message.id %}">{{ message.title }}</a>
+			<span class="small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
 		</li>
 		{% endfor %}
 	</ul>
@@ -44,14 +46,14 @@
 	
 	{% endif %}
 </section>
-<section id="yousend" class="mypage_message p-3 border-top">
+<section id="yousend" class="mypage_message py-3 pl-3 border-top">
 	<h5>あなたが送信したメッセージ</h5>
 	{% if yousend %}
 	<ul class="list-unstyled">
 		{% for message in yousend %}
-		<li class="mb-2 ml-3">
-			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
-			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+		<li>
+			<a href="{% url 'board:content' message.id %}">{{ message.title }}</a>
+			<span class="small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
 		</li>
 		{% endfor %}
 	</ul>
@@ -61,14 +63,14 @@
 	{% endif %}
 </section>
 
-<section id="yourmessage_otherssend" class="mypage_message p-3 border-top">
+<section id="yourmessage_otherssend" class="mypage_message py-3 pl-3 border-top">
 	<h5>あなたの代わりに送信されたメッセージ</h5>
 	{% if yourmessage_otherssend %}
 	<ul class="list-unstyled">
 		{% for message in yourmessage_otherssend %}
-		<li class="mb-2 ml-3">
-			<a href="/read/content/{{ message.id }}">{{ message.title }}</a>
-			<span class="d-inline-block small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
+		<li>
+			<a href="{% url 'board:content' message.id %}">{{ message.title }}</a>
+			<span class="small">{{ message.created_at|date:"Y/m/d D H:i" }} 送信</span>
 		</li>
 		{% endfor %}
 	</ul>
@@ -77,5 +79,4 @@
 	メッセージ：0件
 	{% endif %}
 </section>
-
 {% endblock %}

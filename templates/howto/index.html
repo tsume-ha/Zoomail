@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load kansou_list %}
+
+{% block title %}新メーリスの使い方 | UnpluggedMessage{% endblock %}
+
+{% block extrastyle %}
+{% endblock %}
+
+{% block body %}
+<h3 class="my-1">新メーリスの使い方</h3>
+<p class="py-2">
+	新メーリスの仕様、使い方について載せていきます。<br>
+	
+</p>
+<div class="row">
+	<section class="col-sm-6 col-lg-4">
+		<h4><a href="{% url 'howto:user_setting' %}">ユーザー情報の設定</a></h4>
+		<ul>
+			<li><a href="{% url 'howto:user_setting' %}">名前、ニックネームの設定</a></li>
+			<li><a href="{% url 'howto:user_setting' %}#2">受信用メールアドレスの設定</a></li>
+		</ul>
+	</section>
+	<section class="col-sm-6 col-lg-4">
+		<h4>メーリスを読む</h4>
+		<ul>
+			<li><a>全回、回生の表示について</a></li>
+			<li><a>検索機能を使う</a></li>
+			<li><a>既読の機能について</a></li>
+			<li><a>ブックマーク機能について</a></li>
+		</ul>
+	</section>
+	<section class="col-sm-6 col-lg-4">
+		<h4><a href="{% url 'howto:send_message' %}">メーリスを送信する</a></h4>
+		<ul>
+			<li><a href="{% url 'howto:send_message' %}">送信するにはどこから？</a></li>
+			<li><a href="{% url 'howto:send_message' %}#2">件名、本文を入力する</a></li>
+			<li><a href="{% url 'howto:send_message' %}#3">宛先を選択する</a></li>
+			<li><a href="{% url 'howto:send_message' %}#4">送信者を選択する（代理送信機能を使う）</a></li>
+			<li><a>ファイルを添付する</a></li>
+			<li><a>送信を行うときの注意点</a></li>
+			<li><a>送信後に編集する</a></li>
+		</ul>
+	</section>
+	<section class="col-sm-6 col-lg-4">
+		<h4>音源を聞く</h4>
+		<ul>
+			<li><a>音源の一覧画面</a></li>
+			<li><a>プレーヤーの機能</a></li>
+		</ul>
+	</section>
+</div>
+
+
+<style type="text/css">
+	
+</style>
+{% endblock %}

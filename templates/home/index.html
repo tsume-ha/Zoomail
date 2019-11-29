@@ -23,10 +23,22 @@
 			</p>
 		</div>
 		<div class="col-sm-2"></div>
-		<div class="col-12 varsion" data-var="0.3.8">Beta Var. (0.3.8)</div>
+		<div class="col-12 varsion" data-var="1.1.2">Varsion 1.1.2</div>
 	</div>
 	{% if user.is_authenticated %}
-	
+	<div class="row center-block my-3">
+		<div class="col-sm-6">
+			<h5>HP係からのおしらせ</h5>
+			<article>
+				<h6>セットリスト確認用のPDFをアップロードしました</h6>
+				<p class="small">
+					<a href="{% url 'otherdocs:index' %}">その他資料</a>のページに、セットリスト確認用のPDFをアップロードしました。<br>
+					各バンドは本番前にもう一度セットリストを確認してください。<br>
+					詳しくはメーリスで。<br>
+				</p>
+			</article>
+		</div>
+	</div>
 	
 	{% else %}
 	<div class="row center-block mt-3">

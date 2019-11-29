@@ -6,7 +6,7 @@ from .models import User, TmpMember
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'year')}),
-        (('Personal info'), {'fields': ('last_name', 'first_name', 'nickname', 'furigana')}),
+        (('Personal info'), {'fields': ('receive_email', 'last_name', 'first_name', 'nickname', 'furigana')}),
         (('Permissions'), {'fields': ('is_superuser', 'is_staff', 'groups', 'user_permissions')}),
     )
     add_fieldsets = (
@@ -15,10 +15,10 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2', 'year')
         }),
     )
-    list_display = ('email', 'first_name', 'last_name', 'year',)
-    list_filter = ('email',)
-    search_fields = ('email',)
-    ordering = ('email',)
+    list_display = ('year', 'last_name', 'first_name', 'email', 'receive_email')
+    list_filter = ('year',)
+    search_fields = ('last_name', 'first_name',)
+    ordering = ('year', 'furigana',)
     filter_horizontal = ('groups',)
 
 admin.site.register(TmpMember)

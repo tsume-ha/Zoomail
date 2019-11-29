@@ -177,7 +177,8 @@ else:
 
 
 
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1014
+# 20 KB
 
 
 
@@ -239,3 +240,13 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
 
 )
+
+
+
+# Send Grid Mail Settings
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = settings_local.SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

@@ -12,3 +12,5 @@ config/settings_local.py
 player/test.mp3
 
 scripts/emails/*
+
+static/special/*

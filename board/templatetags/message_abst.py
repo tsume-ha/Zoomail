@@ -40,8 +40,6 @@ def no_kidoku_css_class(message, user):
     if not Kidoku.objects.filter(message=message).filter(user=user).exists():
         return " midoku"
     else:
-        if not Kidoku.objects.filter(message=message).get(user=user).have_read:
-            return " midoku"
         return ''
 
 @register.simple_tag

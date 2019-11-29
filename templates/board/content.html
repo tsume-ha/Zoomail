@@ -6,9 +6,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/board/content.css' %}">
 {% endblock %}
 {% block body %}
-<div class="row my-3">
+<!-- <div class="row my-3">
 	<span class="col tag">{{tag}}</span>
-</div>
+</div> -->
 <h3 class="my-1">{{message.title}}</h3>
 <form method="post" id="bookmark">
     {% csrf_token %}
@@ -29,7 +29,7 @@
 {% if attachment.isImage %}
 <img src="/private-media/{{attachment.path}}" style="width: 100%;max-width: 560px;">
 {% else %}
-<a href="/read/download/{{message.pk}}/{{attachment.pk}}">{{message.title}}_添付{{attachment.fileext}}</a>
+<a href="/read/download/{{message.pk}}/{{attachment.pk}}">{{message.title}}_添付{{forloop.counter}}{{attachment.fileext}}</a><br>
 {% endif %}
 {% endfor %}
 
@@ -40,7 +40,7 @@
 
 {% if edit_allowed %}
 <hr>
-<a href="{% url 'message_edit' message.id %}">メッセージを修正する</a>
+<a href="{% url 'board:content_edit' message.id %}">メッセージを修正する</a>
 <p class="small text-secondary">
 	現在、タイトルと本文のみ修正可能となっています。<br>
 	添付ファイル、宛先の修正については、今後更新予定です。<br>

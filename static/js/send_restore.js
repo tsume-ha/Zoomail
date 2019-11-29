@@ -36,7 +36,7 @@ $('input, select, textarea').change(function(){
 		var html_output = '<p id="selected_year">'
 		html_output += value;
 		html_output += '</p>';
-		$('#message_form > p:nth-child(4)').append(html_output);
+		$('#SendMessageForm > div:nth-child(4)').append(html_output);
 	}
 
 
