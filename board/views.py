@@ -9,7 +9,9 @@ from django.core.paginator import Paginator
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
-from django.core.mail import send_mass_mail
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, To, PlainTextContent
+from config.settings_local import SENDGRID_API_KEY
 import datetime
 
 def EditPermisson(user, content_id):
@@ -156,10 +158,6 @@ def send(request):
                     text_content += '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
                 year_query = MessageYear.objects.filter(message=content_data).values('year')
 
-                from sendgrid import SendGridAPIClient
-                from sendgrid.helpers.mail import Mail, To, PlainTextContent
-                from config.settings_local import SENDGRID_API_KEY
-
                 if year_query.filter(year=0).exists():
                     from_email_adress = 'zenkai@message.ku-unplugged.net'
                     from_email_name = content_data.writer.get_short_name()
@@ -175,18 +173,18 @@ def send(request):
                     try:
                         sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
                         response = sendgrid_client.send(send_massage_data)
-                        print(response.status_code)
                     except Exception as e:
                         print(e.message)
-                    
+
                 else:
-                    to_emails = []
+                    ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
                     for year in year_query:
-                        ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
                         from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
                         from_email_name = content_data.writer.get_short_name()
+                        if not User.objects.filter(year=year['year']).exists():
+                            continue
                         to_list = User.objects.filter(year=year['year']).values_list('receive_email', flat=True)
-                        to_emails += [To(email=eml) for eml in to_list]
+                        to_emails = [To(email=eml) for eml in to_list]
                         send_massage_data = Mail(
                             from_email=(from_email_adress, from_email_name),
                             to_emails=to_emails,
@@ -197,13 +195,10 @@ def send(request):
                         try:
                             sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
                             response = sendgrid_client.send(send_massage_data)
-                            print(response.status_code)
                         except Exception as e:
                             print(e.message)
 
-                # success_num = send_mass_mail(message_list, fail_silently=False)
                 django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
-                # django_messages.success(request, 'メール送信件数 : '+str(success_num))
 
                 return redirect(to='../read/')
             else:
