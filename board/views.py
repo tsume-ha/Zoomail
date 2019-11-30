@@ -155,22 +155,55 @@ def send(request):
                 else:
                     text_content += '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
                 year_query = MessageYear.objects.filter(message=content_data).values('year')
-                if year_query.filter(year=0).exists():
-                    from_email = '"' + content_data.writer.get_short_name() + '" <zenkai@message.ku-unplugged.net>'
-                    to_list = User.objects.all().values_list('receive_email', flat=True)
-                    message_list = list(map(lambda to: (subject, text_content, from_email, [to]), to_list))
 
+                from sendgrid import SendGridAPIClient
+                from sendgrid.helpers.mail import Mail, To, PlainTextContent
+                from config.settings_local import SENDGRID_API_KEY
+
+                if year_query.filter(year=0).exists():
+                    from_email_adress = 'zenkai@message.ku-unplugged.net'
+                    from_email_name = content_data.writer.get_short_name()
+                    to_list = User.objects.all().values_list('receive_email', flat=True)
+                    to_emails = [To(email=eml) for eml in to_list]
+                    send_massage_data = Mail(
+                        from_email=(from_email_adress, from_email_name),
+                        to_emails=to_emails,
+                        subject=subject,
+                        plain_text_content=PlainTextContent(text_content),
+                        is_multiple=True
+                        )
+                    try:
+                        sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
+                        response = sendgrid_client.send(send_massage_data)
+                        print(response.status_code)
+                    except Exception as e:
+                        print(e.message)
+                    
                 else:
-                    message_list = []
+                    to_emails = []
                     for year in year_query:
                         ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
-                        from_email = '"' + content_data.writer.get_short_name()
-                        from_email += '" <' + ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net>'
+                        from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
+                        from_email_name = content_data.writer.get_short_name()
                         to_list = User.objects.filter(year=year['year']).values_list('receive_email', flat=True)
-                        message_list += list(map(lambda to: (subject, text_content, from_email, [to]), to_list))
-                success_num = send_mass_mail(message_list, fail_silently=False)
+                        to_emails += [To(email=eml) for eml in to_list]
+                        send_massage_data = Mail(
+                            from_email=(from_email_adress, from_email_name),
+                            to_emails=to_emails,
+                            subject=subject,
+                            plain_text_content=PlainTextContent(text_content),
+                            is_multiple=True
+                            )
+                        try:
+                            sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
+                            response = sendgrid_client.send(send_massage_data)
+                            print(response.status_code)
+                        except Exception as e:
+                            print(e.message)
+
+                # success_num = send_mass_mail(message_list, fail_silently=False)
                 django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
-                django_messages.success(request, 'メール送信件数 : '+str(success_num))
+                # django_messages.success(request, 'メール送信件数 : '+str(success_num))
 
                 return redirect(to='../read/')
             else:
