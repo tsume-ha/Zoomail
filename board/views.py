@@ -12,6 +12,7 @@ from members.models import User
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent
 from config.settings_local import SENDGRID_API_KEY
+from config.settings import SEND_MAIL
 import datetime
 
 def EditPermisson(user, content_id):
@@ -170,11 +171,12 @@ def send(request):
                         plain_text_content=PlainTextContent(text_content),
                         is_multiple=True
                         )
-                    try:
-                        sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
-                        response = sendgrid_client.send(send_massage_data)
-                    except Exception as e:
-                        print(e.message)
+                    if SEND_MAIL == True:
+                        try:
+                            sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
+                            response = sendgrid_client.send(send_massage_data)
+                        except Exception as e:
+                            print(e.message)
 
                 else:
                     ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
@@ -192,11 +194,12 @@ def send(request):
                             plain_text_content=PlainTextContent(text_content),
                             is_multiple=True
                             )
-                        try:
-                            sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
-                            response = sendgrid_client.send(send_massage_data)
-                        except Exception as e:
-                            print(e.message)
+                        if SEND_MAIL == True:
+                            try:
+                                sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
+                                response = sendgrid_client.send(send_massage_data)
+                            except Exception as e:
+                                print(e.message)
 
                 django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
 

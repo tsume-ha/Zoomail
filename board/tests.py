@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.db.models import Count
 from members.models import User
 import os
@@ -127,6 +127,7 @@ class AuthentificationReadViewTest(TestCase):
                     self.assertEqual(response.status_code, 404)
 
 
+@override_settings(SEND_MAIL=False)
 class AuthentificationSendTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -140,29 +141,6 @@ class AuthentificationSendTest(TestCase):
         response = self.client.get(url_redial_to)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'admin/login.html')
-
-# {
-# 'csrfmiddlewaretoken': ['BPe33gaRWSrrfJYJJAN3v0h5De8yxBQIDzigof4dAaJXmpF8vjEpk1qxb67N9Gn4'],
-# 'title': ['テストメーリス'],
-# 'year_choice': ['2019'],
-# 'written_by': ['2019-1'],
-# 'to': ['0'],
-# 'content': ['POSTテスト'],
-# 'attachments-TOTAL_FORMS': ['3'],
-# 'attachments-INITIAL_FORMS': ['0'],
-# 'attachments-MIN_NUM_FORMS': ['0'],
-# 'attachments-MAX_NUM_FORMS': ['6'],
-# 'attachments-0-attachment_file': [''],
-# 'attachments-0-id': [''],
-# 'attachments-0-message': [''],
-# 'attachments-1-attachment_file': [''],
-# 'attachments-1-id': [''],
-# 'attachments-1-message': [''],
-# 'attachments-2-attachment_file': [''],
-# 'attachments-2-id': [''],
-# 'attachments-2-message': [''],
-# 'SEND': ['送信']
-# }
 
     def test_send_POST_logOUT(self):
         data = {
