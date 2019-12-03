@@ -12,7 +12,7 @@ from members.models import User
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent
 from config.settings_local import SENDGRID_API_KEY
-from config.settings import SEND_MAIL
+from django.conf import settings
 import datetime
 
 def EditPermisson(user, content_id):
@@ -171,7 +171,7 @@ def send(request):
                         plain_text_content=PlainTextContent(text_content),
                         is_multiple=True
                         )
-                    if SEND_MAIL == True:
+                    if settings.SEND_MAIL == True:
                         try:
                             sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
                             response = sendgrid_client.send(send_massage_data)
@@ -194,7 +194,7 @@ def send(request):
                             plain_text_content=PlainTextContent(text_content),
                             is_multiple=True
                             )
-                        if SEND_MAIL == True:
+                        if settings.SEND_MAIL == True:
                             try:
                                 sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
                                 response = sendgrid_client.send(send_massage_data)
