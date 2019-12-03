@@ -4,7 +4,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from members.models import User
 import os
 from .models import Performance, Song
-from config.settings import BASE_DIR
+from django.conf import settings
 
 
 def User_LogOUT(self):
@@ -22,7 +22,7 @@ def Make_Song(self, user_year=2019):
         live_name = 'Test Rehasal 1',
         updated_by = User.objects.get(email=str(user_year) + 'mail@gmail.com') #changed from google_account
         )
-    mp3dir = os.path.join(BASE_DIR, 'player', 'test.mp3')
+    mp3dir = os.path.join(settings.BASE_DIR, 'player', 'test.mp3')
     with open(mp3dir, 'rb') as file:
         Song.objects.create(
             performance = self.performance,

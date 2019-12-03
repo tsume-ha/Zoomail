@@ -1,4 +1,4 @@
-from config.settings import BASE_DIR
+from django.conf import settings
 import os
 import eml_parser
 import datetime
@@ -9,7 +9,7 @@ def run():
     admin = User.objects.get(email='developer@ku-unplugged.net')
     for i in range(3000, 3100):
         name = str(i) + '.eml'
-        target = os.path.join(BASE_DIR, 'scripts', 'emails', name)
+        target = os.path.join(settings.BASE_DIR, 'scripts', 'emails', name)
         try:
             with open(target, 'rb') as file:
                 raw_email = file.read()

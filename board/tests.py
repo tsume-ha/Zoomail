@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Message, MessageYear
 from .forms import validation_error_messages
-from config.settings import BASE_DIR
+from django.conf import settings
 
 # >> py manage.py test board.tests.AuthentificationSendTest
 # でclassごとにテストできる
@@ -326,7 +326,7 @@ class AuthentificationSendTest(TestCase):
         self.testfiles = [['29MB.txt', 29*1024*1024], ['31MB.txt', 31*1024*1024]]
         user = User_LogIN(self)
         for textfile in self.testfiles:
-            filedir = os.path.join(BASE_DIR, 'board', textfile[0])
+            filedir = os.path.join(settings.BASE_DIR, 'board', textfile[0])
             with open(filedir, 'rb') as file:
                 data = {
                     'title': ['LogIN POST test with' + textfile[0]],
@@ -400,7 +400,7 @@ class AuthentificationSendTest(TestCase):
     def test_send_POST_logIN_with_multiple_TextFile(self):
         self.testfiles = ['1KB.txt', '2KB.txt', '4KB.txt']
         user = User_LogIN(self)
-        filedir = [os.path.join(BASE_DIR, 'board', testfile) for testfile in self.testfiles]
+        filedir = [os.path.join(settings.BASE_DIR, 'board', testfile) for testfile in self.testfiles]
         with open(filedir[0], 'rb') as file0:
             with open(filedir[1], 'rb') as file1:
                 with open(filedir[2], 'rb') as file2:
@@ -440,7 +440,7 @@ class AuthentificationSendTest(TestCase):
     def test_send_POST_logIN_with_multiple_TextFile_FileSizeOVER(self):
         self.testfiles = ['1KB.txt', '2KB.txt', '31MB.txt']
         user = User_LogIN(self)
-        filedir = [os.path.join(BASE_DIR, 'board', testfile) for testfile in self.testfiles]
+        filedir = [os.path.join(settings.BASE_DIR, 'board', testfile) for testfile in self.testfiles]
         with open(filedir[0], 'rb') as file0:
             with open(filedir[1], 'rb') as file1:
                 with open(filedir[2], 'rb') as file2:
