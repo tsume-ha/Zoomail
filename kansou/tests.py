@@ -4,7 +4,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Kansouyoushi
 from django.contrib.auth.models import Group
 import os
-from config.settings import BASE_DIR
+from django.conf import settings
 from .forms import KansouUploadForm
 import datetime
 
@@ -31,7 +31,7 @@ def User_LogIN_and_Add_AdministerGroup(self,year=2019):
 
 def Make_KansouPDF(self, user_year=2019, performed_at=datetime.date.today()):
     Kansouyoushi.objects.all().delete()
-    pdfdir = os.path.join(BASE_DIR, 'kansou', 'test.pdf')
+    pdfdir = os.path.join(settings.BASE_DIR, 'kansou', 'test.pdf')
     for i in range(len(livename)):
         live = livename[i][0]
         filename = performed_at.strftime('%Y_%m_%d') + '_' + live + '.pdf'
@@ -106,7 +106,7 @@ class KansouyoushiViewTest(TestCase):
         url_redial_to = response.url
         self.assertEqual(url_redial_to, '/kansou/')
 
-        filedir = os.path.join(BASE_DIR, 'kansou', 'test.pdf')
+        filedir = os.path.join(settings.BASE_DIR, 'kansou', 'test.pdf')
         with open(filedir, 'rb') as file:
             data = {
                 'live': livename[0][0],
@@ -130,7 +130,7 @@ class KansouyoushiViewTest(TestCase):
         response = self.client.get('/kansou/upload/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'kansou/upload.html')
-        filedir = os.path.join(BASE_DIR, 'kansou', 'test.pdf')
+        filedir = os.path.join(settings.BASE_DIR, 'kansou', 'test.pdf')
         with open(filedir, 'rb') as file:
             data = {
                 'live': livename[0][0],

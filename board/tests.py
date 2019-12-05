@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.db.models import Count
 from members.models import User
 import os
@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Message, MessageYear
 from .forms import validation_error_messages
-from config.settings import BASE_DIR
+from django.conf import settings
 
 # >> py manage.py test board.tests.AuthentificationSendTest
 # でclassごとにテストできる
@@ -127,6 +127,7 @@ class AuthentificationReadViewTest(TestCase):
                     self.assertEqual(response.status_code, 404)
 
 
+@override_settings(SEND_MAIL=False)
 class AuthentificationSendTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -140,29 +141,6 @@ class AuthentificationSendTest(TestCase):
         response = self.client.get(url_redial_to)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'admin/login.html')
-
-# {
-# 'csrfmiddlewaretoken': ['BPe33gaRWSrrfJYJJAN3v0h5De8yxBQIDzigof4dAaJXmpF8vjEpk1qxb67N9Gn4'],
-# 'title': ['テストメーリス'],
-# 'year_choice': ['2019'],
-# 'written_by': ['2019-1'],
-# 'to': ['0'],
-# 'content': ['POSTテスト'],
-# 'attachments-TOTAL_FORMS': ['3'],
-# 'attachments-INITIAL_FORMS': ['0'],
-# 'attachments-MIN_NUM_FORMS': ['0'],
-# 'attachments-MAX_NUM_FORMS': ['6'],
-# 'attachments-0-attachment_file': [''],
-# 'attachments-0-id': [''],
-# 'attachments-0-message': [''],
-# 'attachments-1-attachment_file': [''],
-# 'attachments-1-id': [''],
-# 'attachments-1-message': [''],
-# 'attachments-2-attachment_file': [''],
-# 'attachments-2-id': [''],
-# 'attachments-2-message': [''],
-# 'SEND': ['送信']
-# }
 
     def test_send_POST_logOUT(self):
         data = {
@@ -348,7 +326,7 @@ class AuthentificationSendTest(TestCase):
         self.testfiles = [['29MB.txt', 29*1024*1024], ['31MB.txt', 31*1024*1024]]
         user = User_LogIN(self)
         for textfile in self.testfiles:
-            filedir = os.path.join(BASE_DIR, 'board', textfile[0])
+            filedir = os.path.join(settings.BASE_DIR, 'board', textfile[0])
             with open(filedir, 'rb') as file:
                 data = {
                     'title': ['LogIN POST test with' + textfile[0]],
@@ -422,7 +400,7 @@ class AuthentificationSendTest(TestCase):
     def test_send_POST_logIN_with_multiple_TextFile(self):
         self.testfiles = ['1KB.txt', '2KB.txt', '4KB.txt']
         user = User_LogIN(self)
-        filedir = [os.path.join(BASE_DIR, 'board', testfile) for testfile in self.testfiles]
+        filedir = [os.path.join(settings.BASE_DIR, 'board', testfile) for testfile in self.testfiles]
         with open(filedir[0], 'rb') as file0:
             with open(filedir[1], 'rb') as file1:
                 with open(filedir[2], 'rb') as file2:
@@ -462,7 +440,7 @@ class AuthentificationSendTest(TestCase):
     def test_send_POST_logIN_with_multiple_TextFile_FileSizeOVER(self):
         self.testfiles = ['1KB.txt', '2KB.txt', '31MB.txt']
         user = User_LogIN(self)
-        filedir = [os.path.join(BASE_DIR, 'board', testfile) for testfile in self.testfiles]
+        filedir = [os.path.join(settings.BASE_DIR, 'board', testfile) for testfile in self.testfiles]
         with open(filedir[0], 'rb') as file0:
             with open(filedir[1], 'rb') as file1:
                 with open(filedir[2], 'rb') as file2:
