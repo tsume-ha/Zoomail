@@ -1,6 +1,4 @@
 from django.db import models
-from django.utils import timezone
-from django.contrib.contenttypes.models import ContentType
 from members.models import User
 
 class SpecialPage(models.Model):
@@ -12,26 +10,20 @@ class SpecialPage(models.Model):
     def __str__(self):
         return self.title + ' ' + self.html_name
 
+def ContentLog():
+    from kansou.models import Kansouyoushi
+    from movie.models import YoutubeURL
+    from pictures.models import Album
+    from player.models import Performance
 
-KANSOU = 1
-SOUND = 2
-MOVIE = 3
-ALBUM = 4
+    LIST_NUM = 3
 
-MODEL_FLAG_CHOICES = (
-    (KANSOU, 'Kansou'),
-    (SOUND, 'Sound'),
-    (MOVIE, 'Movie'),
-    (ALBUM, 'Album'),
-)
+    kansou_list = [('kansou', q.created_at, q.live) for q in Kansouyoushi.objects.order_by('-created_at')[:LIST_NUM]]
+    movie_list = [('movie', q.created_at, q.title) for q in YoutubeURL.objects.order_by('-created_at')[:LIST_NUM]]
+    pictures_list = [('pictures', q.created_at, q.title) for q in Album.objects.order_by('-created_at')[:LIST_NUM]]
+    player_list = [('player', q.updated_at, q.live_name) for q in Performance.objects.order_by('-updated_at')[:LIST_NUM]]
 
-class ContentLog(models.Model):
-    action_time = models.DateTimeField(
-        default=timezone.now,
-        editable=False,
-    )
-    content_type = models.ForeignKey(
-        ContentType,
-        models.SET_NULL,
-        blank=True, null=True,
-    )
+    log_list = kansou_list + movie_list + pictures_list + player_list
+    log_list.sort(key=lambda tup: tup[1], reverse=True)
+
+    return log_list[:LIST_NUM]
