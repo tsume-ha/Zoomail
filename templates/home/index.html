@@ -26,17 +26,40 @@
 		<div class="col-12 varsion" data-var="1.1.2">Varsion 1.1.2</div>
 	</div>
 	{% if user.is_authenticated %}
-	<div class="row center-block my-3">
-		<div class="col-sm-6">
-			<h5>HP係からのおしらせ</h5>
-			<article>
-				<h6>セットリスト確認用のPDFをアップロードしました</h6>
-				<p class="small">
-					<a href="{% url 'otherdocs:index' %}">その他資料</a>のページに、セットリスト確認用のPDFをアップロードしました。<br>
-					各バンドは本番前にもう一度セットリストを確認してください。<br>
-					詳しくはメーリスで。<br>
-				</p>
-			</article>
+	<div class="row center-block my-2">
+		<div class="col-sm-8 my-2" id="newcontents">
+			<h4>New Contents</h4>
+			<ul>
+				<li>
+					<span>リハ音源</span><a href="https://message.ku-unplugged.net/player/playlist/16">NFリハ#3（その３）</a>
+				</li>
+				<li>
+					<span>Special</span><a href="https://message.ku-unplugged.net/player/playlist/16">オーディション特設ページ</a>
+				</li>
+				<li>
+					<span>ライブ映像</span><a href="https://message.ku-unplugged.net/player/playlist/16">NFリハ#3（その３）</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-sm-4 my-2 p-2" id="meeting_room">
+			<div class="p-2">
+				<h4>例会教室</h4>
+				<p><span>そのうちここに「今日の例会教室」がのります</span></p>
+				<!-- <p><span>今日({{today}}12/24)の例会教室は</span><span>{{huga}}4共21(20時まで音出し禁止)</span><span>です。</span></p> -->
+			</div>
+		</div>
+		<div class="col-sm-12 my-3" id="announcement">
+			<h4>お知らせ</h4>
+			<ul>
+				<li>
+					<span class="date">2019/12/5</span>
+					<p>メール送信に関わるプログラムを書き換えました。従来より早く送信することができますが、万が一不具合が発生した場合はお知らせください。</p>
+				</li>
+				<li>
+					<span class="date">2019/12/5</span>
+					<p>メール送信に関わるプログラムを書き換えました。従来より早く送信することができますが、万が一不具合が発生した場合はお知らせください。</p>
+				</li>
+			</ul>
 		</div>
 	</div>
 	

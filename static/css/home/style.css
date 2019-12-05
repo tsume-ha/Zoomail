@@ -26,3 +26,79 @@ a#G-login.hover{
 	margin-top: 0;
 	padding-bottom: 0.5rem;
 }
+
+#newcontents h4{
+	font-weight: 400;
+	border-left: 5px solid #adddeb;
+	padding-left: 0.5rem;
+}
+#newcontents ul{
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+#newcontents ul li{
+	display: block;
+	position: relative;
+	padding: 0.5rem 0;
+	border-bottom: 1px dotted #aaa;
+}
+#newcontents ul li:first-child{
+	border-top: 1px dotted #aaa;
+}
+#newcontents ul li span{
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 600;
+    line-height: 1;
+    width: 5rem;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}
+#meeting_room div{
+	border: 1px solid #aaa;
+	border-radius: 4px;
+}
+#meeting_room div h4{
+	font-size: 1.2rem;
+}
+#meeting_room div p span{
+	display: inline-block;
+}
+#meeting_room div p span:nth-child(1),
+#meeting_room div p span:nth-child(3){
+	font-size: 0.8rem;
+}
+#meeting_room div p span:nth-child(2){
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+#announcement h4{
+	font-weight: 400;
+	border-left: 5px solid #adddeb;
+	padding-left: 0.5rem;
+}
+#announcement ul{
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+#announcement ul li{
+	display: block;
+	position: relative;
+	padding: 0.5rem 0;
+}
+#announcement ul li span.date{
+	display: block;
+	position: relative;
+	font-size: 0.75rem;
+}
+#announcement ul li p{
+	margin: 0;
+}
