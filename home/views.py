@@ -3,12 +3,14 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
-from .models import SpecialPage
+from .models import SpecialPage, ContentLog, Announcement
 import os
 
 def index(request):
+    announcements = Announcement.objects.order_by('-created_at')[:5]
     params = {
-    
+        'content_log': ContentLog(LIST_NUM=5),
+        'announcements': announcements,
     }
     return render(request, 'home/index.html', params)
 
