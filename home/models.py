@@ -1,14 +1,6 @@
 from django.db import models
+from django.utils import timezone
 from members.models import User
-
-class SpecialPage(models.Model):
-    title = models.CharField(max_length=200)
-    url = models.CharField(max_length=200)
-    key = models.CharField(max_length=64)
-    html_name = models.CharField(max_length=200)
-    
-    def __str__(self):
-        return self.title + ' ' + self.html_name
 
 def ContentLog(LIST_NUM=3):
     from django.urls import reverse
@@ -26,3 +18,19 @@ def ContentLog(LIST_NUM=3):
     log_list.sort(key=lambda tup: tup[2], reverse=True)
 
     return log_list[:LIST_NUM]
+
+
+class Announcement(models.Model):
+	text = models.TextField(blank=False, null=False)
+	created_at = models.DateTimeField(
+		blank=False, null=False,
+		default=timezone.now)
+
+class SpecialPage(models.Model):
+    title = models.CharField(max_length=200)
+    url = models.CharField(max_length=200)
+    key = models.CharField(max_length=64)
+    html_name = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.title + ' ' + self.html_name
