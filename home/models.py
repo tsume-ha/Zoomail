@@ -21,10 +21,12 @@ def ContentLog(LIST_NUM=3):
 
 
 class Announcement(models.Model):
-	text = models.TextField(blank=False, null=False)
-	created_at = models.DateTimeField(
-		blank=False, null=False,
-		default=timezone.now)
+    text = models.TextField(blank=False, null=False)
+    created_at = models.DateTimeField(
+        blank=False, null=False,
+        default=timezone.now)
+    def __str__(self):
+        return self.created_at.strftime('%Y_%m_%d') + ' ' + self.text
 
 class SpecialPage(models.Model):
     title = models.CharField(max_length=200)

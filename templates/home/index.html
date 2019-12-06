@@ -48,14 +48,12 @@
 		<div class="col-sm-12 my-3" id="announcement">
 			<h4>お知らせ</h4>
 			<ul>
+				{% for announcement in announcements %}
 				<li>
-					<span class="date">2019/12/5</span>
-					<p>メール送信に関わるプログラムを書き換えました。従来より早く送信することができますが、万が一不具合が発生した場合はお知らせください。</p>
+					<span class="date">{{ announcement.created_at|date:"Y/m/d" }}</span>
+					<p>{{ announcement.text | linebreaks | urlize }}</p>
 				</li>
-				<li>
-					<span class="date">2019/12/5</span>
-					<p>メール送信に関わるプログラムを書き換えました。従来より早く送信することができますが、万が一不具合が発生した場合はお知らせください。</p>
-				</li>
+				{% endfor %}
 			</ul>
 		</div>
 	</div>

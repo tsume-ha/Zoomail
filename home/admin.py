@@ -1,4 +1,5 @@
 from django.contrib import admin
-from .models import SpecialPage
+from .models import Announcement, SpecialPage
 
+admin.site.register(Announcement)
 admin.site.register(SpecialPage)
