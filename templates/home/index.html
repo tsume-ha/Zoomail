@@ -30,15 +30,12 @@
 		<div class="col-sm-8 my-2" id="newcontents">
 			<h4>New Contents</h4>
 			<ul>
+				{% for content in content_log %}
 				<li>
-					<span>リハ音源</span><a href="https://message.ku-unplugged.net/player/playlist/16">NFリハ#3（その３）</a>
+					<span>{{ content.1 }}</span>
+					<a href="{{ content.4 }}">{{ content.3 }}</a>
 				</li>
-				<li>
-					<span>Special</span><a href="https://message.ku-unplugged.net/player/playlist/16">オーディション特設ページ</a>
-				</li>
-				<li>
-					<span>ライブ映像</span><a href="https://message.ku-unplugged.net/player/playlist/16">NFリハ#3（その３）</a>
-				</li>
+				{% endfor %}
 			</ul>
 		</div>
 		<div class="col-sm-4 my-2 p-2" id="meeting_room">
