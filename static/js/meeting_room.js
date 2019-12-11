@@ -1,3 +1,4 @@
+window.onload = function() {
 const requestURL = 'https://meetingroomcontroller.appspot.com/room/today';
 
 var request = new XMLHttpRequest();
@@ -19,4 +20,6 @@ request.onload = function() {
     		room: data.room
     	}
     })
+}
+
 }
