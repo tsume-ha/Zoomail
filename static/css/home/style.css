@@ -60,8 +60,9 @@ a#G-login.hover{
     border-radius: .25rem;
 }
 #meeting_room div{
-	border: 1px solid #aaa;
+	border: 1px solid #463100;
 	border-radius: 4px;
+	background-color: #ffffcc;
 }
 #meeting_room div h4{
 	font-size: 1.2rem;

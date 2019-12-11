@@ -5,6 +5,7 @@
 
 {% block extrastyle %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/home/style.css' %}">
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 	<script src="{% static 'js/meeting_room.js' %}"></script>
 {% endblock %}
 
@@ -42,8 +43,7 @@
 		<div class="col-sm-4 my-2 p-2" id="meeting_room">
 			<div class="p-2">
 				<h4>例会教室</h4>
-				<p><span>そのうちここに「今日の例会教室」がのります</span></p>
-				<!-- <p><span>今日({{today}}12/24)の例会教室は</span><span>{{huga}}4共21(20時まで音出し禁止)</span><span>です。</span></p> -->
+				<p><span>今日([|[today]|])の例会教室は</span><span>[|[room]|]</span><span>です。</span></p>
 			</div>
 		</div>
 		<div class="col-sm-12 my-3" id="announcement">
