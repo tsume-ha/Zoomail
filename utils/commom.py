@@ -1,7 +1,6 @@
 import os
 from io import BytesIO
 from django.http import HttpResponse
-from config.settings import BASE_DIR
 import urllib.parse
 
 

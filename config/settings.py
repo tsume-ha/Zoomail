@@ -12,7 +12,15 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from . import settings_local
-
+# written in settings_local
+# settings_local.SECRET_KEY
+# settings_local.DEBUG
+# settings_local.DB_USER
+# settings_local.DB_PASSWORD
+# settings_local.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
+# settings_local.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+# settings_local.SENDGRID_API_KEY
+# settings_local.SEND_MAIL
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -193,7 +201,7 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_LOGIN_URL = '/login/'
 LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = 'mypage_index'
+LOGIN_REDIRECT_URL = 'members:index'
 SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = settings_local.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
@@ -250,3 +258,5 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = settings_local.SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+SEND_MAIL = settings_local.SEND_MAIL
