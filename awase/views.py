@@ -9,6 +9,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, get_object_or_404
 from django.forms import formset_factory
 from django.db.models import Count
+from django.http import Http404
+from django.http.response import JsonResponse
 
 def calendar_permission(calendar, user):
     return CalendarUser.objects.filter(calendar=calendar).filter(user=user).exists()
@@ -41,7 +43,7 @@ def CalendarView(request, pk):
     for day in display_date:
         hours = CollectHour.objects.filter(calendar=calendar).get(date=day)
         timelist = [datetime.datetime.combine(day, datetime.time(0)) + datetime.timedelta(minutes=30*h)
-            for h in range(hours.hour_begin*2,hours.hour_end*2)]
+                    for h in range(hours.hour_begin*2,hours.hour_end*2)]
         for time in timelist:
             is_answered = Schedule.objects.filter(calendar=calendar, starttime=time).exists()
             if not is_answered:
@@ -70,6 +72,19 @@ def CalendarView(request, pk):
         'NG_3over_list' : NG[3],
     }
     return render(request, 'awase/calendar.html', params)
+
+@login_required()
+def CalendarJsonResponse(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    data = {
+        '2019-12-12': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
+        '2019-12-13': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
+        '2019-12-14': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
+        }
+    return JsonResponse(data)
 
 
 @login_required()
@@ -145,6 +160,7 @@ def input(request, pk):
                     defaults = {'duration': 30, 'canattend': can_attend}
                 )
             return redirect(to='../')
+
         formsets = []
         InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
         schedule_calendar_query = Schedule.objects.filter(calendar=calendar).filter(user=now_user)

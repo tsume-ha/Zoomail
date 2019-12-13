@@ -6,35 +6,41 @@
     margin: 0.25rem 0;
     font-weight: 400;
     background-color: #fff;
+    z-index: 7;
 }
 
-/*.form_one_day .form-group:nth-of-type(2n+1){
-    padding: 0.25rem 0;
+.form_one_day .form_checks{
+    display: block;
+    position: relative;
     margin: 0;
-}
-.form_one_day .form-group:nth-of-type(2n){
     padding: 0;
-    margin: 0;
-    height: 8px;
-    background-color: #fff8de;
+    width: 100%;
+    min-width: 300px;
+    max-width: 600px;
+    overflow-x: scroll;
+    letter-spacing:-1em;
 }
-.form_one_day .form-group:nth-of-type(2n) *{
-    visibility: hidden;
+.form_one_day .form_checks *{
+    letter-spacing:normal;
 }
-.form_one_day .form-group:nth-of-type(4n+3){
-    background-color: #f3f3f3;
-}*/
-.form_one_day .form-group{
+.form_one_day .form_one_check{
+    display: inline-block;
     padding: 0.25rem 0;
     margin: 0;
+    width: 50%;
+    height: 42px;
+    border: none;
+    box-sizing: inherit;
 }
-.form_one_day .form-group:nth-of-type(2n){
+.form_one_day .form_one_check:nth-of-type(4n+3),
+.form_one_day .form_one_check:nth-of-type(4n+4){
     background-color: #f3f3f3;
+
 }
 .form_one_day input[type="text"]{
     display: inline;
-    width: 6rem;
-    margin: 0 1rem 0;
+    width: 2.5rem;
+    margin: 0 4px 0 2px;
     padding: 0;
 }
 .form_one_day input[type="radio"]{
@@ -44,9 +50,9 @@
 .form_one_day input[type="radio"] + label{
     display: inline-block;
     position: relative;
-    width: 4rem;
+    width: 2.4rem;
     text-align: center;
-    padding: 0.3rem;
+    padding: 0rem;
     margin: 0;
     border-radius: 1rem;
     font-size: 1.4rem;
@@ -76,6 +82,9 @@
     bottom: 0;
     background-color: #fff;
     padding: 1rem auto 0.5rem;
+    width: 100%;
+    min-width: 300px;
+    z-index: 8;
 }
 
 .form_submit input{

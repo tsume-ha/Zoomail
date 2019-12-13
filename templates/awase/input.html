@@ -17,8 +17,9 @@
         {% for formset in formsets %}
         <div class="form_one_day col-sm-12 col-md-6 m-0 p-0">
         	<h5>{{formset.date|date:"n月j日 (D)"}}</h5>
+            <div class="form_checks">
             {% for form in formset.InputScheduleFormSet %}
-                <div class="form-group p-0 m-0">
+                <div class="form_one_check">
                 {{ form.non_field_errors }}
                 {{ form.displaytime }}
                 {% for radio in form.can_attend %}
@@ -30,6 +31,7 @@
                 {% endfor %}
                 </div>
             {% endfor %}
+            </div>
         </div>
         {% endfor %}
         <div class="form_submit pt-3">
