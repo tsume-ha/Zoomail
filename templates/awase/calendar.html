@@ -6,6 +6,8 @@
 {% block extrastyle %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/awase/calendar.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="{% static 'js/calendar_display.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -20,13 +22,9 @@
 	</div>
 	<div class="room">
 		<div class="leftside">例会教室</div>
-		<div>4共21</div>
-		<div>4共31</div>
-		<div>使用不可</div>
-		<div>4共21</div>
-		<div>4共21</div>
-		<div>4共21</div>
-		<div>4共31</div>
+		{% for date in datetuple %}
+		<room date="{{date | date:'Y-m-d'}}"><div>Loading</div></room>
+		{% endfor %}
 	</div>
 	{% for time in timetuple %}
 	<div class="time zero" data-time="{{time}}">
