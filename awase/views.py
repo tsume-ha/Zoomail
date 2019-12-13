@@ -142,12 +142,13 @@ def create(request):
     return render(request, 'awase/create.html', params)
 
 @login_required()
-def input(request, pk):
+def input(request, pk, page=1):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
     can_edit = calendar_permission(calendar, now_user)
     if can_edit:
         if (request.method == 'POST'):
+            print(request.POST)
             keys = [k for k in request.POST if 'can_attend' in k]
             for key in keys:
                 time_name = key.replace('can_attend', 'datetime')
@@ -164,9 +165,9 @@ def input(request, pk):
         formsets = []
         InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
         schedule_calendar_query = Schedule.objects.filter(calendar=calendar).filter(user=now_user)
-        date = calendar.days_begin
+        date = calendar.days_begin + datetime.timedelta(days=7*(page-1))
         count = 0
-        while date <= calendar.days_end:
+        while date <= calendar.days_end and date <= calendar.days_begin + datetime.timedelta(days=7*page):
             hour_query = CollectHour.objects.filter(calendar=calendar).get(date=date)
             initial_data = []
             for t in range(hour_query.hour_begin, hour_query.hour_end):
