@@ -1,13 +1,13 @@
 from django.db import models
 from members.models import User
-import datetime
+from django.utils import timezone
 
 class Calendar(models.Model):
     title = models.CharField(max_length=200, verbose_name='曲名・バンド名・イベント名')
     text = models.CharField(max_length=400, blank=True, verbose_name='説明')
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='calendar_creater')
-    days_begin = models.DateField(default=datetime.date.today(), verbose_name='開始日')
-    days_end = models.DateField(default=datetime.date.today()+datetime.timedelta(days=60), verbose_name='終了日')
+    days_begin = models.DateField(default=timezone.datetime.today(), verbose_name='開始日')
+    days_end = models.DateField(default=timezone.datetime.today()+timezone.timedelta(days=60), verbose_name='終了日')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
