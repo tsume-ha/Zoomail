@@ -166,8 +166,9 @@ def input(request, pk, page=1):
         InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
         schedule_calendar_query = Schedule.objects.filter(calendar=calendar).filter(user=now_user)
         date = calendar.days_begin + datetime.timedelta(days=7*(page-1))
+        date_range = {'start': date}
         count = 0
-        while date <= calendar.days_end and date <= calendar.days_begin + datetime.timedelta(days=7*page):
+        while date <= calendar.days_end and date < calendar.days_begin + datetime.timedelta(days=7*page):
             hour_query = CollectHour.objects.filter(calendar=calendar).get(date=date)
             initial_data = []
             for t in range(hour_query.hour_begin, hour_query.hour_end):
@@ -200,10 +201,18 @@ def input(request, pk, page=1):
                         })
             formsets.append({'date':date, 'InputScheduleFormSet':InputScheduleFormSet(initial=initial_data,prefix=str(count))})
             count += 1
+            date_range['end'] = date
             date = date + datetime.timedelta(days=1)
+        import math
+        total_pages = math.ceil((calendar.days_end - calendar.days_begin).days / 7)
         params = {
             'calendar': calendar,
             'formsets': formsets,
+            'prev': page-1,
+            'page': page,
+            'next': page+1,
+            'total_pages': total_pages,
+            'date_range': date_range,
         }
 
 

@@ -22,7 +22,6 @@ request.onload = function() {
                         	return 'NoData';
                         }
                         let display = data[0].room;
-                        console.log(display);
                         if (display=='終日使用不可') {
                             display = '使用不可';
                         }
