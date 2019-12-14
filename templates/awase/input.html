@@ -26,7 +26,7 @@
 </nav>
 {% endif %}
 <section id="" class="my-3">
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" name="calendarinput" enctype="multipart/form-data">
         {% csrf_token %}
         {% for formset in formsets %}
         <div class="form_one_day col-12 m-0 p-0">
