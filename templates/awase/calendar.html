@@ -14,61 +14,53 @@
 <h3 class="my-1">あわせのあわせ</h3>
 
 <section id="calendar">
-	<div class="date">
-		<div class="leftside"> </div>
-		{% for date in datetuple %}
-		<div>{{date | date:"n/j"}}<br>{{date | date:"D"}}</div>
-		{% endfor %}
-	</div>
-	<div class="room">
-		<div class="leftside">例会教室</div>
-		{% for date in datetuple %}
-		<room date="{{date | date:'Y-m-d'}}"><div>Loading</div></room>
-		{% endfor %}
-	</div>
-	{% for time in timetuple %}
-	<div class="time zero" data-time="{{time}}">
-		<div class="leftside">{{time}}:00</div>
-		{% for date in datetuple %}
-		<div data-date="{{date| date:'Y-m-d'}}"></div>
-		{% endfor %}
-	</div>
-	<div class="time half" data-time="{{time}}">
-		<div class="leftside"></div>
-		{% for date in datetuple %}
-		<div data-date="{{date| date:'Y-m-d'}}"></div>
-		{% endfor %}
-	</div>
-	{% endfor %}
+    <div id="leftside" class="column">
+        <div> </div>
+        <div class="room">例会</div>
+        {% for time in timetuple %}
+        <div class="time" data-time="{{time}}.0">{{time}}:00</div>
+        <div class="time" data-time="{{time}}.5"></div>
+        {% endfor %}
+    </div>
+    {% for date in datetuple %}
+    <div class="day column" data-date="{{date| date:'Y-m-d'}}">
+        <div class="date">{{date | date:"n/j"}}<br>{{date | date:"D"}}</div>
+        <!-- <room date="{{date | date:'Y-m-d'}}"> --><div class="room">Loading</div><!-- </room> -->
+        {% for time in timetuple %}
+        <div class="time" data-time="{{time}}.0"></div>
+        <div class="time" data-time="{{time}}.5"></div>
+        {% endfor %}
+    </div>
+    {% endfor %}
 <style type="text/css">
 {% for value in NG_0_list %}
 .time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
 {% endfor %}{
-	background-color: #99ffcc;
+    background-color: #99ffcc;
 }
 
 {% for value in NG_1_list %}
 .time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
 {% endfor %}{
-	background-color: #ffff84;
+    background-color: #ffff84;
 }
 
 {% for value in NG_2_list %}
 .time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
 {% endfor %}{
-	background-color: #ff9999;
+    background-color: #ff9999;
 }
 {% for value in NG_3over_list %}
 .time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
 {% endfor %}{
-	background-color: #444;
+    background-color: #444;
 }
 </style>
 </section>
 
 <section id="menu">
-	<a href="input/">入力する</a>
-	<a href="">調節期間を変更</a>
+    <a href="input/">入力する</a>
+    <a href="">調節期間を変更</a>
 </section>
 
 {% endblock %}

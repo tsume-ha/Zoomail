@@ -1,7 +1,7 @@
 section{
 	margin: 1rem 0;
 }
-
+/*
 #calendar div{
 	position: relative;
 	margin: 0;
@@ -50,4 +50,63 @@ section{
 }
 #calendar div.time.half div{
 	border-top: none;
+}*/
+#calendar{
+    display: -webkit-flex;
+    display: flex;
+}
+#calendar *{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+#calendar .column{
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+#calendar #leftside{
+    -webkit-flex-basis: 50px;
+    flex-basis: 50px;
+	font-size: 10px;
+}
+#calendar #leftside div{
+	border-left: 1px solid #eee;
+	padding: 0 5px;
+}
+#calendar #leftside div.room{
+	padding: 5px 0;
+}
+#calendar .day{
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+}
+#calendar .column div{
+	border-right: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+#calendar .column div:first-child{
+	height: 3.5rem;
+	text-align: center;
+	line-height: 1.5rem;
+	font-size: 12px;
+	padding: 5px 0;
+	padding: 0.25rem auto;
+	border-top: 1px solid #eee;
+}
+
+#calendar .column div.room{
+	font-size: 10px;
+	text-align: center;
+	padding: 5px 0;
+	line-height: 15px;
+	height: 26px;
+}
+#calendar .column div.time{
+	height: 1rem;
+}
+#calendar .column div.time[data-time$=".0"]{
+	border-bottom: none;
 }
