@@ -221,7 +221,9 @@ def edit(request, id):
         if (request.method == 'POST'):
             if editForm.is_valid:
                 if request.POST['title'] != before_edit.title or request.POST['content'] != before_edit.content:
-                    editForm.save()
+                    content = editForm.save(commit=False)
+                    content.updated_at = datetime.datetime.now()
+                    content.save()
                     django_messages.success(request, '更新しました')
                 else:
                     django_messages.success(request, '変更はありませんでした')
