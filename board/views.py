@@ -6,6 +6,7 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.core.exceptions import PermissionDenied
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
@@ -77,7 +78,9 @@ def content(request, id):
 
     # 閲覧できないならば/read にリダイレクトする
     if not message.years.all().filter(Q(year=now_user.year)|Q(year=0)).exists():
-        return redirect('/read')
+        if not EditPermisson(now_user, id):
+            raise PermissionDenied
+
 
     attachments = map(
         lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName(), "pk": file.pk, "fileext": file.extension()},
