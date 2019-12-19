@@ -194,7 +194,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.open_id.OpenIdAuth',
     'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend', # これがあると UserName & Passでloginできる
+    # 'django.contrib.auth.backends.ModelBackend', # これがあると UserName & Passでloginできる
 )
 
 SOCIAL_AUTH_LOGIN_URL = '/login/'
