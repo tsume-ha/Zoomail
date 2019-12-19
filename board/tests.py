@@ -122,7 +122,7 @@ class AuthentificationReadViewTest(TestCase):
                     if Message_Year == 0 or Message_Year == User_Year:
                         self.assertEqual(response.status_code, 200)
                     else:
-                        self.assertEqual(response.status_code, 302)
+                        self.assertEqual(response.status_code, 403)
                 else:
                     self.assertEqual(response.status_code, 404)
 

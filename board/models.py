@@ -33,6 +33,9 @@ class MessageYear(models.Model):
         
         return self.year
 
+    def __str__(self):
+        return str(self.year) + ':' + self.message.title
+
 def custom_upload_to(instance, filename):
     now = datetime.datetime.now()
     path = 'document/' + now.strftime('%Y/%m/%d/') + now.strftime('%Y_%m_%d__%H_%M_%S')
