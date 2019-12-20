@@ -32,6 +32,8 @@
         {% endfor %}
     </div>
     {% endfor %}
+</section>
+
 <style type="text/css">
 {% for value in NG_0_list %}
 .time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
@@ -56,8 +58,6 @@
     background-color: #444;
 }
 </style>
-</section>
-
 <section id="menu">
     <a href="input/">入力する</a>
     <a href="">調節期間を変更</a>

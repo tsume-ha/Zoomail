@@ -64,7 +64,7 @@ def CalendarView(request, pk):
             else:
                 NG[3].append(data)
     params = {
-        'timetuple': (n for n in range(9,26)),
+        'timetuple': list(range(9,26)),
         'datetuple': display_date,
         'NG_0_list' : NG[0],
         'NG_1_list' : NG[1],
