@@ -6,7 +6,6 @@ window.addEventListener('DOMContentLoaded', function() {
     request.send();
     request.onload = function(){
         let jsondata = request.response;
-        console.log(jsondata);
         var room = new Vue({
             el: '#calendar',
             components:{
@@ -24,7 +23,6 @@ window.addEventListener('DOMContentLoaded', function() {
                             if (display=='終日使用不可') {
                                 display = '使用不可';
                             }
-                            console.log(display);
                             return display;
                         },
                     },

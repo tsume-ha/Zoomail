@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/awase/calendar.css' %}">
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="{% static 'js/calendar_meetingroom.js' %}"></script>
+<script src="{% static 'js/calendar_display.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -27,34 +28,26 @@
         <div class="date">{{date | date:"n/j"}}<br>{{date | date:"D"}}</div>
         <room date="{{date | date:'Y-m-d'}}"><div class="room">Loading</div></room>
         {% for time in timetuple %}
-        <div class="time" data-time="{{time}}.0"></div>
-        <div class="time" data-time="{{time}}.5"></div>
+        <timedata v-bind:data-NGnum="jsondata.{{date | date:'Y-m-d'}}.{{time}}:00"><div class="time"></div></timedata>
+        <timedata v-bind:data-NGnum="jsondata.{{date | date:'Y-m-d'}}.{{time}}:30"><div class="time"></div></timedata>
         {% endfor %}
     </div>
     {% endfor %}
 </section>
 
 <style type="text/css">
-{% for value in NG_0_list %}
-.time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
-{% endfor %}{
+.NG0{
     background-color: #99ffcc;
 }
 
-{% for value in NG_1_list %}
-.time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
-{% endfor %}{
+.NG1{
     background-color: #ffff84;
 }
 
-{% for value in NG_2_list %}
-.time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
-{% endfor %}{
+.NG2{
     background-color: #ff9999;
 }
-{% for value in NG_3over_list %}
-.time.{% if value.half %}half{% else %}zero{% endif %}[data-time="{{ value.time }}"] div[data-date="{{ value.date | date:'Y-m-d' }}"]{% if forloop.last %}{%else%},{% endif %}
-{% endfor %}{
+.NG3{
     background-color: #444;
 }
 </style>
@@ -62,5 +55,9 @@
     <a href="input/">入力する</a>
     <a href="">調節期間を変更</a>
 </section>
+
+<script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', calendar_display("{% url 'awase:calendar_json' calendar.pk %}"));
+</script>
 
 {% endblock %}
