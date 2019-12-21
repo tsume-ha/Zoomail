@@ -28,8 +28,8 @@
         <div class="date">{{date | date:"n/j"}}<br>{{date | date:"D"}}</div>
         <room date="{{date | date:'Y-m-d'}}"><div class="room">Loading</div></room>
         {% for time in timetuple %}
-        <timedata v-bind:data-NGnum="jsondata.{{date | date:'Y-m-d'}}.{{time}}:00"><div class="time"></div></timedata>
-        <timedata v-bind:data-NGnum="jsondata.{{date | date:'Y-m-d'}}.{{time}}:30"><div class="time"></div></timedata>
+        <div class="time" v-bind:data-NGnum="2019-12-21.9:00"></div>
+        <div class="time" v-bind:data-NGnum="2019-12-21.9:30"></div>
         {% endfor %}
     </div>
     {% endfor %}
@@ -57,7 +57,7 @@
 </section>
 
 <script type="text/javascript">
-    window.addEventListener('DOMContentLoaded', calendar_display("{% url 'awase:calendar_json' calendar.pk %}"));
+window.addEventListener('DOMContentLoaded', calendar_display("{% url 'awase:calendar_json' calendar.pk %}"));
 </script>
 
 {% endblock %}
