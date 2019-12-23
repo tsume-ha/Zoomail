@@ -81,14 +81,17 @@ def CalendarJsonResponse(request, pk):
     if not calendar_permission(calendar, now_user):
         raise Http404()
     data = {
-        '2019-12-21': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
-        '2019-12-22': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
-        '2019-12-23': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
-        '2019-12-24': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
-        '2019-12-25': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
-        '2019-12-26': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
-        '2019-12-27': {'9:00': 3, '9:30': 3, '10:00': 3, '10:30': 3, '11:00': 3, '11:30': 3, '12:00': 3, '12:30': 3, '13:00': 3,},
-        
+        'calendar_data': {
+            {'date':'2019-12-23', 'display_date': '12/23', 'display_day': '土', 'room': 'Loading', 'NGlist': ['NG1','NG2','NG3','NG1','NG2','NG3','NG1','NG2','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3',]},
+            {'date':'2019-12-24', 'display_date': '12/24', 'display_day': '日', 'room': 'Loading', 'NGlist': ['NG1','NG2','NG3','NG1','NG2','NG3','NG1','NG2','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3',]},
+            {'date':'2019-12-25', 'display_date': '12/25', 'display_day': '月', 'room': 'Loading', 'NGlist': ['NG1','NG2','NG3','NG1','NG2','NG3','NG1','NG2','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3',]},
+            {'date':'2019-12-26', 'display_date': '12/26', 'display_day': '火', 'room': 'Loading', 'NGlist': ['NG1','NG2','NG3','NG1','NG2','NG3','NG1','NG2','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3',]},
+            {'date':'2019-12-27', 'display_date': '12/27', 'display_day': '水', 'room': 'Loading', 'NGlist': ['NG1','NG2','NG3','NG1','NG2','NG3','NG1','NG2','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3',]},
+            {'date':'2019-12-28', 'display_date': '12/28', 'display_day': '木', 'room': 'Loading', 'NGlist': ['NG1','NG2','NG3','NG1','NG2','NG3','NG1','NG2','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3',]},
+            {'date':'2019-12-29', 'display_date': '12/29', 'display_day': '金', 'room': 'Loading', 'NGlist': ['NG1','NG2','NG3','NG1','NG2','NG3','NG1','NG2','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3',]},
+            {'date':'2019-12-30', 'display_date': '12/30', 'display_day': '土', 'room': 'Loading', 'NGlist': ['NG1','NG2','NG3','NG1','NG2','NG3','NG1','NG2','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3',]},
+            {'date':'2019-12-31', 'display_date': '12/31', 'display_day': '日', 'room': 'Loading', 'NGlist': ['NG1','NG2','NG3','NG1','NG2','NG3','NG1','NG2','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3','NG3',]},
+            }
         }
     return JsonResponse(data)
 

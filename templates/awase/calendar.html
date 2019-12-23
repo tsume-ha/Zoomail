@@ -25,7 +25,7 @@
     <div class="day column" v-for="day in days" v-bind:date="day.date">
         <div class="date">[|[day.display_date]|]<br>[|[day.display_day]|]</div>
         <div class="room">[|[day.room]|]</div>
-        <div class="time" v-for="NGnum in day.NGlist">[|[NGnum]|]</div>
+        <div class="time" v-for="NGnum in day.NGlist" v-bind:class="NGnum"></div>
     </div>
 </section>
 
@@ -50,8 +50,5 @@
     <a href="">調節期間を変更</a>
 </section>
 
-<script type="text/javascript">
-window.addEventListener('DOMContentLoaded', calendar_display("{% url 'awase:calendar_json' calendar.pk %}"));
-</script>
 
 {% endblock %}
