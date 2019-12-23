@@ -17,29 +17,40 @@ window.addEventListener('DOMContentLoaded', function() {
 
 var data = {
     days: [
-        {date:'2019-12-23',display_date: '12/23',display_day: '土'},
-        {date:'2019-12-24',display_date: '12/24',display_day: '日'},
-        {date:'2019-12-25',display_date: '12/25',display_day: '月'},
+        {date:'2019-12-23', display_date: '12/23', display_day: '土', room: 'Loading',},
+        {date:'2019-12-24', display_date: '12/24', display_day: '日', room: 'Loading',},
+        {date:'2019-12-25', display_date: '12/25', display_day: '月', room: 'Loading',},
         ],
 }
 
-Vue.component('daycolumns', {
-    data: function(){
-        return {
-            calendar_json: null,
-            meetingroom_json: null,
-            hoge:'fuga',
-        };
-    },
-    props: ['date'],
-    template: '<div class="day column"><div class="date">{{date}}<br>土{{hoge}}</div><div class="room">Loading</div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div></div>'
-});
 
 var calendar = new Vue({
     el: '#calendar',
+    delimiters: ['[|[', ']|]'],
     data: data,
 });
 
-})
+(function () {
+    const meetingroomURL = 'https://meetingroomcontroller.appspot.com/room/all';
+    var request = new XMLHttpRequest();
+    request.open('GET', meetingroomURL);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function(){
+	    for (var i = 0; i < data.days.length; i++) {
+	    	let jsondata = request.response.filter(function(item, index){
+                if (item.date == data.days[i].date) return true;
+            });
+            if (jsondata.length < 1) {
+                data.days[i].room = 'NoData';
+            }
+            let display = jsondata[0].room;
+            if (display=='終日使用不可') {
+                display = '使用不可';
+            }
+            data.days[i].room = display;
+	    }
+	}
+}());
 
-// <div class="day column" data-date="2019-12-21"><div class="date">12/21<br>土</div><div class="room">Loading</div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div><div class="time"></div></div>
+})

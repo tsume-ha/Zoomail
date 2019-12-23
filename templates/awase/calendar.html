@@ -22,15 +22,14 @@
         <div class="time" data-time="{{time}}.5"></div>
         {% endfor %}
     </div>
-    <daycolumns v-for="day in days" v-bind:date="day.date"/>
-<!--     <div class="day column" data-date="{{date| date:'Y-m-d'}}">
-        <div class="date">{{date | date:"n/j"}}<br>{{date | date:"D"}}</div>
-        <room date="{{date | date:'Y-m-d'}}"><div class="room">Loading</div></room>
+    <div class="day column" v-for="day in days" v-bind:date="day.date">
+        <div class="date">[|[day.display_date]|]<br>[|[day.display_day]|]</div>
+        <div class="room">[|[day.room]|]</div>
         {% for time in timetuple %}
-        <div class="time" v-bind:data-NGnum="2019-12-21.9:00"></div>
-        <div class="time" v-bind:data-NGnum="2019-12-21.9:30"></div>
+        <div class="time"></div>
+        <div class="time"></div>
         {% endfor %}
-    </div> -->
+    </div>
 </section>
 
 <style type="text/css">
