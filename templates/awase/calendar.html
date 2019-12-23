@@ -7,7 +7,6 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/awase/calendar.css' %}">
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="{% static 'js/calendar_meetingroom.js' %}"></script>
 <script src="{% static 'js/calendar_display.js' %}"></script>
 {% endblock %}
 
@@ -23,16 +22,15 @@
         <div class="time" data-time="{{time}}.5"></div>
         {% endfor %}
     </div>
-    {% for date in datetuple %}
-    <div class="day column" data-date="{{date| date:'Y-m-d'}}">
+    <daycolumns v-for="day in days" v-bind:date="day"/>
+<!--     <div class="day column" data-date="{{date| date:'Y-m-d'}}">
         <div class="date">{{date | date:"n/j"}}<br>{{date | date:"D"}}</div>
         <room date="{{date | date:'Y-m-d'}}"><div class="room">Loading</div></room>
         {% for time in timetuple %}
         <div class="time" v-bind:data-NGnum="2019-12-21.9:00"></div>
         <div class="time" v-bind:data-NGnum="2019-12-21.9:30"></div>
         {% endfor %}
-    </div>
-    {% endfor %}
+    </div> -->
 </section>
 
 <style type="text/css">
