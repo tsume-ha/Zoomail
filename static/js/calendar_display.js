@@ -15,12 +15,20 @@ function calendar_display(url){
 
 window.addEventListener('DOMContentLoaded', function() {
 
+const json_calendar = [
+        {date:'2019-12-23', display_date: '12/23', display_day: '土', room: 'Loading', NGlist: [1,2,3,1,2,3,1,2,3,3,3,3,3,3,3,3,3,]},
+        {date:'2019-12-24', display_date: '12/24', display_day: '日', room: 'Loading', NGlist: [1,2,3,1,2,3,1,2,3,3,3,3,3,3,3,3,3,]},
+        {date:'2019-12-25', display_date: '12/25', display_day: '月', room: 'Loading', NGlist: [1,2,3,1,2,3,1,2,3,3,3,3,3,3,3,3,3,]},
+        {date:'2019-12-26', display_date: '12/26', display_day: '土', room: 'Loading', NGlist: [1,2,3,1,2,3,1,2,3,3,3,3,3,3,3,3,3,]},
+        {date:'2019-12-27', display_date: '12/27', display_day: '日', room: 'Loading', NGlist: [1,2,3,1,2,3,1,2,3,3,3,3,3,3,3,3,3,]},
+        {date:'2019-12-28', display_date: '12/28', display_day: '月', room: 'Loading', NGlist: [1,2,3,1,2,3,1,2,3,3,3,3,3,3,3,3,3,]},
+        {date:'2019-12-29', display_date: '12/29', display_day: '土', room: 'Loading', NGlist: [1,2,3,1,2,3,1,2,3,3,3,3,3,3,3,3,3,]},
+        {date:'2019-12-30', display_date: '12/30', display_day: '日', room: 'Loading', NGlist: [1,2,3,1,2,3,1,2,3,3,3,3,3,3,3,3,3,]},
+        {date:'2019-12-31', display_date: '12/31', display_day: '月', room: 'Loading', NGlist: [1,2,3,1,2,3,1,2,3,3,3,3,3,3,3,3,3,]},
+    ];
+
 var data = {
-    days: [
-        {date:'2019-12-23', display_date: '12/23', display_day: '土', room: 'Loading',},
-        {date:'2019-12-24', display_date: '12/24', display_day: '日', room: 'Loading',},
-        {date:'2019-12-25', display_date: '12/25', display_day: '月', room: 'Loading',},
-        ],
+    days: json_calendar.slice(0,5),
 }
 
 
