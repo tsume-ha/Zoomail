@@ -28,49 +28,9 @@ def index(request):
 def CalendarView(request, pk):
     now_user = request.user
     calendar = Calendar.objects.get(pk=pk)
-    pagenum = 0
-    if (calendar.days_end - calendar.days_begin).days < 7:
-        displaydays = (calendar.days_end - calendar.days_begin).days + 1
-    else:
-        displaydays = 7
-    display_date = [calendar.days_begin + datetime.timedelta(days=d+pagenum*7) for d in range(displaydays)]
-    NG = [
-        [],#0
-        [],#1
-        [],#2
-        [],#over3
-        ]
-    for day in display_date:
-        hours = CollectHour.objects.filter(calendar=calendar).get(date=day)
-        timelist = [datetime.datetime.combine(day, datetime.time(0)) + datetime.timedelta(minutes=30*h)
-                    for h in range(hours.hour_begin*2,hours.hour_end*2)]
-        for time in timelist:
-            is_answered = Schedule.objects.filter(calendar=calendar, starttime=time).exists()
-            if not is_answered:
-                continue
-            num = Schedule.objects.filter(calendar=calendar, starttime=time, canattend=False)\
-                .aggregate(Count('starttime'))['starttime__count']
-            data = {'date' : day}
-            if 0 <= time.hour <= 5:
-                data['time'] = time.hour + 24
-            else:
-                data['time'] = time.hour
-            if time.minute == 0:
-                data['half'] = False
-            else:
-                data['half'] = True
-            if num < 4:
-                NG[num].append(data)
-            else:
-                NG[3].append(data)
     params = {
         'timetuple': list(range(9,26)),
         'calendar': calendar,
-        'datetuple': display_date,
-        'NG_0_list' : NG[0],
-        'NG_1_list' : NG[1],
-        'NG_2_list' : NG[2],
-        'NG_3over_list' : NG[3],
     }
     return render(request, 'awase/calendar.html', params)
 
