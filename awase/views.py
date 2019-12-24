@@ -81,7 +81,7 @@ def CalendarJsonResponse(request, pk):
     if not calendar_permission(calendar, now_user):
         raise Http404()
     data = {
-        'calendar_data': {
+        'calendar_data': [
             {'date':'2019-12-23', 'display_date': '12/23', 'display_day': '土', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
             {'date':'2019-12-24', 'display_date': '12/24', 'display_day': '日', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
             {'date':'2019-12-25', 'display_date': '12/25', 'display_day': '月', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
@@ -91,7 +91,7 @@ def CalendarJsonResponse(request, pk):
             {'date':'2019-12-29', 'display_date': '12/29', 'display_day': '金', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
             {'date':'2019-12-30', 'display_date': '12/30', 'display_day': '土', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
             {'date':'2019-12-31', 'display_date': '12/31', 'display_day': '日', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            }
+            ],
         }
     return JsonResponse(data)
 
