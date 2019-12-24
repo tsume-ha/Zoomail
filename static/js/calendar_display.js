@@ -12,6 +12,20 @@ var calendar = new Vue({
         days: json_calendar,
     },
 });
+(function () {
+	function calendar_display(url){
+	    var request = new XMLHttpRequest();
+	    request.open('GET', url);
+	    request.responseType = 'json';
+	    request.send();
+	    request.onload = function(){
+            json_calendar = request.response.calendar_data
+	        calendar.days = json_calendar.slice(0,7);
+console.log(calendar.days);
+	    }
+	}
+	calendar_display('http://localhost:3333/awase/calendar/json/4/');
+}());
 
 (function () {
     const meetingroomURL = 'https://meetingroomcontroller.appspot.com/room/all';
@@ -37,18 +51,6 @@ var calendar = new Vue({
         }
     }
 }());
-(function () {
-	function calendar_display(url){
-	    var request = new XMLHttpRequest();
-	    request.open('GET', url);
-	    request.responseType = 'json';
-	    request.send();
-	    request.onload = function(){
-            json_calendar = request.response.calendar_data
-	        calendar.days = json_calendar.slice(0,7);
-	    }
-	}
-	calendar_display('http://localhost:3333/awase/calendar/json/4/');
-}());
+
 
 })

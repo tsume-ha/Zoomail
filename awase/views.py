@@ -80,19 +80,56 @@ def CalendarJsonResponse(request, pk):
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
         raise Http404()
+    
+    LIMIT_DAYS = 100
+    today = datetime.date.today()
+    if (calendar.days_end - calendar.days_begin).days > LIMIT_DAYS:
+        if calendar.days_begin <= today < calendar.days_end:
+            collect_days = [today + datetime.timedelta(days=d) for d in range(LIMIT_DAYS)]
+        elif today < calendar.days_begin:
+            collect_days = [calendar.days_begin + datetime.timedelta(days=d) for d in range(LIMIT_DAYS)]
+        else: # calendar.days_end <= today
+            collect_days = [calendar.days_end - datetime.timedelta(days=LIMIT_DAYS) + datetime.timedelta(days=d) for d in range(LIMIT_DAYS)]
+    else:
+        collect_days = [calendar.days_begin + datetime.timedelta(days=d) for d in range((calendar.days_end - calendar.days_begin).days + 1)]
+    
     data = {
-        'calendar_data': [
-            {'date':'2019-12-23', 'display_date': '12/23', 'display_day': '土', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            {'date':'2019-12-24', 'display_date': '12/24', 'display_day': '日', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            {'date':'2019-12-25', 'display_date': '12/25', 'display_day': '月', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            {'date':'2019-12-26', 'display_date': '12/26', 'display_day': '火', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            {'date':'2019-12-27', 'display_date': '12/27', 'display_day': '水', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            {'date':'2019-12-28', 'display_date': '12/28', 'display_day': '木', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            {'date':'2019-12-29', 'display_date': '12/29', 'display_day': '金', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            {'date':'2019-12-30', 'display_date': '12/30', 'display_day': '土', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            {'date':'2019-12-31', 'display_date': '12/31', 'display_day': '日', 'room': 'Loading', 'NGlist': {'9_00': 'NG1', '9_30': 'NG2', '10_00': 'NG3', '10_30': 'NG1', '11_00': 'NG2', '11_30': 'NG3', '12_00': 'NG1', '12_30': 'NG2', '13_00': 'NG3'}},
-            ],
+        'calendar_data': [],
+    }
+
+    weekday_jp = ['月','火','水','木','金','土','日']
+    NG_CSS_classname = ['NG0', 'NG1', 'NG2', 'NG3']
+    for day in collect_days:
+        day_json = {
+            'date': day.strftime('%Y-%m-%d'),
+            'display_date': day.strftime('%m/%d'),
+            'display_day': weekday_jp[day.weekday()],
+            'room': 'Loading',
+            'NGlist':{}
         }
+        hours = CollectHour.objects.filter(calendar=calendar).get(date=day)
+        timelist = [
+            datetime.datetime.combine(day, datetime.time(0)) + datetime.timedelta(minutes=30*h)
+            for h in range(hours.hour_begin*2,hours.hour_end*2)
+            ]
+        for time in timelist:
+            if time.hour > 5:
+                time_label = time.strftime('%H_%M')
+            else:
+                time_label = str(time.hour + 24) + '_' + str(time.minute)
+            
+            is_answered = Schedule.objects.filter(calendar=calendar, starttime=time).exists()
+            if not is_answered:
+                day_json['NGlist'][time_label] = ''
+                continue
+            num = Schedule.objects.filter(calendar=calendar, starttime=time, canattend=False).aggregate(Count('starttime'))['starttime__count']
+            if num < 4:
+                day_json['NGlist'][time_label] = NG_CSS_classname[num]
+            else:
+                day_json['NGlist'][time_label] = NG_CSS_classname[3]
+        data['calendar_data'].append(day_json)
+    print(data['calendar_data'])
+
     return JsonResponse(data)
 
 
