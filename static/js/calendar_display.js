@@ -14,9 +14,8 @@ var calendar = new Vue({
     methods: {
         window:onload = function() {
             calendar_display(jsonURL, get_room_data);
-            console.log(json_calendar);
-            console.log(json_roomdata);
-        }
+        },
+        
     }
 });
 
@@ -34,6 +33,25 @@ function calendar_display(url, callback){
 }
 
 
+function set_room_data(){
+    for (var i = 0; i < calendar.days.length; i++) {
+        let jsondata = json_roomdata.filter(function(item, index){
+            if (item.date == calendar.days[i].date) return true;
+        });
+        if (jsondata.length < 1) {
+            calendar.days[i].room = 'NoData';
+            continue;
+        }
+        let display = jsondata[0].room;
+        if (display=='終日使用不可') {
+            display = '使用不可';
+        }
+        calendar.days[i].room = display;
+        continue;
+    }
+}
+
+
 
 function get_room_data(){
     const meetingroomURL = 'https://meetingroomcontroller.appspot.com/room/all';
@@ -43,25 +61,9 @@ function get_room_data(){
     request.send();
     request.onload = function(){
         json_roomdata = request.response;
-        for (var i = 0; i < calendar.days.length; i++) {
-            let jsondata = request.response.filter(function(item, index){
-                if (item.date == calendar.days[i].date) return true;
-            });
-            if (jsondata.length < 1) {
-                calendar.days[i].room = 'NoData';
-                continue;
-            }
-            let display = jsondata[0].room;
-            if (display=='終日使用不可') {
-                display = '使用不可';
-            }
-            calendar.days[i].room = display;
-            continue;
-        }
+        set_room_data();
     }
 }
 
-
-console.log(jsonURL);
 
 })
