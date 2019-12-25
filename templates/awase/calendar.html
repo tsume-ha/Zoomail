@@ -14,19 +14,28 @@
 <h3 class="my-1">あわせのあわせ</h3>
 
 <section id="calendar">
-    <div class="row"><button v-on:click="move(1)">+1day</button><button v-on:click="move(-1)">-1day</button></div>
-    <div id="leftside" class="column">
-        <div> </div>
-        <div class="room">例会</div>
-        {% for time in timetuple %}
-        <div class="time" data-time="{{time}}.0">{{time}}:00</div>
-        <div class="time" data-time="{{time}}.5"></div>
-        {% endfor %}
+    <div id="calendar_menu">
+        <button v-on:click="change_display_days(-1)">--</button>
+        <button v-on:click="change_display_days(1)">++</button>
+        <button v-on:click="move(-day_display_max_num)">-[|[day_display_max_num]|]day</button>
+        <button v-on:click="move(-1)">-1day</button>
+        <button v-on:click="move(1)">+1day</button>
+        <button v-on:click="move(day_display_max_num)">+[|[day_display_max_num]|]day</button>
     </div>
-    <div class="day column" v-for="day in days" v-bind:date="day.date">
-        <div class="date">[|[day.display_date]|]<br>[|[day.display_day]|]</div>
-        <div class="room">[|[day.room]|]</div>
-        <div class="time" v-for="(NGnum, key) in day.NGlist" v-bind:class="NGnum"></div>
+    <div id="calendar_table">
+        <div id="leftside" class="column">
+            <div> </div>
+            <div class="room">例会</div>
+            {% for time in timetuple %}
+            <div class="time" data-time="{{time}}.0">{{time}}:00</div>
+            <div class="time" data-time="{{time}}.5"></div>
+            {% endfor %}
+        </div>
+        <div class="day column" v-for="day in days" v-bind:date="day.date">
+            <div class="date">[|[day.display_date]|]<br>[|[day.display_day]|]</div>
+            <div class="room">[|[day.room]|]</div>
+            <div class="time" v-for="(NGnum, key) in day.NGlist" v-bind:class="NGnum"></div>
+        </div>
     </div>
 </section>
 

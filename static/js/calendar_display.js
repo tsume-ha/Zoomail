@@ -4,6 +4,8 @@ var json_calendar = [
         {date:'Loading', display_date: 'Loading', display_day: '', room: 'Loading', NGlist: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]},
     ];
 var json_roomdata;
+var settings;
+
 
 var calendar = new Vue({
     el: '#calendar',
@@ -18,13 +20,24 @@ var calendar = new Vue({
             calendar_display(jsonURL, get_room_data);
         },
         move: function(days){
-            calendar.day_count += days;
-            if (calendar.day_count < 0) {
-                calendar.day_count = 0;
+            this.day_count += days;
+            if (this.day_count < 0) {
+                this.day_count = 0;
             }
-            calendar.days = json_calendar.slice(calendar.day_count, calendar.day_count + calendar.day_display_max_num);
+            if (settings.total_days - this.day_count < this.day_display_max_num) {
+                this.day_count = settings.total_days - this.day_display_max_num + 1;
+            }//要検討
+            this.days = json_calendar.slice(this.day_count, this.day_count + this.day_display_max_num);
             set_room_data();
         },
+        change_display_days: function(day){
+            this.day_display_max_num += day;
+            if (this.day_display_max_num <= 0) {
+                this.day_display_max_num = 1;
+            }
+            this.days = json_calendar.slice(this.day_count, this.day_count + this.day_display_max_num);
+            set_room_data();
+        }
     }
 });
 
@@ -36,7 +49,9 @@ function calendar_display(url, callback){
     request.send();
     request.onload = function(){
         json_calendar = request.response.calendar_data;
-        calendar.days = json_calendar.slice(0,7);
+        settings = request.response.settings;
+        calendar.day_count = settings.today_num;
+        calendar.days = json_calendar.slice(calendar.day_count, calendar.day_count + calendar.day_display_max_num);
         callback();
     }
 }

@@ -55,6 +55,10 @@ def CalendarJsonResponse(request, pk):
     
     data = {
         'calendar_data': [],
+        'settings': {
+            'total_days': (calendar.days_end - calendar.days_begin).days,
+            'today_num': (today - calendar.days_begin).days,
+        }
     }
 
     weekday_jp = ['月','火','水','木','金','土','日']
@@ -88,7 +92,6 @@ def CalendarJsonResponse(request, pk):
             else:
                 day_json['NGlist'][time_label] = NG_CSS_classname[3]
         data['calendar_data'].append(day_json)
-    print(data['calendar_data'])
 
     return JsonResponse(data)
 

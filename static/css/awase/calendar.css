@@ -1,93 +1,43 @@
 section{
 	margin: 1rem 0;
 }
-/*
-#calendar div{
-	position: relative;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-#calendar > div{
-	display: flex;
-}
-
-#calendar div.leftside{
-	width: 50px !important;
-	padding: 0 5px;
-	font-size: 10px;
-	border-left: 1px solid #eee;
-}
-
-#calendar div div{
-	border-bottom: 1px solid #eee;
-	border-right: 1px solid #eee;
-}
-
-#calendar div.date div{
-	font-size: 12px;
-	text-align: center;
-	width: calc((100% - 50px) / 7);
-	padding: 5px 0;
-	border-top: 1px solid #eee;
-}
-
-#calendar div.room div{
-	font-size: 10px;
-	text-align: center;
-	width: calc((100% - 50px) / 7);
-	padding: 5px 0;
-}
-
-
-#calendar div.time div{
-	height: 1rem;
-	width: calc((100% - 50px) / 7);
-}
-#calendar div.time.zero div{
-	border-bottom: none;
-}
-#calendar div.time.half div{
-	border-top: none;
-}*/
-#calendar{
+#calendar_table{
     display: -webkit-flex;
     display: flex;
 }
-#calendar *{
+#calendar_table *{
 	position: relative;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
-#calendar .column{
+#calendar_table .column{
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
 }
-#calendar #leftside{
+#calendar_table #leftside{
     -webkit-flex-basis: 50px;
     flex-basis: 50px;
 	font-size: 10px;
 }
-#calendar #leftside div{
+#calendar_table #leftside div{
 	border-left: 1px solid #eee;
 	padding: 0 5px;
 }
-#calendar #leftside div.room{
+#calendar_table #leftside div.room{
 	padding: 5px 0;
 }
-#calendar .day{
+#calendar_table .day{
     -webkit-flex-grow: 1;
     flex-grow: 1;
 }
-#calendar .column div{
+#calendar_table .column div{
 	border-right: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 }
-#calendar .column div:first-child{
+#calendar_table .column div:first-child{
 	height: 3.5rem;
 	text-align: center;
 	line-height: 1.5rem;
@@ -97,16 +47,16 @@ section{
 	border-top: 1px solid #eee;
 }
 
-#calendar .column div.room{
+#calendar_table .column div.room{
 	font-size: 10px;
 	text-align: center;
 	padding: 5px 0;
 	line-height: 15px;
 	height: 26px;
 }
-#calendar .column div.time{
+#calendar_table .column div.time{
 	height: 1rem;
 }
-#calendar .column div.time[data-time$=".0"]{
+#calendar_table .column div.time[data-time$=".0"]{
 	border-bottom: none;
 }
