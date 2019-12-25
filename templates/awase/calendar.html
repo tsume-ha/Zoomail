@@ -15,12 +15,17 @@
 
 <section id="calendar">
     <div id="calendar_menu">
-        <button v-on:click="change_display_days(-1)">--</button>
-        <button v-on:click="change_display_days(1)">++</button>
-        <button v-on:click="move(-day_display_max_num)">-[|[day_display_max_num]|]day</button>
-        <button v-on:click="move(-1)">-1day</button>
-        <button v-on:click="move(1)">+1day</button>
-        <button v-on:click="move(day_display_max_num)">+[|[day_display_max_num]|]day</button>
+        <div>
+            <span>表示日数：[|[day_display_max_num]|]</span>
+            <button v-on:click="change_display_days(-1)">--</button>
+            <button v-on:click="change_display_days(1)">++</button>
+        </div>
+        <div>
+            <button v-on:click="move(-day_display_max_num)">[|[day_display_max_num]|]日戻る</button>
+            <button v-on:click="move(-1)">1日戻る</button>
+            <button v-on:click="move(1)">1日進む</button>
+            <button v-on:click="move(day_display_max_num)">[|[day_display_max_num]|]日進む</button>
+        </div>
     </div>
     <div id="calendar_table">
         <div id="leftside" class="column">
