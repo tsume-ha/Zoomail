@@ -10,12 +10,21 @@ var calendar = new Vue({
     delimiters: ['[|[', ']|]'],
     data: {
         days: json_calendar,
+        day_count: 0,
+        day_display_max_num: 7,
     },
     methods: {
         window:onload = function() {
             calendar_display(jsonURL, get_room_data);
         },
-        
+        move: function(days){
+            calendar.day_count += days;
+            if (calendar.day_count < 0) {
+                calendar.day_count = 0;
+            }
+            calendar.days = json_calendar.slice(calendar.day_count, calendar.day_count + calendar.day_display_max_num);
+            set_room_data();
+        },
     }
 });
 
