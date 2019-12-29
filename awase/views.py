@@ -27,7 +27,9 @@ def index(request):
 @login_required()
 def CalendarView(request, pk):
     now_user = request.user
-    calendar = Calendar.objects.get(pk=pk)
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
     params = {
         'timetuple': list(range(9,26)),
         'calendar': calendar,

@@ -11,20 +11,19 @@
 {% endblock %}
 
 {% block body %}
-<h3 class="my-1">あわせのあわせ</h3>
+<h3 class="my-1">{{calendar.title}}</h3>
 
 <section id="calendar">
-    <div id="calendar_menu">
-        <div>
-            <span>表示日数：[|[day_display_max_num]|]</span>
-            <button v-on:click="change_display_days(-1)">--</button>
-            <button v-on:click="change_display_days(1)">++</button>
+    <div id="calendar_menu" class="row mx-0 my-2 clearfix">
+        <div id="menu_days" class="float-left">
+            <button v-on:click="change_display_days(-1)"><img src="{% static 'img/awase/red.png' %}" height="24" alt="列を減らす">列を減らす</button>
+            <button v-on:click="change_display_days(1)"><img src="{% static 'img/awase/add.png' %}" height="24" alt="列を増やす">列を増やす</button>
         </div>
-        <div>
-            <button v-on:click="move(-day_display_max_num)">[|[day_display_max_num]|]日戻る</button>
-            <button v-on:click="move(-1)">1日戻る</button>
-            <button v-on:click="move(1)">1日進む</button>
-            <button v-on:click="move(day_display_max_num)">[|[day_display_max_num]|]日進む</button>
+        <div id="menu_move" class="float-right">
+            <button v-on:click="move(-day_display_max_num)"><img src="{% static 'img/awase/1w_bk.png' %}" height="24" :alt="day_display_max_num">[|[day_display_max_num]|]日戻る</button>
+            <button v-on:click="move(-1)"><img src="{% static 'img/awase/1d_bk.png' %}" height="24" alt="1日戻る">1日戻る</button>
+            <button v-on:click="move(1)"><img src="{% static 'img/awase/1d_fw.png' %}" height="24" alt="1日進む">1日進む</button>
+            <button v-on:click="move(day_display_max_num)"><img src="{% static 'img/awase/1w_fw.png' %}" height="24" :alt="day_display_max_num">[|[day_display_max_num]|]日進む</button>
         </div>
     </div>
     <div id="calendar_table">

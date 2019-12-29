@@ -4,7 +4,24 @@ section{
 #calendar_menu{
 	display: block;
 	position: relative;
-	margin: 0.5rem 0;
+}
+#calendar_menu div{
+	display: inline-block;
+	position: relative;
+}
+#calendar_menu div button{
+	display: inline-block;
+	position: relative;
+	background-color: #fff;
+	border-style: none;
+	text-align: center;
+	font-size: 10px;
+	margin: 0;
+	padding: 0 4px;
+}
+#calendar_menu div button img{
+	display: block;
+	margin: 0 auto;
 }
 
 #calendar_table{
