@@ -1,6 +1,7 @@
 from django.db import models
 from members.models import User
 from private_storage.fields import PrivateFileField
+from .forms import KansouUploadForm
 
 class Kansouyoushi(models.Model):
     live = models.CharField(max_length=200, verbose_name='ライブ名')
@@ -24,3 +25,9 @@ class Kansouyoushi(models.Model):
         'newyearlive',#      7          あけおめ
         'marchlive',#        8          3月
     )
+
+    def translate_livename(self):
+        l_name = KansouUploadForm.livename
+        for i in range(len(l_name)):
+            if l_name[i][0] == self.live:
+                return l_name[i][1]
