@@ -6,9 +6,11 @@ from board.models import Message, MessageYear, Kidoku
 from members.models import User
 from .senders import senders
 
-# sender を, 管理アカウントに設定. writer はユーザデータと紐付け. senders.py に, 
+# sender を, 管理アカウントに設定. writer はユーザデータと紐付け. senders.py に,
 # sender = {'old@email':'new@gmail.com', 'old@email.com', 'new1@gmail.com'}
 # で設定
+
+
 def run():
     admin = User.objects.get(email='developer@ku-unplugged.net')
     for i in range(1, 78):
@@ -26,7 +28,12 @@ def run():
                 message_content = parsed_eml['body'][0]['content']
                 writerAddress = senders.get(
                     from_mail_address, from_mail_address)
-                writer = User.objects.get(email=writerAddress)
+
+                try:
+                    writer = User.objects.get(email=writerAddress)
+                except:
+                    writer = admin
+
                 send_at = datetime.datetime(
                     send_at.year,
                     send_at.month,
