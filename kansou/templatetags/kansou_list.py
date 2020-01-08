@@ -1,7 +1,6 @@
 from django import template
 from django.utils.safestring import mark_safe
 from kansou.models import Kansouyoushi
-from kansou.forms import KansouUploadForm
 import datetime
 
 register = template.Library()
@@ -20,7 +19,7 @@ def GetKansouList(year):
             num /= 1024.0
         return "%.1f%s%s" % (num, 'Yi', suffix)
 
-    l_name = KansouUploadForm.livename
+    l_name = Kansouyoushi.livename
     def translate_livename(live):
         for i in range(len(l_name)):
             if l_name[i][0] == live:

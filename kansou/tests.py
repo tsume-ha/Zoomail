@@ -5,10 +5,9 @@ from .models import Kansouyoushi
 from django.contrib.auth.models import Group
 import os
 from django.conf import settings
-from .forms import KansouUploadForm
 import datetime
 
-livename = KansouUploadForm.livename
+livename = Kansouyoushi.livename
 
 
 def User_LogOUT(self):
