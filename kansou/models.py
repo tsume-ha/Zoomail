@@ -29,3 +29,5 @@ class Kansouyoushi(models.Model):
         for l_name in self.livename:
             if l_name[0] == self.live:
                 return l_name[1]
+        return '（ライブ名不明）'#見つからなかった場合にこれを返す
+        
