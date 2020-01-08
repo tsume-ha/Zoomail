@@ -9,7 +9,7 @@ def ContentLog(LIST_NUM=3):
     from pictures.models import Album
     from player.models import Performance
 
-    kansou_list = [('kansou', '感想用紙', q.created_at, q.live, reverse('kansou:index')) for q in Kansouyoushi.objects.order_by('-created_at')[:LIST_NUM]]
+    kansou_list = [('kansou', '感想用紙', q.created_at, q.translate_livename, reverse('kansou:index')) for q in Kansouyoushi.objects.order_by('-created_at')[:LIST_NUM]]
     movie_list = [('movie', 'ライブ映像', q.created_at, q.title, reverse('movie:index')) for q in YoutubeURL.objects.order_by('-created_at')[:LIST_NUM]]
     pictures_list = [('pictures', '写真', q.created_at, q.title, reverse('pictures:index')) for q in Album.objects.order_by('-created_at')[:LIST_NUM]]
     player_list = [('player', 'リハ音源', q.updated_at, q.live_name, reverse('player:playlist', args=[q.pk])) for q in Performance.objects.order_by('-updated_at')[:LIST_NUM]]

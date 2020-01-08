@@ -4,18 +4,6 @@ import datetime
 
 
 class KansouUploadForm(forms.ModelForm):
-    livename = [
-    ('sinkanlive','新歓ライブ'),
-    ('junelive','6月ライブ'),
-    ('freshmanlive','新人ライブ'),
-    ('septemberlive','9月ライブ'),
-    ('octoberlive','10月ライブ'),
-    ('christmaslive','クリスマスライブ'),
-    ('newyearlive','あけおめライブ'),
-    ('marchlive','3月ライブ'),
-    ('other','その他'),
-    ]
-
     class Meta:
         model = Kansouyoushi
         fields = ['live', 'performed_at', 'numbering', 'file', 'detail']
@@ -25,7 +13,7 @@ class KansouUploadForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
         self.fields['live'] = forms.ChoiceField(
-            choices = self.livename,
+            choices = Kansouyoushi.livename,
             label = "ライブ名",
             widget = forms.Select(attrs={'class': 'form-control'}),
             required = True,

@@ -13,14 +13,21 @@ class Kansouyoushi(models.Model):
     def __str__(self):
         return self.performed_at.strftime('%Y-%m-%d') + ' : ' + self.live
 
-    livename = (#            index     名称
-        'other',#            0          その他
-        'sinkanlive'#        1          新歓
-        'junelive',#         2          6月
-        'freshmanlive',#     3          新人
-        'septemberlive',#    4          9月
-        'octoberlive',#      5          10月
-        'christmaslive',#    6          クリスマス
-        'newyearlive',#      7          あけおめ
-        'marchlive',#        8          3月
-    )
+    livename = [
+        ('sinkanlive','新歓ライブ'),
+        ('junelive','6月ライブ'),
+        ('freshmanlive','新人ライブ'),
+        ('septemberlive','9月ライブ'),
+        ('octoberlive','10月ライブ'),
+        ('christmaslive','クリスマスライブ'),
+        ('newyearlive','あけおめライブ'),
+        ('marchlive','3月ライブ'),
+        ('other','その他'),
+    ]
+
+    def translate_livename(self):
+        for l_name in self.livename:
+            if l_name[0] == self.live:
+                return l_name[1]
+        return '（ライブ名不明）'#見つからなかった場合にこれを返す
+        
