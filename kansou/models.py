@@ -26,7 +26,6 @@ class Kansouyoushi(models.Model):
     ]
 
     def translate_livename(self):
-        l_name = self.livename
-        for i in range(len(l_name)):
-            if l_name[i][0] == self.live:
-                return l_name[i][1]
+        for l_name in self.livename:
+            if l_name[0] == self.live:
+                return l_name[1]
