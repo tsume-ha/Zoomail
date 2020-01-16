@@ -48,3 +48,8 @@ def is_marked(message, user):
         return static('img/star_yl.png')
     else:
         return static('img/star_bk.png')
+
+@register.filter("AddTarget_blank")
+def AddTarget_blank(content):
+    content = content.replace('<a ', '<a target="_blank" rel="nofollow ugc" class="text-break" ')
+    return mark_safe(content)
