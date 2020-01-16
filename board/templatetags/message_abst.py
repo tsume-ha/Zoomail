@@ -51,5 +51,5 @@ def is_marked(message, user):
 
 @register.filter("AddTarget_blank")
 def AddTarget_blank(content):
-    content = content.replace('<a ', '<a target="_blank" rel="nofollow ugc" class="text-break" ')
+    content = content.replace('<a ', '<a target="_blank" rel="nofollow ugc noopener" class="text-break" ')
     return mark_safe(content)
