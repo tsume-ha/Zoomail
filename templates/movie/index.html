@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load index_added_tags %}
 
 {% block title %}ライブ映像 | UnpluggedMessage{% endblock %}
 
@@ -25,7 +26,7 @@
         {% endif %}
         {% if movie.textcontent %}
         <div class="text col-12">
-            {{ movie.textcontent | linebreaks | urlize }}
+            {{ movie.textcontent | linebreaks | urlize | URL_Tag_Property}}
         </div>
         {% endif %}
     </article>
