@@ -17,17 +17,26 @@ var calendar = new Vue({
     },
     methods: {
         window:onload = function() {
-            calendar_display(jsonURL, get_room_data);
+            get_calendar_json(jsonURL, get_room_data);
+        },
+        display_calendar: function(){
+            if (this.day_count < 0) {
+                this.day_count = 0;
+                if (settings.total_days <= this.day_display_max_num) {
+                    this.days = json_calendar.slice(this.day_count, settings.total_days);
+                } else {
+                    this.days = json_calendar.slice(this.day_count, this.day_display_max_num);
+                }
+            } else if (0 <= this.day_count && this.day_count < settings.total_days - this.day_display_max_num) {
+                this.days = json_calendar.slice(this.day_count, this.day_count + this.day_display_max_num);
+            } else {
+                this.day_count = settings.total_days - this.day_display_max_num;
+                this.days = json_calendar.slice(this.day_count, settings.total_days);
+            }
         },
         move: function(days){
             this.day_count += days;
-            if (this.day_count < 0) {
-                this.day_count = 0;
-            }
-            if (settings.total_days - this.day_count < this.day_display_max_num) {
-                this.day_count = settings.total_days - this.day_display_max_num + 1;
-            }//要検討
-            this.days = json_calendar.slice(this.day_count, this.day_count + this.day_display_max_num);
+            this.display_calendar();
             set_room_data();
         },
         change_display_days: function(day){
@@ -35,14 +44,17 @@ var calendar = new Vue({
             if (this.day_display_max_num <= 0) {
                 this.day_display_max_num = 1;
             }
-            this.days = json_calendar.slice(this.day_count, this.day_count + this.day_display_max_num);
+            if (settings.total_days <= this.day_display_max_num) {
+                this.day_display_max_num = settings.total_days;
+            }
+            this.display_calendar();
             set_room_data();
         }
     }
 });
 
 
-function calendar_display(url, callback){
+function get_calendar_json(url, callback){
     var request = new XMLHttpRequest();
     request.open('GET', url);
     request.responseType = 'json';
@@ -51,7 +63,7 @@ function calendar_display(url, callback){
         json_calendar = request.response.calendar_data;
         settings = request.response.settings;
         calendar.day_count = settings.today_num;
-        calendar.days = json_calendar.slice(calendar.day_count, calendar.day_count + calendar.day_display_max_num);
+        calendar.display_calendar();
         callback();
     }
 }
