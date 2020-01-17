@@ -169,7 +169,7 @@ def input(request, pk, page=1):
                     calendar = calendar,
                     user = now_user,
                     starttime = time,
-                    defaults = {'duration': 30, 'canattend': can_attend}
+                    defaults = {'canattend': can_attend}
                 )
             return redirect(to='../')
 
