@@ -107,26 +107,29 @@ def create(request):
     if (request.method == 'POST'):
         if CreateForm.is_valid():
             content = CreateForm.save(commit=False)
-            content.created_by = now_user
-            content.invite_key = User.objects.make_random_password(length=12)
-            content.save()
-            date = content.days_begin
-            while date <= content.days_end:
-                date_content = CollectHour(
-                    calendar=content,
-                    date=date,
-                    hour_begin=9,
-                    hour_end=26,
+            try:
+                calendar = Calendar.objects.get(title=content.title, text=content.text, days_begin=content.days_begin, days_end=content.days_end)
+            except ObjectDoesNotExist:
+                content.created_by = now_user
+                content.invite_key = User.objects.make_random_password(length=12)
+                content.save()
+                calendar = content
+                date = content.days_begin
+                while date <= content.days_end:
+                    date_content = CollectHour(
+                        calendar=content,
+                        date=date,
+                        hour_begin=9,
+                        hour_end=26,
+                        )
+                    date_content.save()
+                    date = date + datetime.timedelta(days=1)
+                user_content = CalendarUser(
+                    calendar = content,
+                    user = now_user
                     )
-                date_content.save()
-                date = date + datetime.timedelta(days=1)
-            user_content = CalendarUser(
-                calendar = content,
-                user = now_user
-                )
-            user_content.save()
-
-            params ={'calendar': content}
+                user_content.save()
+            params ={'calendar': calendar}
             return render(request, 'awase/create_complete.html', params)
         else:
             print('Form is not valid')
@@ -141,7 +144,7 @@ def create(request):
 def invited(request, key):
     now_user = request.user
     calendar = Calendar.objects.get(invite_key=key)
-    if CalendarUser.objects.filter(calendar=calendar, user=now_user).exists:
+    if CalendarUser.objects.filter(calendar=calendar, user=now_user).exists():
         messages.warning(request, calendar.title + 'にはすでに参加しています。')
         return redirect(to = reverse('awase:calendar', args=[calendar.pk]))
     if (request.method == 'POST'):
