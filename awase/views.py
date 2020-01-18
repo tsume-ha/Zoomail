@@ -5,12 +5,14 @@ from members.models import User
 from .models import Calendar, CalendarUser, Schedule, CollectHour
 from .forms import CreateCalendarForm, InputScheduleForm
 from django.utils.datastructures import MultiValueDictKeyError
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, get_object_or_404
 from django.forms import formset_factory
 from django.db.models import Count
 from django.http import Http404
 from django.http.response import JsonResponse
+from django.urls import reverse
 
 def calendar_permission(calendar, user):
     return CalendarUser.objects.filter(calendar=calendar).filter(user=user).exists()
@@ -141,7 +143,14 @@ def invited(request, key):
     now_user = request.user
     calendar = Calendar.objects.get(invite_key=key)
     if (request.method == 'POST'):
-        print(request.POST)
+        if request.POST['join'] == 'true':
+            user_content = CalendarUser(
+                calendar = calendar,
+                user = now_user
+                )
+            user_content.save()
+            messages.success(request, calendar.title + 'に参加しました。')
+            return redirect(to = reverse('awase:calendar', args=[calendar.pk]))
     params = {
         'calendar': calendar,
     }

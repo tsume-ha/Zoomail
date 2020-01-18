@@ -27,7 +27,21 @@ document.getElementById("n").addEventListener("click", function(){
 });
 
 document.getElementById("y").addEventListener("click", function(){
-    $.post(location.href, 'csrfmiddlewaretoken={{ csrf_token }}&join=true');
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.style.display = "none";
+    document.body.appendChild(form);
+    var input_csrf = document.createElement('input');
+    input_csrf.setAttribute('type', 'hidden');
+    input_csrf.setAttribute('name', 'csrfmiddlewaretoken');
+    input_csrf.setAttribute('value', '{{ csrf_token }}');
+    form.appendChild(input_csrf);
+    var input_join = document.createElement('input');
+    input_join.setAttribute('type', 'hidden');
+    input_join.setAttribute('name', 'join');
+    input_join.setAttribute('value', 'true');
+    form.appendChild(input_join);
+    form.submit();
 });
 </script>
 {% endblock %}
