@@ -16,9 +16,11 @@
 	新しい日程調整「{{ calendar.title }}」が作成されました！<br>
 	以下の招待URLを日程調整したい人に(LINE,メールなどで)送信してください。<br>
     </p>
-    <p>
-    {{ calendar.invite_key }}
+    <p class="text-break">
+    http://localhost:3333{% url 'awase:invited' calendar.invite_key %}
     </p>
 </section>
-
+<section>
+	<a href="{% url 'awase:index' %}">「あわせのあわせ」のトップに戻る</a>
+</section>
 {% endblock %}

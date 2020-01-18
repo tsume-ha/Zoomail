@@ -125,7 +125,6 @@ def create(request):
                 user = now_user
                 )
             user_content.save()
-            print(content.invite_key)
 
             params ={'calendar': content}
             return render(request, 'awase/create_complete.html', params)
@@ -142,6 +141,9 @@ def create(request):
 def invited(request, key):
     now_user = request.user
     calendar = Calendar.objects.get(invite_key=key)
+    if CalendarUser.objects.filter(calendar=calendar, user=now_user).exists:
+        messages.warning(request, calendar.title + 'にはすでに参加しています。')
+        return redirect(to = reverse('awase:calendar', args=[calendar.pk]))
     if (request.method == 'POST'):
         if request.POST['join'] == 'true':
             user_content = CalendarUser(

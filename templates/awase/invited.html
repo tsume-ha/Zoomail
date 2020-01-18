@@ -12,13 +12,11 @@
 <h3>あわせのあわせ</h3>
 
 <section class="my-3">
+    <p>日程調整「{{ calendar.title }}」</p>
+    <p>{{ calendar.text }}</p>
     <p>
-    {{ calendar.created_by.get_short_name }}さんから、「{{ calendar.title }}」の日程調整の招待が届きました。<br>
-    「{{ calendar.title }}」の日程調整に参加しますか？
-    </p>
-    <p>
-        <button id="n" class="btn btn-secondary my-2">いいえ、参加しません。</button>
-        <button id="y" class="btn btn-danger my-2">はい、参加します。</button>
+        <button id="n" class="btn btn-secondary my-2">参加しません…</button>
+        <button id="y" class="btn btn-danger my-2">参加する！</button>
     </p>
 </section>
 <script type="text/javascript">
