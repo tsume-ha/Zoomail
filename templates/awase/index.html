@@ -28,15 +28,12 @@
 		<article class="card m-2">
 			<a href="{% url 'awase:calendar' calendar.pk %}" class="card-body">
 				<h5 class="card-title　float-left mb-2">{{ calendar.title }}</h5>
+				<p class="small">{{ calendar.text }}</p>
 				<h6 class="card-subtitle float-right small">Created : {{ calendar.created_at | date:"Y/m/d D" }}</h6>
 			</a>
 		</article>
 	</div>
 	{% endfor %}
-
-
-
-
 
 </section>
 
