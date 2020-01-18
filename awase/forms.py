@@ -10,32 +10,16 @@ class CreateCalendarForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['days_begin'].widget=forms.SelectDateWidget(
-            years=[datetime.datetime.now().year, datetime.datetime.now().year +1]
+        today = datetime.date.today()
+        self.fields['days_begin'].widget = self.fields['days_end'].widget = forms.SelectDateWidget(
+            years=[today.year, today.year +1]
         )
-        self.fields['days_end'].widget=forms.SelectDateWidget(
-            years=[datetime.datetime.now().year, datetime.datetime.now().year +1]
-        )
+        self.fields['days_begin'].initial = today
+        self.fields['days_end'].initial = today + datetime.timedelta(days=60)
         self.fields['text'].required = False
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
 
-
-class InviteUserForm(forms.Form):
-    year_choice = forms.ChoiceField(# No POSTed DATA is USED in VIEW.PY, This Form is used only for JS
-        label = "Year",
-        required = False,
-    )
-    invite_user = forms.ChoiceField(
-        required = False
-    )
-    user_post_data = forms.CharField(
-        widget=forms.HiddenInput()
-    )
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['year_choice'].widget.attrs["class"] = "form-control"
-        self.fields['invite_user'].widget.attrs["class"] = "form-control"
 
 class InputScheduleForm(forms.Form):
     displaytime = forms.CharField(required=False)

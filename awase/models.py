@@ -1,17 +1,17 @@
 from django.db import models
 from members.models import User
-from django.utils import timezone
 
 class Calendar(models.Model):
     title = models.CharField(max_length=200, verbose_name='曲名・バンド名・イベント名')
     text = models.CharField(max_length=400, blank=True, verbose_name='説明')
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='calendar_creater')
-    days_begin = models.DateField(default=timezone.datetime.today(), verbose_name='開始日')
-    days_end = models.DateField(default=timezone.datetime.today()+timezone.timedelta(days=60), verbose_name='終了日')
+    days_begin = models.DateField(verbose_name='開始日')
+    days_end = models.DateField(verbose_name='終了日')
+    invite_key = models.CharField(max_length=32, unique=True, verbose_name='招待用パスワード')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.created_at.strftime('%Y-%m-%d') + self.title
+        return self.created_at.strftime('%Y-%m-%d') + ' : ' + self.title
 
 class CalendarUser(models.Model):
     calendar = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_content')
