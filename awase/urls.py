@@ -9,4 +9,5 @@ urlpatterns = [
 	path('calendar/<int:pk>/input/', views.input, name='input_top'),
 	path('calendar/<int:pk>/input/<int:page>/', views.input, name='input'),
 	path('create/', views.create, name='create'),
+	path('invited/key=<str:key>/', views.invited, name='invited'),
 ]

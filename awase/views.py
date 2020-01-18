@@ -124,7 +124,9 @@ def create(request):
                 )
             user_content.save()
             print(content.invite_key)
-            return redirect(to='../')
+
+            params ={'calendar': content}
+            return render(request, 'awase/create_complete.html', params)
         else:
             print('Form is not valid')
     params = {
@@ -133,6 +135,18 @@ def create(request):
     }
 
     return render(request, 'awase/create.html', params)
+
+@login_required()
+def invited(request, key):
+    now_user = request.user
+    calendar = Calendar.objects.get(invite_key=key)
+    if (request.method == 'POST'):
+        print(request.POST)
+    params = {
+        'calendar': calendar,
+    }
+    return render(request, 'awase/invited.html', params)
+
 
 @login_required()
 def input(request, pk, page=1):

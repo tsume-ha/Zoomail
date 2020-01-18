@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}あわせのあわせ | Unplugged Message{% endblock %}
+{% block extrastyle %}
+
+{% endblock %}
+
+
+{% block body %}
+<h3>あわせのあわせ</h3>
+
+<section class="my-3">
+    <p>
+    {{ calendar.created_by.get_short_name }}さんから、「{{ calendar.title }}」の日程調整の招待が届きました。<br>
+    「{{ calendar.title }}」の日程調整に参加しますか？
+    </p>
+    <p>
+        <button id="n" class="btn btn-secondary my-2">いいえ、参加しません。</button>
+        <button id="y" class="btn btn-danger my-2">はい、参加します。</button>
+    </p>
+</section>
+<script type="text/javascript">
+document.getElementById("n").addEventListener("click", function(){
+    location.href = "{% url 'awase:index' %}";
+});
+
+document.getElementById("y").addEventListener("click", function(){
+    $.post(location.href, 'csrfmiddlewaretoken={{ csrf_token }}&join=true');
+});
+</script>
+{% endblock %}

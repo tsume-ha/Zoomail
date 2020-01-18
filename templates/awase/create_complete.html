@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}日程調整を作成 - 完了画面 | Unplugged Message{% endblock %}
+{% block extrastyle %}
+
+{% endblock %}
+
+
+{% block body %}
+<h3>日程調整を作成 - 完了画面</h3>
+
+<section class="my-3">
+	<p>
+	新しい日程調整「{{ calendar.title }}」が作成されました！<br>
+	以下の招待URLを日程調整したい人に(LINE,メールなどで)送信してください。<br>
+    </p>
+    <p>
+    {{ calendar.invite_key }}
+    </p>
+</section>
+
+{% endblock %}
