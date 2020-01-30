@@ -70,7 +70,7 @@ def CalendarJsonResponse(request, pk):
     for day in collect_days:
         day_json = {
             'date': day.strftime('%Y-%m-%d'),
-            'display_date': day.strftime('%m/%d'),
+            'display_date': f"{day.month}/{day.day}",
             'display_day': weekday_jp[day.weekday()],
             'room': 'Loading',
             'NGlist':{}
