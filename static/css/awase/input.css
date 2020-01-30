@@ -40,7 +40,8 @@
 .form_one_day .form_checks *{
     letter-spacing:normal;
 }
-.form_one_day .form_one_check{
+.form_one_day .form_one_check,
+.form_one_day .form_oneday_all{
     display: inline-block;
     padding: 0.25rem 0;
     margin: 0;
@@ -49,10 +50,13 @@
     border: none;
     box-sizing: inherit;
 }
-.form_one_day .form_one_check:nth-of-type(4n+3),
-.form_one_day .form_one_check:nth-of-type(4n+4){
+.form_one_day .form_one_check:nth-of-type(4n),
+.form_one_day .form_one_check:nth-of-type(4n+1){
     background-color: #f3f3f3;
-
+}
+.form_one_day .form_oneday_all{
+    width: 100%;
+    background-color: #ffffcc;
 }
 .form_one_day input[type="text"]{
     display: inline;
@@ -64,7 +68,8 @@
     display: none;
 }
 
-.form_one_day input[type="radio"] + label{
+.form_one_day input[type="radio"] + label,
+.form_oneday_all button.dayall{
     display: inline-block;
     position: relative;
     width: 24%;
@@ -76,20 +81,24 @@
     font-size: 1.4rem;
     line-height: 2rem;
     }
-.form_one_day input[type="radio"][value="True"] + label{
+.form_one_day input[type="radio"][value="True"] + label,
+.form_oneday_all button.dayall[value="True"]{
     border: 1px solid transparent;
     color: #4cd964;
 }
-.form_one_day input[type="radio"][value="True"]:checked + label{
+.form_one_day input[type="radio"][value="True"]:checked + label,
+.form_oneday_all button.dayall[value="True"]{
     background-color: #4cd964;
     color: #fff;
 }
 
-.form_one_day input[type="radio"][value="False"] + label{
+.form_one_day input[type="radio"][value="False"] + label,
+.form_oneday_all button.dayall[value="False"]{
     border: 1px solid transparent;
     color: #ff3b30;
 }
-.form_one_day input[type="radio"][value="False"]:checked + label{
+.form_one_day input[type="radio"][value="False"]:checked + label,
+.form_oneday_all button.dayall[value="False"]{
     background-color: #ff3b30;
     color: #fff;
 }
