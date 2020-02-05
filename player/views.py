@@ -112,7 +112,13 @@ def edit(request, live_id):
     for form in formset:
         print(form['file'])
     if request.method == 'POST' and formset.is_valid():
-        formset.save()
+        instances = formset.save(commit=False)
+        for instance in formset.deleted_objects:
+            instance.delete()
+        for instance in instances:
+            instance.updated_by = now_user
+            instance.updated_at = datetime.datetime.now()
+            instance.save()
         return redirect('player:index')
     params = {
         'performance': performance,
