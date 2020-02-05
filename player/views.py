@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
-from django.forms import formset_factory
+from django.forms import formset_factory, modelformset_factory
 from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
-from .forms import CreateRehasalForm, CreateSongForm
+from .forms import CreateRehasalForm, CreateSongForm, EditSongForm
 from .models import Performance, Song
 import datetime
 
@@ -101,9 +101,22 @@ def edit(request, live_id):
     is_allowed = RecordingPermisson(now_user)
     if not is_allowed:
         raise PermissionDenied
+
     performance = get_object_or_404(Performance, id=live_id)
+    FormSetExtraNum = 3
+    EditSongFormSet = modelformset_factory(Song, EditSongForm, extra=FormSetExtraNum)
+    formset = EditSongFormSet(
+        request.POST or None,
+        queryset=Song.objects.filter(performance=performance).order_by('track_num')
+        )
+    for form in formset:
+        print(form['file'])
+    if request.method == 'POST' and formset.is_valid():
+        formset.save()
+        return redirect('player:index')
     params = {
-        'performance': performance
+        'performance': performance,
+        'formset': formset,
     }
     return render(request, 'player/edit.html', params)
 

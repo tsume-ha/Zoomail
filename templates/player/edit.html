@@ -2,14 +2,25 @@
 {% load static %}
 {% block title %}{{ performance.live_name }} | リハ音源編集 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-	<link rel="stylesheet" type="text/css" href="{% static 'css/player/songupload.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/player/songedit.css' %}">
 	<script src="{% static 'js/music_upload.js' %}"></script>
 {% endblock %}
 {% block body %}
 	<h3 class="mb-4">{{ performance.live_name }} - リハ音源編集</h3>
 	<form method="post" enctype="multipart/form-data" id="">
 		{% csrf_token %}
-
-		<input type="submit" name="UPLOAD">
+        {% for form in formset %}
+            <div class="form_row">
+            {{ form.non_field_errors }}
+                <div class="track_num">{{ form.track_num }}</div>
+                <div class="song_name">{{ form.song_name }}</div>
+                <div class="file">{{ form.file }}</div>
+            {% for field in form.hidden_fields %}
+                {{ field }}
+            {% endfor %}
+            </div>
+        {% endfor %}
+	    {{ formset.management_form }}
+		<input type="submit" name="UPDATE">
 	</form>
 {% endblock %}
