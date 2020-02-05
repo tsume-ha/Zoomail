@@ -95,6 +95,20 @@ def songupload(request, FormSetExtraNum=20):
         raise PermissionDenied
 
 
+@login_required()
+def edit(request, live_id):
+    now_user = request.user
+    is_allowed = RecordingPermisson(now_user)
+    if not is_allowed:
+        raise PermissionDenied
+    performance = get_object_or_404(Performance, id=live_id)
+    params = {
+        'performance': performance
+    }
+    return render(request, 'player/edit.html', params)
+
+
+
 from utils.commom import download
 def FileDownloadView(request, live_id, song_pk):
     try:
