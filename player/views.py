@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
-from django.forms import formset_factory
+from django.forms import formset_factory, modelformset_factory
 from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
-from .forms import CreateRehasalForm, CreateSongForm
+from .forms import CreateRehasalForm, CreateSongForm, EditSongForm
 from .models import Performance, Song
 import datetime
 
@@ -93,6 +93,40 @@ def songupload(request, FormSetExtraNum=20):
         return render(request, 'player/songupload.html', params)
     else:
         raise PermissionDenied
+
+
+@login_required()
+def edit(request, live_id):
+    now_user = request.user
+    is_allowed = RecordingPermisson(now_user)
+    if not is_allowed:
+        raise PermissionDenied
+
+    performance = get_object_or_404(Performance, id=live_id)
+    FormSetExtraNum = 3
+    EditSongFormSet = modelformset_factory(Song, EditSongForm, extra=FormSetExtraNum)
+    formset = EditSongFormSet(
+        request.POST or None, request.FILES or None,
+        queryset=Song.objects.filter(performance=performance).order_by('track_num')
+        )
+    if request.method == 'POST':
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            for instance in formset.deleted_objects:
+                instance.delete()
+            for instance in instances:
+                instance.updated_by = now_user
+                instance.updated_at = datetime.datetime.now()
+                instance.save()
+            return redirect('player:playlist', live_id=live_id)
+        else:
+            print('validation error')
+    params = {
+        'performance': performance,
+        'formset': formset,
+    }
+    return render(request, 'player/edit.html', params)
+
 
 
 from utils.commom import download

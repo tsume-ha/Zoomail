@@ -1,4 +1,5 @@
 from django import forms
+from .models import Song
 import os
 
 class CreateRehasalForm(forms.Form):
@@ -23,3 +24,8 @@ class CreateSongForm(forms.Form):
         required = False,
         widget = forms.FileInput(attrs={'class':'border border-primary rounded-right'}),
     )
+
+class EditSongForm(forms.ModelForm):
+    class Meta:
+        model = Song
+        fields = ['track_num', 'song_name', 'file']

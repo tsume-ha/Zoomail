@@ -30,6 +30,8 @@
 				<h6 class="card-subtitle float-right small">Recorded : {{ Performance.recorded_at | date:"Y/m/d D" }}</h6>
 				{% GetSongDetail Performance %}
 			</a>
+			{% if is_allowed %}<a href="{% url 'player:edit' Performance.pk %}" class="btn btn-outline-warning btn-sm mx-3 mb-2">編集する</a>{% endif %}
+
 		</article>
 	</div>
 	{% endfor %}
