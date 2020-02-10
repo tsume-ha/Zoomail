@@ -118,7 +118,7 @@ def edit(request, live_id):
                 instance.updated_by = now_user
                 instance.updated_at = datetime.datetime.now()
                 instance.save()
-            return redirect('player:index')
+            return redirect('player:playlist', live_id=live_id)
         else:
             print('validation error')
     params = {
