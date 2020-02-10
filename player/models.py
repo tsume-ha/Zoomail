@@ -30,4 +30,4 @@ class Song(models.Model):
     updated_at = models.DateTimeField(default=timezone.now)
     updated_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='song_updated_by')
     def __str__(self):
-        return str(self.track_num) + self.song_name
+        return str(self.track_num) + ' ' + self.song_name

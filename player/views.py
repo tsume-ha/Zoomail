@@ -106,20 +106,21 @@ def edit(request, live_id):
     FormSetExtraNum = 3
     EditSongFormSet = modelformset_factory(Song, EditSongForm, extra=FormSetExtraNum)
     formset = EditSongFormSet(
-        request.POST or None,
+        request.POST or None, request.FILES or None,
         queryset=Song.objects.filter(performance=performance).order_by('track_num')
         )
-    for form in formset:
-        print(form['file'])
-    if request.method == 'POST' and formset.is_valid():
-        instances = formset.save(commit=False)
-        for instance in formset.deleted_objects:
-            instance.delete()
-        for instance in instances:
-            instance.updated_by = now_user
-            instance.updated_at = datetime.datetime.now()
-            instance.save()
-        return redirect('player:index')
+    if request.method == 'POST':
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            for instance in formset.deleted_objects:
+                instance.delete()
+            for instance in instances:
+                instance.updated_by = now_user
+                instance.updated_at = datetime.datetime.now()
+                instance.save()
+            return redirect('player:index')
+        else:
+            print('validation error')
     params = {
         'performance': performance,
         'formset': formset,
