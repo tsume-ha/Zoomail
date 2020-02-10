@@ -84,6 +84,7 @@ section{
 	word-break: break-all;
 	overflow-x: hidden;
 	overflow-y: hidden;
+	z-index: 2;
 }
 #calendar_table .column div.room.hover{
 	overflow-y: visible;
