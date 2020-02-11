@@ -6,6 +6,7 @@
 {% block extrastyle %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/awase/calendar.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/awase/calendar_menu.css' %}">
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="{% static 'js/calendar_display.js' %}"></script>
 <script src="{% static 'js/calendar-touch-hover.js' %}"></script>
@@ -17,8 +18,8 @@
 <section id="calendar">
     <div id="calendar_menu" class="row mx-0 my-2 clearfix">
         <div id="menu_days" class="float-left">
-            <button v-on:click="change_display_days(-1)"><img src="{% static 'img/awase/red.png' %}" height="24" alt="列を減らす">列を減らす</button>
-            <button v-on:click="change_display_days(1)"><img src="{% static 'img/awase/add.png' %}" height="24" alt="列を増やす">列を増やす</button>
+            <button v-on:click="change_display_days(-1)"><img src="{% static 'img/awase/red.png' %}" height="24" alt="列を減らす"><span>列を</span><span>減らす</span></button>
+            <button v-on:click="change_display_days(1)"><img src="{% static 'img/awase/add.png' %}" height="24" alt="列を増やす"><span>列を</span><span>増やす</span></button>
         </div>
         <div id="menu_move" class="float-right">
             <button v-on:click="move(-day_display_max_num)"><img src="{% static 'img/awase/1w_bk.png' %}" height="24" :alt="day_display_max_num">[|[day_display_max_num]|]日戻る</button>
@@ -60,33 +61,32 @@
     background-color: #444;
 }
 </style>
-<section id="menu">
-    <a href="input/">入力する</a>
-    <a href="">調節期間を変更</a>
-</section>
-<section id="setting">
-    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="card">
-            <div class="card-header" role="tab" id="headingOne">
-                <h5 class="mb-0">
-                <a class="text-body d-block p-3 m-n3" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
-                設定変更
-                </a>
-                </h5>
-            </div>
-            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="card-body"><a href="">集計期間（日にち）の変更</a></div>
-                <div class="card-body"><a href="">集計時間（時間帯）の変更</a></div>
-                <div class="card-body"><a href="">招待URLの確認・変更</a></div>
-                <div class="card-body"><a href="">カレンダーユーザーの変更</a></div>
-                <div class="card-body"><a href="" class="text-danger">この日程調整から退会する</a></div>
-                <div class="card-body"><a href="" class="text-danger">カレンダーを削除するページへ</a></div>
-            </div>
-        </div>
+
+<section id="menu" class="col-xs-12 col-sm-8 col-md-6 col-ld-6">
+    <a href="input/" class="enter text-center text-sm-left">入力する</a>
+    <a href="javascript:menu_sw()" id="menu_sw" class="text-center text-sm-left">設定変更</a>
+    <div id="submenu">
+        <a href="" class="text-center text-sm-left">集計期間（日にち）の変更</a>
+        <a href="" class="text-center text-sm-left">集計時間（時間帯）の変更</a>
+        <a href="" class="text-center text-sm-left">招待URLの確認・変更</a>
+        <a href="" class="text-center text-sm-left">カレンダーユーザーの変更</a>
+        <a href="" class="text-center text-sm-left text-danger">この日程調整から退会する</a>
+        <a href="" class="text-center text-sm-left text-danger">カレンダーを削除するページへ</a>
     </div>
 </section>
+
 <script type="text/javascript">
 const jsonURL = "{% url 'awase:calendar_json' calendar.pk %}";
+function menu_sw(){
+    $('#menu_sw').toggleClass('active');
+    if ($('#menu_sw').hasClass('active')) {
+        $('#submenu').css('max-height', '220px');
+        $('#submenu').css('overflow-y', 'overflow');
+    } else {
+        $('#submenu').css('max-height', '0');
+        $('#submenu').css('overflow-y', 'hidden');
+    }
+}
 </script>
 
 {% endblock %}

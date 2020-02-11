@@ -1,0 +1,43 @@
+section#menu a{
+	display: block;
+	font-size: 1rem;
+	margin: 0;
+	padding: 0.4rem 0.5rem;
+	color: #0480a9;
+	border: none;
+	background-color: #fff;
+}
+section#menu a.enter{
+	color: #218c3a;
+	background-color: #caf2d4;
+}
+section#menu a.hover{
+	background-color: #e4f4f8;
+}
+section#menu a.enter.hover{
+	background-color: #afecbd;
+}
+section#menu a.active,
+div#submenu a{
+	background-color: #c9e9f1;
+}
+section#menu a.active.hover,
+div#submenu a.hover{
+	background-color: #e4f4f8;
+}
+section#menu a#menu_sw{
+	margin-bottom: 0;
+}
+div#submenu{
+	max-height: 0;
+	overflow-y: hidden;
+	transition: 0.3s;
+}
+@media screen and (min-width: 576px) {
+div#submenu{
+	border-left: 2px solid #aaa;
+}
+}
+div#submenu a{
+
+}

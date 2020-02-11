@@ -23,6 +23,22 @@ section{
 	display: block;
 	margin: 0 auto;
 }
+#calendar_menu div button span{
+	display: inline-block;
+	white-space: nowrap;
+}
+
+@media screen and (min-width: 340px) {/*340px以上*/
+div#menu_days button{
+    width: 58px;
+}
+}
+@media screen and (max-width: 339px) {/*339px以下*/
+div#menu_days button{
+    width: 38px;
+}
+} 
+
 
 #calendar_table{
     display: -webkit-flex;
