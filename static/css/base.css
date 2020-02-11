@@ -88,7 +88,7 @@ nav ul li{
 	margin: 0 0.2rem;
 	padding: 0 0.2rem;
 }
-nav ul li:nth-child(7){
+nav ul li:nth-last-child(2){
 	position: absolute;
 	top: 0.85rem;
 	right: 4.4rem;
