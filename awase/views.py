@@ -168,8 +168,26 @@ def input(request, pk, page=1):
     calendar = get_object_or_404(Calendar, pk=pk)
     can_edit = calendar_permission(calendar, now_user)
     if can_edit:
+
+        import math
+        total_pages = math.ceil((calendar.days_end - calendar.days_begin).days / 7)
+
+        move = False
+        if 'prev' in request.GET:
+            page -= 1
+            move = True
+            if page < 0:
+                page = 1
+
+        if 'next' in request.GET:
+            page += 1
+            move = True
+            if page > total_pages:
+                page = total_pages
+
         if (request.method == 'POST'):
             print(request.POST)
+            print(request.GET)
             keys = [k for k in request.POST if 'can_attend' in k]
             for key in keys:
                 time_name = key.replace('can_attend', 'datetime')
@@ -181,7 +199,17 @@ def input(request, pk, page=1):
                     starttime = time,
                     defaults = {'canattend': can_attend}
                 )
-            return redirect(to='../')
+            if not move:
+                return redirect(to='../')
+
+        if 'prev' in request.GET:
+            page -= 1
+            if page < 0:
+                page = 1
+        if 'next' in request.GET:
+            page += 1
+            if page > total_pages:
+                page = total_pages
 
         formsets = []
         InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
@@ -224,8 +252,7 @@ def input(request, pk, page=1):
             count += 1
             date_range['end'] = date
             date = date + datetime.timedelta(days=1)
-        import math
-        total_pages = math.ceil((calendar.days_end - calendar.days_begin).days / 7)
+
         params = {
             'calendar': calendar,
             'formsets': formsets,

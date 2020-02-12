@@ -16,3 +16,9 @@ $('.dayall').click(function(e){
     target = $('div.form_one_day[data-date='+date+'] input[name$=can_attend][value=' + value + ']');
     target.prop('checked', true);
 })
+
+function move_week(direction){
+    console.log(direction);
+    $('form[name=calendarinput]').attr('action', window.location + '?' + direction + '=True');
+    $('form[name=calendarinput]').submit();
+}
