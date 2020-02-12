@@ -169,8 +169,9 @@ def input(request, pk, page=1):
     can_edit = calendar_permission(calendar, now_user)
     if can_edit:
 
-        import math
-        total_pages = math.ceil((calendar.days_end - calendar.days_begin).days / 7)
+        def ceil(a, b):
+            return a//b if a%b==0 else a//b + 1
+        total_pages = ceil((calendar.days_end - calendar.days_begin).days, 7)
 
         move = False
         if 'prev' in request.GET:
