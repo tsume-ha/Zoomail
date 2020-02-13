@@ -3,12 +3,11 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from members.models import User
 from .models import Calendar, CalendarUser, Schedule, CollectHour
-from .forms import CreateCalendarForm, InputScheduleForm, InputScheduleFormSet
+from .forms import CreateCalendarForm, InputScheduleFormSet
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, get_object_or_404
-from django.forms import formset_factory, modelformset_factory
 from django.db.models import Count
 from django.http import Http404
 from django.http.response import JsonResponse
@@ -201,14 +200,6 @@ def input(request, pk, page=1):
             if not move:
                 return redirect(to='../')
 
-        if 'prev' in request.GET:
-            page -= 1
-            if page < 0:
-                page = 1
-        if 'next' in request.GET:
-            page += 1
-            if page > total_pages:
-                page = total_pages
 
         formsets = []
 

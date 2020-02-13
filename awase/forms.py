@@ -37,18 +37,6 @@ class InputScheduleForm(forms.Form):
         self.fields['displaytime'].widget.attrs["disabled"] = "True"
         self.fields['displaytime'].widget.attrs["class"] = "form-control-plaintext displaytime"
 
-# class InputScheduleForm_(forms.ModelForm):
-#     class Meta:
-#         model = Schedule
-#         fields = ['starttime', 'canattend']
-
-#     displaytime = forms.CharField(required=False)
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.fields['displaytime'].widget.attrs["readonly"] = "readonly"
-#         self.fields['displaytime'].widget.attrs["disabled"] = "True"
-#         self.fields['displaytime'].widget.attrs["class"] = "form-control-plaintext displaytime"
-
 InputScheduleFormSet = forms.formset_factory(
     InputScheduleForm, extra=0
 )
