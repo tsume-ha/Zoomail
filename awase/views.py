@@ -3,12 +3,12 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from members.models import User
 from .models import Calendar, CalendarUser, Schedule, CollectHour
-from .forms import CreateCalendarForm, InputScheduleForm
+from .forms import CreateCalendarForm, InputScheduleForm, InputScheduleFormSet
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, get_object_or_404
-from django.forms import formset_factory
+from django.forms import formset_factory, modelformset_factory
 from django.db.models import Count
 from django.http import Http404
 from django.http.response import JsonResponse
@@ -187,11 +187,9 @@ def input(request, pk, page=1):
                 page = total_pages
 
         if (request.method == 'POST'):
-            print(request.POST)
-            print(request.GET)
             keys = [k for k in request.POST if 'can_attend' in k]
             for key in keys:
-                time_name = key.replace('can_attend', 'datetime')
+                time_name = key.replace('can_attend', 'starttime')
                 time = request.POST[time_name]
                 can_attend = request.POST[key]
                 Schedule.objects.update_or_create(
@@ -213,55 +211,47 @@ def input(request, pk, page=1):
                 page = total_pages
 
         formsets = []
-        InputScheduleFormSet = formset_factory(InputScheduleForm, extra=0)
-        schedule_calendar_query = Schedule.objects.filter(calendar=calendar).filter(user=now_user)
+
         date = calendar.days_begin + datetime.timedelta(days=7*(page-1))
-        date_range = {'start': date}
         count = 0
+        date_range = {'start': date}
         while date <= calendar.days_end and date < calendar.days_begin + datetime.timedelta(days=7*page):
             hour_query = CollectHour.objects.filter(calendar=calendar).get(date=date)
-            initial_data = []
-            for t in range(hour_query.hour_begin, hour_query.hour_end):
-                datetime_data = datetime.datetime.combine(date, datetime.time(00,00,00))
-                datetime_data = datetime_data + datetime.timedelta(hours=t)
-                try:
-                    schedule_query = schedule_calendar_query.get(starttime=datetime_data)
-                    initial_data.append({
-                        'displaytime':datetime_data.strftime('%H:%M'),
-                        'datetime':datetime_data,
-                        'can_attend': schedule_query.canattend
-                        })
-                except ObjectDoesNotExist:
-                    initial_data.append({
-                        'displaytime':datetime_data.strftime('%H:%M'),
-                        'datetime':datetime_data
-                        })
-                datetime_data = datetime_data + datetime.timedelta(minutes=30)
-                try:
-                    schedule_query = schedule_calendar_query.get(starttime=datetime_data)
-                    initial_data.append({
-                        'displaytime':datetime_data.strftime('%H:%M'),
-                        'datetime':datetime_data,
-                        'can_attend': schedule_query.canattend
-                        })
-                except ObjectDoesNotExist:
-                    initial_data.append({
-                        'displaytime':datetime_data.strftime('%H:%M'),
-                        'datetime':datetime_data
-                        })
-            formsets.append({'date':date, 'InputScheduleFormSet':InputScheduleFormSet(initial=initial_data,prefix=str(count))})
+            time_list = [datetime.datetime.combine(date, datetime.time(00,00,00))\
+                          + datetime.timedelta(hours=hour_query.hour_begin)\
+                          + datetime.timedelta(minutes=30*n)
+                         for n in range((hour_query.hour_end-hour_query.hour_begin)*2)]
+            initial = []
+            for time in time_list:
+                item, created = Schedule.objects.get_or_create(
+                    calendar = calendar,
+                    user = now_user,
+                    starttime = time,
+                    defaults = {'canattend': ''}
+                    )
+                initial.append({
+                    'displaytime':time.strftime('%H:%M'),
+                    'starttime':time,
+                    'can_attend': item.canattend
+                    })
+
+            formsets.append({
+                'date':date,
+                'InputScheduleFormSet':InputScheduleFormSet(
+                    initial = initial,
+                    prefix = str(count)
+                    )
+                })
             count += 1
-            date_range['end'] = date
             date = date + datetime.timedelta(days=1)
+        date_range['end'] = date
 
         params = {
             'calendar': calendar,
             'formsets': formsets,
-            'prev': page-1,
             'page': page,
-            'next': page+1,
-            'total_pages': total_pages,
             'date_range': date_range,
+            'total_pages': total_pages,
         }
 
 

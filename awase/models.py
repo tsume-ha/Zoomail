@@ -32,7 +32,7 @@ class Schedule(models.Model):
     calendar = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_schedule')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='schedule_user')
     starttime = models.DateTimeField()
-    canattend = models.BooleanField()
+    canattend = models.NullBooleanField()
     def __str__(self):
         return self.calendar.title
 

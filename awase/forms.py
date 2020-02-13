@@ -1,5 +1,5 @@
 from django import forms
-from .models import Calendar
+from .models import Calendar, Schedule
 import os
 import datetime
 
@@ -28,7 +28,7 @@ class InputScheduleForm(forms.Form):
         required = False,
         choices = {(True, '○'),(False, '×')}
     )
-    datetime = forms.DateTimeField(
+    starttime = forms.DateTimeField(
         widget=forms.HiddenInput()
     )
     def __init__(self, *args, **kwargs):
@@ -36,3 +36,19 @@ class InputScheduleForm(forms.Form):
         self.fields['displaytime'].widget.attrs["readonly"] = "readonly"
         self.fields['displaytime'].widget.attrs["disabled"] = "True"
         self.fields['displaytime'].widget.attrs["class"] = "form-control-plaintext displaytime"
+
+# class InputScheduleForm_(forms.ModelForm):
+#     class Meta:
+#         model = Schedule
+#         fields = ['starttime', 'canattend']
+
+#     displaytime = forms.CharField(required=False)
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['displaytime'].widget.attrs["readonly"] = "readonly"
+#         self.fields['displaytime'].widget.attrs["disabled"] = "True"
+#         self.fields['displaytime'].widget.attrs["class"] = "form-control-plaintext displaytime"
+
+InputScheduleFormSet = forms.formset_factory(
+    InputScheduleForm, extra=0
+)
