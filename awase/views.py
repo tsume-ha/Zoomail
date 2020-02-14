@@ -69,22 +69,6 @@ def CalendarJsonResponse(request, pk):
 
     user_list = CalendarUser.objects.filter(calendar=calendar) # order?
 
-    def NullBool_to_Complex(nullbool):
-        if nullbool is None:
-            return complex(0,0)
-        elif nullbool is True:
-            return complex(1,0)
-        else :
-            return complex(0,1)
-    def Complex_to_NGnumClassName(complex_value):
-        if complex_value == 0+0j:
-            return ''
-        else:
-            if complex_value.imag <=3:
-                return NG_CSS_classname[int(complex_value.imag)]
-            else:
-                return NG_CSS_classname[4]
-
     for day in collect_days:
         schedule_list = []
         complex_list = []
@@ -97,18 +81,19 @@ def CalendarJsonResponse(request, pk):
                 user = calendar_user.user,
                 starttime__gte = datetime.datetime.combine(day, datetime.time(hour=hour_begin)),
                 starttime__lt = datetime.datetime.combine(day, datetime.time(hour=hour_end%24)) + datetime.timedelta(days=hour_end//24)
-                ).values_list('canattend', flat=True)
-            schedule_list.append([calendar_user.user.get_short_name(), list(tmp)])
-            if tmp:
-                complex_list.append(list(map(NullBool_to_Complex, tmp)))
+                ).values_list('starttime', 'canattend')
+            schedule_list.append({calendar_user.user.get_short_name(): list(tmp)})
 
-        if complex_list:
-            import numpy as np
-            complex_array = np.array(complex_list)
-            output = np.sum(complex_array, axis=0)
-            schedule_list.append(['total', list(map(Complex_to_NGnumClassName, output))])
-        else:
-            schedule_list.append(['total_allnull'])
+        time_list = [datetime.datetime.combine(day, datetime.time(00,00,00))\
+                      + datetime.timedelta(hours=hour_begin)\
+                      + datetime.timedelta(minutes=30*n)
+                     for n in range((hour_end-hour_begin)*2)]
+        total_list = {'total': []}
+        for time in time_list:
+            NG_count = Schedule.objects.filter(calendar=calendar, starttime=time, canattend=False)\
+                       .aggregate(Count('starttime'))['starttime__count']
+            total_list['total'].append((time, NG_count))
+        schedule_list.append(total_list)
 
         day_json = {
             'date': day.strftime('%Y-%m-%d'),
@@ -117,7 +102,7 @@ def CalendarJsonResponse(request, pk):
             'weekday': day.weekday(),
             'hour_begin': hour_begin,
             'hour_end': hour_end,
-            'schedule_list':schedule_list
+            'schedule_list':schedule_list,
             'room': 'Loading',
         }
         data['calendar_data'].append(day_json)
