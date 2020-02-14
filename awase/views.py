@@ -66,34 +66,60 @@ def CalendarJsonResponse(request, pk):
 
     weekday_jp = ['月','火','水','木','金','土','日']
     NG_CSS_classname = ['NG0', 'NG1', 'NG2', 'NG3']
+
+    user_list = CalendarUser.objects.filter(calendar=calendar) # order?
+
+    def NullBool_to_Complex(nullbool):
+        if nullbool is None:
+            return complex(0,0)
+        elif nullbool is True:
+            return complex(1,0)
+        else :
+            return complex(0,1)
+    def Complex_to_NGnumClassName(complex_value):
+        if complex_value == 0+0j:
+            return ''
+        else:
+            if complex_value.imag <=3:
+                return NG_CSS_classname[int(complex_value.imag)]
+            else:
+                return NG_CSS_classname[4]
+
     for day in collect_days:
+        schedule_list = []
+        complex_list = []
+        hour_begin = CollectHour.objects.get(calendar=calendar, date=day).hour_begin
+        hour_end = CollectHour.objects.get(calendar=calendar, date=day).hour_end
+
+        for calendar_user in user_list:
+            tmp = Schedule.objects.filter(
+                calendar = calendar,
+                user = calendar_user.user,
+                starttime__gte = datetime.datetime.combine(day, datetime.time(hour=hour_begin)),
+                starttime__lt = datetime.datetime.combine(day, datetime.time(hour=hour_end%24)) + datetime.timedelta(days=hour_end//24)
+                ).values_list('canattend', flat=True)
+            schedule_list.append([calendar_user.user.get_short_name(), list(tmp)])
+            if tmp:
+                complex_list.append(list(map(NullBool_to_Complex, tmp)))
+
+        if complex_list:
+            import numpy as np
+            complex_array = np.array(complex_list)
+            output = np.sum(complex_array, axis=0)
+            schedule_list.append(['total', list(map(Complex_to_NGnumClassName, output))])
+        else:
+            schedule_list.append(['total_allnull'])
+
         day_json = {
             'date': day.strftime('%Y-%m-%d'),
-            'display_date': f"{day.month}/{day.day}",
+            'display_date': str(day.month) + '/' + str(day.day),
             'display_day': weekday_jp[day.weekday()],
+            'weekday': day.weekday(),
+            'hour_begin': hour_begin,
+            'hour_end': hour_end,
+            'schedule_list':schedule_list
             'room': 'Loading',
-            'NGlist':{}
         }
-        hours = CollectHour.objects.filter(calendar=calendar).get(date=day)
-        timelist = [
-            datetime.datetime.combine(day, datetime.time(0)) + datetime.timedelta(minutes=30*h)
-            for h in range(hours.hour_begin*2,hours.hour_end*2)
-            ]
-        for time in timelist:
-            if time.hour > 5:
-                time_label = time.strftime('%H_%M')
-            else:
-                time_label = str(time.hour + 24) + '_' + str(time.minute)
-            
-            is_answered = Schedule.objects.filter(calendar=calendar, starttime=time).exists()
-            if not is_answered:
-                day_json['NGlist'][time_label] = ''
-                continue
-            num = Schedule.objects.filter(calendar=calendar, starttime=time, canattend=False).aggregate(Count('starttime'))['starttime__count']
-            if num < 4:
-                day_json['NGlist'][time_label] = NG_CSS_classname[num]
-            else:
-                day_json['NGlist'][time_label] = NG_CSS_classname[3]
         data['calendar_data'].append(day_json)
 
     return JsonResponse(data)
