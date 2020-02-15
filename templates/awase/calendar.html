@@ -40,7 +40,10 @@
         <div class="day column" v-for="day in days" v-bind:date="day.date">
             <div class="date">[|[day.display_date]|]<br>[|[day.display_day]|]</div>
             <div class="room">[|[day.room]|]</div>
-            <div class="time" v-for="(NGnum, key) in day.NGlist" v-bind:class="NGnum"></div>
+            {% for time in timetuple %}
+            <div class="time" v-bind:class="day.NG_list.9_0"></div>
+            <div class="time" v-bind:class="day.NG_list.9_30"></div>
+            {% endfor %}
         </div>
     </div>
 </section>

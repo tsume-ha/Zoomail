@@ -1,7 +1,9 @@
 window.addEventListener('DOMContentLoaded', function() {
 
 var json_calendar = [
-        {date:'Loading', display_date: 'Loading', display_day: '', room: 'Loading', NGlist: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',]},
+        {date:'Loading', display_date: 'Loading', display_day: '', room: 'Loading',
+         NG_list: {'9_0': "", '9_30': "", '10_0': "", '10_30': "", '11_0': "", '11_30': "", '12_0': "", '12_30': "", '13_0': "", '13_30': "", '14_0': "", '14_30': "", '15_0': "", '15_30': "", '16_0': "", '16_30': "", '17_0': "", '17_30': "", '18_0': "", '18_30': "", '19_0': "", '19_30': "", '20_0': "", '20_30': "", '21_0': "", '21_30': "", '22_0': "", '22_30': "", '23_0': "", '23_30': "", '24_0': "", '24_30': "", '25_0': "", '25_30': "", }
+     },
     ];
 var json_roomdata;
 var settings;
@@ -64,6 +66,7 @@ function get_calendar_json(url, callback){
         settings = request.response.settings;
         calendar.day_count = settings.today_num;
         calendar.display_calendar();
+        console.log(json_calendar);
         callback();
     }
 }

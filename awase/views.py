@@ -69,8 +69,19 @@ def CalendarJsonResponse(request, pk):
 
     user_list = CalendarUser.objects.filter(calendar=calendar) # order?
 
+
+    def get_time_str(day, time):
+        hour = time.hour + (time - datetime.datetime.combine(day, datetime.time(00,00,00))).days * 24
+        return str(hour) + '_' + str(time.minute)
+
+    def get_NG_CSS_classname(num):
+        if num < 4:
+            return NG_CSS_classname[int(num)]
+        else:
+            return NG_CSS_classname[4]
+
     for day in collect_days:
-        schedule_list = []
+        schedule_list = {}
         complex_list = []
         hour_begin = CollectHour.objects.get(calendar=calendar, date=day).hour_begin
         hour_end = CollectHour.objects.get(calendar=calendar, date=day).hour_end
@@ -82,18 +93,21 @@ def CalendarJsonResponse(request, pk):
                 starttime__gte = datetime.datetime.combine(day, datetime.time(hour=hour_begin)),
                 starttime__lt = datetime.datetime.combine(day, datetime.time(hour=hour_end%24)) + datetime.timedelta(days=hour_end//24)
                 ).values_list('starttime', 'canattend')
-            schedule_list.append({calendar_user.user.get_short_name(): list(tmp)})
+            tmp_dict = {}
+            for starttime, canattend in tmp:
+                tmp_dict[get_time_str(day, starttime)] = canattend
+            schedule_list[calendar_user.user.get_short_name()] = list(tmp_dict)
 
         time_list = [datetime.datetime.combine(day, datetime.time(00,00,00))\
                       + datetime.timedelta(hours=hour_begin)\
                       + datetime.timedelta(minutes=30*n)
                      for n in range((hour_end-hour_begin)*2)]
-        total_list = {'total': []}
+        total_list = {}
         for time in time_list:
             NG_count = Schedule.objects.filter(calendar=calendar, starttime=time, canattend=False)\
                        .aggregate(Count('starttime'))['starttime__count']
-            total_list['total'].append((time, NG_count))
-        schedule_list.append(total_list)
+            total_list[get_time_str(day ,time)] = get_NG_CSS_classname(NG_count)
+        # schedule_list['total'] = total_list
 
         day_json = {
             'date': day.strftime('%Y-%m-%d'),
@@ -103,6 +117,7 @@ def CalendarJsonResponse(request, pk):
             'hour_begin': hour_begin,
             'hour_end': hour_end,
             'schedule_list':schedule_list,
+            'NG_list': total_list,
             'room': 'Loading',
         }
         data['calendar_data'].append(day_json)
