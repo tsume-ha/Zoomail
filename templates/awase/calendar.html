@@ -41,8 +41,8 @@
             <div class="date">[|[day.display_date]|]<br>[|[day.display_day]|]</div>
             <div class="room">[|[day.room]|]</div>
             {% for time in timetuple %}
-            <div class="time" v-bind:class="day.NG_list.9_0"></div>
-            <div class="time" v-bind:class="day.NG_list.9_30"></div>
+            <div class="time" v-bind:class="[day.NG_list.t{{time}}_0]"></div>
+            <div class="time" v-bind:class="[day.NG_list.t{{time}}_30]"></div>
             {% endfor %}
         </div>
     </div>

@@ -72,7 +72,7 @@ def CalendarJsonResponse(request, pk):
 
     def get_time_str(day, time):
         hour = time.hour + (time - datetime.datetime.combine(day, datetime.time(00,00,00))).days * 24
-        return str(hour) + '_' + str(time.minute)
+        return 't' + str(hour) + '_' + str(time.minute)
 
     def get_NG_CSS_classname(num):
         if num < 4:
