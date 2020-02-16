@@ -10,4 +10,6 @@ urlpatterns = [
 	path('calendar/<int:pk>/input/<int:page>/', views.input, name='input'),
 	path('create/', views.create, name='create'),
 	path('invited/key=<str:key>/', views.invited, name='invited'),
+	path('update/calendar/<int:pk>/', views.UpdateCalendarView, name='calendar_update'),
+
 ]

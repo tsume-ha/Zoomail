@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}{{calendar.title}}を変更 | あわせのあわせ | Unplugged Message{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
+{% endblock %}
+
+
+{% block body %}
+<h3>{{calendar.title}}を変更</h3>
+
+<section id="form_upload" class="my-3">
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{% for field in UpdateForm %}
+		<div class="form-group row mx-0">
+			{{ field.label_tag }}
+			{{ field }}
+			{% if field.errors %}
+			<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>
+			{% endif %}
+		</div>
+		{% endfor %}
+
+		<input type="submit" value="この内容に変更" class="btn btn-info mx-2 my-3">
+	</form>
+</section>
+
+{% endblock %}

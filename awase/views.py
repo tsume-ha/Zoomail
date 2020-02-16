@@ -257,3 +257,36 @@ def input(request, pk, page=1):
         return render(request, 'awase/input.html', params)
     else:
         return redirect('/awase/')
+
+
+@login_required()
+def UpdateCalendarView(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    UpdateForm = CreateCalendarForm(request.POST or None, instance=calendar)
+    if (request.method == 'POST'):
+        if UpdateForm.is_valid():
+            content = UpdateForm.save()
+
+            date = content.days_begin
+            while date <= content.days_end:
+                date_content = CollectHour.objects.get_or_create(
+                    calendar = calendar,
+                    date = date,
+                    defaults = {'hour_begin': 9, 'hour_end': 26},
+                    )
+                date = date + datetime.timedelta(days=1)
+
+            return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
+        else:
+            print('form is not valid')
+
+    params = {
+        'calendar': calendar,
+        'UpdateForm': UpdateForm,
+
+    }
+
+    return render(request, 'awase/update_calendar.html', params)
