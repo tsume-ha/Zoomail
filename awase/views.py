@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from members.models import User
 from .models import Calendar, CalendarUser, Schedule, CollectHour
-from .forms import CreateCalendarForm, InputScheduleFormSet
+from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -290,3 +290,30 @@ def UpdateCalendarView(request, pk):
     }
 
     return render(request, 'awase/update_calendar.html', params)
+
+
+
+@login_required()
+def UpdateCollectHourView(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    updateFormset = UpdateCollectHourFormSet(request.POST or None, queryset=CollectHour.objects.filter(
+        calendar = calendar,
+        date__gte = calendar.days_begin,
+        date__lte = calendar.days_end
+        ).order_by('date'))
+    if (request.method == 'POST'):
+        if updateFormset.is_valid():
+            content = updateFormset.save()
+            return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
+    for form in updateFormset.forms:
+        print(form.fields['date'].widget)
+    params = {
+        'calendar': calendar,
+        'updateFormset': updateFormset,
+
+    }
+
+    return render(request, 'awase/update_hours.html', params)

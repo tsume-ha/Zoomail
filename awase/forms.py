@@ -1,5 +1,5 @@
 from django import forms
-from .models import Calendar, Schedule
+from .models import Calendar, Schedule, CollectHour
 import os
 import datetime
 
@@ -39,4 +39,28 @@ class InputScheduleForm(forms.Form):
 
 InputScheduleFormSet = forms.formset_factory(
     InputScheduleForm, extra=0
+)
+
+class UpdateCollectHourForm(forms.ModelForm):
+    class Meta:
+        model = CollectHour
+        fields = ['date', 'hour_begin', 'hour_end']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['date'].widget = forms.DateInput(
+            format = '%m/%d',
+            attrs = {
+                'readonly': 'readonly',
+                'disabled': 'True',
+                'class': 'form-control-plaintext displaytime',
+            })
+        self.fields['date'].required = False
+        
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+
+
+UpdateCollectHourFormSet = forms.modelformset_factory(
+    CollectHour, form=UpdateCollectHourForm, extra=0,
 )

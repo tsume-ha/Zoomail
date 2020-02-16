@@ -11,5 +11,6 @@ urlpatterns = [
 	path('create/', views.create, name='create'),
 	path('invited/key=<str:key>/', views.invited, name='invited'),
 	path('update/calendar/<int:pk>/', views.UpdateCalendarView, name='calendar_update'),
+	path('update/hours/<int:pk>/', views.UpdateCollectHourView, name='hours_update'),
 
 ]
