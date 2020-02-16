@@ -2,7 +2,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
 var json_calendar = [
         {date:'Loading', display_date: 'Loading', display_day: '', room: 'Loading',
-         NG_list: {t9_0: "", t9_30: "", t10_0: "", t10_30: "", t11_0: "", t11_30: "", t12_0: "", t12_30: "", t13_0: "", t13_30: "", t14_0: "", t14_30: "", t15_0: "", t15_30: "", t16_0: "", t16_30: "", t17_0: "", t17_30: "", t18_0: "", t18_30: "", t19_0: "", t19_30: "", t20_0: "", t20_30: "", t21_0: "", t21_30: "", t22_0: "", t22_30: "", t23_0: "", t23_30: "", t24_0: "", t24_30: "", t25_0: "", t25_30: "", },
          schedule_list: {initial: ''},
         },
     ];
