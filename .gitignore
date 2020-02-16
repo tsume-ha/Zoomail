@@ -8,6 +8,9 @@ private_media/*
 
 u_message/settings_local.py
 config/settings_local.py
+config/local.py
+config/production.py
+config/base.env
 scripts/senders.py
 
 player/test.mp3
