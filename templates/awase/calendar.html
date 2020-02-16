@@ -37,12 +37,12 @@
             <div class="time" data-time="{{time}}.5"></div>
             {% endfor %}
         </div>
-        <div class="day column" v-for="day in days" v-bind:date="day.date">
+        <div class="day column" v-for="day, index in days" v-bind:date="day.date">
             <div class="date">[|[day.display_date]|]<br>[|[day.display_day]|]</div>
             <div class="room">[|[day.room]|]</div>
             {% for time in timetuple %}
-            <div class="time" v-bind:class="[day.NG_list.t{{time}}_0]"></div>
-            <div class="time" v-bind:class="[day.NG_list.t{{time}}_30]"></div>
+            <div class="time" v-bind:class="[NG_num(index, 't{{time}}_0')]"></div>
+            <div class="time" v-bind:class="[NG_num(index, 't{{time}}_30')]"></div>
             {% endfor %}
         </div>
     </div>

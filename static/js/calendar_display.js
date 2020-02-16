@@ -2,8 +2,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
 var json_calendar = [
         {date:'Loading', display_date: 'Loading', display_day: '', room: 'Loading',
-         NG_list: {t9_0: "", t9_30: "", t10_0: "", t10_30: "", t11_0: "", t11_30: "", t12_0: "", t12_30: "", t13_0: "", t13_30: "", t14_0: "", t14_30: "", t15_0: "", t15_30: "", t16_0: "", t16_30: "", t17_0: "", t17_30: "", t18_0: "", t18_30: "", t19_0: "", t19_30: "", t20_0: "", t20_30: "", t21_0: "", t21_30: "", t22_0: "", t22_30: "", t23_0: "", t23_30: "", t24_0: "", t24_30: "", t25_0: "", t25_30: "", }
-     },
+         NG_list: {t9_0: "", t9_30: "", t10_0: "", t10_30: "", t11_0: "", t11_30: "", t12_0: "", t12_30: "", t13_0: "", t13_30: "", t14_0: "", t14_30: "", t15_0: "", t15_30: "", t16_0: "", t16_30: "", t17_0: "", t17_30: "", t18_0: "", t18_30: "", t19_0: "", t19_30: "", t20_0: "", t20_30: "", t21_0: "", t21_30: "", t22_0: "", t22_30: "", t23_0: "", t23_30: "", t24_0: "", t24_30: "", t25_0: "", t25_30: "", },
+         schedule_list: {initial: ''},
+        },
     ];
 var json_roomdata;
 var settings;
@@ -51,8 +52,28 @@ var calendar = new Vue({
             }
             this.display_calendar();
             set_room_data();
+        },
+        NG_num: function(date, time){
+            const NG_class_name = ['NG0', 'NG1', 'NG2', 'NG3'];
+            let num = 0;
+            let flag = false
+            for (var key in this.days[date].schedule_list){
+                if (this.days[date].schedule_list[key][time] === false) {
+                    num += 1;
+                    flag = true;
+                } else if (this.days[date].schedule_list[key][time] === true) {
+                    flag = true;
+                }
+            }
+            if (flag == false) {
+                return '';
+            } else if (num < 4) {
+                return NG_class_name[num];
+            } else {
+                return NG_class_name[3];
+            }
         }
-    }
+    },
 });
 
 

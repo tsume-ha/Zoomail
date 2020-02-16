@@ -96,7 +96,7 @@ def CalendarJsonResponse(request, pk):
             tmp_dict = {}
             for starttime, canattend in tmp:
                 tmp_dict[get_time_str(day, starttime)] = canattend
-            schedule_list[calendar_user.user.get_short_name()] = list(tmp_dict)
+            schedule_list[calendar_user.user.get_short_name()] = tmp_dict
 
         time_list = [datetime.datetime.combine(day, datetime.time(00,00,00))\
                       + datetime.timedelta(hours=hour_begin)\
