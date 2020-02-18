@@ -2,13 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Kansouyoushi
 from .forms import KansouUploadForm
+from config.permissions import KansouPermission
 from django.db.models import Max, Min
 from django.contrib import messages
 import datetime
 
-def KansouPermission(user):
-    return user.is_superuser or\
-           user.groups.filter(name='Administer').exists()
 
 def exist_years(records):
     if records.exists():

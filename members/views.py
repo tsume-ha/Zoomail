@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import User, TmpMember
 from .forms import UserUpdateForm, RegisterForm, RegisterCSV
+from config.permissions import MemberRegisterPermission, AdminEnterPermission
 import csv
 from io import TextIOWrapper
 from .create_google_user import DuplicateGmailAccountError
@@ -12,14 +13,6 @@ from .create_google_user import Create_Google_User as register
 from django.core.exceptions import ValidationError
 import datetime
 
-
-def MemberRegisterPermission(user):
-    return user.is_superuser or\
-           user.groups.filter(name='Administer').exists()
-
-def AdminEnterPermission(user):
-    return user.is_superuser or\
-           user.groups.filter(name='HomepageGroup').exists()
 
 @login_required()
 def index(request):

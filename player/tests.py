@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.db.models import Count
 from django.core.files.uploadedfile import SimpleUploadedFile
 from members.models import User
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Permission
 import os
 from .models import Performance, Song
 from django.conf import settings
@@ -33,13 +33,10 @@ def Make_Song(self, user_year=2019):
             updated_by = User.objects.get(email=str(user_year) + 'mail@gmail.com')
             )
 
-def Make_Group(self):
-    return Group.objects.create(name='RecordingGroup')
-
-def User_LogIN_and_Add_a_Group(self, year=2019):
+def User_LogIN_and_Get_a_Permission(self, year=2019):
     user = User.objects.get(email=str(year) + 'mail@gmail.com')
-    admin_group = Group.objects.get(name='RecordingGroup')
-    admin_group.user_set.add(user)
+    permission = Permission.objects.get(codename="add_song")
+    user.user_permissions.add(permission)
     self.client.force_login(user)
     return user
 
@@ -112,7 +109,6 @@ class SongUploadTest(TestCase):
     def setUpTestData(cls):
         Make_User(cls, year=2019)
         Make_User(cls, year=2018)
-        Make_Group(cls)
 
     def test_player_upload_logOUT(self):
         User_LogOUT(self)
@@ -129,7 +125,7 @@ class SongUploadTest(TestCase):
         self.assertEqual(response.status_code, 403)
 
     def test_player_upload_logIN_with_permission(self):
-        User_LogIN_and_Add_a_Group(self, 2019)
+        User_LogIN_and_Get_a_Permission(self, 2019)
         response = self.client.get('/player/songupload/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'player/songupload.html')
@@ -167,7 +163,6 @@ class SongUploadTest(TestCase):
     def setUpTestData(cls):
         Make_User(cls, year=2019)
         Make_User(cls, year=2018)
-        Make_Group(cls)
         Make_Song(cls, user_year=2019)
         cls.performance = Performance.objects.get(live_name='Test Rehasal 1')
 
@@ -186,7 +181,7 @@ class SongUploadTest(TestCase):
         self.assertEqual(response.status_code, 403)
 
     def test_player_upload_logIN_with_permission(self):
-        User_LogIN_and_Add_a_Group(self, 2019)
+        User_LogIN_and_Get_a_Permission(self, 2019)
         response = self.client.get('/player/edit/' + str(self.performance.pk))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'player/edit.html')
