@@ -7,11 +7,8 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from .forms import CreateRehasalForm, CreateSongForm, EditSongForm
 from .models import Performance, Song
+from config.permissions import RecordingPermisson
 import datetime
-
-def RecordingPermisson(user):
-    return user.is_superuser or \
-           user.groups.filter(name='RecordingGroup').exists()
 
 
 @login_required()

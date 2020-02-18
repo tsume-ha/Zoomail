@@ -27,8 +27,9 @@ def PicturesPermission(user):
 
 # player
 def RecordingPermisson(user):
-    return user.is_superuser or \
+    return user.is_superuser or\
            user.groups.filter(name='RecordingGroup').exists() or\
+           user.groups.filter(name='PA').exists() or\
            user.groups.filter(name='HomepageGroup').exists()
 
 
