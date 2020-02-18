@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.db.models import Count
 from django.core.files.uploadedfile import SimpleUploadedFile
 from members.models import User
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Permission
 import os
 from .models import Performance, Song
 from django.conf import settings
@@ -34,12 +34,14 @@ def Make_Song(self, user_year=2019):
             )
 
 def Make_Group(self):
-    return Group.objects.create(name='RecordingGroup')
+    pass
 
 def User_LogIN_and_Add_a_Group(self, year=2019):
     user = User.objects.get(email=str(year) + 'mail@gmail.com')
-    admin_group = Group.objects.get(name='RecordingGroup')
-    admin_group.user_set.add(user)
+    # admin_group = Group.objects.get(name='RecordingGroup')
+    # admin_group.user_set.add(user)
+    permission = Permission.objects.get(codename="add_song")
+    user.user_permissions.add(permission)
     self.client.force_login(user)
     return user
 

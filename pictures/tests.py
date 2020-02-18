@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from members.models import User
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Permission
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Album
 import datetime
@@ -15,8 +15,10 @@ def Make_User(self,year=2019):
 
 def User_LogIN_and_Add_a_Group(self, groupname, year=2019):
     user = User.objects.get(email=str(year) + 'mail@gmail.com')
-    admin_group = Group.objects.create(name=groupname)
-    admin_group.user_set.add(user)
+    # admin_group = Group.objects.create(name=groupname)
+    # admin_group.user_set.add(user)
+    permission = Permission.objects.get(codename="add_album")
+    user.user_permissions.add(permission)
     self.client.force_login(user)
     return user
 

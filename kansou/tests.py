@@ -1,8 +1,8 @@
 from django.test import TestCase, Client
 from members.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth.models import Permission
 from .models import Kansouyoushi
-from django.contrib.auth.models import Group
 import os
 from django.conf import settings
 import datetime
@@ -23,8 +23,8 @@ def User_LogIN(self,year=2019):
 
 def User_LogIN_and_Add_AdministerGroup(self,year=2019):
     user = User.objects.get(email=str(year) + 'mail@gmail.com')
-    admin_group = Group.objects.create(name='Administer')
-    admin_group.user_set.add(user)
+    permission = Permission.objects.get(codename="add_kansouyoushi")
+    user.user_permissions.add(permission)
     self.client.force_login(user)
 
 

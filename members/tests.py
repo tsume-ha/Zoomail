@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from members.models import User
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Permission
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -14,8 +14,10 @@ def Make_User(self,year=2019):
 
 def User_LogIN_and_Add_AdministerGroup(self,year=2019):
     user = User.objects.get(email=str(year) + 'mail@gmail.com')
-    admin_group = Group.objects.create(name='Administer')
-    admin_group.user_set.add(user)
+    # admin_group = Group.objects.create(name='Administer')
+    # admin_group.user_set.add(user)
+    permission = Permission.objects.get(codename="change_user")
+    user.user_permissions.add(permission)
     self.client.force_login(user)
     return user
 
