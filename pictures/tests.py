@@ -13,10 +13,8 @@ def Make_User(self,year=2019):
     self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year)
     return self.user
 
-def User_LogIN_and_Add_a_Group(self, groupname, year=2019):
+def User_LogIN_and_Get_a_Permission(self, groupname, year=2019):
     user = User.objects.get(email=str(year) + 'mail@gmail.com')
-    # admin_group = Group.objects.create(name=groupname)
-    # admin_group.user_set.add(user)
     permission = Permission.objects.get(codename="add_album")
     user.user_permissions.add(permission)
     self.client.force_login(user)
@@ -119,7 +117,7 @@ class PicturesTestwithModel(TestCase):
             'held_at': '2019-04-01',
             'url': 'https://example.com',
         }
-        User_LogIN_and_Add_a_Group(self, 'PhotographersGroup')
+        User_LogIN_and_Get_a_Permission(self, 'PhotographersGroup')
         request = self.client.post('/pictures/register/', data)
         self.assertEqual(request.status_code, 302)
         url_redial_to = request.url
