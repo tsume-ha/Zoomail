@@ -310,7 +310,7 @@ def UpdateCollectHourView(request, pk):
             content = updateFormset.save()
             return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
         else:
-            pass
+            print('validationerror')
     params = {
         'calendar': calendar,
         'updateFormset': updateFormset,

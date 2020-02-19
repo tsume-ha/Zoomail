@@ -10,22 +10,23 @@
 
 {% block body %}
 <h3>{{calendar.title}}の集計時間を変更</h3>
-<p>
+<p class="mb-4">
     各日にちの中で日程調整したい時間帯を変更できます。<br>
     時間は24時間表記で、9時(AM9:00)～26時(翌AM2:00)まで1時間単位で指定できます。<br>
-    例：18:00～24:00まで集計したい場合、開始時間に18、終了時間に24を指定してください。
+    また、その日の集計を行わない場合は開始時間と終了時間に同じ数字を入れてください。<br>
+    例：開始「9」、終了「9」 のとき、その日は集計を行いません。
 </p>
 <section id="form_upload" class="my-3">
     <form method="post" enctype="multipart/form-data">
         <div class="form-group row mx-0">
-            <span class="display_date col-3 px-2">日にち</span>
-            <span class="col-3">開始時間</span>
-            <span class="col-3">終了時間</span>
+            <span class="display_date col-4 px-2">日にち</span>
+            <span class="col-3 mx-2">開始時間</span>
+            <span class="col-3 mx-2">終了時間</span>
         </div>
         {% csrf_token %}
         {% for form in updateFormset %}
             <div class="form-group row mx-0">
-            <span class="display_date col-3 px-2">
+            <span class="display_date col-4 px-2">
                 {% if form.instance.date %}
                 {{ form.instance.date | date:"m/d (D)" }}
                 {% else %}
@@ -34,10 +35,6 @@
             </span>
             {{ form.hour_begin }}
             {{ form.hour_end }}
-            <span class="is_cancel">
-                {{ form.canceled.label_tag }}
-                {{ form.canceled }}
-            </span>
             {% for field in form.visible_fields %}
                 {% if field.errors %}<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>{% endif %}
             {% endfor %}
