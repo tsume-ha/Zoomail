@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from members.models import User
 from .models import Calendar, CalendarUser, Schedule, CollectHour
-from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet
+from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -336,3 +336,19 @@ def UpdateURLKey(request, pk):
         'calendar': calendar,
     }
     return render(request, 'awase/update_URLKey.html', params)
+
+@login_required()
+def ChangeUsers(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    
+    formset = UserChangeFormSet(request.POST or None, queryset=CalendarUser.objects.filter(
+        calendar = calendar
+        ))
+    params = {
+        'calendar': calendar,
+        'formset': formset,
+    }
+    return render(request, 'awase/change_users.html', params)

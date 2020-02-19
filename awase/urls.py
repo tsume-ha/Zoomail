@@ -13,5 +13,6 @@ urlpatterns = [
 	path('update/calendar/<int:pk>/', views.UpdateCalendarView, name='calendar_update'),
 	path('update/hours/<int:pk>/', views.UpdateCollectHourView, name='hours_update'),
 	path('update/urlkey/<int:pk>/', views.UpdateURLKey, name='key_update'),
+	path('update/user/<int:pk>/', views.ChangeUsers, name='change_users'),
 
 ]

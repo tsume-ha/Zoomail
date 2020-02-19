@@ -1,5 +1,5 @@
 from django import forms
-from .models import Calendar, Schedule, CollectHour
+from .models import Calendar, Schedule, CollectHour, CalendarUser
 import os
 import datetime
 
@@ -79,4 +79,19 @@ class UpdateCollectHourForm(forms.ModelForm):
 
 UpdateCollectHourFormSet = forms.modelformset_factory(
     CollectHour, form=UpdateCollectHourForm, extra=0,
+)
+
+class UserChangeForm(forms.ModelForm):
+    class Meta:
+        model = CalendarUser
+        fields = ['user']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['user'].widget = forms.HiddenInput()
+
+
+
+UserChangeFormSet = forms.modelformset_factory(
+    CalendarUser, form=UserChangeForm, extra=0, can_delete=True,
 )
