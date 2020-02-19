@@ -12,5 +12,6 @@ urlpatterns = [
 	path('invited/key=<str:key>/', views.invited, name='invited'),
 	path('update/calendar/<int:pk>/', views.UpdateCalendarView, name='calendar_update'),
 	path('update/hours/<int:pk>/', views.UpdateCollectHourView, name='hours_update'),
+	path('update/urlkey/<int:pk>/', views.UpdateURLKey, name='key_update'),
 
 ]

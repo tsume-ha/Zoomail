@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}{{ calendar.title }} - 招待URLの確認 | Unplugged Message{% endblock %}
+{% block extrastyle %}
+
+{% endblock %}
+
+
+{% block body %}
+<h3>{{ calendar.title }} - 招待URLの確認</h3>
+<section class="my-3">
+    <p>
+        このカレンダーへの招待リンクは以下の通りです。<br>
+        この招待URLを日程調整したい人に(LINE,メールなどで)送信してください。<br>
+    </p>
+    <input id="inviteURL" class="p-2 form-control text-break" type="text" readonly="readonly" value="http://localhost:3333{% url 'awase:invited' calendar.invite_key %}">
+    <p class="small">
+    招待URLです。<br>
+    クリックするとクリップボードにコピーされます。
+    </p>
+</section>
+<section class="my-3">
+    <h6>招待リンクの変更</h6>
+    <p class="small">
+        招待リンクを変更すると以前に発行されたURLは無効になります。<br>
+        別のメンバーを招待するには新しいURLを使ってください。<br>
+        <button type="button" id="change_key" class="btn btn-warning mx-2 my-2">招待URLを変更する</button>
+        <form id="change_key_form">
+            {% csrf_token %}
+            <input type="hidden" name="change_key" value="true">
+        </form>
+    </p>
+</section>
+<script type="text/javascript">
+var target = document.getElementById("inviteURL");
+target.addEventListener("click", function(){
+    target.select();
+    document.execCommand("Copy");
+    alert("クリップボードにコピーしました！ : " + target.value);
+});
+
+var button = document.getElementById("change_key");
+button.addEventListener("click", function(){
+    var result = confirm('【確認】　招待URLを変更しますか？');
+    if(result) {
+        $.post(location.href, $('#change_key_form').serialize(), function(){
+            location.reload();
+        });     
+    }
+});
+</script>
+{% endblock %}
