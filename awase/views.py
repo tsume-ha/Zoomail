@@ -220,27 +220,28 @@ def input(request, pk, page=1):
                           + datetime.timedelta(hours=hour_query.hour_begin)\
                           + datetime.timedelta(minutes=30*n)
                          for n in range((hour_query.hour_end-hour_query.hour_begin)*2)]
-            initial = []
-            for time in time_list:
-                item, created = Schedule.objects.get_or_create(
-                    calendar = calendar,
-                    user = now_user,
-                    starttime = time,
-                    defaults = {'canattend': ''}
-                    )
-                initial.append({
-                    'displaytime':time.strftime('%H:%M'),
-                    'starttime':time,
-                    'can_attend': item.canattend
-                    })
+            if len(time_list):
+                initial = []
+                for time in time_list:
+                    item, created = Schedule.objects.get_or_create(
+                        calendar = calendar,
+                        user = now_user,
+                        starttime = time,
+                        defaults = {'canattend': ''}
+                        )
+                    initial.append({
+                        'displaytime':time.strftime('%H:%M'),
+                        'starttime':time,
+                        'can_attend': item.canattend
+                        })
 
-            formsets.append({
-                'date':date,
-                'InputScheduleFormSet':InputScheduleFormSet(
-                    initial = initial,
-                    prefix = str(count)
-                    )
-                })
+                formsets.append({
+                    'date':date,
+                    'InputScheduleFormSet':InputScheduleFormSet(
+                        initial = initial,
+                        prefix = str(count)
+                        )
+                    })
             count += 1
             date = date + datetime.timedelta(days=1)
         date_range['end'] = date
