@@ -303,13 +303,14 @@ def UpdateCollectHourView(request, pk):
         calendar = calendar,
         date__gte = calendar.days_begin,
         date__lte = calendar.days_end
-        ).order_by('date'))
+        ).order_by('date')
+    )
     if (request.method == 'POST'):
         if updateFormset.is_valid():
             content = updateFormset.save()
             return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
-    for form in updateFormset.forms:
-        print(form.fields['date'].widget)
+        else:
+            pass
     params = {
         'calendar': calendar,
         'updateFormset': updateFormset,

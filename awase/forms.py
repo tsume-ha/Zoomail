@@ -45,20 +45,38 @@ class UpdateCollectHourForm(forms.ModelForm):
     class Meta:
         model = CollectHour
         fields = ['date', 'hour_begin', 'hour_end']
+    
+    cancel = forms.BooleanField(
+        required = False,
+        label = "無効",
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['date'].widget = forms.DateInput(
-            format = '%m/%d',
-            attrs = {
-                'readonly': 'readonly',
-                'disabled': 'True',
-                'class': 'form-control-plaintext displaytime',
-            })
-        self.fields['date'].required = False
-        
-        for field in self.fields.values():
-            field.widget.attrs["class"] = "form-control"
+        # for field in self.fields.values():
+        #     field.widget.attrs["class"] = "form-control"
+        self.fields['date'].widget = forms.HiddenInput()
+        self.fields['hour_begin'].widget.attrs["class"] = "form-control col-3"
+        self.fields['hour_end'].widget.attrs["class"] = "form-control col-3"
+        # self.fields['cancel'].widget.attrs["class"] = "form-control col-1"
+
+
+
+    def clean(self):
+        hour_begin = self.cleaned_data['hour_begin']
+        hour_end = self.cleaned_data['hour_end']
+        if not 9 <= hour_begin <= 26:
+            raise forms.ValidationError(
+                '24時間表記で9時から26時までの範囲で指定してください'
+            )
+        if not 9 <= hour_end <= 26:
+            raise forms.ValidationError(
+                '24時間表記で9時から26時までの範囲で指定してください'
+            )
+        if hour_end <= hour_begin:
+            raise forms.ValidationError(
+                '終了時間は、開始時間よりも後にしてください'
+            )
 
 
 UpdateCollectHourFormSet = forms.modelformset_factory(

@@ -20,14 +20,24 @@
         {% csrf_token %}
         {% for form in updateFormset %}
             <div class="form-group row mx-0">
-            {{ form.non_field_errors }}
-            {% for field in form.visible_fields %}
-                {{ field.label_tag }}
-                {{ field }}
-                {% if field.errors %}
-                <p class="small text-danger pl-2">{{ field.errors.as_text }}</p>
+            <span class="display_date col-3 px-2">
+                {% if form.instance.date %}
+                {{ form.instance.date | date:"m/d (D)" }}
+                {% else %}
+                {{ form.date.value | date:"m/d (D)" }}
                 {% endif %}
+            </span>
+            {{ form.hour_begin }}
+            {{ form.hour_end }}
+            <span class="is_cancel">
+            	{{ form.cancel.label_tag }}
+                {{ form.cancel }}
+            </span>
+            {% for field in form.visible_fields %}
+                {% if field.errors %}<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>{% endif %}
             {% endfor %}
+
+            {{ form.non_field_errors }}
             {% for field in form.hidden_fields %}
                 {{ field }}
             {% endfor %}
