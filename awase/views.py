@@ -393,5 +393,7 @@ def DeleteCalendarView(request, pk):
     params = {
         'calendar': calendar,
     }
-    return render(request, 'awase/delete_calendar.html', params
+    return render(request, 'awase/delete_calendar.html', params)
+
+
 
