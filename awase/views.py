@@ -357,3 +357,22 @@ def ChangeUsers(request, pk):
         'formset': formset,
     }
     return render(request, 'awase/change_users.html', params)
+
+
+@login_required()
+def LeaveCalendarView(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    if (request.method == 'POST'):
+        if 'leave' in request.POST:
+            content = CalendarUser.objects.filter(calendar=calendar, user=now_user)
+            content.delete()
+            messages.success(request, calendar.title + 'から退会しました。')
+            return redirect(to=reverse('awase:index'))
+
+    params = {
+        'calendar': calendar,
+    }
+    return render(request, 'awase/leave_calendar.html', params)

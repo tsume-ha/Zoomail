@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}{{ calendar.title }} - 日程調整から退会する | Unplugged Message{% endblock %}
+{% block extrastyle %}
+
+{% endblock %}
+
+
+{% block body %}
+<h3>{{ calendar.title }} - 日程調整から退会する</h3>
+<section class="my-3">
+    <p>
+        この日程調整から退会するには下のボタンを押してください。<br>
+        もう一度この日程調整に参加するには、もう一度招待リンクを教えてもらい、招待リンクから参加し直してください。<br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="leave" value="true">
+            <input type="submit" value="{{ calendar.title }}から退会する" class="btn btn-danger mx-2 my-2">
+        </form>
+    </p>
+</section>
+{% endblock %}
