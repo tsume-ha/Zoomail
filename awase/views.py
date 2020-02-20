@@ -376,3 +376,22 @@ def LeaveCalendarView(request, pk):
         'calendar': calendar,
     }
     return render(request, 'awase/leave_calendar.html', params)
+
+
+@login_required()
+def DeleteCalendarView(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    if (request.method == 'POST'):
+        if 'delete' in request.POST:
+            calendar.delete()
+            messages.success(request, calendar.title + 'を削除しました。')
+            return redirect(to=reverse('awase:index'))
+
+    params = {
+        'calendar': calendar,
+    }
+    return render(request, 'awase/delete_calendar.html', params
+
