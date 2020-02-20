@@ -347,6 +347,11 @@ def ChangeUsers(request, pk):
     formset = UserChangeFormSet(request.POST or None, queryset=CalendarUser.objects.filter(
         calendar = calendar
         ))
+    if (request.method == 'POST'):
+        if formset.is_valid():
+            formset.save()
+            messages.success(request, 'メンバーを退会させました。')
+            return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
     params = {
         'calendar': calendar,
         'formset': formset,
