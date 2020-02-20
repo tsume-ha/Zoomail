@@ -207,6 +207,8 @@ def input(request, pk, page=1):
                 )
             if not move:
                 return redirect(to='../')
+            else:
+                return redirect(to = reverse('awase:input', args=[calendar.pk, page]))
 
 
         formsets = []
