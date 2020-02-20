@@ -246,7 +246,7 @@ def input(request, pk, page=1):
                     })
             count += 1
             date = date + datetime.timedelta(days=1)
-        date_range['end'] = date
+        date_range['end'] = date - datetime.timedelta(days=1)
 
         params = {
             'calendar': calendar,
