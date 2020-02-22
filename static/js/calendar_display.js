@@ -86,16 +86,20 @@ var calendar = new Vue({
             this.detail_list = {};
             for (var username in this.days[date].schedule_list){
                 let schedule = this.days[date].schedule_list[username][time];
-                let obj = {}
-                if (schedule === null) {
+                console.log(schedule);
+                let obj = {};
+                if (schedule === null || schedule === undefined) {
                     obj.class = 'text-secondary';
                     obj.text = '未回答';
-                } else if (schedule == true) {
+                } else if (schedule === true) {
                     obj.class = 'text-success';
                     obj.text = '○';
-                } else if (schedule == false) {
+                } else if (schedule === false) {
                     obj.class = 'text-danger';
                     obj.text = '×';
+                } else {
+                    obj.class = "";
+                    obj.text = schedule;
                 }
                 this.detail_list[username] = obj;
             }

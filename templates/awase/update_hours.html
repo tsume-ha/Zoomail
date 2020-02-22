@@ -9,7 +9,7 @@
 
 
 {% block body %}
-<h3>{{calendar.title}}の集計時間を変更</h3>
+<h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a>の集計時間を変更</h3>
 <p class="mb-4">
     各日にちの中で日程調整したい時間帯を変更できます。<br>
     時間は24時間表記で、9時(AM9:00)～26時(翌AM2:00)まで1時間単位で指定できます。<br>

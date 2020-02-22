@@ -2,14 +2,23 @@
 
 /*共通設定*/
 a,
-a h6{
+a h6,
+h3 a{
 	text-decoration: none;
 }
 a.hover,
 a:hover,
-a.hover h6
-a:hover h6{
+a.hover h6,
+a:hover h6
+h3 a.hover,
+h3 a:hover{
 	text-decoration: underline;
+}
+
+h3 a,
+h3.hover a
+h3:hover a{
+	color: #000!important;
 }
 
 

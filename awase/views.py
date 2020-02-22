@@ -67,7 +67,7 @@ def CalendarJsonResponse(request, pk):
     weekday_jp = ['月','火','水','木','金','土','日']
     NG_CSS_classname = ['NG0', 'NG1', 'NG2', 'NG3']
 
-    user_list = CalendarUser.objects.filter(calendar=calendar) # order?
+    user_list = CalendarUser.objects.filter(calendar=calendar).order_by('joined_at')
 
 
     def get_time_str(day, time):

@@ -9,7 +9,7 @@
 
 
 {% block body %}
-<h3>{{ calendar.title }} - ユーザーの変更</h3>
+<h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> - ユーザーの変更</h3>
 <p class="my-3">
     日程調整から退会させたいユーザーを選んで送信してください。<br>
     チェックボックスがついたユーザーが日程調整から外れます。<br>

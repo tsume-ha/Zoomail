@@ -9,7 +9,7 @@
 
 
 {% block body %}
-<h3>{{ calendar.title }} - 招待URLの確認</h3>
+<h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> - 招待URLの確認</h3>
 <section class="my-3">
     <p>
         このカレンダーへの招待リンクは以下の通りです。<br>

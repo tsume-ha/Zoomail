@@ -9,7 +9,7 @@
 
 
 {% block body %}
-<h3>{{ calendar.title }} - 日程調整を削除する</h3>
+<h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> - 日程調整を削除する</h3>
 <section class="my-3">
     <p>
         この日程調整から削除するには下のボタンを押してください。<br>

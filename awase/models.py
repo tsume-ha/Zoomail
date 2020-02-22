@@ -16,6 +16,7 @@ class Calendar(models.Model):
 class CalendarUser(models.Model):
     calendar = models.ForeignKey(Calendar, on_delete=models.CASCADE, related_name='calendar_content')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='calendar_user')
+    joined_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.calendar.title + ' : ' + self.user.get_full_name()
 
