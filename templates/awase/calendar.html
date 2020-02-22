@@ -41,23 +41,20 @@
             <div class="date">[|[day.display_date]|]<br>[|[day.display_day]|]</div>
             <div class="room">[|[day.room]|]</div>
             {% for time in timetuple %}
-            <div class="time" v-bind:class="[NG_num(index, 't{{time}}_0')]"></div>
-            <div class="time" v-bind:class="[NG_num(index, 't{{time}}_30')]"></div>
+            <div class="time" v-on:click="detail_open(index, 't{{time}}_0')" v-bind:class="[NG_num(index, 't{{time}}_0')]"></div>
+            <div class="time" v-on:click="detail_open(index, 't{{time}}_30')" v-bind:class="[NG_num(index, 't{{time}}_30')]"></div>
             {% endfor %}
         </div>
     </div>
-    <div id="calendar_detail">
-        <span id="detail_close"></span>
-        <h5>2/22(土)</h5>
-        <h6>18:00～18:30</h6>
+    <div id="calendar_detail" v-bind:class="{opened:detail_dislpay}">
+        <span v-on:click="detail_close" id="detail_close"></span>
+        <h5>[|[detail_date]|]</h5>
+        <h6>[|[detail_time]|]</h6>
         <ul>
-            <li class="row"><span class="col-8">だれだれ</span><span class="col-4">○</span></li>
-            <li class="row"><span class="col-8">だれだれ</span><span class="col-4">○</span></li>
-            <li class="row"><span class="col-8">だれだれ</span><span class="col-4">○</span></li>
-            <li class="row"><span class="col-8">だれだれ</span><span class="col-4">○</span></li>
-            <li class="row"><span class="col-8">だれだれ</span><span class="col-4">○</span></li>
-            <li class="row"><span class="col-8">だれだれ</span><span class="col-4">○</span></li>
-            <li class="row"><span class="col-8">だれだれ</span><span class="col-4">○</span></li>
+            <li class="row" v-for="schedule, name in detail_list">
+                <span class="col-8">[|[name]|]</span>
+                <span class="col-4 schedule" v-bind:class="[schedule.class]">[|[schedule.text]|]</span>
+            </li>
         </ul>
     </div>
 </section>

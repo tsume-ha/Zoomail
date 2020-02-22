@@ -115,8 +115,14 @@ div#menu_days button{
     border-bottom: none;
 }
 
-@media screen and (max-width: 767px) {/*767px以下*/
+
+
 #calendar_detail{
+	display: none;
+}
+
+@media screen and (max-width: 767px) {/*767px以下*/
+#calendar_detail.opened{
     display: block;
     position: fixed;
     bottom: 0;
@@ -135,7 +141,7 @@ div#menu_days button{
 
 }
 
-#calendar_detail #detail_close{
+#calendar_detail.opened #detail_close{
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -149,8 +155,8 @@ div#menu_days button{
     border: 1px solid #faa;
 }
 
-#calendar_detail #detail_close:before,
-#calendar_detail #detail_close:after{
+#calendar_detail.opened #detail_close:before,
+#calendar_detail.opened #detail_close:after{
     content: '';
     position: absolute;
     display: block;
@@ -159,11 +165,11 @@ div#menu_days button{
     margin-left: -8px;
     background-color: currentColor;
 }
-#calendar_detail #detail_close:before{
+#calendar_detail.opened #detail_close:before{
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-#calendar_detail #detail_close:after {
+#calendar_detail.opened #detail_close:after {
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
@@ -173,18 +179,18 @@ div#menu_days button{
 
 
 
-#calendar_detail h5,
-#calendar_detail h6{
+#calendar_detail.opened h5,
+#calendar_detail.opened h6{
     text-align: center;
 }
 
-#calendar_detail ul{
+#calendar_detail.opened ul{
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
-#calendar_detail ul li{
+#calendar_detail.opened ul li{
     margin: 0.25rem;
     padding: 0.25rem;
     border-bottom: 1px solid #aaa;

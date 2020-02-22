@@ -16,6 +16,10 @@ var calendar = new Vue({
         days: json_calendar,
         day_count: 0,
         day_display_max_num: 7,
+        detail_dislpay: false,
+        detail_date: '',
+        detail_time: '',
+        detail_list: {},
     },
     methods: {
         window:onload = function() {
@@ -71,6 +75,32 @@ var calendar = new Vue({
             } else {
                 return NG_class_name[3];
             }
+        },
+        detail_close: function(event){
+            this.detail_dislpay = false;
+            console.log(this.detail_dislpay)
+        },
+        detail_open: function(date, time){
+            this.detail_dislpay = true;
+            this.detail_date = this.days[date].display_date + ' (' + this.days[date].display_day + ')';
+            this.detail_time = get_time_range(time);
+            this.detail_list = {};
+            for (var username in this.days[date].schedule_list){
+                let schedule = this.days[date].schedule_list[username][time];
+                let obj = {}
+                if (schedule === null) {
+                    obj.class = 'text-secondary';
+                    obj.text = '未回答';
+                } else if (schedule == true) {
+                    obj.class = 'text-success';
+                    obj.text = '○';
+                } else if (schedule == false) {
+                    obj.class = 'text-danger';
+                    obj.text = '×';
+                }
+                this.detail_list[username] = obj;
+            }
+
         }
     },
 });
@@ -122,6 +152,23 @@ function get_room_data(){
         json_roomdata = request.response;
         set_room_data();
     }
+}
+
+function get_time_range(time){
+    // time--> str  t9_0 or t12_30 etc
+    // return --> str 9:00～9:30 etc
+    let str = time.replace('t', '');
+    str = str.split('_');
+    let start = '';
+    let end = '';
+    if (str[1] == '0') {
+        start = str[0] + ':00';
+        end = str[0] + ':30';
+    } else if (str[1] == '30'){
+        start = str[0] + ':30';
+        end = String(Number(str[0]) + 1) + ':00';
+    }
+    return start + '～' + end;
 }
 
 
