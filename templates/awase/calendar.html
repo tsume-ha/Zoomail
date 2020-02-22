@@ -59,23 +59,6 @@
     </div>
 </section>
 
-<style type="text/css">
-.NG0{
-    background-color: #78df90;
-}
-
-.NG1{
-    background-color: #ffe38f;
-}
-
-.NG2{
-    background-color: #ff8999;
-}
-.NG3{
-    background-color: #343a40;
-}
-</style>
-
 <section id="menu" class="col-xs-12 col-sm-8 col-md-6 col-ld-6">
     <a href="input/" class="enter text-center text-sm-left">入力する</a>
     <a href="javascript:menu_sw()" id="menu_sw" class="text-center text-sm-left">設定変更</a>
@@ -88,6 +71,20 @@
         <a href="{% url 'awase:leave_calendar' calendar.pk %}" class="text-center text-sm-left text-danger">この日程調整から退会する</a>
         <a href="{% url 'awase:delete_calendar' calendar.pk %}" class="text-center text-sm-left text-danger">カレンダーを削除するページへ</a>
     </div>
+</section>
+
+<section id="exapmle">
+    <p class="small">
+        色分けは、その時間帯に参加できない人の人数を表しています。<br>
+        回答していない人は数に含まれていません。
+    </p>
+    <p>
+        凡例：参加できない人数...0人（回答者は全員参加できる）<span class="NG0"></span><br>
+        1人<span class="NG1"></span><br>
+        2人<span class="NG2"></span><br>
+        3人以上<span class="NG3"></span><br>
+        全員未回答もしくは集計範囲外<span></span><br>
+    </p>
 </section>
 
 <script type="text/javascript">
