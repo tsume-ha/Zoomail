@@ -1,31 +1,31 @@
 section{
-	margin: 1rem 0;
+    margin: 1rem 0;
 }
 #calendar_menu{
-	display: block;
-	position: relative;
+    display: block;
+    position: relative;
 }
 #calendar_menu div{
-	display: inline-block;
-	position: relative;
+    display: inline-block;
+    position: relative;
 }
 #calendar_menu div button{
-	display: inline-block;
-	position: relative;
-	background-color: #fff;
-	border-style: none;
-	text-align: center;
-	font-size: 10px;
-	margin: 0;
-	padding: 0 4px;
+    display: inline-block;
+    position: relative;
+    background-color: #fff;
+    border-style: none;
+    text-align: center;
+    font-size: 10px;
+    margin: 0;
+    padding: 0 4px;
 }
 #calendar_menu div button img{
-	display: block;
-	margin: 0 auto;
+    display: block;
+    margin: 0 auto;
 }
 #calendar_menu div button span{
-	display: inline-block;
-	white-space: nowrap;
+    display: inline-block;
+    white-space: nowrap;
 }
 
 @media screen and (min-width: 340px) {/*340px以上*/
@@ -45,10 +45,10 @@ div#menu_days button{
     display: flex;
 }
 #calendar_table *{
-	position: relative;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 #calendar_table .column{
     display: -webkit-flex;
@@ -63,54 +63,129 @@ div#menu_days button{
     flex-grow: 0;
     -webkit-flex-shrink: 0;
     flex-shrink: 0;
-	font-size: 10px;
+    font-size: 10px;
 }
 #calendar_table #leftside div{
-	border-left: 1px solid #eee;
-	padding: 0 5px;
+    border-left: 1px solid #eee;
+    padding: 0 5px;
 }
 #calendar_table #leftside div.room{
-	padding: 5px 0;
+    padding: 5px 0;
 }
 #calendar_table .day{
-	width: 50px;
+    width: 50px;
     -webkit-flex-grow: 1;
     flex-grow: 1;
 }
 #calendar_table .column div{
-	border-right: 1px solid #eee;
-	border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 #calendar_table .column div:first-child{
-	height: 3.5rem;
-	text-align: center;
-	line-height: 1.5rem;
-	font-size: 12px;
-	padding: 5px 0;
-	padding: 0.25rem auto;
-	border-top: 1px solid #eee;
+    height: 3.5rem;
+    text-align: center;
+    line-height: 1.5rem;
+    font-size: 12px;
+    padding: 5px 0;
+    padding: 0.25rem auto;
+    border-top: 1px solid #eee;
 }
 
 #calendar_table .column div.room{
-	font-size: 10px;
-	text-align: center;
-	padding: 5px 0;
-	line-height: 15px;
-	height: 26px;
-	word-break: break-all;
-	overflow-x: hidden;
-	overflow-y: hidden;
-	z-index: 2;
+    font-size: 10px;
+    text-align: center;
+    padding: 5px 0;
+    line-height: 15px;
+    height: 26px;
+    word-break: break-all;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    z-index: 2;
 }
 #calendar_table .column div.room.hover{
-	overflow-y: visible;
-	height: 100px;
-	margin-bottom: -74px;
-	border-bottom: none;
+    overflow-y: visible;
+    height: 100px;
+    margin-bottom: -74px;
+    border-bottom: none;
 }
 #calendar_table .column div.time{
-	height: 1rem;
+    height: 1rem;
 }
 #calendar_table .column div.time[data-time$=".0"]{
-	border-bottom: none;
+    border-bottom: none;
+}
+
+@media screen and (max-width: 767px) {/*767px以下*/
+#calendar_detail{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 500px;
+    max-height: 50vh;
+    margin: 0 auto;
+    padding: 0 0;
+    border-top: 1px dotted #999;
+    z-index: 10;
+    overflow-y: scroll;
+    background-color: rgba(255,255,255,0.75);
+}
+
+}
+
+#calendar_detail #detail_close{
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 10px;
+	padding: 12px;
+	width: 24px;
+	height: 24px;
+	color: #F00;
+	background-color: #fee;
+    border-radius: 4px;
+    border: 1px solid #faa;
+}
+
+#calendar_detail #detail_close:before,
+#calendar_detail #detail_close:after{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 16px;
+    height: 1px;
+    margin-left: -8px;
+    background-color: currentColor;
+}
+#calendar_detail #detail_close:before{
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+#calendar_detail #detail_close:after {
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+
+
+
+
+
+#calendar_detail h5,
+#calendar_detail h6{
+    text-align: center;
+}
+
+#calendar_detail ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#calendar_detail ul li{
+    margin: 0.25rem;
+    padding: 0.25rem;
+    border-bottom: 1px solid #aaa;
 }
