@@ -94,6 +94,17 @@ class CalendarViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'awase/index.html')
 
+    def test_awase_create_logOUT(self):
+        url = '/awase/create/'
+        logOUT_test_view(self, url=url)
+
+    def test_awase_create_logIN(self):
+        url = '/awase/create/'
+        Force_Login(self)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'awase/create.html')
+
     def test_awase_calendar_view_logOUT(self):
         calendar = Make_a_Calendar(self)
         url = '/awase/calendar/%s/' % str(calendar.pk)
@@ -183,3 +194,14 @@ class CalendarViewTest(TestCase):
         self.assertTemplateUsed(response, 'awase/delete_calendar.html')
 
 
+class CalendarCreateTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User(cls)
+
+    def test_create_calendar_POST_logOUT(self):
+        data = {
+            
+        }
+
+        # request = self.client.post('/send/', data)
