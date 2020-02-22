@@ -78,7 +78,6 @@ var calendar = new Vue({
         },
         detail_close: function(event){
             this.detail_dislpay = false;
-            console.log(this.detail_dislpay)
         },
         detail_open: function(date, time){
             this.detail_dislpay = true;

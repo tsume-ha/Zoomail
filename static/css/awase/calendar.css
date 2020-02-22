@@ -121,10 +121,15 @@ div#menu_days button{
 	display: none;
 }
 
-@media screen and (max-width: 767px) {/*767px以下*/
 #calendar_detail.opened{
     display: block;
     position: fixed;
+    z-index: 10;
+    background-color: rgba(255,255,255,0.75);
+}
+
+@media screen and (max-width: 767px) {/*767px以下*/
+#calendar_detail.opened{
     bottom: 0;
     left: 0;
     right: 0;
@@ -134,11 +139,17 @@ div#menu_days button{
     margin: 0 auto;
     padding: 0 0;
     border-top: 1px dotted #999;
-    z-index: 10;
     overflow-y: scroll;
-    background-color: rgba(255,255,255,0.75);
 }
-
+}
+@media screen and (min-width: 768px) {/*768px以上*/
+#calendar_detail.opened{
+	width: 500px;
+	margin: 1rem;
+	padding: 0.5rem;
+	top: 0;
+	left: 0;
+}
 }
 
 #calendar_detail.opened #detail_close{
@@ -173,9 +184,6 @@ div#menu_days button{
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
-
-
-
 
 
 

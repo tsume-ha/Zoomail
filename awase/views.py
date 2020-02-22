@@ -90,7 +90,10 @@ def CalendarJsonResponse(request, pk):
             tmp_dict = {}
             for starttime, canattend in tmp:
                 tmp_dict[get_time_str(day, starttime)] = canattend
-            schedule_list[calendar_user.user.get_short_name()] = tmp_dict
+            if calendar_user.user.nickname == "":
+                schedule_list[calendar_user.user.get_full_name()] = tmp_dict
+            else:
+                schedule_list[calendar_user.user.get_short_name() + '(' + calendar_user.user.get_full_name() + ')'] = tmp_dict
 
         day_json = {
             'date': day.strftime('%Y-%m-%d'),
