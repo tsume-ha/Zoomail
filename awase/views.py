@@ -176,93 +176,91 @@ def invited(request, key):
 def input(request, pk, page=1):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
-    can_edit = calendar_permission(calendar, now_user)
-    if can_edit:
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+        
+    def ceil(a, b):
+        return a//b if a%b==0 else a//b + 1
+    total_pages = ceil((calendar.days_end - calendar.days_begin).days, 7)
 
-        def ceil(a, b):
-            return a//b if a%b==0 else a//b + 1
-        total_pages = ceil((calendar.days_end - calendar.days_begin).days, 7)
+    move = False
+    if 'prev' in request.GET:
+        page -= 1
+        move = True
+        if page < 0:
+            page = 1
 
-        move = False
-        if 'prev' in request.GET:
-            page -= 1
-            move = True
-            if page < 0:
-                page = 1
+    if 'next' in request.GET:
+        page += 1
+        move = True
+        if page > total_pages:
+            page = total_pages
 
-        if 'next' in request.GET:
-            page += 1
-            move = True
-            if page > total_pages:
-                page = total_pages
+    if (request.method == 'POST'):
+        keys = [k for k in request.POST if 'can_attend' in k]
+        for key in keys:
+            time_name = key.replace('can_attend', 'starttime')
+            time = request.POST[time_name]
+            can_attend = request.POST[key]
+            Schedule.objects.update_or_create(
+                calendar = calendar,
+                user = now_user,
+                starttime = time,
+                defaults = {'canattend': can_attend}
+            )
+        if move:
+            return redirect(to = reverse('awase:input', args=[calendar.pk, page]))
+        else:
+            return redirect(to = reverse('awase:calendar', args=[calendar.pk]))
 
-        if (request.method == 'POST'):
-            keys = [k for k in request.POST if 'can_attend' in k]
-            for key in keys:
-                time_name = key.replace('can_attend', 'starttime')
-                time = request.POST[time_name]
-                can_attend = request.POST[key]
-                Schedule.objects.update_or_create(
+
+    formsets = []
+
+    date = calendar.days_begin + datetime.timedelta(days=7*(page-1))
+    count = 0
+    date_range = {'start': date}
+    while date <= calendar.days_end and date < calendar.days_begin + datetime.timedelta(days=7*page):
+        hour_query = CollectHour.objects.filter(calendar=calendar).get(date=date)
+        time_list = [datetime.datetime.combine(date, datetime.time(00,00,00))\
+                      + datetime.timedelta(hours=hour_query.hour_begin)\
+                      + datetime.timedelta(minutes=30*n)
+                     for n in range((hour_query.hour_end-hour_query.hour_begin)*2)]
+        if len(time_list):
+            initial = []
+            for time in time_list:
+                item, created = Schedule.objects.get_or_create(
                     calendar = calendar,
                     user = now_user,
                     starttime = time,
-                    defaults = {'canattend': can_attend}
-                )
-            if not move:
-                return redirect(to='../')
-            else:
-                return redirect(to = reverse('awase:input', args=[calendar.pk, page]))
-
-
-        formsets = []
-
-        date = calendar.days_begin + datetime.timedelta(days=7*(page-1))
-        count = 0
-        date_range = {'start': date}
-        while date <= calendar.days_end and date < calendar.days_begin + datetime.timedelta(days=7*page):
-            hour_query = CollectHour.objects.filter(calendar=calendar).get(date=date)
-            time_list = [datetime.datetime.combine(date, datetime.time(00,00,00))\
-                          + datetime.timedelta(hours=hour_query.hour_begin)\
-                          + datetime.timedelta(minutes=30*n)
-                         for n in range((hour_query.hour_end-hour_query.hour_begin)*2)]
-            if len(time_list):
-                initial = []
-                for time in time_list:
-                    item, created = Schedule.objects.get_or_create(
-                        calendar = calendar,
-                        user = now_user,
-                        starttime = time,
-                        defaults = {'canattend': ''}
-                        )
-                    initial.append({
-                        'displaytime':time.strftime('%H:%M'),
-                        'starttime':time,
-                        'can_attend': item.canattend
-                        })
-
-                formsets.append({
-                    'date':date,
-                    'InputScheduleFormSet':InputScheduleFormSet(
-                        initial = initial,
-                        prefix = str(count)
-                        )
+                    defaults = {'canattend': ''}
+                    )
+                initial.append({
+                    'displaytime':time.strftime('%H:%M'),
+                    'starttime':time,
+                    'can_attend': item.canattend
                     })
-            count += 1
-            date = date + datetime.timedelta(days=1)
-        date_range['end'] = date - datetime.timedelta(days=1)
 
-        params = {
-            'calendar': calendar,
-            'formsets': formsets,
-            'page': page,
-            'date_range': date_range,
-            'total_pages': total_pages,
-        }
+            formsets.append({
+                'date':date,
+                'InputScheduleFormSet':InputScheduleFormSet(
+                    initial = initial,
+                    prefix = str(count)
+                    )
+                })
+        count += 1
+        date = date + datetime.timedelta(days=1)
+    date_range['end'] = date - datetime.timedelta(days=1)
+
+    params = {
+        'calendar': calendar,
+        'formsets': formsets,
+        'page': page,
+        'date_range': date_range,
+        'total_pages': total_pages,
+    }
 
 
-        return render(request, 'awase/input.html', params)
-    else:
-        return redirect('/awase/')
+    return render(request, 'awase/input.html', params)
 
 
 @login_required()
