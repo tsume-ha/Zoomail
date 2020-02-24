@@ -17,6 +17,7 @@ def Create_Google_User(email, year=0, first_name='', last_name='', furigana=''):
             user.last_name = last_name
         if furigana != '':
             user.furigana = furigana
+        user.receive_email = email
         user.save()
 
         content_social = UserSocialAuth(

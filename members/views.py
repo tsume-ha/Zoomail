@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import User, TmpMember
 from .forms import UserUpdateForm, RegisterForm, RegisterCSV
+from config.permissions import MemberRegisterPermission, AdminEnterPermission
 import csv
 from io import TextIOWrapper
 from .create_google_user import DuplicateGmailAccountError
@@ -13,14 +14,11 @@ from django.core.exceptions import ValidationError
 import datetime
 
 
-def MemberRegisterPermission(user):
-    return user.is_superuser or\
-           user.groups.filter(name='Administer').exists()
-
 @login_required()
 def index(request):
     now_user = request.user
     register_allowed = MemberRegisterPermission(now_user)
+    adminenter_allowed = AdminEnterPermission(now_user)
     midoku = Message.objects.filter(Q(years__year=request.user.year)|Q(years__year=0)).exclude(kidoku_message__user=now_user).order_by('updated_at').reverse()
     messages_you_send = Message.objects.filter(sender=now_user).order_by('updated_at').reverse()
     messages_you_wrote = Message.objects.filter(writer=now_user).exclude(sender=now_user).order_by('updated_at').reverse()
@@ -35,6 +33,7 @@ def index(request):
 
     params = {
         'register_allowed': register_allowed,
+        'adminenter_allowed': adminenter_allowed,
         'midoku': midoku,
         'yousend': messages_you_send,
         'yourmessage_otherssend': messages_you_wrote,

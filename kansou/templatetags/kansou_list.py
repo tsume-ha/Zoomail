@@ -1,7 +1,6 @@
 from django import template
 from django.utils.safestring import mark_safe
 from kansou.models import Kansouyoushi
-from kansou.forms import KansouUploadForm
 import datetime
 
 register = template.Library()
@@ -20,18 +19,12 @@ def GetKansouList(year):
             num /= 1024.0
         return "%.1f%s%s" % (num, 'Yi', suffix)
 
-    l_name = KansouUploadForm.livename
-    def translate_livename(live):
-        for i in range(len(l_name)):
-            if l_name[i][0] == live:
-                return l_name[i][1]
-
     text_return = ''
     for record in records:
         text_return += '<a href="'
         text_return += record.file.url
         text_return += '" target="_blank" class="list-group-item list-group-item-action p-2"><h6 class="d-inline-block m-0">'
-        text_return += translate_livename(record.live)
+        text_return += record.translate_livename()
         if record.numbering > 1:
             text_return += '_' + str(record.numbering)
         text_return += ' ('

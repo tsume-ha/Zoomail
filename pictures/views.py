@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Min, Count
 from .models import Album
 from .forms import AlbumRegisterForm
+from config.permissions import PicturesPermission
 import datetime
 from imagekit import ImageSpec
 from imagekit.processors import ResizeToFill
@@ -15,13 +16,6 @@ class Thumbnail(ImageSpec):
     format = 'JPEG'
     options = {'quality': 60}
 
-
-
-def PicturesPermission(user):
-    return user.is_superuser or\
-           user.groups.filter(name='Administer').exists() or\
-           user.groups.filter(name='HomepageGroup').exists() or\
-           user.groups.filter(name='PhotographersGroup').exists()
 
 def exist_years(records):
     if records.exists():

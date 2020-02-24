@@ -6,6 +6,7 @@ from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.core.exceptions import PermissionDenied
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
@@ -77,7 +78,9 @@ def content(request, id):
 
     # 閲覧できないならば/read にリダイレクトする
     if not message.years.all().filter(Q(year=now_user.year)|Q(year=0)).exists():
-        return redirect('/read')
+        if not EditPermisson(now_user, id):
+            raise PermissionDenied
+
 
     attachments = map(
         lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName(), "pk": file.pk, "fileext": file.extension()},
@@ -119,7 +122,7 @@ def send(request):
         initial={'written_by': str(request.user.year)+'-'+str(request.user.pk),
                  'year_choice': request.user.year}
     )
-    years = User.objects.order_by().values('year').distinct()
+    years = User.objects.order_by('year').values('year').distinct()
     messageForm.fields['year_choice'].choices = [(q['year'],q['year']) for q in years]
     messageForm.fields['written_by'].choices = [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')]
     params = {
@@ -221,7 +224,9 @@ def edit(request, id):
         if (request.method == 'POST'):
             if editForm.is_valid:
                 if request.POST['title'] != before_edit.title or request.POST['content'] != before_edit.content:
-                    editForm.save()
+                    content = editForm.save(commit=False)
+                    content.updated_at = datetime.datetime.now()
+                    content.save()
                     django_messages.success(request, '更新しました')
                 else:
                     django_messages.success(request, '変更はありませんでした')

@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from members.models import User
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Permission
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -12,10 +12,10 @@ def Make_User(self,year=2019):
     self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year)
     return self.user
 
-def User_LogIN_and_Add_AdministerGroup(self,year=2019):
+def User_LogIN_and_Get_a_Permission(self,year=2019):
     user = User.objects.get(email=str(year) + 'mail@gmail.com')
-    admin_group = Group.objects.create(name='Administer')
-    admin_group.user_set.add(user)
+    permission = Permission.objects.get(codename="change_user")
+    user.user_permissions.add(permission)
     self.client.force_login(user)
     return user
 
@@ -146,7 +146,7 @@ class MemberRegisterFormTest(TestCase):
             'furigana': 'きょうだいたろう',
             'nickname': 'タロー',
         }
-        self.user = User_LogIN_and_Add_AdministerGroup(self)
+        self.user = User_LogIN_and_Get_a_Permission(self)
         request = self.client.post('/members/register/', data)
 
         self.assertEqual(request.status_code, 200)

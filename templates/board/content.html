@@ -23,7 +23,7 @@
 </div>
 <hr>
 <p class="content col-sm-12 col-md-9">
-	{{message.content | linebreaks | urlize}}
+	{{message.content | linebreaks | urlize | AddTarget_blank}}
 </p>
 {% for attachment in attachments %}
 {% if attachment.isImage %}

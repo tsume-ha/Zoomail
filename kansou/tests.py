@@ -1,14 +1,13 @@
 from django.test import TestCase, Client
 from members.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth.models import Permission
 from .models import Kansouyoushi
-from django.contrib.auth.models import Group
 import os
 from django.conf import settings
-from .forms import KansouUploadForm
 import datetime
 
-livename = KansouUploadForm.livename
+livename = Kansouyoushi.livename
 
 
 def User_LogOUT(self):
@@ -22,10 +21,10 @@ def Make_User(self,year=2019):
 def User_LogIN(self,year=2019):
     self.client.force_login(User.objects.get(email=str(year) + 'mail@gmail.com'))
 
-def User_LogIN_and_Add_AdministerGroup(self,year=2019):
+def User_LogIN_and_Get_a_Permission(self,year=2019):
     user = User.objects.get(email=str(year) + 'mail@gmail.com')
-    admin_group = Group.objects.create(name='Administer')
-    admin_group.user_set.add(user)
+    permission = Permission.objects.get(codename="add_kansouyoushi")
+    user.user_permissions.add(permission)
     self.client.force_login(user)
 
 
@@ -126,7 +125,7 @@ class KansouyoushiViewTest(TestCase):
 
 
     def test_kansou_upload_logIN_POST_with_Permission(self):
-        User_LogIN_and_Add_AdministerGroup(self)
+        User_LogIN_and_Get_a_Permission(self)
         response = self.client.get('/kansou/upload/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'kansou/upload.html')

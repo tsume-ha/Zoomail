@@ -20,7 +20,7 @@
 		{% if register_allowed %}
 		<a href="{% url 'members:register_form' %}" class="btn btn-warning m-2">ユーザー登録へ</a>
 		{% endif %}
-		{% if user.is_superuser %}
+		{% if adminenter_allowed %}
 		<a href="/admin/" class="btn btn-danger m-2">管理者管理ページへ</a>
 		{% endif %}
 	</p>
