@@ -153,7 +153,7 @@ def create(request):
 @login_required()
 def invited(request, key):
     now_user = request.user
-    calendar = Calendar.objects.get(invite_key=key)
+    calendar = get_object_or_404(Calendar, invite_key=key)
     if CalendarUser.objects.filter(calendar=calendar, user=now_user).exists():
         messages.warning(request, calendar.title + 'にはすでに参加しています。')
         return redirect(to = reverse('awase:calendar', args=[calendar.pk]))
