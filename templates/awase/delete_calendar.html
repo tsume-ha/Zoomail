@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}{{ calendar.title }} - 日程調整を削除する | Unplugged Message{% endblock %}
+{% block extrastyle %}
+
+{% endblock %}
+
+
+{% block body %}
+<h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> - 日程調整を削除する</h3>
+<section class="my-3">
+    <p>
+        この日程調整から削除するには下のボタンを押してください。<br>
+        <span class="text-danger">
+            削除すると、この日程調整に関する全てのデータ（招待URL、参加メンバー、各メンバーの入力したスケジュール）が全て削除されます。<br>
+            また、これらデータの復元は出来ません。
+        </span>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="delete" value="true">
+            <input type="submit" value="{{ calendar.title }}を削除する" class="btn btn-danger mx-2 my-2">
+        </form>
+    </p>
+</section>
+{% endblock %}

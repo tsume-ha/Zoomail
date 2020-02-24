@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}合わせの合わせ | Unplugged Message{% endblock %}
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/player/index.css' %}">
+{% endblock %}
+
+
+{% block body %}
+<h3>合わせの合わせ</h3>
+<p>
+	「合わせの合わせ」は、アンプラの合わせに特化した日程調整アプリです。
+</p>
+<section class="row">
+	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
+		<article class="card border-info m-2">
+			<a href="{% url 'awase:create' %}" class="card-body">
+				<h5 class="card-title bg-info　mb-2">新しく日程調整を追加</h5>
+				<p class="text-info">こちらから追加</p>
+			</a>
+		</article>
+	</div>
+
+	{% for calendar in calendars %}
+	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
+		<article class="card m-2">
+			<a href="{% url 'awase:calendar' calendar.pk %}" class="card-body">
+				<h5 class="card-title　float-left mb-2">{{ calendar.title }}</h5>
+				<p class="small">{{ calendar.text }}</p>
+				<h6 class="card-subtitle float-right small">Created : {{ calendar.created_at | date:"Y/m/d D" }}</h6>
+			</a>
+		</article>
+	</div>
+	{% endfor %}
+
+</section>
+
+
+{% endblock %}

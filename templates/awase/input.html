@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}{{ calendar.title }} に回答 | Unplugged Message{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/input.css' %}">
+{% endblock %}
+
+
+{% block body %}
+<h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> に回答</h3>
+{% if total_pages != 1 %}
+<nav id="input_nav" class="my-2">
+{% if page == 1 %}
+    <a class="nav-link disabled">＜＜前の週</a>
+{% else %}
+    <a href="javascript:move_week('prev')" class="nav-link">＜＜前の週</a>
+{% endif %}
+    <span class="p-2">{{date_range.start|date:"n/j"}}～{{date_range.end|date:"n/j"}}</span>
+{% if page == total_pages %}
+    <a class="nav-link disabled">次の週＞＞</a>
+{% else %}
+    <a href="javascript:move_week('next')" class="nav-link">次の週＞＞</a>
+{% endif %}
+</nav>
+{% endif %}
+<section id="" class="my-3">
+    <form method="post" name="calendarinput" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for formset in formsets %}
+        <div class="form_one_day col-12 m-0 p-0" data-date="{{formset.date|date:'Y-m-d'}}">
+            <h5>{{formset.date|date:"n月j日 (D)"}}</h5>
+            <div class="form_checks">
+                <div class="form_oneday_all">
+                    <span class="mx-3">１日一括指定</span>
+                    <button type="button" class="dayall" value="False" data-date="{{formset.date|date:'Y-m-d'}}">×</button>
+                    <button type="button" class="dayall" value="True" data-date="{{formset.date|date:'Y-m-d'}}">○</button>
+                </div>
+            {% for form in formset.InputScheduleFormSet %}
+                <div class="form_one_check">
+                {{ form.non_field_errors }}
+                {{ form.displaytime }}
+                {% for radio in form.can_attend %}
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                {% endfor %}
+                {% for field in form.hidden_fields %}
+                    {{ field }}
+                {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        <div class="form_submit pt-3">
+            <input type="submit" id="" value="送信" class="btn btn-info mx-2 mb-2">
+            <p class="small">
+                回答はすべて埋めなくても送信できます。<br>
+                （サーバでの処理に時間がかかります。<br>
+                　送信ボタンは一回だけ押してください。）
+            </p>
+        </div>
+    </form>
+</section>
+
+
+
+
+</section>
+
+<script src="{% static 'js/awase_input.js' %}"></script>
+{% endblock %}

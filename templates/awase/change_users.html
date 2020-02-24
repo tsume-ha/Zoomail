@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}{{ calendar.title }} - ユーザーの変更 | Unplugged Message{% endblock %}
+{% block extrastyle %}
+
+{% endblock %}
+
+
+{% block body %}
+<h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> - ユーザーの変更</h3>
+<p class="my-3">
+    日程調整から退会させたいユーザーを選んで送信してください。<br>
+    チェックボックスがついたユーザーが日程調整から外れます。<br>
+    <a class="small">自分自身が退会するにはこちらから</a>
+</p>
+<section class="my-3">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for form in formset %}
+            <div class="form-group row m-0">
+                <div class="col-8">
+                    {{ form.instance.user.get_short_name }}
+                    {% if form.instance.user.get_short_name != form.instance.user.get_full_name %}
+                    <span class="small m-3">({{ form.instance.user.get_full_name }})</span>
+                    {% endif %}
+                </div>
+            {% if form.instance.pk %}
+                <label for="{{ form.DELETE.id_for_label }}">{{ form.DELETE.label_tag }}</label>
+                {{ form.DELETE }}
+            {% endif %}
+            {% for field in form.visible_fields %}
+                {% if field.errors %}<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>{% endif %}
+            {% endfor %}
+            {{ form.non_field_errors }}
+            {% for field in form.hidden_fields %}
+                {{ field }}
+            {% endfor %}
+            </div>
+        {% endfor %}
+        {{ formset.management_form }}
+
+        <input type="submit" value="送信" class="btn btn-info mx-2 my-3">
+    </form>
+</section>
+<style type="text/css">
+    input[type=checkbox]{
+        height: 1rem;
+        width: 1rem;
+        margin: .25rem;
+    }
+</style>
+{% endblock %}

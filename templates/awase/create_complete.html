@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getsongdetail %}
+
+{% block title %}日程調整を作成 - 完了画面 | Unplugged Message{% endblock %}
+{% block extrastyle %}
+
+{% endblock %}
+
+
+{% block body %}
+<h3>日程調整を作成 - 完了画面</h3>
+
+<section class="my-3">
+    <p>
+    <h5>新しい日程調整「{{ calendar.title }}」が作成されました！</h5>
+    以下の招待URLを日程調整したい人に(LINE,メールなどで)送信してください。<br>
+    </p>
+    <input id="inviteURL" class="p-2 form-control text-break" type="text" readonly="readonly" value="https://message.ku-unplugged.net{% url 'awase:invited' calendar.invite_key %}">
+    <p class="small">
+    招待URLです。<br>
+    クリックするとクリップボードにコピーされます。
+    </p>
+</section>
+<section class="py-4">
+    <a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}へ</a><br>
+    <a href="{% url 'awase:index' %}">「あわせのあわせ」のトップに戻る</a>
+</section>
+<script type="text/javascript">
+var target = document.getElementById("inviteURL");
+target.addEventListener("click", function(){
+    target.select();
+    document.execCommand("Copy");
+    alert("クリップボードにコピーしました！ : " + target.value);
+});
+
+</script>
+{% endblock %}
