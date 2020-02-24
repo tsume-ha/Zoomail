@@ -299,44 +299,46 @@ class CalendarInputTest(TestCase):
         Make_User(cls)
         cls.calendar = Make_a_Calendar(cls)
         cls.url = '/awase/calendar/%s/input/' % str(cls.calendar.pk)
-        today = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
-        tomorrow = (datetime.datetime.now() + datetime.timedelta(days=2)).strftime('%Y-%m-%d')
+        cls.time_list = [datetime.datetime.combine(datetime.date.today(), datetime.time(00,00,00))\
+                      + datetime.timedelta(days=1, hours=9)\
+                      + datetime.timedelta(minutes=30*n)
+                     for n in range((26-9)*2)]
         cls.data = {
-            '0-0-can_attend': ['True'], '0-0-starttime': [today + ' 09:00:00'],
-            '0-1-can_attend': ['True'], '0-1-starttime': [today + ' 09:30:00'],
-            '0-2-can_attend': ['True'], '0-2-starttime': [today + ' 10:00:00'],
-            '0-3-can_attend': ['True'], '0-3-starttime': [today + ' 10:30:00'],
-            '0-4-can_attend': ['True'], '0-4-starttime': [today + ' 11:00:00'],
-            '0-5-can_attend': ['True'], '0-5-starttime': [today + ' 11:30:00'],
-            '0-6-can_attend': ['True'], '0-6-starttime': [today + ' 12:00:00'],
-            '0-7-can_attend': ['True'], '0-7-starttime': [today + ' 12:30:00'],
-            '0-8-can_attend': ['True'], '0-8-starttime': [today + ' 13:00:00'],
-            '0-9-can_attend': ['True'], '0-9-starttime': [today + ' 13:30:00'],
-            '0-10-can_attend': ['True'], '0-10-starttime': [today + ' 14:00:00'],
-            '0-11-can_attend': ['True'], '0-11-starttime': [today + ' 14:30:00'],
-            '0-12-can_attend': ['True'], '0-12-starttime': [today + ' 15:00:00'],
-            '0-13-can_attend': ['True'], '0-13-starttime': [today + ' 15:30:00'],
-            '0-14-can_attend': ['True'], '0-14-starttime': [today + ' 16:00:00'],
-            '0-15-can_attend': ['True'], '0-15-starttime': [today + ' 16:30:00'],
-            '0-16-can_attend': ['True'], '0-16-starttime': [today + ' 17:00:00'],
-            '0-17-can_attend': ['True'], '0-17-starttime': [today + ' 17:30:00'],
-            '0-18-can_attend': ['True'], '0-18-starttime': [today + ' 18:00:00'],
-            '0-19-can_attend': ['True'], '0-19-starttime': [today + ' 18:30:00'],
-            '0-20-can_attend': ['True'], '0-20-starttime': [today + ' 19:00:00'],
-            '0-21-can_attend': ['True'], '0-21-starttime': [today + ' 19:30:00'],
-            '0-22-can_attend': ['True'], '0-22-starttime': [today + ' 20:00:00'],
-            '0-23-can_attend': ['True'], '0-23-starttime': [today + ' 20:30:00'],
-            '0-24-can_attend': ['True'], '0-24-starttime': [today + ' 21:00:00'],
-            '0-25-can_attend': ['True'], '0-25-starttime': [today + ' 21:30:00'],
-            '0-26-can_attend': ['True'], '0-26-starttime': [today + ' 22:00:00'],
-            '0-27-can_attend': ['True'], '0-27-starttime': [today + ' 22:30:00'],
-            '0-28-can_attend': ['True'], '0-28-starttime': [today + ' 23:00:00'],
-            '0-29-can_attend': ['True'], '0-29-starttime': [today + ' 23:30:00'],
-            '0-30-can_attend': ['True'], '0-30-starttime': [tomorrow + ' 00:00:00'],
-            '0-31-can_attend': ['True'], '0-31-starttime': [tomorrow + ' 00:30:00'],
-            '0-32-can_attend': ['True'], '0-32-starttime': [tomorrow + ' 01:00:00'],
-            '0-33-can_attend': ['True'], '0-33-starttime': [tomorrow + ' 01:30:00'],
-        }
+            '0-0-can_attend': ['True'], '0-0-starttime': [cls.time_list[0].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-1-can_attend': ['True'], '0-1-starttime': [cls.time_list[1].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-2-can_attend': ['True'], '0-2-starttime': [cls.time_list[2].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-3-can_attend': ['True'], '0-3-starttime': [cls.time_list[3].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-4-can_attend': ['True'], '0-4-starttime': [cls.time_list[4].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-5-can_attend': ['True'], '0-5-starttime': [cls.time_list[5].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-6-can_attend': ['True'], '0-6-starttime': [cls.time_list[6].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-7-can_attend': ['True'], '0-7-starttime': [cls.time_list[7].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-8-can_attend': ['True'], '0-8-starttime': [cls.time_list[8].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-9-can_attend': ['True'], '0-9-starttime': [cls.time_list[9].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-10-can_attend': ['True'], '0-10-starttime': [cls.time_list[10].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-11-can_attend': ['True'], '0-11-starttime': [cls.time_list[11].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-12-can_attend': ['True'], '0-12-starttime': [cls.time_list[12].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-13-can_attend': ['True'], '0-13-starttime': [cls.time_list[13].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-14-can_attend': ['True'], '0-14-starttime': [cls.time_list[14].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-15-can_attend': ['True'], '0-15-starttime': [cls.time_list[15].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-16-can_attend': ['True'], '0-16-starttime': [cls.time_list[16].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-17-can_attend': ['True'], '0-17-starttime': [cls.time_list[17].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-18-can_attend': ['True'], '0-18-starttime': [cls.time_list[18].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-19-can_attend': ['True'], '0-19-starttime': [cls.time_list[19].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-20-can_attend': ['True'], '0-20-starttime': [cls.time_list[20].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-21-can_attend': ['True'], '0-21-starttime': [cls.time_list[21].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-22-can_attend': ['True'], '0-22-starttime': [cls.time_list[22].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-23-can_attend': ['True'], '0-23-starttime': [cls.time_list[23].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-24-can_attend': ['True'], '0-24-starttime': [cls.time_list[24].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-25-can_attend': ['True'], '0-25-starttime': [cls.time_list[25].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-26-can_attend': ['True'], '0-26-starttime': [cls.time_list[26].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-27-can_attend': ['True'], '0-27-starttime': [cls.time_list[27].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-28-can_attend': ['True'], '0-28-starttime': [cls.time_list[28].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-29-can_attend': ['True'], '0-29-starttime': [cls.time_list[29].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-30-can_attend': ['True'], '0-30-starttime': [cls.time_list[30].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-31-can_attend': ['True'], '0-31-starttime': [cls.time_list[31].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-32-can_attend': ['True'], '0-32-starttime': [cls.time_list[32].strftime('%Y-%m-%d %H:%M:%S')],
+            '0-33-can_attend': ['True'], '0-33-starttime': [cls.time_list[33].strftime('%Y-%m-%d %H:%M:%S')],
+            }
 
     def test_input_calendar_POST_logOUT(self):
         User_LogOUT(self)
@@ -356,11 +358,48 @@ class CalendarInputTest(TestCase):
         response = self.client.get(url_redial_to)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'awase/calendar.html')
-
-        self.assertTrue(Schedule.objects.filter(
-            calendar = self.calendar,
-            user = user,
-            ).exists())
-
+        
+        for time in self.time_list:
+            self.assertTrue(Schedule.objects.filter(
+                calendar = self.calendar,
+                user = user,
+                starttime = time,
+                canattend = True,
+                ).exists())
+            self.assertFalse(Schedule.objects.filter(
+                calendar = self.calendar,
+                user = user,
+                starttime = time,
+                canattend = False,
+                ).exists())
 
         
+class CalendarInvitionTest(TestCase):
+    @classmethod
+    def setUpTestData(self):
+        Make_User(self)
+        self.calendar = Make_a_Calendar(self)
+        self.url = '/awase/invited/key=%s/' % self.calendar.invite_key
+
+    def test_calendar_invite_logOUT(self):
+        logOUT_test_view(self, self.url)
+
+    def test_calendar_invite_logIN(self):
+        newuser = Make_User(self, year=2018)
+        self.assertFalse(CalendarUser.objects.filter(calendar=self.calendar, user=newuser).exists())
+        
+        Force_Login(self, year=2018)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'awase/invited.html')
+        self.assertFalse(CalendarUser.objects.filter(calendar=self.calendar, user=newuser).exists())
+        
+        request = self.client.post(self.url, {'join': ['true']})
+        self.assertTrue(CalendarUser.objects.filter(calendar=self.calendar, user=newuser).exists())
+        self.assertEqual(request.status_code, 302)
+        url_redial_to = request.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'awase/calendar.html')
+        
+
