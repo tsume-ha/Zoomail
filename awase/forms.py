@@ -70,8 +70,9 @@ class UpdateCollectHourForm(forms.ModelForm):
         return hour_end
 
     def clean(self):
-        hour_begin = self.cleaned_data['hour_begin']
-        hour_end = self.cleaned_data['hour_end']
+        cleaned_data = super().clean()
+        hour_begin = cleaned_data.get('hour_begin')
+        hour_end = cleaned_data.get('hour_end')
         if hour_end < hour_begin:
             raise forms.ValidationError(
                 '終了時間は、開始時間よりも後にしてください'
