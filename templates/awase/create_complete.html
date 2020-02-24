@@ -16,7 +16,7 @@
     <h5>新しい日程調整「{{ calendar.title }}」が作成されました！</h5>
     以下の招待URLを日程調整したい人に(LINE,メールなどで)送信してください。<br>
     </p>
-    <input id="inviteURL" class="p-2 form-control text-break" type="text" readonly="readonly" value="http://localhost:3333{% url 'awase:invited' calendar.invite_key %}">
+    <input id="inviteURL" class="p-2 form-control text-break" type="text" readonly="readonly" value="https://message.ku-unplugged.net{% url 'awase:invited' calendar.invite_key %}">
     <p class="small">
     招待URLです。<br>
     クリックするとクリップボードにコピーされます。
