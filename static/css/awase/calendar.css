@@ -140,7 +140,7 @@ div#menu_days button{
     display: block;
     position: fixed;
     z-index: 10;
-    background-color: rgba(255,255,255,0.75);
+    background-color: rgba(255,255,255,0.8);
 }
 
 @media screen and (max-width: 767px) {/*767px以下*/
