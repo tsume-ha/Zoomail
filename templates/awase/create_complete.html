@@ -23,8 +23,8 @@
     </p>
 </section>
 <section class="py-4">
-    <a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}へ</a><br>
-    <a href="{% url 'awase:index' %}">「あわせのあわせ」のトップに戻る</a>
+    <a href="{% url 'awase:calendar' calendar.pk %}" class="btn btn-primary my-2">日程調整「{{ calendar.title }}」へ</a><br>
+    <a href="{% url 'awase:index' %}" class="btn btn-secondary my-2">「あわせのあわせ」のトップに戻る</a>
 </section>
 <script type="text/javascript">
 var target = document.getElementById("inviteURL");
