@@ -141,8 +141,7 @@ def create(request):
                 user_content.save()
             params ={'calendar': calendar}
             return render(request, 'awase/create_complete.html', params)
-        else:
-            print('Form is not valid')
+
     params = {
         'CreateForm': CreateForm,
 
@@ -284,8 +283,7 @@ def UpdateCalendarView(request, pk):
                 date = date + datetime.timedelta(days=1)
 
             return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
-        else:
-            print('form is not valid')
+            
 
     params = {
         'calendar': calendar,
