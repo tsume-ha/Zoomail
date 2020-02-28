@@ -20,6 +20,20 @@ class CreateCalendarForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
 
+    def clean(self):
+        cleaned_data = super().clean()
+        days_begin = cleaned_data.get('days_begin')
+        days_end = cleaned_data.get('days_end')
+        if days_end < days_begin:
+            raise forms.ValidationError(
+                '集計終了日が、開始日よりも前になっています。'
+            )
+        if (days_end - days_begin).days > 120:
+            raise forms.ValidationError(
+                '集計できる期間は最大で120日間です。'
+            )
+
+
 
 class InputScheduleForm(forms.Form):
     displaytime = forms.CharField(required=False)

@@ -12,20 +12,27 @@
 <h3>日程調整を作成</h3>
 
 <section id="form_upload" class="my-3">
-	<form method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		{% for field in CreateForm %}
-		<div class="form-group row mx-0">
-			{{ field.label_tag }}
-			{{ field }}
-			{% if field.errors %}
-			<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>
-			{% endif %}
-		</div>
-		{% endfor %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in CreateForm %}
+        <div class="form-group row mx-0">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+            <p class="small text-danger pl-2">{{ field.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
 
-		<input type="submit" value="登録" class="btn btn-info mx-2 my-3">
-	</form>
+        {% for non_field_error in CreateForm.non_field_errors %}
+        <p class="small text-danger pl-2">{{ non_field_error }}</p>
+        {% endfor %}
+
+        <input type="submit" value="登録" class="btn btn-info mx-2 my-3">
+    </form>
+    <p class="small text-secondary">
+    	集計できる期間は現在のところ、最大で120日間です。<br>
+    </p>
 </section>
 
 {% endblock %}

@@ -23,9 +23,16 @@
 			{% endif %}
 		</div>
 		{% endfor %}
+		
+        {% for non_field_error in UpdateForm.non_field_errors %}
+        <p class="small text-danger pl-2">{{ non_field_error }}</p>
+        {% endfor %}
 
 		<input type="submit" value="この内容に変更" class="btn btn-info mx-2 my-3">
 	</form>
+    <p class="small text-secondary">
+    	集計できる期間は現在のところ、最大で120日間です。<br>
+    </p>
 </section>
 
 {% endblock %}
