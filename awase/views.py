@@ -43,24 +43,12 @@ def CalendarJsonResponse(request, pk):
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
         raise Http404()
-    
-    LIMIT_DAYS = 100
-    today = datetime.date.today()
-    if (calendar.days_end - calendar.days_begin).days > LIMIT_DAYS:
-        if calendar.days_begin <= today < calendar.days_end:
-            collect_days = [today + datetime.timedelta(days=d) for d in range(LIMIT_DAYS)]
-        elif today < calendar.days_begin:
-            collect_days = [calendar.days_begin + datetime.timedelta(days=d) for d in range(LIMIT_DAYS)]
-        else: # calendar.days_end <= today
-            collect_days = [calendar.days_end - datetime.timedelta(days=LIMIT_DAYS) + datetime.timedelta(days=d) for d in range(LIMIT_DAYS)]
-    else:
-        collect_days = [calendar.days_begin + datetime.timedelta(days=d) for d in range((calendar.days_end - calendar.days_begin).days + 1)]
-    
+ 
     data = {
         'calendar_data': [],
         'settings': {
             'total_days': (calendar.days_end - calendar.days_begin).days,
-            'today_num': (today - calendar.days_begin).days,
+            'today_num': (datetime.date.today() - calendar.days_begin).days,
         }
     }
 
@@ -74,7 +62,7 @@ def CalendarJsonResponse(request, pk):
         hour = time.hour + (time - datetime.datetime.combine(day, datetime.time(00,00,00))).days * 24
         return 't' + str(hour) + '_' + str(time.minute)
 
-    for day in collect_days:
+    for day in [calendar.days_begin + datetime.timedelta(days=d) for d in range((calendar.days_end - calendar.days_begin).days + 1)]:
         schedule_list = {}
         complex_list = []
         hour_begin = CollectHour.objects.get(calendar=calendar, date=day).hour_begin
