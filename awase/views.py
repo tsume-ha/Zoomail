@@ -73,9 +73,9 @@ def CalendarJsonResponse(request, pk):
             tmp = Schedule.objects.filter(
                 calendar = calendar,
                 user = calendar_user.user,
-                starttime__gte = datetime.datetime.combine(day, datetime.time(hour=hour_begin)),
-                starttime__lt = datetime.datetime.combine(day, datetime.time(hour=hour_end%24)) + datetime.timedelta(days=hour_end//24)
-                ).values_list('starttime', 'canattend')
+                start_time__gte = datetime.datetime.combine(day, datetime.time(hour=hour_begin)),
+                start_time__lt = datetime.datetime.combine(day, datetime.time(hour=hour_end%24)) + datetime.timedelta(days=hour_end//24)
+                ).values_list('start_time', 'can_attend')
             tmp_dict = {}
             for starttime, canattend in tmp:
                 tmp_dict[get_time_str(day, starttime)] = canattend
@@ -191,8 +191,8 @@ def input(request, pk, page=1):
             Schedule.objects.update_or_create(
                 calendar = calendar,
                 user = now_user,
-                starttime = time,
-                defaults = {'canattend': can_attend}
+                start_time = time,
+                defaults = {'can_attend': can_attend}
             )
         if move:
             return redirect(to = reverse('awase:input', args=[calendar.pk, page]))
@@ -217,13 +217,13 @@ def input(request, pk, page=1):
                 item, created = Schedule.objects.get_or_create(
                     calendar = calendar,
                     user = now_user,
-                    starttime = time,
-                    defaults = {'canattend': ''}
+                    start_time = time,
+                    defaults = {'can_attend': ''}
                     )
                 initial.append({
                     'displaytime':time.strftime('%H:%M'),
                     'starttime':time,
-                    'can_attend': item.canattend
+                    'can_attend': item.can_attend
                     })
 
             formsets.append({
