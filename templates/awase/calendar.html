@@ -65,7 +65,7 @@
     <div id="submenu">
         <a href="{% url 'awase:calendar_update' calendar.pk %}" class="text-center text-sm-left">カレンダーの名前、ひとことの変更</a>
         <a href="{% url 'awase:calendar_update' calendar.pk %}" class="text-center text-sm-left">集計期間（日にち）の変更</a>
-        <a href="{% url 'awase:hours_update' calendar.pk %}" class="text-center text-sm-left">集計時間（時間帯）の変更</a>
+        <a href="{% url 'awase:hours_update_top' calendar.pk %}" class="text-center text-sm-left">集計時間（時間帯）の変更</a>
         <a href="{% url 'awase:key_update' calendar.pk %}" class="text-center text-sm-left">招待URLの確認・変更</a>
         <a href="{% url 'awase:change_users' calendar.pk %}" class="text-center text-sm-left">カレンダーユーザーの変更</a>
         <a href="{% url 'awase:leave_calendar' calendar.pk %}" class="text-center text-sm-left text-danger">この日程調整から退会する</a>

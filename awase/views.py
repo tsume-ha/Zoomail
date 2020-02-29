@@ -16,6 +16,9 @@ from django.urls import reverse
 def calendar_permission(calendar, user):
     return CalendarUser.objects.filter(calendar=calendar).filter(user=user).exists()
 
+def ceil(a, b):
+    return a//b if a%b==0 else a//b + 1
+
 @login_required()
 def index(request):
     now_user = request.user
@@ -166,8 +169,6 @@ def input(request, pk, page=1):
     if not calendar_permission(calendar, now_user):
         raise Http404()
         
-    def ceil(a, b):
-        return a//b if a%b==0 else a//b + 1
     total_pages = ceil((calendar.days_end - calendar.days_begin).days, 7)
 
     move = False
@@ -284,27 +285,34 @@ def UpdateCalendarView(request, pk):
 
 
 @login_required()
-def UpdateCollectHourView(request, pk):
+def UpdateCollectHourView(request, pk, page=1):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
         raise Http404()
+    DISPLAY_DAYS = 30
     updateFormset = UpdateCollectHourFormSet(
         request.POST or None,
         queryset=CollectHour.objects.filter(
             calendar = calendar,
             date__gte = calendar.days_begin,
             date__lte = calendar.days_end
-            ).order_by('date'),
+            ).order_by('date')[(page - 1) * DISPLAY_DAYS : page * DISPLAY_DAYS],
         form_kwargs={'empty_permitted': False}
     )
     if (request.method == 'POST'):
         if updateFormset.is_valid():
             content = updateFormset.save()
             return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
+
+    total_pages = ceil((calendar.days_end - calendar.days_begin).days + 1, DISPLAY_DAYS)
+    page_range = list(range(1, total_pages + 1))
+
     params = {
         'calendar': calendar,
         'updateFormset': updateFormset,
+        'page_range': page_range,
+        'current_page': page
 
     }
 
