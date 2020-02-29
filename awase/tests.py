@@ -364,14 +364,14 @@ class CalendarInputTest(TestCase):
             self.assertTrue(Schedule.objects.filter(
                 calendar = self.calendar,
                 user = user,
-                starttime = time,
-                canattend = True,
+                start_time = time,
+                can_attend = True,
                 ).exists())
             self.assertFalse(Schedule.objects.filter(
                 calendar = self.calendar,
                 user = user,
-                starttime = time,
-                canattend = False,
+                start_time = time,
+                can_attend = False,
                 ).exists())
 
 
