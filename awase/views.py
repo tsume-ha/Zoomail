@@ -320,16 +320,11 @@ def UpdateCollectHourView(request, pk, page=1):
 
 
 @login_required()
-def UpdateURLKey(request, pk):
+def CalendarURLKey(request, pk):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
         raise Http404()
-    if (request.method == 'POST'):
-        if 'change_key' in request.POST:
-            calendar.invite_key = User.objects.make_random_password(length=12)
-            calendar.save()
-            messages.success(request, '招待URLが変更されました')
     params = {
         'calendar': calendar,
     }

@@ -33,6 +33,7 @@
     <p class="small text-secondary">
     	集計できる期間は現在のところ、最大で120日間です。<br>
     </p>
+    <a href="{% url 'awase:calendar' calendar.pk %}" class="btn btn-primary my-2">日程調整「{{ calendar.title }}」に戻る</a>
 </section>
 
 {% endblock %}
