@@ -4,7 +4,6 @@ import datetime
 from members.models import User
 from .models import Calendar, CalendarUser, Schedule, CollectHour
 from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet
-from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, get_object_or_404
@@ -56,7 +55,6 @@ def CalendarJsonResponse(request, pk):
     }
 
     weekday_jp = ['月','火','水','木','金','土','日']
-    NG_CSS_classname = ['NG0', 'NG1', 'NG2', 'NG3']
 
     user_list = CalendarUser.objects.filter(calendar=calendar).order_by('joined_at')
 
