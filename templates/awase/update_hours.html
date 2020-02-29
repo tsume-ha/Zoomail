@@ -53,7 +53,9 @@
                 {% if field.errors %}<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>{% endif %}
             {% endfor %}
 
-            {{ form.non_field_errors }}
+            {% for error in form.non_field_errors %}
+                <p class="small text-danger pl-2">{{ error }}</p>
+            {% endfor %}
             {% for field in form.hidden_fields %}
                 {{ field }}
             {% endfor %}

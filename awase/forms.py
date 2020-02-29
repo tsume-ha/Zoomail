@@ -67,30 +67,23 @@ class UpdateCollectHourForm(forms.ModelForm):
         self.fields['hour_begin'].widget.attrs["class"] = "form-control col-3 mx-2"
         self.fields['hour_end'].widget.attrs["class"] = "form-control col-3 mx-2"
 
-    def clean_hour_begin(self):
-        hour_begin = self.cleaned_data['hour_begin']
-        if not 9 <= hour_begin <= 26:
-            raise forms.ValidationError(
-                '24時間表記で9時から26時までの範囲で指定してください'
-            )
-        return hour_begin
-
-    def clean_hour_end(self):
-        hour_end = self.cleaned_data['hour_end']
-        if not 9 <= hour_end <= 26:
-            raise forms.ValidationError(
-                '24時間表記で9時から26時までの範囲で指定してください'
-            )
-        return hour_end
-
     def clean(self):
         cleaned_data = super().clean()
         hour_begin = cleaned_data.get('hour_begin')
         hour_end = cleaned_data.get('hour_end')
+        if not 9 <= hour_begin <= 26:
+            raise forms.ValidationError(
+                '開始時間は24時間表記で9時から26時までの範囲で指定してください'
+            )
+        if not 9 <= hour_end <= 26:
+            raise forms.ValidationError(
+                '終了時間は24時間表記で9時から26時までの範囲で指定してください'
+            )
         if hour_end < hour_begin:
             raise forms.ValidationError(
                 '終了時間は、開始時間よりも後にしてください'
             )
+        return cleaned_data
 
 UpdateCollectHourFormSet = forms.modelformset_factory(
     CollectHour, form=UpdateCollectHourForm, extra=0,
