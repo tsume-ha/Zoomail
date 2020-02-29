@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from members.models import User
 from .models import Calendar, CalendarUser, Schedule, CollectHour
+from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet
 import datetime
 
 
@@ -151,12 +152,12 @@ class CalendarViewTest(TestCase):
 
     def test_awase_update_urlkey_view_logOUT(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/update/urlkey/%s/' % str(calendar.pk)
+        url = '/awase/calendar/%s/urlkey/' % str(calendar.pk)
         logOUT_test_view(self, url=url)
 
     def test_awase_update_urlkey_view_logIN(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/update/urlkey/%s/' % str(calendar.pk)
+        url = '/awase/calendar/%s/urlkey/' % str(calendar.pk)
         response = logIN_test_view(self, calendar=calendar, url=url)
         self.assertTemplateUsed(response, 'awase/update_URLKey.html')
 
@@ -373,7 +374,7 @@ class CalendarInputTest(TestCase):
                 canattend = False,
                 ).exists())
 
-        
+
 class CalendarInvitionTest(TestCase):
     @classmethod
     def setUpTestData(self):
@@ -403,3 +404,34 @@ class CalendarInvitionTest(TestCase):
         self.assertTemplateUsed(response, 'awase/calendar.html')
         
 
+class UpdateCollectHourTest(TestCase):
+    @classmethod
+    def setUpTestData(self):
+        Make_User(self)
+        self.calendar = Make_a_Calendar(self)
+        self.url = '/awase/update/hours/%s/' % self.calendar.pk
+
+    def test_calendar_update_collecthour_logOUT(self):
+        logOUT_test_view(self, self.url)
+
+    def test_calendar_update_collecthour_logIN_POST(self):
+        instance = CollectHour.objects.get(
+            calendar = self.calendar,
+            date = self.calendar.days_begin,
+            )
+        data = {
+            'form-0-hour_begin': ['9'],
+            'form-0-hour_end': ['26'],
+            'form-0-date': [str(instance.date.strftime('%Y-%m-%d'))],
+            'form-0-id': [str(instance.id)],
+        }
+        # formset = UpdateCollectHourFormSet(data)
+        # self.assertTrue(formset.is_valid())
+        
+        # Force_Login(self)
+        # request = self.client.post(self.url, data)
+        # self.assertEqual(request.status_code, 302)
+        # url_redial_to = request.url
+        # response = self.client.get(url_redial_to)
+        # self.assertEqual(response.status_code, 200)
+        # self.assertTemplateUsed(response, 'awase/calendar.html')
