@@ -49,7 +49,7 @@ def CalendarJsonResponse(request, pk):
     data = {
         'calendar_data': [],
         'settings': {
-            'total_days': (calendar.days_end - calendar.days_begin).days,
+            'total_days': (calendar.days_end - calendar.days_begin).days + 1,
             'today_num': (datetime.date.today() - calendar.days_begin).days,
         }
     }
