@@ -16,6 +16,20 @@
     また、その日の集計を行わない場合は開始時間と終了時間に同じ数字を入れてください。<br>
     例：開始「9」、終了「9」 のとき、その日は集計を行いません。
 </p>
+<ul id="pagination" class="pagination">
+    {% for page in page_range %}
+    {% if page == current_page %}
+    <li class="disabled">
+        <a class="page-link text-secondary disabled d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
+    </li>
+    {% else %}
+    <li>
+        <a class="page-link text-primary d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
 <section id="form_upload" class="my-3">
     <form method="post" enctype="multipart/form-data">
         <div class="form-group row mx-0">
@@ -49,5 +63,20 @@
         <input type="submit" value="この内容に変更" class="btn btn-info mx-2 my-3">
     </form>
 </section>
+
+
+<ul id="pagination" class="pagination">
+    {% for page in page_range %}
+    {% if page == current_page %}
+    <li class="disabled">
+        <a class="page-link text-secondary disabled d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
+    </li>
+    {% else %}
+    <li>
+        <a class="page-link text-primary d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
 
 {% endblock %}
