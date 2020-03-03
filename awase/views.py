@@ -310,7 +310,8 @@ def UpdateCollectHourView(request, pk, page=1):
         'calendar': calendar,
         'updateFormset': updateFormset,
         'page_range': page_range,
-        'current_page': page
+        'total_pages': total_pages,
+        'current_page': page,
 
     }
 

@@ -16,6 +16,7 @@
     また、その日の集計を行わない場合は開始時間と終了時間に同じ数字を入れてください。<br>
     例：開始「9」、終了「9」 のとき、その日は集計を行いません。
 </p>
+{% if total_pages > 1 %}
 <ul id="pagination" class="pagination">
     {% for page in page_range %}
     {% if page == current_page %}
@@ -29,6 +30,7 @@
     {% endif %}
     {% endfor %}
 </ul>
+{% endif %}
 
 <section id="form_upload" class="my-3">
     <form method="post" enctype="multipart/form-data">
@@ -67,6 +69,7 @@
 </section>
 
 
+{% if total_pages > 1 %}
 <ul id="pagination" class="pagination">
     {% for page in page_range %}
     {% if page == current_page %}
@@ -80,5 +83,6 @@
     {% endif %}
     {% endfor %}
 </ul>
+{% endif %}
 
 {% endblock %}
