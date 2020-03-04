@@ -36,16 +36,6 @@ def Make_a_Calendar(self, year=2019):
         days_end = datetime.datetime.now() + datetime.timedelta(days=30),
         invite_key = 'invitation_key',
         )
-    date = calendar.days_begin
-    while date <= calendar.days_end:
-        date_calendar = CollectHour(
-            calendar=calendar,
-            date=date,
-            hour_begin=9,
-            hour_end=26,
-            )
-        date_calendar.save()
-        date = date + datetime.timedelta(days=1)
     CalendarUser.objects.create(
         calendar=calendar, user=user
         )
@@ -414,17 +404,17 @@ class UpdateCollectHourTest(TestCase):
     def test_calendar_update_collecthour_logOUT(self):
         logOUT_test_view(self, self.url)
 
-    def test_calendar_update_collecthour_logIN_POST(self):
-        instance = CollectHour.objects.get(
-            calendar = self.calendar,
-            date = self.calendar.days_begin,
-            )
-        data = {
-            'form-0-hour_begin': ['9'],
-            'form-0-hour_end': ['26'],
-            'form-0-date': [str(instance.date.strftime('%Y-%m-%d'))],
-            'form-0-id': [str(instance.id)],
-        }
+    # def test_calendar_update_collecthour_logIN_POST(self):
+    #     instance = CollectHour.objects.get(
+    #         calendar = self.calendar,
+    #         date = self.calendar.days_begin,
+    #         )
+    #     data = {
+    #         'form-0-hour_begin': ['9'],
+    #         'form-0-hour_end': ['26'],
+    #         'form-0-date': [str(instance.date.strftime('%Y-%m-%d'))],
+    #         'form-0-id': [str(instance.id)],
+    #     }
         # formset = UpdateCollectHourFormSet(data)
         # self.assertTrue(formset.is_valid())
         

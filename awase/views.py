@@ -113,16 +113,6 @@ def create(request):
                 content.invite_key = User.objects.make_random_password(length=12)
                 content.save()
                 calendar = content
-                date = content.days_begin
-                while date <= content.days_end:
-                    date_content = CollectHour(
-                        calendar=content,
-                        date=date,
-                        hour_begin=9,
-                        hour_end=26,
-                        )
-                    date_content.save()
-                    date = date + datetime.timedelta(days=1)
                 user_content = CalendarUser(
                     calendar = content,
                     user = now_user
@@ -206,7 +196,7 @@ def input(request, pk, page=1):
     count = 0
     date_range = {'start': date}
     while date <= calendar.days_end and date < calendar.days_begin + datetime.timedelta(days=7*page):
-        hour_query = CollectHour.objects.filter(calendar=calendar).get(date=date)
+        hour_query = CollectHour.objects.get(calendar=calendar, date=date)
         time_list = [datetime.datetime.combine(date, datetime.time(00,00,00))\
                       + datetime.timedelta(hours=hour_query.hour_begin)\
                       + datetime.timedelta(minutes=30*n)
@@ -259,16 +249,6 @@ def UpdateCalendarView(request, pk):
     if (request.method == 'POST'):
         if UpdateForm.is_valid():
             content = UpdateForm.save()
-
-            date = content.days_begin
-            while date <= content.days_end:
-                date_content = CollectHour.objects.get_or_create(
-                    calendar = calendar,
-                    date = date,
-                    defaults = {'hour_begin': 9, 'hour_end': 26},
-                    )
-                date = date + datetime.timedelta(days=1)
-
             return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
             
 
