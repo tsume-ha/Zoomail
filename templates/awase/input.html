@@ -10,7 +10,7 @@
 
 {% block body %}
 <h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> に回答</h3>
-{% if total_pages != 1 %}
+
 <nav id="input_nav" class="my-2">
 {% if page == 1 %}
     <a class="nav-link disabled">＜＜前の週</a>
@@ -24,7 +24,7 @@
     <a href="javascript:move_week('next')" class="nav-link">次の週＞＞</a>
 {% endif %}
 </nav>
-{% endif %}
+
 <section id="" class="my-3">
     <form method="post" name="calendarinput" enctype="multipart/form-data">
         {% csrf_token %}
