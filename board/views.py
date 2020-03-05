@@ -114,6 +114,26 @@ def ajax_bookmark(request, pk):
             bookmark = 'true'
         return HttpResponse('bookmark='+bookmark)
 
+def mail_compose(from_email_adress, to_list, message_data):
+    '''
+    宛先リストとメッセージコンテントからメールを構成、送信するところまで行う。
+
+    Parameters
+    ----------
+    from_email_adress: str
+        送信元のメールアドレス
+        全回なら'zenkai@message.ku-unplugged.net'
+    to_list: list
+        emailアドレスのリスト
+    message_data: Query Object
+        board.models.Message のオブジェクト
+    '''
+
+    subject = message_data.title
+    text_content = message_data.content
+    
+
+
 @login_required()
 def send(request):
     messageForm = SendMessage(
