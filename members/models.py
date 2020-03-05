@@ -37,7 +37,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name="Googleアカウント")
     receive_email = models.EmailField(blank=True, null=False, verbose_name="受信用メールアドレス")
-    send_mail = models.BooleanField(default=True)
+    send_mail = models.BooleanField(default=True, verbose_name="メーリスを受信する")
     first_name = models.CharField(max_length=255, verbose_name='名前')
     last_name = models.CharField(max_length=255, verbose_name='名字')
     nickname = models.CharField(max_length=255, blank=True, verbose_name='ニックネーム')
