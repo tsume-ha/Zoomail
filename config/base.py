@@ -201,6 +201,7 @@ SOCIAL_AUTH_PIPELINE = (
 
 
 SEND_MAIL = False
+SENDGRID_API_KEY = env('SENDGRID_API_KEY')
 
 # Send Grid Mail Settings
 EMAIL_HOST = 'smtp.sendgrid.net'
