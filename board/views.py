@@ -12,7 +12,6 @@ from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent
-from config.settings_local import SENDGRID_API_KEY
 from django.conf import settings
 import datetime
 
@@ -176,10 +175,10 @@ def send(request):
                         )
                     if settings.SEND_MAIL == True:
                         try:
-                            sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
+                            sendgrid_client = SendGridAPIClient(settings.EMAIL_HOST_PASSWORD)
                             response = sendgrid_client.send(send_massage_data)
                         except Exception as e:
-                            print(e.message)
+                            print(e)
 
                 else:
                     ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
@@ -199,10 +198,10 @@ def send(request):
                             )
                         if settings.SEND_MAIL == True:
                             try:
-                                sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
+                                sendgrid_client = SendGridAPIClient(settings.EMAIL_HOST_PASSWORD)
                                 response = sendgrid_client.send(send_massage_data)
                             except Exception as e:
-                                print(e.message)
+                                print(e)
 
                 django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
 
