@@ -7,13 +7,12 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent
-from config.settings_local import SENDGRID_API_KEY
-from django.conf import settings
 import datetime
 
 def EditPermisson(user, content_id):
@@ -196,10 +195,10 @@ def send(request):
                         )
                     if settings.SEND_MAIL == True:
                         try:
-                            sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
+                            sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
                             response = sendgrid_client.send(send_massage_data)
                         except Exception as e:
-                            print(e.message)
+                            print(e)
 
                 else:
                     ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
@@ -219,10 +218,10 @@ def send(request):
                             )
                         if settings.SEND_MAIL == True:
                             try:
-                                sendgrid_client = SendGridAPIClient(SENDGRID_API_KEY)
+                                sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
                                 response = sendgrid_client.send(send_massage_data)
                             except Exception as e:
-                                print(e.message)
+                                print(e)
 
                 django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
 
