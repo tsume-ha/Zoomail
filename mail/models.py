@@ -11,7 +11,16 @@ class SendMailAddress(models.Model):
     def __str__(self):
         return str(self.year) + ' - ' + self.user.get_full_name() +' - ' + self.email
 
-# class XMessageID(models.Model):
-#     message = models.ForeignKey(User, null=False, on_delete=models.CASCADE, related_name='x_message_id')
-#     x_message_id = models.UUIDField(default=uuid.uuid4, editable=False)
-#     
+class MessageProcess(models.Model):
+    message = models.ForeignKey(Message, null=False, on_delete=models.CASCADE, related_name='x_message_id')
+    x_message_id = models.CharField(max_length=100, editable=False)
+    email = models.EmailField(null=False, blank=False, verbose_name="送信時メールアドレス")
+    Requested = models.BooleanField(default=False, verbose_name="SendGridへ転送")
+    Processed = models.BooleanField(default=False, verbose_name="SendGridから送信")
+    Delivered = models.BooleanField(default=False, verbose_name="相手サーバーに到達")
+    Opened = models.BooleanField(default=False, verbose_name="開封")
+    Error_occurd = models.BooleanField(default=False, verbose_name="エラー")
+    Error_detail = models.CharField(max_length=100, null=True, blank=True, verbose_name="エラー詳細")
+
+    def __str__(self):
+        return self.message.title + ' - Processed:' + str(self.Processed) + ' Delivered:' + str(self.Delivered)

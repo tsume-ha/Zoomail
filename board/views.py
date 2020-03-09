@@ -11,7 +11,7 @@ from django.conf import settings
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
-from mail.models import SendMailAddress
+from mail.models import SendMailAddress, MessageProcess
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
 from sendgrid.helpers.mail import Attachment as helper_Attachment
@@ -172,6 +172,20 @@ def mail_compose(from_email_adress, to_list, message_data):
     try:
         sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sendgrid_client.send(message)
+        x_message_id = response.headers['X-Message-Id']
+
+        process_list = []
+        for email in to_list:
+            obj = MessageProcess(
+                message = message_data,
+                x_message_id = x_message_id,
+                email = email,
+                Requested = True,
+                )
+            process_list.append(obj)
+        MessageProcess.objects.bulk_create(process_list)
+
+        return response
     except Exception as e:
         print(e)
 
