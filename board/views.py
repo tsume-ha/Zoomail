@@ -149,7 +149,7 @@ def mail_compose(from_email_adress, to_list, message_data):
     
     is_attachment = Attachment.objects.filter(message=message_data).exists()
     if is_attachment:
-        file_list = Attachment.objects.filter(message=message_data)
+        file_list = Attachment.objects.filter(message=message_data).order_by('id').reverse()
         attachment_list = []
         for file in file_list:
             file_path = file.attachment_file.path
