@@ -13,7 +13,7 @@ from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
 from mail.models import SendMailAddress
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition, ContentId
+from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
 from sendgrid.helpers.mail import Attachment as helper_Attachment
 import datetime
 import base64
@@ -166,6 +166,8 @@ def mail_compose(from_email_adress, to_list, message_data):
             attachment_list.append(attachment)
 
         message.attachment = attachment_list
+
+    # message.send_at = int(datetime.datetime.now().timestamp() + 100)
 
     if settings.SEND_MAIL == True:
         try:
