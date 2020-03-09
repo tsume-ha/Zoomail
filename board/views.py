@@ -236,7 +236,7 @@ def send(request):
 
                 return redirect(to='../read/')
             else:
-                django_messages.error(request, 'どの添付ファイルのサイズも30MB未満にしてください')
+                django_messages.error(request, 'どの添付ファイルのサイズも9MB未満にしてください')
         else:
             # print('validation error')
             params['JSstop'] = True
