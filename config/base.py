@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'movie',
     'otherdocs',
     'awase',
+    'mail'
 ]
 
 MIDDLEWARE = [
