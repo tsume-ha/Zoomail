@@ -134,50 +134,45 @@ def mail_compose(from_email_adress, to_list, message_data):
 
     subject = message_data.title
     text_content = message_data.content
-    is_attachment = Attachment.objects.filter(message=message_data).exists()
-    if is_attachment:
-        text_content += '\n\n--------------------------------\n※このメッセージには添付ファイルがあります。\n※添付ファイルはメーリスHPにアクセスして見てください。\n\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(message_data.pk)
-    else:
-        text_content += '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(message_data.pk)
 
+    added_text = '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(message_data.pk)
 
     from_email_name = message_data.writer.get_short_name()
-
     to_emails = [To(email=eml) for eml in to_list]
     message = Mail(
         from_email=(from_email_adress, from_email_name),
         to_emails=to_emails,
         subject=subject,
-        plain_text_content=PlainTextContent(text_content),
+        plain_text_content=PlainTextContent(text_content + added_text),
         is_multiple=True
         )
     
+    is_attachment = Attachment.objects.filter(message=message_data).exists()
     if is_attachment:
-        file = Attachment.objects.get(message=message_data)
-        # attachment_list = []
-        # for file in file_list:
-        file_path = file.attachment_file.path
-        with open(file_path, 'rb') as f:
-            a_data = f.read()
-            f.close()
-        encoded = base64.b64encode(a_data).decode()
-        attachment = helper_Attachment(
-            file_content = FileContent(encoded),
-            file_type = FileType('image/jpeg'),
-            file_name = FileName(file.fileName()),
-            disposition = Disposition('attachment'),
-            content_id = ContentId('example')
-            )
-            # attachment_list.append(attachment)
+        file_list = Attachment.objects.filter(message=message_data)
+        attachment_list = []
+        for file in file_list:
+            file_path = file.attachment_file.path
+            with open(file_path, 'rb') as f:
+                a_data = f.read()
+                f.close()
+            encoded = base64.b64encode(a_data).decode()
+            attachment = helper_Attachment(
+                file_content = FileContent(encoded),
+                file_type = FileType('application/octet-stream'),
+                file_name = FileName(file.fileName()),
+                disposition = Disposition('attachment'),
+                )
+            attachment_list.append(attachment)
 
-        message.attachment = attachment
+        message.attachment = attachment_list
 
     if settings.SEND_MAIL == True:
-        # try:
+        try:
             sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
             response = sendgrid_client.send(message)
-        # except Exception as e:
-        #     print(e)
+        except Exception as e:
+            print(e)
 
 @login_required()
 def send(request):
