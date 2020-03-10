@@ -172,18 +172,18 @@ def mail_compose(from_email_adress, to_list, message_data):
     try:
         sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sendgrid_client.send(message)
-        x_message_id = response.headers['X-Message-Id']
+        # x_message_id = response.headers['X-Message-Id']
 
-        process_list = []
-        for email in to_list:
-            obj = MessageProcess(
-                message = message_data,
-                x_message_id = x_message_id,
-                email = email,
-                Requested = True,
-                )
-            process_list.append(obj)
-        MessageProcess.objects.bulk_create(process_list)
+        # process_list = []
+        # for email in to_list:
+        #     obj = MessageProcess(
+        #         message = message_data,
+        #         x_message_id = x_message_id,
+        #         email = email,
+        #         Requested = True,
+        #         )
+        #     process_list.append(obj)
+        # MessageProcess.objects.bulk_create(process_list)
 
         return response
     except Exception as e:
