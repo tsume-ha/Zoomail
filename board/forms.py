@@ -3,6 +3,7 @@ from django.core import validators
 from .models import Message, Attachment
 
 kaisei = [
+(2020,"2020 26期",),
 (2019,"2019 25期（会長 : 和波俊亮）",),
 (2018,"2018 24期（会長 : 成基進）",),
 (2017,"2017 23期（会長 : 宮武功貴）",),
