@@ -11,9 +11,13 @@ from django.conf import settings
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
+from mail.models import SendMailAddress, MessageProcess
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent
+from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
+from sendgrid.helpers.mail import Attachment as helper_Attachment
 import datetime
+import base64
+import os
 
 def EditPermisson(user, content_id):
     return user.is_superuser or\
@@ -113,8 +117,82 @@ def ajax_bookmark(request, pk):
             bookmark = 'true'
         return HttpResponse('bookmark='+bookmark)
 
+def mail_compose(from_email_adress, to_list, message_data):
+    '''
+    宛先リストとメッセージコンテントからメールを構成、送信するところまで行う。
+
+    Parameters
+    ----------
+    from_email_adress: str
+        送信元のメールアドレス
+        全回なら'zenkai@message.ku-unplugged.net'
+    to_list: list
+        emailアドレスのリスト
+    message_data: Query Object
+        board.models.Message のオブジェクト
+    '''
+
+    subject = message_data.title
+    text_content = message_data.content
+
+    added_text = '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(message_data.pk)
+
+    from_email_name = message_data.writer.get_short_name()
+    to_emails = [To(email=eml) for eml in to_list]
+    message = Mail(
+        from_email=(from_email_adress, from_email_name),
+        to_emails=to_emails,
+        subject=subject,
+        plain_text_content=PlainTextContent(text_content + added_text),
+        is_multiple=True
+        )
+    
+    is_attachment = Attachment.objects.filter(message=message_data).exists()
+    if is_attachment:
+        file_list = Attachment.objects.filter(message=message_data).order_by('id').reverse()
+        attachment_list = []
+        for file in file_list:
+            file_path = file.attachment_file.path
+            with open(file_path, 'rb') as f:
+                a_data = f.read()
+                f.close()
+            encoded = base64.b64encode(a_data).decode()
+            attachment = helper_Attachment(
+                file_content = FileContent(encoded),
+                file_type = FileType('application/octet-stream'),
+                file_name = FileName(file.fileName()),
+                disposition = Disposition('attachment'),
+                )
+            attachment_list.append(attachment)
+
+        message.attachment = attachment_list
+
+    # message.send_at = int(datetime.datetime.now().timestamp() + 100)
+    
+    try:
+        sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sendgrid_client.send(message)
+        # x_message_id = response.headers['X-Message-Id']
+
+        # process_list = []
+        # for email in to_list:
+        #     obj = MessageProcess(
+        #         message = message_data,
+        #         x_message_id = x_message_id,
+        #         email = email,
+        #         Requested = True,
+        #         )
+        #     process_list.append(obj)
+        # MessageProcess.objects.bulk_create(process_list)
+
+        return response
+    except Exception as e:
+        print(e)
+
+
 @login_required()
 def send(request):
+    django_messages.error(request, 'ただいま、メーリス送信に関わるメンテナンス中です。3/10 19:00までのメンテナンスを予定しています。メンテナンス中はメーリスを送信しないでください。')
     messageForm = SendMessage(
         request.POST or None,
         request.FILES or None,
@@ -152,62 +230,29 @@ def send(request):
                     content_data.years.create(year=to)
 
                 # sendgrid mail
-                subject = content_data.title
-                text_content = content_data.content
-                is_attachment = Attachment.objects.filter(message=content_data).exists()
-                if is_attachment:
-                    text_content += '\n\n--------------------------------\n※このメッセージには添付ファイルがあります。\n※添付ファイルはメーリスHPにアクセスして見てください。\n\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
-                else:
-                    text_content += '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(content_data.pk)
-                year_query = MessageYear.objects.filter(message=content_data).values('year')
+                if settings.SEND_MAIL == True:
+                    year_query = MessageYear.objects.filter(message=content_data).values('year')
 
-                if year_query.filter(year=0).exists():
-                    from_email_adress = 'zenkai@message.ku-unplugged.net'
-                    from_email_name = content_data.writer.get_short_name()
-                    to_list = User.objects.all().values_list('receive_email', flat=True)
-                    to_emails = [To(email=eml) for eml in to_list]
-                    send_massage_data = Mail(
-                        from_email=(from_email_adress, from_email_name),
-                        to_emails=to_emails,
-                        subject=subject,
-                        plain_text_content=PlainTextContent(text_content),
-                        is_multiple=True
-                        )
-                    if settings.SEND_MAIL == True:
-                        try:
-                            sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                            response = sendgrid_client.send(send_massage_data)
-                        except Exception as e:
-                            print(e)
+                    if year_query.filter(year=0).exists():
+                        from_email_adress = 'zenkai@message.ku-unplugged.net'
+                        to_list = SendMailAddress.objects.all().values_list('email', flat=True)
+                        mail_compose(from_email_adress, to_list, content_data)
 
-                else:
-                    ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
-                    for year in year_query:
-                        from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
-                        from_email_name = content_data.writer.get_short_name()
-                        if not User.objects.filter(year=year['year']).exists():
-                            continue
-                        to_list = User.objects.filter(year=year['year']).values_list('receive_email', flat=True)
-                        to_emails = [To(email=eml) for eml in to_list]
-                        send_massage_data = Mail(
-                            from_email=(from_email_adress, from_email_name),
-                            to_emails=to_emails,
-                            subject=subject,
-                            plain_text_content=PlainTextContent(text_content),
-                            is_multiple=True
-                            )
-                        if settings.SEND_MAIL == True:
-                            try:
-                                sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
-                                response = sendgrid_client.send(send_massage_data)
-                            except Exception as e:
-                                print(e)
+                    else:
+                        ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
+                        for year in year_query:
+                            from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
+                            from_email_name = content_data.writer.get_short_name()
+                            to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
+                            if to_list:
+                                to_list = User.objects.filter(year=year['year']).values_list('receive_email', flat=True)
+                                mail_compose(from_email_adress, to_list, content_data)
 
-                django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
+                    django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
 
                 return redirect(to='../read/')
             else:
-                django_messages.error(request, 'どの添付ファイルのサイズも30MB未満にしてください')
+                django_messages.error(request, 'どの添付ファイルのサイズも9MB未満にしてください')
         else:
             # print('validation error')
             params['JSstop'] = True

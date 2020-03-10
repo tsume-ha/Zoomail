@@ -323,7 +323,7 @@ class AuthentificationSendTest(TestCase):
 
 
     def test_send_POST_logIN_with_TextFile(self):
-        self.testfiles = [['29MB.txt', 29*1024*1024], ['31MB.txt', 31*1024*1024]]
+        self.testfiles = [['9MB.txt', 9*1024*1024], ['11MB.txt', 11*1024*1024]]
         user = User_LogIN(self)
         for textfile in self.testfiles:
             filedir = os.path.join(settings.BASE_DIR, 'board', textfile[0])
@@ -341,7 +341,7 @@ class AuthentificationSendTest(TestCase):
                     'attachments-0-attachment_file': [SimpleUploadedFile(textfile[0], file.read())],
                 }
                 request = self.client.post('/send/', data)
-                if textfile[1] < 30*1024*1024:
+                if textfile[1] < 10*1000*1000:
                     self.assertEqual(request.status_code, 302) # => 成功、read/へ転送
                     url_redial_to = request.url
                     self.assertEqual(url_redial_to, '../read/')
@@ -361,7 +361,7 @@ class AuthentificationSendTest(TestCase):
                     self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
                     self.assertTemplateUsed(request, 'board/send.html')
                     self.assertContains(request, data['title'][0])
-                    self.assertContains(request, 'どの添付ファイルのサイズも30MB未満にしてください')
+                    self.assertContains(request, 'どの添付ファイルのサイズも9MB未満にしてください')
                     try:
                         saved_content = Message.objects.get(title=data['title'][0])
                         self.assertTrue(False)
@@ -438,7 +438,7 @@ class AuthentificationSendTest(TestCase):
         self.assertContains(response, data['title'][0] + '_添付3')
 
     def test_send_POST_logIN_with_multiple_TextFile_FileSizeOVER(self):
-        self.testfiles = ['1KB.txt', '2KB.txt', '31MB.txt']
+        self.testfiles = ['1KB.txt', '2KB.txt', '11MB.txt']
         user = User_LogIN(self)
         filedir = [os.path.join(settings.BASE_DIR, 'board', testfile) for testfile in self.testfiles]
         with open(filedir[0], 'rb') as file0:
@@ -463,7 +463,7 @@ class AuthentificationSendTest(TestCase):
         self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
         self.assertTemplateUsed(request, 'board/send.html')
         self.assertContains(request, data['title'][0])
-        self.assertContains(request, 'どの添付ファイルのサイズも30MB未満にしてください')
+        self.assertContains(request, 'どの添付ファイルのサイズも9MB未満にしてください')
         try:
             saved_content = Message.objects.get(title=data['title'][0])
             self.assertTrue(False)

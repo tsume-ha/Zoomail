@@ -7,7 +7,7 @@ from .models import User
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['receive_email', 'last_name', 'first_name', 'furigana', 'nickname']
+        fields = ['receive_email', 'send_mail', 'last_name', 'first_name', 'furigana', 'nickname']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -15,6 +15,7 @@ class UserUpdateForm(forms.ModelForm):
             field.widget.attrs["class"] = "form-control"
         self.fields['receive_email'].required = False
         self.fields['nickname'].required = False
+        self.fields['send_mail'].widget.attrs['class'] = 'mx-2'
 
     def get_object(self):
         return self.request.user

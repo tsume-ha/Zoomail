@@ -46,7 +46,7 @@ class Attachment(models.Model):
     message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name='attachments')
     attachment_file = PrivateFileField(
         upload_to = custom_upload_to,
-        max_file_size = 30*1024*1024,
+        max_file_size = 10*1000*1000,# < 10*1024*1024
         null = True,
         blank = True
         )
