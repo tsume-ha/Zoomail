@@ -192,7 +192,6 @@ def mail_compose(from_email_adress, to_list, message_data):
 
 @login_required()
 def send(request):
-    django_messages.error(request, 'ただいま、メーリス送信に関わるメンテナンス中です。3/10 19:00までのメンテナンスを予定しています。メンテナンス中はメーリスを送信しないでください。')
     messageForm = SendMessage(
         request.POST or None,
         request.FILES or None,
