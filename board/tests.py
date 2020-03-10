@@ -361,7 +361,7 @@ class AuthentificationSendTest(TestCase):
                     self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
                     self.assertTemplateUsed(request, 'board/send.html')
                     self.assertContains(request, data['title'][0])
-                    self.assertContains(request, 'どの添付ファイルのサイズも30MB未満にしてください')
+                    self.assertContains(request, 'どの添付ファイルのサイズも9MB未満にしてください')
                     try:
                         saved_content = Message.objects.get(title=data['title'][0])
                         self.assertTrue(False)
@@ -463,7 +463,7 @@ class AuthentificationSendTest(TestCase):
         self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
         self.assertTemplateUsed(request, 'board/send.html')
         self.assertContains(request, data['title'][0])
-        self.assertContains(request, 'どの添付ファイルのサイズも30MB未満にしてください')
+        self.assertContains(request, 'どの添付ファイルのサイズも9MB未満にしてください')
         try:
             saved_content = Message.objects.get(title=data['title'][0])
             self.assertTrue(False)
