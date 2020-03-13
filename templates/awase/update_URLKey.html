@@ -20,6 +20,10 @@
     招待URLです。<br>
     クリックするとクリップボードにコピーされます。
     </p>
+    <p class="small">
+        コピーできない方はこちら<br>
+        <span>https://message.ku-unplugged.net{% url 'awase:invited' calendar.invite_key %}</span>
+    </p>
     <a href="{% url 'awase:calendar' calendar.pk %}" class="btn btn-primary my-2">日程調整「{{ calendar.title }}」に戻る</a><br>
 </section>
 
