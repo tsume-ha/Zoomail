@@ -5,6 +5,7 @@
 {% block title %}日程調整を作成 | Unplugged Message{% endblock %}
 {% block extrastyle %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
+    <script src='https://unpkg.com/v-calendar'></script>
 {% endblock %}
 
 
@@ -14,16 +15,40 @@
 <section id="form_upload" class="my-3">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {% for field in CreateForm %}
+
         <div class="form-group row mx-0">
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.errors %}
-            <p class="small text-danger pl-2">{{ field.errors.as_text }}</p>
+            {{ CreateForm.title.label_tag }}
+            {{ CreateForm.title }}
+            {% if CreateForm.title.errors %}
+            <p class="small text-danger pl-2">{{ CreateForm.title.errors.as_text }}</p>
             {% endif %}
         </div>
-        {% endfor %}
+        <div class="form-group row mx-0">
+            {{ CreateForm.text.label_tag }}
+            {{ CreateForm.text }}
+            {% if CreateForm.text.errors %}
+            <p class="small text-danger pl-2">{{ CreateForm.text.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group row mx-0">
+            {{ CreateForm.days_begin.label_tag }}
+            {{ CreateForm.days_begin }}
+            {% if CreateForm.days_begin.errors %}
+            <p class="small text-danger pl-2">{{ CreateForm.days_begin.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group row mx-0">
+            {{ CreateForm.days_end.label_tag }}
+            {{ CreateForm.days_end }}
+            {% if CreateForm.days_end.errors %}
+            <p class="small text-danger pl-2">{{ CreateForm.days_end.errors.as_text }}</p>
+            {% endif %}
+        </div>
 
+        <div class="form-group row mx-0">
+            <v-date-picker mode='range' v-model='selectedDate' />
+        </div>
+        
         {% for non_field_error in CreateForm.non_field_errors %}
         <p class="small text-danger pl-2">{{ non_field_error }}</p>
         {% endfor %}
@@ -35,4 +60,5 @@
     </p>
 </section>
 
+<script src="{% static 'js/awase/create.js' %}"></script>
 {% endblock %}
