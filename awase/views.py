@@ -18,6 +18,8 @@ def calendar_permission(calendar, user):
 def ceil(a, b):
     return a//b if a%b==0 else a//b + 1
 
+CALENDAR_MAX_RANGE = 120 # max days
+
 @login_required()
 def index(request):
     now_user = request.user
@@ -123,7 +125,7 @@ def create(request):
 
     params = {
         'CreateForm': CreateForm,
-
+        'max_range': CALENDAR_MAX_RANGE,
     }
 
     return render(request, 'awase/create.html', params)
