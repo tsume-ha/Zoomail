@@ -5,6 +5,7 @@
 {% block title %}{{calendar.title}}の集計時間を変更 | あわせのあわせ | Unplugged Message{% endblock %}
 {% block extrastyle %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
+    <script src='https://unpkg.com/v-calendar'></script>
 {% endblock %}
 
 
@@ -16,73 +17,40 @@
     また、その日の集計を行わない場合は開始時間と終了時間に同じ数字を入れてください。<br>
     例：開始「9」、終了「9」 のとき、その日は集計を行いません。
 </p>
-{% if total_pages > 1 %}
-<ul id="pagination" class="pagination">
-    {% for page in page_range %}
-    {% if page == current_page %}
-    <li class="disabled">
-        <a class="page-link text-secondary disabled d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
-    </li>
-    {% else %}
-    <li>
-        <a class="page-link text-primary d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
-    </li>
-    {% endif %}
-    {% endfor %}
-</ul>
-{% endif %}
 
-<section id="form_upload" class="my-3">
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group row mx-0">
-            <span class="display_date col-4 px-2">日にち</span>
-            <span class="col-3 mx-2">開始時間</span>
-            <span class="col-3 mx-2">終了時間</span>
-        </div>
-        {% csrf_token %}
-        {% for form in updateFormset %}
-            <div class="form-group row mx-0">
-            <span class="display_date col-4 px-2">
-                {% if form.instance.date %}
-                {{ form.instance.date | date:"m/d (D)" }}
-                {% else %}
-                {{ form.date.value | date:"m/d (D)" }}
-                {% endif %}
-            </span>
-            {{ form.hour_begin }}
-            {{ form.hour_end }}
-            {% for field in form.visible_fields %}
-                {% if field.errors %}<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>{% endif %}
-            {% endfor %}
 
-            {% for error in form.non_field_errors %}
-                <p class="small text-danger pl-2">{{ error }}</p>
-            {% endfor %}
-            {% for field in form.hidden_fields %}
-                {{ field }}
-            {% endfor %}
-            </div>
-        {% endfor %}
-        {{ updateFormset.management_form }}
-        <input type="submit" value="この内容に変更" class="btn btn-info mx-2 my-3">
-    </form>
+<section id="app">
+    <v-date-picker
+        mode="multiple"
+        v-model="selectedDate"
+        :first-day-of-week="2"
+        :is-inline="isInline"
+        is-expanded
+        :columns="$screens({ default: 1, ld: 2 })"
+        >
+        <template slot='header-title' slot-scope='props'>
+            [[props.yearLabel]]年[[props.monthLabel]]
+        </template>
+
+    </v-date-picker>
 </section>
 
 
-{% if total_pages > 1 %}
-<ul id="pagination" class="pagination">
-    {% for page in page_range %}
-    {% if page == current_page %}
-    <li class="disabled">
-        <a class="page-link text-secondary disabled d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
-    </li>
-    {% else %}
-    <li>
-        <a class="page-link text-primary d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
-    </li>
-    {% endif %}
-    {% endfor %}
-</ul>
-{% endif %}
+<script type="text/javascript">
+
+let app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    data: {
+        selectedDate: null,
+        isInline: true,
+    },
+
+    dayclick: function(day){
+        console.log(day);
+    }
+})
+
+</script>
 
 {% endblock %}
