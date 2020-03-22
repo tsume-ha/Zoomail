@@ -20,19 +20,31 @@
 
 
 <section id="app">
-    <v-date-picker
-        mode="multiple"
-        v-model="selectedDate"
-        :first-day-of-week="2"
-        :is-inline="isInline"
-        is-expanded
-        :columns="$screens({ default: 1, ld: 2 })"
-        >
-        <template slot='header-title' slot-scope='props'>
-            [[props.yearLabel]]年[[props.monthLabel]]
-        </template>
+    <div v-if="!jsonLoaded">
+        <p>読み込み中...</p>
+    </div>
+    <div v-else>
+        <v-calendar
+            :first-day-of-week="2"
+            is-expanded
+            :columns="$screens({ default: 1, ld: 2 })"
+            >
+            <template slot='header-title' slot-scope='props'>
+                [[props.yearLabel]]年[[props.monthLabel]]
+            </template>
+            <template slot='day-content' slot-scope='props'>
+                <div class="ceil text-center pt-1 pb-2" v-on:click="dayclick(props.day)">
+                    <h6 class="m-0 p-0">[[props.day.day]]</h6>
+                    <span class="small">22-26</span>
+                </div>
+            </template>
 
-    </v-date-picker>
+        </v-calendar>
+        <button @click="clear()">選択を全て解除</button>
+        <ul v-for="date in selectedDate">
+            <li>[[dayToDisplayStr(date)]]</li>
+        </ul>
+    </div>
 </section>
 
 
@@ -42,12 +54,34 @@ let app = new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
-        selectedDate: null,
+        jsonLoaded: true,
+        selectedDate: [],
         isInline: true,
+        WEEKDAYS: ['日','月','火','水','木','金','土']
     },
-
-    dayclick: function(day){
-        console.log(day);
+    methods: {
+        dayclick: function(day){
+            let is_exist = this.selectedDate.filter(function(item){
+                return item.id === day.id
+            });
+            if (is_exist.length == 0) {
+                this.selectedDate.push(day);
+                day.isFocusable = true;
+                // this.selectedDate.sort(function(a,b){
+                //     return a.dateTime > b.dateTime;
+                // });
+                console.log(day);
+            }
+        },
+        clear: function(){
+            this.selectedDate = [];
+        },
+        // dateToYYYYMMDD: function(date){
+        //     return date.getFullYear() + '' + (date.getMonth() + 1) + '' + date.getDate();
+        // },
+        dayToDisplayStr: function(day){
+            return day.month + '/' + day.day + ' (' + this.WEEKDAYS[day.weekday - 1] + ')';
+        }
     }
 })
 
