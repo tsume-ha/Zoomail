@@ -35,33 +35,39 @@
             <template slot='day-content' slot-scope='props'>
                 <custom-day-content
                     :day="props.day"
-                    @clicked="dayclick"></custom-day-content>
+                    :data="timedata[String(props.day.day)]"
+                    @dayadd="dayadd"
+                    @dayremove="dayremove"></custom-day-content>
             </template>
 
         </v-calendar>
-        <button @click="clear()">選択を全て解除</button>
-        <ul v-for="date in displayDateList">
-            <li>[[dayToDisplayStr(date)]]</li>
-        </ul>
+        <div id="time-select">
+            
+        </div>
+
     </div>
 </section>
 
 
 <script type="text/javascript">
 Vue.component('custom-day-content', {
-    props: {day: {type: Object, required: true}},
+    props: {
+        day: {type: Object, required: true},
+        data: {type: Object, required: false},
+    },
     delimiters: ['[[', ']]'],
     template: `<div
                   class="ceil text-center pt-1 pb-2"
-                  v-on:click="onclick"
+                  @click="onclick"
                   :class="{selected: isSelected}"
                 >
                    <h6 class="m-0 p-0">[[propedDay.day]]</h6>
-                   <span class="small">22-26</span>
+                   <span class="small">[[displayHour]]</span>
                </div>`,
     data: function(){
         return {
             propedDay: this.day,
+            propedData: this.data,
             isSelected: false,
         }
     },
@@ -69,9 +75,20 @@ Vue.component('custom-day-content', {
         onclick: function(){
             this.isSelected = !this.isSelected;
             if (this.isSelected) {
-                this.$emit('clicked', this.propedDay);
+                this.$emit('dayadd', this.propedDay);
+            } else {
+                this.$emit('dayremove', this.propedDay);
             }
 
+        }
+    },
+    computed: {
+        displayHour: function(){
+            if (this.data.start === this.data.end) {
+                return '×';
+            } else {
+                return this.data.start + '-' + this.data.end;
+            }
         }
     }
 })
@@ -82,40 +99,69 @@ let app = new Vue({
     delimiters: ['[[', ']]'],
     data: {
         jsonLoaded: true,
-        selectedDate: [],
+        timedata: {
+            '1': {start: 9, end: 9},
+            '2': {start: 9, end: 26},
+            '3': {start: 9, end: 26},
+            '4': {start: 9, end: 26},
+            '5': {start: 9, end: 26},
+            '6': {start: 12, end: 26},
+            '7': {start: 9, end: 26},
+            '8': {start: 9, end: 26},
+            '9': {start: 9, end: 26},
+            '10': {start: 9, end: 26},
+            '11': {start: 9, end: 26},
+            '12': {start: 9, end: 26},
+            '13': {start: 9, end: 26},
+            '14': {start: 9, end: 26},
+            '15': {start: 9, end: 26},
+            '16': {start: 9, end: 26},
+            '17': {start: 9, end: 26},
+            '18': {start: 9, end: 26},
+            '19': {start: 9, end: 26},
+            '20': {start: 9, end: 26},
+            '21': {start: 9, end: 26},
+            '22': {start: 9, end: 26},
+            '23': {start: 9, end: 26},
+            '24': {start: 9, end: 26},
+            '25': {start: 9, end: 26},
+            '26': {start: 9, end: 26},
+            '27': {start: 9, end: 26},
+            '28': {start: 9, end: 26},
+            '29': {start: 9, end: 26},
+            '30': {start: 9, end: 26},
+            '31': {start: 9, end: 26},
+        },
+        selectedDate: {},
         isInline: true,
         WEEKDAYS: ['日','月','火','水','木','金','土']
     },
     methods: {
-        dayclick: function(e){
-            console.log(e);
-            let is_exist = this.selectedDate.filter(function(item){
-                return item.id === e.id
-            });
-            if (is_exist.length == 0) {
-                this.selectedDate.push(e);
-                e.isFocusable = true;
-                console.log(e);
+        dayadd: function(e){
+            let id = e.id;
+            if (!(id in this.selectedDate)) {
+                this.$set(this.selectedDate, id, e);
+            }
+        },
+        dayremove: function(e){
+            let id = e.id;
+            if (id in this.selectedDate) {
+                this.$delete(this.selectedDate, id);
             }
         },
         clear: function(){
-            this.selectedDate = [];
+            this.selectedDate = {};
         },
-        // dateToYYYYMMDD: function(date){
-        //     return date.getFullYear() + '' + (date.getMonth() + 1) + '' + date.getDate();
-        // },
-        dayToDisplayStr: function(day){
-            return day.month + '/' + day.day + ' (' + this.WEEKDAYS[day.weekday - 1] + ')';
-        }
     },
     computed: {
-        displayDateList: function(){
-            let result = this.selectedDate.sort(function(a,b){
-                    console.log(a.dateTime, b.dateTime);
-                    return a.dateTime > b.dateTime;
-                });
-            return result;
-        }
+    },
+    watch: {
+        selectedDate: function(){
+            for (var key in this.selectedDate) {
+                console.log(key + "：" + this.selectedDate[key].day);
+            }
+            console.log(Object.keys(this.selectedDate).length);
+        },
     }
 })
 
