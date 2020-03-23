@@ -33,15 +33,14 @@
                 [[props.yearLabel]]年[[props.monthLabel]]
             </template>
             <template slot='day-content' slot-scope='props'>
-                <div class="ceil text-center pt-1 pb-2" v-on:click="dayclick(props.day)">
-                    <h6 class="m-0 p-0">[[props.day.day]]</h6>
-                    <span class="small">22-26</span>
-                </div>
+                <custom-day-content
+                    :day="props.day"
+                    @clicked="dayclick"></custom-day-content>
             </template>
 
         </v-calendar>
         <button @click="clear()">選択を全て解除</button>
-        <ul v-for="date in selectedDate">
+        <ul v-for="date in displayDateList">
             <li>[[dayToDisplayStr(date)]]</li>
         </ul>
     </div>
@@ -49,6 +48,34 @@
 
 
 <script type="text/javascript">
+Vue.component('custom-day-content', {
+    props: {day: {type: Object, required: true}},
+    delimiters: ['[[', ']]'],
+    template: `<div
+                  class="ceil text-center pt-1 pb-2"
+                  v-on:click="onclick"
+                  :class="{selected: isSelected}"
+                >
+                   <h6 class="m-0 p-0">[[propedDay.day]]</h6>
+                   <span class="small">22-26</span>
+               </div>`,
+    data: function(){
+        return {
+            propedDay: this.day,
+            isSelected: false,
+        }
+    },
+    methods: {
+        onclick: function(){
+            this.isSelected = !this.isSelected;
+            if (this.isSelected) {
+                this.$emit('clicked', this.propedDay);
+            }
+
+        }
+    }
+})
+
 
 let app = new Vue({
     el: '#app',
@@ -60,17 +87,15 @@ let app = new Vue({
         WEEKDAYS: ['日','月','火','水','木','金','土']
     },
     methods: {
-        dayclick: function(day){
+        dayclick: function(e){
+            console.log(e);
             let is_exist = this.selectedDate.filter(function(item){
-                return item.id === day.id
+                return item.id === e.id
             });
             if (is_exist.length == 0) {
-                this.selectedDate.push(day);
-                day.isFocusable = true;
-                // this.selectedDate.sort(function(a,b){
-                //     return a.dateTime > b.dateTime;
-                // });
-                console.log(day);
+                this.selectedDate.push(e);
+                e.isFocusable = true;
+                console.log(e);
             }
         },
         clear: function(){
@@ -82,9 +107,23 @@ let app = new Vue({
         dayToDisplayStr: function(day){
             return day.month + '/' + day.day + ' (' + this.WEEKDAYS[day.weekday - 1] + ')';
         }
+    },
+    computed: {
+        displayDateList: function(){
+            let result = this.selectedDate.sort(function(a,b){
+                    console.log(a.dateTime, b.dateTime);
+                    return a.dateTime > b.dateTime;
+                });
+            return result;
+        }
     }
 })
 
 </script>
+<style type="text/css">
 
+.ceil.selected{
+    background-color: #abcdef;
+}
+</style>
 {% endblock %}
