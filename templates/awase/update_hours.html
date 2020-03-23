@@ -41,8 +41,15 @@
             </template>
 
         </v-calendar>
-        <div id="time-select">
-            
+        <div id="time-select" class="mb-5">
+            <select id="start" :value="start" class="form-control col-3">
+                <option v-for="i in 18" value="i+8">[[ i+8 ]]:00</option>
+            </select>
+            <span>から</span>
+            <select id="end" :value="end" class="form-control col-3">
+                <option v-for="i in 18" value="i+8">[[ i+8 ]]:00</option>
+            </select>
+            <button>変更</button>
         </div>
 
     </div>
@@ -133,6 +140,8 @@ let app = new Vue({
             '31': {start: 9, end: 26},
         },
         selectedDate: {},
+        start: null,
+        end: null,
         isInline: true,
         WEEKDAYS: ['日','月','火','水','木','金','土']
     },
@@ -162,6 +171,9 @@ let app = new Vue({
             }
             console.log(Object.keys(this.selectedDate).length);
         },
+        start: function(){
+            console.log(this.start);
+        }
     }
 })
 
