@@ -299,6 +299,17 @@ def UpdateCollectHourView(request, pk, page=1):
 
     return render(request, 'awase/update_hours.html', params)
 
+@login_required()
+def CollectHourJsonResponse(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+
+    data = {'event': 'successed'}
+    return JsonResponse(data)
+
+
 
 @login_required()
 def CalendarURLKey(request, pk):

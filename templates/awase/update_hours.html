@@ -5,6 +5,7 @@
 {% block title %}{{calendar.title}}の集計時間を変更 | あわせのあわせ | Unplugged Message{% endblock %}
 {% block extrastyle %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src='https://unpkg.com/v-calendar'></script>
 {% endblock %}
 
@@ -57,6 +58,8 @@
 
 
 <script type="text/javascript">
+const jsonURL = "{% url 'awase:hours_update_json' calendar.pk %}";
+
 Vue.component('custom-day-content', {
     props: {
         day: {type: Object, required: true},
@@ -140,7 +143,7 @@ let app = new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
-        jsonLoaded: true,
+        jsonLoaded: false,
         timedata: {
             '20200301': {start: 9, end: 9},
             '20200302': {start: 9, end: 26},
@@ -180,6 +183,18 @@ let app = new Vue({
         beforePOSTRequest: {},
         isInline: true,
         WEEKDAYS: ['日','月','火','水','木','金','土']
+    },
+    mounted: function(){
+        console.log('done');        
+        var request = new XMLHttpRequest();
+        request.open('GET', jsonURL);
+        request.responseType = 'json';
+        request.send();
+        request.onload = function(){
+            console.log(request.response);
+            
+            app.jsonLoaded = true;
+        }
     },
     methods: {
         dayadd: function(e){
