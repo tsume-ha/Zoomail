@@ -305,8 +305,9 @@ def CollectHourJsonResponse(request, pk):
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
         raise Http404()
+    datalist = CollectHour.objects.filter(calendar=calendar).order_by('date').values_list('date', 'hour_begin', 'hour_end')
+    data = {data[0].strftime('%Y%m%d'): {'start': data[1], 'end': data[2]} for data in datalist}
 
-    data = {'event': 'successed'}
     return JsonResponse(data)
 
 

@@ -70,14 +70,16 @@ Vue.component('custom-day-content', {
     template: `<div
                   class="ceil text-center pt-1 pb-2"
                   @click="onclick"
-                  :class="{selected: isSelected}"
-                  style="cursor: pointer"
+                  :class="{active: isActive, selected: isSelected}"
                 >
                    <h6 class="m-0 p-0">[[day.day]]</h6>
                    <span class="small">[[displayHour]]</span>
                </div>`,
     methods: {
         onclick: function(){
+            if (!this.isActive) {
+                return false;
+            }
             if (this.isSelected) {
                 this.$emit('dayremove', this.day);
             } else {
@@ -90,13 +92,16 @@ Vue.component('custom-day-content', {
         displayHour: function(){
             let start = this.data.start;
             let end = this.data.end;
-            if (start === '' && end === '') {
+            if (!this.isActive) {
                 return '-';
             } else if (start === end) {
                 return '×';
             } else {
                 return start + '-' + end;
             }
+        },
+        isActive: function(){
+            return !(this.data.start === '' && this.data.end === '');
         }
     }
 })
@@ -144,44 +149,11 @@ let app = new Vue({
     delimiters: ['[[', ']]'],
     data: {
         jsonLoaded: false,
-        timedata: {
-            '20200301': {start: 9, end: 9},
-            '20200302': {start: 9, end: 26},
-            '20200303': {start: 9, end: 26},
-            '20200304': {start: 9, end: 26},
-            '20200305': {start: 9, end: 26},
-            '20200306': {start: 12, end: 26},
-            '20200307': {start: 9, end: 26},
-            '20200308': {start: 9, end: 26},
-            '20200309': {start: 9, end: 26},
-            '20200310': {start: 9, end: 26},
-            '20200311': {start: 9, end: 26},
-            '20200312': {start: 10, end: 26},
-            '20200313': {start: 9, end: 26},
-            '20200314': {start: 9, end: 26},
-            '20200315': {start: 9, end: 26},
-            '20200316': {start: 9, end: 26},
-            '20200317': {start: 9, end: 26},
-            '20200318': {start: 9, end: 26},
-            '20200319': {start: 9, end: 26},
-            '20200320': {start: 9, end: 26},
-            '20200321': {start: 9, end: 26},
-            '20200322': {start: 9, end: 26},
-            '20200323': {start: 9, end: 26},
-            '20200324': {start: 9, end: 26},
-            '20200325': {start: 9, end: 26},
-            '20200326': {start: 9, end: 26},
-            '20200327': {start: 9, end: 26},
-            '20200328': {start: 9, end: 26},
-            '20200329': {start: 9, end: 26},
-            '20200330': {start: 9, end: 26},
-            '20200331': {start: 9, end: 26},
-        },
+        timedata: {},
         selectedDate: {},
         start: null,
         end: null,
         beforePOSTRequest: {},
-        isInline: true,
         WEEKDAYS: ['日','月','火','水','木','金','土']
     },
     mounted: function(){
@@ -191,8 +163,10 @@ let app = new Vue({
         request.responseType = 'json';
         request.send();
         request.onload = function(){
-            console.log(request.response);
-            
+            let response = request.response;
+            console.log(response);
+            app.timedata = response;
+
             app.jsonLoaded = true;
         }
     },
@@ -254,6 +228,13 @@ let app = new Vue({
 
 </script>
 <style type="text/css">
+.ceil{
+    cursor: default;
+}
+.ceil.active{
+    cursor: pointer;
+}
+
 
 .ceil.selected{
     background-color: #abcdef;
