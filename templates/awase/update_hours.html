@@ -36,7 +36,7 @@
             <template slot='day-content' slot-scope='props'>
                 <custom-day-content
                     :day="props.day"
-                    :data="timedata[String(props.day.day)]"
+                    :data="timedata[dateToYYYYMMDD(props.day.date)]"
                     :is-selected="(props.day.id in selectedDate)"
                     @dayadd="dayadd"
                     @dayremove="dayremove"></custom-day-content>
@@ -49,7 +49,7 @@
             <time-selector name="start" :max="end" @onchange="timeChange"></time-selector>
             <span>から</span>
             <time-selector name="end" :min="start" @onchange="timeChange"></time-selector>
-            <button>変更</button>
+            <button @click="setTimeData">変更</button>
         </div>
 
     </div>
@@ -60,7 +60,7 @@
 Vue.component('custom-day-content', {
     props: {
         day: {type: Object, required: true},
-        data: {type: Object, required: false},
+        data: {type: Object, required: false, default: () => {return{start: '', end: ''}},},
         isSelected: {type: Boolean, required: false}
     },
     delimiters: ['[[', ']]'],
@@ -85,10 +85,14 @@ Vue.component('custom-day-content', {
     },
     computed: {
         displayHour: function(){
-            if (this.data.start === this.data.end) {
+            let start = this.data.start;
+            let end = this.data.end;
+            if (start === '' && end === '') {
+                return '-';
+            } else if (start === end) {
                 return '×';
             } else {
-                return this.data.start + '-' + this.data.end;
+                return start + '-' + end;
             }
         }
     }
@@ -139,37 +143,37 @@ let app = new Vue({
     data: {
         jsonLoaded: true,
         timedata: {
-            '1': {start: 9, end: 9},
-            '2': {start: 9, end: 26},
-            '3': {start: 9, end: 26},
-            '4': {start: 9, end: 26},
-            '5': {start: 9, end: 26},
-            '6': {start: 12, end: 26},
-            '7': {start: 9, end: 26},
-            '8': {start: 9, end: 26},
-            '9': {start: 9, end: 26},
-            '10': {start: 9, end: 26},
-            '11': {start: 9, end: 26},
-            '12': {start: 10, end: 26},
-            '13': {start: 9, end: 26},
-            '14': {start: 9, end: 26},
-            '15': {start: 9, end: 26},
-            '16': {start: 9, end: 26},
-            '17': {start: 9, end: 26},
-            '18': {start: 9, end: 26},
-            '19': {start: 9, end: 26},
-            '20': {start: 9, end: 26},
-            '21': {start: 9, end: 26},
-            '22': {start: 9, end: 26},
-            '23': {start: 9, end: 26},
-            '24': {start: 9, end: 26},
-            '25': {start: 9, end: 26},
-            '26': {start: 9, end: 26},
-            '27': {start: 9, end: 26},
-            '28': {start: 9, end: 26},
-            '29': {start: 9, end: 26},
-            '30': {start: 9, end: 26},
-            '31': {start: 9, end: 26},
+            '20200301': {start: 9, end: 9},
+            '20200302': {start: 9, end: 26},
+            '20200303': {start: 9, end: 26},
+            '20200304': {start: 9, end: 26},
+            '20200305': {start: 9, end: 26},
+            '20200306': {start: 12, end: 26},
+            '20200307': {start: 9, end: 26},
+            '20200308': {start: 9, end: 26},
+            '20200309': {start: 9, end: 26},
+            '20200310': {start: 9, end: 26},
+            '20200311': {start: 9, end: 26},
+            '20200312': {start: 10, end: 26},
+            '20200313': {start: 9, end: 26},
+            '20200314': {start: 9, end: 26},
+            '20200315': {start: 9, end: 26},
+            '20200316': {start: 9, end: 26},
+            '20200317': {start: 9, end: 26},
+            '20200318': {start: 9, end: 26},
+            '20200319': {start: 9, end: 26},
+            '20200320': {start: 9, end: 26},
+            '20200321': {start: 9, end: 26},
+            '20200322': {start: 9, end: 26},
+            '20200323': {start: 9, end: 26},
+            '20200324': {start: 9, end: 26},
+            '20200325': {start: 9, end: 26},
+            '20200326': {start: 9, end: 26},
+            '20200327': {start: 9, end: 26},
+            '20200328': {start: 9, end: 26},
+            '20200329': {start: 9, end: 26},
+            '20200330': {start: 9, end: 26},
+            '20200331': {start: 9, end: 26},
         },
         selectedDate: {},
         start: null,
@@ -197,12 +201,15 @@ let app = new Vue({
             console.log(e);
             this[e.name] = e.value;
         },
-        timeReset: function(){
-            this.start = 9;
-            this.end = 26;
-        },
         setTimeData: function(){
-            
+            for (day in this.selectedDate) {
+                let content = this.selectedDate[day];
+
+                console.log(this.dateToYYYYMMDD(content.date));
+            }
+        },
+        dateToYYYYMMDD: function(date){
+            return date.getFullYear() + '' + ('0'+ (date.getMonth()+1) ).slice(-2) + '' + ('0' + date.getDate()).slice(-2);
         }
     },
     computed: {
