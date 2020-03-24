@@ -72,7 +72,7 @@ Vue.component('custom-day-content', {
                   @click="onclick"
                   :class="{active: isActive, selected: isSelected}"
                 >
-                   <h6 class="m-0 p-0">[[day.day]]</h6>
+                   <h6 class="m-0 p-0" :style="addStyleTextColor(day.weekday)">[[day.day]]</h6>
                    <span class="small">[[displayHour]]</span>
                </div>`,
     methods: {
@@ -85,8 +85,19 @@ Vue.component('custom-day-content', {
             } else {
                 this.$emit('dayadd', this.day);
             }
-
+        },
+        addStyleTextColor: function(weekday) {
+            if (weekday === 1) {
+                return {
+                    color: "red"
+                };
+            } else if (weekday === 7) {
+                return {
+                    color: "#00c0ff"
+                };
+            }
         }
+
     },
     computed: {
         displayHour: function(){
@@ -156,8 +167,7 @@ let app = new Vue({
         beforePOSTRequest: {},
         WEEKDAYS: ['日','月','火','水','木','金','土']
     },
-    mounted: function(){
-        console.log('done');        
+    mounted: function(){  
         var request = new XMLHttpRequest();
         request.open('GET', jsonURL);
         request.responseType = 'json';
@@ -206,6 +216,24 @@ let app = new Vue({
                 this.$set(this.beforePOSTRequest, key, this.timedata[key]);
                 this.$delete(this.selectedDate, day);
             }
+            this.postMethod();
+        },
+        postMethod: function(){
+            let data = {};
+            for (var key in this.beforePOSTRequest) {
+                data[key] = this.beforePOSTRequest[key].start + '-' + this.beforePOSTRequest[key].end;
+            }
+            console.log(data);
+
+            axios.defaults.xsrfCookieName = 'csrftoken';
+            axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+            axios.post(jsonURL, data)
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
         },
         dateToYYYYMMDD: function(date){
             return date.getFullYear() + '' + ('0'+ (date.getMonth()+1) ).slice(-2) + '' + ('0' + date.getDate()).slice(-2);
@@ -214,15 +242,7 @@ let app = new Vue({
     computed: {
     },
     watch: {
-        selectedDate: function(){
-            for (var key in this.selectedDate) {
-                console.log(key + "：" + this.selectedDate[key].day);
-            }
-            console.log(Object.keys(this.selectedDate).length);
-        },
-        start: function(){
-            console.log(this.start);
-        }
+
     }
 })
 
