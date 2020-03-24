@@ -121,7 +121,6 @@ Vue.component('time-selector', {
     },
     methods: {
         eventUp: function(){
-            console.log(this.value);
             this.$emit('onchange', {name: this.name, value: this.value});
         },
     },
@@ -178,6 +177,7 @@ let app = new Vue({
         selectedDate: {},
         start: null,
         end: null,
+        beforePOSTRequest: {},
         isInline: true,
         WEEKDAYS: ['日','月','火','水','木','金','土']
     },
@@ -202,10 +202,20 @@ let app = new Vue({
             this[e.name] = e.value;
         },
         setTimeData: function(){
+            if (this.start === null && this.end === null) {
+                return false;
+            }
             for (day in this.selectedDate) {
                 let content = this.selectedDate[day];
-
-                console.log(this.dateToYYYYMMDD(content.date));
+                let key = this.dateToYYYYMMDD(content.date);
+                if (this.start){
+                    this.$set(this.timedata[key], 'start', this.start);
+                }
+                if (this.end) {
+                    this.$set(this.timedata[key], 'end', this.end);
+                }
+                this.$set(this.beforePOSTRequest, key, this.timedata[key]);
+                this.$delete(this.selectedDate, day);
             }
         },
         dateToYYYYMMDD: function(date){
