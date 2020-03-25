@@ -15,8 +15,7 @@
 <p class="mb-4">
     各日にちの中で日程調整したい時間帯を変更できます。<br>
     時間は24時間表記で、9時(AM9:00)～26時(翌AM2:00)まで1時間単位で指定できます。<br>
-    また、その日の集計を行わない場合は開始時間と終了時間に同じ数字を入れてください。<br>
-    例：開始「9」、終了「9」 のとき、その日は集計を行いません。
+    また、期間内の任意の日を、「集計しない日」に設定することも出きます。
 </p>
 
 
@@ -28,7 +27,7 @@
         <div v-if="isProcessError">
             <p v-text="errorMessage" class="text-danger"></p>
         </div>
-        <h6>1. 変更したい日(複数も可)を選ぶ</h6>
+        <h6>1. 日付をクリックして変更したい日(複数も可)を選ぶ</h6>
         <v-calendar
             :first-day-of-week="2"
             is-expanded
@@ -49,13 +48,18 @@
         </v-calendar>
         <hr>
         <h6>2. 選んだ日に集計する時間を指定する</h6>
-        <div id="time-select" class="mt-3 mb-5">
+        <div id="time-select" class="row my-3 mx-2">
             <time-selector name="start" :max="end" @onchange="timeChange"></time-selector>
-            <span>から</span>
+            <span class="m-2">から</span>
             <time-selector name="end" :min="start" @onchange="timeChange"></time-selector>
-            <button @click="setTimeData">変更</button>
+            <span class="m-2">に</span>
+            <button @click="setTimeData" class="btn btn-info">変更</button>
         </div>
-
+        <hr>
+        <div id="not-collect-select" class="row my-3 mx-2">
+            <span class="m-2">もしくは、</span>
+            <button class="btn btn-secondary">「集計しない日」にする</button>
+        </div>
     </div>
 </section>
 
@@ -216,6 +220,17 @@ let app = new Vue({
                 if (this.end) {
                     this.$set(this.timedata[key], 'end', this.end);
                 }
+                if (this.timedata[key].start > this.timedata[key].end) {
+                    console.log('validation error');
+                    if (this.start === null) {
+                        this.$set(this.timedata[key], 'start', 9);
+                    } else if (this.end === null) {
+                        this.$set(this.timedata[key], 'end', 26);
+                    } else {
+                        this.$set(this.timedata[key], 'start', 9);
+                        this.$set(this.timedata[key], 'end', 26);
+                    }
+                }
                 this.$set(this.beforePOSTRequest, key, this.timedata[key]);
                 this.$delete(this.selectedDate, day);
             }
@@ -237,6 +252,7 @@ let app = new Vue({
             axios.post(jsonURL, data)
                 .then(function (response) {
                     console.log(response);
+                    app.isProcessError = false;
                     for (var key of inProcess) {
                         app.$delete(app.beforePOSTRequest, key);
                     }
