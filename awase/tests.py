@@ -194,12 +194,8 @@ class CalendarCreateTest(TestCase):
         data = {
             'title': ['test_calendar_group'],
             'text': ['test_calendar_subscription'],
-            'days_begin_year': ['2020'],
-            'days_begin_month': ['4'],
-            'days_begin_day': ['1'],
-            'days_end_year': ['2020'],
-            'days_end_month': ['4'],
-            'days_end_day': ['10'],
+            'days_begin': ['2020-04-01'],
+            'days_end': ['2020-04-10'],
         }
         User_LogOUT(self)
         request = self.client.post('/awase/create/', data)
@@ -215,12 +211,8 @@ class CalendarCreateTest(TestCase):
         data = {
             'title': ['test_calendar_group'],
             'text': ['test_calendar_subscription'],
-            'days_begin_year': ['2020'],
-            'days_begin_month': ['4'],
-            'days_begin_day': ['10'],
-            'days_end_year': ['2020'],
-            'days_end_month': ['4'],
-            'days_end_day': ['20'],
+            'days_begin': ['2020-04-01'],
+            'days_end': ['2020-04-20'],
         }
         user = Force_Login(self)
         request = self.client.post('/awase/create/', data)
@@ -251,36 +243,19 @@ class CalendarCreateTest(TestCase):
 
         self.assertFalse(CollectHour.objects.filter(
             calendar = calendar,
-            date = datetime.date(
-                year = int(data['days_begin_year'][0]),
-                month = int(data['days_begin_month'][0]),
-                day = int(data['days_begin_day'][0]) - 1
-                )
+            date = datetime.datetime.strptime(data['days_begin'][0], '%Y-%m-%d') - datetime.timedelta(days=1)
             ).exists())
-        for date in range(int(data['days_begin_day'][0]), int(data['days_end_day'][0])):
-            self.assertTrue(CollectHour.objects.filter(
-                calendar = calendar,
-                date = datetime.date(
-                    year = int(data['days_end_year'][0]),
-                    month = int(data['days_end_month'][0]),
-                    day = date
-                    )
-                ).exists())
         self.assertTrue(CollectHour.objects.filter(
             calendar = calendar,
-            date = datetime.date(
-                year = int(data['days_end_year'][0]),
-                month = int(data['days_end_month'][0]),
-                day = int(data['days_end_day'][0])
-                )
+            date = datetime.datetime.strptime(data['days_begin'][0], '%Y-%m-%d')
+            ).exists())
+        self.assertTrue(CollectHour.objects.filter(
+            calendar = calendar,
+            date = datetime.datetime.strptime(data['days_end'][0], '%Y-%m-%d')
             ).exists())
         self.assertFalse(CollectHour.objects.filter(
             calendar = calendar,
-            date = datetime.date(
-                year = int(data['days_end_year'][0]),
-                month = int(data['days_end_month'][0]),
-                day = int(data['days_end_day'][0]) + 1
-                )
+            date = datetime.datetime.strptime(data['days_end'][0], '%Y-%m-%d') + datetime.timedelta(days=1)
             ).exists())
 
 

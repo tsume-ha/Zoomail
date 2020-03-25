@@ -14,6 +14,7 @@ urlpatterns = [
 	path('update/calendar/<int:pk>/', views.UpdateCalendarView, name='calendar_update'),
 	path('update/hours/<int:pk>/', views.UpdateCollectHourView, name='hours_update_top'),
 	path('update/hours/<int:pk>/page=<int:page>', views.UpdateCollectHourView, name='hours_update'),
+	path('update/hours/json/<int:pk>/', views.CollectHourJsonResponse, name='hours_update_json'),
 	path('update/user/<int:pk>/', views.ChangeUsers, name='change_users'),
 	path('calendar/leave/<int:pk>/', views.LeaveCalendarView, name='leave_calendar'),
 	path('calendar/delete/<int:pk>/', views.DeleteCalendarView, name='delete_calendar'),

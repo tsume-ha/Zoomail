@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 import datetime
+import json
 from members.models import User
 from .models import Calendar, CalendarUser, Schedule, CollectHour
-from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet
+from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet, UpdateCollectHourForm
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, FieldError
 from django.shortcuts import redirect, get_object_or_404
 from django.db.models import Count
-from django.http import Http404
+from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.http.response import JsonResponse
 from django.urls import reverse
 
@@ -17,6 +18,8 @@ def calendar_permission(calendar, user):
 
 def ceil(a, b):
     return a//b if a%b==0 else a//b + 1
+
+CALENDAR_MAX_RANGE = 120 # max days
 
 @login_required()
 def index(request):
@@ -123,7 +126,7 @@ def create(request):
 
     params = {
         'CreateForm': CreateForm,
-
+        'max_range': CALENDAR_MAX_RANGE,
     }
 
     return render(request, 'awase/create.html', params)
@@ -296,6 +299,53 @@ def UpdateCollectHourView(request, pk, page=1):
     }
 
     return render(request, 'awase/update_hours.html', params)
+
+@login_required()
+def CollectHourJsonResponse(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+
+    if (request.method == 'POST' and request.body):
+        json_dict = json.loads(request.body)
+        is_error = False;
+        for (YYYYMMDD, time_range) in json_dict.items():
+            date = datetime.date(
+                year = int(YYYYMMDD[0:4]),
+                month = int(YYYYMMDD[4:6]),
+                day = int(YYYYMMDD[6:8])
+                )
+            time_list = time_range.split('-')
+            start = time_list[0]
+            end = time_list[1]
+
+            instance = CollectHour.objects.get(calendar=calendar, date=date)
+
+            form = UpdateCollectHourForm({
+                'date': date,
+                'hour_begin': start,
+                'hour_end': end
+                }, instance = instance)
+            if form.is_valid():
+                form.save()
+            else:
+                is_error = True
+        if is_error:
+            response = HttpResponse('BAD REQUEST')
+            response.status_code = 400
+            return response
+        else:
+            response = HttpResponse('OK')
+            response.status_code = 200
+            return response
+
+
+    datalist = CollectHour.objects.filter(calendar=calendar).order_by('date').values_list('date', 'hour_begin', 'hour_end')
+    data = {data[0].strftime('%Y%m%d'): {'start': data[1], 'end': data[2]} for data in datalist}
+
+    return JsonResponse(data)
+
 
 
 @login_required()

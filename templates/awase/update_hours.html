@@ -5,6 +5,8 @@
 {% block title %}{{calendar.title}}の集計時間を変更 | あわせのあわせ | Unplugged Message{% endblock %}
 {% block extrastyle %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src='https://unpkg.com/v-calendar'></script>
 {% endblock %}
 
 
@@ -13,76 +15,316 @@
 <p class="mb-4">
     各日にちの中で日程調整したい時間帯を変更できます。<br>
     時間は24時間表記で、9時(AM9:00)～26時(翌AM2:00)まで1時間単位で指定できます。<br>
-    また、その日の集計を行わない場合は開始時間と終了時間に同じ数字を入れてください。<br>
-    例：開始「9」、終了「9」 のとき、その日は集計を行いません。
+    また、期間内の任意の日を、「集計しない日」に設定することも出きます。
 </p>
-{% if total_pages > 1 %}
-<ul id="pagination" class="pagination">
-    {% for page in page_range %}
-    {% if page == current_page %}
-    <li class="disabled">
-        <a class="page-link text-secondary disabled d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
-    </li>
-    {% else %}
-    <li>
-        <a class="page-link text-primary d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
-    </li>
-    {% endif %}
-    {% endfor %}
-</ul>
-{% endif %}
 
-<section id="form_upload" class="my-3">
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group row mx-0">
-            <span class="display_date col-4 px-2">日にち</span>
-            <span class="col-3 mx-2">開始時間</span>
-            <span class="col-3 mx-2">終了時間</span>
+
+<section id="app">
+    <div v-if="!jsonLoaded">
+        <p>読み込み中...</p>
+    </div>
+    <div v-else>
+        <div v-if="isProcessError">
+            <p v-text="errorMessage" class="text-danger"></p>
         </div>
-        {% csrf_token %}
-        {% for form in updateFormset %}
-            <div class="form-group row mx-0">
-            <span class="display_date col-4 px-2">
-                {% if form.instance.date %}
-                {{ form.instance.date | date:"m/d (D)" }}
-                {% else %}
-                {{ form.date.value | date:"m/d (D)" }}
-                {% endif %}
-            </span>
-            {{ form.hour_begin }}
-            {{ form.hour_end }}
-            {% for field in form.visible_fields %}
-                {% if field.errors %}<p class="small text-danger pl-2">{{ field.errors.as_text }}</p>{% endif %}
-            {% endfor %}
+        <h6>1. 日付をクリックして変更したい日(複数も可)を選ぶ</h6>
+        <v-calendar
+            :first-day-of-week="2"
+            is-expanded
+            :columns="$screens({ default: 1, md: 2 })"
+            >
+            <template slot='header-title' slot-scope='props'>
+                [[props.yearLabel]]年[[props.monthLabel]]
+            </template>
+            <template slot='day-content' slot-scope='props'>
+                <custom-day-content
+                    :day="props.day"
+                    :data="timedata[dateToYYYYMMDD(props.day.date)]"
+                    :is-selected="(props.day.id in selectedDate)"
+                    @dayadd="dayadd"
+                    @dayremove="dayremove"></custom-day-content>
+            </template>
 
-            {% for error in form.non_field_errors %}
-                <p class="small text-danger pl-2">{{ error }}</p>
-            {% endfor %}
-            {% for field in form.hidden_fields %}
-                {{ field }}
-            {% endfor %}
-            </div>
-        {% endfor %}
-        {{ updateFormset.management_form }}
-        <input type="submit" value="この内容に変更" class="btn btn-info mx-2 my-3">
-    </form>
+        </v-calendar>
+        <hr>
+        <h6>2. 選んだ日に対して、集計時間を設定するか、集計しない日にするか指定する。</h6>
+        <div id="time-select" class="row my-3 mx-2">
+            <time-selector name="start" :max="end" @onchange="timeChange"></time-selector>
+            <span class="m-2">から</span>
+            <time-selector name="end" :min="start" @onchange="timeChange"></time-selector>
+            <span class="m-2">に</span>
+            <button @click="setTimeData" class="btn btn-info">変更</button>
+        </div>
+        <hr>
+        <div id="not-collect-select" class="row my-3 mx-2">
+            <span class="m-2">もしくは、</span>
+            <button @click="setNotCollectDay" class="btn btn-secondary">「集計しない日」にする</button>
+        </div>
+    </div>
+    <div v-if="isInAccess" class="small text-secondary is-in-access">サーバーと通信中...</div>
+    <hr>
 </section>
 
+<a href="{% url 'awase:calendar' calendar.pk %}" class="btn btn-primary my-2">日程調整「{{ calendar.title }}」に戻る</a>
 
-{% if total_pages > 1 %}
-<ul id="pagination" class="pagination">
-    {% for page in page_range %}
-    {% if page == current_page %}
-    <li class="disabled">
-        <a class="page-link text-secondary disabled d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
-    </li>
-    {% else %}
-    <li>
-        <a class="page-link text-primary d-inline-block" href="{% url 'awase:hours_update' calendar.pk page %}">{{ page }}</a>
-    </li>
-    {% endif %}
-    {% endfor %}
-</ul>
-{% endif %}
+<script type="text/javascript">
+const jsonURL = "{% url 'awase:hours_update_json' calendar.pk %}";
 
+Vue.component('custom-day-content', {
+    props: {
+        day: {type: Object, required: true},
+        data: {type: Object, required: false, default: () => {return{start: '', end: ''}},},
+        isSelected: {type: Boolean, required: false}
+    },
+    delimiters: ['[[', ']]'],
+    template: `<div
+                  class="ceil text-center pt-1 pb-2"
+                  @click="onclick"
+                  :class="{active: isActive, selected: isSelected}"
+                >
+                   <h6 class="m-0 p-0" :style="addStyleTextColor(day.weekday)">[[day.day]]</h6>
+                   <span class="small">[[displayHour]]</span>
+               </div>`,
+    methods: {
+        onclick: function(){
+            if (!this.isActive) {
+                return false;
+            }
+            if (this.isSelected) {
+                this.$emit('dayremove', this.day);
+            } else {
+                this.$emit('dayadd', this.day);
+            }
+        },
+        addStyleTextColor: function(weekday) {
+            if (weekday === 1) {
+                return {
+                    color: "red"
+                };
+            } else if (weekday === 7) {
+                return {
+                    color: "#1669a8"
+                };
+            }
+        }
+
+    },
+    computed: {
+        displayHour: function(){
+            let start = this.data.start;
+            let end = this.data.end;
+            if (!this.isActive) {
+                return '-';
+            } else if (start === end) {
+                return '×';
+            } else {
+                return start + '-' + end;
+            }
+        },
+        isActive: function(){
+            return !(this.data.start === '' && this.data.end === '');
+        }
+    }
+})
+
+Vue.component('time-selector', {
+    props: {
+        name: {type: String, required: true},
+        min: {type: Number, required: false},//ここでdefault定義できない。nullの時効かない。
+        max: {type: Number, required: false},
+    },    
+    delimiters: ['[[', ']]'],
+    template: `<select v-model="value" @change="eventUp" class="form-control col-3 d-inline">
+                   <option
+                        v-for="i in 18"
+                        :value="i+8"
+                        :disabled="!(minSafed <= i+8 && i+8 <= maxSafed)"
+                        >
+                            [[ i+8 ]]:00
+                        </option>
+               </select>`,
+    data: function(){
+        return {
+            value: null,
+        };
+    },
+    methods: {
+        eventUp: function(){
+            this.$emit('onchange', {name: this.name, value: this.value});
+        },
+    },
+    computed: {
+        minSafed: function(){
+            return this.min || 9;//nullの時propsでのdefaultを通り抜けるためここでdefault定義。
+        },
+        maxSafed: function(){
+            return this.max || 26;
+        }
+    }
+
+})
+
+
+let app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    data: {
+        jsonLoaded: false,
+        isProcessError: false,
+        errorMessage: '',
+        isInAccess: false,
+        timedata: {},
+        selectedDate: {},
+        start: null,
+        end: null,
+        beforePOSTRequest: {},
+        WEEKDAYS: ['日','月','火','水','木','金','土']
+    },
+    mounted: function(){  
+        var request = new XMLHttpRequest();
+        request.open('GET', jsonURL);
+        request.responseType = 'json';
+        request.send();
+        request.onload = function(){
+            let response = request.response;
+            app.timedata = response;
+
+            app.jsonLoaded = true;
+        }
+    },
+    methods: {
+        dayadd: function(e){
+            let id = e.id;
+            if (!(id in this.selectedDate)) {
+                this.$set(this.selectedDate, id, e);
+            }
+        },
+        dayremove: function(e){
+            let id = e.id;
+            if (id in this.selectedDate) {
+                this.$delete(this.selectedDate, id);
+            }
+        },
+        clear: function(){
+            this.selectedDate = {};
+        },
+        timeChange: function(e){
+            this[e.name] = e.value;
+        },
+        setTimeData: function(){
+            if (this.start === null && this.end === null) {
+                return false;
+            }
+            for (day in this.selectedDate) {
+                let content = this.selectedDate[day];
+                let key = this.dateToYYYYMMDD(content.date);
+                if (this.start){
+                    this.$set(this.timedata[key], 'start', this.start);
+                }
+                if (this.end) {
+                    this.$set(this.timedata[key], 'end', this.end);
+                }
+                if (this.timedata[key].start > this.timedata[key].end) {
+                    console.log('validation error');
+                    if (this.start === null) {
+                        this.$set(this.timedata[key], 'start', 9);
+                    } else if (this.end === null) {
+                        this.$set(this.timedata[key], 'end', 26);
+                    } else {
+                        this.$set(this.timedata[key], 'start', 9);
+                        this.$set(this.timedata[key], 'end', 26);
+                    }
+                }
+                this.$set(this.beforePOSTRequest, key, this.timedata[key]);
+                this.$delete(this.selectedDate, day);
+            }
+            this.postMethod();
+        },
+        setNotCollectDay: function(){
+            for (day in this.selectedDate) {
+                let content = this.selectedDate[day];
+                let key = this.dateToYYYYMMDD(content.date);
+
+                this.$set(this.timedata[key], 'start', 9);
+                this.$set(this.timedata[key], 'end', 9);
+
+                this.$set(this.beforePOSTRequest, key, this.timedata[key]);
+                this.$delete(this.selectedDate, day);
+            }
+            this.postMethod();
+        },
+        postMethod: function(){
+            this.isInAccess = true;
+            let data = {};
+            let inProcess = [];
+            let counter = 0;
+            for (var key in this.beforePOSTRequest) {
+                if (counter > 10) {break;}
+                data[key] = this.beforePOSTRequest[key].start + '-' + this.beforePOSTRequest[key].end;
+                inProcess.push(key);
+                counter += 1;
+            }
+
+            axios.defaults.xsrfCookieName = 'csrftoken';
+            axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+            axios.post(jsonURL, data)
+                .then(function (response) {
+                    console.log(response);
+                    app.isProcessError = false;
+                    for (var key of inProcess) {
+                        app.$delete(app.beforePOSTRequest, key);
+                    }
+
+                    if (Object.keys(app.beforePOSTRequest).length > 0) {
+                        app.postMethod();
+                    } else {
+                        app.isInAccess = false;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    app.isInAccess = false;
+                    if (!error.response.status) {
+                        console.log('network error');
+                        app.isProcessError = true;
+                        app.errorMessage = '通信に失敗しました。インターネットへの接続を確認し、再度送信ボタンを押してください。(Network Error)'
+                    } else {
+                        console.log('internal error');
+                        app.isProcessError = true;
+                        app.errorMessage = '処理に失敗しました。変更が保存されていない可能性があります。お手数ですが、開発者までご連絡ください。(' +
+                                           error.response.status + ' ' + error.response.statusText + ')';
+                    }
+                });
+        },
+        dateToYYYYMMDD: function(date){
+            return date.getFullYear() + '' + ('0'+ (date.getMonth()+1) ).slice(-2) + '' + ('0' + date.getDate()).slice(-2);
+        }
+    },
+    computed: {
+    },
+    watch: {
+
+    }
+})
+
+</script>
+<style type="text/css">
+.ceil{
+    cursor: default;
+}
+.ceil.active{
+    cursor: pointer;
+}
+.ceil.selected{
+    background-color: #adddeb;
+}
+
+div.is-in-access{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0 1rem;
+    padding: 0.25rem;
+}
+</style>
 {% endblock %}
