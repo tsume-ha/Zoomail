@@ -47,7 +47,7 @@
 
         </v-calendar>
         <hr>
-        <h6>2. 選んだ日に集計する時間を指定する</h6>
+        <h6>2. 選んだ日に対して、集計時間を設定するか、集計しない日にするか指定する。</h6>
         <div id="time-select" class="row my-3 mx-2">
             <time-selector name="start" :max="end" @onchange="timeChange"></time-selector>
             <span class="m-2">から</span>
@@ -58,11 +58,14 @@
         <hr>
         <div id="not-collect-select" class="row my-3 mx-2">
             <span class="m-2">もしくは、</span>
-            <button class="btn btn-secondary">「集計しない日」にする</button>
+            <button @click="setNotCollectDay" class="btn btn-secondary">「集計しない日」にする</button>
         </div>
     </div>
+    <div v-if="isInAccess" class="small text-secondary is-in-access">サーバーと通信中...</div>
+    <hr>
 </section>
 
+<a href="{% url 'awase:calendar' calendar.pk %}" class="btn btn-primary my-2">日程調整「{{ calendar.title }}」に戻る</a>
 
 <script type="text/javascript">
 const jsonURL = "{% url 'awase:hours_update_json' calendar.pk %}";
@@ -169,6 +172,7 @@ let app = new Vue({
         jsonLoaded: false,
         isProcessError: false,
         errorMessage: '',
+        isInAccess: false,
         timedata: {},
         selectedDate: {},
         start: null,
@@ -236,7 +240,21 @@ let app = new Vue({
             }
             this.postMethod();
         },
+        setNotCollectDay: function(){
+            for (day in this.selectedDate) {
+                let content = this.selectedDate[day];
+                let key = this.dateToYYYYMMDD(content.date);
+
+                this.$set(this.timedata[key], 'start', 9);
+                this.$set(this.timedata[key], 'end', 9);
+
+                this.$set(this.beforePOSTRequest, key, this.timedata[key]);
+                this.$delete(this.selectedDate, day);
+            }
+            this.postMethod();
+        },
         postMethod: function(){
+            this.isInAccess = true;
             let data = {};
             let inProcess = [];
             let counter = 0;
@@ -259,10 +277,13 @@ let app = new Vue({
 
                     if (Object.keys(app.beforePOSTRequest).length > 0) {
                         app.postMethod();
+                    } else {
+                        app.isInAccess = false;
                     }
                 })
                 .catch(function (error) {
                     console.log(error);
+                    app.isInAccess = false;
                     if (!error.response.status) {
                         console.log('network error');
                         app.isProcessError = true;
@@ -294,10 +315,16 @@ let app = new Vue({
 .ceil.active{
     cursor: pointer;
 }
-
-
 .ceil.selected{
     background-color: #adddeb;
+}
+
+div.is-in-access{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0 1rem;
+    padding: 0.25rem;
 }
 </style>
 {% endblock %}
