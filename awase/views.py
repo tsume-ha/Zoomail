@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, FieldError
 from django.shortcuts import redirect, get_object_or_404
 from django.db.models import Count
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.http.response import JsonResponse
 from django.urls import reverse
 
@@ -309,6 +309,7 @@ def CollectHourJsonResponse(request, pk):
 
     if (request.method == 'POST' and request.body):
         json_dict = json.loads(request.body)
+        is_error = False;
         for (YYYYMMDD, time_range) in json_dict.items():
             date = datetime.date(
                 year = int(YYYYMMDD[0:4]),
@@ -328,15 +329,16 @@ def CollectHourJsonResponse(request, pk):
                 }, instance = instance)
             if form.is_valid():
                 form.save()
-                response = HttpResponse('OK')
-                response.status_code = 200
-                return response
             else:
-                raise FieldError
-                response = HttpResponse('BAD REQUEST')
-                response.status_code = 400
-                return response
-
+                is_error = True
+        if is_error:
+            response = HttpResponse('BAD REQUEST')
+            response.status_code = 400
+            return response
+        else:
+            response = HttpResponse('OK')
+            response.status_code = 200
+            return response
 
 
     datalist = CollectHour.objects.filter(calendar=calendar).order_by('date').values_list('date', 'hour_begin', 'hour_end')

@@ -25,6 +25,9 @@
         <p>読み込み中...</p>
     </div>
     <div v-else>
+        <div v-if="isProcessError">
+            <p v-text="errorMessage" class="text-danger"></p>
+        </div>
         <h6>1. 変更したい日(複数も可)を選ぶ</h6>
         <v-calendar
             :first-day-of-week="2"
@@ -160,6 +163,8 @@ let app = new Vue({
     delimiters: ['[[', ']]'],
     data: {
         jsonLoaded: false,
+        isProcessError: false,
+        errorMessage: '',
         timedata: {},
         selectedDate: {},
         start: null,
@@ -174,7 +179,6 @@ let app = new Vue({
         request.send();
         request.onload = function(){
             let response = request.response;
-            console.log(response);
             app.timedata = response;
 
             app.jsonLoaded = true;
@@ -197,7 +201,6 @@ let app = new Vue({
             this.selectedDate = {};
         },
         timeChange: function(e){
-            console.log(e);
             this[e.name] = e.value;
         },
         setTimeData: function(){
@@ -220,20 +223,41 @@ let app = new Vue({
         },
         postMethod: function(){
             let data = {};
+            let inProcess = [];
+            let counter = 0;
             for (var key in this.beforePOSTRequest) {
+                if (counter > 10) {break;}
                 data[key] = this.beforePOSTRequest[key].start + '-' + this.beforePOSTRequest[key].end;
+                inProcess.push(key);
+                counter += 1;
             }
-            console.log(data);
 
             axios.defaults.xsrfCookieName = 'csrftoken';
             axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
             axios.post(jsonURL, data)
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+                .then(function (response) {
+                    console.log(response);
+                    for (var key of inProcess) {
+                        app.$delete(app.beforePOSTRequest, key);
+                    }
+
+                    if (Object.keys(app.beforePOSTRequest).length > 0) {
+                        app.postMethod();
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    if (!error.response.status) {
+                        console.log('network error');
+                        app.isProcessError = true;
+                        app.errorMessage = '通信に失敗しました。インターネットへの接続を確認し、再度送信ボタンを押してください。(Network Error)'
+                    } else {
+                        console.log('internal error');
+                        app.isProcessError = true;
+                        app.errorMessage = '処理に失敗しました。変更が保存されていない可能性があります。お手数ですが、開発者までご連絡ください。(' +
+                                           error.response.status + ' ' + error.response.statusText + ')';
+                    }
+                });
         },
         dateToYYYYMMDD: function(date){
             return date.getFullYear() + '' + ('0'+ (date.getMonth()+1) ).slice(-2) + '' + ('0' + date.getDate()).slice(-2);
