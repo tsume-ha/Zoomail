@@ -11,9 +11,7 @@ class CreateCalendarForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         today = datetime.date.today()
-        # self.fields['days_begin'].widget = self.fields['days_end'].widget = forms.HiddenInput()
-        self.fields['days_begin'].initial = today
-        self.fields['days_end'].initial = today + datetime.timedelta(days=60)
+        self.fields['days_begin'].widget = self.fields['days_end'].widget = forms.HiddenInput()
         self.fields['text'].required = False
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
