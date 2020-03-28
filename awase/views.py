@@ -154,6 +154,20 @@ def invited(request, key):
 
 
 @login_required()
+def input_(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+
+    params = {
+        'calendar': calendar,
+    }
+
+
+    return render(request, 'awase/input_.html', params)
+
+@login_required()
 def input(request, pk, page=1):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
