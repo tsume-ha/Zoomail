@@ -17,13 +17,13 @@
 </section>
 <section id="menu" class="float-md-left col-md-4 col-lg-3">
 	<a href="{% url 'members:update' %}" class="btn btn-info m-2">登録情報確認・変更</a>
-	<a href="{% url 'logout' %}" class="btn btn-outline-secondary m-2">ログアウト</a>
 	{% if register_allowed %}
 	<a href="{% url 'members:register_form' %}" class="btn btn-warning m-2">ユーザー登録へ</a>
 	{% endif %}
 	{% if adminenter_allowed %}
 	<a href="/admin/" class="btn btn-danger m-2">管理者管理ページへ</a>
 	{% endif %}
+	<a href="{% url 'logout' %}" class="btn btn-outline-secondary m-2">ログアウト</a>
 </section>
 <section id="midoku" class="mypage_message float-md-right col-md-8 col-lg-9 py-3">
 	<h5 class="d-inline-block">未読メッセージ</h5>
@@ -78,11 +78,4 @@
 	メッセージ：0件
 	{% endif %}
 </section>
-
-<script type="text/javascript">
-
-
-
-</script>
-
 {% endblock %}
