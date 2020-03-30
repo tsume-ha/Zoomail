@@ -9,23 +9,23 @@
 
 
 {% block body %}
-<section id="username">
+<section id="username" class="col-12 border-bottom">
 	<h3 class="d-inline-block">{{ user.get_full_name }}</h3>
 	{% if user.nickname %}
 	<h4 class="d-inline-block">({{ user.nickname }})</h4>
 	{% endif %}
-	<p>
-		<a href="{% url 'members:update' %}" class="btn btn-info m-2">登録情報確認・変更</a>
-		<a href="{% url 'logout' %}" class="btn btn-outline-secondary m-2">ログアウト</a>
-		{% if register_allowed %}
-		<a href="{% url 'members:register_form' %}" class="btn btn-warning m-2">ユーザー登録へ</a>
-		{% endif %}
-		{% if adminenter_allowed %}
-		<a href="/admin/" class="btn btn-danger m-2">管理者管理ページへ</a>
-		{% endif %}
-	</p>
 </section>
-<section id="midoku" class="mypage_message py-3 pl-3 border-top">
+<section id="menu" class="float-md-left col-md-4 col-lg-3">
+	<a href="{% url 'members:update' %}" class="btn btn-info m-2">登録情報確認・変更</a>
+	<a href="{% url 'logout' %}" class="btn btn-outline-secondary m-2">ログアウト</a>
+	{% if register_allowed %}
+	<a href="{% url 'members:register_form' %}" class="btn btn-warning m-2">ユーザー登録へ</a>
+	{% endif %}
+	{% if adminenter_allowed %}
+	<a href="/admin/" class="btn btn-danger m-2">管理者管理ページへ</a>
+	{% endif %}
+</section>
+<section id="midoku" class="mypage_message float-md-right col-md-8 col-lg-9 py-3">
 	<h5 class="d-inline-block">未読メッセージ</h5>
 	{% if midoku %}
 	<button type="submit" onclick="kidoku()" class="btn btn-outline-secondary btn-sm d-inline-block mb-1 ml-2">すべて既読にする</button>
@@ -46,7 +46,7 @@
 	
 	{% endif %}
 </section>
-<section id="yousend" class="mypage_message py-3 pl-3 border-top">
+<section id="yousend" class="mypage_message float-md-right col-md-8 col-lg-9 py-3 border-top">
 	<h5>あなたが送信したメッセージ</h5>
 	{% if yousend %}
 	<ul class="list-unstyled">
@@ -62,8 +62,7 @@
 	メッセージ：0件
 	{% endif %}
 </section>
-
-<section id="yourmessage_otherssend" class="mypage_message py-3 pl-3 border-top">
+<section id="yourmessage_otherssend" class="mypage_message float-md-right col-md-8 col-lg-9 py-3 border-top">
 	<h5>あなたの代わりに送信されたメッセージ</h5>
 	{% if yourmessage_otherssend %}
 	<ul class="list-unstyled">
@@ -79,4 +78,11 @@
 	メッセージ：0件
 	{% endif %}
 </section>
+
+<script type="text/javascript">
+
+
+
+</script>
+
 {% endblock %}
