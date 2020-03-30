@@ -11,8 +11,9 @@ from .create_google_user import DuplicateGmailAccountError
 from board.models import Message, Kidoku
 from .create_google_user import Create_Google_User as register
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse
 import datetime
-
+import json
 
 @login_required()
 def index(request):
@@ -173,3 +174,27 @@ def UserRegistrationPreview(request):
         return render(request, 'members/register_preview.html', params)
     else:
         return redirect('/members')
+
+@login_required()
+def EmailConfirm(request):
+    now_user = request.user
+    if (request.method == 'POST' and request.body):
+        json_dict = json.loads(request.body)
+        if json_dict['send'] == 'true':
+            print('send')
+
+            # send process
+
+
+            response = HttpResponse('OK')
+            response.status_code = 200
+            return response
+        else:
+            response = HttpResponse('BAD REQUEST')
+            response.status_code = 400
+            return response
+
+    params = {
+        'user': now_user,
+    }
+    return render(request, 'members/email_confirm.html', params)

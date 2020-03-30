@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}メール受信テスト | Unplugged Message{% endblock %}
+{% block extrastyle %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{% endblock %}
+
+{% block body %}
+
+<h3>メール受信テスト</h3>
+<section id="app">
+	<p>
+		現在設定されている受信メールアドレス：<br>
+		<span v-if="display">
+			{{ user.get_receive_email }}
+			<a @click="display = !display" class="text-primary">メールアドレスを隠す</a>
+		</span>
+		<span v-else>
+			**************
+			<a @click="display = !display" class="text-primary">メールアドレスを表示する</a>
+		</span>
+	</p>
+	<p>
+		上記のメールアドレスにテストメールを送信します。
+	</p>
+	<a href="{% url 'members:index' %}" class="btn btn-secondary">戻る</a>
+	<button @click="send" class="btn btn-info">テストメールを送信する</button>
+	<p class="my-3" :class="{'text-danger': isError}">[[message]]</p>
+</section>
+
+<script type="text/javascript">
+let app = new Vue({
+    el: '#app',
+    delimiters: ['[[', ']]'],
+    data: {
+		display: false,
+		inProcess: false,
+		message: '',
+		isError: false,
+	},
+	methods: {
+		send: function(){
+			this.inProcess = true;
+			this.message = '送信中...';
+			let url = window.location.href;
+			console.log(window.location.href);
+
+            axios.defaults.xsrfCookieName = 'csrftoken';
+            axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+            axios.post(url, {'send': 'true'})
+                .then(function (response) {
+                    console.log(response);
+                    app.isError = false;
+
+					app.inProcess = false;
+					app.message = '送信しました！';
+					
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    app.inProcess = false;
+                    if (!error.response.status) {
+                        console.log('network error');
+                        app.isError = true;
+                        app.errorMessage = '通信に失敗しました。インターネットへの接続を確認し、再度送信ボタンを押してください。(Network Error)'
+                    } else {
+                        console.log('internal error');
+                        app.isError = true;
+                        app.errorMessage = '処理に失敗しました。変更が保存されていない可能性があります。お手数ですが、開発者までご連絡ください。(' +
+                                           error.response.status + ' ' + error.response.statusText + ')';
+                    }
+                });
+		}
+	}
+    
+})
+</script>
+<style type="text/css">
+
+</style>
+{% endblock %}
