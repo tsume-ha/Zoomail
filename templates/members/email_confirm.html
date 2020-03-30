@@ -22,7 +22,14 @@
 		</span>
 	</p>
 	<p>
-		上記のメールアドレスにテストメールを送信します。
+		上記のメールアドレスにテストメールを送信します。<br>
+		<span class="small">
+			5分に1回送信することが出来ます。
+		</span><br>
+		<span class="small text-seconday">
+			皆さんに大量に送信されると、メール送信サービスの無料枠を超えてしまう恐れがあるためです。<br>
+			ご了承ください。
+		</span>
 	</p>
 	<a href="{% url 'members:index' %}" class="btn btn-secondary">戻る</a>
 	<button @click="send" class="btn btn-info">テストメールを送信する</button>
@@ -41,10 +48,14 @@ let app = new Vue({
 	},
 	methods: {
 		send: function(){
+			if (this.inProcess == true){
+				console.log('doubleclicked');
+				return false;
+			}
 			this.inProcess = true;
 			this.message = '送信中...';
+			this.isError = false;
 			let url = window.location.href;
-			console.log(window.location.href);
 
             axios.defaults.xsrfCookieName = 'csrftoken';
             axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -52,25 +63,25 @@ let app = new Vue({
                 .then(function (response) {
                     console.log(response);
                     app.isError = false;
-
-					app.inProcess = false;
 					app.message = '送信しました！';
-					
                 })
                 .catch(function (error) {
                     console.log(error);
-                    app.inProcess = false;
-                    if (!error.response.status) {
+					app.isError = true;
+                    if (!error.response) {
                         console.log('network error');
-                        app.isError = true;
-                        app.errorMessage = '通信に失敗しました。インターネットへの接続を確認し、再度送信ボタンを押してください。(Network Error)'
-                    } else {
+                        app.message = '通信に失敗しました。インターネットへの接続を確認し、再度送信ボタンを押してください。(Network Error)'
+                    } else if (error.response.status == 429) {
+						console.log(error.response.statusText);
+						app.message = '送信は5分に1回のみ可能です。時間をおいて再度アクセスしてください。(' +
+                                           error.response.status + ' ' + error.response.statusText + ')';
+					} else {
                         console.log('internal error');
-                        app.isError = true;
-                        app.errorMessage = '処理に失敗しました。変更が保存されていない可能性があります。お手数ですが、開発者までご連絡ください。(' +
+                        app.message = '処理に失敗しました。メールが正常に送信されなかった可能性があります。お手数ですが、開発者までご連絡ください。(' +
                                            error.response.status + ' ' + error.response.statusText + ')';
                     }
-                });
+				})
+				.finally(() => app.inProcess = false);
 		}
 	}
     

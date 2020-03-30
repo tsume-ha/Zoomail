@@ -186,6 +186,11 @@ def EmailConfirm(request):
             # send process
 
 
+            if False:# time error
+                response = HttpResponse('Rate Limiting')
+                response.status_code = 429
+                return response
+
             response = HttpResponse('OK')
             response.status_code = 200
             return response
