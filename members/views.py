@@ -185,7 +185,6 @@ def EmailConfirm(request):
     if (request.method == 'POST' and request.body):
         json_dict = json.loads(request.body)
         if json_dict['send'] == 'true':
-            print('send')
             now = datetime.datetime.now()
             is_sent_in_5_min = TestMail.objects.filter(
                 user = now_user,
@@ -197,24 +196,36 @@ def EmailConfirm(request):
                 return response
 
             email = now_user.get_receive_email()
-            content = TestMail.objects.update_or_create(
+            obj, created = TestMail.objects.update_or_create(
                 user = now_user,
                 defaults = {
                     'email': email,
                     'sent_at': now,
                 }
             )
-            text_content = 'テストメールを送信します。'
+            text_content = '京大アンプラグド　メーリングリストサービスのUnplugged Messageです。\n\n'
+            text_content += 'このメールはテストメールです。\n'
+            text_content += 'このメールが受信できていたら、現在の設定で今後のメーリスが受信できます。\n\n'
+            text_content += '---------------\n'
+            text_content += 'https://message.ku-unplugged.net/'
             message = Mail(
-                from_email=('zenkai@message.ku-unlugged.net', 'テスト用メール'),
+                from_email=('zenkai@message.ku-unplugged.net', 'テスト用メール'),
                 to_emails=[To(email)],
-                subject='テストメール【ZooMail】',
+                subject='テストメール【UnpluggedMessage】',
                 plain_text_content=PlainTextContent(text_content),
                 is_multiple=True
                 )
             if settings.SEND_MAIL:
                 sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
                 response = sendgrid_client.send(message)
+                try:
+                    x_message_id = response.headers['X-Message-Id']
+                    print(obj)
+                    print(x_message_id)
+                    obj.x_message_id = x_message_id
+                    obj.save()
+                except expression as e:
+                    print(e)
 
             response = HttpResponse('OK')
             response.status_code = 200
