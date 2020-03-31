@@ -4,7 +4,7 @@
 
 {% block title %}{{ calendar.title }} に回答 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/input.css' %}">
+
 {% endblock %}
 
 
@@ -13,12 +13,17 @@
 
 
 <section id="app" class="my-3">
-    <ul id="input_nav" class="my-2">
-        <date-li-selector
-            v-for="date in days" :date="date"
-        >
+    <nav  id="input_nav">
+        <div class="d-none d-md-inline-block">a</div>
+        <ul class="col-12 mx-md-5">
+            <date-li-selector
+                v-for="date in days" :date="date"
+            ></date-li-selector>
+        </ul>
+        <div class="d-none d-md-inline-block">b</div>
+    </nav>
                 
-        </date-li-selector>
+        
     </ul>
 
 
@@ -45,7 +50,6 @@ Vue.component('date-li-selector', {
         displayDate: function (){
             let month = this.date.getMonth() + 1;
             let day = this.date.getDate();
-            
             return month + '月' + day + '日';
         },
         displayWeekday: function(){
@@ -63,7 +67,7 @@ let app = new Vue({
             new Date(2020, 3, 28),
             new Date(2020, 3, 29),
             new Date(2020, 3, 30),
-            new Date(2020, 3, 31),
+            new Date(2020, 11, 31),
             new Date(2020, 4, 1),
             new Date(2020, 4, 2),
             new Date(2020, 4, 3),
@@ -74,20 +78,39 @@ let app = new Vue({
 })
 </script>
 <style type="text/css">
-ul#input_nav{
-    box-sizing: border-box;
+nav#input_nav{
+    box-sizing: content-box;
+    display: block;
+    position: relative;
+    width: 100%;
+}
+nav#input_nav ul{
+    box-sizing: content-box;
+    display: inline-block;
+    position: relative;
     height: 5rem;
     margin: 1rem 0;
     padding: 0;
-    overflow-x: scroll;
-    overflow-y: visible;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    /* -webkit-overflow-scrolling: touch; */
 }
-ul#input_nav li{
-    box-sizing: border-box;
-    height: 5rem;
-    width: 12rem;
-    padding: 1rem;
+nav#input_nav ul li{
     display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    width: 90px;
+    height: 60px;
+    padding: 0.25rem;
+    text-align: center;
+}
+nav#input_nav div{
+    display: inline-block;
+    position: absolute;
+    margin: 1rem 0;
+    padding: 0;
+    height: 5rem;
 }
 </style>
 {% endblock %}
