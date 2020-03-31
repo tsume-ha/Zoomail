@@ -188,6 +188,7 @@ let app = new Vue({
         request.onload = function(){
             let response = request.response;
             app.timedata = response;
+            console.log(app.timedata);
 
             app.jsonLoaded = true;
         }

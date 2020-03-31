@@ -5,7 +5,6 @@
 {% block title %}{{ calendar.title }} に回答 | Unplugged Message{% endblock %}
 {% block extrastyle %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/vue-draggable-cal"></script>
 {% endblock %}
 
 
@@ -13,63 +12,89 @@
 <h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> に回答</h3>
 
 
-<section id="app" class="my-3">
-    <draggable-cal></draggable-cal>
-
+<section id="app" class="my-3 row">
+<nav id="input_nav" class="col-md-4">
+    <ul>
+        <date-li-selector 
+            v-for="(obj, key) in collectDays"
+            :date="YYYYMMDDToDate(key)"
+            :is-active="key == selectedDay"
+            :key="key"
+            ></date-li-selector>
+    </ul>
+</nav>
+<form class="col-md-8">
+hogehoge
+</form>
 
 </section>
 
 
 
-
-</section>
 <script type="text/javascript">
-// Vue.component('date-li-selector', {
-//     props: {
-//         date: {type: Date, required: true},
-//     },
-//     delimiters: ['[[', ']]'],
-//     data: function(){
-//         return {
-//             jp_weekday: ['日','月','火','水','木','金','土'],
-//             };
-//         },
-//     template: `<li>[[displayDate]]<br>[[displayWeekday]]</li>`,
-//     computed: {
-//         displayDate: function (){
-//             let month = this.date.getMonth() + 1;
-//             let day = this.date.getDate();
-//             return month + '月' + day + '日';
-//         },
-//         displayWeekday: function(){
-//             let weekday = this.date.getDay();
-//             return '(' + this.jp_weekday[weekday] + ')';
-//         }
-//     }
-// })
+Vue.component('date-li-selector', {
+    props: {
+        date: {type: Date, required: true},
+        isActive: {type: Boolean, required: false},
+    },
+    delimiters: ['[[', ']]'],
+    data: function(){
+        return {
+            jp_weekday: ['日','月','火','水','木','金','土'],
+            };
+        },
+    template: `<li :class="{ active: isActive }">[[displayDate]] [[displayWeekday]]</li>`,
+    computed: {
+        displayDate: function (){
+            let month = this.date.getMonth() + 1;
+            let day = this.date.getDate();
+            return month + '月' + day + '日';
+        },
+        displayWeekday: function(){
+            let weekday = this.date.getDay();
+            return '(' + this.jp_weekday[weekday] + ')';
+        }
+    }
+})
 
 let app = new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
-    components: {
-        draggableCal,
-    },
     data: {
-        // days: [
-        //     new Date(2020, 3, 28),
-        //     new Date(2020, 3, 29),
-        //     new Date(2020, 3, 30),
-        //     new Date(2020, 11, 31),
-        //     new Date(2020, 4, 1),
-        //     new Date(2020, 4, 2),
-        //     new Date(2020, 4, 3),
-        //     new Date(2020, 4, 4),
-        //     new Date(2020, 4, 5),
-        //     ]
+        collectDays: {
+            '20200401': {'start': 9, 'end': 24},
+            '20200402': {'start': 9, 'end': 24},
+            '20200403': {'start': 9, 'end': 24},
+            '20200404': {'start': 9, 'end': 24},
+            '20200405': {'start': 9, 'end': 24},
+            '20200406': {'start': 9, 'end': 24},
+            '20200407': {'start': 9, 'end': 24},
+            '20200408': {'start': 9, 'end': 24},
+        },
+        selectedDay: '20200404',
+    },
+    methods: {
+        YYYYMMDDToDate: (YYYYMMDD) => {
+            let year = YYYYMMDD.slice(0,4);
+            let month = Number(YYYYMMDD.slice(5,6)) - 1;
+            let day = YYYYMMDD.slice(7,8);
+            return new Date(year, month, day);
+        }
     }
+    
 })
 </script>
 <style type="text/css">
-
+nav#input_nav ul li{
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    border-top: solid 1px #cccccc;
+}
+nav#input_nav ul li.active{
+    background-color: #abc;
+}
 </style>
 {% endblock %}
