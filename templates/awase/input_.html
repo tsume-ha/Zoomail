@@ -4,7 +4,8 @@
 
 {% block title %}{{ calendar.title }} に回答 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vue-draggable-cal"></script>
 {% endblock %}
 
 
@@ -13,18 +14,7 @@
 
 
 <section id="app" class="my-3">
-    <nav  id="input_nav">
-        <div class="d-none d-md-inline-block">a</div>
-        <ul class="col-12 mx-md-5">
-            <date-li-selector
-                v-for="date in days" :date="date"
-            ></date-li-selector>
-        </ul>
-        <div class="d-none d-md-inline-block">b</div>
-    </nav>
-                
-        
-    </ul>
+    <draggable-cal></draggable-cal>
 
 
 </section>
@@ -33,84 +23,53 @@
 
 
 </section>
-
 <script type="text/javascript">
-Vue.component('date-li-selector', {
-    props: {
-        date: {type: Date, required: true},
-    },
-    delimiters: ['[[', ']]'],
-    data: function(){
-        return {
-            jp_weekday: ['日','月','火','水','木','金','土'],
-            };
-        },
-    template: `<li>[[displayDate]]<br>[[displayWeekday]]</li>`,
-    computed: {
-        displayDate: function (){
-            let month = this.date.getMonth() + 1;
-            let day = this.date.getDate();
-            return month + '月' + day + '日';
-        },
-        displayWeekday: function(){
-            let weekday = this.date.getDay();
-            return '(' + this.jp_weekday[weekday] + ')';
-        }
-    }
-})
+// Vue.component('date-li-selector', {
+//     props: {
+//         date: {type: Date, required: true},
+//     },
+//     delimiters: ['[[', ']]'],
+//     data: function(){
+//         return {
+//             jp_weekday: ['日','月','火','水','木','金','土'],
+//             };
+//         },
+//     template: `<li>[[displayDate]]<br>[[displayWeekday]]</li>`,
+//     computed: {
+//         displayDate: function (){
+//             let month = this.date.getMonth() + 1;
+//             let day = this.date.getDate();
+//             return month + '月' + day + '日';
+//         },
+//         displayWeekday: function(){
+//             let weekday = this.date.getDay();
+//             return '(' + this.jp_weekday[weekday] + ')';
+//         }
+//     }
+// })
 
 let app = new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
+    components: {
+        draggableCal,
+    },
     data: {
-        days: [
-            new Date(2020, 3, 28),
-            new Date(2020, 3, 29),
-            new Date(2020, 3, 30),
-            new Date(2020, 11, 31),
-            new Date(2020, 4, 1),
-            new Date(2020, 4, 2),
-            new Date(2020, 4, 3),
-            new Date(2020, 4, 4),
-            new Date(2020, 4, 5),
-            ]
+        // days: [
+        //     new Date(2020, 3, 28),
+        //     new Date(2020, 3, 29),
+        //     new Date(2020, 3, 30),
+        //     new Date(2020, 11, 31),
+        //     new Date(2020, 4, 1),
+        //     new Date(2020, 4, 2),
+        //     new Date(2020, 4, 3),
+        //     new Date(2020, 4, 4),
+        //     new Date(2020, 4, 5),
+        //     ]
     }
 })
 </script>
 <style type="text/css">
-nav#input_nav{
-    box-sizing: content-box;
-    display: block;
-    position: relative;
-    width: 100%;
-}
-nav#input_nav ul{
-    box-sizing: content-box;
-    display: inline-block;
-    position: relative;
-    height: 5rem;
-    margin: 1rem 0;
-    padding: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    /* -webkit-overflow-scrolling: touch; */
-}
-nav#input_nav ul li{
-    display: inline-block;
-    box-sizing: border-box;
-    position: relative;
-    width: 90px;
-    height: 60px;
-    padding: 0.25rem;
-    text-align: center;
-}
-nav#input_nav div{
-    display: inline-block;
-    position: absolute;
-    margin: 1rem 0;
-    padding: 0;
-    height: 5rem;
-}
+
 </style>
 {% endblock %}
