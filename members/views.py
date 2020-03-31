@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
-from .models import User, TmpMember
+from .models import User, TmpMember, TestMail
 from .forms import UserUpdateForm, RegisterForm, RegisterCSV
 from config.permissions import MemberRegisterPermission, AdminEnterPermission
 import csv
@@ -14,6 +14,10 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 import datetime
 import json
+from django.conf import settings
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, To, PlainTextContent
+
 
 @login_required()
 def index(request):
@@ -182,18 +186,40 @@ def EmailConfirm(request):
         json_dict = json.loads(request.body)
         if json_dict['send'] == 'true':
             print('send')
-
-            # send process
-
-
-            if False:# time error
+            now = datetime.datetime.now()
+            is_sent_in_5_min = TestMail.objects.filter(
+                user = now_user,
+                sent_at__gte = now - datetime.timedelta(minutes=5)
+                ).exists()
+            if is_sent_in_5_min:
                 response = HttpResponse('Rate Limiting')
                 response.status_code = 429
                 return response
 
+            email = now_user.get_receive_email()
+            content = TestMail.objects.update_or_create(
+                user = now_user,
+                defaults = {
+                    'email': email,
+                    'sent_at': now,
+                }
+            )
+            text_content = 'テストメールを送信します。'
+            message = Mail(
+                from_email=('zenkai@message.ku-unlugged.net', 'テスト用メール'),
+                to_emails=[To(email)],
+                subject='テストメール【ZooMail】',
+                plain_text_content=PlainTextContent(text_content),
+                is_multiple=True
+                )
+            if settings.SEND_MAIL:
+                sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                response = sendgrid_client.send(message)
+
             response = HttpResponse('OK')
             response.status_code = 200
             return response
+
         else:
             response = HttpResponse('BAD REQUEST')
             response.status_code = 400

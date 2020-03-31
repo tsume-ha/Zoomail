@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, TmpMember
+from .models import User, TmpMember, TestMail
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
@@ -23,3 +23,4 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ('groups',)
 
 admin.site.register(TmpMember)
+admin.site.register(TestMail)
