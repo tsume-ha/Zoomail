@@ -23,15 +23,12 @@
 	</p>
 	<p>
 		上記のメールアドレスにテストメールを送信します。<br>
+		ご自身の受信ボックスを確認し、きちんとメールが受け取れるか、確認してください。<br>
 		<span class="small">
-			5分に1回送信することが出来ます。
-		</span><br>
-		<span class="small text-seconday">
-			皆さんに大量に送信されると、メール送信サービスの無料枠を超えてしまう恐れがあるためです。<br>
-			ご了承ください。
+			テストメールは、5分に1回送信することが出来ます。
 		</span>
 	</p>
-	<a href="{% url 'members:index' %}" class="btn btn-secondary">戻る</a>
+	<a href="{% url 'members:index' %}" class="btn btn-secondary mr-4">戻る</a>
 	<button @click="send" class="btn btn-info">テストメールを送信する</button>
 	<p class="my-3" :class="{'text-danger': isError}">[[message]]</p>
 </section>
@@ -61,7 +58,6 @@ let app = new Vue({
             axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
             axios.post(url, {'send': 'true'})
                 .then(function (response) {
-                    console.log(response);
                     app.isError = false;
 					app.message = '送信しました！';
                 })
