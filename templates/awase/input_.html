@@ -13,9 +13,10 @@
 <h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> に回答</h3>
 
 
-<section id="app" class="row my-3">
-<nav id="input-nav" :class="{'active': isMenuOpen}">
+<section id="app" class="row my-3 border-top">
+<nav id="input-nav" :class="{'active': isMenuOpen}" class="pt-3">
     <div id="calendar-wrap">
+        <h5 class="px-3">日付を選択</h5>
         <v-calendar
         :first-day-of-week="2"
         is-expanded
@@ -35,8 +36,14 @@
     </div>
 </nav>
 <button @click="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">メニュー</button>
-<form id="input-form" class="" style="background-color: #eee;">
-hogehoge
+<form id="input-form" class="pt-3" style="background-color: #eee;">
+hogehoge<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+hoge
 </form>
 
 </section>
@@ -188,22 +195,27 @@ section#app{
     transition: .2s;
 }
 #menu-switch.active{
-    left: 300px;
+    left: 280px;
 }
 #input-nav{
     position: absolute;
     display: block;
+    border: none;
     top: 0;
     left: 0;
     width: 0px;
+    padding: 0;
+    background-color: #fff;
     transition: .2s;
     overflow: hidden;
 }
 #input-nav.active{
-    width: 300px;
+    width: 280px;
+    padding: 0 10px;
+    border-right: 1px solid #aaa;
 }
 div#calendar-wrap{
-    width: 300px;
+    width: 260px;
 }
 </style>
 {% endblock %}
