@@ -110,20 +110,34 @@ Vue.component('input-forms', {
         end: {type: Number, required: false, default: 26},
     },
     delimiters: ['[[', ']]'],
-    template: `<div class="form_oneday_all">
-                    <span class="mx-3">１日一括指定</span>
-                    <button type="button" class="dayall" value="False">×</button>
-                    <button type="button" class="dayall" value="True">○</button>
+    template: `<div class="form-group">
+                    <div class="form-oneday-all">
+                        <span class="mx-3">１日一括指定</span>
+                        <button type="button" class="dayall false">×</button>
+                        <button type="button" class="dayall true">○</button>
+                    </div>
+                    <input-one-row></input-one-row>
+                    <input-one-row></input-one-row>
                 </div>`,
 })
 
 Vue.component('input-one-row', {
     props: {
+        time: {type: Number, required: false, default: 12},
     },
     delimiters: ['[[', ']]'],
-    template: `<div><input-forms></input-forms>
-        <br>huga
-        </div>`,
+    template: `<div class="form-one-row">
+                    <div class="form-one-check">
+                        <span>[[time]]:00</span>
+                        <button type="button" class="onetime false checked">×</button>
+                        <button type="button" class="onetime true checked">○</button>
+                    </div>
+                    <div class="form-one-check">
+                        <span>[[time]]:30</span>
+                        <button type="button" class="onetime false">×</button>
+                        <button type="button" class="onetime true">○</button>
+                    </div>
+                </div>`,
 })
 
 let app = new Vue({
@@ -265,22 +279,11 @@ div#calendar-wrap{
 
 
 /* inputのcss */
-.form_checks{
-    display: block;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-width: 300px;
-    max-width: 600px;
-    overflow-x: scroll;
-    letter-spacing:-1em;
-}
-.form_checks *{
+.form-group *{
     letter-spacing:normal;
 }
-.form_one_check,
-.form_oneday_all{
+.form-one-check,
+.form-oneday-all{
     display: inline-block;
     padding: 0.25rem 0;
     margin: 0;
@@ -289,26 +292,27 @@ div#calendar-wrap{
     border: none;
     box-sizing: inherit;
 }
-.form_one_check:nth-of-type(4n),
-.form_one_check:nth-of-type(4n+1){
+.form-one-row:nth-of-type(2n+1){
     background-color: #f3f3f3;
 }
-.form_oneday_all{
+.form-oneday-all{
     width: 100%;
     background-color: #ffffcc;
 }
-input[type="text"]{
-    display: inline;
+.form-one-check span{
+    display: inline-block;
     width: 2.5rem;
     margin: 0 4px 0 2px;
     padding: 0;
 }
-input[type="radio"]{
-    display: none;
+.form-one-row{
+    display: flex;
 }
-
-input[type="radio"] + label,
-.form_oneday_all button.dayall{
+.form-group button{
+    background-color: rgba(255, 255, 255, 0);
+}
+.dayall,
+.onetime{
     display: inline-block;
     position: relative;
     width: 24%;
@@ -320,24 +324,24 @@ input[type="radio"] + label,
     font-size: 1.4rem;
     line-height: 2rem;
     }
-input[type="radio"][value="True"] + label,
-.form_oneday_all button.dayall[value="True"]{
+.dayall.true,
+.onetime.true{
     border: 1px solid transparent;
     color: #4cd964;
 }
-input[type="radio"][value="True"]:checked + label,
-.form_oneday_all button.dayall[value="True"]{
+.dayall.true,
+.onetime.true.checked{
     background-color: #4cd964;
     color: #fff;
 }
 
-input[type="radio"][value="False"] + label,
-.form_oneday_all button.dayall[value="False"]{
+.dayall.false,
+.onetime.false{
     border: 1px solid transparent;
     color: #ff3b30;
 }
-input[type="radio"][value="False"]:checked + label,
-.form_oneday_all button.dayall[value="False"]{
+.dayall.false,
+.onetime.false.checked{
     background-color: #ff3b30;
     color: #fff;
 }
