@@ -27,7 +27,7 @@
             <template slot='day-content' slot-scope='props'>
                 <custom-day-content
                     :day="props.day"
-                    :data="timedata[dateToYYYYMMDD(props.day.date)]"
+                    :data="timeRangeData[dateToYYYYMMDD(props.day.date)]"
                     :is-selected="dateToYYYYMMDD(props.day.date) == selectedDate"
                     @dayadd="dayadd"
                     ></custom-day-content>
@@ -38,7 +38,8 @@
 <button @click="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">メニュー</button>
 <form id="input-form" class="pt-3">
     <h5 class="ml-5">[[YYYYMMDDToTitle]]</h5>
-    <input-forms></input-forms>
+    <input-forms
+        @value-change="onValueChange"></input-forms>
 </form>
 </section>
 
@@ -98,7 +99,7 @@ Vue.component('custom-day-content', {
 Vue.component('input-forms', {
     props: {
         start: {type: Number, required: false, default: 9},
-        end: {type: Number, required: false, default: 24},
+        end: {type: Number, required: false, default: 26},
     },
     delimiters: ['[[', ']]'],
     template: `<div class="form-group">
@@ -111,9 +112,17 @@ Vue.component('input-forms', {
                         v-for="t in timeRange"
                         :key="t + start - 1"
                         :hour="t + start - 1"
+                        @timeClick="onOneRowClicked"
                         >
                     </input-one-row>
                 </div>`,
+    methods: {
+        onOneRowClicked: function(e){
+            // e: Object,
+            // e = {hour: 12, minute: 0, bool: true}
+            this.$emit('value-change', e);
+        }
+    },
     computed: {
         timeRange: function(){
             return this.end - this.start;
@@ -187,7 +196,11 @@ let app = new Vue({
         isProcessError: false,
         errorMessage: '',
         isInAccess: false,
-        timedata: {},
+        timeRangeData: {},
+        timeScheduleData: {
+            '20200403_0900': false,
+            '20200403_0930': true,
+        },
         selectedDate: '',
         beforePOSTRequest: {},
     },
@@ -198,15 +211,15 @@ let app = new Vue({
         request.send();
         request.onload = function(){
             let response = request.response;
-            app.timedata = response;
-            console.log(app.timedata);
+            app.timeRangeData = response;
+            console.log(app.timeRangeData);
 
             app.jsonLoaded = true;
 
             let today = app.dateToYYYYMMDD(new Date());
             app.selectedDate = today;
             console.log(today);
-            if (!(today in app.timedata)){
+            if (!(today in app.timeRangeData)){
                 // 範囲に入ってない時の処理
             }
         }
@@ -217,6 +230,10 @@ let app = new Vue({
         },
         dateToYYYYMMDD: function(date){
             return date.getFullYear() + '' + ('0'+ (date.getMonth()+1) ).slice(-2) + '' + ('0' + date.getDate()).slice(-2);
+        },
+        onValueChange: function(e){
+            let key = this.selectedDate + '_' + ('0' + e.hour).slice(-2) + ('0' + e.minute).slice(-2);
+            this.$set(this.timeScheduleData, key, e.bool);
         }
     },
     computed: {
@@ -233,9 +250,9 @@ let app = new Vue({
         }
     },
     watch: {
-        //  selectedDate: function(){
-        //      console.log(this.selectedDate);
-        //  }
+         timeScheduleData: function(){
+             console.log(this.timeScheduleData);
+         }
     }
 })
 
