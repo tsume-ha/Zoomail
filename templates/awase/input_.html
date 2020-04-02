@@ -38,18 +38,9 @@
 <button @click="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">メニュー</button>
 <form id="input-form" class="pt-3">
     <h5 class="ml-5">[[YYYYMMDDToTitle]]</h5>
-<input-forms></input-forms>
-<br>
-<br>
-<br>
-<br>
-<br>
-hoge
+    <input-forms></input-forms>
 </form>
-
 </section>
-
-
 
 <script type="text/javascript">
 const jsonURL = "{% url 'awase:hours_update_json' calendar.pk %}";
@@ -107,7 +98,7 @@ Vue.component('custom-day-content', {
 Vue.component('input-forms', {
     props: {
         start: {type: Number, required: false, default: 9},
-        end: {type: Number, required: false, default: 26},
+        end: {type: Number, required: false, default: 24},
     },
     delimiters: ['[[', ']]'],
     template: `<div class="form-group">
@@ -116,28 +107,75 @@ Vue.component('input-forms', {
                         <button type="button" class="dayall false">×</button>
                         <button type="button" class="dayall true">○</button>
                     </div>
-                    <input-one-row></input-one-row>
-                    <input-one-row></input-one-row>
+                    <input-one-row
+                        v-for="t in timeRange"
+                        :key="t + start - 1"
+                        :hour="t + start - 1"
+                        >
+                    </input-one-row>
                 </div>`,
+    computed: {
+        timeRange: function(){
+            return this.end - this.start;
+        }
+    }
 })
 
 Vue.component('input-one-row', {
     props: {
-        time: {type: Number, required: false, default: 12},
+        hour: {type: Number, required: true},
+        selected_1: {type: Boolean, required: false, default: undefined},
+        selected_2: {type: Boolean, required: false, default: undefined}
     },
     delimiters: ['[[', ']]'],
     template: `<div class="form-one-row">
                     <div class="form-one-check">
-                        <span>[[time]]:00</span>
-                        <button type="button" class="onetime false checked">×</button>
-                        <button type="button" class="onetime true checked">○</button>
+                        <span>[[hour]]:00</span>
+                        <button
+                            type="button"
+                            class="onetime false"
+                            :class="{'checked': selected_1 === false}"
+                            @click="onclick(0, false)"
+                            >×</button>
+                        <button
+                            type="button"
+                            class="onetime true"
+                            :class="{'checked': selected_1 === true}"
+                            @click="onclick(0, true)"
+                            >○</button>
                     </div>
                     <div class="form-one-check">
-                        <span>[[time]]:30</span>
-                        <button type="button" class="onetime false">×</button>
-                        <button type="button" class="onetime true">○</button>
+                        <span>[[hour]]:30</span>
+                        <button
+                            type="button"
+                            class="onetime false"
+                            :class="{'checked': selected_2 === false}"
+                            @click="onclick(30, false)"
+                            >×</button>
+                        <button
+                            type="button"
+                            class="onetime true"
+                            :class="{'checked': selected_2 === true}"
+                            @click="onclick(30, true)"
+                            >○</button>
                     </div>
                 </div>`,
+    methods: {
+        onclick: function(minute, bool){
+            this.$emit('timeClick', {
+                hour: this.hour,
+                minute: minute,
+                bool: bool
+            });
+            if (minute == 0){
+            this.$emit('timeClick', {
+                hour: this.hour,
+                minute: 30,//0分を押したときは30も発火
+                bool: bool
+            });
+            }
+        }
+    }
 })
 
 let app = new Vue({
@@ -302,7 +340,7 @@ div#calendar-wrap{
 .form-one-check span{
     display: inline-block;
     width: 2.5rem;
-    margin: 0 4px 0 2px;
+    margin: 0 4px 0 8px;
     padding: 0;
 }
 .form-one-row{
