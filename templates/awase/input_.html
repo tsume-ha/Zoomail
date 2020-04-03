@@ -39,6 +39,10 @@
 <form id="input-form" class="pt-3">
     <h5 class="ml-5">[[YYYYMMDDToTitle]]</h5>
     <input-forms
+        :date="selectedDate"
+        :data="selectedDateScheduleData"
+        :start="timeRangeData[selectedDate].start"
+        :end="timeRangeData[selectedDate].end"
         @value-change="onValueChange"></input-forms>
 </form>
 </section>
@@ -98,6 +102,8 @@ Vue.component('custom-day-content', {
 
 Vue.component('input-forms', {
     props: {
+        date: {type: String, required: true},// YYYYMMDD, String (example): '20200401']
+        data: {type: Object, required: true},// extracted from app.timeScheduleData (example) {'20200401_0900': true, '20200401_0930': false}
         start: {type: Number, required: false, default: 9},
         end: {type: Number, required: false, default: 26},
     },
@@ -105,36 +111,58 @@ Vue.component('input-forms', {
     template: `<div class="form-group">
                     <div class="form-oneday-all">
                         <span class="mx-3">１日一括指定</span>
-                        <button type="button" class="dayall false">×</button>
-                        <button type="button" class="dayall true">○</button>
+                        <button
+                            type="button"
+                            class="dayall false"
+                            @click="onAlldayClicked(false)">×</button>
+                        <button
+                            type="button"
+                            class="dayall true"
+                            @click="onAlldayClicked(true)">○</button>
                     </div>
                     <input-one-row
                         v-for="t in timeRange"
                         :key="t + start - 1"
                         :hour="t + start - 1"
-                        @timeClick="onOneRowClicked"
+                        :isSelected_00="getScheduleBool((t + start - 1), 0)"
+                        :isSelected_30="getScheduleBool((t + start - 1), 30)"
+                        @time-click="onOneRowClicked"
                         >
                     </input-one-row>
                 </div>`,
     methods: {
         onOneRowClicked: function(e){
-            // e: Object,
-            // e = {hour: 12, minute: 0, bool: true}
+            // e: Object, (example) {hour: 12, minute: 0, bool: true}
             this.$emit('value-change', e);
+        },
+        onAlldayClicked: function(bool){
+            for (let hour = this.start; hour < this.end; hour++) {
+                for (let minute of [0, 30]) {
+                    this.$emit('value-change', {
+                        hour: hour,
+                        minute: minute,
+                        bool: bool
+                    });
+                }
+            }
+        },
+        getScheduleBool: function (hour, minute) {
+            let key = this.date + '_' + ('0' + hour).slice(-2) + ('0' + minute).slice(-2);
+            return this.data[key];
         }
     },
     computed: {
         timeRange: function(){
             return this.end - this.start;
-        }
+        },
     }
 })
 
 Vue.component('input-one-row', {
     props: {
         hour: {type: Number, required: true},
-        selected_1: {type: Boolean, required: false, default: undefined},
-        selected_2: {type: Boolean, required: false, default: undefined}
+        isSelected_00: {type: Boolean, required: false, default: undefined},
+        isSelected_30: {type: Boolean, required: false, default: undefined}
     },
     delimiters: ['[[', ']]'],
     template: `<div class="form-one-row">
@@ -143,13 +171,13 @@ Vue.component('input-one-row', {
                         <button
                             type="button"
                             class="onetime false"
-                            :class="{'checked': selected_1 === false}"
+                            :class="{'checked': isSelected_00 === false}"
                             @click="onclick(0, false)"
                             >×</button>
                         <button
                             type="button"
                             class="onetime true"
-                            :class="{'checked': selected_1 === true}"
+                            :class="{'checked': isSelected_00 === true}"
                             @click="onclick(0, true)"
                             >○</button>
                     </div>
@@ -158,26 +186,26 @@ Vue.component('input-one-row', {
                         <button
                             type="button"
                             class="onetime false"
-                            :class="{'checked': selected_2 === false}"
+                            :class="{'checked': isSelected_30 === false}"
                             @click="onclick(30, false)"
                             >×</button>
                         <button
                             type="button"
                             class="onetime true"
-                            :class="{'checked': selected_2 === true}"
+                            :class="{'checked': isSelected_30 === true}"
                             @click="onclick(30, true)"
                             >○</button>
                     </div>
                 </div>`,
     methods: {
         onclick: function(minute, bool){
-            this.$emit('timeClick', {
+            this.$emit('time-click', {
                 hour: this.hour,
                 minute: minute,
                 bool: bool
             });
             if (minute == 0){
-            this.$emit('timeClick', {
+            this.$emit('time-click', {
                 hour: this.hour,
                 minute: 30,//0分を押したときは30も発火
                 bool: bool
@@ -196,12 +224,12 @@ let app = new Vue({
         isProcessError: false,
         errorMessage: '',
         isInAccess: false,
-        timeRangeData: {},
+        timeRangeData: {},//Object, (example) {'20200401': {start: 9, end: 26},}
         timeScheduleData: {
             '20200403_0900': false,
             '20200403_0930': true,
         },
-        selectedDate: '',
+        selectedDate: '',//YYYYMMDD, String  (example) '20200401'
         beforePOSTRequest: {},
     },
     mounted: function(){
@@ -247,12 +275,24 @@ let app = new Vue({
             let date = new Date(year, month - 1, day);
             let jp_weekday = ['日','月','火','水','木','金','土'];
             return month + '月' + day + '日（' + jp_weekday[date.getDay()] + '）';
+        },
+        selectedDateScheduleData: function (){
+            let keys = Object.keys(this.timeScheduleData);
+            let matchKeys = keys.filter(item => (item.slice(0,8) === this.selectedDate));
+            let data = {};
+            for (let key of matchKeys) {
+                data[key] = this.timeScheduleData[key]
+            }
+            return data;
+        },
+        isActiveDay: function (){
+            return !(this.timeRangeData[this.selectedDate].start === '' && this.timeRangeData[this.selectedDate].end === '');
         }
     },
     watch: {
-         timeScheduleData: function(){
-             console.log(this.timeScheduleData);
-         }
+        //  timeScheduleData: function(){
+        //     //  console.log(this.timeScheduleData);
+        //  }
     }
 })
 
