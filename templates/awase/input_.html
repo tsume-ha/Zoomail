@@ -13,9 +13,9 @@
 <h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a> に回答</h3>
 
 
-<section id="app" class="row my-3 border-top">
+<section id="app" class="row mt-3 border-top" @click="isMenuOpen = false">
 <template v-if="jsonLoaded">
-<nav id="input-nav" :class="{'active': isMenuOpen}" class="pt-3">
+<nav id="input-nav" @click.stop="isMenuOpen = true" :class="{'active': isMenuOpen}" class="pt-3">
     <div id="calendar-wrap">
         <h5 class="px-3">日付を選択</h5>
         <v-calendar
@@ -36,7 +36,9 @@
         </v-calendar>
     </div>
 </nav>
-<button @click="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">メニュー</button>
+<button @click.stop="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">
+    <img src="{% static 'img/calendar-menu.png' %}" width="32" height="32" alt="Open Date Picker" />
+</button>
 <form id="input-form" class="pt-3">
     <h5 class="ml-5">[[YYYYMMDDToTitle]]</h5>
     <input-forms
@@ -231,7 +233,7 @@ let app = new Vue({
         isMenuOpen: false,
         jsonLoaded: false,
         isProcessError: false,
-        errorMessage: '',
+        errorMessage: '',// String, (example) '404エラーです'
         isInAccess: false,
         timeRangeData: {},//Object, (example) {'20200401': {start: 9, end: 26},}
         timeScheduleData: {
@@ -299,9 +301,6 @@ let app = new Vue({
         }
     },
     watch: {
-        //  timeScheduleData: function(){
-        //     //  console.log(this.timeScheduleData);
-        //  }
     }
 })
 
@@ -309,16 +308,22 @@ let app = new Vue({
 <style type="text/css">
 section#app{
     position: relative;
+    min-height: 100vh;
 }
 #menu-switch{
     position: absolute;
     display: block;
-    width: 100px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    padding: 0;
     top: 0;
     left: 0;
+    background-color: #fff;
+    border: none;
     overflow: visible;
     transition: .2s;
+    z-index: 20;
 }
 #menu-switch.active{
     left: 280px;
@@ -334,6 +339,7 @@ section#app{
     background-color: #fff;
     transition: .2s;
     overflow: hidden;
+    z-index: 10;
 }
 #input-nav.active{
     width: 280px;
@@ -383,6 +389,9 @@ div#calendar-wrap{
 
 
 /* inputのcss */
+#input-form{
+    z-index: 5;
+}
 .form-group *{
     letter-spacing:normal;
 }
