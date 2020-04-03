@@ -14,6 +14,7 @@
 
 
 <section id="app" class="row my-3 border-top">
+<template v-if="jsonLoaded">
 <nav id="input-nav" :class="{'active': isMenuOpen}" class="pt-3">
     <div id="calendar-wrap">
         <h5 class="px-3">日付を選択</h5>
@@ -39,12 +40,20 @@
 <form id="input-form" class="pt-3">
     <h5 class="ml-5">[[YYYYMMDDToTitle]]</h5>
     <input-forms
+        v-if="isActiveDay"
         :date="selectedDate"
         :data="selectedDateScheduleData"
         :start="timeRangeData[selectedDate].start"
         :end="timeRangeData[selectedDate].end"
         @value-change="onValueChange"></input-forms>
+    <p v-else>
+        この日にちの集計はおこなわれていません。
+    </p>
 </form>
+</template>
+<p v-else>
+    Loading...
+</p>
 </section>
 
 <script type="text/javascript">
@@ -286,7 +295,7 @@ let app = new Vue({
             return data;
         },
         isActiveDay: function (){
-            return !(this.timeRangeData[this.selectedDate].start === '' && this.timeRangeData[this.selectedDate].end === '');
+            return (this.selectedDate in this.timeRangeData) && (this.timeRangeData[this.selectedDate].start !== this.timeRangeData[this.selectedDate].end);
         }
     },
     watch: {
