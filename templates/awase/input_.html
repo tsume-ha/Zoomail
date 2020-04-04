@@ -39,8 +39,8 @@
 <button @click.stop="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">
     <img src="{% static 'img/calendar-menu.png' %}" width="32" height="32" alt="Open Date Picker" />
 </button>
-<form id="input-form" class="pt-3">
-    <h5 class="ml-5">[[YYYYMMDDToTitle]]</h5>
+<form id="input-form">
+    <h5>[[YYYYMMDDToTitle]]</h5>
     <input-forms
         v-if="isActiveDay"
         :date="selectedDate"
@@ -315,7 +315,7 @@ section#app{
     display: block;
     width: 32px;
     height: 32px;
-    margin: 0;
+    margin: 8px;
     padding: 0;
     top: 0;
     left: 0;
@@ -343,7 +343,7 @@ section#app{
 }
 #input-nav.active{
     width: 280px;
-    padding: 0 10px;
+    padding: 0 10px 10px;
     border-right: 1px solid #aaa;
 }
 div#calendar-wrap{
@@ -370,7 +370,7 @@ div#calendar-wrap{
 #input-form{
     width: calc(100% - 280px);
     margin-left: 280px;
-    padding: 1rem 10px;
+    padding: 0 10px;
 }
 
 }
@@ -392,6 +392,11 @@ div#calendar-wrap{
 #input-form{
     z-index: 5;
 }
+#input-form h5{
+    margin: 16px 0 8px 4rem;
+    height: 24px;
+    line-height: 24px;
+}
 .form-group *{
     letter-spacing:normal;
 }
@@ -411,6 +416,10 @@ div#calendar-wrap{
 .form-oneday-all{
     width: 100%;
     background-color: #ffffcc;
+    border-top: 1px solid #abcdef;
+    border-bottom: 1px solid #abcdef;
+    padding: 0.5rem 0;
+    height: auto;
 }
 .form-one-check span{
     display: inline-block;
