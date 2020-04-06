@@ -19,3 +19,4 @@ scripts/emails/*
 scripts/emails22/*
 
 static/special/*
+.vscode/*

@@ -175,6 +175,13 @@ def inputJSON(request, pk):
     if not calendar_permission(calendar, now_user):
         raise Http404()
     
+    if (request.method == 'POST' and request.body):
+        json_dict = json.loads(request.body)
+        print(json_dict)
+        print('done')
+        import time
+        time.sleep(10)
+
     def getOver24h(dt):# Datetime => String
         if 0 <= dt.hour <= 5:
             t = 12# 適当な時間をさかのぼって、そこからの経過時間を計算する
