@@ -241,7 +241,7 @@ let app = new Vue({
             '20200403_0930': true,
         },
         selectedDate: '',//YYYYMMDD, String  (example) '20200401'
-        beforePOSTRequest: {},
+        beforePOSTRequest: {},// timeScheduleDataとおなじ形式
     },
     mounted: function(){
         var request = new XMLHttpRequest();
@@ -273,6 +273,7 @@ let app = new Vue({
         onValueChange: function(e){
             let key = this.selectedDate + '_' + ('0' + e.hour).slice(-2) + ('0' + e.minute).slice(-2);
             this.$set(this.timeScheduleData, key, e.bool);
+            this.$set(this.beforePOSTRequest, key, e.bool);
         }
     },
     computed: {
