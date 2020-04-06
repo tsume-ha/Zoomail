@@ -167,6 +167,31 @@ def input_(request, pk):
 
     return render(request, 'awase/input_.html', params)
 
+
+@login_required()
+def inputJSON(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    
+    def getOver24h(dt):# Datetime => String
+        if 0 <= dt.hour <= 5:
+            t = 12# 適当な時間をさかのぼって、そこからの経過時間を計算する
+            tmp = dt - datetime.timedelta(hours=t)
+            hour = tmp.hour + 12# ここで二ケタの保証はされるから、0埋めはしない
+            return tmp.strftime('%Y%m%d_') + str(hour) + tmp.strftime('%M')
+        else:
+            return dt.strftime('%Y%m%d_%H%M')
+
+    data = {}
+    RangeDataList = CollectHour.objects.filter(calendar=calendar).order_by('date').values_list('date', 'hour_begin', 'hour_end')
+    data['HourRange'] = {RangeData[0].strftime('%Y%m%d'): {'start': RangeData[1], 'end': RangeData[2]} for RangeData in RangeDataList}
+    ScheduleDataList = Schedule.objects.filter(user=now_user, calendar=calendar).values_list('start_time', 'can_attend')
+    data['Schedule'] = {getOver24h(ScheduleData[0]): ScheduleData[1] for ScheduleData in ScheduleDataList}
+    return JsonResponse(data)
+
+
 @login_required()
 def input(request, pk, page=1):
     now_user = request.user

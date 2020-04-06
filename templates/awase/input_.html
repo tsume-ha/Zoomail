@@ -40,7 +40,7 @@
     <img src="{% static 'img/calendar-menu.png' %}" width="32" height="32" alt="Open Date Picker" />
 </button>
 <form id="input-form">
-    <h5>[[YYYYMMDDToTitle]]</h5>
+    <h5 :class="{'active': isMenuOpen}">[[YYYYMMDDToTitle]]</h5>
     <input-forms
         v-if="isActiveDay"
         :date="selectedDate"
@@ -51,6 +51,9 @@
     <p v-else>
         この日にちの集計はおこなわれていません。
     </p>
+<p class="small mx-3">
+    2020年4月x日から、サーバーとの通信が自動で行われるようになり、送信ボタンが無くなりました。
+</p>
 </form>
 </template>
 <p v-else>
@@ -59,7 +62,7 @@
 </section>
 
 <script type="text/javascript">
-const jsonURL = "{% url 'awase:hours_update_json' calendar.pk %}";
+const jsonURL = "{% url 'awase:input_json' calendar.pk %}";
 
 Vue.component('custom-day-content', {
     props: {
@@ -172,8 +175,8 @@ Vue.component('input-forms', {
 Vue.component('input-one-row', {
     props: {
         hour: {type: Number, required: true},
-        isSelected_00: {type: Boolean, required: false, default: undefined},
-        isSelected_30: {type: Boolean, required: false, default: undefined}
+        isSelected_00: {type: Boolean, required: false, default: null},
+        isSelected_30: {type: Boolean, required: false, default: null}
     },
     delimiters: ['[[', ']]'],
     template: `<div class="form-one-row">
@@ -250,8 +253,10 @@ let app = new Vue({
         request.send();
         request.onload = function(){
             let response = request.response;
-            app.timeRangeData = response;
+            app.timeRangeData = response.HourRange;
             console.log(app.timeRangeData);
+            app.timeScheduleData = response.Schedule;
+            console.log(app.timeScheduleData);
 
             app.jsonLoaded = true;
 
@@ -346,6 +351,7 @@ section#app{
     width: 280px;
     padding: 0 10px 10px;
     border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
 }
 div#calendar-wrap{
     width: 260px;
@@ -396,6 +402,7 @@ div#calendar-wrap{
 #input-form h5{
     margin: 16px 0 8px 4rem;
     height: 24px;
+    width: 100%;
     line-height: 24px;
 }
 .form-group *{
