@@ -258,18 +258,10 @@ let app = new Vue({
         request.onload = function(){
             let response = request.response;
             app.timeRangeData = response.HourRange;
-            console.log(app.timeRangeData);
             app.timeScheduleData = response.Schedule;
-            console.log(app.timeScheduleData);
-
+            app.selectedDate = response.InitialDate;
 
             app.jsonLoaded = true;
-
-            let today = app.dateToYYYYMMDD(new Date());
-            app.selectedDate = today;
-            if (!(today in app.timeRangeData)){
-                // 範囲に入ってない時の処理
-            }
         }
     },
     mounted: function(){

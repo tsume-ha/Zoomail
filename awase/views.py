@@ -213,10 +213,20 @@ def inputJSON(request, pk):
             return dt.strftime('%Y%m%d_%H%M')
 
     data = {}
-    RangeDataList = CollectHour.objects.filter(calendar=calendar).order_by('date').values_list('date', 'hour_begin', 'hour_end')
+    RangeDataList = CollectHour.objects.filter(
+        calendar=calendar, date__gte=calendar.days_begin, date__lte=calendar.days_end
+        ).order_by('date').values_list('date', 'hour_begin', 'hour_end')
     data['HourRange'] = {RangeData[0].strftime('%Y%m%d'): {'start': RangeData[1], 'end': RangeData[2]} for RangeData in RangeDataList}
     ScheduleDataList = Schedule.objects.filter(user=now_user, calendar=calendar).values_list('start_time', 'can_attend')
     data['Schedule'] = {getOver24h(ScheduleData[0]): ScheduleData[1] for ScheduleData in ScheduleDataList}
+
+    if datetime.date.today() <= calendar.days_begin:
+        data['InitialDate'] = calendar.days_begin.strftime('%Y%m%d')
+    elif calendar.days_begin < datetime.date.today() <= calendar.days_end:
+        data['InitialDate'] = datetime.date.today().strftime('%Y%m%d')
+    else:
+        data['InitialDate'] = calendar.days_end.strftime('%Y%m%d')
+
     return JsonResponse(data)
 
 
