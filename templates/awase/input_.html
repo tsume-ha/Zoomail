@@ -291,7 +291,7 @@ let app = new Vue({
             let inProcess = [];
             let counter = 0;
             for (var key in this.beforePOSTRequest) {
-                if (counter > 20) { break; }
+                if (counter > 34) { break; }
                 data[key] = this.beforePOSTRequest[key];
                 inProcess.push(key);
                 counter += 1;
@@ -302,7 +302,6 @@ let app = new Vue({
             axios.post(jsonURL, data).then(response => {
                 console.log(response);
                 this.isProcessError = false;
-                console.log(inProcess);
                 for (var key of inProcess) {
                     this.$delete(this.beforePOSTRequest, key);
                 }

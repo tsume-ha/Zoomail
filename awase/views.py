@@ -177,10 +177,30 @@ def inputJSON(request, pk):
     
     if (request.method == 'POST' and request.body):
         json_dict = json.loads(request.body)
-        print(json_dict)
-        print('done')
-        import time
-        time.sleep(10)
+
+        def getDatetime(key):# String, YYYYMMDD_HHMM => Datetime
+            dt = datetime.datetime(year=int(key[0:4]), month=int(key[4:6]), day=int(key[6:8]))
+            dt += datetime.timedelta(hours=int(key[9:11]), minutes=int(key[11:13]))
+            return dt
+
+        for key in json_dict:
+            try:
+                Schedule.objects.update_or_create(
+                    calendar=calendar,
+                    user=now_user,
+                    start_time=getDatetime(key),
+                    defaults={
+                        'can_attend': json_dict[key]
+                    }
+                )
+                response = HttpResponse('OK')
+                response.status_code = 200
+                return response
+            except:
+                response = HttpResponse('BAD REQUEST')
+                response.status_code = 400
+                return response
+
 
     def getOver24h(dt):# Datetime => String
         if 0 <= dt.hour <= 5:
