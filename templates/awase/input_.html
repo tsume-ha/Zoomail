@@ -36,7 +36,7 @@
         </v-calendar>
     </div>
 </nav>
-<button @click.stop="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">
+<button type="button" @click.stop="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">
     <img src="{% static 'img/calendar-menu.png' %}" width="32" height="32" alt="Open Date Picker" />
 </button>
 <form id="input-form">
@@ -52,7 +52,10 @@
         この日にちの集計はおこなわれていません。
     </p>
     <p v-if="isProcessError" v-text="errorMessage" class="text-danger"></p>
-    <p class="small mx-3">
+    <button type="button" v-if="isProcessError" @click="POST" class="btn btn-danger m-3">再送信</button>
+    <p v-if="whenPageLeave" class="text-info">バックグラウンドで通信中です。通信が終わるまで、このページを開いたままにしてください！</p>
+    <p v-text="afterErrorMessage" class="text-success"></p>
+    <p class="small">
         2020年4月x日から、サーバーとの通信が自動で行われるようになり、送信ボタンが無くなりました。
     </p>
 </form>
@@ -239,13 +242,15 @@ let app = new Vue({
         jsonLoaded: false,
         isProcessError: false,
         errorMessage: '',// String, (example) '404エラーです'
+        afterErrorMessage: '',//String エラーが回復したときのメッセージ
         isInAccess: false,
+        whenPageLeave: false,
         timeRangeData: {},//Object, (example) {'20200401': {start: 9, end: 26},}
         timeScheduleData: {},//Object (example) {'20200403_0900': false, '20200403_2030': true}
         selectedDate: '',//YYYYMMDD, String  (example) '20200401'
         beforePOSTRequest: {},// timeScheduleDataとおなじ形式
     },
-    mounted: function(){
+    created: function(){
         var request = new XMLHttpRequest();
         request.open('GET', jsonURL);
         request.responseType = 'json';
@@ -262,11 +267,20 @@ let app = new Vue({
 
             let today = app.dateToYYYYMMDD(new Date());
             app.selectedDate = today;
-            console.log(today);
             if (!(today in app.timeRangeData)){
                 // 範囲に入ってない時の処理
             }
         }
+    },
+    mounted: function(){
+        $(window)
+            .off('beforeunload')
+            .on('beforeunload', () => {
+                if (this.isInAccess){
+                    this.whenPageLeave = true;
+                    return 'バックグラウンドでデータを転送中です！終了するまで、このページを開いたままにしてください！';
+                }
+            })
     },
     methods: {
         dayadd: function(e){
@@ -287,44 +301,44 @@ let app = new Vue({
         },
         POST: function () {
             this.isInAccess = true;
-            let data = {};
-            let inProcess = [];
-            let counter = 0;
-            for (var key in this.beforePOSTRequest) {
-                if (counter > 34) { break; }
-                data[key] = this.beforePOSTRequest[key];
-                inProcess.push(key);
-                counter += 1;
-            }
-
-            axios.defaults.xsrfCookieName = 'csrftoken';
-            axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-            axios.post(jsonURL, data).then(response => {
-                console.log(response);
-                this.isProcessError = false;
-                for (var key of inProcess) {
-                    this.$delete(this.beforePOSTRequest, key);
+            setTimeout(() => {
+                let data = {};
+                let inProcess = [];
+                let counter = 0;
+                for (var key in this.beforePOSTRequest) {
+                    if (counter > 34) { break; }
+                    data[key] = this.beforePOSTRequest[key];
+                    inProcess.push(key);
+                    counter += 1;
                 }
-                console.log(this.beforePOSTRequest);
-                if (Object.keys(this.beforePOSTRequest).length > 0) {
-                    this.POST();
-                } else {
+                axios.defaults.xsrfCookieName = 'csrftoken';
+                axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+                axios.post(jsonURL, data).then(response => {
+                    console.log(response);
+                    this.isProcessError = false;
+                    for (var key of inProcess) {
+                        this.$delete(this.beforePOSTRequest, key);
+                    }
+                    if (Object.keys(this.beforePOSTRequest).length > 0) {
+                        this.POST();
+                    } else {
+                        this.isInAccess = false;
+                    }
+                }).catch(error => {
+                    console.log(error);
                     this.isInAccess = false;
-                }
-            }).catch(error => {
-                console.log(error);
-                this.isInAccess = false;
-                if (!error.response.status) {
-                    console.log('network error');
-                    this.isProcessError = true;
-                    this.errorMessage = '通信に失敗しました。インターネットへの接続を確認し、再度送信ボタンを押してください。(Network Error)'
-                } else {
-                    console.log('internal error');
-                    this.isProcessError = true;
-                    this.errorMessage = '処理に失敗しました。変更が保存されていない可能性があります。お手数ですが、開発者までご連絡ください。(' +
-                        error.response.status + ' ' + error.response.statusText + ')';
-                }
-            });
+                    if (!error.response) {
+                        console.log('network error');
+                        this.isProcessError = true;
+                        this.errorMessage = '通信に失敗しました。インターネットへの接続を確認し、再度送信ボタンを押してください。(Network Error)'
+                    } else {
+                        console.log('internal error');
+                        this.isProcessError = true;
+                        this.errorMessage = '処理に失敗しました。変更が保存されていない可能性があります。お手数ですが、開発者までご連絡ください。(' +
+                            error.response.status + ' ' + error.response.statusText + ')';
+                    }
+                });
+            }, 1000);
         }
     },
     computed: {
@@ -353,6 +367,14 @@ let app = new Vue({
         }
     },
     watch: {
+        isInAccess: function (newval, oldval) {
+            if (newval === false) {
+                if (this.whenPageLeave === true) {
+                    this.afterErrorMessage = '通信が終わりました。ページを閉じたり、他のページに移動しても大丈夫です。';
+                    this.whenPageLeave = false;
+                }
+            }
+        }
     }
 })
 

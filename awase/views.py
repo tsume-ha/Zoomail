@@ -182,7 +182,7 @@ def inputJSON(request, pk):
             dt = datetime.datetime(year=int(key[0:4]), month=int(key[4:6]), day=int(key[6:8]))
             dt += datetime.timedelta(hours=int(key[9:11]), minutes=int(key[11:13]))
             return dt
-
+            
         for key in json_dict:
             try:
                 Schedule.objects.update_or_create(
@@ -193,13 +193,14 @@ def inputJSON(request, pk):
                         'can_attend': json_dict[key]
                     }
                 )
-                response = HttpResponse('OK')
-                response.status_code = 200
-                return response
             except:
                 response = HttpResponse('BAD REQUEST')
                 response.status_code = 400
                 return response
+
+        response = HttpResponse('OK')
+        response.status_code = 200
+        return response
 
 
     def getOver24h(dt):# Datetime => String
