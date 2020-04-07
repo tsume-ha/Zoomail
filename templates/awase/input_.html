@@ -41,6 +41,10 @@
 </button>
 <form id="input-form">
     <h5 :class="{'active': isMenuOpen}">[[YYYYMMDDToTitle]]</h5>
+    <div class="d-inline-block my-2">
+        <button type="button" @click="moveDay(-1)" class="btn btn-info mx-1">前の日に</button>
+        <button type="button" @click="moveDay(1)" class="btn btn-info">次の日に</button>
+    </div>
     <input-forms
         v-if="isActiveDay"
         :date="selectedDate"
@@ -55,9 +59,10 @@
     <button type="button" v-if="isProcessError" @click="POST" class="btn btn-danger m-3">再送信</button>
     <p v-if="whenPageLeave" class="text-info">バックグラウンドで通信中です。通信が終わるまで、このページを開いたままにしてください！</p>
     <p v-text="afterErrorMessage" class="text-success"></p>
-    <p class="small">
-        2020年4月x日から、サーバーとの通信が自動で行われるようになり、送信ボタンが無くなりました。
+    <p class="small mx-2">
+        サーバーとの通信が自動で行われるようになり、送信ボタンが無くなりました。
     </p>
+    <a href="{% url 'awase:calendar' calendar.pk %}" class="btn btn-secondary m-2">{{ calendar.title }}に戻る</a>
 </form>
 <div v-if="isInAccess" class="small text-secondary is-in-access">サーバーと通信中...</div>
 </template>
@@ -238,7 +243,7 @@ let app = new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
-        isMenuOpen: false,
+        isMenuOpen: true,
         jsonLoaded: false,
         isProcessError: false,
         errorMessage: '',// String, (example) '404エラーです'
@@ -280,6 +285,14 @@ let app = new Vue({
         },
         dateToYYYYMMDD: function(date){
             return date.getFullYear() + '' + ('0'+ (date.getMonth()+1) ).slice(-2) + '' + ('0' + date.getDate()).slice(-2);
+        },
+        YYYYMMDDToDate: function(YYYYMMDD){
+            return new Date(Number(YYYYMMDD.slice(0, 4)), Number(YYYYMMDD.slice(4, 6)) - 1, Number(YYYYMMDD.slice(6, 8)));
+        },
+        moveDay: function(int){
+            let date = this.YYYYMMDDToDate(this.selectedDate);
+            date.setDate(date.getDate() + int);
+            this.selectedDate = this.dateToYYYYMMDD(date);
         },
         onValueChange: function(e){
             let key = this.selectedDate + '_' + ('0' + e.hour).slice(-2) + ('0' + e.minute).slice(-2);
@@ -338,10 +351,10 @@ let app = new Vue({
             if (this.selectedDate == ''){
                 return '';
             }
-            let year = Number(this.selectedDate.slice(0,4))
+            let year = Number(this.selectedDate.slice(0,4));
             let month = Number(this.selectedDate.slice(4,6));
             let day = Number(this.selectedDate.slice(6,8));
-            let date = new Date(year, month - 1, day);
+            let date = this.YYYYMMDDToDate(this.selectedDate);
             let jp_weekday = ['日','月','火','水','木','金','土'];
             return month + '月' + day + '日（' + jp_weekday[date.getDay()] + '）';
         },
@@ -362,7 +375,7 @@ let app = new Vue({
         isInAccess: function (newval, oldval) {
             if (newval === false) {
                 if (this.whenPageLeave === true) {
-                    this.afterErrorMessage = '通信が終わりました。ページを閉じたり、他のページに移動しても大丈夫です。';
+                    this.afterErrorMessage = '通信が終わりました。もうページを閉じたり、他のページに移動しても大丈夫です。';
                     this.whenPageLeave = false;
                 }
             }
