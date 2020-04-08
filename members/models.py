@@ -85,3 +85,12 @@ class TmpMember(models.Model):
     email = models.EmailField()
     def __str__(self):
         return self.session + self.email
+
+
+class TestMail(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='test_mail')
+    email = models.EmailField(verbose_name='送信したメールアドレス')
+    sent_at = models.DateTimeField()
+    x_message_id = models.CharField(max_length=100, editable=False)
+    def __str__(self):
+        return self.user.get_full_name() + ' - ' + self.email
