@@ -154,6 +154,83 @@ def invited(request, key):
 
 
 @login_required()
+def input_(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+
+    params = {
+        'calendar': calendar,
+    }
+
+
+    return render(request, 'awase/input_.html', params)
+
+
+@login_required()
+def inputJSON(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    
+    if (request.method == 'POST' and request.body):
+        json_dict = json.loads(request.body)
+
+        def getDatetime(key):# String, YYYYMMDD_HHMM => Datetime
+            dt = datetime.datetime(year=int(key[0:4]), month=int(key[4:6]), day=int(key[6:8]))
+            dt += datetime.timedelta(hours=int(key[9:11]), minutes=int(key[11:13]))
+            return dt
+            
+        for key in json_dict:
+            try:
+                Schedule.objects.update_or_create(
+                    calendar=calendar,
+                    user=now_user,
+                    start_time=getDatetime(key),
+                    defaults={
+                        'can_attend': json_dict[key]
+                    }
+                )
+            except:
+                response = HttpResponse('BAD REQUEST')
+                response.status_code = 400
+                return response
+
+        response = HttpResponse('OK')
+        response.status_code = 200
+        return response
+
+
+    def getOver24h(dt):# Datetime => String
+        if 0 <= dt.hour <= 5:
+            t = 12# 適当な時間をさかのぼって、そこからの経過時間を計算する
+            tmp = dt - datetime.timedelta(hours=t)
+            hour = tmp.hour + 12# ここで二ケタの保証はされるから、0埋めはしない
+            return tmp.strftime('%Y%m%d_') + str(hour) + tmp.strftime('%M')
+        else:
+            return dt.strftime('%Y%m%d_%H%M')
+
+    data = {}
+    RangeDataList = CollectHour.objects.filter(
+        calendar=calendar, date__gte=calendar.days_begin, date__lte=calendar.days_end
+        ).order_by('date').values_list('date', 'hour_begin', 'hour_end')
+    data['HourRange'] = {RangeData[0].strftime('%Y%m%d'): {'start': RangeData[1], 'end': RangeData[2]} for RangeData in RangeDataList}
+    ScheduleDataList = Schedule.objects.filter(user=now_user, calendar=calendar).values_list('start_time', 'can_attend')
+    data['Schedule'] = {getOver24h(ScheduleData[0]): ScheduleData[1] for ScheduleData in ScheduleDataList}
+
+    if datetime.date.today() <= calendar.days_begin:
+        data['InitialDate'] = calendar.days_begin.strftime('%Y%m%d')
+    elif calendar.days_begin < datetime.date.today() <= calendar.days_end:
+        data['InitialDate'] = datetime.date.today().strftime('%Y%m%d')
+    else:
+        data['InitialDate'] = calendar.days_end.strftime('%Y%m%d')
+
+    return JsonResponse(data)
+
+
+@login_required()
 def input(request, pk, page=1):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)

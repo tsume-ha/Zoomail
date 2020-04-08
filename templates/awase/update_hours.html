@@ -178,7 +178,6 @@ let app = new Vue({
         start: null,
         end: null,
         beforePOSTRequest: {},
-        WEEKDAYS: ['日','月','火','水','木','金','土']
     },
     mounted: function(){  
         var request = new XMLHttpRequest();
@@ -188,6 +187,7 @@ let app = new Vue({
         request.onload = function(){
             let response = request.response;
             app.timedata = response;
+            console.log(app.timedata);
 
             app.jsonLoaded = true;
         }
