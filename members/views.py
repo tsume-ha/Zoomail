@@ -224,8 +224,8 @@ def EmailConfirm(request):
                     print(x_message_id)
                     obj.x_message_id = x_message_id
                     obj.save()
-                except expression as e:
-                    print(e)
+                except:
+                    pass
 
             response = HttpResponse('OK')
             response.status_code = 200
