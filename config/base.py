@@ -169,10 +169,21 @@ SOCIAL_AUTH_AUTH0_KEY = env('SOCIAL_AUTH_AUTH0_KEY')
 SOCIAL_AUTH_AUTH0_SECRET = env('SOCIAL_AUTH_AUTH0_SECRET')
 
 SOCIAL_AUTH_AUTH0_SCOPE = [
-    'openid',
-    'profile',
-    'email'
-]
+    "openid",
+    # "profile",
+    # "offline_access",
+    # "name",
+    # "given_name",
+    # "family_name",
+    # "nickname",
+    # "email",
+    # "email_verified",
+    # "picture",
+    # "created_at",
+    # "identities",
+    # "phone",
+    # "address"
+    ]
 
 
 
