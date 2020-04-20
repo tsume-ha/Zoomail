@@ -146,6 +146,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.open_id.OpenIdAuth',
     'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
+    'members.auth0backend.Auth0',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -157,6 +158,23 @@ SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+
+# LiveLog Login
+LOGIN_URL = '/login/auth0'
+
+SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
+SOCIAL_AUTH_AUTH0_DOMAIN = 'patient-bar-7812.auth0.com'
+SOCIAL_AUTH_AUTH0_KEY = env('SOCIAL_AUTH_AUTH0_KEY')
+SOCIAL_AUTH_AUTH0_SECRET = env('SOCIAL_AUTH_AUTH0_SECRET')
+
+SOCIAL_AUTH_AUTH0_SCOPE = [
+    'openid',
+    'profile',
+    'email'
+]
+
+
 
 # other settings
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
@@ -186,7 +204,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.get_username',
     
     # Create a user account if we haven't found one yet.
-    # 'social_core.pipeline.user.create_user',
+    'social_core.pipeline.user.create_user',################################################
 
     # Create the record that associates the social account with the user.
     'social_core.pipeline.social_auth.associate_user',
