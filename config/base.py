@@ -169,19 +169,8 @@ SOCIAL_AUTH_AUTH0_SECRET = env('SOCIAL_AUTH_AUTH0_SECRET')
 SOCIAL_AUTH_AUTH0_SCOPE = [
     "aud",
     "openid",
-    "profile",
-    "offline_access",
-    "name",
-    "given_name",
-    "family_name",
-    "nickname",
     "email",
     "email_verified",
-    "picture",
-    "created_at",
-    "identities",
-    "phone",
-    "address"
     ]
 
 
@@ -215,6 +204,9 @@ SOCIAL_AUTH_PIPELINE = (
     
     # Create a user account if we haven't found one yet.
     'config.social_auth.create_user_override.create_user',
+
+    # userが新規作成された後にreceive_email, yearを登録します
+    'config.social_auth.new_user_data_after_created.register_user_data',
 
     # Create the record that associates the social account with the user.
     'config.social_auth.social_auth_pipelines.associate_user',

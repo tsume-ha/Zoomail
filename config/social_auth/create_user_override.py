@@ -1,6 +1,6 @@
 from django.contrib import messages
 
-USER_FIELDS = ['username', 'email']
+USER_FIELDS = ['username', 'email', 'year']
 
 def create_user(strategy, details, backend, user=None, *args, **kwargs):
     if user:
@@ -13,9 +13,9 @@ def create_user(strategy, details, backend, user=None, *args, **kwargs):
                   for name in backend.setting('USER_FIELDS', USER_FIELDS))
     if not fields:
         return
-
-    strategy.session_set('next', '/read')
-
+    
+    #nextリンクはsessionに保存されている、これを書き換える
+    strategy.session_set('next', '/members/update')
     return {
         'is_new': True,
         'user': strategy.create_user(**fields)
