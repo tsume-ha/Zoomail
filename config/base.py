@@ -205,9 +205,6 @@ SOCIAL_AUTH_PIPELINE = (
     # Create a user account if we haven't found one yet.
     'config.social_auth.create_user_override.create_user',
 
-    # userが新規作成された後にreceive_email, yearを登録します
-    'config.social_auth.new_user_data_after_created.register_user_data',
-
     # Create the record that associates the social account with the user.
     'config.social_auth.social_auth_pipelines.associate_user',
 
