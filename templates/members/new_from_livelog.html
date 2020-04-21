@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<title>初回登録 | Unplugged Message</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-grid.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.min.css' %}">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script type="text/javascript">
+		window.Vue || document.write('<script src="{% static 'js/vue.js' %}"><\/script>');
+	</script>
+	<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/touch-hover.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+</head>
+<body>
+<input type="checkbox" id="nav_open">
+<header>
+	<div class="container">
+		<h1><a href="{% url 'home:index' %}">U Message</a></h1>
+		<label id="nav_SW" for="nav_open"><span></span></label>
+		<nav id="nav">
+			<ul>
+				<li><a href="/login/">LiveLogでログイン中</a></li>
+			</ul>
+		</nav>
+	</div>
+</header>
+{% if messages %}
+<div class="container mt-3">
+	<div class="messages my-3">
+		{% for message in messages %}
+			<p  class="alert 
+			{% if message.tags %}alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} ">{{ message }}</p>
+		{% endfor %}
+	</div>
+</div>
+{% endif %}
+
+<div id="container" class="container mt-3">
+	<h3>初回登録</h3>
+	<form method="post">
+		{% csrf_token %}
+		<div class="form-group">
+			{{ form.receive_email.label_tag }}
+			{{ form.receive_email }}
+			{% if form.receive_email.errors %}
+			<p class="small text-danger pl-2">{{ form.receive_email.errors.as_text }}</p>
+			{% endif %}
+			<p class="small text-secondary">
+				メーリスを受信するためのメールアドレスです。<br>
+				ここで登録されたメールアドレスに全回・回生メーリスが届きます。
+			</p>
+		</div>
+		<div class="form-group">
+			{{ form.send_mail.label_tag }}
+			{{ form.send_mail }}
+			{% if form.send_mail.errors %}
+			<p class="small text-danger pl-2">{{ form.send_mail.errors.as_text }}</p>
+			{% endif %}
+			<p class="small text-secondary">
+				メーリスを受け取りたくない場合はチェックを外してください。<br>
+				チェックが外されると、全回・回生メーリスともに送信されないようになりますが、<br>
+				このサイトにログインし、メーリスを確認することは出来ます。
+			</p>
+		</div>
+		<div class="form-group">
+			{{ form.last_name.label_tag }}
+			{{ form.last_name }}
+			{% if form.last_name.errors %}
+			<p class="small text-danger pl-2">{{ form.last_name.errors.as_text }}</p>
+			{% endif %}
+			<p class="small text-secondary">
+				必須です
+			</p>
+		</div>
+		<div class="form-group">
+			{{ form.first_name.label_tag }}
+			{{ form.first_name }}
+			{% if form.first_name.errors %}
+			<p class="small text-danger pl-2">{{ form.first_name.errors.as_text }}</p>
+			{% endif %}
+			<p class="small text-secondary">
+				必須です
+			</p>
+		</div>
+		<div class="form-group">
+			{{ form.furigana.label_tag }}
+			{{ form.furigana }}
+			{% if form.furigana.errors %}
+			<p class="small text-danger pl-2">{{ form.furigana.errors.as_text }}</p>
+			{% endif %}
+			<p class="small text-secondary">
+				必須です
+			</p>
+		</div>
+		<div class="form-group">
+			{{ form.nickname.label_tag }}
+			{{ form.nickname }}
+			{% if form.nickname.errors %}
+			<p class="small text-danger pl-2">{{ form.nickname.errors.as_text }}</p>
+			{% endif %}
+		</div>
+
+		<input type="submit" name="search" value="登録" class="btn btn-info mx-2 my-3">
+	</form>
+	
+</div>
+</body>
+</html>
