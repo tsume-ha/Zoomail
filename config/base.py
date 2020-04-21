@@ -160,29 +160,28 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 
-# LiveLog Login
-LOGIN_URL = '/login/auth0'
-
 SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
+# Google 認証のurlもスラッシュを外したモノに変更する必要
 SOCIAL_AUTH_AUTH0_DOMAIN = 'patient-bar-7812.auth0.com'
 SOCIAL_AUTH_AUTH0_KEY = env('SOCIAL_AUTH_AUTH0_KEY')
 SOCIAL_AUTH_AUTH0_SECRET = env('SOCIAL_AUTH_AUTH0_SECRET')
 
 SOCIAL_AUTH_AUTH0_SCOPE = [
+    "aud",
     "openid",
-    # "profile",
-    # "offline_access",
-    # "name",
-    # "given_name",
-    # "family_name",
-    # "nickname",
-    # "email",
-    # "email_verified",
-    # "picture",
-    # "created_at",
-    # "identities",
-    # "phone",
-    # "address"
+    "profile",
+    "offline_access",
+    "name",
+    "given_name",
+    "family_name",
+    "nickname",
+    "email",
+    "email_verified",
+    "picture",
+    "created_at",
+    "identities",
+    "phone",
+    "address"
     ]
 
 
