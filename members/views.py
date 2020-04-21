@@ -17,6 +17,7 @@ import json
 from django.conf import settings
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent
+from social_django.models import UserSocialAuth
 
 
 @login_required()
@@ -261,3 +262,12 @@ def EmailConfirm(request):
         'user': now_user,
     }
     return render(request, 'members/email_confirm.html', params)
+
+@login_required()
+def OAuthRegisterView(request):
+    now_user = request.user
+    params = {
+        'google': UserSocialAuth.objects.filter(user=now_user, provider='google-oauth2').exists(),
+        'livelog': UserSocialAuth.objects.filter(user=now_user, provider='auth0').exists(),
+    }
+    return render(request, 'members/oauth_register.html', params)

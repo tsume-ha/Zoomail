@@ -10,4 +10,5 @@ urlpatterns = [
     path('register/csv/', views.UserRegistrationCSV, name='register_CSV'),
     path('register/csv/preview/', views.UserRegistrationPreview, name='register_preview'),
     path('first_register/', views.NewFromLiveLog, name='new_from_livelog'),
+    path('oauth/', views.OAuthRegisterView, name='oauth'),
 ]
