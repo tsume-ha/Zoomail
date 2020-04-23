@@ -1,12 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth import logout
 from django.conf import settings
 from urllib.parse import urlencode
-from django.contrib import messages
-from django.shortcuts import redirect, get_object_or_404
+
 from .models import SpecialPage, ContentLog, Announcement
-import os
+
 
 def index(request):
     announcements = Announcement.objects.order_by('-created_at')[:5]
