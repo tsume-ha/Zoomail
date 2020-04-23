@@ -2,9 +2,11 @@ from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
-from social_django.models import UserSocialAuth
 from django.core import validators
 from django.core.validators import RegexValidator
+
+from social_django.models import UserSocialAuth
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, year=0):

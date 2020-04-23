@@ -1,23 +1,26 @@
+import datetime
+import json
+import csv
+
+from io import TextIOWrapper
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, To, PlainTextContent
+from social_django.models import UserSocialAuth
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
+from django.core.exceptions import ValidationError
+from django.http import HttpResponse
+from django.conf import settings
+
 from .models import User, TmpMember, TestMail
 from .forms import UserUpdateForm, RegisterForm, RegisterCSV
 from config.permissions import MemberRegisterPermission, AdminEnterPermission
-import csv
-from io import TextIOWrapper
-from .create_google_user import DuplicateGmailAccountError
 from board.models import Message, Kidoku
+from .create_google_user import DuplicateGmailAccountError
 from .create_google_user import Create_Google_User as register
-from django.core.exceptions import ValidationError
-from django.http import HttpResponse
-import datetime
-import json
-from django.conf import settings
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent
-from social_django.models import UserSocialAuth
 
 
 @login_required()

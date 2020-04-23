@@ -1,8 +1,8 @@
-from members.models import User
-from social_django.models import UserSocialAuth
 from django.db.utils import IntegrityError
 from django.core.mail import send_mail
 
+from members.models import User
+from social_django.models import UserSocialAuth
 
 class DuplicateGmailAccountError(Exception):
     pass
