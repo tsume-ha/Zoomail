@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'social_django',
     'imagekit',
     'django_extensions',
+    'webpack_loader',
     'home',
     'members',
     'board',
@@ -199,6 +200,17 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
 
 )
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'static/dist/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'static/dist/webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    }
+}
 
 
 SEND_MAIL = False

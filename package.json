@@ -1,0 +1,27 @@
+{
+  "name": "unplugged_messsage",
+  "version": "1.0.0",
+  "description": "Message board for Kyoto Univ. unplugged",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsume-ha/UnpluggedMessage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tsume-ha/UnpluggedMessage/issues"
+  },
+  "homepage": "https://github.com/tsume-ha/UnpluggedMessage#readme",
+  "devDependencies": {
+    "vue": "^2.6.11",
+    "webpack": "^4.42.1",
+    "webpack-bundle-tracker": "^0.4.3",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {}
+}
