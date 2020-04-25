@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
-from django.core import validators
 from django.core.validators import RegexValidator
 
 from social_django.models import UserSocialAuth
@@ -37,7 +36,7 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True, verbose_name="Googleアカウント")
+    email = models.EmailField(unique=True, verbose_name="Emailアドレス")
     receive_email = models.EmailField(blank=True, null=False, verbose_name="受信用メールアドレス")
     send_mail = models.BooleanField(default=True, verbose_name="メーリスを受信する")
     first_name = models.CharField(max_length=255, verbose_name='名前')
@@ -70,7 +69,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.last_name + self.first_name
 
     def get_receive_email(self):
-        if self.receive_email == "" or self.receive_email == None:
+        if self.receive_email == "" or self.receive_email is None:
             return self.email
         else:
             return self.receive_email
