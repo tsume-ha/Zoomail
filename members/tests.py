@@ -1,4 +1,5 @@
 from django.test import TestCase, Client
+from django.urls import reverse
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -166,3 +167,43 @@ class MemberRegisterFormTest(TestCase):
         self.assertTrue(created_user.furigana == data['furigana'])
         self.assertTrue(created_user.nickname == '')
 
+
+class EmailConfirmViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User(cls)
+    
+    def test_get_emailconfirm_logout(self):
+        User_LogOUT(self)
+        response = self.client.get(reverse('members:email_confirm'))
+        self.assertEqual(response.status_code, 302)
+        url_redial_to = response.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin/login.html')
+
+    def test_get_emailconfirm_logIN(self):
+        User_LogIN(self)
+        response = self.client.get(reverse('members:email_confirm'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'members/email_confirm.html')
+
+class OauthViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User(cls)
+    
+    def test_get_oauth_logout(self):
+        User_LogOUT(self)
+        response = self.client.get(reverse('members:oauth'))
+        self.assertEqual(response.status_code, 302)
+        url_redial_to = response.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin/login.html')
+
+    def test_get_oauth_logIN(self):
+        User_LogIN(self)
+        response = self.client.get(reverse('members:oauth'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'members/oauth_register.html')
