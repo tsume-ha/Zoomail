@@ -1,7 +1,7 @@
 from django import forms
 from django.core import validators
-from .models import User
 
+from .models import User
 
 
 class UserUpdateForm(forms.ModelForm):

@@ -8,15 +8,17 @@
 {% block body %}
 <h2>Login</h2>
 	<p class="my-3">
-		ログインするには事前にこのアプリに登録されたGoogleアカウントが必要です。<br>
-		まだ登録していない人は、ログインに使うGoogleアカウントを決めて、<br>
-		ホームページ係を通して登録してください。
+		ログインするためには、事前にこのアプリに登録されたGoogleアカウントか、<br>
+		<a href="https://livelog.ku-unplugged.net">LiveLog</a> アカウントが必要です。<br>
 	</p>
 	<p>
 		<a href="{% url 'social:begin' 'google-oauth2' %}{% if next %}?next={{ next }}{% endif %}">
 		<img src="{% static 'img/btn_google_signin_light_normal_web@2x.png' %}" width="192" height="46" id="G-login"></a>
 	</p>
-	
+	<p class="livelogin">
+		<a href="/auth/login/auth0">
+		Log in with <img src="{% static 'img/livelog.png' %}" width="80" height="59"/></a>
+	</p>
 
 <script type="text/javascript">
 $(function(){
@@ -29,4 +31,20 @@ $(function(){
 	});
 })
 </script>
+<style>
+.livelogin{
+	width: 100%;
+}
+.livelogin a{
+	display: block;
+	position: relative;
+	background-color: #fcf8e3;
+	width: 200px;
+	margin: 6px 4px;
+	padding: 10px 5px 10px 15px;
+	border-radius: 4px;
+	color: #666!important;
+	
+}
+</style>
 {% endblock %}

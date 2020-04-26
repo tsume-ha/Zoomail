@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}初回登録 | Unplugged Message{% endblock %}
+
+{% block body %}
+<h3>初回登録</h3>
+<form method="post">
+	{% csrf_token %}
+	<div class="form-group">
+		{{ form.receive_email.label_tag }}
+		{{ form.receive_email }}
+		{% if form.receive_email.errors %}
+		<p class="small text-danger pl-2">{{ form.receive_email.errors.as_text }}</p>
+		{% endif %}
+		<p class="small text-secondary">
+			メーリスを受信するためのメールアドレスです。<br>
+			ここで登録されたメールアドレスに全回・回生メーリスが届きます。
+		</p>
+	</div>
+	<div class="form-group">
+		{{ form.send_mail.label_tag }}
+		{{ form.send_mail }}
+		{% if form.send_mail.errors %}
+		<p class="small text-danger pl-2">{{ form.send_mail.errors.as_text }}</p>
+		{% endif %}
+		<p class="small text-secondary">
+			メーリスを受け取りたくない場合はチェックを外してください。<br>
+			チェックが外されると、全回・回生メーリスともに送信されないようになりますが、<br>
+			このサイトにログインし、メーリスを確認することは出来ます。
+		</p>
+	</div>
+	<div class="form-group">
+		{{ form.last_name.label_tag }}
+		{{ form.last_name }}
+		{% if form.last_name.errors %}
+		<p class="small text-danger pl-2">{{ form.last_name.errors.as_text }}</p>
+		{% endif %}
+		<p class="small text-secondary">
+			必須です
+		</p>
+	</div>
+	<div class="form-group">
+		{{ form.first_name.label_tag }}
+		{{ form.first_name }}
+		{% if form.first_name.errors %}
+		<p class="small text-danger pl-2">{{ form.first_name.errors.as_text }}</p>
+		{% endif %}
+		<p class="small text-secondary">
+			必須です
+		</p>
+	</div>
+	<div class="form-group">
+		{{ form.furigana.label_tag }}
+		{{ form.furigana }}
+		{% if form.furigana.errors %}
+		<p class="small text-danger pl-2">{{ form.furigana.errors.as_text }}</p>
+		{% endif %}
+		<p class="small text-secondary">
+			必須です
+		</p>
+	</div>
+	<div class="form-group">
+		{{ form.nickname.label_tag }}
+		{{ form.nickname }}
+		{% if form.nickname.errors %}
+		<p class="small text-danger pl-2">{{ form.nickname.errors.as_text }}</p>
+		{% endif %}
+	</div>
+
+	<input type="submit" name="search" value="登録" class="btn btn-info mx-2 my-3">
+</form>
+{% endblock %}
