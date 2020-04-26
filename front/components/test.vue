@@ -8,7 +8,7 @@ module.exports = {
   name: "test",
   data: function() {
     return {
-      message: "hello",
+      message: "hello world!",
     };
   },
   computed: {

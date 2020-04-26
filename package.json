@@ -4,9 +4,8 @@
   "description": "Message board for Kyoto Univ. unplugged",
   "main": "index.js",
   "scripts": {
-    "dev": "node_modules/.bin/webpack --mode development",
-    "build": "node_modules/.bin/webpack --config webpack.config.js",
-    "watch": "node_modules/.bin/webpack --watch -d"
+    "dev": "./node_modules/.bin/webpack --config webpack.config.js --watch -d --mode development",
+    "build": "node_modules/.bin/webpack --config webpack.config.js --mode production"
   },
   "repository": {
     "type": "git",
@@ -25,6 +24,7 @@
     "style-loader": "^1.2.0",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.1",
+    "vue-template-compiler": "^2.6.11",
     "webpack": "^4.42.1",
     "webpack-bundle-tracker": "^0.4.3",
     "webpack-cli": "^3.3.11"

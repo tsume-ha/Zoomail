@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-	{% render_bundle 'main' %}
+	{% render_bundle 'main' 'css' %}
 	<title>{% block title %}{% endblock %}</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-grid.min.css' %}">
@@ -55,6 +55,9 @@
 	</div>
 </div>
 {% endif %}
+<div id="main">
+	<example-component></example-component>
+</div>
 
 <div id="container" class="container mt-3">
 	{% block body %}
@@ -63,4 +66,5 @@
 	{% endblock %}
 </div>
 </body>
+{% render_bundle 'main' 'js' attrs='defer' %}
 </html>

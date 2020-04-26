@@ -1,9 +1,9 @@
-window.Vue = require('vue');
-import Example from './****.vue'
+window.Vue = require("vue");
+import Example from "../../front/components/test.vue";
 
 var app = new Vue({
-    el: '#app',
-    data: {
-        message: 'Hello Vue!'
-    }
-})
+  el: "#main",
+  components: {
+    "example-component": Example,
+  }
+});

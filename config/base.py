@@ -204,7 +204,7 @@ SOCIAL_AUTH_PIPELINE = (
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'static/dist/', # must end with slash
+        'BUNDLE_DIR_NAME': 'dist/', # must end with slash
         'STATS_FILE': os.path.join(BASE_DIR, 'static/dist/webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
