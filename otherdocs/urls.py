@@ -4,5 +4,6 @@ from . import views
 app_name = 'otherdocs'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('download/<int:pk>', views.FileDownloadView, name='download'),
+    path('download/<int:pk>/', views.FileDownloadView, name='download'),
+    path('upload/', views.UploadView, name='upload'),
 ]

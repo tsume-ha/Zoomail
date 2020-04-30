@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}アップロード | その他・各種書類 | UnpluggedMessage{% endblock %}
+
+{% block extrastyle %}
+{% endblock %}
+
+{% block body %}
+<h3 class="my-1">アップロード | その他・各種書類</h3>
+
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{form}}
+	<input type="submit" name="UPLOAD" value="送信" class="btn btn-info mb-3">
+</form>
+
+<style>
+.helptext{
+	display: block;
+	position: relative;
+	color: #666;
+	font-size: 0.75rem;
+	margin: 0 1rem 2rem;
+	padding: 0;
+}
+</style>
+{% endblock %}

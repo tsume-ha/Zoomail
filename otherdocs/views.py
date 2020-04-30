@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
 from .models import Content
+from .forms import UploadForm
 from utils.commom import download
 
 @login_required()
@@ -25,3 +26,13 @@ def FileDownloadView(request, pk):
         mimetype='application/octet-stream'
     )
     return response
+
+
+@login_required()
+def UploadView(request):
+    form = UploadForm(request.POST or None, request.FILES or None)
+
+    params = {
+        'form': form
+    }
+    return render(request, 'otherdocs/upload.html', params)
