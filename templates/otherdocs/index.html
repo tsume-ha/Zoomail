@@ -13,7 +13,7 @@
 </p>
 
 <section class="list-group list-group-flush mb-3">
-	<a href="/private-media/others/notes_of_rehearsal_comment.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
+	<!-- <a href="/private-media/others/notes_of_rehearsal_comment.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
 		<h6 class="d-inline-block m-0">リハーサル コメントの注意点</h6>
 	</a>
 	<a href="/private-media/others/meibo_template_2019.pdf" target="_blank" class="list-group-item list-group-item-action p-2 mb-3">
@@ -42,7 +42,19 @@
 	</a>
 	<a href="/private-media/others/instructions_for_freshmen_2of2_set_equipment.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
 		<h6 class="d-inline-block m-0">新人ライブ説明会資料2(リハ・本番機材出し編)</h6>
+	</a> -->
+	{% for content in contents %}
+	<a href="{% url 'otherdocs:download' content.pk %}" target="_blank" class="list-group-item list-group-item-action p-2">
+		<h6 class="d-inline-block m-0">{{content.title}}</h6>
+		{% if content.detail %}
+		<span class="small m-0 pl-2 text-dark">{{content.detail}}</span>
+		{% endif %}
+		<span class="small d-inline-block float-right m-0 pr-4 text-dark">
+			更新：{{content.updated_at | date:"Y/m/d H:i"}}
+		</span>
 	</a>
+	{% endfor %}
 </section>
+
 
 {% endblock %}

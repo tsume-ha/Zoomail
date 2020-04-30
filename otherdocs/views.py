@@ -1,13 +1,27 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+
+from .models import Content
+from utils.commom import download
 
 @login_required()
 def index(request):
-# その他資料はすべてHTMLに書き出します。
-# /templates/otherdocs/index.html にどんどん書いていきましょう
-# ファイルは /private_media/others/ 以下に「英数字ファイル名」で、
-# FTPクライアントや、SSHクライアントソフトでサーバーに直接アップロードしてください。
-# (FFFTPとかでいいです)
+    contents = Content.objects.all().order_by(
+        'index', 'updated_at'
+    ).reverse()
     params = {
+        'contents': contents
     }
     return render(request, 'otherdocs/index.html', params)
+
+@login_required()
+def FileDownloadView(request, pk):
+    content = get_object_or_404(Content, pk=pk)
+    filename = content.title + content.extension()
+    response = download(
+        filepath=content.file.path,
+        filename=filename,
+        mimetype='application/octet-stream'
+    )
+    return response

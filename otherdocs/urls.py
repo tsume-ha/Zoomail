@@ -4,4 +4,5 @@ from . import views
 app_name = 'otherdocs'
 urlpatterns = [
     path('', views.index, name='index'),
+    path('download/<int:pk>', views.FileDownloadView, name='download'),
 ]
