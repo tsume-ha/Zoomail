@@ -1,10 +1,13 @@
+import datetime
+
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from .models import Content
 from .forms import UploadForm
 from utils.commom import download
+from config.permissions import OtherDocsPermission
 
 @login_required()
 def index(request):
@@ -12,7 +15,8 @@ def index(request):
         'index', 'updated_at'
     ).reverse()
     params = {
-        'contents': contents
+        'contents': contents,
+        'can_edit': OtherDocsPermission(request.user)
     }
     return render(request, 'otherdocs/index.html', params)
 
@@ -30,8 +34,20 @@ def FileDownloadView(request, pk):
 
 @login_required()
 def UploadView(request):
+    now_user = request.user
+    if not OtherDocsPermission(now_user):
+        return redirect(to='otherdocs:index')
     form = UploadForm(request.POST or None, request.FILES or None)
-
+    if (request.method == 'POST'):
+        if form.is_valid():
+            now_time = datetime.datetime.now()
+            content = form.save(commit=False)
+            content.created_by = now_user
+            content.updated_by = now_user
+            content.created_at = now_time
+            content.updated_at = now_time
+            content.save()
+            return redirect(to='otherdocs:index')
     params = {
         'form': form
     }

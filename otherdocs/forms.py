@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Content
 
+
 class UploadForm(forms.ModelForm):
     class Meta:
         model = Content
@@ -12,6 +13,8 @@ class UploadForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control d-inline-block mb-2"
         self.fields['file'].widget.attrs["class"] = "px-2 pt-0 pb-3 d-block"
+        self.fields['title'].widget.attrs["placeholder"] = "セットリスト テンプレート"
+
 
     def clean_index(self):
         index = self.cleaned_data.get('index')
@@ -23,7 +26,3 @@ class UploadForm(forms.ModelForm):
             raise forms.ValidationError('設定値が大きすぎます。設定可能な数値は-30000から30000までです。')
         return index
 
-    # def clean_file(self):
-    #     file = self.cleaned_data.get('file')
-    #     if file.size > 30*1024*1024:
-    #         raise forms.ValidationError('ファイルサイズが大きすぎます。アップロードできるのは最大30MBまでです')

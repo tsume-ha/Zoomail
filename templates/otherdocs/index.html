@@ -11,6 +11,9 @@
 <p class="py-2">
 	その他のファイルはこちらです。
 </p>
+{% if can_edit %}
+<a href="{% url 'otherdocs:upload' %}" class="btn btn-warning my-3">アップロードする</a>
+{% endif %}
 
 <section class="list-group list-group-flush mb-3">
 	<!-- <a href="/private-media/others/notes_of_rehearsal_comment.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
@@ -43,6 +46,8 @@
 	<a href="/private-media/others/instructions_for_freshmen_2of2_set_equipment.pdf" target="_blank" class="list-group-item list-group-item-action p-2">
 		<h6 class="d-inline-block m-0">新人ライブ説明会資料2(リハ・本番機材出し編)</h6>
 	</a> -->
+
+
 	{% for content in contents %}
 	<a href="{% url 'otherdocs:download' content.pk %}" target="_blank" class="list-group-item list-group-item-action p-2">
 		<h6 class="d-inline-block m-0">{{content.title}}</h6>
