@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('download/<int:pk>/', views.FileDownloadView, name='download'),
     path('upload/', views.UploadView, name='upload'),
+    path('edit/<int:pk>/', views.EditView, name='edit'),
 ]

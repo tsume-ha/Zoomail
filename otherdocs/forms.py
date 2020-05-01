@@ -26,3 +26,13 @@ class UploadForm(forms.ModelForm):
             raise forms.ValidationError('設定値が大きすぎます。設定可能な数値は-30000から30000までです。')
         return index
 
+
+class EditForm(UploadForm):
+    delete = forms.BooleanField(
+        initial=False,
+        required=False
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['delete'].widget.attrs["class"] = ""

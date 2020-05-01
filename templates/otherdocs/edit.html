@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}編集 | その他・各種書類 | UnpluggedMessage{% endblock %}
+
+{% block extrastyle %}
+{% endblock %}
+
+{% block body %}
+<h3 class="mt-1 mb-4">編集 | その他・各種書類</h3>
+
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+
+	{{form.title.label_tag}}
+	{{form.title}}
+	{{form.title.errors}}
+
+	{{form.file.label_tag}}
+	{{form.file}}
+	{{form.file.errors}}
+
+	{{form.detail.label_tag}}
+	{{form.detail}}
+	{{form.detail.errors}}
+
+	{{form.index.label_tag}}
+	{{form.index}}
+	{{form.index.errors}}
+	
+	<div class="alert alert-warning my-3">
+		<span>
+			削除するにはここにチェックを入れて「変更」ボタンを押してください<br>
+			更新は行われず、削除されます
+		</span>
+		{{form.delete}}
+	</div>
+
+	<a href="{% url 'otherdocs:index' %}" class="btn btn-secondary m-3">戻る</a>
+	<input type="submit" name="UPLOAD" value="変更" class="btn btn-info my-3">
+</form>
+
+<style>
+label{
+	display: block;
+}
+.helptext{
+	display: block;
+	position: relative;
+	color: #666;
+	font-size: 0.75rem;
+	margin: 0 1rem 2rem;
+	padding: 0;
+}
+</style>
+{% endblock %}

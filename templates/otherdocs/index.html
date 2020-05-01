@@ -58,6 +58,11 @@
 			更新：{{content.updated_at | date:"Y/m/d H:i"}}
 		</span>
 	</a>
+	{% if can_edit %}
+	<a href="{% url 'otherdocs:edit' content.pk %}" class="list-group-item list-group-item-action text-primary px-2 pt-0 pb-2">
+		{{content.title}} を編集する
+	</a>
+	{% endif %}
 	{% endfor %}
 </section>
 

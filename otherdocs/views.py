@@ -3,9 +3,10 @@ import datetime
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 
 from .models import Content
-from .forms import UploadForm
+from .forms import UploadForm, EditForm
 from utils.commom import download
 from config.permissions import OtherDocsPermission
 
@@ -41,14 +42,39 @@ def UploadView(request):
     if (request.method == 'POST'):
         if form.is_valid():
             now_time = datetime.datetime.now()
-            content = form.save(commit=False)
-            content.created_by = now_user
-            content.updated_by = now_user
-            content.created_at = now_time
-            content.updated_at = now_time
-            content.save()
+            context = form.save(commit=False)
+            context.created_by = now_user
+            context.updated_by = now_user
+            context.created_at = now_time
+            context.updated_at = now_time
+            context.save()
             return redirect(to='otherdocs:index')
     params = {
         'form': form
     }
     return render(request, 'otherdocs/upload.html', params)
+
+
+@login_required()
+def EditView(request, pk):
+    now_user = request.user
+    if not OtherDocsPermission(now_user):
+        return redirect(to='otherdocs:index')
+    content = get_object_or_404(Content, pk=pk)
+    form = EditForm(request.POST or None, request.FILES or None, instance=content)
+    if (request.method == 'POST'):
+        if form.is_valid():
+            if form.cleaned_data['delete']:
+                content.delete()
+                messages.success(request, content.title + 'を削除しました')
+                return redirect(to='otherdocs:index')
+            now_time = datetime.datetime.now()
+            context = form.save(commit=False)
+            context.updated_by = now_user
+            context.updated_at = now_time
+            context.save()
+            return redirect(to='otherdocs:index')
+    params = {
+        'form': form
+    }
+    return render(request, 'otherdocs/edit.html', params)
