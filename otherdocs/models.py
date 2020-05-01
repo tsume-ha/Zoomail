@@ -1,4 +1,5 @@
 import os
+import datetime
 
 from django.db import models
 from django.utils import timezone
@@ -8,10 +9,15 @@ from private_storage.fields import PrivateFileField
 from members.models import User
 
 
+def custom_upload_to(instance, filename):
+    path = 'others/' + datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+    extension = os.path.splitext(filename)[-1]
+    return path + extension
+
 class Content(models.Model):
     title = models.CharField(max_length=50, verbose_name='タイトル')
     file = PrivateFileField(
-        upload_to='others/',
+        upload_to=custom_upload_to,
         max_file_size=30*1024*1024,
         verbose_name='ファイル'
     )
