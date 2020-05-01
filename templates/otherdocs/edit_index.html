@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}編集 | その他・各種書類 | UnpluggedMessage{% endblock %}
+
+{% block extrastyle %}
+{% endblock %}
+
+{% block body %}
+<h3 class="my-1">編集 | その他・各種書類</h3>
+<p class="py-2">
+	アップロードされたファイルの編集を行います。<br>
+	編集したいファイルを選んでください。
+</p>
+{% if can_edit %}
+<a href="{% url 'otherdocs:upload' %}" class="btn btn-warning my-3">アップロードする</a>
+{% endif %}
+
+<section class="list-group list-group-flush mb-3">
+	{% for content in contents %}
+	<a href="{% url 'otherdocs:edit' content.pk %}" class="list-group-item list-group-item-action list-group-item-warning p-2">
+		<h6 class="d-inline-block m-0">{{content.title}} を編集する</h6>
+		{% if content.detail %}
+		<span class="small m-0 pl-2 text-dark">{{content.detail}}</span>
+		{% endif %}
+		<span class="small d-inline-block float-right m-0 pr-4 text-dark">
+			更新：{{content.updated_at | date:"Y/m/d H:i"}}
+		</span>
+	</a>
+	{% endfor %}
+</section>
+<a href="{% url 'otherdocs:index' %}" class="btn btn-secondary m-3">戻る</a>
+
+{% endblock %}

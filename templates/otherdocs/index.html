@@ -13,6 +13,7 @@
 </p>
 {% if can_edit %}
 <a href="{% url 'otherdocs:upload' %}" class="btn btn-warning my-3">アップロードする</a>
+<a href="{% url 'otherdocs:edit_index' %}" class="btn btn-warning m-3">編集する</a>
 {% endif %}
 
 <section class="list-group list-group-flush mb-3">
@@ -58,11 +59,6 @@
 			更新：{{content.updated_at | date:"Y/m/d H:i"}}
 		</span>
 	</a>
-	{% if can_edit %}
-	<a href="{% url 'otherdocs:edit' content.pk %}" class="list-group-item list-group-item-action text-primary px-2 pt-0 pb-2">
-		{{content.title}} を編集する
-	</a>
-	{% endif %}
 	{% endfor %}
 </section>
 
