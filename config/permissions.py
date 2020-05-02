@@ -28,5 +28,4 @@ def RecordingPermisson(user):
 
 # other documents
 def OtherDocsPermission(user):
-    return user.has_perm('otherdocs.add_content') or\
-           user.has_perm('otherdocs.change_content')
+    return user.has_perm('otherdocs.view_content')
