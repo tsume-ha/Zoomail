@@ -14,45 +14,40 @@
 	
 </p>
 <div class="row">
-	<section class="col-sm-6 col-lg-4">
-		<h4><a href="{% url 'howto:user_setting' %}">ユーザー情報の設定</a></h4>
-		<ul>
-			<li><a href="{% url 'howto:user_setting' %}">名前、ニックネームの設定</a></li>
-			<li><a href="{% url 'howto:user_setting' %}#2">受信用メールアドレスの設定</a></li>
-		</ul>
+	<section class="list-group list-group-flush col-sm-6 col-lg-4 my-3">
+	<a href="{% url 'howto:user_setting' %}" class="list-group-item">ユーザー情報の設定</a></li>
+	<a href="{% url 'howto:user_setting' %}" class="list-group-item">名前、ニックネームの設定</a></li>
+	<a href="{% url 'howto:user_setting' %}#2" class="list-group-item">受信用メールアドレスの設定</a></li>
 	</section>
-	<section class="col-sm-6 col-lg-4">
-		<h4>メーリスを読む</h4>
-		<ul>
-			<li><a>全回、回生の表示について</a></li>
-			<li><a>検索機能を使う</a></li>
-			<li><a>既読の機能について</a></li>
-			<li><a>ブックマーク機能について</a></li>
-		</ul>
+	<section class="list-group list-group-flush col-sm-6 col-lg-4 my-3">
+	<a href="{% url 'howto:user_setting' %}" class="list-group-item">メーリスを読む</a></li>
+		<a class="list-group-item disabled">全回、回生の表示について</a></li>
+		<a class="list-group-item disabled">検索機能を使う</a></li>
+		<a class="list-group-item disabled">既読の機能について</a></li>
+		<a class="list-group-item disabled">ブックマーク機能について</a></li>
 	</section>
-	<section class="col-sm-6 col-lg-4">
-		<h4><a href="{% url 'howto:send_message' %}">メーリスを送信する</a></h4>
-		<ul>
-			<li><a href="{% url 'howto:send_message' %}">送信するにはどこから？</a></li>
-			<li><a href="{% url 'howto:send_message' %}#2">件名、本文を入力する</a></li>
-			<li><a href="{% url 'howto:send_message' %}#3">宛先を選択する</a></li>
-			<li><a href="{% url 'howto:send_message' %}#4">送信者を選択する（代理送信機能を使う）</a></li>
-			<li><a>ファイルを添付する</a></li>
-			<li><a>送信を行うときの注意点</a></li>
-			<li><a>送信後に編集する</a></li>
-		</ul>
+	<section class="list-group list-group-flush col-sm-6 col-lg-4 my-3">
+		<a href="{% url 'howto:send_message' %}" class="list-group-item">メーリスを送信する</a></li>
+		<a href="{% url 'howto:send_message' %}" class="list-group-item">送信するにはどこから？</a></li>
+		<a href="{% url 'howto:send_message' %}#2" class="list-group-item">件名、本文を入力する</a></li>
+		<a href="{% url 'howto:send_message' %}#3" class="list-group-item">宛先を選択する</a></li>
+		<a href="{% url 'howto:send_message' %}#4" class="list-group-item">送信者を選択する（代理送信機能を使う）</a></li>
+		<a class="list-group-item disabled">ファイルを添付する</a></li>
+		<a class="list-group-item disabled">送信を行うときの注意点</a></li>
+		<a class="list-group-item disabled">送信後に編集する</a></li>
 	</section>
-	<section class="col-sm-6 col-lg-4">
-		<h4>音源を聞く</h4>
-		<ul>
-			<li><a>音源の一覧画面</a></li>
-			<li><a>プレーヤーの機能</a></li>
-		</ul>
+	<section class="list-group list-group-flush col-sm-6 col-lg-4 my-3">
+		<a class="list-group-item disabled">音源を聞く</a></li>
+		<a class="list-group-item disabled">音源の一覧画面</a></li>
+		<a class="list-group-item disabled">プレーヤーの機能</a></li>
 	</section>
 </div>
 
 
 <style type="text/css">
-	
+section a:first-child{
+	font-size: 1.25rem;
+	background: #eee!important;
+}
 </style>
 {% endblock %}
