@@ -20,3 +20,6 @@ scripts/emails22/*
 
 static/special/*
 .vscode/*
+
+node_modules/*
+yarn-error.log
