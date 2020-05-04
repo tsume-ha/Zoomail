@@ -15,6 +15,11 @@
 </p>
 <div class="row">
 	<section class="list-group list-group-flush col-sm-6 col-lg-4 my-3">
+		<a href="{% url 'howto:introduction' %}" class="list-group-item">はじめに（新入生向け）</a></li>
+		<a href="{% url 'howto:introduction' %}" class="list-group-item">このサイトについて</a></li>
+		<a href="{% url 'howto:introduction' %}#2" class="list-group-item">ログインの方法</a></li>
+	</section>
+	<section class="list-group list-group-flush col-sm-6 col-lg-4 my-3">
 	<a href="{% url 'howto:user_setting' %}" class="list-group-item">ユーザー情報の設定</a></li>
 	<a href="{% url 'howto:user_setting' %}" class="list-group-item">名前、ニックネームの設定</a></li>
 	<a href="{% url 'howto:user_setting' %}#2" class="list-group-item">受信用メールアドレスの設定</a></li>
@@ -47,7 +52,9 @@
 <style type="text/css">
 section a:first-child{
 	font-size: 1.25rem;
-	background: #eee!important;
+	border-top: none;
+	border-left: 0.5rem solid #eee!important;
+	padding-left: 0.75rem;
 }
 </style>
 {% endblock %}
