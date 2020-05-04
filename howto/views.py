@@ -16,3 +16,7 @@ def send_message(request):
 # @login_required()
 def introduction(request):
     return render(request, 'howto/introduction.html')
+
+# @login_required()
+def login(request):
+    return render(request, 'howto/login.html')
