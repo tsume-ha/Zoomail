@@ -37,61 +37,43 @@
 <p class="dev">
     2019年10月まではfreemlというメーリングリストサービスを利用していました。<br>
     freemlが2019年6月3日にサービス終了予告発表→12月2日に終了したため、このサイトを立ち上げました。<br>
+</p>
+<p class="dev">
     メーリス以外の役割は2019年10月まで公式HPが担っていました。<br>
     当時の公式HPにはパスワードが必要な会員のみページがあり、そこに掲載されていました。<br>
     2019年10月に公式HPがリニューアルし、会員のみページは無くなりました。<br>
 </p>
-<h4 id="2">ログインについて</h4>
+<h4 id="2">LiveLogアカウントでの初回ログイン</h4>
 <p>
-    UnpluggedMessageの中身を見るには<b>ログインが必須</b>です。
-    ログインしていないと何も見れません。<br>
-    ログインには以下の2つの方法を用意しています。
-    <ul>
-        <li>LiveLogアカウントでのログイン（おすすめ）</li>
-        <li>Googleアカウントでのログイン</li>
-    </ul>
-</p>
-<p class="dev">
-    Emailとパスワードを登録することによるログインは採用していません。<br>
-    パスワードなどのセキュリティーが求められる管理をしたくないからです笑<br>
-    LiveLogも最近Auth0というIDaaSに移行しました。<br>
+    UnpluggedMessageの中身を見るには<b>ログインが必須</b>です。<br>
+    ログインしていないと何も見ることはできません。<br>
+    ここではLiveLogアカウントを用いた初回ログイン（サインアップ）の方法を紹介します。
 </p>
 <div class="border-left-dotted mt-3 mb-4">
-    <h5 class="mt-2 mb-4">LiveLogアカウントでのサインアップ（初回ログイン）おすすめ</h5>
+    <h5 class="mt-2 mb-4">LiveLogアカウントでのサインアップ（初回ログイン）</h5>
     <ol class="process">
         <li><a href="https://message.ku-unplugged.net" target="_blank">トップページ</a>から「LiveLogでログイン」をクリックします。</li>
         <li>表示された画面に、自分のメールアドレス、パスワードを入力します。</li>
-        <li>UnpluggedMessageの「初回登録」ページに戻ってきます。ここで氏名、ふりがななどの必要事項を記入してください。</li>
+        <li>
+            UnpluggedMessageの「初回登録」ページに戻ってきます。ここで<b>氏名、ふりがななどの必要事項</b>を記入してください。<br>
+            受信用メールアドレスとは、メーリスを受け取るためのメールアドレスです。これはLiveLogに登録したメールアドレスと<b>同じでなくてもかまいません</b>。
+            自分が受け取りやすいメールアドレスを設定してください。
+        </li>
         <li>初回登録を完了するとサインアップは終了です。</li>
     </ol>
 </div>
-<div class="border-left-dotted mt-3 mb-4">
-    <h5 class="mt-2 mb-4">Googleアカウントでのサインアップ（初回ログイン）</h5>
-    <ol class="process">
-        <li>先にメーリスの管理者にGoogleアカウントを申請してUnpluggedMessageに登録してもらいます。<br>
-        申請時に必要な内容は氏名、ふりがな、Googleアカウント名（=Gmailアドレス）、入部年度です。</li>
-        <li>UnpluggedMessageへの登録が完了する（これは管理者が行います）と申請したGoogleアカウントのGmailアドレスに登録完了メールが届きます。</li>
-        <li>メールが届いてから、<a href="https://message.ku-unplugged.net" target="_blank">トップページ</a>の「Sign in with Google」をクリックします。</li>
-        <li>登録したGoogleアカウントでログインできるようになります。</li>
-    </ol>
-</div>
-
-<hr>
-
-<p>
-    サインアップが完了すると、<b>次回から登録した方法でログイン</b>できるようになります。
-</p>
-<p>
-    また、もう一方のログイン情報を登録すると、LiveLogとGoogleのどちらでもログインできるようになります。<br>
-    詳しくはこちらをご覧ください。<br>
-    Googleのみ登録している人はLiveLogも登録しておくことをお勧めします。<br>
-</p>
 <p class="dev">
-    LiveLogアカウントでのログインは2020年4月に実装した新機能です。
+    UnpluggedMessageではサインアップ時、LiveLogからメールアドレス、入部年度の情報の提供を受けます。
+</p>
+
+<p>
+    サインアップが完了すると、次回からは登録に用いたLiveLogアカウントでログインできるようになります。<br>
+    おつかれさまでした。
 </p>
 <hr>
-<!-- <div class="row mb-5">
-    >><a href="{% url 'howto:send_message' %}"> next：メーリスを送信する </a>>>
-</div> -->
+<p>
+    <a href="{% url 'howto:index' %}" class="mb-5">使い方・トップページ</a>に戻る
+</p>
+
 
 {% endblock %}
