@@ -1,5 +1,5 @@
 from django.shortcuts import render
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 
 # @login_required()
 def index(request):
@@ -20,3 +20,7 @@ def introduction(request):
 # @login_required()
 def login(request):
     return render(request, 'howto/login.html')
+
+@login_required()
+def otherdocs(request):
+    return render(request, 'howto/otherdocs.html')
