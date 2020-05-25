@@ -40,5 +40,8 @@ social-auth-core==3.2.0
 sqlparse==0.3.0
 typed-ast==1.4.1
 urllib3==1.25.3
+<<<<<<< HEAD
 django-webpack-loader==0.7.0
+=======
 wrapt==1.11.2
+>>>>>>> master

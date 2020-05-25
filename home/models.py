@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from members.models import User
+
 
 def ContentLog(LIST_NUM=3):
     from django.urls import reverse

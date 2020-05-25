@@ -1,7 +1,9 @@
 from django.test import TestCase, Client
-from members.models import User
+from django.urls import reverse
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ObjectDoesNotExist
+
+from members.models import User
 
 
 def User_LogOUT(self):
@@ -9,7 +11,13 @@ def User_LogOUT(self):
     self.client.logout()
 
 def Make_User(self,year=2019):
-    self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year)
+    self.user = User.objects.create_user(
+        email=str(year) + 'mail@gmail.com',
+        year=year)
+    self.user.last_name = '京大'
+    self.user.first_name = '太郎'
+    self.user.furigana = 'きょうだいたろう'
+    self.user.save()
     return self.user
 
 def User_LogIN_and_Get_a_Permission(self,year=2019):
@@ -58,13 +66,13 @@ class MemberUpdateFormTest(TestCase):
         User_LogIN(self)
         response = self.client.get('/members/update/')
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'members/mypage_UserUpdate.html')
+        self.assertTemplateUsed(response, 'members/user_update.html')
 
     def test_members_update_POST_logOUT(self):
         data = {
-            'last_name': '京大',
-            'first_name': '太郎',
-            'furigana': 'きょうだいたろう',
+            'last_name': '京大変更後',
+            'first_name': '太郎変更後',
+            'furigana': 'きょうだいたろうへんこうご',
             'nickname': 'タロー',
         }
         User_LogOUT(self)
@@ -84,9 +92,9 @@ class MemberUpdateFormTest(TestCase):
 
     def test_members_update_POST_logIN(self):
         data = {
-            'last_name': '京大',
-            'first_name': '太郎',
-            'furigana': 'きょうだいたろう',
+            'last_name': '京大変更後',
+            'first_name': '太郎変更後',
+            'furigana': 'きょうだいたろうへんこうご',
             'nickname': 'タロー',
         }
         self.user = User_LogIN(self)
@@ -160,14 +168,42 @@ class MemberRegisterFormTest(TestCase):
         self.assertTrue(created_user.nickname == '')
 
 
-class MemberRegisterCSVFileTest(TestCase):
+class EmailConfirmViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Make_User(cls)
+    
+    def test_get_emailconfirm_logout(self):
+        User_LogOUT(self)
+        response = self.client.get(reverse('members:email_confirm'))
+        self.assertEqual(response.status_code, 302)
+        url_redial_to = response.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin/login.html')
 
-        def test_members_Register_CSV_Register_logOUT(self):
-            pass
-        def test_members_Register_CSV_Register_NoSuperuser_logIN(self):
-            pass
-        def test_members_Register_CSV_Register_Superuser_LogIN(self):
-            pass
+    def test_get_emailconfirm_logIN(self):
+        User_LogIN(self)
+        response = self.client.get(reverse('members:email_confirm'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'members/email_confirm.html')
+
+class OauthViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User(cls)
+    
+    def test_get_oauth_logout(self):
+        User_LogOUT(self)
+        response = self.client.get(reverse('members:oauth'))
+        self.assertEqual(response.status_code, 302)
+        url_redial_to = response.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin/login.html')
+
+    def test_get_oauth_logIN(self):
+        User_LogIN(self)
+        response = self.client.get(reverse('members:oauth'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'members/oauth_register.html')

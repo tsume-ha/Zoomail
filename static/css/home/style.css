@@ -14,9 +14,19 @@ a#G-login{
 	text-decoration: none;
 }
 a#G-login.hover{
-	text-decoration: underline;
+	text-decoration: none;
 }
-
+a.livelogin{
+	display: inline-block;
+	position: relative;
+	background-color: #fcf8e3;
+	width: 200px;
+	margin: 6px 4px;
+	padding: 10px 5px 10px 15px;
+	border-radius: 4px;
+	color: #666!important;
+	
+}
 .varsion{
 	background-color: #d6eef5;
 	position: relative;

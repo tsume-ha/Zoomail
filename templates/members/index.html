@@ -15,16 +15,17 @@
 	<h4 class="d-inline-block">({{ user.nickname }})</h4>
 	{% endif %}
 </section>
-<section id="menu" class="float-md-left col-md-4 col-lg-3">
-	<a href="{% url 'members:update' %}" class="btn btn-info m-2">登録情報確認・変更</a>
-	<a href="{% url 'members:email_confirm' %}" class="btn btn-success m-2">メール受信テスト</a>
+<section id="menu" class="float-md-left col-md-4 col-lg-3 list-group pt-3">
+	<a href="{% url 'members:update' %}" class="list-group-item list-group-item-action list-group-item-info">登録情報確認・変更</a>
+	<a href="{% url 'members:email_confirm' %}" class="list-group-item list-group-item-action list-group-item-info">メール受信テスト</a>
+	<a href="{% url 'members:oauth' %}" class="list-group-item list-group-item-action list-group-item-info">LiveLog・Google認証</a>
 	{% if register_allowed %}
-	<a href="{% url 'members:register_form' %}" class="btn btn-warning m-2">ユーザー登録へ</a>
+	<a href="{% url 'members:register_form' %}" class="list-group-item list-group-item-action list-group-item-warning">ユーザー登録へ</a>
 	{% endif %}
 	{% if adminenter_allowed %}
-	<a href="/admin/" class="btn btn-danger m-2">管理者管理ページへ</a>
+	<a href="/admin/" class="list-group-item list-group-item-action list-group-item-danger">管理者管理ページへ</a>
 	{% endif %}
-	<a href="{% url 'logout' %}" class="btn btn-outline-secondary m-2">ログアウト</a>
+	<a href="{% url 'logout' %}" class="list-group-item list-group-item-action list-group-item-outline-secondary">ログアウト</a>
 </section>
 <section id="midoku" class="mypage_message float-md-right col-md-8 col-lg-9 py-3">
 	<h5 class="d-inline-block">未読メッセージ</h5>

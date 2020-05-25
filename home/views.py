@@ -1,10 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth import logout
-from django.contrib import messages
-from django.shortcuts import redirect, get_object_or_404
+from django.conf import settings
+from urllib.parse import urlencode
+
 from .models import SpecialPage, ContentLog, Announcement
-import os
+
 
 def index(request):
     announcements = Announcement.objects.order_by('-created_at')[:5]
@@ -24,8 +25,10 @@ def login(request):
 
 def logoutview(request):
     logout(request)
-    messages.success(request,"ログアウトしました。")
-    return redirect(to='/')
+    return_to = urlencode({'returnTo': request.build_absolute_uri('/')})
+    logout_url = 'https://%s/v2/logout?client_id=%s&%s' % \
+                 (settings.SOCIAL_AUTH_AUTH0_DOMAIN, settings.SOCIAL_AUTH_AUTH0_KEY, return_to)
+    return HttpResponseRedirect(logout_url)
 
 def special(request, url):
     # keyは平文なので安全性は確保できないので注意

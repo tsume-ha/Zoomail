@@ -10,7 +10,13 @@ def User_LogOUT(self):
     self.client.logout()
 
 def Make_User(self,year=2019):
-    self.user = User.objects.create_user(email=str(year) + 'mail@gmail.com', year=year)
+    self.user = User.objects.create_user(
+        email=str(year) + 'mail@gmail.com',
+        year=year)
+    self.user.last_name = '京大'
+    self.user.first_name = '太郎'
+    self.user.furigana = 'きょうだいたろう'
+    self.user.save()
     return self.user
 
 def User_LogIN_and_Get_a_Permission(self, groupname, year=2019):

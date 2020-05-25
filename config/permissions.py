@@ -26,3 +26,6 @@ def RecordingPermisson(user):
            user.has_perm('player.add_song')
 
 
+# other documents
+def OtherDocsPermission(user):
+    return user.has_perm('otherdocs.view_content')
