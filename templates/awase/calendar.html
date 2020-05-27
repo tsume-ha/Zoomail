@@ -59,7 +59,7 @@
 </section>
 
 <section id="menu" class="col-xs-12 col-sm-8 col-md-6 col-ld-6">
-    <a href="input/" class="enter text-center text-sm-left">入力する</a>
+    <a href="{% url 'awase:input' calendar.pk %}" class="enter text-center text-sm-left">入力する</a>
     <a href="javascript:menu_sw()" id="menu_sw" class="text-center text-sm-left">設定変更</a>
     <div id="submenu">
         <a href="{% url 'awase:calendar_update' calendar.pk %}" class="text-center text-sm-left">カレンダーの名前、説明文の変更</a>
