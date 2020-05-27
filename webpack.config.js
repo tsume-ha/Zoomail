@@ -13,14 +13,13 @@ module.exports = {
   },
   output: {
     path: path.resolve("./static/dist/"), // 出力
-    // filename: "[name]-[hash].js",
-    filename: "[name].js",
+    filename: "[name]-[hash].js",
   },
-  // resolve: {
-  //   alias: {
-  //     vue: "vue/dist/vue.js",
-  //   },
-  // },
+  resolve: {
+    alias: {
+      vue: "vue/dist/vue.js",
+    },
+  },
   module: {
     rules: [
       {
