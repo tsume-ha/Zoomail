@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load getsongdetail %}
+{% load webpack_static from webpack_loader %}
 
 {% block title %}{{ calendar.title }} に回答 | Unplugged Message{% endblock %}
 {% block extrastyle %}

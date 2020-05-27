@@ -1,7 +1,7 @@
 <template>
   <div class="form-one-row">
     <div class="form-one-check">
-      <span>[[hour]]:00</span>
+      <span>{{hour}}:00</span>
       <button
         type="button"
         class="onetime false"
@@ -16,7 +16,7 @@
         >○</button>
     </div>
     <div class="form-one-check">
-      <span>[[hour]]:30</span>
+      <span>{{hour}}:30</span>
       <button
         type="button"
         class="onetime false"
@@ -58,3 +58,76 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* inputのcss */
+.form-group *{
+  letter-spacing:normal;
+}
+.form-one-check,
+.form-oneday-all{
+  display: inline-block;
+  padding: 0.25rem 0;
+  margin: 0;
+  width: 50%;
+  height: 42px;
+  border: none;
+  box-sizing: inherit;
+}
+.form-one-row:nth-of-type(2n+1){
+  background-color: #f3f3f3;
+}
+.form-oneday-all{
+  width: 100%;
+  background-color: #ffffcc;
+  border-top: 1px solid #abcdef;
+  border-bottom: 1px solid #abcdef;
+  padding: 0.5rem 0;
+  height: auto;
+}
+.form-one-check span{
+  display: inline-block;
+  width: 2.5rem;
+  margin: 0 4px 0 8px;
+  padding: 0;
+}
+.form-one-row{
+  display: flex;
+}
+.dayall,
+.onetime{
+  display: inline-block;
+  position: relative;
+  width: 24%;
+  max-width: 5rem;
+  text-align: center;
+  padding: 0rem;
+  margin: 0;
+  border-radius: 0.6rem;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  background: transparent;
+  }
+.dayall.true,
+.onetime.true{
+  border: 1px solid transparent;
+  color: #4cd964;
+}
+.dayall.true,
+.onetime.true.checked{
+  background-color: #4cd964;
+  color: #fff;
+}
+
+.dayall.false,
+.onetime.false{
+  border: 1px solid transparent;
+  color: #ff3b30;
+}
+.dayall.false,
+.onetime.false.checked{
+  background-color: #ff3b30;
+  color: #fff;
+}
+
+</style>

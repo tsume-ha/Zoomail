@@ -9,7 +9,7 @@
         is-expanded
         >
           <template slot='header-title' slot-scope='props'>
-            [[props.yearLabel]]年[[props.monthLabel]]
+            {{props.yearLabel}}年{{props.monthLabel}}
           </template>
           <template slot='day-content' slot-scope='props'>
             <custom-day-content
@@ -23,10 +23,10 @@
       </div>
     </nav> -->
     <button type="button" @click.stop="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">
-      <img src="{% static 'img/calendar-menu.png' %}" width="32" height="32" alt="Open Date Picker" />
+      <img src="{% webpack_static 'img/calendar-menu.png' %}" width="32" height="32" alt="Open Date Picker" />
     </button>
     <form id="input-form">
-      <h5 :class="{'active': isMenuOpen}">[[YYYYMMDDToTitle]]</h5>
+      <h5 :class="{'active': isMenuOpen}">{{YYYYMMDDToTitle}}</h5>
       <div class="d-inline-block my-2">
         <button type="button" @click="moveDay(-1)" class="btn btn-info mx-1">前の日に</button>
         <button type="button" @click="moveDay(1)" class="btn btn-info">次の日に</button>
@@ -48,7 +48,7 @@
       <p class="small mx-2">
         サーバーとの通信が自動で行われるようになり、送信ボタンが無くなりました。
       </p>
-      <a href="{% url 'awase:calendar' calendar.pk %}" class="btn btn-secondary m-2">戻る</a>
+      <a href="../" class="btn btn-secondary m-2">戻る</a>
     </form>
     <div v-if="isInAccess" class="small text-secondary is-in-access">サーバーと通信中...</div>
     </template>
@@ -62,7 +62,6 @@
 <script>
 import customDayContent from './input-custom-day-content.vue';
 import forms from './input-forms.vue';
-import oneRow from './input-one-row.vue';
 
 export default {
   props: {
@@ -71,7 +70,6 @@ export default {
   components: {
     "custom-day-content": customDayContent,
     "input-forms": forms,
-    "input-one-row": oneRow,
   },
   data: function() {
     return {
@@ -299,86 +297,6 @@ div#calendar-wrap{
   background-color: #adddeb;
 }
 
-
-/* inputのcss */
-#input-form{
-  z-index: 5;
-}
-#input-form h5{
-  margin: 16px 0 8px 4rem;
-  height: 24px;
-  line-height: 24px;
-}
-.form-group *{
-  letter-spacing:normal;
-}
-.form-one-check,
-.form-oneday-all{
-  display: inline-block;
-  padding: 0.25rem 0;
-  margin: 0;
-  width: 50%;
-  height: 42px;
-  border: none;
-  box-sizing: inherit;
-}
-.form-one-row:nth-of-type(2n+1){
-  background-color: #f3f3f3;
-}
-.form-oneday-all{
-  width: 100%;
-  background-color: #ffffcc;
-  border-top: 1px solid #abcdef;
-  border-bottom: 1px solid #abcdef;
-  padding: 0.5rem 0;
-  height: auto;
-}
-.form-one-check span{
-  display: inline-block;
-  width: 2.5rem;
-  margin: 0 4px 0 8px;
-  padding: 0;
-}
-.form-one-row{
-  display: flex;
-}
-.form-group button{
-  background-color: rgba(255, 255, 255, 0);
-}
-.dayall,
-.onetime{
-  display: inline-block;
-  position: relative;
-  width: 24%;
-  max-width: 5rem;
-  text-align: center;
-  padding: 0rem;
-  margin: 0;
-  border-radius: 0.6rem;
-  font-size: 1.4rem;
-  line-height: 2rem;
-  }
-.dayall.true,
-.onetime.true{
-  border: 1px solid transparent;
-  color: #4cd964;
-}
-.dayall.true,
-.onetime.true.checked{
-  background-color: #4cd964;
-  color: #fff;
-}
-
-.dayall.false,
-.onetime.false{
-  border: 1px solid transparent;
-  color: #ff3b30;
-}
-.dayall.false,
-.onetime.false.checked{
-  background-color: #ff3b30;
-  color: #fff;
-}
 
 div.is-in-access{
   position: fixed;
