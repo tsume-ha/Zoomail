@@ -55,15 +55,24 @@
 	</div>
 </div>
 {% endif %}
-<div id="main">
-</div>
 
-<div id="container" class="container mt-3">
+<div id="vue-app" class="container mt-3">
+<!-- vueapp内ではwebpackによるvueやそのコンポーネントの.vueファイルが使用可能です
+一斉にnew Vueされたくない時は下の #novue 内にコンテントを配置してください -->
+	{% block vuebody %}
+	{% endblock %}
+</div>
+<div id="no-vue" class="container mt-3">
 	{% block body %}
 	{% endblock %}
 	{% block popup %}
 	{% endblock %}
+	<!-- popup必要ありませんね...
+	一応、template/board/indexで使ってるんですが body ブロックに統合してしまった方がいいですね
+	(-- TO DO --) -->
 </div>
+
+
 </body>
 {% render_bundle 'main' 'js' attrs='defer' %}
 </html>
