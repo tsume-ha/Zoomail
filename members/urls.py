@@ -11,5 +11,5 @@ urlpatterns = [
     path('register/csv/preview/', views.UserRegistrationPreview, name='register_preview'),
     path('first_register/', views.NewFromLiveLog, name='new_from_livelog'),
     path('oauth/', views.OAuthRegisterView, name='oauth'),
-    path('api/user/', views.getUserInfo)
+    path('api/user/', views.getUserInfo, name='api_get_user')
 ]
