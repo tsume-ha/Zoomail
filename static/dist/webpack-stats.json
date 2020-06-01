@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"main-422502edaea4c7c07782.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\main-422502edaea4c7c07782.js"}]}}
+{"status":"done","chunks":{"main":[{"name":"main-31e6ad4f6a6af99dca30.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\main-31e6ad4f6a6af99dca30.js"}]},"error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve 'jquery' in 'C:\\Users\\雅史\\Documents\\UnpluggedMessage\\node_modules\\bootstrap\\dist\\js'"}
