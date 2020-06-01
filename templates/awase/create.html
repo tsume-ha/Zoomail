@@ -4,14 +4,13 @@
 
 {% block title %}日程調整を作成 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
-    <script src='https://unpkg.com/v-calendar'></script>
 {% endblock %}
 
-
-{% block body %}
+{% block vuebody %}
 <h3>日程調整を作成</h3>
-
+<awase-create-and-update></awase-create-and-update>
+{% endblock %}
+<!-- 
 <section id="form_upload" class="my-3">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -75,5 +74,4 @@
     </p>
 </section>
 
-<script src="{% static 'js/awase/create.js' %}"></script>
-{% endblock %}
+<script src="{% static 'js/awase/create.js' %}"></script> -->
