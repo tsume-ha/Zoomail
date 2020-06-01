@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     onclick: function(){
-      this.$emit('dayadd', this.day);
+      this.$emit('dayselected', this.day);
     },
     addStyleTextColor: function(weekday) {
       if (weekday === 1) {
@@ -50,3 +50,15 @@ export default {
   }
 };
 </script>
+<style scoped>
+/* Calendar内のcss */
+.ceil{
+    cursor: default;
+}
+.ceil.active{
+    cursor: pointer;
+}
+.ceil.selected{
+    background-color: #adddeb;
+}
+</style>

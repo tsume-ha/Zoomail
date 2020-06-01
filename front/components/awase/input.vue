@@ -1,7 +1,7 @@
 <template>
-  <section class="row mt-3 border-top" @click="isMenuOpen = false">
+  <section class="input-wrap row mt-3 border-top" @click="isMenuOpen = false">
     <template v-if="jsonLoaded">
-    <!-- <nav id="input-nav" @click.stop="isMenuOpen = true" :class="{'active': isMenuOpen}" class="pt-3">
+    <nav id="input-nav" @click.stop="isMenuOpen = true" :class="{'active': isMenuOpen}" class="pt-3">
       <div id="calendar-wrap">
         <h5 class="px-3">日付を選択</h5>
         <v-calendar
@@ -16,16 +16,16 @@
               :day="props.day"
               :data="timeRangeData[dateToYYYYMMDD(props.day.date)]"
               :is-selected="dateToYYYYMMDD(props.day.date) == selectedDate"
-              @dayadd="dayadd"
+              @dayselected="daySelected"
               ></custom-day-content>
           </template>
         </v-calendar>
       </div>
-    </nav> -->
+    </nav>
     <button type="button" @click.stop="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">
       <img src="{% webpack_static 'img/calendar-menu.png' %}" width="32" height="32" alt="Open Date Picker" />
     </button>
-    <form id="input-form">
+    <form id="input-form" class="pt-3">
       <h5 :class="{'active': isMenuOpen}">{{YYYYMMDDToTitle}}</h5>
       <div class="d-inline-block my-2">
         <button type="button" @click="moveDay(-1)" class="btn btn-info mx-1">前の日に</button>
@@ -62,6 +62,7 @@
 <script>
 import customDayContent from './input-custom-day-content.vue';
 import forms from './input-forms.vue';
+import Calendar from 'v-calendar/lib/components/calendar.umd'
 
 export default {
   props: {
@@ -70,6 +71,7 @@ export default {
   components: {
     "custom-day-content": customDayContent,
     "input-forms": forms,
+    "v-calendar": Calendar,
   },
   data: function() {
     return {
@@ -109,14 +111,15 @@ export default {
       })
   },
   methods: {
-    dayadd: function(e){
-      app.selectedDate = app.dateToYYYYMMDD(e.date);
-    },
     dateToYYYYMMDD: function(date){
       return date.getFullYear() + '' + ('0'+ (date.getMonth()+1) ).slice(-2) + '' + ('0' + date.getDate()).slice(-2);
     },
     YYYYMMDDToDate: function(YYYYMMDD){
       return new Date(Number(YYYYMMDD.slice(0, 4)), Number(YYYYMMDD.slice(4, 6)) - 1, Number(YYYYMMDD.slice(6, 8)));
+    },
+    daySelected: function(e){
+      console.log(this.selectedDate)
+      this.selectedDate = this.dateToYYYYMMDD(e['date']);
     },
     moveDay: function(int){
       let date = this.YYYYMMDDToDate(this.selectedDate);
@@ -145,33 +148,32 @@ export default {
           inProcess.push(key);
           counter += 1;
         }
-        axios.defaults.xsrfCookieName = 'csrftoken';
-        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-        axios.post(this.jsonUrl, data).then(response => {
-          console.log(response);
-          this.isProcessError = false;
-          for (var key of inProcess) {
-            this.$delete(this.beforePOSTRequest, key);
-          }
-          if (Object.keys(this.beforePOSTRequest).length > 0) {
-            this.POST();
-          } else {
+        this.axios
+          .post(this.jsonUrl, data).then(response => {
+            console.log(response);
+            this.isProcessError = false;
+            for (var key of inProcess) {
+              this.$delete(this.beforePOSTRequest, key);
+            }
+            if (Object.keys(this.beforePOSTRequest).length > 0) {
+              this.POST();
+            } else {
+              this.isInAccess = false;
+            }
+          }).catch(error => {
+            console.log(error);
             this.isInAccess = false;
-          }
-        }).catch(error => {
-          console.log(error);
-          this.isInAccess = false;
-          if (!error.response) {
-            console.log('network error');
-            this.isProcessError = true;
-            this.errorMessage = '通信に失敗しました。インターネットへの接続を確認し、再度送信ボタンを押してください。(Network Error)'
-          } else {
-            console.log('internal error');
-            this.isProcessError = true;
-            this.errorMessage = '処理に失敗しました。変更が保存されていない可能性があります。お手数ですが、開発者までご連絡ください。(' +
-              error.response.status + ' ' + error.response.statusText + ')';
-          }
-        });
+            if (!error.response) {
+              console.log('network error');
+              this.isProcessError = true;
+              this.errorMessage = '通信に失敗しました。インターネットへの接続を確認し、再度送信ボタンを押してください。(Network Error)'
+            } else {
+              console.log('internal error');
+              this.isProcessError = true;
+              this.errorMessage = '処理に失敗しました。変更が保存されていない可能性があります。お手数ですが、開発者までご連絡ください。(' +
+                error.response.status + ' ' + error.response.statusText + ')';
+            }
+          });
       }, 1000);
     }
   },
@@ -215,7 +217,7 @@ export default {
 </script>
 
 <style scoped>
-section#app{
+section.input-wrap{
   position: relative;
   min-height: 100vh;
 }
@@ -283,18 +285,6 @@ div#calendar-wrap{
   padding: 0 10px;
 }
 
-}
-
-
-/* Calendar内のcss */
-.ceil{
-  cursor: default;
-}
-.ceil.active{
-  cursor: pointer;
-}
-.ceil.selected{
-  background-color: #adddeb;
 }
 
 
