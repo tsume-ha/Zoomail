@@ -23,7 +23,7 @@
       </div>
     </nav>
     <button type="button" @click.stop="isMenuOpen = !isMenuOpen" id="menu-switch" :class="{'active': isMenuOpen}">
-      <img src="{% webpack_static 'img/calendar-menu.png' %}" width="32" height="32" alt="Open Date Picker" />
+      <img src="/static/img/calendar-menu.png" width="32" height="32" alt="Open Date Picker" />
     </button>
     <form id="input-form" class="pt-3">
       <h5 :class="{'active': isMenuOpen}">{{YYYYMMDDToTitle}}</h5>
@@ -265,6 +265,9 @@ div#calendar-wrap{
 #input-form{
   width: 100%;
 }
+#input-form > h5{
+  padding-left: 50px;
+}
 
 @media screen and (min-width: 768px) {
 #menu-switch{
@@ -284,7 +287,9 @@ div#calendar-wrap{
   margin-left: 280px;
   padding: 0 10px;
 }
-
+#input-form > h5{
+  padding-left: 0;
+}
 }
 
 
