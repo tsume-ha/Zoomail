@@ -18,5 +18,6 @@ urlpatterns = [
 	path('update/user/<int:pk>/', views.ChangeUsers, name='change_users'),
 	path('calendar/leave/<int:pk>/', views.LeaveCalendarView, name='leave_calendar'),
 	path('calendar/delete/<int:pk>/', views.DeleteCalendarView, name='delete_calendar'),
+	path('api/calendar/<int:pk>/', views.GetCalendarInfo, name='get_calendar_info'),
 
 ]

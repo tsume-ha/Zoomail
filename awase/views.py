@@ -404,4 +404,17 @@ def DeleteCalendarView(request, pk):
     return render(request, 'awase/delete_calendar.html', params)
 
 
-
+@login_required()
+def GetCalendarInfo(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    return JsonResponse(
+        {
+            "title": calendar.title,
+            "text": calendar.text,
+            "days_begin": calendar.days_begin.strftime('%Y-%m-%d'),
+            "days_end": calendar.days_end.strftime('%Y-%m-%d'),
+        }
+    )
