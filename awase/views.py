@@ -188,7 +188,7 @@ def inputJSON(request, pk):
                     user=now_user,
                     start_time=getDatetime(key),
                     defaults={
-                        'can_attend': json_dict[key]
+                        'can_attend': bool(json_dict[key])
                     }
                 )
             except:
