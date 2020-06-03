@@ -107,26 +107,24 @@ def create(request):
     now_user = request.user
     CreateForm = CreateCalendarForm(request.POST or None)
     if (request.method == 'POST'):
-        if CreateForm.is_valid():
+        if not CreateForm.is_valid():
+            messages.error(request, '登録できませんでした。もう一度入力を行ってください。')
+        else:
             content = CreateForm.save(commit=False)
-            try:
-                calendar = Calendar.objects.get(title=content.title, text=content.text, days_begin=content.days_begin, days_end=content.days_end)
-            except ObjectDoesNotExist:
-                content.created_by = now_user
-                content.invite_key = User.objects.make_random_password(length=12)
-                content.save()
-                calendar = content
-                user_content = CalendarUser(
-                    calendar = content,
-                    user = now_user
-                    )
-                user_content.save()
+            content.created_by = now_user
+            content.invite_key = User.objects.make_random_password(length=12)
+            content.save()
+            calendar = content
+            user_content = CalendarUser(
+                calendar = content,
+                user = now_user
+                )
+            user_content.save()
             params ={'calendar': calendar}
             return render(request, 'awase/create_complete.html', params)
 
     params = {
         'CreateForm': CreateForm,
-        'max_range': CALENDAR_MAX_RANGE,
     }
 
     return render(request, 'awase/create.html', params)

@@ -8,7 +8,10 @@
 
 {% block vuebody %}
 <h3>日程調整を作成</h3>
-<awase-create-and-update></awase-create-and-update>
+<awase-create-and-update
+  csrftoken="{{csrf_token}}"
+>
+</awase-create-and-update>
 {% endblock %}
 <!-- 
 <section id="form_upload" class="my-3">
