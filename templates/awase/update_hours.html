@@ -4,64 +4,26 @@
 
 {% block title %}{{calendar.title}}の集計時間を変更 | あわせのあわせ | Unplugged Message{% endblock %}
 {% block extrastyle %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src='https://unpkg.com/v-calendar'></script>
 {% endblock %}
 
 
-{% block body %}
+{% block vuebody %}
 <h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a>の集計時間を変更</h3>
 <p class="mb-4">
     各日にちの中で日程調整したい時間帯を変更できます。<br>
     時間は24時間表記で、9時(AM9:00)～26時(翌AM2:00)まで1時間単位で指定できます。<br>
     また、期間内の任意の日を、「集計しない日」に設定することも出きます。
 </p>
+<awase-update-hours
+  json-url="{% url 'awase:hours_update_json' calendar.pk %}"
+></awase-update-hours>
+<hr>
+<a href="{% url 'awase:calendar' calendar.pk %}" class="btn btn-primary my-2">日程調整「{{ calendar.title }}」に戻る</a>
+{% endblock %}
 
-
+{% block body %}
+<!-- 
 <section id="app">
-    <div v-if="!jsonLoaded">
-        <p>読み込み中...</p>
-    </div>
-    <div v-else>
-        <div v-if="isProcessError">
-            <p v-text="errorMessage" class="text-danger"></p>
-        </div>
-        <h6>1. 日付をクリックして変更したい日(複数も可)を選ぶ</h6>
-        <v-calendar
-            :first-day-of-week="2"
-            is-expanded
-            :columns="$screens({ default: 1, md: 2 })"
-            >
-            <template slot='header-title' slot-scope='props'>
-                [[props.yearLabel]]年[[props.monthLabel]]
-            </template>
-            <template slot='day-content' slot-scope='props'>
-                <custom-day-content
-                    :day="props.day"
-                    :data="timedata[dateToYYYYMMDD(props.day.date)]"
-                    :is-selected="(props.day.id in selectedDate)"
-                    @dayadd="dayadd"
-                    @dayremove="dayremove"></custom-day-content>
-            </template>
-
-        </v-calendar>
-        <hr>
-        <h6>2. 選んだ日に対して、集計時間を設定するか、集計しない日にするか指定する。</h6>
-        <div id="time-select" class="row my-3 mx-2">
-            <time-selector name="start" :max="end" @onchange="timeChange"></time-selector>
-            <span class="m-2">から</span>
-            <time-selector name="end" :min="start" @onchange="timeChange"></time-selector>
-            <span class="m-2">に</span>
-            <button @click="setTimeData" class="btn btn-info">変更</button>
-        </div>
-        <hr>
-        <div id="not-collect-select" class="row my-3 mx-2">
-            <span class="m-2">もしくは、</span>
-            <button @click="setNotCollectDay" class="btn btn-secondary">「集計しない日」にする</button>
-        </div>
-    </div>
-    <div v-if="isInAccess" class="small text-secondary is-in-access">サーバーと通信中...</div>
     <hr>
 </section>
 
@@ -70,69 +32,10 @@
 <script type="text/javascript">
 const jsonURL = "{% url 'awase:hours_update_json' calendar.pk %}";
 
-Vue.component('custom-day-content', {
-    props: {
-        day: {type: Object, required: true},
-        data: {type: Object, required: false, default: () => {return{start: '', end: ''}},},
-        isSelected: {type: Boolean, required: false}
-    },
-    delimiters: ['[[', ']]'],
-    template: `<div
-                  class="ceil text-center pt-1 pb-2"
-                  @click="onclick"
-                  :class="{active: isActive, selected: isSelected}"
-                >
-                   <h6 class="m-0 p-0" :style="addStyleTextColor(day.weekday)">[[day.day]]</h6>
-                   <span class="small">[[displayHour]]</span>
-               </div>`,
-    methods: {
-        onclick: function(){
-            if (!this.isActive) {
-                return false;
-            }
-            if (this.isSelected) {
-                this.$emit('dayremove', this.day);
-            } else {
-                this.$emit('dayadd', this.day);
-            }
-        },
-        addStyleTextColor: function(weekday) {
-            if (weekday === 1) {
-                return {
-                    color: "red"
-                };
-            } else if (weekday === 7) {
-                return {
-                    color: "#1669a8"
-                };
-            }
-        }
 
-    },
-    computed: {
-        displayHour: function(){
-            let start = this.data.start;
-            let end = this.data.end;
-            if (!this.isActive) {
-                return '-';
-            } else if (start === end) {
-                return '×';
-            } else {
-                return start + '-' + end;
-            }
-        },
-        isActive: function(){
-            return !(this.data.start === '' && this.data.end === '');
-        }
-    }
-})
 
 Vue.component('time-selector', {
-    props: {
-        name: {type: String, required: true},
-        min: {type: Number, required: false},//ここでdefault定義できない。nullの時効かない。
-        max: {type: Number, required: false},
-    },    
+    
     delimiters: ['[[', ']]'],
     template: `<select v-model="value" @change="eventUp" class="form-control col-3 d-inline">
                    <option
@@ -143,24 +46,7 @@ Vue.component('time-selector', {
                             [[ i+8 ]]:00
                         </option>
                </select>`,
-    data: function(){
-        return {
-            value: null,
-        };
-    },
-    methods: {
-        eventUp: function(){
-            this.$emit('onchange', {name: this.name, value: this.value});
-        },
-    },
-    computed: {
-        minSafed: function(){
-            return this.min || 9;//nullの時propsでのdefaultを通り抜けるためここでdefault定義。
-        },
-        maxSafed: function(){
-            return this.max || 26;
-        }
-    }
+
 
 })
 
@@ -326,5 +212,5 @@ div.is-in-access{
     margin: 0 1rem;
     padding: 0.25rem;
 }
-</style>
+</style> -->
 {% endblock %}
