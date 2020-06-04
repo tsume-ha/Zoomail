@@ -14,8 +14,6 @@ import awaseCreateForm from "../../front/components/awase/create-calendar-form.v
 import awaseUpdateForm from "../../front/components/awase/update-calendar-form.vue";
 import awaseUpdateHours from "../../front/components/awase/update-hours.vue";
 
-
-
 import MemberEmailConfirm from "../../front/components/email_confirm.vue";
 
 Vue.use(VueAxios, axios)
