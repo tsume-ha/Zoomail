@@ -9,11 +9,11 @@
 
 {% block vuebody %}
 <h3><a href="{% url 'awase:calendar' calendar.pk %}">{{ calendar.title }}</a>を変更</h3>
-<update-calendar-form
+<awase-update-calendar-form
   csrftoken="{{csrf_token}}"
   init-title="{{calendar.title}}"
   init-text="{{calendar.text}}"
   init-days-begin="{{calendar.days_begin|date:'Y-m-d'}}"
   init-days-end="{{calendar.days_end|date:'Y-m-d'}}"
-></update-calendar-form>
+></awase-update-calendar-form>
 {% endblock %}

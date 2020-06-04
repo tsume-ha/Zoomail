@@ -60,7 +60,7 @@
         name="days_end"
         :value='daysEnd' />
 
-      <input type="submit" value="登録" @click="onclick" class="btn btn-info mx-2 my-3">
+      <input type="submit" value="変更" @click="onclick" class="btn btn-info mx-2 my-3">
 
     </form>
     <p class="small text-secondary" @click="onclick">
@@ -73,7 +73,6 @@
 
 <script>
 import moment from "moment"
-import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 export default {
   props: {
     csrftoken: {type: String, required: true},
@@ -81,9 +80,6 @@ export default {
     initText: {type: String, required: false, default: ""},
     initDaysBegin: {type: String, required: true},// YYYY-MM-DD
     initDaysEnd: {type: String, required: true},// YYYY-MM-DD
-  },
-  components: {
-    "v-date-picker": DatePicker,
   },
   data: function () {
     return {

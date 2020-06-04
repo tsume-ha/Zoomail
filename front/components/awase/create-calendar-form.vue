@@ -66,13 +66,9 @@
 </template>
 
 <script>
-import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 export default {
   props: {
     csrftoken: {type: String, required: true},
-  },
-  components: {
-    "v-date-picker": DatePicker,
   },
   data: function () {
     return {

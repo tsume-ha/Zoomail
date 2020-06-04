@@ -327,7 +327,11 @@ def CollectHourJsonResponse(request, pk):
             return response
 
 
-    datalist = CollectHour.objects.filter(calendar=calendar).order_by('date').values_list('date', 'hour_begin', 'hour_end')
+    datalist = CollectHour.objects.filter(
+                   calendar=calendar,
+                   date__gte=calendar.days_begin,
+                   date__lte=calendar.days_end
+                   ).order_by('date').values_list('date', 'hour_begin', 'hour_end')
     data = {data[0].strftime('%Y%m%d'): {'start': data[1], 'end': data[2]} for data in datalist}
 
     return JsonResponse(data)

@@ -2,6 +2,10 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueMoment from 'vue-moment'
+// v-calendar
+import Calendar from 'v-calendar/lib/components/calendar.umd'
+import DatePicker from 'v-calendar/lib/components/date-picker.umd'
+
 
 import MeetingRoom from "../../front/components/meeting-room.vue";
 
@@ -14,6 +18,9 @@ import MemberEmailConfirm from "../../front/components/email_confirm.vue";
 Vue.use(VueAxios, axios)
 Vue.use(VueMoment);
 
+Vue.component('v-calendar', Calendar)
+Vue.component('v-date-picker', DatePicker)
+
 var app = new Vue({
   el: "#vue-app",
   components: {
@@ -22,8 +29,8 @@ var app = new Vue({
 
     // awase/calendar/<int:pk>/input/ のコンポーネント
     'awase-input': awaseInput,
-    'create-calendar-form': awaseCreateForm,
-    'update-calendar-form': awaseUpdateForm,
+    'awase-create-calendar-form': awaseCreateForm,
+    'awase-update-calendar-form': awaseUpdateForm,
 
     'member-email-confirm': MemberEmailConfirm,
   }

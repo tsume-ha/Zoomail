@@ -62,7 +62,6 @@
 <script>
 import customDayContent from './input-custom-day-content.vue';
 import forms from './input-forms.vue';
-import Calendar from 'v-calendar/lib/components/calendar.umd'
 
 export default {
   props: {
@@ -71,7 +70,6 @@ export default {
   components: {
     "custom-day-content": customDayContent,
     "input-forms": forms,
-    "v-calendar": Calendar,
   },
   data: function() {
     return {
