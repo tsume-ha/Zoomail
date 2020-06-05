@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load customtags %}
 
-{% block title %}{{Performances.live_name}} | リハ音源 | Unplugged Message{% endblock %}
+{% block title %}{{performance.live_name}} | リハ音源 | Unplugged Message{% endblock %}
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/player/playlist.css' %}">
 
@@ -11,14 +12,16 @@
 {% block body %}
 
 
-<div class="row border-bottom pb-1 mb-2"><!-- Live Title -->
+<div class="row border-bottom pb-1 mb-2">
+	<!-- Live Title -->
 	<div class="col-sm-12">
 		<a href="{% url 'player:index' %}" class="float-left col-xs-2" id="return"> </a>
-		<h5 class="float-left col-xs-7 ml-2">{{Performances.live_name}}</h5>
-		<span class="float-right col-xs-3 small">{{Performances.recorded_at|date:"Y/m/d D"}}</span>
+		<h5 class="float-left col-xs-7 ml-2">{{performance.live_name}}</h5>
+		<span class="float-right col-xs-3 small">{{performance.recorded_at|date:"Y/m/d D"}}</span>
 	</div>
 </div>
-<div class="row"><!-- Song Title -->
+<div class="row">
+	<!-- Song Title -->
 	<div class="col-sm-12" id="songtitle">
 		<h4><span>0.</span>no music file selected</h4>
 	</div>
@@ -28,7 +31,7 @@
 	<span id="loadprogress"></span>
 </div>
 <div id="timedisplay">
-	<span id="currenttime">0:00</span> / 
+	<span id="currenttime">0:00</span> /
 	<span id="totaltime">0:00</span>
 </div>
 <div id="waveform"></div>
@@ -42,13 +45,15 @@
 
 
 <div id="songlist" class="row my-3">
-	{% for Song in Songs %}
-	<div class="songselect col-sm-12  border-bottom py-1" onclick="load('{{Song.file.url}}','{{Song.track_num}}','{{Song.song_name}}')"
-	data-track="{{Song.track_num}}" data-url="{{Song.file.url}}" data-name="{{Song.song_name}}">
-		<span class="songnum float-left ml-1 mr-2">{{Song.track_num}}.</span>
-		<span class="songname float-left ml-0 pl-0">{{Song.song_name}}</span>
-		<span class="download float-right mx-2"><a href="{% url 'player:download' Performances.pk Song.pk %}">　</a></span>
-		<!-- <span class="songtime float-right mx-2" data-tnum="{{Song.track_num}}">0:00</span> -->
+	{% for song in songs %}
+	<div class="songselect col-sm-12  border-bottom py-1"
+		onclick="load('{{song.file.url}}','{{song.track_num}}','{{song.song_name}}')" data-track="{{song.track_num}}"
+		data-url="{{song.file.url}}" data-name="{{song.song_name}}">
+		<span class="songnum float-left ml-1 mr-2">{{song.track_num}}.</span>
+		<span class="songname float-left ml-0 pl-0">{{song.song_name}}</span>
+		<span class="download float-right mx-2"><a
+				href="{% url 'player:download' performance.pk song.pk %}">　</a></span>
+		<span class="songtime float-right mx-2" data-tnum="{{song.track_num}}">{{song.length | seconds_to_time}}</span>
 	</div>
 	{% endfor %}
 
@@ -59,11 +64,11 @@
 <script src="{% static 'js/wavesurfer.min.js' %}"></script>
 <script src="{% static 'js/player.js' %}"></script>
 <script type="text/javascript">
-{% if SongToPreload %}
-$(function(){
-	load('{{SongToPreload.file.url}}','{{SongToPreload.track_num}}','{{SongToPreload.song_name}}');
-})
-{% endif %}
+	{% if preload_song %}
+	$(function () {
+		load('{{preload_song.file.url}}', '{{preload_song.track_num}}', '{{preload_song.song_name}}');
+	})
+	{% endif %}
 </script>
 
 
