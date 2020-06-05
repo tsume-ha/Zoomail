@@ -1,23 +1,27 @@
+from utils.commom import download
+import datetime
+
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.forms import formset_factory, modelformset_factory
 from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
-from .forms import CreateRehasalForm, CreateSongForm, EditSongForm
+
+from .forms import CreateRehasalForm, EditSongForm
 from .models import Performance, Song
 from config.permissions import RecordingPermisson
-import datetime
 
 
 @login_required()
 def index(request):
-    Performances = Performance.objects.all().order_by('updated_at').reverse()
+    performances = Performance.objects.all().order_by('updated_at').reverse()
     now_user = request.user
     is_allowed = RecordingPermisson(now_user)
     params = {
-        'Performances': Performances,
+        'performances': performances,
         'is_allowed': is_allowed,
     }
     return render(request, 'player/index.html', params)
@@ -25,71 +29,57 @@ def index(request):
 
 @login_required()
 def playlist(request, live_id):
-    Performances = get_object_or_404(Performance, id=live_id)
-    Songs = Song.objects.filter(performance=Performances).order_by('track_num')
+    performance = get_object_or_404(Performance, id=live_id)
+    songs = Song.objects.filter(performance=performance).order_by('track_num')
     params = {
-    'Performances': Performances,
-    'Songs': Songs,
+        'performance': performance,
+        'songs': songs,
     }
     if 'track' in request.GET:
         try:
             track = request.GET['track']
             if 0 < int(track):
-                    SongToPreload = Songs.get(track_num=track)
-                    params['SongToPreload'] = SongToPreload
-        except :
+                preload_song = Songs.get(track_num=track)
+                params['preload_song'] = preload_song
+        except:
             pass
     return render(request, 'player/playlist.html', params)
 
+
 @login_required()
-def songupload(request, FormSetExtraNum=20):
+def upload(request):
     now_user = request.user
     is_allowed = RecordingPermisson(now_user)
-    if is_allowed:
-        CreateSongFormSet = formset_factory(CreateSongForm, extra=FormSetExtraNum)
-        params = {
-            'CreateRehasalForm': CreateRehasalForm(),
-            'CreateSongFormSet': CreateSongFormSet,
-            }
-        if (request.method == 'POST'):
-            livename = request.POST["livename"]
-            recorded_at = request.POST["recorded_at"]
-            now_time = datetime.datetime.now()
-            now_user = request.user
-            content_Performance = Performance(
-                live_name = livename,
-                recorded_at = now_time,
-                created_at = now_time,
-                updated_at = now_time,
-                updated_by = now_user
-                )
-            content_Performance.save()
-            success_count = 0
-            for i in range(FormSetExtraNum):
-                try:
-                    songname = "form-" + str(i) + "-song_name"
-                    filename = "form-" + str(i) + "-song_file"
-                    song_name = request.POST[songname]
-                    song_file = request.FILES[filename]
-                    content_Song = Song(
-                        performance = content_Performance,
-                        track_num = i + 1,
-                        song_name = song_name,
-                        file = song_file,
-                        created_at = now_time,
-                        updated_at = now_time,
-                        updated_by = now_user
-                    )
-                    content_Song.save()
-                    success_count += 1
-                except MultiValueDictKeyError:
-                    pass
-            success_message = str(success_count) + '曲アップロードしました。'
-            messages.success(request, success_message)
-            return redirect('/player/playlist/' + str(content_Performance.id))
-        return render(request, 'player/songupload.html', params)
-    else:
+    if not is_allowed:
         raise PermissionDenied
+    form = CreateRehasalForm(request.POST or None)
+    if (request.method == 'POST'):
+        songform = EditSongForm(request.POST, request.FILES)
+        if not (form.is_valid() and songform.is_valid()):
+            response = HttpResponse('BAD REQUEST')
+            response.status_code = 400
+            return response
+
+        livename = form.cleaned_data['livename']
+        recorded_at = form.cleaned_data['recorded_at']
+        performance, created = Performance.objects.get_or_create(
+            live_name=livename,
+            recorded_at=recorded_at,
+            updated_by=now_user,
+        )
+        content = songform.save(commit=False)
+        content.performance = performance
+        content.updated_by = now_user
+        content.save()
+
+        response = HttpResponse('OK')
+        response.status_code = 200
+        return response
+
+    params = {
+        'form': form,
+    }
+    return render(request, 'player/upload.html', params)
 
 
 @login_required()
@@ -101,11 +91,13 @@ def edit(request, live_id):
 
     performance = get_object_or_404(Performance, id=live_id)
     FormSetExtraNum = 3
-    EditSongFormSet = modelformset_factory(Song, EditSongForm, extra=FormSetExtraNum)
+    EditSongFormSet = modelformset_factory(
+        Song, EditSongForm, extra=FormSetExtraNum)
     formset = EditSongFormSet(
         request.POST or None, request.FILES or None,
-        queryset=Song.objects.filter(performance=performance).order_by('track_num')
-        )
+        queryset=Song.objects.filter(
+            performance=performance).order_by('track_num')
+    )
     if request.method == 'POST':
         if formset.is_valid():
             instances = formset.save(commit=False)
@@ -124,9 +116,6 @@ def edit(request, live_id):
     }
     return render(request, 'player/edit.html', params)
 
-
-
-from utils.commom import download
 def FileDownloadView(request, live_id, song_pk):
     try:
         song = Song.objects.get(pk=song_pk)
@@ -135,8 +124,8 @@ def FileDownloadView(request, live_id, song_pk):
     filename = str(song.track_num).zfill(2) + ' ' + song.song_name + '.mp3'
     print(song.file.path)
     response = download(
-        filepath = song.file.path,
-        filename = filename,
-        mimetype = 'audio/mpeg'
+        filepath=song.file.path,
+        filename=filename,
+        mimetype='audio/mpeg'
     )
     return response

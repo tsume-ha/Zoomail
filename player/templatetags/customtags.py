@@ -1,9 +1,10 @@
 from django import template
 from django.utils.safestring import mark_safe
+
 from player.models import Song
 
-register = template.Library()
 
+register = template.Library()
 
 @register.simple_tag
 def GetSongDetail(Performance):
@@ -18,3 +19,12 @@ def GetSongDetail(Performance):
     text_return += '曲</span>'
     return mark_safe(text_return)
 
+@register.filter(name="seconds_to_time")
+def seconds_to_MMSS(seconds):
+    if seconds == 0:
+        return ''
+    else:
+        minute = seconds // 60
+        second = seconds % 60
+        return str(minute).zfill(1) + ':' + str(second).zfill(2)
+    

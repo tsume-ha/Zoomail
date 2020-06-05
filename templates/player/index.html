@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load getsongdetail %}
+{% load customtags %}
 
 {% block title %}リハ音源 | Unplugged Message{% endblock %}
 {% block extrastyle %}
@@ -14,7 +14,7 @@
 	{% if is_allowed %}
 	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
 		<article class="card border-info m-2">
-			<a href="{% url 'player:songupload' %}" class="card-body">
+			<a href="{% url 'player:upload' %}" class="card-body">
 				<h5 class="card-title bg-info　mb-2">新しく音源を追加</h5>
 				<p class="text-info">こちらから追加</p>
 			</a>
@@ -22,15 +22,17 @@
 	</div>
 	{% endif %}
 
-	{% for Performance in Performances %}
+	{% for performance in performances %}
 	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
 		<article class="card m-2">
-			<a href="{% url 'player:playlist' Performance.pk %}" class="card-body pb-1">
-				<h5 class="card-title　float-left mb-2">{{ Performance.live_name }}</h5>
-				<h6 class="card-subtitle float-right small">Recorded : {{ Performance.recorded_at | date:"Y/m/d D" }}</h6>
-				{% GetSongDetail Performance %}
+			<a href="{% url 'player:playlist' performance.pk %}" class="card-body pb-1">
+				<h5 class="card-title　float-left mb-2">{{ performance.live_name }}</h5>
+				<h6 class="card-subtitle float-right small">Recorded : {{ performance.recorded_at | date:"Y/m/d D" }}
+				</h6>
+				{% GetSongDetail performance %}
 			</a>
-			{% if is_allowed %}<a href="{% url 'player:edit' Performance.pk %}" class="btn btn-outline-warning btn-sm mx-3 mb-2">編集する</a>{% endif %}
+			{% if is_allowed %}<a href="{% url 'player:edit' performance.pk %}"
+				class="btn btn-outline-warning btn-sm mx-3 mb-2">編集する</a>{% endif %}
 
 		</article>
 	</div>
@@ -43,12 +45,12 @@
 </section>
 
 <script type="text/javascript">
-$('.js-link').on('click', function(e){
-    e.stopPropagation();
-    e.preventDefault();
-    console.log($(this).data('url'));
-    location.href = $(this).data('url');
-})
+	$('.js-link').on('click', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+		console.log($(this).data('url'));
+		location.href = $(this).data('url');
+	})
 </script>
 
 {% endblock %}
