@@ -55,6 +55,9 @@ def upload(request):
     form = CreateRehasalForm(request.POST or None)
     if (request.method == 'POST'):
         songform = EditSongForm(request.POST, request.FILES)
+        print(request.POST)
+        print(songform.is_valid())
+        print(form.is_valid())
         if not (form.is_valid() and songform.is_valid()):
             response = HttpResponse('BAD REQUEST')
             response.status_code = 400
