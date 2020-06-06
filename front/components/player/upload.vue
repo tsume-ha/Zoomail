@@ -49,7 +49,7 @@
             'btn-info': is_valid,
             'btn-secondary': !is_valid,
           }" :disabled="!is_valid" @click.once="onClick">送信</button>
-        <span class="text-warning" v-if="!is_valid">不正な値が入力されているため送信できません</span>
+        <span class="text-warning" v-if="!is_valid">{{errorMessage}}</span>
       </template>
       <template v-else>
         <p>選択されたMP3ファイルがここに表示されます</p>
@@ -105,6 +105,7 @@ export default {
       livename: '',
       files: [],//FileList Object
       filenames: {},//{'01-song.mp3': {'number': 1, 'title': 'song', 'process': 'now'}}
+      errorMessage: "",
       process: { 'yet': '準備中', 'now': '送信中', 'done': '完了', 'error': 'エラー' },
       states: {
         isPostClicked: false,
@@ -188,22 +189,34 @@ export default {
     is_valid: function () {
       // TO DO // ファイルサイズ確認
       if (this.livename.length == 0 || this.livename.length > 255) {
+        this.errorMessage = "ライブ名に不正な値が入力されています";
         return false;
       }
       if (this.date == null) {
+        this.errorMessage = "収録日を指定してください";
         return false;
       }
       if (!this.isFileSelected) {
+        this.errorMessage = "ファイルを選択してください";
         return false;
       }
       for (let key in this.filenames) {
         if (this.filenames[key].title.length == 0 || this.filenames[key].title.length > 500) {
+          this.errorMessage = "曲名に不正な値が入力されているものがあります";
           return false;
         }
         if (this.filenames[key].number <= 0 || this.filenames[key].number > 100) {
+          this.errorMessage = "曲番号に不正な値が入力されているものがあります";
           return false;
         }
       }
+      for (const file of this.files) {
+        if (file.size > 20 * 1024 * 1024) {
+          this.errorMessage = "ファイルサイズが上限の20MBよりも大きい物があります";
+          return false;
+        }
+      }
+      this.errorMessage = "";
       return true;
     }
   }
