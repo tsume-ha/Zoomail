@@ -1,79 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load getsongdetail %}
 
 {% block title %}日程調整を作成 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/awase/create.css' %}">
-    <script src='https://unpkg.com/v-calendar'></script>
 {% endblock %}
 
-
-{% block body %}
+{% block vuebody %}
 <h3>日程調整を作成</h3>
-
-<section id="form_upload" class="my-3">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <div class="form-group mx-0">
-            {{ CreateForm.title.label_tag }}
-            {{ CreateForm.title }}
-            {% if CreateForm.title.errors %}
-            <p class="small text-danger pl-2">{{ CreateForm.title.errors.as_text }}</p>
-            {% endif %}
-        </div>
-        <div class="form-group mx-0">
-            {{ CreateForm.text.label_tag }}
-            {{ CreateForm.text }}
-            {% if CreateForm.text.errors %}
-            <p class="small text-danger pl-2">{{ CreateForm.text.errors.as_text }}</p>
-            {% endif %}
-        </div>
-
-        <div class="form-group mx-0">
-            <label class="d-block">集計期間:</label>
-            <div>
-                <v-date-picker
-                    mode='range'
-                    v-model='selectedRange'
-                    :input-props='{class: "form-control"}'
-                    :min-date="minDate"
-                    :max-date="maxDate"
-                    :first-day-of-week='2'
-                    @input="validate()"
-                    />
-            </div>
-            <p v-if="is_error" class="small text-danger pl-2">
-                選択可能な範囲は最大で{{max_range}}日です。
-            </p>
-        </div>
-
-        <vue-input
-            type='hidden'
-            name='{{ CreateForm.days_begin.name }}'
-            init='null'
-            :value='start'
-            >
-        </vue-input>
-        <vue-input
-            type='hidden'
-            name='{{ CreateForm.days_end.name }}'
-            init='null'
-            :value='end'
-            >
-        </vue-input>
-
-        {% for non_field_error in CreateForm.non_field_errors %}
-        <p class="small text-danger pl-2">{{ non_field_error }}</p>
-        {% endfor %}
-
-        <input type="submit" value="登録" class="btn btn-info mx-2 my-3">
-    </form>
-    <p class="small text-secondary">
-    	集計できる期間は現在のところ、最大で120日間です。<br>
-    </p>
-</section>
-
-<script src="{% static 'js/awase/create.js' %}"></script>
+<awase-create-calendar-form
+  csrftoken="{{csrf_token}}"
+>
+</awase-create-calendar-form>
 {% endblock %}

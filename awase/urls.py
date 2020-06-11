@@ -6,10 +6,8 @@ urlpatterns = [
 	path('', views.index, name='index'),
 	path('calendar/<int:pk>/', views.CalendarView, name='calendar'),
 	path('calendar/json/<int:pk>/', views.CalendarJsonResponse, name='calendar_json'),
-	path('calendar/<int:pk>/input/', views.input, name='input_top'),
-	path('calendar/<int:pk>/input_/', views.input_, name='input_new'),
+	path('calendar/<int:pk>/input/', views.input, name='input'),
 	path('calendar/json/<int:pk>/input/', views.inputJSON, name='input_json'),
-	path('calendar/<int:pk>/input/<int:page>/', views.input, name='input'),
 	path('calendar/<int:pk>/urlkey/', views.CalendarURLKey, name='url_key'),
 	path('create/', views.create, name='create'),
 	path('invited/key=<str:key>/', views.invited, name='invited'),
@@ -20,5 +18,6 @@ urlpatterns = [
 	path('update/user/<int:pk>/', views.ChangeUsers, name='change_users'),
 	path('calendar/leave/<int:pk>/', views.LeaveCalendarView, name='leave_calendar'),
 	path('calendar/delete/<int:pk>/', views.DeleteCalendarView, name='delete_calendar'),
+	path('api/calendar/<int:pk>/', views.GetCalendarInfo, name='get_calendar_info'),
 
 ]

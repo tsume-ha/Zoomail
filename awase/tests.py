@@ -269,42 +269,21 @@ class CalendarInputTest(TestCase):
                       + datetime.timedelta(days=1, hours=9)\
                       + datetime.timedelta(minutes=30*n)
                      for n in range((26-9)*2)]
-        cls.data = {
-            '0-0-can_attend': ['True'], '0-0-starttime': [cls.time_list[0].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-1-can_attend': ['True'], '0-1-starttime': [cls.time_list[1].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-2-can_attend': ['True'], '0-2-starttime': [cls.time_list[2].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-3-can_attend': ['True'], '0-3-starttime': [cls.time_list[3].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-4-can_attend': ['True'], '0-4-starttime': [cls.time_list[4].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-5-can_attend': ['True'], '0-5-starttime': [cls.time_list[5].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-6-can_attend': ['True'], '0-6-starttime': [cls.time_list[6].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-7-can_attend': ['True'], '0-7-starttime': [cls.time_list[7].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-8-can_attend': ['True'], '0-8-starttime': [cls.time_list[8].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-9-can_attend': ['True'], '0-9-starttime': [cls.time_list[9].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-10-can_attend': ['True'], '0-10-starttime': [cls.time_list[10].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-11-can_attend': ['True'], '0-11-starttime': [cls.time_list[11].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-12-can_attend': ['True'], '0-12-starttime': [cls.time_list[12].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-13-can_attend': ['True'], '0-13-starttime': [cls.time_list[13].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-14-can_attend': ['True'], '0-14-starttime': [cls.time_list[14].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-15-can_attend': ['True'], '0-15-starttime': [cls.time_list[15].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-16-can_attend': ['True'], '0-16-starttime': [cls.time_list[16].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-17-can_attend': ['True'], '0-17-starttime': [cls.time_list[17].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-18-can_attend': ['True'], '0-18-starttime': [cls.time_list[18].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-19-can_attend': ['True'], '0-19-starttime': [cls.time_list[19].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-20-can_attend': ['True'], '0-20-starttime': [cls.time_list[20].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-21-can_attend': ['True'], '0-21-starttime': [cls.time_list[21].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-22-can_attend': ['True'], '0-22-starttime': [cls.time_list[22].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-23-can_attend': ['True'], '0-23-starttime': [cls.time_list[23].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-24-can_attend': ['True'], '0-24-starttime': [cls.time_list[24].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-25-can_attend': ['True'], '0-25-starttime': [cls.time_list[25].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-26-can_attend': ['True'], '0-26-starttime': [cls.time_list[26].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-27-can_attend': ['True'], '0-27-starttime': [cls.time_list[27].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-28-can_attend': ['True'], '0-28-starttime': [cls.time_list[28].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-29-can_attend': ['True'], '0-29-starttime': [cls.time_list[29].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-30-can_attend': ['True'], '0-30-starttime': [cls.time_list[30].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-31-can_attend': ['True'], '0-31-starttime': [cls.time_list[31].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-32-can_attend': ['True'], '0-32-starttime': [cls.time_list[32].strftime('%Y-%m-%d %H:%M:%S')],
-            '0-33-can_attend': ['True'], '0-33-starttime': [cls.time_list[33].strftime('%Y-%m-%d %H:%M:%S')],
-            }
+        cls.data = {}
+        
+        # viewからコピーしてきた
+        def getOver24h(dt):  # Datetime => String
+            if 0 <= dt.hour <= 5:
+                t = 12  # 適当な時間をさかのぼって、そこからの経過時間を計算する
+                tmp = dt - datetime.timedelta(hours=t)
+                hour = tmp.hour + 12  # ここで二ケタの保証はされるから、0埋めはしない
+                return tmp.strftime('%Y%m%d_') + str(hour) + tmp.strftime('%M')
+            else:
+                return dt.strftime('%Y%m%d_%H%M')
+
+        for time in cls.time_list:
+            YYYYMMDD_HHMM = getOver24h(time)
+            cls.data[YYYYMMDD_HHMM] = 'true'
 
     def test_input_calendar_POST_logOUT(self):
         User_LogOUT(self)
@@ -317,11 +296,13 @@ class CalendarInputTest(TestCase):
 
     def test_input_calendar_POST_logIN(self):
         user = Force_Login(self)
-        request = self.client.post(self.url, self.data)
-        self.assertEqual(request.status_code, 302)
-        self.assertEqual(request.url, '/awase/calendar/%s/' % str(self.calendar.pk))
-        url_redial_to = request.url
-        response = self.client.get(url_redial_to)
+        request = self.client.post(
+            '/awase/calendar/json/%s/input/' % str(self.calendar.pk), self.data,
+            content_type='application/json'#json送るときこれ必要
+            )
+        self.assertEqual(request.status_code, 200)
+        #自動送信なので自分で遷移する（下行）
+        response = self.client.get('/awase/calendar/%s/' % str(self.calendar.pk))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'awase/calendar.html')
         
