@@ -30,7 +30,7 @@
     <!-- controller -->
     <div class="row justify-content-around mt-3" id="ctrl">
       <div class="col-xs-2">
-        <button id="prev"></button>
+        <button id="prev" @click="prev"></button>
       </div>
       <div class="col-xs-2">
         <button id="back" @click="wavesurfer.skip(-10)"></button>
@@ -42,7 +42,7 @@
         <button id="forward" @click="wavesurfer.skip(15)"></button>
       </div>
       <div class="col-xs-2">
-        <button id="next"></button>
+        <button id="next" @click="next"></button>
       </div>
     </div>
 
@@ -125,21 +125,90 @@ export default {
             this.loadProgressText = ' ...' + String(value) + ' %';
           }
         });
-        this.wavesurfer.on('ready', () => {
-          this.barMoved();
-        });
-        this.wavesurfer.on('audioprocess', () => {
-          this.barMoved();
-        })
-        this.wavesurfer.on('seek', () => {
-          this.barMoved();
-        })
+        this.wavesurfer.on('ready', () => this.barMoved());
+        this.wavesurfer.on('audioprocess', () => this.barMoved());
+        this.wavesurfer.on('seek', () => this.barMoved());
+        
+      }).then(() => {
+        //波形ウィンドウのマウス・タッチ操作
+        const that = this;
+        const wavediv = document.querySelector('#waveform');
+        let x;
+        const div_width = wavediv.clientWidth;
 
-    })
+        wavediv.addEventListener("mousedown", mdown, false);
+        wavediv.addEventListener("touchstart", mdown, false);
 
+        function mdown (e) {
+          let event;
+          if(e.type === "mousedown") {
+            event = e;
+          } else {
+            event = e.changedTouches[0];
+          }
 
+          x = event.pageX - this.offsetLeft;
+          that.wavesurfer.setVolume(0);
+          that.wavesurfer.seekTo(x / div_width);
+          that.barMoved();
+
+          wavediv.addEventListener("mousemove", mmove, false);
+          wavediv.addEventListener("touchmove", mmove, false);
+          wavediv.addEventListener("mouseup", mup, false);
+          wavediv.addEventListener("mouseleave", mup, false);
+          wavediv.addEventListener("touchend", mup, false);
+          wavediv.addEventListener("touchleave", mup, false);
+        }
+
+        function mmove(e) {
+          if(e.type === "mousemove") {
+            var event = e;
+          } else {
+            var event = e.changedTouches[0];
+          }
+          x = event.pageX - this.offsetLeft;
+          that.wavesurfer.setVolume(0);
+          that.wavesurfer.seekTo(x / div_width);
+          that.barMoved();
+
+          wavediv.addEventListener("mouseup", mup, false);
+          wavediv.addEventListener("mouseleave", mup, false);
+          wavediv.addEventListener("touchend", mup, false);
+          wavediv.addEventListener("touchleave", mup, false);
+        }
+
+        function mup(e) {
+          wavediv.removeEventListener("mousemove", mmove, false);
+          wavediv.removeEventListener("mouseup", mup, false);
+          wavediv.removeEventListener("touchmove", mmove, false);
+          wavediv.removeEventListener("touchend", mup, false);
+          that.wavesurfer.setVolume(1);
+          if (that.isPlaying) {
+            that.wavesurfer.play();
+          }
+        }
+      });
   },
   methods: {
+    prev: function () {
+      if (!this.isPlaying || this.currentTime > 10) {
+        const prevsong = this.songs[(this.songs.indexOf(this.nowPlaying) + this.songs.length - 1) % this.songs.length];
+        this.load(prevsong);
+        this.wavesurfer.on('ready', () => {
+            this.wavesurfer.play();
+        });
+      } else {
+      this.wavesurfer.stop();
+      }
+    },
+    next: function () {
+      const nextsong = this.songs[(this.songs.indexOf(this.nowPlaying) + 1) % this.songs.length];
+      this.load(nextsong);
+      this.wavesurfer.on('ready', () => {
+        this.wavesurfer.play();
+      });
+    },
+
     load: function (song) {
       this.nowPlaying = song;
       this.loadSongTitle = "Now Loading... " + song.song_name;
