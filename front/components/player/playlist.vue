@@ -56,8 +56,8 @@
         >
         <span class="songnum float-left ml-1 mr-2">{{song.track_num}}.</span>
         <span class="songname float-left ml-0 pl-0">{{song.song_name}}</span>
-        <span class="download float-right mx-2"><a
-            href="">　</a></span>
+        <span class="download float-right mx-2" @click.stop>
+          <a :href="'/player/download/playlist/' + liveId + '/' + song.id"></a></span>
         <span class="songtime float-right mx-2">{{song.length | readableTime}}</span>
       </div>
     </div>
@@ -128,7 +128,7 @@ export default {
         this.wavesurfer.on('ready', () => this.barMoved());
         this.wavesurfer.on('audioprocess', () => this.barMoved());
         this.wavesurfer.on('seek', () => this.barMoved());
-        
+
       }).then(() => {
         //波形ウィンドウのマウス・タッチ操作
         const that = this;
