@@ -4,24 +4,28 @@
 
 {% block title %}{{performance.live_name}} | リハ音源 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/player/playlist.css' %}">
+<script src="{% static 'js/wavesurfer.min.js' %}"></script>
+{% endblock %}
 
+{% block vuebody %}
+<player-playlist
+  :live-id="{{ performance.pk }}"></player-playlist>
 {% endblock %}
 
 
 {% block body %}
 
 
-<div class="row border-bottom pb-1 mb-2">
+<!-- <div class="row border-bottom pb-1 mb-2"> -->
 	<!-- Live Title -->
-	<div class="col-sm-12">
+	<!-- <div class="col-sm-12">
 		<a href="{% url 'player:index' %}" class="float-left col-xs-2" id="return"> </a>
 		<h5 class="float-left col-xs-7 ml-2">{{performance.live_name}}</h5>
 		<span class="float-right col-xs-3 small">{{performance.recorded_at|date:"Y/m/d D"}}</span>
 	</div>
 </div>
-<div class="row">
-	<!-- Song Title -->
+<div class="row"> -->
+	<!-- Song Title
 	<div class="col-sm-12" id="songtitle">
 		<h4><span>0.</span>no music file selected</h4>
 	</div>
@@ -69,7 +73,7 @@
 		load('{{preload_song.file.url}}', '{{preload_song.track_num}}', '{{preload_song.song_name}}');
 	})
 	{% endif %}
-</script>
+</script> -->
 
 
 

@@ -3,6 +3,7 @@ import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http.response import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
@@ -119,6 +120,8 @@ def edit(request, live_id):
     }
     return render(request, 'player/edit.html', params)
 
+
+@login_required()
 def FileDownloadView(request, live_id, song_pk):
     try:
         song = Song.objects.get(pk=song_pk)
@@ -132,3 +135,27 @@ def FileDownloadView(request, live_id, song_pk):
         mimetype='audio/mpeg'
     )
     return response
+
+
+@login_required()
+def GetSongData(request, live_id):
+    performance = get_object_or_404(Performance, id=live_id)
+    songs = Song.objects.filter(performance=performance).order_by("track_num")
+    return JsonResponse(
+        {
+            "performance": {
+                "id": performance.id,
+                "live_name": performance.live_name,
+                "recorded_at": performance.recorded_at,
+            },
+            "songs": [
+                {
+                    "id": song.id,
+                    "track_num": song.track_num,
+                    "song_name": song.song_name,
+                    "fileurl": song.file.url,
+                    "length": song.length,
+                }
+            for song in songs],
+        }
+    )
