@@ -31,19 +31,9 @@ def index(request):
 @login_required()
 def playlist(request, live_id):
     performance = get_object_or_404(Performance, id=live_id)
-    songs = Song.objects.filter(performance=performance).order_by('track_num')
     params = {
         'performance': performance,
-        'songs': songs,
     }
-    if 'track' in request.GET:
-        try:
-            track = request.GET['track']
-            if 0 < int(track):
-                preload_song = Songs.get(track_num=track)
-                params['preload_song'] = preload_song
-        except:
-            pass
     return render(request, 'player/playlist.html', params)
 
 

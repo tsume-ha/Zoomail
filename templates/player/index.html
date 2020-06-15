@@ -44,13 +44,4 @@
 
 </section>
 
-<script type="text/javascript">
-	$('.js-link').on('click', function (e) {
-		e.stopPropagation();
-		e.preventDefault();
-		console.log($(this).data('url'));
-		location.href = $(this).data('url');
-	})
-</script>
-
 {% endblock %}

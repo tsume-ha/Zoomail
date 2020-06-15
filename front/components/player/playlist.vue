@@ -3,7 +3,7 @@
     <!-- Live Title -->
     <div class="row border-bottom pb-1 mb-2">
       <div class="col-12">
-        <a href="../../" class="float-left col-xs-2" id="return"> </a>
+        <a href="../" class="float-left col-xs-2" id="return"> </a>
         <h5 class="float-left col-xs-7 ml-2">{{performance.live_name}}</h5>
         <span class="float-right col-xs-3 small">{{performance.recorded_at | date}}</span>
       </div>
