@@ -135,32 +135,46 @@ class PlayerViewTest(TestCase):
             else:
                 self.assertEqual(response.status_code, 404)
 
-# class uploadTest(TestCase):
-#     @classmethod
-#     def setUpTestData(cls):
-#         Make_User(cls, year=2019)
-#         Make_User(cls, year=2018)
+class uploadTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User(cls, year=2019)
+        Make_User(cls, year=2018)
 
-#     def test_player_upload_logOUT(self):
-#         User_LogOUT(self)
-#         response = self.client.get('/player/upload/')
-#         self.assertEqual(response.status_code, 302)
-#         url_redial_to = response.url
-#         response = self.client.get(url_redial_to)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'admin/login.html')
+    def test_player_upload_logOUT(self):
+        User_LogOUT(self)
+        response = self.client.get('/player/upload/')
+        self.assertEqual(response.status_code, 302)
+        url_redial_to = response.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin/login.html')
 
-#     def test_player_upload_logIN_withOUT_permission(self):
-#         Force_Login(self, 2019)
-#         response = self.client.get('/player/upload/')
-#         self.assertEqual(response.status_code, 403)
+    def test_player_upload_logIN_withOUT_permission(self):
+        Force_Login(self, 2019)
+        response = self.client.get('/player/upload/')
+        self.assertEqual(response.status_code, 403)
 
-#     def test_player_upload_logIN_with_permission(self):
-#         Get_a_Permission(self, 2019)
-#         response = self.client.get('/player/upload/')
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'player/upload.html')
+    # def test_player_upload_logIN_with_permission(self):
+    #     Get_a_Permission(self, 2019)
+    #     Force_Login(self, 2019)
+    #     response = self.client.get('/player/upload/')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'player/upload.html')
+    #     data = {
+    #         'file': None,
+    #         'track_num': 1,
+    #         'song_name': 'example song name',
+    #         'livename': 'example live name',
+    #         'recorded_at': '2020-04-01',
+    #     }
+    #     request = self.client.post(
+    #                 '/player/upload/', data,
+    #                 content_type='application/json'
+    #                 )
 
+
+    
 #         mp3dir = os.path.join(settings.BASE_DIR, 'player', 'test.mp3')
 #         data = {}
 #         with open(mp3dir, 'rb') as file:
