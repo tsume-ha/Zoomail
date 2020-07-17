@@ -181,7 +181,6 @@ class uploadTest(TestCase):
             self.assertContains(response, data['livename'])
             self.assertContains(response, data['song_name'])
 
-            uploaded_song = Song.objects.get(song_name=data['song_name'])
             performance = Performance.objects.get(live_name=data['livename'])
             response = self.client.get(
                 '/player/api/live/{}'.format(performance.pk)
@@ -191,7 +190,6 @@ class uploadTest(TestCase):
             self.assertContains(response, data['livename'])
             self.assertContains(response, data['song_name'])
             
-
     def test_player_upload_logIN_withOUT_permission(self):
         User_LogOUT(self)
         Force_Login(self, 2018)
