@@ -4,6 +4,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from members.models import User
 from django.contrib.auth.models import Permission
 import os
+import json
 from .models import Performance, Song
 from django.conf import settings
 
@@ -135,129 +136,84 @@ class PlayerViewTest(TestCase):
             else:
                 self.assertEqual(response.status_code, 404)
 
-# class uploadTest(TestCase):
-#     @classmethod
-#     def setUpTestData(cls):
-#         Make_User(cls, year=2019)
-#         Make_User(cls, year=2018)
 
-#     def test_player_upload_logOUT(self):
-#         User_LogOUT(self)
-#         response = self.client.get('/player/upload/')
-#         self.assertEqual(response.status_code, 302)
-#         url_redial_to = response.url
-#         response = self.client.get(url_redial_to)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'admin/login.html')
+class uploadTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Make_User(cls, year=2019)
+        Make_User(cls, year=2018)
 
-#     def test_player_upload_logIN_withOUT_permission(self):
-#         Force_Login(self, 2019)
-#         response = self.client.get('/player/upload/')
-#         self.assertEqual(response.status_code, 403)
+    def test_player_upload_logOUT(self):
+        User_LogOUT(self)
+        response = self.client.get('/player/upload/')
+        self.assertEqual(response.status_code, 302)
+        url_redial_to = response.url
+        response = self.client.get(url_redial_to)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin/login.html')
 
-#     def test_player_upload_logIN_with_permission(self):
-#         Get_a_Permission(self, 2019)
-#         response = self.client.get('/player/upload/')
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'player/upload.html')
+    def test_player_upload_logIN_withOUT_permission(self):
+        Force_Login(self, 2019)
+        response = self.client.get('/player/upload/')
+        self.assertEqual(response.status_code, 403)
 
-#         mp3dir = os.path.join(settings.BASE_DIR, 'player', 'test.mp3')
-#         data = {}
-#         with open(mp3dir, 'rb') as file:
-#             data = {
-#                 'livename': 'テストライブ',
-#                 'recorded_at': '2019-01-01',
-#                 'form-0-song_name': 'テスト曲１',
-#                 'form-0-song_file': SimpleUploadedFile("test.mp3", file.read())
-#             }
-#         request = self.client.post('/player/upload/', data)
-#         self.assertEqual(request.status_code, 302)
-#         url_redial_to = request.url
-#         response = self.client.get(url_redial_to)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'player/playlist.html')
-#         self.assertContains(response, data['livename'])
-#         self.assertContains(response, data['form-0-song_name'])
-        
-#         User_LogOUT(self)
-#         Force_Login(self, 2018)
-#         response = self.client.get('/player/upload/')
-#         self.assertEqual(response.status_code, 403)
-#         response = self.client.get(url_redial_to)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'player/playlist.html')
-#         self.assertContains(response, data['livename'])
-#         self.assertContains(response, data['form-0-song_name'])
+    def test_player_upload_logIN_with_permission(self):
+        Get_a_Permission(self, 2019)
+        Force_Login(self, 2019)
+        response = self.client.get('/player/upload/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'player/upload.html')
 
-# class uploadTest(TestCase):
-#     @classmethod
-#     def setUpTestData(cls):
-#         Make_User(cls, year=2019)
-#         Make_User(cls, year=2018)
-#         Make_Song(cls, user_year=2019)
-#         cls.performance = Performance.objects.get(live_name='Test Rehasal 1')
+        mp3dir = os.path.join(settings.BASE_DIR, 'player', 'test.mp3')
+        with open(mp3dir, 'rb') as file:
+            data = {
+                'track_num': 1,
+                'song_name': 'test_song',
+                'livename': 'test_live',
+                'recorded_at': '2020-07-01',
+                'file': file,
+            }
+            request = self.client.post('/player/upload/', data)
+            self.assertEqual(request.status_code, 200)
+            response = self.client.get('/player/')
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'player/index.html')
+            self.assertContains(response, data['livename'])
+            self.assertContains(response, data['song_name'])
 
-#     def test_player_edit_logOUT(self):
-#         User_LogOUT(self)
-#         response = self.client.get('/player/edit/' + str(self.performance.pk))
-#         self.assertEqual(response.status_code, 302)
-#         url_redial_to = response.url
-#         response = self.client.get(url_redial_to)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'admin/login.html')
+            uploaded_song = Song.objects.get(song_name=data['song_name'])
+            performance = Performance.objects.get(live_name=data['livename'])
+            response = self.client.get(
+                '/player/api/live/{}'.format(performance.pk)
+                )
+            self.assertEqual(response.status_code, 200)
 
-#     def test_player_edit_logIN_withOUT_permission(self):
-#         Force_Login(self, 2019)
-#         response = self.client.get('/player/edit/' + str(self.performance.pk))
-#         self.assertEqual(response.status_code, 403)
+            self.assertContains(response, data['livename'])
+            self.assertContains(response, data['song_name'])
+            
 
-#     def test_player_upload_logIN_with_permission(self):
-#         Get_a_Permission(self, 2019)
-#         response = self.client.get('/player/edit/' + str(self.performance.pk))
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'player/edit.html')
-        
-#         self.song = Song.objects.get(song_name='TestSong')
-#         mp3dir = os.path.join(settings.BASE_DIR, 'player', 'test.mp3')
-#         data = {}
-#         with open(mp3dir, 'rb') as file:
-#             data = {
-#                 'form-0-track_num': 1,
-#                 'form-0-song_name': self.song.song_name + '_changed',
-#                 'form-0-id': self.song.id,
-#                 'form-1-file': SimpleUploadedFile("test.mp3", file.read()),
-#                 'form-1-track_num': '',
-#                 'form-1-song_name': '',
-#                 'form-1-file': '',
-#                 'form-1-id': '',
-#                 'form-2-track_num': '',
-#                 'form-2-song_name': '',
-#                 'form-2-file': '',
-#                 'form-2-id': '',
-#                 'form-3-track_num': '',
-#                 'form-3-song_name': '',
-#                 'form-3-file': '',
-#                 'form-3-id': '',
-#                 'form-TOTAL_FORMS': ['4'],
-#                 'form-INITIAL_FORMS': ['1'],
-#                 'form-MIN_NUM_FORMS': ['0'],
-#                 'form-MAX_NUM_FORMS': ['1000'],
-#             }
-#         request = self.client.post('/player/edit/' + str(self.performance.pk), data)
-#         self.assertEqual(request.status_code, 302)
-#         url_redial_to = request.url
-#         response = self.client.get(url_redial_to)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'player/playlist.html')
-#         self.assertContains(response, self.performance.live_name)
-#         self.assertContains(response, data['form-0-song_name'])
-        
-#         User_LogOUT(self)
-#         Force_Login(self, 2018)
-#         response = self.client.get('/player/upload/')
-#         self.assertEqual(response.status_code, 403)
-#         response = self.client.get(url_redial_to)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertTemplateUsed(response, 'player/playlist.html')
-#         self.assertContains(response, self.performance.live_name)
-#         self.assertContains(response, data['form-0-song_name'])
+    def test_player_upload_logIN_withOUT_permission(self):
+        User_LogOUT(self)
+        Force_Login(self, 2018)
+        response = self.client.get('/player/upload/')
+        self.assertEqual(response.status_code, 403)
+
+        mp3dir = os.path.join(settings.BASE_DIR, 'player', 'test.mp3')
+        with open(mp3dir, 'rb') as file:
+            data = {
+                'track_num': 1,
+                'song_name': 'test_song',
+                'livename': 'test_live',
+                'recorded_at': '2020-07-01',
+                'file': file,
+            }
+            request = self.client.post('/player/upload/', data)
+            self.assertEqual(request.status_code, 403)
+            response = self.client.get('/player/')
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'player/index.html')
+            self.assertNotContains(response, data['livename'])
+            self.assertNotContains(response, data['song_name'])
+
+
+
