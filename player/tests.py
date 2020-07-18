@@ -1,12 +1,14 @@
+import os
+import json
+
 from django.test import TestCase, Client
 from django.db.models import Count
 from django.core.files.uploadedfile import SimpleUploadedFile
-from members.models import User
 from django.contrib.auth.models import Permission
-import os
-import json
-from .models import Performance, Song
+
 from django.conf import settings
+from .models import Performance, Song
+from members.models import User
 
 
 def User_LogOUT(self):
@@ -94,10 +96,6 @@ class PlayerViewTest(TestCase):
             response = self.client.get('/player/playlist/' + str(pk))
             if index < self.performance_num:
                 self.assertEqual(response.status_code, 200)
-                # self.assertContains(response, 'TestSong')
-                # self.songs_in_playlist = Song.objects.filter(performance=Performance.objects.get(pk=pk))
-                # for song in self.songs_in_playlist:
-                #     self.assertContains(response, song.file.url)
             else:
                 self.assertEqual(response.status_code, 404)
 
