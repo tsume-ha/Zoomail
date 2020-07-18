@@ -9,6 +9,9 @@ import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 
 import MeetingRoom from "../../front/components/meeting-room.vue";
 
+import playerUpload from "../../front/components/player/upload.vue";
+import playerPlaylist from "../../front/components/player/playlist.vue";
+
 import awaseInput from "../../front/components/awase/input.vue";
 import awaseCreateForm from "../../front/components/awase/create-calendar-form.vue";
 import awaseUpdateForm from "../../front/components/awase/update-calendar-form.vue";
@@ -27,6 +30,10 @@ var app = new Vue({
   components: {
     // home/index 用の例会教室表示コンポーネント
     'meeting-room': MeetingRoom,
+
+    // player のコンポーネント
+    'player-upload': playerUpload,
+    'player-playlist': playerPlaylist,
 
     // awase/calendar/<int:pk>/input/ のコンポーネント
     'awase-input': awaseInput,
