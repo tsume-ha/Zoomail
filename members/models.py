@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255, verbose_name='名字')
     nickname = models.CharField(max_length=255, blank=True, verbose_name='ニックネーム')
     furigana = models.CharField(max_length=255, default="", verbose_name='ふりがな',
-                                validators=[RegexValidator(regex=u'^[ぁ-ん]+$',
+                                validators=[RegexValidator(regex=u'^[ぁ-んー]+$',
                                                            message='ふりがなは全角ひらがなのみで入力してください。')])
     year = models.IntegerField(verbose_name='入部年度')
     created_at = models.DateTimeField(default=timezone.now)
