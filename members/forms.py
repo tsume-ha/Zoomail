@@ -16,6 +16,10 @@ class UserUpdateForm(forms.ModelForm):
         self.fields['receive_email'].required = False
         self.fields['nickname'].required = False
         self.fields['send_mail'].widget.attrs['class'] = 'mx-2'
+        self.fields['last_name'].widget.attrs['placeholder'] = '京大'
+        self.fields['first_name'].widget.attrs['placeholder'] = '太郎'
+        self.fields['furigana'].widget.attrs['placeholder'] = 'きょうだいたろう'
+        self.fields['nickname'].widget.attrs['placeholder'] = 'たろー'
 
     def get_object(self):
         return self.request.user
@@ -59,11 +63,11 @@ class RegisterForm(forms.Form):
         label = "",
         required = True,
         widget = forms.TextInput(attrs = {
-            'placeholder': 'ふりがな',
+            'placeholder': 'きょうだいたろう',
             'class': 'form-control m-2',
         }),
         validators=[validators.RegexValidator(
-            regex=u'^[ぁ-ん]+$',
+            regex=u'^[ぁ-んー]+$',
             message='ふりがなは全角ひらがなのみで入力してください。',
         )]
     )
