@@ -40,7 +40,7 @@ def CalendarView(request, pk):
         'timetuple': list(range(9,26)),
         'calendar': calendar,
     }
-    return render(request, 'awase/calendar.html', params)
+    return render(request, 'awase/calendar_.html', params)
 
 @login_required()
 def CalendarJsonResponse(request, pk):
