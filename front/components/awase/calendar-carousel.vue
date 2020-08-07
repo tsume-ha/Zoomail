@@ -1,16 +1,16 @@
 <template>
   <div id="calendar-carousel">
-    <div class="calendar-column" :style="[columnWidth]">1</div>
-    <div class="calendar-column" :style="[columnWidth]">2</div>
-    <div class="calendar-column" :style="[columnWidth]">3</div>
-    <div class="calendar-column" :style="[columnWidth]">4</div>
-    <div class="calendar-column" :style="[columnWidth]">5</div>
-    <div class="calendar-column" :style="[columnWidth]">6</div>
-    <div class="calendar-column" :style="[columnWidth]">7</div>
-    <div class="calendar-column" :style="[columnWidth]">8</div>
-    <div class="calendar-column" :style="[columnWidth]">9</div>
-    <div class="calendar-column" :style="[columnWidth]">10</div>
-    <div class="calendar-column" :style="[columnWidth]">{{columnWidth}}</div>
+    <div class="calendar-column" :style="[columnStyle]">1</div>
+    <div class="calendar-column" :style="[columnStyle]">2</div>
+    <div class="calendar-column" :style="[columnStyle]">3</div>
+    <div class="calendar-column" :style="[columnStyle]">4</div>
+    <div class="calendar-column" :style="[columnStyle]">5</div>
+    <div class="calendar-column" :style="[columnStyle]">6</div>
+    <div class="calendar-column" :style="[columnStyle]">7</div>
+    <div class="calendar-column" :style="[columnStyle]">8</div>
+    <div class="calendar-column" :style="[columnStyle]">9</div>
+    <div class="calendar-column" :style="[columnStyle]">10</div>
+    <div class="calendar-column" :style="[columnStyle]">11</div>
   </div>
 </template>
 
@@ -20,15 +20,14 @@ export default {
     return {
       displayDays: 5,
       carouselWidth: 100,
+      diffX: 0,
     }
   },
-  mounted () {
-    this.carouselWidth = this.$el.clientWidth;
-  },
   computed: {
-    columnWidth: function () {
-      // 15px 分は .container のpaddingを打ち消すために
-      return {width: (this.carouselWidth - 15) / this.displayDays + 'px'};
+    columnStyle: function () {
+      return {
+        width: 100 / this.displayDays + '%',
+        transform: 'translate3d(' + this.diffX + 'px, 0, 0)'};
     }
   }
 }
@@ -41,11 +40,14 @@ export default {
   overflow: hidden;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
+  font-size: 0;/* inline-blockのとき隙間が空くので指定 */
 }
 #calendar-carousel .calendar-column{
   display: inline-block;
   margin: 0;
   padding: 0;
+  font-size: 16px;/* 親要素に0をしていしたので戻す */
   border-right: 1px solid #eee;
 }
 </style>

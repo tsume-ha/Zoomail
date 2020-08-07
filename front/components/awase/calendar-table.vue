@@ -22,6 +22,7 @@ export default {
   display: flex;
   flex-direction: row;
   position: relative;
+  box-sizing: border-box;
 }
 #calendar-table > div{
   position: relative;
