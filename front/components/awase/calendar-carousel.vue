@@ -1,5 +1,5 @@
 <template>
-  <div id="calendar-carousel">
+  <div id="calendar-carousel" @mousedown="onMouseDown">
     <div class="calendar-column" :style="[columnStyle]">1</div>
     <div class="calendar-column" :style="[columnStyle]">2</div>
     <div class="calendar-column" :style="[columnStyle]">3</div>
@@ -19,15 +19,48 @@ export default {
   data: function () {
     return {
       displayDays: 5,
-      carouselWidth: 100,
+      startX: null,
       diffX: 0,
+      currentNum: 0,
     }
   },
   computed: {
     columnStyle: function () {
       return {
         width: 100 / this.displayDays + '%',
-        transform: 'translate3d(' + this.diffX + 'px, 0, 0)'};
+        transform: `
+          translate3d(${this.diffX}px, 0, 0)
+          translate3d(${this.currentNum * (-100)}%, 0, 0)`
+      }
+    }
+  },
+  mounted: function () {
+    window.addEventListener('mousemove', this.onMouseMove);
+    window.addEventListener('mouseup', this.onMouseUp);
+  },
+  beforeDestroy: function () {
+    window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('mouseup', this.onMouseUp);
+  },
+  methods: {
+    onMouseDown(e) {
+      this.startX = e.clientX;
+    },
+    onMouseMove(e) {
+      if (this.startX == null) {
+        return;
+      }
+      this.diffX = e.clientX - this.startX;
+    },
+    onMouseUp(e) {
+      this.startX = null;
+      // if (this.diffX > 20) {
+      //   this.currentNum = Math.max(this.currentNum - 1, 0);
+      // }
+      // if (this.diffX < -20) {
+      //   this.currentNum = Math.min(this.currentNum + 1, 1);
+      // }
+      this.diffX = 0;
     }
   }
 }
