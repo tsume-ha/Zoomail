@@ -1,17 +1,10 @@
 <template>
   <div id="calendar-carousel" @mousedown="onMouseDown">
-    <!-- 見えていない前の部分 -->
     <calendar-column
-      v-for="j in displayDays"
-      :key="getDate(-(displayDays - j + 1)).format('YYYY-MM-DD')"
-      :date="getDate(-(displayDays - j + 1))"
-      :style="[columnStyle, isTransition]"
-    />
-    <!-- 見えている部分と後ろの見えてない部分 -->
-    <calendar-column
-      v-for="i in displayDays * 2"
-      :key="getDate(i - 1).format('YYYY-MM-DD')"
-      :date="getDate(i - 1)"
+      v-for="i in daysRange"
+      :key="getDate(i - displayDays - 1).format('YYYY-MM-DD')"
+      :date="getDate(i - displayDays - 1)"
+      :columndata="getScheduleData(getDate(i - displayDays - 1))"
       :style="[columnStyle, isTransition]"
     />
   </div>
@@ -38,6 +31,9 @@ export default {
     }
   },
   computed: {
+    daysRange: function () {
+      return this.displayDays * 3;
+    },
     columnStyle: function () {
       return {
         width: 100 / this.displayDays + '%',
@@ -70,6 +66,9 @@ export default {
       let current = moment(this.currentDate.format('YYYY-MM-DD'));
       return current.add(diff, 'days');
     },
+    getScheduleData(date) {
+      return this.dataList.find(e => e['date'] == date.format('YYYY-MM-DD'));
+    },
     onMouseDown(e) {
       this.isAnimating = false;
       this.reconstruct();
@@ -92,7 +91,6 @@ export default {
     reconstruct() {
       const diffDays = this.currentNum - this.displayDays;
       const newdate = this.getDate(diffDays);
-      // console.log(newdate.format('YYYY-MM-DD'))
       this.$emit('update-current-date', newdate);
       this.currentNum = this.displayDays;
     }
@@ -102,7 +100,6 @@ export default {
 
 <style scoped>
 #calendar-carousel{
-  background-color: rgb(255, 137, 137);
   white-space: nowrap;
   overflow: hidden;
   width: 100%;
