@@ -6,7 +6,6 @@
       :key="getDate(-(displayDays - j + 1)).format('YYYY-MM-DD')"
       :date="getDate(-(displayDays - j + 1))"
       :style="[columnStyle, isTransition]"
-      @transitionend="reconstruct('a')"
     />
     <!-- 見えている部分と後ろの見えてない部分 -->
     <calendar-column
@@ -14,7 +13,6 @@
       :key="getDate(i - 1).format('YYYY-MM-DD')"
       :date="getDate(i - 1)"
       :style="[columnStyle, isTransition]"
-      @transitionend="reconstruct('a')"
     />
   </div>
 </template>
@@ -50,7 +48,7 @@ export default {
     },
     isTransition: function () {
       if (this.isAnimating) {
-        return {transition: ''}
+        return {transition: '0.2s'}
       } else {
         return {transition: 'none'}
       }
@@ -74,6 +72,7 @@ export default {
     },
     onMouseDown(e) {
       this.isAnimating = false;
+      this.reconstruct();
       this.startX = e.clientX;
     },
     onMouseMove(e) {
@@ -95,10 +94,12 @@ export default {
       this.currentNum += diffDays
       this.diffX = 0;
     },
-    reconstruct(newdate) {
-      console.log('done')
-      // this.$emit('update-curent-date', newdate)
-      // this.currentDate = 0;
+    reconstruct() {
+      const diffDays = this.currentNum - this.displayDays;
+      const newdate = this.getDate(diffDays);
+      // console.log(newdate.format('YYYY-MM-DD'))
+      this.$emit('update-current-date', newdate);
+      this.currentNum = this.displayDays;
     }
   }
 }

@@ -37,8 +37,10 @@ export default {
     }
   },
   methods: {
-    updateCurrentDate(newdate) {
-      this.currentDate = newdate
+    updateCurrentDate(e) {
+      console.log(e)
+      console.log('done')
+      this.currentDate = e
     }
   }
 }
