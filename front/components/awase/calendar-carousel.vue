@@ -85,12 +85,7 @@ export default {
       this.isAnimating = true;
       this.startX = null;
       const columnwidth = this.$el.clientWidth / this.displayDays;
-      let diffDays = 0
-      if (this.diffX < 0) {
-        diffDays = -1 * Math.round(this.diffX / columnwidth);
-      } else {
-        diffDays = -1 * Math.round(this.diffX / columnwidth - 0.5);
-      }
+      const diffDays = -1 * Math.round(this.diffX / columnwidth);
       this.currentNum += diffDays
       this.diffX = 0;
     },
