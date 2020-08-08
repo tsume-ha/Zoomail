@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"main-36a3271b17a0cf720e34.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\main-36a3271b17a0cf720e34.js"}]}}
+{"status":"done","chunks":{"main":[{"name":"main-9f33037953dfd383d0a9.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\main-9f33037953dfd383d0a9.js"}]},"error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve './calendar-column.vue' in 'C:\\Users\\雅史\\Documents\\UnpluggedMessage\\front\\components\\awase'"}

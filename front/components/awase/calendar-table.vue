@@ -2,11 +2,16 @@
     <div id="calendar-table">
       <calendar-leftside />
       <calendar-carousel
-        :data-list="dataList" />
+        :data-list="dataList"
+        :display-days="displayDays"
+        :current-date="currentDate"
+        @update-current-date="updateCurrentDate"
+      />
     </div>
 </template>
 
 <script>
+import moment from "moment"
 import calendarLeftside from './calendar-leftside.vue';
 import calendarCarousel from './calendar-carousel.vue';
 export default {
@@ -26,7 +31,14 @@ export default {
         {date: "2020-05-07", display_date: "5/7", display_day: "木", weekday: 3, hour_begin: 9},
         {date: "2020-05-08", display_date: "5/8", display_day: "金", weekday: 4, hour_begin: 18},
         {date: "2020-05-09", display_date: "5/9", display_day: "土", weekday: 5, hour_begin: 9},
-      ]
+      ],
+      displayDays: 5,
+      currentDate: moment('2020-05-03'),
+    }
+  },
+  methods: {
+    updateCurrentDate(newdate) {
+      this.currentDate = newdate
     }
   }
 }
