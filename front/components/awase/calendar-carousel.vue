@@ -1,21 +1,21 @@
 <template>
   <div id="calendar-carousel" @mousedown="onMouseDown">
-    <div class="calendar-column" :style="[columnStyle]">1</div>
-    <div class="calendar-column" :style="[columnStyle]">2</div>
-    <div class="calendar-column" :style="[columnStyle]">3</div>
-    <div class="calendar-column" :style="[columnStyle]">4</div>
-    <div class="calendar-column" :style="[columnStyle]">5</div>
-    <div class="calendar-column" :style="[columnStyle]">6</div>
-    <div class="calendar-column" :style="[columnStyle]">7</div>
-    <div class="calendar-column" :style="[columnStyle]">8</div>
-    <div class="calendar-column" :style="[columnStyle]">9</div>
-    <div class="calendar-column" :style="[columnStyle]">10</div>
-    <div class="calendar-column" :style="[columnStyle]">11</div>
+    <div
+      v-for="columndata in dataList"
+      :key="columndata.date"
+      class="calendar-column"
+      :style="[columnStyle]"
+    >
+      {{columndata.display_date}}
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    dataList: {required: true, type: Array},
+  },
   data: function () {
     return {
       displayDays: 5,
