@@ -52,39 +52,11 @@ export default {
 }
 
 /* border settings */
-.date, .room, .time{
-  border-top: 1px solid #eee;
-}
-.time:last-child{
-  border-bottom: 1px solid #eee;
-}
-
-
-.date{
-  height: 3.5rem;
-  text-align: center;
-  line-height: 1.5rem;
-  font-size: 12px;
-  padding: 0.25rem auto;
-}
+@import "./calendar-table-cell.css";
 .date.sunday{
   background-color: #ffc6c6;
 }
 .date.saturday{
   background-color: rgb(170, 231, 255);
-}
-.room{
-  font-size: 10px;
-  text-align: center;
-  padding: 5px 0;
-  line-height: 15px;
-  height: 26px;
-  word-break: break-all;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  z-index: 2;
-}
-.time{
-  height: 20px;
 }
 </style>
