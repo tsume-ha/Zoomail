@@ -8,6 +8,10 @@
     <div class="room">
       使用不可
     </div>
+    <template v-for="h in (displayTimeRange.end - displayTimeRange.begin)">
+      <div class="time" :class="(h+displayTimeRange.begin+-1)+'00'" :key="(h+displayTimeRange.begin+-1)+'00'"></div>
+      <div class="time" :class="(h+displayTimeRange.begin+-1)+'30'" :key="(h+displayTimeRange.begin+-1)+'30'"></div>
+    </template>
   </div>
 </template>
 
@@ -21,8 +25,9 @@ export default {
   props: {
     date: {required: true, type: Object},
     // moment object
-    columndata: {required: false, type: Object}
+    columndata: {required: false, type: Object},
     // {date: "2020-05-01", display_date: "5/1", display_day: "金", weekday: 4, hour_begin: 18},
+    displayTimeRange: {required: false, type: Object, default: () => {return {begin:9, end:21}}}
   },
   data: function () {
     return {
@@ -45,18 +50,41 @@ export default {
   flex-direction: row;
   text-align: center;
 }
+
+/* border settings */
+.date, .room, .time{
+  border-top: 1px solid #eee;
+}
+.time:last-child{
+  border-bottom: 1px solid #eee;
+}
+
+
 .date{
   height: 3.5rem;
   text-align: center;
   line-height: 1.5rem;
   font-size: 12px;
   padding: 0.25rem auto;
-  border-top: 1px solid #eee;
 }
 .date.sunday{
   background-color: #ffc6c6;
 }
 .date.saturday{
   background-color: rgb(170, 231, 255);
+}
+.room{
+  font-size: 10px;
+  text-align: center;
+  padding: 5px 0;
+  line-height: 15px;
+  height: 26px;
+  word-break: break-all;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  z-index: 2;
+}
+.time{
+  height: 20px;
 }
 </style>
