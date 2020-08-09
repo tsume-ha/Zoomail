@@ -1,10 +1,13 @@
 <template>
     <div id="calendar-table">
-      <calendar-leftside />
+      <calendar-leftside
+        :display-time-range="displayTimeRange"
+      />
       <calendar-carousel
         :data-list="dataList"
         :display-days="displayDays"
         :current-date="currentDate"
+        :display-time-range="displayTimeRange"
         @update-current-date="updateCurrentDate"
       />
     </div>
@@ -23,6 +26,7 @@ export default {
     dataList: {required: true, type: Array},
     displayDays: {required: true, type: Number},
     currentDate: {required: true, type: Object},
+    displayTimeRange: {required: false, type: Object, default: () => {return {begin:9, end:21}}}
   },
   methods: {
     updateCurrentDate(e) {

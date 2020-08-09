@@ -5,6 +5,7 @@
       :key="getDate(i - displayDays - 1).format('YYYY-MM-DD')"
       :date="getDate(i - displayDays - 1)"
       :columndata="getScheduleData(getDate(i - displayDays - 1))"
+      :display-time-range="displayTimeRange"
       :style="[columnStyle, isTransition]"
     />
   </div>
@@ -18,6 +19,7 @@ export default {
     dataList: {required: true, type: Array},
     displayDays: {required: true, type: Number},
     currentDate: {required: true, type: Object},
+    displayTimeRange: {required: true, type: Object}
   },
   components: {
     calendarColumn,

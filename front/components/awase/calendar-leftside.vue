@@ -16,7 +16,7 @@
 <script>
 export default {
   props: {
-    displayTimeRange: {required: false, type: Object, default: () => {return {begin:9, end:21}}}
+    displayTimeRange: {required: true, type: Object}
   },
     
 }

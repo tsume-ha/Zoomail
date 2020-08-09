@@ -27,7 +27,7 @@ export default {
     // moment object
     columndata: {required: false, type: Object},
     // {date: "2020-05-01", display_date: "5/1", display_day: "金", weekday: 4, hour_begin: 18},
-    displayTimeRange: {required: false, type: Object, default: () => {return {begin:9, end:21}}}
+    displayTimeRange: {required: true, type: Object}
   },
   data: function () {
     return {
