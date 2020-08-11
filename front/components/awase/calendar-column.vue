@@ -26,7 +26,6 @@ export default {
     date: {required: true, type: Object},
     // moment object
     columndata: {required: false, type: Object},
-    // {date: "2020-05-01", display_date: "5/1", display_day: "金", weekday: 4, hour_begin: 18},
     displayTimeRange: {required: true, type: Object}
   },
   data: function () {
@@ -39,8 +38,18 @@ export default {
     },
     isSunday: function () {
       return this.date.day() == 0;
+    },
+    hasScheduleData: function () {
+      const keys = Object.keys(this.columndata.schedule_list);
+      for (const key of keys) {
+        if (Object.keys(this.columndata.schedule_list[key]).length > 0) {
+          return true;
+        }
+      }
+      return false;
     }
-  }
+  },
+
 }
 </script>
 

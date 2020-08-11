@@ -16,7 +16,7 @@ import moment, { relativeTimeThreshold } from 'moment'
 import calendarColumn from './calendar-column.vue'
 export default {
   props: {
-    dataList: {required: true, type: Array},
+    scheduleData: {required: true, type: Array},
     displayDays: {required: true, type: Number},
     currentDate: {required: true, type: Object},
     displayTimeRange: {required: true, type: Object}
@@ -69,7 +69,7 @@ export default {
       return current.add(diff, 'days');
     },
     getScheduleData(date) {
-      return this.dataList.find(e => e['date'] == date.format('YYYY-MM-DD'));
+      return this.scheduleData.find(e => e['date'] == date.format('YYYY-MM-DD'));
     },
     onMouseDown(e) {
       this.isAnimating = false;

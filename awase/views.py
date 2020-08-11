@@ -64,11 +64,10 @@ def CalendarJsonResponse(request, pk):
 
     def get_time_str(day, time):
         hour = time.hour + (time - datetime.datetime.combine(day, datetime.time(00,00,00))).days * 24
-        return 't' + str(hour) + '_' + str(time.minute)
+        return str(hour) + '_' + str(time.minute)
 
     for day in [calendar.days_begin + datetime.timedelta(days=d) for d in range((calendar.days_end - calendar.days_begin).days + 1)]:
         schedule_list = {}
-        complex_list = []
         hour_begin = CollectHour.objects.get(calendar=calendar, date=day).hour_begin
         hour_end = CollectHour.objects.get(calendar=calendar, date=day).hour_end
 
@@ -89,13 +88,9 @@ def CalendarJsonResponse(request, pk):
 
         day_json = {
             'date': day.strftime('%Y-%m-%d'),
-            'display_date': str(day.month) + '/' + str(day.day),
-            'display_day': weekday_jp[day.weekday()],
-            'weekday': day.weekday(),
             'hour_begin': hour_begin,
             'hour_end': hour_end,
             'schedule_list':schedule_list,
-            'room': 'Loading',
         }
         data['calendar_data'].append(day_json)
 

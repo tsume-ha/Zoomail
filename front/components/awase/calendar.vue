@@ -7,10 +7,10 @@
       @change-display-days="changeDisplayDays"
     />
     <calendar-table
-      :data-list="dataList"
       :display-days="displayDays"
       :current-date="currentDate"
       :displayTimeRange="{begin: timeRangeBegin, end: timeRangeEnd}"
+      :schedule-data="dataList"
       @update-current-date="updateCurrentDate"
      />
 
@@ -29,18 +29,13 @@ export default {
   data: function () {
     return {
       dataList: [
-        {date: "2020-05-01", hour_begin: 18, hour_end: 26},
-        {date: "2020-05-02", hour_begin: 12, hour_end: 26},
-        {date: "2020-05-03", hour_begin: 12, hour_end: 26},
-        {date: "2020-05-04", hour_begin: 10, hour_end: 26},
-        {date: "2020-05-05", hour_begin: 12, hour_end: 26},
-        {date: "2020-05-06", hour_begin: 12, hour_end: 26},
-        {date: "2020-05-07", hour_begin: 12, hour_end: 26},
-        {date: "2020-05-08", hour_begin: 18, hour_end: 26},
-        {date: "2020-05-09", hour_begin: 9, hour_end: 26},
+        // {date: "2020-05-01", hour_begin: 18, hour_end: 26,
+        //  schedule_list: {hoge:{9_00: true, 9_30: false},
+        //                  fuga:{9_00: true, 9_30: true}
+        //                 },
       ],
       displayDays: 5,
-      currentDate: moment('2020-05-03'),
+      currentDate: moment('2020-08-24'),
     }
   },
   methods: {
@@ -68,19 +63,33 @@ export default {
       return result;
     },
     timeRangeBegin: function () {
+      if (this.displayingDays.length == 0) {
+        return 9;
+      }
       let values = [];
       for (let i = 0; i < this.displayingDays.length; i++) {
         values.push(this.displayingDays[i].hour_begin);
       }
-      return Math.min(...values);
+      return Math.max(Math.min(...values), 9);
     },
     timeRangeEnd: function () {
+      if (this.displayingDays.length == 0) {
+        return 26;
+      }
       let values = [];
       for (let i = 0; i < this.displayingDays.length; i++) {
         values.push(this.displayingDays[i].hour_end);
       }
-      return Math.max(...values);
+      return Math.min(Math.max(...values), 26);
     }
-  }
+  },
+  created: function () {
+    this.axios
+    .get('/awase/calendar/json/24/')
+    .then(res => {
+      console.log(res.data.calendar_data)
+      this.dataList = res.data.calendar_data;
+    })
+  },
 }
 </script>
