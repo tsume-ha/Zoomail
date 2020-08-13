@@ -138,6 +138,7 @@ def mail_compose(from_email_adress, to_list, message_data):
     added_text = '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(message_data.pk)
 
     from_email_name = message_data.writer.get_short_name()
+    print(to_list)
     to_emails = [To(email=eml) for eml in to_list]
     message = Mail(
         from_email=(from_email_adress, from_email_name),
