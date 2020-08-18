@@ -198,7 +198,7 @@ def mail_compose(from_email_adress, to_list, message_data):
             process_list.append(obj)
         MessageProcess.objects.bulk_create(process_list)
 
-        return response
+    return response
 
 @login_required()
 def send(request):
