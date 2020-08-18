@@ -13,6 +13,8 @@ import playerUpload from "../../front/components/player/upload.vue";
 import playerPlaylist from "../../front/components/player/playlist.vue";
 
 import awaseCalendar from "../../front/components/awase/calendar.vue";
+import awaseCalendarMenu from "../../front/components/awase/calendar-menu.vue";
+import awaseCalendarExample from "../../front/components/awase/calendar-example.vue";
 import awaseInput from "../../front/components/awase/input.vue";
 import awaseCreateForm from "../../front/components/awase/create-calendar-form.vue";
 import awaseUpdateForm from "../../front/components/awase/update-calendar-form.vue";
@@ -38,6 +40,8 @@ var app = new Vue({
 
     // awase/calendar/ のコンポーネント
     'awase-calendar': awaseCalendar,
+    'awase-calendar-menu': awaseCalendarMenu,
+    'awase-calendar-example': awaseCalendarExample,
 
     // awase/calendar/<int:pk>/input/ のコンポーネント
     'awase-input': awaseInput,

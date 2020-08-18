@@ -89,22 +89,12 @@ export default {
 
 /* border settings */
 @import "./calendar-table-cell.css";
+@import "./calendar-color.css";
 .date.sunday{
   background-color: #ffc6c6;
 }
 .date.saturday{
   background-color: rgb(170, 231, 255);
 }
-.NG0{
-  background-color: #78df90;
-}
-.NG1{
-  background-color: #ffe38f;
-}
-.NG2{
-  background-color: #ff8999;
-}
-.NG3{
-  background-color: #343a40;
-}
+
 </style>
