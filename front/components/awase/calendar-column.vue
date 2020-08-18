@@ -9,8 +9,8 @@
       使用不可
     </div>
     <template v-for="h in (displayTimeRange.end - displayTimeRange.begin)">
-      <div class="time" :class="(h+displayTimeRange.begin+-1)+'00'" :key="(h+displayTimeRange.begin+-1)+'00'"></div>
-      <div class="time" :class="(h+displayTimeRange.begin+-1)+'30'" :key="(h+displayTimeRange.begin+-1)+'30'"></div>
+      <div class="time" :class="[CountNGNumber((h+displayTimeRange.begin-1)+'_0')]" :key="(h+displayTimeRange.begin-1)+'00'"></div>
+      <div class="time" :class="[CountNGNumber((h+displayTimeRange.begin-1)+'_30')]" :key="(h+displayTimeRange.begin-1)+'30'"></div>
     </template>
   </div>
 </template>
@@ -25,11 +25,12 @@ export default {
   props: {
     date: {required: true, type: Object},
     // moment object
-    columndata: {required: false, type: Object},
+    columndata: {required: false, type: Object, default: ()=>{return {schedule_list: ''}}},
     displayTimeRange: {required: true, type: Object}
   },
   data: function () {
     return {
+      className: ['NG0', 'NG1', 'NG2', 'NG3'],
     }
   },
   computed: {
@@ -49,7 +50,33 @@ export default {
       return false;
     }
   },
-
+  methods: {
+    CountNGNumber: function (time) {// time: str, example: '18_0', '18_30'
+      if (!this.hasScheduleData) {
+        return '';
+      }
+      const user_names = Object.keys(this.columndata.schedule_list);
+      let count = 0;
+      let flag = false;
+      for (const user_name of user_names) {
+        if (this.columndata.schedule_list[user_name][time] === false) {
+          count += 1;
+          flag = true;
+        } else if (this.columndata.schedule_list[user_name][time] === true) {
+          flag = true;
+        }
+      }
+      if (!flag) {
+        return ''
+      } else {
+        if (count > 3) {
+          return this.className[3]
+        } else {
+          return this.className[count];
+        }
+      }
+    }
+  }
 }
 </script>
 
@@ -67,5 +94,17 @@ export default {
 }
 .date.saturday{
   background-color: rgb(170, 231, 255);
+}
+.NG0{
+  background-color: #78df90;
+}
+.NG1{
+  background-color: #ffe38f;
+}
+.NG2{
+  background-color: #ff8999;
+}
+.NG3{
+  background-color: #343a40;
 }
 </style>
