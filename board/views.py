@@ -251,7 +251,6 @@ def send(request):
                         ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
                         for year in year_query:
                             from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
-                            from_email_name = content_data.writer.get_short_name()
                             to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
                             mail_compose(from_email_adress, to_list, content_data)
 
