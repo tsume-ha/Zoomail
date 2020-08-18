@@ -179,7 +179,6 @@ def mail_compose(from_email_adress, to_list, message_data):
         error_detail = ''
 
     except Exception as e:
-        response = None
         x_message_id = ''
         requested = False
         error_occurd = True
