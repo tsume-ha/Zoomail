@@ -169,27 +169,37 @@ def mail_compose(from_email_adress, to_list, message_data):
         message.attachment = attachment_list
 
     # message.send_at = int(datetime.datetime.now().timestamp() + 100)
-    
+
     try:
         sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sendgrid_client.send(message)
-        # x_message_id = response.headers['X-Message-Id']
+        x_message_id = response.headers['X-Message-Id']
 
-        # process_list = []
-        # for email in to_list:
-        #     obj = MessageProcess(
-        #         message = message_data,
-        #         x_message_id = x_message_id,
-        #         email = email,
-        #         Requested = True,
-        #         )
-        #     process_list.append(obj)
-        # MessageProcess.objects.bulk_create(process_list)
+        requested = True
+        error_occurd = False
+        error_detail = ''
+
+    except Exception as e:
+        x_message_id = ''
+        requested = False
+        error_occurd = True
+        error_detail = e
+
+    finally:
+        process_list = []
+        for email in to_list:
+            obj = MessageProcess(
+                message=message_data,
+                x_message_id=x_message_id,
+                email=email,
+                Requested=requested,
+                Error_occurd=error_occurd,
+                Error_detail=error_detail,
+                )
+            process_list.append(obj)
+        MessageProcess.objects.bulk_create(process_list)
 
         return response
-    except Exception as e:
-        print(e)
-
 
 @login_required()
 def send(request):
