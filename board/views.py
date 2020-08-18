@@ -138,7 +138,6 @@ def mail_compose(from_email_adress, to_list, message_data):
     added_text = '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(message_data.pk)
 
     from_email_name = message_data.writer.get_short_name()
-    print(to_list)
     to_emails = [To(email=eml) for eml in to_list]
     message = Mail(
         from_email=(from_email_adress, from_email_name),
@@ -180,6 +179,7 @@ def mail_compose(from_email_adress, to_list, message_data):
         error_detail = ''
 
     except Exception as e:
+        response = None
         x_message_id = ''
         requested = False
         error_occurd = True
@@ -254,9 +254,7 @@ def send(request):
                             from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
                             from_email_name = content_data.writer.get_short_name()
                             to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
-                            if to_list:
-                                to_list = User.objects.filter(year=year['year']).values_list('receive_email', flat=True)
-                                mail_compose(from_email_adress, to_list, content_data)
+                            mail_compose(from_email_adress, to_list, content_data)
 
                     django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
 
