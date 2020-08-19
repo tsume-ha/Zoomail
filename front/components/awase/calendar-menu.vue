@@ -1,12 +1,12 @@
 <template>
   <div>
     <a href="./input/" class="enter text-center text-sm-left">入力する</a>
-    <a 
+    <span
       @click="isOpened=!isOpened"
       id="menu_sw"
       class="text-center text-sm-left"
       :class="{'active': isOpened}"
-      >設定変更</a>
+      >設定変更</span>
     <div
       id="submenu"
       :class="{'active': isOpened}"
@@ -33,14 +33,15 @@ export default {
 </script>
 
 <style scoped>
-a{
+a, span#menu_sw{
 	display: block;
 	font-size: 1rem;
 	margin: 0;
 	padding: 0.4rem 0.5rem;
 	color: #0480a9;
 	border: none;
-	background-color: #fff;
+	background-color: #c9e9f1;
+  cursor: pointer;
 }
 a.enter{
 	color: #218c3a;
@@ -52,11 +53,7 @@ a.hover{
 a.enter.hover{
 	background-color: #afecbd;
 }
-a.active,
-div#submenu a{
-	background-color: #c9e9f1;
-}
-a.active.hover,
+span.active.hover,
 div#submenu a.hover{
 	background-color: #e4f4f8;
 }
