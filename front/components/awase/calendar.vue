@@ -94,7 +94,7 @@ export default {
   },
   created: function () {
     this.axios
-    .get('/awase/calendar/json/24/')
+    .get('./json/')
     .then(res => {
       console.log(res.data.calendar_data)
       this.dataList = res.data.calendar_data;

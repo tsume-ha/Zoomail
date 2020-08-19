@@ -1,17 +1,19 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 import datetime
 import json
-from members.models import User
-from .models import Calendar, CalendarUser, Schedule, CollectHour
-from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet, UpdateCollectHourForm
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, FieldError
-from django.shortcuts import redirect, get_object_or_404
 from django.db.models import Count
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.http.response import JsonResponse
 from django.urls import reverse
+
+from members.models import User
+from .models import Calendar, CalendarUser, Schedule, CollectHour
+from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet, UpdateCollectHourForm
+
 
 def calendar_permission(calendar, user):
     return CalendarUser.objects.filter(calendar=calendar).filter(user=user).exists()

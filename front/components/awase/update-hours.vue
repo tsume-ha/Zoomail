@@ -47,9 +47,6 @@
 import customDayContent from './update-hours-custom-day-content.vue';
 import timeSelector from './update-hours-time-selector.vue';
 export default {
-  props: {
-    jsonUrl: {type: String, required: true}
-  },
   components: {
     "custom-day-content": customDayContent,
     "time-selector": timeSelector,
@@ -69,7 +66,7 @@ export default {
   },
   created: function(){  
     this.axios
-      .get(this.jsonUrl)
+      .get('./json/')
       .then((res) => {
         this.timedata = res.data;
         this.jsonLoaded = true;
@@ -149,7 +146,7 @@ export default {
       }
 
       this.axios
-        .post(this.jsonUrl, data).then((response) => {
+        .post('./json/', data).then((response) => {
           console.log(response);
           this.isProcessError = false;
           for (var key of inProcess) {

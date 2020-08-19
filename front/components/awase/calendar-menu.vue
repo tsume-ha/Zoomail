@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a href="{% url 'awase:input' calendar.pk %}" class="enter text-center text-sm-left">入力する</a>
+    <a href="./input/" class="enter text-center text-sm-left">入力する</a>
     <a 
       @click="isOpened=!isOpened"
       id="menu_sw"
@@ -11,13 +11,13 @@
       id="submenu"
       :class="{'active': isOpened}"
       >
-      <a href="{% url 'awase:calendar_update' calendar.pk %}" class="text-center text-sm-left">カレンダーの名前、説明文の変更</a>
-      <a href="{% url 'awase:calendar_update' calendar.pk %}" class="text-center text-sm-left">集計期間（日にち）の変更</a>
-      <a href="{% url 'awase:hours_update_top' calendar.pk %}" class="text-center text-sm-left">集計時間（時間帯）の変更</a>
-      <a href="{% url 'awase:url_key' calendar.pk %}" class="text-center text-sm-left">招待URLの確認</a>
-      <a href="{% url 'awase:change_users' calendar.pk %}" class="text-center text-sm-left">カレンダーユーザーの変更</a>
-      <a href="{% url 'awase:leave_calendar' calendar.pk %}" class="text-center text-sm-left text-danger">この日程調整から退会する</a>
-      <a href="{% url 'awase:delete_calendar' calendar.pk %}" class="text-center text-sm-left text-danger">カレンダーを削除するページへ</a>
+      <a href="./update/" class="text-center text-sm-left">カレンダーの名前、説明文の変更</a>
+      <a href="./update/" class="text-center text-sm-left">集計期間（日にち）の変更</a>
+      <a href="./hours/" class="text-center text-sm-left">集計時間（時間帯）の変更</a>
+      <a href="./urlkey/" class="text-center text-sm-left">招待URLの確認</a>
+      <a href="./user/" class="text-center text-sm-left">カレンダーユーザーの変更</a>
+      <a href="./leave/" class="text-center text-sm-left text-danger">この日程調整から退会する</a>
+      <a href="./delete/" class="text-center text-sm-left text-danger">カレンダーを削除するページへ</a>
     </div>
   </div>
 </template>
