@@ -60,7 +60,7 @@ export default {
     // Scheduleデータのうち、表示中のものを抽出してreturn
       let result = [];
       for (let i = 0; i < this.displayDays; i++) {
-        let date = moment(this.currentDate.format('YYYY-MM-DD')).add(
+        let date = this.currentDate.clone().add(
           i - this.displayDays + this.currentDateNumForTimeRangeCalc,
           'days'
           );
