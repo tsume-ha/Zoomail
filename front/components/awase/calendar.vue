@@ -43,8 +43,7 @@ export default {
   },
   methods: {
     move: function (e) {
-      const newdate = moment(this.currentDate.format('YYYY-MM-DD')).add(e, 'days')
-      this.currentDate = newdate
+      this.currentDate = this.currentDate.clone().add(e, 'days');
     },
     updateCurrentDate: function (e) {
       this.currentDate = e;

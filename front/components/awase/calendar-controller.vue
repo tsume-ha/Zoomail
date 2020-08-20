@@ -20,10 +20,10 @@ export default {
   },
   methods: {
     move: function (days) {
-      this.$emit('move', days)
+      this.$emit('move', days);
     },
     changeDisplayDays: function (diff) {
-      this.$emit('change-display-days', diff)
+      this.$emit('change-display-days', diff);
     }
   }
 }
