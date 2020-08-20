@@ -104,6 +104,14 @@ export default {
       .then(res => {
         console.log(res.data);
         this.title = res.data.title;
+        const today = moment();
+        if (today.diff(moment(res.data.days_begin)) < 0) {
+          this.currentDate = moment(res.data.days_begin);
+        } else if (today.diff(moment(res.data.days_end)) > 0) {
+          this.currentDate = moment(res.data.days_end).subtract(this.displayDays-1, 'days');
+        } else {
+          this.currentDate = today;
+        }
       });
   },
 }
