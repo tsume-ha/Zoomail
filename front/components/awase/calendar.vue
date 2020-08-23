@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h3>{{title}}</h3>
+    <div>
+      <a id="return" href="../" class="float-left col-xs-2"> </a>
+      <h4 id="title">{{title}}</h4>
+      </div>
     <calendar-controller
       :displayDays="displayDays"
       @move="move"
@@ -96,13 +99,11 @@ export default {
     this.axios
       .get('./json/')
       .then(res => {
-        console.log(res.data.calendar_data)
         this.dataList = res.data.calendar_data;
       });
     this.axios
       .get('./api/info/')
       .then(res => {
-        console.log(res.data);
         this.title = res.data.title;
         const today = moment();
         if (today.diff(moment(res.data.days_begin)) < 0) {
@@ -116,3 +117,41 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+#return{
+  height:24px;
+  width:24px;
+  display:block;
+  position:relative;
+  overflow:hidden;
+  margin: 3px;
+}
+#return:before{
+  content:'';
+  height:12px;
+  width:12px;
+  display:block;
+  border:1px solid #333;
+  border-right-width:0;
+  border-bottom-width:0;
+  transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);-ms-transform:rotate(-45deg);
+  position:absolute;
+  top:5px;
+  left:5px;
+}
+#return:after{
+  content:'';
+  height:1px;
+  width:20px;
+  display:block;
+  background:#333;
+  position:absolute;
+  top:10.5px;
+  left:3px;
+}
+h4#title{
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+</style>
