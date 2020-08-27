@@ -52,27 +52,16 @@ export default {
     },
     isTransition: function () {
       if (this.isAnimating) {
-        return {transition: '0.2s'}
+        return {transition: 'all 0.2s ease-out'}
       } else {
         return {transition: 'none'}
       }
     }
   },
-  mounted: function () {
-    // window.addEventListener('mousemove', this.onMouseMove);
-    // // window.addEventListener('touchmove', this.onTouchMove, { passive: false });
-    // window.addEventListener('mouseup', this.onMouseUp);
-    // window.addEventListener('touchend', this.onTouchend);
-
+  created: function () {
     // 前後に用意してある分ずらす
     this.currentNum = this.displayDays;
   },
-  // beforeDestroy: function () {
-  //   window.removeEventListener('mousemove', this.onMouseMove);
-  //   // window.removeEventListener('touchmove', this.onTouchMove);
-  //   window.removeEventListener('mouseup', this.onMouseUp);
-  //   window.removeEventListener('touchend', this.onTouchend);
-  // },
   methods: {
     getDate(diff) {
       return this.currentDate.clone().add(diff, 'days');
