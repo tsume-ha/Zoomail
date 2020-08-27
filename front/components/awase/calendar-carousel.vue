@@ -1,5 +1,10 @@
 <template>
-  <div id="calendar-carousel" @mousedown="onMouseDown" @touchstart="onTouchStart">
+  <div id="calendar-carousel"
+    @mousedown="onMouseDown" @touchstart="onTouchStart"
+    @mousemove="onMouseMove" @touchmove="onTouchMove"
+    @mouseup="onMouseUp" @touchend="onTouchend"
+    @mouseleave="onMouseUp" @touchleave="onTouchend"
+    >
     <calendar-column
       v-for="i in daysRange"
       :key="getDate(i - displayDays - 1).format('YYYY-MM-DD')"
@@ -53,20 +58,20 @@ export default {
     }
   },
   mounted: function () {
-    window.addEventListener('mousemove', this.onMouseMove);
-    window.addEventListener('touchmove', this.onTouchMove);
-    window.addEventListener('mouseup', this.onMouseUp);
-    window.addEventListener('touchend', this.onTouchend);
+    // window.addEventListener('mousemove', this.onMouseMove);
+    // // window.addEventListener('touchmove', this.onTouchMove, { passive: false });
+    // window.addEventListener('mouseup', this.onMouseUp);
+    // window.addEventListener('touchend', this.onTouchend);
 
     // 前後に用意してある分ずらす
     this.currentNum = this.displayDays;
   },
-  beforeDestroy: function () {
-    window.removeEventListener('mousemove', this.onMouseMove);
-    window.removeEventListener('touchmove', this.onTouchMove);
-    window.removeEventListener('mouseup', this.onMouseUp);
-    window.removeEventListener('touchend', this.onTouchend);
-  },
+  // beforeDestroy: function () {
+  //   window.removeEventListener('mousemove', this.onMouseMove);
+  //   // window.removeEventListener('touchmove', this.onTouchMove);
+  //   window.removeEventListener('mouseup', this.onMouseUp);
+  //   window.removeEventListener('touchend', this.onTouchend);
+  // },
   methods: {
     getDate(diff) {
       let current = moment(this.currentDate.format('YYYY-MM-DD'));
@@ -92,11 +97,11 @@ export default {
 
     // タッチ処理
     onTouchStart(e) {
-      e.preventDefault();
       console.log('onTouchStart')
       this.touchStart(e.touches[0].clientX);
     },
     onTouchMove(e) {
+      e.preventDefault();
       console.log('onTouchMove')
       this.touchMove(e.touches[0].clientX);
     },
@@ -119,6 +124,7 @@ export default {
       }
       this.diffX = clientX - this.startX;
       this.timeRangeUpdate();
+      console.log(this.diffX)
     },
     touchEnd () {
       this.isAnimating = true;
