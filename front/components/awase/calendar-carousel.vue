@@ -84,30 +84,23 @@ export default {
 
     // マウス処理
     onMouseDown(e) {
-      console.log('onMouseDown')
       this.touchStart(e.clientX);
     },
     onMouseMove(e) {
-      console.log('onMouseMove')
       this.touchMove(e.clientX);
     },
     onMouseUp() {
-      console.log('onMouseUp')
       this.touchEnd();
     },
 
     // タッチ処理
     onTouchStart(e) {
-      console.log('onTouchStart')
       this.touchStart(e.touches[0].clientX);
     },
     onTouchMove(e) {
-      // e.preventDefault();
-      console.log('onTouchMove')
       this.touchMove(e.touches[0].clientX);
     },
     onTouchend () {
-      console.log("onTouchEnd")
       this.touchEnd();
     },
 
@@ -118,6 +111,7 @@ export default {
       this.startX = clientX;
     },
     touchMove (clientX) {
+      // clientX: Numver (px単位)
       if (this.startX == null) {
         return;
       }
@@ -132,11 +126,7 @@ export default {
       this.diffX = 0;
     },
     onTransitionEnd (){
-      console.log('done')
       this.isAnimating = false;
-      this.reconstruct();
-    },
-    reconstruct() {
       const diffDays = this.currentNum - this.displayDays;
       const newdate = this.getDate(diffDays);
       this.$emit('update-current-date', newdate);
