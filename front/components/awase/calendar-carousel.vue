@@ -71,20 +71,36 @@ export default {
     getScheduleData(date) {
       return this.scheduleData.find(e => e['date'] == date.format('YYYY-MM-DD'));
     },
+
+    // マウス処理
     onMouseDown(e) {
-      this.isAnimating = false;
-      this.reconstruct();
-      this.startX = e.clientX;
-      this.timeRangeUpdate();
+      this.touchStart(e.clientX);
     },
     onMouseMove(e) {
+      this.touchMove(e.clientX);
+    },
+    onMouseUp() {
+      this.touchEnd();
+    },
+    
+    // タッチ処理
+
+    // マウス・タッチ共通
+    touchStart (clientX) {
+      // clientX: Numver (px単位)
+      this.isAnimating = false;
+      this.reconstruct();
+      this.startX = clientX;
+      this.timeRangeUpdate();
+    },
+    touchMove (clientX) {
       if (this.startX == null) {
         return;
       }
-      this.diffX = e.clientX - this.startX;
+      this.diffX = clientX - this.startX;
       this.timeRangeUpdate();
     },
-    onMouseUp(e) {
+    touchEnd () {
       this.isAnimating = true;
       this.startX = null;
       const columnwidth = this.$el.clientWidth / this.displayDays;
