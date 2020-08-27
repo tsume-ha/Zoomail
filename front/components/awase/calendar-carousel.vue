@@ -1,5 +1,5 @@
 <template>
-  <div id="calendar-carousel" @mousedown="onMouseDown">
+  <div id="calendar-carousel" @mousedown="onMouseDown" @touchstart="onTouchStart">
     <calendar-column
       v-for="i in daysRange"
       :key="getDate(i - displayDays - 1).format('YYYY-MM-DD')"
@@ -54,14 +54,18 @@ export default {
   },
   mounted: function () {
     window.addEventListener('mousemove', this.onMouseMove);
+    window.addEventListener('touchmove', this.onTouchMove);
     window.addEventListener('mouseup', this.onMouseUp);
+    window.addEventListener('touchend', this.onTouchend);
 
     // 前後に用意してある分ずらす
     this.currentNum = this.displayDays;
   },
   beforeDestroy: function () {
     window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('touchmove', this.onTouchMove);
     window.removeEventListener('mouseup', this.onMouseUp);
+    window.removeEventListener('touchend', this.onTouchend);
   },
   methods: {
     getDate(diff) {
@@ -74,16 +78,32 @@ export default {
 
     // マウス処理
     onMouseDown(e) {
+      console.log('onMouseDown')
       this.touchStart(e.clientX);
     },
     onMouseMove(e) {
+      console.log('onMouseMove')
       this.touchMove(e.clientX);
     },
     onMouseUp() {
+      console.log('onMouseUp')
       this.touchEnd();
     },
-    
+
     // タッチ処理
+    onTouchStart(e) {
+      e.preventDefault();
+      console.log('onTouchStart')
+      this.touchStart(e.touches[0].clientX);
+    },
+    onTouchMove(e) {
+      console.log('onTouchMove')
+      this.touchMove(e.touches[0].clientX);
+    },
+    onTouchend () {
+      console.log("onTouchEnd")
+      this.touchEnd();
+    },
 
     // マウス・タッチ共通
     touchStart (clientX) {
