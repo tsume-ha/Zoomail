@@ -116,15 +116,12 @@ export default {
       this.isAnimating = false;
       this.reconstruct();
       this.startX = clientX;
-      this.timeRangeUpdate();
     },
     touchMove (clientX) {
       if (this.startX == null) {
         return;
       }
       this.diffX = clientX - this.startX;
-      this.timeRangeUpdate();
-      console.log(this.diffX)
     },
     touchEnd () {
       this.isAnimating = true;
@@ -140,13 +137,6 @@ export default {
       this.$emit('update-current-date', newdate);
       this.currentNum = this.displayDays;
     },
-    timeRangeUpdate: function () {
-    // time rangeを移動中に更新させる
-      const columnwidth = this.$el.clientWidth / this.displayDays;
-      const diffDays = -1 * Math.round(this.diffX / columnwidth);
-      this.$emit('days-for-time-range-calc', this.currentNum + diffDays)
-      return this.currentNum + diffDays;
-    }
   }
 }
 </script>

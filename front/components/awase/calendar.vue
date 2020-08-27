@@ -15,7 +15,6 @@
       :displayTimeRange="{begin: timeRangeBegin, end: timeRangeEnd}"
       :schedule-data="dataList"
       @update-current-date="updateCurrentDate"
-      @days-for-time-range-calc="updateCurrentDateNumForTimeRangeCalc"
      />
 
   </div>
@@ -41,7 +40,6 @@ export default {
       ],
       displayDays: 5,
       currentDate: moment('2020-08-24'),
-      currentDateNumForTimeRangeCalc: 5,
     }
   },
   methods: {
@@ -54,43 +52,25 @@ export default {
     changeDisplayDays: function (e) {
       this.displayDays += e;
     },
-    updateCurrentDateNumForTimeRangeCalc(e) {
-      this.currentDateNumForTimeRangeCalc = e;
-    }
   },
   computed: {
-    displayingDays: function () {
-    // Scheduleデータのうち、表示中のものを抽出してreturn
-      let result = [];
-      for (let i = 0; i < this.displayDays; i++) {
-        let date = this.currentDate.clone().add(
-          i - this.displayDays + this.currentDateNumForTimeRangeCalc,
-          'days'
-          );
-        let _result = this.dataList.find(e => e['date'] == date.format('YYYY-MM-DD'));
-        if (_result != undefined) {
-          result.push(_result);
-        }
-      }
-      return result;
-    },
     timeRangeBegin: function () {
-      if (this.displayingDays.length == 0) {
+      if (this.dataList.length == 0) {
         return 18;
       }
       let values = [];
-      for (let i = 0; i < this.displayingDays.length; i++) {
-        values.push(this.displayingDays[i].hour_begin);
+      for (let i = 0; i < this.dataList.length; i++) {
+        values.push(this.dataList[i].hour_begin);
       }
       return Math.max(Math.min(...values), 9);
     },
     timeRangeEnd: function () {
-      if (this.displayingDays.length == 0) {
+      if (this.dataList.length == 0) {
         return 24;
       }
       let values = [];
-      for (let i = 0; i < this.displayingDays.length; i++) {
-        values.push(this.displayingDays[i].hour_end);
+      for (let i = 0; i < this.dataList.length; i++) {
+        values.push(this.dataList[i].hour_end);
       }
       return Math.min(Math.max(...values), 26);
     }

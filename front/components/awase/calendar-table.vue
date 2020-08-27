@@ -9,7 +9,6 @@
         :current-date="currentDate"
         :display-time-range="displayTimeRange"
         @update-current-date="updateCurrentDate"
-        @days-for-time-range-calc="updateDaysForTimeRangeCalc"
       />
     </div>
 </template>
@@ -27,15 +26,12 @@ export default {
     scheduleData: {required: true, type: Array},
     displayDays: {required: true, type: Number},
     currentDate: {required: true, type: Object},
-    displayTimeRange: {required: false, type: Object, default: () => {return {begin:9, end:21}}}
+    displayTimeRange: {required: true, type: Object}
   },
   methods: {
     updateCurrentDate(e) {
       this.$emit('update-current-date', e)
     },
-    updateDaysForTimeRangeCalc(e) {
-      this.$emit('days-for-time-range-calc', e)
-    }
   }
 }
 </script>
