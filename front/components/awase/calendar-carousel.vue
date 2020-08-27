@@ -75,8 +75,7 @@ export default {
   // },
   methods: {
     getDate(diff) {
-      let current = moment(this.currentDate.format('YYYY-MM-DD'));
-      return current.add(diff, 'days');
+      return this.currentDate.clone().add(diff, 'days');
     },
     getScheduleData(date) {
       return this.scheduleData.find(e => e['date'] == date.format('YYYY-MM-DD'));
