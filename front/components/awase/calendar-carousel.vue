@@ -4,6 +4,7 @@
     @mousemove="onMouseMove" @touchmove="onTouchMove"
     @mouseup="onMouseUp" @touchend="onTouchend"
     @mouseleave="onMouseUp" @touchleave="onTouchend"
+    @transitionend="onTransitionEnd"
     >
     <calendar-column
       v-for="i in daysRange"
@@ -101,7 +102,7 @@ export default {
       this.touchStart(e.touches[0].clientX);
     },
     onTouchMove(e) {
-      e.preventDefault();
+      // e.preventDefault();
       console.log('onTouchMove')
       this.touchMove(e.touches[0].clientX);
     },
@@ -114,7 +115,6 @@ export default {
     touchStart (clientX) {
       // clientX: Numver (px単位)
       this.isAnimating = false;
-      this.reconstruct();
       this.startX = clientX;
     },
     touchMove (clientX) {
@@ -130,6 +130,11 @@ export default {
       const diffDays = -1 * Math.round(this.diffX / columnwidth);
       this.currentNum += diffDays;
       this.diffX = 0;
+    },
+    onTransitionEnd (){
+      console.log('done')
+      this.isAnimating = false;
+      this.reconstruct();
     },
     reconstruct() {
       const diffDays = this.currentNum - this.displayDays;
