@@ -18,11 +18,12 @@
       @show-detail="showDetail"
     />
     <calendar-detail
-      :is-active="selected.isActive"
+      v-if="selected.isActive"
       :data-list="dataList"
       :date="selected.date"
       :hour="selected.hour"
       :minute="selected.minute"
+      @close-detail="closeDetail"
     />
   </div>
 </template>
@@ -72,6 +73,9 @@ export default {
       this.$set(this.selected, 'date', e.date);
       this.$set(this.selected, 'hour', e.hour);
       this.$set(this.selected, 'minute', e.minute);
+    },
+    closeDetail: function () {
+      this.$set(this.selected, 'isActive', false);
     }
   },
   computed: {

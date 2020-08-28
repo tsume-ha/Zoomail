@@ -2,6 +2,10 @@
   <div id="detail">
     <h5>{{date.format('MM/DD（ddd）')}}</h5>
     <h6>{{timeDisplay}}</h6>
+    <span
+      id="detail_close"
+      @click="close"
+      > </span>
     <ul>
     <li v-for="data in scheduleDisplay" :key="data.name">
       <span>{{data.name}}</span>
@@ -19,7 +23,6 @@ moment.locale('ja', {
 });
 export default {
   props: {
-    isActive: {required: true, type: Boolean},
     dataList: {required: true, type: Array},
     date: {required: true, type: Object},
     hour: {required: true, type: Number},
@@ -70,6 +73,9 @@ export default {
         console.log(bool);
         return String(bool);
       }
+    },
+    close: function () {
+      this.$emit('close-detail');
     }
   }
 }
@@ -81,37 +87,25 @@ div#detail{
   position: fixed;
   z-index: 10;
   background-color: rgba(255,255,255,0.8);
-  top: 0;
-  left: 100px;
 }
 
-#calendar_detail{
-	display: none;
-}
-
-#calendar_detail.opened{
-    display: block;
-    position: fixed;
-    z-index: 10;
-    background-color: rgba(255,255,255,0.8);
-}
 
 @media screen and (max-width: 767px) {/*767px以下*/
-#calendar_detail.opened{
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 500px;
-    max-height: 50vh;
-    margin: 0 auto;
-    padding: 0 0;
-    border-top: 1px dotted #999;
-    overflow-y: scroll;
+div#detail{
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 500px;
+  max-height: 50vh;
+  margin: 0 auto;
+  padding: 0 0;
+  border-top: 1px dotted #999;
+  overflow-y: scroll;
 }
 }
 @media screen and (min-width: 768px) {/*768px以上*/
-#calendar_detail.opened{
+div#detail{
 	width: 500px;
 	margin: 1rem;
 	padding: 0.5rem;
@@ -120,7 +114,7 @@ div#detail{
 }
 }
 
-#calendar_detail.opened #detail_close{
+div#detail #detail_close{
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -130,43 +124,43 @@ div#detail{
 	height: 24px;
 	color: #F00;
 	background-color: #fee;
-    border-radius: 4px;
-    border: 1px solid #faa;
+  border-radius: 4px;
+  border: 1px solid #faa;
 }
 
-#calendar_detail.opened #detail_close:before,
-#calendar_detail.opened #detail_close:after{
-    content: '';
-    position: absolute;
-    display: block;
-    width: 16px;
-    height: 1px;
-    margin-left: -8px;
-    background-color: currentColor;
+div#detail #detail_close:before,
+div#detail #detail_close:after{
+  content: '';
+  position: absolute;
+  display: block;
+  width: 16px;
+  height: 1px;
+  margin-left: -8px;
+  background-color: currentColor;
 }
-#calendar_detail.opened #detail_close:before{
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
+div#detail #detail_close:before{
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
-#calendar_detail.opened #detail_close:after {
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+div#detail #detail_close:after {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 
 
 
-#calendar_detail.opened h5,
-#calendar_detail.opened h6{
+div#detail h5,
+div#detail h6{
     text-align: center;
 }
 
-#calendar_detail.opened ul{
+div#detail ul{
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
-#calendar_detail.opened ul li{
+div#detail ul li{
     margin: 0.25rem;
     padding: 0.25rem;
     border-bottom: 1px solid #aaa;
