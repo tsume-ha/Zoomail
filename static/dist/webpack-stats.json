@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"main-388237ab23c8cd2e2e02.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\main-388237ab23c8cd2e2e02.js"}]}}
+{"status":"error","error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve '../../../vue-temp/vue-editor-bridge' in 'C:\\Users\\Hashizume\\Documents\\UnpluggedMessage\\front\\components\\awase'"}

@@ -15,8 +15,14 @@
       :displayTimeRange="{begin: timeRangeBegin, end: timeRangeEnd}"
       :schedule-data="dataList"
       @update-current-date="updateCurrentDate"
-     />
-
+    />
+    <calendar-detail
+      :is-active="selected.isActive"
+      :data-list="dataList"
+      :date="selected.date"
+      :hour="selected.hour"
+      :minute="selected.minute"
+    />
   </div>
 </template>
 
@@ -24,10 +30,12 @@
 import moment from 'moment';
 import calendarTable from './calendar-table.vue';
 import calendarController from './calendar-controller.vue';
+import calendarDetail from './calendar-detail.vue';
 export default {
   components: {
     calendarTable,
-    calendarController
+    calendarController,
+    calendarDetail
   },
   data: function () {
     return {
@@ -40,6 +48,12 @@ export default {
       ],
       displayDays: 5,
       currentDate: moment('2020-08-24'),
+      selected: {
+        isActive: false,
+        date: moment('2020-08-24'),
+        hour: 12,
+        minute: 0,
+      }
     }
   },
   methods: {
