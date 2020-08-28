@@ -1,17 +1,18 @@
 <template>
   <div id="detail">
-    <h5>{{date.format('MM/DD（ddd）')}}</h5>
+    <h5>{{date.format('MM/DD (ddd)')}}</h5>
     <h6>{{timeDisplay}}</h6>
     <span
       id="detail_close"
       @click="close"
       > </span>
-    <ul>
-    <li v-for="data in scheduleDisplay" :key="data.name">
-      <span>{{data.name}}</span>
-      <span>{{boolToStr(data.bool)}}</span>
-    </li>
+    <ul v-if="hasData">
+      <li v-for="data in scheduleDisplay" :key="data.name" class="row">
+        <span class="col-8">{{data.name}}</span>
+        <span class="col-4 text-center" :class="[boolToClassName(data.bool)]">{{boolToStr(data.bool)}}</span>
+      </li>
     </ul>
+    <div v-else class="text-center">集計範囲外です</div>
   </div>
 </template>
 
@@ -43,8 +44,19 @@ export default {
       return result;
     },
     scheduleData () {
-      let data = this.dataList.find(e => e['date'] == this.date.format('YYYY-MM-DD'));
-      return data;
+      return this.dataList.find(e => e['date'] == this.date.format('YYYY-MM-DD'));
+    },
+    hasData: function () {
+      if (this.scheduleData === undefined) {
+        return false;
+      }
+      if (this.scheduleData.hour_begin > this.hour) {
+        return false;
+      }
+      if (this.scheduleData.hour_end <= this.hour) {
+        return false;
+      }
+      return true;
     },
     scheduleDisplay () {
       if (this.scheduleData === undefined) {
@@ -72,6 +84,17 @@ export default {
         // 例外処理
         console.log(bool);
         return String(bool);
+      }
+    },
+    boolToClassName: function (bool) {
+      if (bool === undefined) {
+        return 'text-secondary';
+      } else if (bool === false) {
+        return 'text-danger';
+      } else if (bool === true) {
+        return 'text-success';
+      } else {
+        return '';
       }
     },
     close: function () {

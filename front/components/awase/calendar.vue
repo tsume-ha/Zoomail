@@ -52,9 +52,9 @@ export default {
       currentDate: moment('2020-08-24'),
       selected: {
         isActive: false,
-        date: moment('2020-08-28'),
-        hour: 12,
-        minute: 0,
+        date: null,
+        hour: null,
+        minute: null,
       }
     }
   },
