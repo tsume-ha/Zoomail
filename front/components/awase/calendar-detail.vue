@@ -1,10 +1,12 @@
 <template>
   <div id="detail">
-    <span v-on:click="detail_close" id="detail_close"></span>
     <h5>{{date.format('MM/DD（ddd）')}}</h5>
     <h6>{{timeDisplay}}</h6>
     <ul>
-    
+    <li v-for="data in scheduleDisplay" :key="data.name">
+      <span>{{data.name}}</span>
+      <span>{{boolToStr(data.bool)}}</span>
+    </li>
     </ul>
   </div>
 </template>
@@ -39,15 +41,18 @@ export default {
     },
     scheduleData () {
       let data = this.dataList.find(e => e['date'] == this.date.format('YYYY-MM-DD'));
-      return data.schedule_list;
+      return data;
     },
     scheduleDisplay () {
-      const keys = Object.keys(this.scheduleData);
+      if (this.scheduleData === undefined) {
+        return [];
+      }
+      const keys = Object.keys(this.scheduleData.schedule_list);
       let result = [];
       const time = String(this.hour) + '_' + String(this.minute);
       for (const key of keys) {
-        const data = this.scheduleData[key][time];
-        result.push({[key]: data});
+        const data = this.scheduleData.schedule_list[key][time];
+        result.push({name: key, bool: data});
       }
       return result;
     }
@@ -60,6 +65,10 @@ export default {
         return '×';
       } else if (bool === true) {
         return '○';
+      } else {
+        // 例外処理
+        console.log(bool);
+        return String(bool);
       }
     }
   }
