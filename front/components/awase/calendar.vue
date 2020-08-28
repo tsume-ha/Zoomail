@@ -15,6 +15,7 @@
       :displayTimeRange="{begin: timeRangeBegin, end: timeRangeEnd}"
       :schedule-data="dataList"
       @update-current-date="updateCurrentDate"
+      @show-detail="showDetail"
     />
     <calendar-detail
       :is-active="selected.isActive"
@@ -66,6 +67,12 @@ export default {
     changeDisplayDays: function (e) {
       this.displayDays += e;
     },
+    showDetail: function (e) {
+      this.$set(this.selected, 'isActive', true);
+      this.$set(this.selected, 'date', e.date);
+      this.$set(this.selected, 'hour', e.hour);
+      this.$set(this.selected, 'minute', e.minute);
+    }
   },
   computed: {
     timeRangeBegin: function () {

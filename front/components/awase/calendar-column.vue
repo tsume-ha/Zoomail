@@ -9,8 +9,16 @@
       使用不可
     </div>
     <template v-for="h in (displayTimeRange.end - displayTimeRange.begin)">
-      <div class="time" :class="[CountNGNumber((h+displayTimeRange.begin-1)+'_0')]" :key="(h+displayTimeRange.begin-1)+'00'"></div>
-      <div class="time" :class="[CountNGNumber((h+displayTimeRange.begin-1)+'_30')]" :key="(h+displayTimeRange.begin-1)+'30'"></div>
+      <div class="time"
+        :class="[CountNGNumber((h+displayTimeRange.begin-1)+'_0')]"
+        :key="(h+displayTimeRange.begin-1)+'00'"
+        @click="showDetail(hour=h+displayTimeRange.begin-1, minute=0)"
+      ></div>
+      <div class="time"
+        :class="[CountNGNumber((h+displayTimeRange.begin-1)+'_30')]"
+        :key="(h+displayTimeRange.begin-1)+'30'"
+        @click="showDetail(hour=h+displayTimeRange.begin-1, minute=30)"
+      ></div>
     </template>
   </div>
 </template>
@@ -75,6 +83,14 @@ export default {
           return this.className[count];
         }
       }
+    },
+    showDetail: function (hour, minute) {
+      let data = {
+        date: this.date,
+      };
+      data['hour'] = hour;
+      data['minute'] = minute;
+      this.$emit('show-detail', data);
     }
   }
 }

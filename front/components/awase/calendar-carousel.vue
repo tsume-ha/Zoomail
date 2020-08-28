@@ -13,6 +13,7 @@
       :columndata="getScheduleData(getDate(i - displayDays - 1))"
       :display-time-range="displayTimeRange"
       :style="[columnStyle, isTransition]"
+      @show-detail="showDetail"
     />
   </div>
 </template>
@@ -120,6 +121,10 @@ export default {
       this.$emit('update-current-date', newdate);
       this.currentNum = this.displayDays;
     },
+    // 詳細画面表示
+    showDetail (e) {
+      this.$emit('show-detail', e);
+    }
   }
 }
 </script>

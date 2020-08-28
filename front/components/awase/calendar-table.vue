@@ -9,6 +9,7 @@
         :current-date="currentDate"
         :display-time-range="displayTimeRange"
         @update-current-date="updateCurrentDate"
+        @show-detail="showDetail"
       />
     </div>
 </template>
@@ -32,6 +33,10 @@ export default {
     updateCurrentDate(e) {
       this.$emit('update-current-date', e)
     },
+    // 詳細画面表示
+    showDetail (e) {
+      this.$emit('show-detail', e);
+    }
   }
 }
 </script>
