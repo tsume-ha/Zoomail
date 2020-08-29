@@ -8,10 +8,6 @@
 	{% render_bundle 'main' 'css' %}
 	<title>{% block title %}{% endblock %}</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script type="text/javascript">
-		window.Vue || document.write('<script src="{% static 'js/vue.js' %}"><\/script>');
-	</script>
 	<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 	<script src="{% static 'js/touch-hover.js' %}"></script>

@@ -359,25 +359,3 @@ class UpdateCollectHourTest(TestCase):
 
     def test_calendar_update_collecthour_logOUT(self):
         logOUT_test_view(self, self.url)
-
-    # def test_calendar_update_collecthour_logIN_POST(self):
-    #     instance = CollectHour.objects.get(
-    #         calendar = self.calendar,
-    #         date = self.calendar.days_begin,
-    #         )
-    #     data = {
-    #         'form-0-hour_begin': ['9'],
-    #         'form-0-hour_end': ['26'],
-    #         'form-0-date': [str(instance.date.strftime('%Y-%m-%d'))],
-    #         'form-0-id': [str(instance.id)],
-    #     }
-        # formset = UpdateCollectHourFormSet(data)
-        # self.assertTrue(formset.is_valid())
-        
-        # Force_Login(self)
-        # request = self.client.post(self.url, data)
-        # self.assertEqual(request.status_code, 302)
-        # url_redial_to = request.url
-        # response = self.client.get(url_redial_to)
-        # self.assertEqual(response.status_code, 200)
-        # self.assertTemplateUsed(response, 'awase/calendar.html')
