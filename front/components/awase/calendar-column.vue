@@ -76,12 +76,11 @@ export default {
       }
       if (!flag) {
         return ''
+      }
+      if (count > 3) {
+        return this.className[3]
       } else {
-        if (count > 3) {
-          return this.className[3]
-        } else {
-          return this.className[count];
-        }
+        return this.className[count];
       }
     },
     showDetail: function (hour, minute) {
@@ -110,7 +109,7 @@ export default {
   background-color: #ffc6c6;
 }
 .date.saturday{
-  background-color: rgb(170, 231, 255);
+  background-color: #8fe7fd;
 }
 
 </style>

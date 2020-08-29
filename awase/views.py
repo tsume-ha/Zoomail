@@ -18,11 +18,6 @@ from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFo
 def calendar_permission(calendar, user):
     return CalendarUser.objects.filter(calendar=calendar).filter(user=user).exists()
 
-def ceil(a, b):
-    return a//b if a%b==0 else a//b + 1
-
-CALENDAR_MAX_RANGE = 120 # max days
-
 @login_required()
 def index(request):
     now_user = request.user
@@ -38,11 +33,7 @@ def CalendarView(request, pk):
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
         raise Http404()
-    params = {
-        'timetuple': list(range(9,26)),
-        'calendar': calendar,
-    }
-    return render(request, 'awase/calendar_.html', params)
+    return render(request, 'awase/calendar.html')
 
 @login_required()
 def CalendarJsonResponse(request, pk):
@@ -58,8 +49,6 @@ def CalendarJsonResponse(request, pk):
             'today_num': (datetime.date.today() - calendar.days_begin).days,
         }
     }
-
-    weekday_jp = ['月','火','水','木','金','土','日']
 
     user_list = CalendarUser.objects.filter(calendar=calendar).order_by('joined_at')
 
@@ -254,31 +243,15 @@ def UpdateCollectHourView(request, pk, page=1):
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
         raise Http404()
-    DISPLAY_DAYS = 30
-    updateFormset = UpdateCollectHourFormSet(
-        request.POST or None,
-        queryset=CollectHour.objects.filter(
-            calendar = calendar,
-            date__gte = calendar.days_begin,
-            date__lte = calendar.days_end
-            ).order_by('date')[(page - 1) * DISPLAY_DAYS : page * DISPLAY_DAYS],
-        form_kwargs={'empty_permitted': False}
-    )
+
+    updateFormset = UpdateCollectHourFormSet(request.POST or None)
     if (request.method == 'POST'):
         if updateFormset.is_valid():
             content = updateFormset.save()
             return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
 
-    total_pages = ceil((calendar.days_end - calendar.days_begin).days + 1, DISPLAY_DAYS)
-    page_range = list(range(1, total_pages + 1))
-
     params = {
         'calendar': calendar,
-        'updateFormset': updateFormset,
-        'page_range': page_range,
-        'total_pages': total_pages,
-        'current_page': page,
-
     }
 
     return render(request, 'awase/update_hours.html', params)
