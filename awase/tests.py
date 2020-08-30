@@ -98,89 +98,89 @@ class CalendarViewTest(TestCase):
 
     def test_awase_calendar_view_logOUT(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/%s/' % str(calendar.pk)
+        url = '/awase/%s/' % str(calendar.pk)
         logOUT_test_view(self, url=url)
 
     def test_awase_calendar_view_logIN(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/%s/' % str(calendar.pk)
+        url = '/awase/%s/' % str(calendar.pk)
         response = logIN_test_view(self, calendar=calendar, url=url)
         self.assertTemplateUsed(response, 'awase/calendar.html')
 
     def test_awase_input_view_logOUT(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/%s/input/' % str(calendar.pk)
+        url = '/awase/%s/input/' % str(calendar.pk)
         logOUT_test_view(self, url=url)
 
     def test_awase_input_view_logIN(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/%s/input/' % str(calendar.pk)
+        url = '/awase/%s/input/' % str(calendar.pk)
         response = logIN_test_view(self, calendar=calendar, url=url)
         self.assertTemplateUsed(response, 'awase/input.html')
 
     def test_awase_update_calendar_view_logOUT(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/update/calendar/%s/' % str(calendar.pk)
+        url = '/awase/%s/update/' % str(calendar.pk)
         logOUT_test_view(self, url=url)
 
     def test_awase_update_calendar_view_logIN(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/update/calendar/%s/' % str(calendar.pk)
+        url = '/awase/%s/update/' % str(calendar.pk)
         response = logIN_test_view(self, calendar=calendar, url=url)
         self.assertTemplateUsed(response, 'awase/update_calendar.html')
 
     def test_awase_update_hours_view_logOUT(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/update/hours/%s/' % str(calendar.pk)
+        url = '/awase/%s/hours/' % str(calendar.pk)
         logOUT_test_view(self, url=url)
 
     def test_awase_update_hours_view_logIN(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/update/hours/%s/' % str(calendar.pk)
+        url = '/awase/%s/hours/' % str(calendar.pk)
         response = logIN_test_view(self, calendar=calendar, url=url)
         self.assertTemplateUsed(response, 'awase/update_hours.html')
 
     def test_awase_update_urlkey_view_logOUT(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/%s/urlkey/' % str(calendar.pk)
+        url = '/awase/%s/urlkey/' % str(calendar.pk)
         logOUT_test_view(self, url=url)
 
     def test_awase_update_urlkey_view_logIN(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/%s/urlkey/' % str(calendar.pk)
+        url = '/awase/%s/urlkey/' % str(calendar.pk)
         response = logIN_test_view(self, calendar=calendar, url=url)
         self.assertTemplateUsed(response, 'awase/update_URLKey.html')
 
     def test_awase_update_user_view_logOUT(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/update/user/%s/' % str(calendar.pk)
+        url = '/awase/%s/user/' % str(calendar.pk)
         logOUT_test_view(self, url=url)
 
     def test_awase_update_user_view_logIN(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/update/user/%s/' % str(calendar.pk)
+        url = '/awase/%s/user/' % str(calendar.pk)
         response = logIN_test_view(self, calendar=calendar, url=url)
         self.assertTemplateUsed(response, 'awase/change_users.html')
 
     def test_awase_leave_calendar_view_logOUT(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/leave/%s/' % str(calendar.pk)
+        url = '/awase/%s/leave/' % str(calendar.pk)
         logOUT_test_view(self, url=url)
 
     def test_awase_leave_calendar_view_logIN(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/leave/%s/' % str(calendar.pk)
+        url = '/awase/%s/leave/' % str(calendar.pk)
         response = logIN_test_view(self, calendar=calendar, url=url)
         self.assertTemplateUsed(response, 'awase/leave_calendar.html')
 
     def test_awase_delete_calendar_view_logOUT(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/delete/%s/' % str(calendar.pk)
+        url = '/awase/%s/delete/' % str(calendar.pk)
         logOUT_test_view(self, url=url)
 
     def test_awase_delete_calendar_view_logIN(self):
         calendar = Make_a_Calendar(self)
-        url = '/awase/calendar/delete/%s/' % str(calendar.pk)
+        url = '/awase/%s/delete/' % str(calendar.pk)
         response = logIN_test_view(self, calendar=calendar, url=url)
         self.assertTemplateUsed(response, 'awase/delete_calendar.html')
 
@@ -264,7 +264,7 @@ class CalendarInputTest(TestCase):
     def setUpTestData(cls):
         Make_User(cls)
         cls.calendar = Make_a_Calendar(cls)
-        cls.url = '/awase/calendar/%s/input/' % str(cls.calendar.pk)
+        cls.url = '/awase/%s/input/' % str(cls.calendar.pk)
         cls.time_list = [datetime.datetime.combine(datetime.date.today(), datetime.time(00,00,00))\
                       + datetime.timedelta(days=1, hours=9)\
                       + datetime.timedelta(minutes=30*n)
@@ -297,12 +297,12 @@ class CalendarInputTest(TestCase):
     def test_input_calendar_POST_logIN(self):
         user = Force_Login(self)
         request = self.client.post(
-            '/awase/calendar/json/%s/input/' % str(self.calendar.pk), self.data,
+            '/awase/%s/input/json/' % str(self.calendar.pk), self.data,
             content_type='application/json'#json送るときこれ必要
             )
         self.assertEqual(request.status_code, 200)
         #自動送信なので自分で遷移する（下行）
-        response = self.client.get('/awase/calendar/%s/' % str(self.calendar.pk))
+        response = self.client.get('/awase/%s/' % str(self.calendar.pk))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'awase/calendar.html')
         
@@ -355,29 +355,7 @@ class UpdateCollectHourTest(TestCase):
     def setUpTestData(self):
         Make_User(self)
         self.calendar = Make_a_Calendar(self)
-        self.url = '/awase/update/hours/%s/' % self.calendar.pk
+        self.url = '/awase/%s/hours/' % self.calendar.pk
 
     def test_calendar_update_collecthour_logOUT(self):
         logOUT_test_view(self, self.url)
-
-    # def test_calendar_update_collecthour_logIN_POST(self):
-    #     instance = CollectHour.objects.get(
-    #         calendar = self.calendar,
-    #         date = self.calendar.days_begin,
-    #         )
-    #     data = {
-    #         'form-0-hour_begin': ['9'],
-    #         'form-0-hour_end': ['26'],
-    #         'form-0-date': [str(instance.date.strftime('%Y-%m-%d'))],
-    #         'form-0-id': [str(instance.id)],
-    #     }
-        # formset = UpdateCollectHourFormSet(data)
-        # self.assertTrue(formset.is_valid())
-        
-        # Force_Login(self)
-        # request = self.client.post(self.url, data)
-        # self.assertEqual(request.status_code, 302)
-        # url_redial_to = request.url
-        # response = self.client.get(url_redial_to)
-        # self.assertEqual(response.status_code, 200)
-        # self.assertTemplateUsed(response, 'awase/calendar.html')

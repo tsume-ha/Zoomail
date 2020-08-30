@@ -13,9 +13,7 @@
     時間は24時間表記で、9時(AM9:00)～26時(翌AM2:00)まで1時間単位で指定できます。<br>
     また、期間内の任意の日を、「集計しない日」に設定することも出きます。
 </p>
-<awase-update-hours
-  json-url="{% url 'awase:hours_update_json' calendar.pk %}"
-></awase-update-hours>
+<awase-update-hours />
 <hr>
 <a href="{% url 'awase:calendar' calendar.pk %}" class="btn btn-primary my-2">日程調整「{{ calendar.title }}」に戻る</a>
 {% endblock %}
