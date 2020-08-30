@@ -18,8 +18,8 @@ import moment from "moment"
 export default {
   data: function() {
     return {
-      todayRoom: "",
-      today: "",
+      todayRoom: "データなし",
+      today: moment().format('YYYY-MM-DD'),
       yesterdayRoom: "",
       yesterday: "",
     };

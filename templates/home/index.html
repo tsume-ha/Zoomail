@@ -62,7 +62,7 @@
 		</script>
 		{% endif %}
 		<div class="col-sm-4 my-2 p-2" id="meeting-room">
-			<meeting-room></meeting-room>
+			<meeting-room />
 		</div>
 		{% if user.is_authenticated %}
 		<div class="col-sm-12 my-3" id="announcement">
@@ -70,7 +70,7 @@
 			<ul>
 				{% for announcement in announcements %}
 				<li>
-					<span class="date">{{ announcement.created_at|date:"Y/m/d" }}</span>
+					<span>{{ announcement.created_at|date:"Y/m/d" }}</span>
 					<p>{{ announcement.text | linebreaks | urlize }}</p>
 				</li>
 				{% endfor %}
