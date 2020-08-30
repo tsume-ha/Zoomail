@@ -34,12 +34,13 @@
       <span class="m-2">に</span>
       <button @click="setTimeData" class="btn btn-info">変更</button>
     </div>
-    <hr>
     <div id="not-collect-select" class="row my-3 mx-2">
       <span class="m-2">もしくは、</span>
       <button @click="setNotCollectDay" class="btn btn-secondary">「集計しない日」にする</button>
     </div>
     <div v-if="isInAccess" class="small text-secondary is-in-access">サーバーと通信中...</div>
+    <hr>  
+    <a href="../" class="btn btn-secondary mx-2 my-3">戻る</a>
   </div>
 </template>
 

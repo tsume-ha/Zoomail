@@ -66,6 +66,7 @@
     <p class="small text-secondary" @click="onclick">
       集計できる期間は現在のところ、最大で120日間です。<br>
     </p>
+    <a href="../" class="btn btn-secondary mx-2 my-3">戻る</a>
   </section>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <a id="return" href="../" class="float-left col-xs-2"> </a>
+      <back />
       <h4 id="title">{{title}}</h4>
       </div>
     <calendar-controller
@@ -30,6 +30,7 @@
 
 <script>
 import moment from 'moment';
+import back from '../back-arrow.vue';
 import calendarTable from './calendar-table.vue';
 import calendarController from './calendar-controller.vue';
 import calendarDetail from './calendar-detail.vue';
@@ -37,7 +38,8 @@ export default {
   components: {
     calendarTable,
     calendarController,
-    calendarDetail
+    calendarDetail,
+    back
   },
   data: function () {
     return {
@@ -124,37 +126,6 @@ export default {
 </script>
 
 <style scoped>
-#return{
-  height:24px;
-  width:24px;
-  display:block;
-  position:relative;
-  overflow:hidden;
-  margin: 3px;
-}
-#return:before{
-  content:'';
-  height:12px;
-  width:12px;
-  display:block;
-  border:1px solid #333;
-  border-right-width:0;
-  border-bottom-width:0;
-  transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);-ms-transform:rotate(-45deg);
-  position:absolute;
-  top:5px;
-  left:5px;
-}
-#return:after{
-  content:'';
-  height:1px;
-  width:20px;
-  display:block;
-  background:#333;
-  position:absolute;
-  top:10.5px;
-  left:3px;
-}
 h4#title{
   display: inline-block;
   margin-left: 0.5rem;

@@ -46,7 +46,8 @@
       <p v-if="whenPageLeave" class="text-info">バックグラウンドで通信中です。通信が終わるまで、このページを開いたままにしてください！</p>
       <p v-text="afterErrorMessage" class="text-success"></p>
       <p class="small mx-2">
-        サーバーとの通信が自動で行われるようになり、送信ボタンが無くなりました。
+        サーバーとの通信が自動で行われるようになり、送信ボタンが無くなりました。<br>
+        通信中にページを閉じるとエラーが出ますが、すぐに通信は終了し、その後はページを閉じても大丈夫です。
       </p>
       <a href="../" class="btn btn-secondary m-2">戻る</a>
     </form>

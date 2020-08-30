@@ -6,6 +6,8 @@ import VueMoment from 'vue-moment'
 import Calendar from 'v-calendar/lib/components/calendar.umd'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 
+// 共通コンポーネント
+import back from '../../front/components/back-arrow.vue';
 
 import MeetingRoom from "../../front/components/meeting-room.vue";
 
@@ -31,6 +33,9 @@ Vue.component('v-date-picker', DatePicker)
 var app = new Vue({
   el: "#vue-app",
   components: {
+    // 「戻る」リンク用のコンポーネント
+    'back': back,
+
     // home/index 用の例会教室表示コンポーネント
     'meeting-room': MeetingRoom,
 
