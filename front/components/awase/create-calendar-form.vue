@@ -59,12 +59,17 @@
     <p class="small text-secondary">
     	集計できる期間は現在のところ、最大で120日間です。<br>
     </p>
+    <nowloading v-if="isSending" text="Now Loading."/>
   </section>
 </template>
 
 <script>
 import moment from "moment";
+import nowloading from "../nowloading.vue";
 export default {
+  components: {
+    nowloading
+  },
   data: function () {
     return {
       title: "",
@@ -77,16 +82,16 @@ export default {
       dayEnd: "",// YYYY-MM-DD
       minDate: moment().toDate(),
       maxDate: moment().add(1, 'years').toDate(),
-      is_sending: false,//送信後画面遷移中のときtrue，多重送信防止
+      isSending: false,//送信後画面遷移中のときtrue，多重送信防止
     }
   },
   methods: {
     onclick: function(e){
       e.preventDefault();
-      if (this.is_sending) {
+      if (this.isSending) {
         return;
       }
-      this.is_sending = true;
+      this.isSending = true;
       if (this.validateTitle() &&
           this.validateText() &&
           this.validateDate() ) {
@@ -104,11 +109,9 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          this.is_sending = false;
+          this.isSending = false;
         })
       }
-      this.is_sending = false;
-      console.log('invalid');
     },
     validateTitle: function () {
       if (this.title.length > 64) {
