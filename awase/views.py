@@ -90,30 +90,47 @@ def CalendarJsonResponse(request, pk):
 
 @login_required()
 def create(request):
+    return render(request, 'awase/create.html')
+
+
+@login_required()
+def createJson(request):
     now_user = request.user
-    CreateForm = CreateCalendarForm(request.POST or None)
+    CreateForm = CreateCalendarForm(
+        json.loads(request.body) or None
+    )
     if (request.method == 'POST'):
-        if not CreateForm.is_valid():
-            messages.error(request, '登録できませんでした。もう一度入力を行ってください。')
-        else:
+        if CreateForm.is_valid():
             content = CreateForm.save(commit=False)
             content.created_by = now_user
             content.invite_key = User.objects.make_random_password(length=12)
             content.save()
-            calendar = content
             user_content = CalendarUser(
                 calendar = content,
                 user = now_user
                 )
             user_content.save()
-            params ={'calendar': calendar}
-            return render(request, 'awase/create_complete.html', params)
+            return JsonResponse({
+                "calendar_id": content.pk,
+                "url": reverse('awase:complete', args=[content.pk])
+            })
+
+    response = HttpResponse('BAD REQUEST')
+    response.status_code = 400
+    return response
+
+
+@login_required()
+def complete(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
 
     params = {
-        'CreateForm': CreateForm,
+        'calendar': calendar,
     }
-
-    return render(request, 'awase/create.html', params)
+    return render(request, 'awase/create_complete.html', params)
 
 @login_required()
 def invited(request, key):

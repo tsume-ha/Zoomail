@@ -1,8 +1,6 @@
 <template>
   <section id="form_upload" class="my-3">
     <form method="post">
-      <input type="hidden" name="csrfmiddlewaretoken" :value="csrftoken">
-
       <div class="form-group mx-0">
         <label for="id_title">曲名・バンド名・イベント名:</label>
         <input
@@ -85,22 +83,32 @@ export default {
   methods: {
     onclick: function(e){
       e.preventDefault();
+      if (this.is_sending) {
+        return;
+      }
+      this.is_sending = true;
       if (this.validateTitle() &&
           this.validateText() &&
-          this.validateDate()) {
-        console.log('valid')
-        this.axios.post("./json/", {
+          this.validateDate() ) {
+        const data = {
           "title": this.title,
           "text": this.text,
           "days_begin": this.dayStart,
           "days_end": this.dayEnd
-        })
+          };
+        console.log(data)
+        this.axios.post("../api/create/", data)
         .then(res => {
-          console.log(res)
+          location.href = res.data.url;
+          return;
         })
-      } else {
-        console.log('invalid')
+        .catch(error => {
+          console.log(error);
+          this.is_sending = false;
+        })
       }
+      this.is_sending = false;
+      console.log('invalid');
     },
     validateTitle: function () {
       if (this.title.length > 64) {
@@ -138,9 +146,7 @@ export default {
       this.dayEnd = end.format("YYYY-MM-DD");
       return true;
     }
-
-  },
-
+  }
 }
 </script>
 

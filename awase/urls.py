@@ -18,6 +18,9 @@ urlpatterns = [
     path('<int:pk>/user/', views.ChangeUsers, name='change_users'),
     path('<int:pk>/leave/', views.LeaveCalendarView, name='leave_calendar'),
     path('<int:pk>/delete/', views.DeleteCalendarView, name='delete_calendar'),
+    path('<int:pk>/complete/', views.complete, name='complete'),
+
+    path('api/create/', views.createJson, name='create_json'),
     path('<int:pk>/api/info/', views.GetCalendarInfo, name='get_calendar_info'),
 
 ]
