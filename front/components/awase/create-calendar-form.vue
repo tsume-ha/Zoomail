@@ -91,7 +91,6 @@ export default {
       if (this.isSending) {
         return;
       }
-      this.isSending = true;
       if (this.validateTitle() &&
           this.validateText() &&
           this.validateDate() ) {
@@ -102,6 +101,7 @@ export default {
           "days_end": this.dayEnd
           };
         console.log(data)
+        this.isSending = true;
         this.axios.post("../api/create/", data)
         .then(res => {
           location.href = res.data.url;
