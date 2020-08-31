@@ -2,6 +2,7 @@ var path = require("path");
 var webpack = require("webpack");
 var BundleTracker = require("webpack-bundle-tracker");
 var VueLoaderPlugin = require("vue-loader/lib/plugin");
+var MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = {
   mode: "development",
@@ -35,6 +36,7 @@ module.exports = {
   plugins: [
     new BundleTracker({ filename: "./static/dist/webpack-stats.json" }),
     new VueLoaderPlugin(),
+    new MomentLocalesPlugin({ localesToKeep: ['ja'] }),
   ],
   resolve: {
     extensions: [".js", ".vue"],
