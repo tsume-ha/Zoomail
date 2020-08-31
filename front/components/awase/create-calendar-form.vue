@@ -46,7 +46,7 @@
             :min-date="minDate"
             :max-date="maxDate"
             :first-day-of-week='2'
-            @input="validate()"
+            @input="validateDate"
             />
         </div>
         <p v-if="dateError" class="small text-danger pl-2">
@@ -67,9 +67,6 @@
 <script>
 import moment from "moment";
 export default {
-  props: {
-    csrftoken: {type: String, required: true},
-  },
   data: function () {
     return {
       title: "",
@@ -77,35 +74,33 @@ export default {
       text: "",
       textError: "",
       selectedRange: null,
-      dayRangeError: false,
       dateError: "",
+      dayStart: "",// YYYY-MM-DD
+      dayEnd: "",// YYYY-MM-DD
+      minDate: moment().toDate(),
+      maxDate: moment().add(1, 'years').toDate(),
       is_sending: false,//送信後画面遷移中のときtrue，多重送信防止
     }
   },
   methods: {
-    dateToText: function(date){
-      console.log(moment(date))
-      return date.getFullYear() + '-' + ('00' + (date.getMonth() + 1)).slice(-2) + '-' + ('00' + date.getDate()).slice(-2);
-    },
-    validate: function(){
-      let diff = this.selectedRange.end.getTime() - this.selectedRange.start.getTime();
-      let days = diff / (1000 * 60 * 60 * 24);
-      if (days > 120) {
-        this.dayRangeError = true;
-      } else {
-        this.dayRangeError = false;
-      }
-    },
     onclick: function(e){
-      if (!this.is_valid) {
-        e.preventDefault();
-        return false;
+      e.preventDefault();
+      if (this.validateTitle() &&
+          this.validateText() &&
+          this.validateDate()) {
+        console.log('valid')
+        this.axios.post("./json/", {
+          "title": this.title,
+          "text": this.text,
+          "days_begin": this.dayStart,
+          "days_end": this.dayEnd
+        })
+        .then(res => {
+          console.log(res)
+        })
+      } else {
+        console.log('invalid')
       }
-      if (this.is_sending) {
-        e.preventDefault();
-        return false;
-      }
-      this.is_sending = true;
     },
     validateTitle: function () {
       if (this.title.length > 64) {
@@ -127,56 +122,22 @@ export default {
       this.textError = "";
       return true;
     },
-
-
-  },
-  computed: {
-    start: function(){
-      if (this.selectedRange === null) {
-        return '';
-      } else {
-        return this.dateToText(this.selectedRange.start);
-      }
-    },
-    end: function(){
-      if (this.selectedRange === null) {
-        return '';
-      } else {
-        return this.dateToText(this.selectedRange.end);
-      }
-    },
-    minDate: function(){
-      let dt = new Date();
-      return dt;
-    },
-    maxDate: function(){
-      let dt = new Date;
-      return dt.setDate(dt.getDate() + 365);
-    },
-    is_valid: function () {
-
-      if (!this.validateTitle) {
-        return false
-      }
-
-      if (!this.validateText) {
-        return false;
-      }
-
+    validateDate: function () {
       if (this.selectedRange == null) {
         this.dateError = "集計期間を指定してください。";
         return false;
-      } else if (this.dayRangeError == true) {
-        this.dateError = "集計可能な期間は最大120日です";
-        return false;
-      } else {
-        this.dateError = "";
       }
-
+      const start = moment(this.selectedRange.start);
+      const end = moment(this.selectedRange.end);
+      if (end.diff(start, 'days') > 120) {
+        this.dateError = "集計できる期間は、最大で120日です。";
+        return false;
+      }
+      this.dateError = "";
+      this.dayStart = start.format("YYYY-MM-DD");
+      this.dayEnd = end.format("YYYY-MM-DD");
       return true;
-
     }
-    
 
   },
 
