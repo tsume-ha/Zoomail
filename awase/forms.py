@@ -1,19 +1,13 @@
-from django import forms
-from .models import Calendar, Schedule, CollectHour, CalendarUser
 import os
 import datetime
+
+from django import forms
+from .models import Calendar, Schedule, CollectHour, CalendarUser
 
 class CreateCalendarForm(forms.ModelForm):
     class Meta:
         model = Calendar
         fields = ['title', 'text', 'days_begin', 'days_end']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['days_begin'].widget = self.fields['days_end'].widget = forms.HiddenInput()
-        self.fields['text'].required = False
-        for field in self.fields.values():
-            field.widget.attrs["class"] = "form-control"
 
     def clean(self):
         cleaned_data = super().clean()

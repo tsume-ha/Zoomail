@@ -1,8 +1,10 @@
+import datetime
+import json
+
 from django.test import TestCase, Client
 from members.models import User
 from .models import Calendar, CalendarUser, Schedule, CollectHour
 from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet
-import datetime
 
 
 def User_LogOUT(self):
@@ -209,27 +211,35 @@ class CalendarCreateTest(TestCase):
 
     def test_create_calendar_POST_logIN(self):
         data = {
-            'title': ['test_calendar_group'],
-            'text': ['test_calendar_subscription'],
-            'days_begin': ['2020-04-01'],
-            'days_end': ['2020-04-20'],
+            'title': 'test_calendar_group',
+            'text': 'test_calendar_subscription',
+            'days_begin': '2020-04-01',
+            'days_end': '2020-04-20',
         }
         user = Force_Login(self)
-        request = self.client.post('/awase/create/', data)
+        request = self.client.post(
+            '/awase/api/create/',
+            data,
+            content_type='application/json'
+            )
         self.assertEqual(request.status_code, 200)
-        self.assertTemplateUsed(request, 'awase/create_complete.html')
+
+        content = json.loads(request.content)
+        response = self.client.get(content['url'])
+
+        self.assertTemplateUsed(response, 'awase/create_complete.html')
         
-        self.assertTrue(Calendar.objects.filter(title=data['title'][0]).exists())
+        self.assertTrue(Calendar.objects.filter(title=data['title']).exists())
         self.assertTrue(CalendarUser.objects.filter(user=user).exists())
 
-        calendar = Calendar.objects.get(title=data['title'][0])
+        calendar = Calendar.objects.get(title=data['title'])
         self.assertFalse(CalendarUser.objects.filter(calendar=calendar).exclude(user=user).exists())
 
         response = self.client.get('/awase/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'awase/index.html')
-        self.assertContains(response, data['title'][0])
-        self.assertContains(response, data['text'][0])
+        self.assertContains(response, data['title'])
+        self.assertContains(response, data['text'])
 
         User_LogOUT(self)
         other_user = Make_User(self, year=2018)
@@ -237,25 +247,25 @@ class CalendarCreateTest(TestCase):
         response = self.client.get('/awase/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'awase/index.html')
-        self.assertNotContains(response, data['title'][0])
-        self.assertNotContains(response, data['text'][0])
+        self.assertNotContains(response, data['title'])
+        self.assertNotContains(response, data['text'])
 
 
         self.assertFalse(CollectHour.objects.filter(
             calendar = calendar,
-            date = datetime.datetime.strptime(data['days_begin'][0], '%Y-%m-%d') - datetime.timedelta(days=1)
+            date = datetime.datetime.strptime(data['days_begin'], '%Y-%m-%d') - datetime.timedelta(days=1)
             ).exists())
         self.assertTrue(CollectHour.objects.filter(
             calendar = calendar,
-            date = datetime.datetime.strptime(data['days_begin'][0], '%Y-%m-%d')
+            date = datetime.datetime.strptime(data['days_begin'], '%Y-%m-%d')
             ).exists())
         self.assertTrue(CollectHour.objects.filter(
             calendar = calendar,
-            date = datetime.datetime.strptime(data['days_end'][0], '%Y-%m-%d')
+            date = datetime.datetime.strptime(data['days_end'], '%Y-%m-%d')
             ).exists())
         self.assertFalse(CollectHour.objects.filter(
             calendar = calendar,
-            date = datetime.datetime.strptime(data['days_end'][0], '%Y-%m-%d') + datetime.timedelta(days=1)
+            date = datetime.datetime.strptime(data['days_end'], '%Y-%m-%d') + datetime.timedelta(days=1)
             ).exists())
 
 

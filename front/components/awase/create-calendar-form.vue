@@ -1,35 +1,39 @@
 <template>
   <section id="form_upload" class="my-3">
     <form method="post">
-      <input type="hidden" name="csrfmiddlewaretoken" :value="csrftoken">
       <div class="form-group mx-0">
         <label for="id_title">曲名・バンド名・イベント名:</label>
         <input
+          id="id_title"
+          class="form-control"
           type="text"
           v-model="title"
           name="title"
-          maxlength="200"
+          maxlength="64"
           required="required"
-          id="id_title"
-          class="form-control"
+          @change="validateTitle"
           >
         <p v-if="titleError" class="small text-danger pl-2">
           {{titleError}}
         </p>
       </div>
+
       <div class="form-group mx-0">
         <label for="id_text">説明:</label>
         <input
+          id="id_text"
+          class="form-control"
           type="text"
           v-model="text"
           name="text"
-          maxlength="400"
-          id="id_text"
-          class="form-control">
+          maxlength="200"
+          @change="validateText"
+          >
         <p v-if="textError" class="small text-danger pl-2">
           {{textError}}
         </p>
       </div>
+
       <div class="form-group mx-0">
         <label class="d-block">集計期間:</label>
         <div>
@@ -40,136 +44,112 @@
             :min-date="minDate"
             :max-date="maxDate"
             :first-day-of-week='2'
-            @input="validate()"
+            @input="validateDate"
             />
         </div>
         <p v-if="dateError" class="small text-danger pl-2">
           {{dateError}}
         </p>
       </div>
-      <input
-        type="hidden"
-        name="days_begin"
-        :value='start' />
-      <input
-        type="hidden"
-        name="days_end"
-        :value='end' />
 
-      <input type="submit" value="登録" @click="onclick" class="btn btn-info mx-2 my-3">
-
+      <button @click="onclick" class="btn btn-info mx-2 my-3">
+        登録
+      </button>
     </form>
     <p class="small text-secondary">
     	集計できる期間は現在のところ、最大で120日間です。<br>
     </p>
+    <nowloading v-if="isSending" text="Now Loading."/>
   </section>
 </template>
 
 <script>
+import moment from "moment";
+import nowloading from "../nowloading.vue";
 export default {
-  props: {
-    csrftoken: {type: String, required: true},
+  components: {
+    nowloading
   },
   data: function () {
     return {
       title: "",
-      text: "",
-      selectedRange: null,
-      dayRangeError: false,
       titleError: "",
+      text: "",
       textError: "",
+      selectedRange: null,
       dateError: "",
-      is_sending: false,//送信後画面遷移中のときtrue，多重送信防止
+      dayStart: "",// YYYY-MM-DD
+      dayEnd: "",// YYYY-MM-DD
+      minDate: moment().toDate(),
+      maxDate: moment().add(1, 'years').toDate(),
+      isSending: false,//送信後画面遷移中のときtrue，多重送信防止
     }
   },
   methods: {
-    dateToText: function(date){
-      return date.getFullYear() + '-' + ('00' + (date.getMonth() + 1)).slice(-2) + '-' + ('00' + date.getDate()).slice(-2);
-    },
-    validate: function(){
-      let diff = this.selectedRange.end.getTime() - this.selectedRange.start.getTime();
-      let days = diff / (1000 * 60 * 60 * 24);
-      if (days > 120) {
-        this.dayRangeError = true;
-      } else {
-        this.dayRangeError = false;
-      }
-    },
     onclick: function(e){
-      if (!this.is_valid) {
-        e.preventDefault();
+      e.preventDefault();
+      if (this.isSending) {
+        return;
+      }
+      if (this.validateTitle() &&
+          this.validateText() &&
+          this.validateDate() ) {
+        const data = {
+          "title": this.title,
+          "text": this.text,
+          "days_begin": this.dayStart,
+          "days_end": this.dayEnd
+          };
+        console.log(data)
+        this.isSending = true;
+        this.axios.post("../api/create/", data)
+        .then(res => {
+          location.href = res.data.url;
+          return;
+        })
+        .catch(error => {
+          console.log(error);
+          this.isSending = false;
+        })
+      }
+    },
+    validateTitle: function () {
+      if (this.title.length > 64) {
+        this.titleError = "名前が長すぎます。64文字以内で入力してください。";
         return false;
       }
-      if (this.is_sending) {
-        e.preventDefault();
-        return false;
-      }
-      this.is_sending = true;
-    }
-  },
-  computed: {
-    start: function(){
-      if (this.selectedRange === null) {
-        return '';
-      } else {
-        return this.dateToText(this.selectedRange.start);
-      }
-    },
-    end: function(){
-      if (this.selectedRange === null) {
-        return '';
-      } else {
-        return this.dateToText(this.selectedRange.end);
-      }
-    },
-    minDate: function(){
-      let dt = new Date();
-      return dt;
-    },
-    maxDate: function(){
-      let dt = new Date;
-      return dt.setDate(dt.getDate() + 365);
-    },
-    is_valid: function () {
-
-      if (this.title.length > 100) {
-        this.titleError = "名前が長すぎます。100文字以内で入力してください。";
-        return false;
-      } else {
-        this.titleError = "";
-      }
-
       if (this.title.length == 0) {
-        this.titleError = "曲名・バンド名の入力は必須です。";
+        this.titleError = "タイトルは必須です。";
         return false;
-      } else {
-        this.titleError = "";
       }
-
+      this.titleError = "";
+      return true;      
+    },
+    validateText: function () {
       if (this.text.length > 200) {
         this.textError = "入力が長すぎます。200文字以内で入力してください。";
         return false;
-      } else {
-        this.textError = "";
       }
-
+      this.textError = "";
+      return true;
+    },
+    validateDate: function () {
       if (this.selectedRange == null) {
         this.dateError = "集計期間を指定してください。";
         return false;
-      } else if (this.dayRangeError == true) {
-        this.dateError = "集計可能な期間は最大120日です";
-        return false;
-      } else {
-        this.dateError = "";
       }
-
+      const start = moment(this.selectedRange.start);
+      const end = moment(this.selectedRange.end);
+      if (end.diff(start, 'days') > 120) {
+        this.dateError = "集計できる期間は、最大で120日です。";
+        return false;
+      }
+      this.dateError = "";
+      this.dayStart = start.format("YYYY-MM-DD");
+      this.dayEnd = end.format("YYYY-MM-DD");
       return true;
-
     }
-    
-
-  },
-
+  }
 }
 </script>
 

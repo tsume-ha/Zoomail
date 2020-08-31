@@ -168,27 +168,37 @@ def mail_compose(from_email_adress, to_list, message_data):
         message.attachment = attachment_list
 
     # message.send_at = int(datetime.datetime.now().timestamp() + 100)
-    
+
     try:
         sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sendgrid_client.send(message)
-        # x_message_id = response.headers['X-Message-Id']
+        x_message_id = response.headers['X-Message-Id']
 
-        # process_list = []
-        # for email in to_list:
-        #     obj = MessageProcess(
-        #         message = message_data,
-        #         x_message_id = x_message_id,
-        #         email = email,
-        #         Requested = True,
-        #         )
-        #     process_list.append(obj)
-        # MessageProcess.objects.bulk_create(process_list)
+        requested = True
+        error_occurd = False
+        error_detail = ''
 
-        return response
     except Exception as e:
-        print(e)
+        x_message_id = ''
+        requested = False
+        error_occurd = True
+        error_detail = e
 
+    finally:
+        process_list = []
+        for email in to_list:
+            obj = MessageProcess(
+                message=message_data,
+                x_message_id=x_message_id,
+                email=email,
+                Requested=requested,
+                Error_occurd=error_occurd,
+                Error_detail=error_detail,
+                )
+            process_list.append(obj)
+        MessageProcess.objects.bulk_create(process_list)
+
+    return response
 
 @login_required()
 def send(request):
@@ -241,11 +251,8 @@ def send(request):
                         ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
                         for year in year_query:
                             from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
-                            from_email_name = content_data.writer.get_short_name()
                             to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
-                            if to_list:
-                                to_list = User.objects.filter(year=year['year']).values_list('receive_email', flat=True)
-                                mail_compose(from_email_adress, to_list, content_data)
+                            mail_compose(from_email_adress, to_list, content_data)
 
                     django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
 
