@@ -255,7 +255,7 @@ def UpdateCalendarView(request, pk):
 
 
 @login_required()
-def UpdateCollectHourView(request, pk, page=1):
+def UpdateCollectHourView(request, pk):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
@@ -264,7 +264,7 @@ def UpdateCollectHourView(request, pk, page=1):
     updateFormset = UpdateCollectHourFormSet(request.POST or None)
     if (request.method == 'POST'):
         if updateFormset.is_valid():
-            content = updateFormset.save()
+            updateFormset.save()
             return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
 
     params = {
@@ -282,7 +282,7 @@ def CollectHourJsonResponse(request, pk):
 
     if (request.method == 'POST' and request.body):
         json_dict = json.loads(request.body)
-        is_error = False;
+        is_error = False
         for (YYYYMMDD, time_range) in json_dict.items():
             date = datetime.date(
                 year = int(YYYYMMDD[0:4]),
