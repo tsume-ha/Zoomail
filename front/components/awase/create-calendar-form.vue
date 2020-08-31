@@ -2,34 +2,40 @@
   <section id="form_upload" class="my-3">
     <form method="post">
       <input type="hidden" name="csrfmiddlewaretoken" :value="csrftoken">
+
       <div class="form-group mx-0">
         <label for="id_title">曲名・バンド名・イベント名:</label>
         <input
+          id="id_title"
+          class="form-control"
           type="text"
           v-model="title"
           name="title"
-          maxlength="200"
+          maxlength="64"
           required="required"
-          id="id_title"
-          class="form-control"
+          @change="validateTitle"
           >
         <p v-if="titleError" class="small text-danger pl-2">
           {{titleError}}
         </p>
       </div>
+
       <div class="form-group mx-0">
         <label for="id_text">説明:</label>
         <input
+          id="id_text"
+          class="form-control"
           type="text"
           v-model="text"
           name="text"
-          maxlength="400"
-          id="id_text"
-          class="form-control">
+          maxlength="200"
+          @change="validateText"
+          >
         <p v-if="textError" class="small text-danger pl-2">
           {{textError}}
         </p>
       </div>
+
       <div class="form-group mx-0">
         <label class="d-block">集計期間:</label>
         <div>
@@ -47,17 +53,10 @@
           {{dateError}}
         </p>
       </div>
-      <input
-        type="hidden"
-        name="days_begin"
-        :value='start' />
-      <input
-        type="hidden"
-        name="days_end"
-        :value='end' />
 
-      <input type="submit" value="登録" @click="onclick" class="btn btn-info mx-2 my-3">
-
+      <button @click="onclick" class="btn btn-info mx-2 my-3">
+        登録
+      </button>
     </form>
     <p class="small text-secondary">
     	集計できる期間は現在のところ、最大で120日間です。<br>
@@ -66,6 +65,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   props: {
     csrftoken: {type: String, required: true},
@@ -73,17 +73,18 @@ export default {
   data: function () {
     return {
       title: "",
+      titleError: "",
       text: "",
+      textError: "",
       selectedRange: null,
       dayRangeError: false,
-      titleError: "",
-      textError: "",
       dateError: "",
       is_sending: false,//送信後画面遷移中のときtrue，多重送信防止
     }
   },
   methods: {
     dateToText: function(date){
+      console.log(moment(date))
       return date.getFullYear() + '-' + ('00' + (date.getMonth() + 1)).slice(-2) + '-' + ('00' + date.getDate()).slice(-2);
     },
     validate: function(){
@@ -105,7 +106,29 @@ export default {
         return false;
       }
       this.is_sending = true;
-    }
+    },
+    validateTitle: function () {
+      if (this.title.length > 64) {
+        this.titleError = "名前が長すぎます。64文字以内で入力してください。";
+        return false;
+      }
+      if (this.title.length == 0) {
+        this.titleError = "タイトルは必須です。";
+        return false;
+      }
+      this.titleError = "";
+      return true;      
+    },
+    validateText: function () {
+      if (this.text.length > 200) {
+        this.textError = "入力が長すぎます。200文字以内で入力してください。";
+        return false;
+      }
+      this.textError = "";
+      return true;
+    },
+
+
   },
   computed: {
     start: function(){
@@ -132,25 +155,12 @@ export default {
     },
     is_valid: function () {
 
-      if (this.title.length > 100) {
-        this.titleError = "名前が長すぎます。100文字以内で入力してください。";
-        return false;
-      } else {
-        this.titleError = "";
+      if (!this.validateTitle) {
+        return false
       }
 
-      if (this.title.length == 0) {
-        this.titleError = "曲名・バンド名の入力は必須です。";
+      if (!this.validateText) {
         return false;
-      } else {
-        this.titleError = "";
-      }
-
-      if (this.text.length > 200) {
-        this.textError = "入力が長すぎます。200文字以内で入力してください。";
-        return false;
-      } else {
-        this.textError = "";
       }
 
       if (this.selectedRange == null) {

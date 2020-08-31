@@ -12,6 +12,6 @@ def Create_Collecthour_from_Calendar(sender, instance, **kwargs):
         CollectHour.objects.get_or_create(
             calendar = calendar,
             date = date,
-            defaults = {'hour_begin': 9, 'hour_end': 26},
+            defaults = {'hour_begin': 9, 'hour_end': 24},
             )
         date += datetime.timedelta(days=1)
