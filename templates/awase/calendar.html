@@ -5,99 +5,18 @@
 
 {% block extrastyle %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/awase/calendar.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/awase/calendar_menu.css' %}">
-<script src="{% static 'js/calendar_display.js' %}"></script>
-<script src="{% static 'js/calendar-touch-hover.js' %}"></script>
 {% endblock %}
 
-{% block body %}
-<h3 class="my-1">{{calendar.title}}</h3>
-
+{% block vuebody %}
 <section id="calendar">
-    <div id="calendar_menu" class="row mx-0 my-2 clearfix">
-        <div id="menu_days" class="float-left">
-            <button v-on:click="change_display_days(-1)"><img src="{% static 'img/awase/red.png' %}" height="24" alt="列を減らす"><span>列を</span><span>減らす</span></button>
-            <button v-on:click="change_display_days(1)"><img src="{% static 'img/awase/add.png' %}" height="24" alt="列を増やす"><span>列を</span><span>増やす</span></button>
-        </div>
-        <div id="menu_move" class="float-right">
-            <button v-on:click="move(-day_display_max_num)"><img src="{% static 'img/awase/1w_bk.png' %}" height="24" :alt="day_display_max_num">[|[day_display_max_num]|]日戻る</button>
-            <button v-on:click="move(-1)"><img src="{% static 'img/awase/1d_bk.png' %}" height="24" alt="1日戻る">1日戻る</button>
-            <button v-on:click="move(1)"><img src="{% static 'img/awase/1d_fw.png' %}" height="24" alt="1日進む">1日進む</button>
-            <button v-on:click="move(day_display_max_num)"><img src="{% static 'img/awase/1w_fw.png' %}" height="24" :alt="day_display_max_num">[|[day_display_max_num]|]日進む</button>
-        </div>
-    </div>
-    <div id="calendar_table">
-        <div id="leftside" class="column">
-            <div> </div>
-            <div class="room">例会</div>
-            {% for time in timetuple %}
-            <div class="time" data-time="{{time}}.0">{{time}}:00</div>
-            <div class="time" data-time="{{time}}.5"></div>
-            {% endfor %}
-        </div>
-        <div class="day column" v-for="day, index in days">
-            <div class="date">[|[day.display_date]|]<br>[|[day.display_day]|]</div>
-            <div class="room">[|[day.room]|]</div>
-            {% for time in timetuple %}
-            <div class="time" v-on:click="detail_open(index, 't{{time}}_0')" v-bind:class="[NG_num(index, 't{{time}}_0')]"></div>
-            <div class="time" v-on:click="detail_open(index, 't{{time}}_30')" v-bind:class="[NG_num(index, 't{{time}}_30')]"></div>
-            {% endfor %}
-        </div>
-    </div>
-    <div id="calendar_detail" v-bind:class="{opened:detail_dislpay}">
-        <span v-on:click="detail_close" id="detail_close"></span>
-        <h5>[|[detail_date]|]</h5>
-        <h6>[|[detail_time]|]</h6>
-        <ul>
-            <li class="row" v-for="schedule, name in detail_list">
-                <span class="col-8">[|[name]|]</span>
-                <span class="col-4 schedule" v-bind:class="[schedule.class]">[|[schedule.text]|]</span>
-            </li>
-        </ul>
-    </div>
+  <awase-calendar />
 </section>
 
-<section id="menu" class="col-xs-12 col-sm-8 col-md-6 col-ld-6">
-    <a href="input/" class="enter text-center text-sm-left">入力する</a>
-    <a href="javascript:menu_sw()" id="menu_sw" class="text-center text-sm-left">設定変更</a>
-    <div id="submenu">
-        <a href="{% url 'awase:calendar_update' calendar.pk %}" class="text-center text-sm-left">カレンダーの名前、説明文の変更</a>
-        <a href="{% url 'awase:calendar_update' calendar.pk %}" class="text-center text-sm-left">集計期間（日にち）の変更</a>
-        <a href="{% url 'awase:hours_update_top' calendar.pk %}" class="text-center text-sm-left">集計時間（時間帯）の変更</a>
-        <a href="{% url 'awase:url_key' calendar.pk %}" class="text-center text-sm-left">招待URLの確認</a>
-        <a href="{% url 'awase:change_users' calendar.pk %}" class="text-center text-sm-left">カレンダーユーザーの変更</a>
-        <a href="{% url 'awase:leave_calendar' calendar.pk %}" class="text-center text-sm-left text-danger">この日程調整から退会する</a>
-        <a href="{% url 'awase:delete_calendar' calendar.pk %}" class="text-center text-sm-left text-danger">カレンダーを削除するページへ</a>
-    </div>
+<section id="menu" class="col-xs-12 col-sm-8 col-md-6 col-ld-6 my-4">
+  <awase-calendar-menu />
 </section>
 
 <section id="exapmle">
-    <p class="small">
-        色分けは、その時間帯に参加できない人の人数を表しています。<br>
-        回答していない人は数に含まれていません。
-    </p>
-    <p>
-        凡例：参加できない人数...0人（回答者は全員参加できる）<span class="NG0"></span><br>
-        1人<span class="NG1"></span><br>
-        2人<span class="NG2"></span><br>
-        3人以上<span class="NG3"></span><br>
-        全員未回答もしくは集計範囲外<span></span><br>
-    </p>
+  <awase-calendar-example />
 </section>
-
-<script type="text/javascript">
-const jsonURL = "{% url 'awase:calendar_json' calendar.pk %}";
-function menu_sw(){
-    $('#menu_sw').toggleClass('active');
-    if ($('#menu_sw').hasClass('active')) {
-        $('#submenu').css('max-height', '300px');
-        $('#submenu').css('overflow-y', 'overflow');
-    } else {
-        $('#submenu').css('max-height', '0');
-        $('#submenu').css('overflow-y', 'hidden');
-    }
-}
-</script>
-
 {% endblock %}

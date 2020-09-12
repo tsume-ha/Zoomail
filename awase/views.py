@@ -1,25 +1,22 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 import datetime
 import json
-from members.models import User
-from .models import Calendar, CalendarUser, Schedule, CollectHour
-from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet, UpdateCollectHourForm
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, FieldError
-from django.shortcuts import redirect, get_object_or_404
 from django.db.models import Count
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.http.response import JsonResponse
 from django.urls import reverse
 
+from members.models import User
+from .models import Calendar, CalendarUser, Schedule, CollectHour
+from .forms import CreateCalendarForm, InputScheduleFormSet, UpdateCollectHourFormSet, UserChangeFormSet, UpdateCollectHourForm
+
+
 def calendar_permission(calendar, user):
     return CalendarUser.objects.filter(calendar=calendar).filter(user=user).exists()
-
-def ceil(a, b):
-    return a//b if a%b==0 else a//b + 1
-
-CALENDAR_MAX_RANGE = 120 # max days
 
 @login_required()
 def index(request):
@@ -36,11 +33,7 @@ def CalendarView(request, pk):
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
         raise Http404()
-    params = {
-        'timetuple': list(range(9,26)),
-        'calendar': calendar,
-    }
-    return render(request, 'awase/calendar.html', params)
+    return render(request, 'awase/calendar.html')
 
 @login_required()
 def CalendarJsonResponse(request, pk):
@@ -57,18 +50,15 @@ def CalendarJsonResponse(request, pk):
         }
     }
 
-    weekday_jp = ['月','火','水','木','金','土','日']
-
     user_list = CalendarUser.objects.filter(calendar=calendar).order_by('joined_at')
 
 
     def get_time_str(day, time):
         hour = time.hour + (time - datetime.datetime.combine(day, datetime.time(00,00,00))).days * 24
-        return 't' + str(hour) + '_' + str(time.minute)
+        return str(hour) + '_' + str(time.minute)
 
     for day in [calendar.days_begin + datetime.timedelta(days=d) for d in range((calendar.days_end - calendar.days_begin).days + 1)]:
         schedule_list = {}
-        complex_list = []
         hour_begin = CollectHour.objects.get(calendar=calendar, date=day).hour_begin
         hour_end = CollectHour.objects.get(calendar=calendar, date=day).hour_end
 
@@ -89,13 +79,9 @@ def CalendarJsonResponse(request, pk):
 
         day_json = {
             'date': day.strftime('%Y-%m-%d'),
-            'display_date': str(day.month) + '/' + str(day.day),
-            'display_day': weekday_jp[day.weekday()],
-            'weekday': day.weekday(),
             'hour_begin': hour_begin,
             'hour_end': hour_end,
             'schedule_list':schedule_list,
-            'room': 'Loading',
         }
         data['calendar_data'].append(day_json)
 
@@ -104,32 +90,47 @@ def CalendarJsonResponse(request, pk):
 
 @login_required()
 def create(request):
+    return render(request, 'awase/create.html')
+
+
+@login_required()
+def createJson(request):
     now_user = request.user
-    CreateForm = CreateCalendarForm(request.POST or None)
+    CreateForm = CreateCalendarForm(
+        json.loads(request.body) or None
+    )
     if (request.method == 'POST'):
         if CreateForm.is_valid():
             content = CreateForm.save(commit=False)
-            try:
-                calendar = Calendar.objects.get(title=content.title, text=content.text, days_begin=content.days_begin, days_end=content.days_end)
-            except ObjectDoesNotExist:
-                content.created_by = now_user
-                content.invite_key = User.objects.make_random_password(length=12)
-                content.save()
-                calendar = content
-                user_content = CalendarUser(
-                    calendar = content,
-                    user = now_user
-                    )
-                user_content.save()
-            params ={'calendar': calendar}
-            return render(request, 'awase/create_complete.html', params)
+            content.created_by = now_user
+            content.invite_key = User.objects.make_random_password(length=12)
+            content.save()
+            user_content = CalendarUser(
+                calendar = content,
+                user = now_user
+                )
+            user_content.save()
+            return JsonResponse({
+                "calendar_id": content.pk,
+                "url": reverse('awase:complete', args=[content.pk])
+            })
+
+    response = HttpResponse('BAD REQUEST')
+    response.status_code = 400
+    return response
+
+
+@login_required()
+def complete(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
 
     params = {
-        'CreateForm': CreateForm,
-        'max_range': CALENDAR_MAX_RANGE,
+        'calendar': calendar,
     }
-
-    return render(request, 'awase/create.html', params)
+    return render(request, 'awase/create_complete.html', params)
 
 @login_required()
 def invited(request, key):
@@ -154,7 +155,7 @@ def invited(request, key):
 
 
 @login_required()
-def input_(request, pk):
+def input(request, pk):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
@@ -165,7 +166,7 @@ def input_(request, pk):
     }
 
 
-    return render(request, 'awase/input_.html', params)
+    return render(request, 'awase/input.html', params)
 
 
 @login_required()
@@ -190,7 +191,7 @@ def inputJSON(request, pk):
                     user=now_user,
                     start_time=getDatetime(key),
                     defaults={
-                        'can_attend': json_dict[key]
+                        'can_attend': bool(json_dict[key])
                     }
                 )
             except:
@@ -231,95 +232,6 @@ def inputJSON(request, pk):
 
 
 @login_required()
-def input(request, pk, page=1):
-    now_user = request.user
-    calendar = get_object_or_404(Calendar, pk=pk)
-    if not calendar_permission(calendar, now_user):
-        raise Http404()
-        
-    total_pages = ceil((calendar.days_end - calendar.days_begin).days, 7)
-
-    move = False
-    if 'prev' in request.GET:
-        page -= 1
-        move = True
-        if page < 0:
-            page = 1
-
-    if 'next' in request.GET:
-        page += 1
-        move = True
-        if page > total_pages:
-            page = total_pages
-
-    if (request.method == 'POST'):
-        keys = [k for k in request.POST if 'can_attend' in k]
-        for key in keys:
-            time_name = key.replace('can_attend', 'starttime')
-            time = request.POST[time_name]
-            can_attend = request.POST[key]
-            Schedule.objects.update_or_create(
-                calendar = calendar,
-                user = now_user,
-                start_time = time,
-                defaults = {'can_attend': can_attend}
-            )
-        if move:
-            return redirect(to = reverse('awase:input', args=[calendar.pk, page]))
-        else:
-            return redirect(to = reverse('awase:calendar', args=[calendar.pk]))
-
-
-    formsets = []
-
-    date = calendar.days_begin + datetime.timedelta(days=7*(page-1))
-    count = 0
-    date_range = {'start': date}
-    while date <= calendar.days_end and date < calendar.days_begin + datetime.timedelta(days=7*page):
-        hour_query = CollectHour.objects.get(calendar=calendar, date=date)
-        time_list = [datetime.datetime.combine(date, datetime.time(00,00,00))\
-                      + datetime.timedelta(hours=hour_query.hour_begin)\
-                      + datetime.timedelta(minutes=30*n)
-                     for n in range((hour_query.hour_end-hour_query.hour_begin)*2)]
-        if len(time_list):
-            initial = []
-            for time in time_list:
-                item, created = Schedule.objects.get_or_create(
-                    calendar = calendar,
-                    user = now_user,
-                    start_time = time,
-                    defaults = {'can_attend': ''}
-                    )
-                initial.append({
-                    'displaytime':time.strftime('%H:%M'),
-                    'starttime':time,
-                    'can_attend': item.can_attend
-                    })
-
-            formsets.append({
-                'date':date,
-                'InputScheduleFormSet':InputScheduleFormSet(
-                    initial = initial,
-                    prefix = str(count)
-                    )
-                })
-        count += 1
-        date = date + datetime.timedelta(days=1)
-    date_range['end'] = date - datetime.timedelta(days=1)
-
-    params = {
-        'calendar': calendar,
-        'formsets': formsets,
-        'page': page,
-        'date_range': date_range,
-        'total_pages': total_pages,
-    }
-
-
-    return render(request, 'awase/input.html', params)
-
-
-@login_required()
 def UpdateCalendarView(request, pk):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
@@ -343,36 +255,20 @@ def UpdateCalendarView(request, pk):
 
 
 @login_required()
-def UpdateCollectHourView(request, pk, page=1):
+def UpdateCollectHourView(request, pk):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
     if not calendar_permission(calendar, now_user):
         raise Http404()
-    DISPLAY_DAYS = 30
-    updateFormset = UpdateCollectHourFormSet(
-        request.POST or None,
-        queryset=CollectHour.objects.filter(
-            calendar = calendar,
-            date__gte = calendar.days_begin,
-            date__lte = calendar.days_end
-            ).order_by('date')[(page - 1) * DISPLAY_DAYS : page * DISPLAY_DAYS],
-        form_kwargs={'empty_permitted': False}
-    )
+
+    updateFormset = UpdateCollectHourFormSet(request.POST or None)
     if (request.method == 'POST'):
         if updateFormset.is_valid():
-            content = updateFormset.save()
+            updateFormset.save()
             return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
-
-    total_pages = ceil((calendar.days_end - calendar.days_begin).days + 1, DISPLAY_DAYS)
-    page_range = list(range(1, total_pages + 1))
 
     params = {
         'calendar': calendar,
-        'updateFormset': updateFormset,
-        'page_range': page_range,
-        'total_pages': total_pages,
-        'current_page': page,
-
     }
 
     return render(request, 'awase/update_hours.html', params)
@@ -386,7 +282,7 @@ def CollectHourJsonResponse(request, pk):
 
     if (request.method == 'POST' and request.body):
         json_dict = json.loads(request.body)
-        is_error = False;
+        is_error = False
         for (YYYYMMDD, time_range) in json_dict.items():
             date = datetime.date(
                 year = int(YYYYMMDD[0:4]),
@@ -418,7 +314,11 @@ def CollectHourJsonResponse(request, pk):
             return response
 
 
-    datalist = CollectHour.objects.filter(calendar=calendar).order_by('date').values_list('date', 'hour_begin', 'hour_end')
+    datalist = CollectHour.objects.filter(
+                   calendar=calendar,
+                   date__gte=calendar.days_begin,
+                   date__lte=calendar.days_end
+                   ).order_by('date').values_list('date', 'hour_begin', 'hour_end')
     data = {data[0].strftime('%Y%m%d'): {'start': data[1], 'end': data[2]} for data in datalist}
 
     return JsonResponse(data)
@@ -495,4 +395,17 @@ def DeleteCalendarView(request, pk):
     return render(request, 'awase/delete_calendar.html', params)
 
 
-
+@login_required()
+def GetCalendarInfo(request, pk):
+    now_user = request.user
+    calendar = get_object_or_404(Calendar, pk=pk)
+    if not calendar_permission(calendar, now_user):
+        raise Http404()
+    return JsonResponse(
+        {
+            "title": calendar.title,
+            "text": calendar.text,
+            "days_begin": calendar.days_begin.strftime('%Y-%m-%d'),
+            "days_end": calendar.days_end.strftime('%Y-%m-%d'),
+        }
+    )

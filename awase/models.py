@@ -2,7 +2,7 @@ from django.db import models
 from members.models import User
 
 class Calendar(models.Model):
-    title = models.CharField(max_length=200, verbose_name='曲名・バンド名・イベント名')
+    title = models.CharField(max_length=64, verbose_name='曲名・バンド名・イベント名')
     text = models.CharField(max_length=400, blank=True, verbose_name='説明')
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='calendar_creater')
     days_begin = models.DateField(verbose_name='開始日')

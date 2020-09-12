@@ -9,31 +9,24 @@ from social_django.models import UserSocialAuth
 
 class UserManager(BaseUserManager):
     def create_user(self, email, year=0):
-        if not email: # changed from google_account
-            raise ValueError('Users must have a Google account')
-        user = self.model(
-            email = email, # changed from google_account
-            year = year,
-        )
+        if not email:  # changed from google_account
+            raise ValueError("Users must have a Google account")
+        user = self.model(email=email, year=year,)  # changed from google_account
         user.set_unusable_password()
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, year, password=None): # changed from google_account
-        user = self.create_user(
-            email, # changed from google_account
-            year = year,
-        )
+    def create_superuser(
+        self, email, year, password=None
+    ):  # changed from google_account
+        user = self.create_user(email, year=year,)  # changed from google_account
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
-        content_social = UserSocialAuth(
-            user = user,
-            provider = 'google-oauth2',
-            uid = email,
-            )
+        content_social = UserSocialAuth(user=user, provider="google-oauth2", uid=email,)
         content_social.save()
         return user
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name="Emailアドレス")
@@ -53,11 +46,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['year']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["year"]
 
     def __str__(self):
-        return str(self.year) + ' : ' + self.last_name + self.first_name + '(' + self.email + ')'
+        return (
+            str(self.year)
+            + " : "
+            + self.last_name
+            + self.first_name
+            + "("
+            + self.email
+            + ")"
+        )
 
     def get_short_name(self):
         if self.nickname == "":
@@ -79,19 +80,24 @@ class TmpMember(models.Model):
     session = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
-    furigana = models.CharField(max_length=255,
-                                validators=[RegexValidator(regex=u'^[ぁ-ん]+$',
-                                                           message='ふりがなは全角ひらがなのみで入力してください。')])
+    furigana = models.CharField(
+        max_length=255,
+        validators=[
+            RegexValidator(regex=u"^[ぁ-ん]+$", message="ふりがなは全角ひらがなのみで入力してください。")
+        ],
+    )
     year = models.IntegerField(default=0)
     email = models.EmailField()
+
     def __str__(self):
         return self.session + self.email
 
 
 class TestMail(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='test_mail')
-    email = models.EmailField(verbose_name='送信したメールアドレス')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="test_mail")
+    email = models.EmailField(verbose_name="送信したメールアドレス")
     sent_at = models.DateTimeField()
     x_message_id = models.CharField(max_length=100, editable=False)
+
     def __str__(self):
-        return self.user.get_full_name() + ' - ' + self.email
+        return self.user.get_full_name() + " - " + self.email

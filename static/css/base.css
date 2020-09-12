@@ -15,6 +15,10 @@ h3 a:hover{
 	text-decoration: underline;
 }
 
+a,a:hover{
+	color: #007bff;
+}
+
 h3 a,
 h3.hover a
 h3:hover a{

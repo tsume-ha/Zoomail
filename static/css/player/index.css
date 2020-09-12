@@ -27,7 +27,7 @@ a.card-body{
 
 .songdetail{
 	max-height: 48px;
-	overflow-y: hidden;
+	overflow: hidden;
 }
 
 .songdetail span{
