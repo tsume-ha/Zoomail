@@ -92,7 +92,7 @@
         </tbody>
       </table>
     </div>
-    <a href="/player/" class="btn btn-success mb-4" v-if="states.isComplete">「音源」トップページに戻る</a>
+    <a href="/sound/" class="btn btn-success mb-4" v-if="states.isComplete">「音源」トップページに戻る</a>
   </template>
 </section>
 </template>

@@ -31,7 +31,7 @@ urlpatterns = [
     path('members/', include('members.urls')),
     path('read/', include('board.urls')),
     path('send/', board.send, name="send"),
-    path('player/', include('player.urls')),
+    path('sound/', include('sound.urls')),
     path('kansou/', include('kansou.urls')),
     path('pictures/', include('pictures.urls')),
     path('movie/', include('movie.urls')),

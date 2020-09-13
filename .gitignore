@@ -14,6 +14,7 @@ config/base.env
 scripts/senders.py
 
 player/test.mp3
+sound/test.mp3
 
 scripts/emails/*
 scripts/emails22/*

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load customtags %}
+
+{% block title %}{{live.live_name}} | リハ音源 | Unplugged Message{% endblock %}
+{% block extrastyle %}
+<script src="{% static 'js/wavesurfer.min.js' %}"></script>
+{% endblock %}
+
+{% block vuebody %}
+<player-playlist
+  :live-id="{{ live.pk }}"></player-playlist>
+{% endblock %}
