@@ -82,7 +82,7 @@ class SoundViewTest(TestCase):
         User_LogOUT(self)
         for index in range(self.live_num+3):
             pk = index + 1
-            response = self.client.get('/sound/playlist/' + str(pk))
+            response = self.client.get('/sound/' + str(pk) + '/')
             self.assertEqual(response.status_code, 302)
             url_redial_to = response.url
             response = self.client.get(url_redial_to)
@@ -93,7 +93,7 @@ class SoundViewTest(TestCase):
         Force_Login(self)
         for index in range(self.live_num+3):
             pk = index + 1
-            response = self.client.get('/sound/playlist/' + str(pk))
+            response = self.client.get('/sound/' + str(pk) + '/')
             if index < self.live_num:
                 self.assertEqual(response.status_code, 200)
             else:
@@ -117,7 +117,7 @@ class SoundViewTest(TestCase):
         User_LogOUT(self)
         for index in range(self.live_num+3):
             pk = index + 1
-            response = self.client.get('/sound/api/live/' + str(pk))
+            response = self.client.get('/sound/' + str(pk) + '/json/')
             self.assertEqual(response.status_code, 302)
             url_redial_to = response.url
             response = self.client.get(url_redial_to)
@@ -128,7 +128,7 @@ class SoundViewTest(TestCase):
         Force_Login(self)
         for index in range(self.live_num+3):
             pk = index + 1
-            response = self.client.get('/sound/api/live/' + str(pk))
+            response = self.client.get('/sound/' + str(pk) + '/json/')
             if index < self.live_num:
                 self.assertEqual(response.status_code, 200)
             else:
@@ -181,7 +181,7 @@ class uploadTest(TestCase):
 
             live = Live.objects.get(live_name=data['livename'])
             response = self.client.get(
-                '/sound/api/live/{}'.format(live.pk)
+                '/sound/' + str(live.pk) + '/json/'
                 )
             self.assertEqual(response.status_code, 200)
 
