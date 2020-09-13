@@ -42,7 +42,7 @@ class MemberUpdateFormTest(TestCase):
 
     def test_members_index_logOUT(self):
         User_LogOUT(self)
-        response = self.client.get("/members/")
+        response = self.client.get("/mypage/")
         self.assertEqual(response.status_code, 302)
         url_redial_to = response.url
         response = self.client.get(url_redial_to)
@@ -51,13 +51,13 @@ class MemberUpdateFormTest(TestCase):
 
     def test_members_index_logIN(self):
         User_LogIN(self)
-        response = self.client.get("/members/")
+        response = self.client.get("/mypage/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "members/index.html")
 
     def test_members_update_logOUT(self):
         User_LogOUT(self)
-        response = self.client.get("/members/update/")
+        response = self.client.get("/mypage/update/")
         self.assertEqual(response.status_code, 302)
         url_redial_to = response.url
         response = self.client.get(url_redial_to)
@@ -66,7 +66,7 @@ class MemberUpdateFormTest(TestCase):
 
     def test_members_update_logIN(self):
         User_LogIN(self)
-        response = self.client.get("/members/update/")
+        response = self.client.get("/mypage/update/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "members/user_update.html")
 
@@ -78,7 +78,7 @@ class MemberUpdateFormTest(TestCase):
             "nickname": "タロー",
         }
         User_LogOUT(self)
-        request = self.client.post("/members/update/", data)
+        request = self.client.post("/mypage/update/", data)
         self.assertEqual(request.status_code, 302)
         url_redial_to = request.url
         response = self.client.get(url_redial_to)
@@ -99,12 +99,12 @@ class MemberUpdateFormTest(TestCase):
             "nickname": "タロー",
         }
         self.user = User_LogIN(self)
-        request = self.client.post("/members/update/", data)
+        request = self.client.post("/mypage/update/", data)
         self.assertEqual(request.status_code, 302)
         url_redial_to = request.url
-        self.assertEqual(url_redial_to, "/members")
+        self.assertEqual(url_redial_to, "/mypage/")
 
-        response = self.client.get("/members/update/")
+        response = self.client.get("/mypage/update/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, data["last_name"])
 
@@ -130,10 +130,10 @@ class MemberRegisterFormTest(TestCase):
             "nickname": "タロー",
         }
         User_LogIN(self)
-        request = self.client.post("/members/register/", data)
+        request = self.client.post("/mypage/register/", data)
         self.assertEqual(request.status_code, 302)
         url_redial_to = request.url
-        self.assertEqual(url_redial_to, "/members")
+        self.assertEqual(url_redial_to, "/mypage/")
         response = self.client.get(url_redial_to)
         # print(response)
         # self.assertEqual(response.status_code, 301)
@@ -154,7 +154,7 @@ class MemberRegisterFormTest(TestCase):
             "nickname": "タロー",
         }
         self.user = User_LogIN_and_Get_a_Permission(self)
-        request = self.client.post("/members/register/", data)
+        request = self.client.post("/mypage/register/", data)
 
         self.assertEqual(request.status_code, 200)
         self.assertContains(request, data["email"])

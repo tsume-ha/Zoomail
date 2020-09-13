@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ performance.live_name }} | リハ音源編集 | Unplugged Message{% endblock %}
+{% block title %}{{ live.live_name }} | リハ音源編集 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/player/songedit.css' %}">
-    <script src="{% static 'js/music_upload.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sound/songedit.css' %}">
 {% endblock %}
 {% block body %}
-    <h3 class="mb-4">{{ performance.live_name }} - リハ音源編集</h3>
+    <h3 class="mb-4">{{ live.live_name }} - リハ音源編集</h3>
     <form method="post" enctype="multipart/form-data">
     　　　{% csrf_token %}
         {% for form in formset %}

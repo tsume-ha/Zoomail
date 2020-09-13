@@ -20,10 +20,10 @@ def PicturesPermission(user):
     return user.has_perm('pictures.add_album')
 
 
-# player
+# sound
 def RecordingPermisson(user):
-    return user.has_perm('player.add_performance') or\
-           user.has_perm('player.add_song')
+    return user.has_perm('sound.add_live') or\
+           user.has_perm('sound.add_song')
 
 
 # other documents

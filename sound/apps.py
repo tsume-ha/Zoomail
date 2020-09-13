@@ -1,8 +1,8 @@
 from django.apps import AppConfig
 
 
-class PlayerConfig(AppConfig):
-    name = 'player'
+class SoundConfig(AppConfig):
+    name = 'sound'
 
     def ready(self):
         from . import signals

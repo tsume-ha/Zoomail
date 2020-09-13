@@ -1,15 +1,15 @@
 from django import template
 from django.utils.safestring import mark_safe
 
-from player.models import Song
+from sound.models import Song
 
 
 register = template.Library()
 
 @register.simple_tag
-def GetSongDetail(Performance):
-    Songs = Song.objects.filter(performance=Performance).order_by('track_num')
-    Performance_pk = Performance.pk
+def GetSongDetail(live):
+    Songs = Song.objects.filter(live=live).order_by('track_num')
+    live_pk = live.pk
     text_return = '<p class="songdetail mt-4 mb-2">'
     for index, SongData in enumerate(Songs):
         text_return += '<span>'

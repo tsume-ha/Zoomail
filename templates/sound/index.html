@@ -4,7 +4,7 @@
 
 {% block title %}リハ音源 | Unplugged Message{% endblock %}
 {% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/player/index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/sound/index.css' %}">
 {% endblock %}
 
 
@@ -14,7 +14,7 @@
 	{% if is_allowed %}
 	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
 		<article class="card border-info m-2">
-			<a href="{% url 'player:upload' %}" class="card-body">
+			<a href="{% url 'sound:upload' %}" class="card-body">
 				<h5 class="card-title bg-info　mb-2">新しく音源を追加</h5>
 				<p class="text-info">こちらから追加</p>
 			</a>
@@ -22,16 +22,16 @@
 	</div>
 	{% endif %}
 
-	{% for performance in performances %}
+	{% for live in lives %}
 	<div class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
 		<article class="card m-2">
-			<a href="{% url 'player:playlist' performance.pk %}" class="card-body pb-1">
-				<h5 class="card-title　float-left mb-2">{{ performance.live_name }}</h5>
-				<h6 class="card-subtitle float-right small">Recorded : {{ performance.recorded_at | date:"Y/m/d D" }}
+			<a href="{% url 'sound:playlist' live.pk %}" class="card-body pb-1">
+				<h5 class="card-title　float-left mb-2">{{ live.live_name }}</h5>
+				<h6 class="card-subtitle float-right small">Recorded : {{ live.recorded_at | date:"Y/m/d D" }}
 				</h6>
-				{% GetSongDetail performance %}
+				{% GetSongDetail live %}
 			</a>
-			{% if is_allowed %}<a href="{% url 'player:edit' performance.pk %}"
+			{% if is_allowed %}<a href="{% url 'sound:edit' live.pk %}"
 				class="btn btn-outline-warning btn-sm mx-3 mb-2">編集する</a>{% endif %}
 
 		</article>
