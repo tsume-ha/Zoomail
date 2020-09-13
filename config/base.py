@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'home',
     'members',
     'board',
-    'player',
+    'sound',
     'kansou',
     'pictures',
     'movie',

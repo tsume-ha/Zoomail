@@ -4,8 +4,8 @@
     <div class="row border-bottom pb-1 mb-2">
       <div class="col-12">
         <a href="../" class="float-left col-xs-2" id="return"> </a>
-        <h5 class="float-left col-xs-7 ml-2">{{performance.live_name}}</h5>
-        <span class="float-right col-xs-3 small">{{performance.recorded_at | date}}</span>
+        <h5 class="float-left col-xs-7 ml-2">{{live.live_name}}</h5>
+        <span class="float-right col-xs-3 small">{{live.recorded_at | date}}</span>
       </div>
     </div>
 
@@ -57,7 +57,7 @@
         <span class="songnum float-left ml-1 mr-2">{{song.track_num}}.</span>
         <span class="songname float-left ml-0 pl-0">{{song.song_name}}</span>
         <span class="download float-right mx-2" @click.stop>
-          <a :href="'/player/download/playlist/' + liveId + '/' + song.id"></a></span>
+          <a :href="'/sound/download/' + song.id"></a></span>
         <span class="songtime float-right mx-2">{{song.length | readableTime}}</span>
       </div>
     </div>
@@ -68,14 +68,11 @@
 <script>
 import moment from "moment"
 export default {
-  props: {
-    liveId: {type: Number, required: true}
-  },
   data: function () {
     return {
       wavesurfer: null,
       errorMessage: "",
-      performance: {},
+      live: {},
       songs: [],
       nowPlaying: {
         "id": null,
@@ -94,9 +91,9 @@ export default {
     }
   },
   created: function () {
-    this.axios.get('/player/api/live/' + this.liveId)
+    this.axios.get('./json/')
     .then(response => {
-      this.performance = response.data.performance;
+      this.live = response.data.live;
       this.songs = response.data.songs;
     })
     .catch(error => {

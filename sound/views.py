@@ -2,7 +2,7 @@ from utils.commom import download
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.http.response import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -12,29 +12,29 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 
 from .forms import CreateRehasalForm, EditSongForm
-from .models import Performance, Song
+from .models import Live, Song
 from config.permissions import RecordingPermisson
 
 
 @login_required()
 def index(request):
-    performances = Performance.objects.all().order_by('updated_at').reverse()
+    lives = Live.objects.all().order_by('updated_at').reverse()
     now_user = request.user
     is_allowed = RecordingPermisson(now_user)
     params = {
-        'performances': performances,
+        'lives': lives,
         'is_allowed': is_allowed,
     }
-    return render(request, 'player/index.html', params)
+    return render(request, 'sound/index.html', params)
 
 
 @login_required()
 def playlist(request, live_id):
-    performance = get_object_or_404(Performance, id=live_id)
+    live = get_object_or_404(Live, id=live_id)
     params = {
-        'performance': performance,
+        'live': live,
     }
-    return render(request, 'player/playlist.html', params)
+    return render(request, 'sound/playlist.html', params)
 
 
 @login_required()
@@ -53,13 +53,13 @@ def upload(request):
 
         livename = form.cleaned_data['livename']
         recorded_at = form.cleaned_data['recorded_at']
-        performance, created = Performance.objects.get_or_create(
+        live, created = Live.objects.get_or_create(
             live_name=livename,
             recorded_at=recorded_at,
             updated_by=now_user,
         )
         content = songform.save(commit=False)
-        content.performance = performance
+        content.live = live
         content.updated_by = now_user
         content.save()
 
@@ -70,7 +70,7 @@ def upload(request):
     params = {
         'form': form,
     }
-    return render(request, 'player/upload.html', params)
+    return render(request, 'sound/upload.html', params)
 
 
 @login_required()
@@ -80,14 +80,14 @@ def edit(request, live_id):
     if not is_allowed:
         raise PermissionDenied
 
-    performance = get_object_or_404(Performance, id=live_id)
+    live = get_object_or_404(Live, id=live_id)
     FormSetExtraNum = 3
     EditSongFormSet = modelformset_factory(
         Song, EditSongForm, extra=FormSetExtraNum)
     formset = EditSongFormSet(
         request.POST or None, request.FILES or None,
         queryset=Song.objects.filter(
-            performance=performance).order_by('track_num')
+            live=live).order_by('track_num')
     )
     if request.method == 'POST':
         if formset.is_valid():
@@ -95,27 +95,27 @@ def edit(request, live_id):
             for instance in formset.deleted_objects:
                 instance.delete()
             for instance in instances:
+                instance.live = live
                 instance.updated_by = now_user
                 instance.updated_at = datetime.datetime.now()
                 instance.save()
-            return redirect('player:playlist', live_id=live_id)
+            return redirect('sound:playlist', live_id=live_id)
         else:
             print('validation error')
     params = {
-        'performance': performance,
+        'live': live,
         'formset': formset,
     }
-    return render(request, 'player/edit.html', params)
+    return render(request, 'sound/edit.html', params)
 
 
 @login_required()
-def FileDownloadView(request, live_id, song_pk):
+def FileDownloadView(request, song_pk):
     try:
         song = Song.objects.get(pk=song_pk)
     except ObjectDoesNotExist:
-        return redirect('/player/playlist/' + str(live_id))
+        raise Http404
     filename = str(song.track_num).zfill(2) + ' ' + song.song_name + '.mp3'
-    # print(song.file.path)
     response = download(
         filepath=song.file.path,
         filename=filename,
@@ -125,15 +125,15 @@ def FileDownloadView(request, live_id, song_pk):
 
 
 @login_required()
-def GetSongData(request, live_id):
-    performance = get_object_or_404(Performance, id=live_id)
-    songs = Song.objects.filter(performance=performance).order_by("track_num")
+def playlistJson(request, live_id):
+    live = get_object_or_404(Live, id=live_id)
+    songs = Song.objects.filter(live=live).order_by("track_num")
     return JsonResponse(
         {
-            "performance": {
-                "id": performance.id,
-                "live_name": performance.live_name,
-                "recorded_at": performance.recorded_at,
+            "live": {
+                "id": live.id,
+                "live_name": live.live_name,
+                "recorded_at": live.recorded_at,
             },
             "songs": [
                 {
