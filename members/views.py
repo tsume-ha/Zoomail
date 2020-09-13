@@ -16,6 +16,7 @@ from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
+from django.urls import reverse
 
 from .models import User, TmpMember, TestMail
 from .forms import UserUpdateForm, RegisterForm, RegisterCSV
@@ -74,7 +75,7 @@ def UserUpdate(request):
             content.updated_at = datetime.datetime.now()
             content.save()
             messages.success(request, "更新しました")
-            return redirect("/members")
+            return redirect(to=reverse('members:index'))
         else:
             messages.error(request, "更新できませんでした")
     params = {
@@ -109,7 +110,7 @@ def UserRegistration(request):
     now_user = request.user
     is_allowed = MemberRegisterPermission(now_user)
     if not is_allowed:
-        return redirect("/members")
+        return redirect(to=reverse('members:index'))
     form = RegisterForm(request.POST or None)
     params = {
         "RegisterForm": form,
@@ -146,7 +147,7 @@ def UserRegistrationCSV(request):
     now_user = request.user
     is_allowed = MemberRegisterPermission(now_user)
     if not is_allowed:
-        return redirect("/members")
+        return redirect(to=reverse('members:index'))
     csvform = RegisterCSV(request.POST or None, request.FILES or None)
     params = {
         "RegisterCSV": csvform,
@@ -202,7 +203,7 @@ def UserRegistrationPreview(request):
     now_user = request.user
     is_allowed = MemberRegisterPermission(now_user)
     if not is_allowed:
-        return redirect("/members")
+        return redirect(to=reverse('members:index'))
     TmpMembers = TmpMember.objects.filter(session=request.session.session_key).order_by(
         "id"
     )
@@ -230,7 +231,7 @@ def UserRegistrationPreview(request):
             return render(request, "members/register_preview.html", params)
         else:
             messages.success(request, "登録しました")
-            return redirect("/members/register/csv/")
+            return redirect("/mypage/register/csv/")
     return render(request, "members/register_preview.html", params)
 
 
