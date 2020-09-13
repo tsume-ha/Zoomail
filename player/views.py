@@ -115,7 +115,7 @@ def FileDownloadView(request, live_id, song_pk):
     except ObjectDoesNotExist:
         return redirect('/player/playlist/' + str(live_id))
     filename = str(song.track_num).zfill(2) + ' ' + song.song_name + '.mp3'
-    print(song.file.path)
+    # print(song.file.path)
     response = download(
         filepath=song.file.path,
         filename=filename,

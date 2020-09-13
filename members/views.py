@@ -240,8 +240,6 @@ def EmailConfirm(request):
     params = {
         "user": now_user,
     }
-    print(bool(request.method))
-    print(bool(request.body))
     if request.method != "POST" or not request.body:
         return render(request, "members/email_confirm.html", params)
 
@@ -282,8 +280,6 @@ def EmailConfirm(request):
         response = sendgrid_client.send(message)
         try:
             x_message_id = response.headers["X-Message-Id"]
-            print(obj)
-            print(x_message_id)
             obj.x_message_id = x_message_id
             obj.save()
         except Exception:
