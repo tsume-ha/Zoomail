@@ -2,7 +2,7 @@ from utils.commom import download
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.http.response import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -110,13 +110,12 @@ def edit(request, live_id):
 
 
 @login_required()
-def FileDownloadView(request, live_id, song_pk):
+def FileDownloadView(request, song_pk):
     try:
         song = Song.objects.get(pk=song_pk)
     except ObjectDoesNotExist:
-        return redirect('/sound/playlist/' + str(live_id))
+        raise Http404
     filename = str(song.track_num).zfill(2) + ' ' + song.song_name + '.mp3'
-    # print(song.file.path)
     response = download(
         filepath=song.file.path,
         filename=filename,
@@ -126,7 +125,7 @@ def FileDownloadView(request, live_id, song_pk):
 
 
 @login_required()
-def GetSongData(request, live_id):
+def playlistJson(request, live_id):
     live = get_object_or_404(Live, id=live_id)
     songs = Song.objects.filter(live=live).order_by("track_num")
     return JsonResponse(

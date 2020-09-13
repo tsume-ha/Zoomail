@@ -11,8 +11,8 @@ import back from '../../front/components/back-arrow.vue';
 
 import MeetingRoom from "../../front/components/meeting-room.vue";
 
-import playerUpload from "../../front/components/player/upload.vue";
-import playerPlaylist from "../../front/components/player/playlist.vue";
+import soundUpload from "../../front/components/sound/upload.vue";
+import soundPlaylist from "../../front/components/sound/playlist.vue";
 
 import awaseCalendar from "../../front/components/awase/calendar.vue";
 import awaseCalendarMenu from "../../front/components/awase/calendar-menu.vue";
@@ -39,9 +39,9 @@ var app = new Vue({
     // home/index 用の例会教室表示コンポーネント
     'meeting-room': MeetingRoom,
 
-    // player のコンポーネント
-    'player-upload': playerUpload,
-    'player-playlist': playerPlaylist,
+    // sound のコンポーネント
+    'sound-upload': soundUpload,
+    'sound-playlist': soundPlaylist,
 
     // awase/calendar/ のコンポーネント
     'awase-calendar': awaseCalendar,
