@@ -74,6 +74,32 @@ def index(request, page_num=1):
     }
     return render(request, 'board/index.html', params)
 
+
+@login_required()
+def indexJsonResponse(request):
+    now_user = request.user
+
+    if 'page' in request.GET:
+        try:
+            page_num = int(request.GET['page'])
+        except ValueError:
+            page_num = 1
+    else:
+        page_num = 1
+
+    query = Message.objects.filter(
+        Q(years__year=now_user.year) | Q(years__year=0)
+        ).order_by('updated_at').reverse()
+
+    page = Paginator(query, 20)
+
+    params = {
+        'page': page.get_page(page_num),
+    }
+
+    return render(request, 'board/messages.json', params, content_type='application/json')
+
+
 @login_required()
 def content(request, id):
     message = get_object_or_404(Message, id=id)

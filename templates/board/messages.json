@@ -1,0 +1,17 @@
+{% load json_filter %}
+{
+    "message_list": [
+        {% for message in page %}
+            {
+                "id": "{{message.id}}",
+                "title": "{{message.title | escapejs}}",
+                "content": "{{message.content | linebreaksbr | urlize | escapejs}}",
+                "sender": "{{message.sender.get_short_name}}",
+                "writer": "{{message.writer.get_short_name}}",
+                "created_at": "{{message.created_at | date:"Y-m-d-H-i"}}",
+                "updated_at": "{{message.updated_at | date:"Y-m-d-H-i"}}",
+                "is_bookmarked": {% is_bookmarked message request.user %}
+            }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
