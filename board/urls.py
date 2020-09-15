@@ -4,6 +4,7 @@ from . import views
 app_name = 'board'
 urlpatterns = [
     path('', views.index, name='read'),
+    path('_/', views.index_, name='read_'),
     path('json/', views.indexJsonResponse, name='messages_json'),
     path('<int:page_num>/', views.index, name='page'),
     path('content/<int:id>', views.content, name='content'),

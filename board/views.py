@@ -74,6 +74,9 @@ def index(request, page_num=1):
     }
     return render(request, 'board/index.html', params)
 
+@login_required()
+def index_(request):
+    return render(request, 'board/index_.html')
 
 @login_required()
 def indexJsonResponse(request):
