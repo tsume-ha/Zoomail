@@ -3,21 +3,18 @@ import axios from 'axios';
 export default {
   namespaced: true,
   state: {
-    test: 'hogefuga',
-    messages: [
-
-    ],
+    messages: [],
   },
   mutations: {
     addMessages (state, payload) {
-      state.messages += payload;
+      console.log(payload)
+      state.messages = state.messages.concat(payload);
     },
   },
   actions: {
     loadMessages (context) {
       axios.get('/read/_/json/')
         .then(res => {
-          console.log(res);
           context.commit('addMessages', res.data.message_list);
         })
     }

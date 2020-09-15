@@ -1,13 +1,22 @@
 <template>
-  <div>{{test}}</div>
+  <div>
+    <one-content
+      v-for="message in messages"
+      :key="message.id"
+      :message="message" />
+  </div>
 </template>
 
 <script>
+import oneContent from './index-one-content.vue';
 export default {
   name: 'index',
+  components: {
+    oneContent
+  },
   computed: {
-    test () {
-      return this.$store.state.read.test;
+    messages () {
+      return this.$store.state.read.messages;
     }
   },
   mounted () {
