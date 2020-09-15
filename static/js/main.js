@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import router from '../../front/router'
 import VueAxios from 'vue-axios'
 import VueMoment from 'vue-moment'
 // v-calendar
@@ -31,6 +32,7 @@ Vue.component('v-calendar', Calendar)
 Vue.component('v-date-picker', DatePicker)
 
 var app = new Vue({
+  router,
   el: "#vue-app",
   components: {
     // 「戻る」リンク用のコンポーネント
