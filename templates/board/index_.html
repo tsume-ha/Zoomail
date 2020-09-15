@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load render_bundle from webpack_loader %}
 
 {% block title %}メーリス一覧 | Unplugged Message{% endblock %}
 
+{% block extrastyle %}
+{% render_bundle 'read' 'js' attrs='defer' %}
+{% endblock %}
+
 {% block vuebody %}
 <h3>メーリス一覧</h3>
-
-<div id="vue-app">
-    <router-view></router-view>
-</div>
-
+<router-view></router-view>
 {% endblock %}
+
