@@ -1,5 +1,5 @@
 <template>
-  <div>test</div>
+  <div>{{test}}</div>
 </template>
 
 <script>
@@ -9,6 +9,9 @@ export default {
     test () {
       return this.$store.state.read.test;
     }
-  }
+  },
+  mounted () {
+    this.$store.dispatch('read/loadMessages');
+  },
 }
 </script>
