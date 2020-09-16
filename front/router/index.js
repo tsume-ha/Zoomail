@@ -9,6 +9,14 @@ const routes = [
     name: 'index',
     component: () => import(/* webpackChunkName: "read" */ '../components/board/index.vue')
   },
+  {
+    path: '/read/_/content/:id/',
+    name: 'content',
+    component: () => import(/* webpackChunkName: "read" */ '../components/board/content.vue'),
+    props: routes => ({
+      id: Number(routes.params.id)
+    })
+  },
 ]
 
 const router = new VueRouter({

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>メーリス一覧</h3>
     <one-content
       v-for="message in messages"
       :key="message.id"

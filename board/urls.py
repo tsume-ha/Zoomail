@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='read'),
     path('_/', views.index_, name='read_'),
     path('_/json/', views.indexJsonResponse, name='messages_json'),
+    path('_/content/<int>/', views.index_, name='content_'),
     path('<int:page_num>/', views.index, name='page'),
     path('content/<int:id>', views.content, name='content'),
     path('content/<int:id>/edit/', views.edit, name='content_edit'),
