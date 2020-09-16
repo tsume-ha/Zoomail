@@ -20,7 +20,7 @@ export default {
       return this.$store.state.read.messages;
     }
   },
-  mounted () {
+  created () {
     this.$store.dispatch('read/loadMessages');
   },
 }

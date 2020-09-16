@@ -5,7 +5,10 @@
   </div>
   <div v-else>
     <!-- message exists -->
-    <h3 class="my-1">{{message.title}}</h3>
+    <div>
+      <router-back-arrow :href="'../../'" />
+      <h4 class="d-inline-block">{{message.title}}</h4>
+    </div>
     <div class="col-sm-12 col-md-8 mt-1 pl-0">
       <span class="date d-inline-block">{{message.created_at}}</span>
       <span class="ml-4 whosent">{{message.writer}}</span>
@@ -26,12 +29,14 @@
 
 <script>
 import bookmarkStar from './bookmark-star.vue'
+import routerBackArrow from './router-back-arrow.vue'
 export default {
   props: {
     id: {type: Number, required: true}
   },
   components: {
     bookmarkStar,
+    routerBackArrow
   },
   data: () => ({
     messageExists: false,
