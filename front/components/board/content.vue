@@ -5,9 +5,9 @@
   </div>
   <div v-else>
     <!-- message exists -->
-    <div>
+    <div class="message-title mb-2">
       <router-back-arrow :href="'../../'" />
-      <h4 class="d-inline-block">{{message.title}}</h4>
+      <h4 class="d-inline-block m-0">{{message.title}}</h4>
     </div>
     <div class="col-sm-12 col-md-8 mt-1 pl-0">
       <span class="date d-inline-block">{{message.created_at}}</span>
@@ -67,6 +67,9 @@ export default {
 </script>
 
 <style scoped>
+.message-title > *{
+  vertical-align: bottom;
+}
 p.content{
   white-space: pre-line;
 }

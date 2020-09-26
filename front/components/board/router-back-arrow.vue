@@ -1,5 +1,7 @@
 <template>
-  <span id="back" @click="onclick"> </span>
+  <div id="back">
+    <span @click="onclick"> </span>
+  </div>
 </template>
 <script>
 module.exports = {
@@ -16,15 +18,22 @@ module.exports = {
 };
 </script>
 <style scoped>
-#back{
+div#back{
+  display: inline-block;
+  
+  height: 24px;
+  margin: 0 6px 0 0;
+}
+
+#back > span{
   height: 24px;
   width: 24px;
   display: inline-block;
   position: relative;
   overflow: hidden;
-  margin: 3px 0.5rem 3px 0.25rem;
+  margin: 0;
 }
-#back:before{
+#back > span:before{
   content: '';
   height: 12px;
   width: 12px;
@@ -33,15 +42,11 @@ module.exports = {
   border-right-width: 0;
   border-bottom-width: 0;
   transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
   position: absolute;
   top: 5px;
   left: 5px;
 }
-#back:after{
+#back > span:after{
   content: '';
   height: 1px;
   width: 20px;
