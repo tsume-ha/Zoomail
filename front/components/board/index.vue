@@ -5,6 +5,9 @@
       v-for="message in messages"
       :key="message.id"
       :message="message" />
+    <infinite-loading
+      @infinite="infiniteLoad"
+    ></infinite-loading>
   </div>
 </template>
 
@@ -24,7 +27,18 @@ export default {
     if (this.messages.length) {
       return;
     }
-    this.$store.dispatch('read/loadMessages');
+    // this.$store.dispatch('read/loadMessages');
   },
+  methods: {
+    infiniteLoad ($state) {
+      this.$store.dispatch('read/loadMessages')
+      .then((res) => {
+        console.log('complete')
+        console.log(res)
+
+      })
+      // $state.loaded();
+    }
+  }
 }
 </script>

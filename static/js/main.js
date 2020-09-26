@@ -8,6 +8,9 @@ import VueMoment from 'vue-moment'
 import Calendar from 'v-calendar/lib/components/calendar.umd'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 
+// infinite loading
+import InfiniteLoading from 'vue-infinite-loading';
+
 // 共通コンポーネント
 import back from '../../front/components/back-arrow.vue';
 
@@ -28,6 +31,10 @@ import MemberEmailConfirm from "../../front/components/email_confirm.vue";
 
 Vue.use(VueAxios, axios)
 Vue.use(VueMoment);
+
+Vue.use(InfiniteLoading, {
+  
+});
 
 Vue.component('v-calendar', Calendar)
 Vue.component('v-date-picker', DatePicker)

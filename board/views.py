@@ -94,7 +94,7 @@ def indexJsonResponse(request):
         Q(years__year=now_user.year) | Q(years__year=0)
         ).order_by('updated_at').reverse()
 
-    page = Paginator(query, 20)
+    page = Paginator(query, 10)
 
     params = {
         'page': page.get_page(page_num),
