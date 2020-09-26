@@ -131,6 +131,31 @@ def content(request, id):
 
     return render(request, 'board/content.html', params)
 
+
+@login_required()
+def contentJson(request, id):
+    message = get_object_or_404(Message, id=id)
+    now_user = request.user
+
+    # 閲覧できないならば/read にリダイレクトする
+    if not message.years.all().filter(Q(year=now_user.year)|Q(year=0)).exists():
+        if not EditPermisson(now_user, id):
+            raise PermissionDenied
+
+
+    # attachments = map(
+    #     lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName(), "pk": file.pk, "fileext": file.extension()},
+    #     message.attachments.all()
+    # )
+    params = {
+        'page': [message],
+        # 'attachments': attachments,
+        # 'edit_allowed': EditPermisson(user=now_user, content_id=id),
+        # 'is_updated': is_updated(message.created_at, message.updated_at),
+    }
+    return render(request, 'board/messages.json', params)
+
+
 @login_required()
 def ajax_bookmark(request, pk):
     now_user = request.user

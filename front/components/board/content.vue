@@ -42,7 +42,7 @@ export default {
     messageExists: false,
     message: {},
   }),
-  mounted () {
+  created () {
     let message = this.$store.state.read.messages.find(obj => obj.id == this.id);
     if (message) {
       this.messageExists = true;
@@ -50,6 +50,16 @@ export default {
     }
     // 直接アクセスして来た場合
     console.log('直接アクセス')
+    this.axios.get('/read/api/content/' + String(this.id) + '/')
+      .then(res => {
+        console.log(res);
+        this.messageExists = true;
+        this.message = res.data.message_list[0];
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    this.$store.dispatch('read/loadMessages');
   },
 
 

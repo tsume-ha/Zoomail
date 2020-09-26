@@ -21,6 +21,9 @@ export default {
     }
   },
   created () {
+    if (this.messages.length) {
+      return;
+    }
     this.$store.dispatch('read/loadMessages');
   },
 }
