@@ -47,12 +47,12 @@ export default {
     if (message) {
       this.messageExists = true;
       this.message = message;
+      return;
     }
     // 直接アクセスして来た場合
     console.log('直接アクセス')
     this.axios.get('/read/api/content/' + String(this.id) + '/')
       .then(res => {
-        console.log(res);
         this.messageExists = true;
         this.message = res.data.message_list[0];
       })

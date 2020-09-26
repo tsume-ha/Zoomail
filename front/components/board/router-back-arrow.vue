@@ -11,7 +11,6 @@ module.exports = {
   },
   methods: {
     onclick () {
-      console.log('link clicked')
       this.$router.push(this.href)
     }
   }
