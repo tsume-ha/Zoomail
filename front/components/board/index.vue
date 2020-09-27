@@ -18,26 +18,36 @@ export default {
   components: {
     oneContent
   },
+  data: () => ({
+    isInitial: true,
+  }),
   computed: {
     messages () {
       return this.$store.state.read.messages;
     }
   },
   created () {
-    if (this.messages.length) {
+    console.log('com _ created')
+    console.log('com _ ' + String(this.messages.length))
+    if (this.messages.length > 0) {
       return;
     }
-    // this.$store.dispatch('read/loadMessages');
+    this.$store.dispatch('read/loadMessages');
   },
   methods: {
     infiniteLoad ($state) {
-      this.$store.dispatch('read/loadMessages')
-      .then((res) => {
-        console.log('complete')
-        console.log(res)
-
-      })
-      // $state.loaded();
+      // console.log('infinite load start')
+      // if (this.isInitial) {
+      //   this.isInitial = false;
+      //   // return $state.loaded();
+      // }
+      console.log('com _ infinite load axios start')
+      this.$store.dispatch('read/loadMessages').then(
+        () => {
+          console.log('com _ vuex.then')
+          $state.loaded();
+        }
+      )
     }
   }
 }
