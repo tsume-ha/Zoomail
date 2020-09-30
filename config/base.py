@@ -11,12 +11,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-import environ
 env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, 'config', 'base.env'))
 
@@ -29,7 +28,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["message.ku-unplugged.net", "ku-unplugged.net", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [
+    "message.ku-unplugged.net", "ku-unplugged.net", "127.0.0.1", "localhost"
+]
 
 # Application definition
 
@@ -106,8 +107,6 @@ DATABASES = {
 # CustomUserModel
 AUTH_USER_MODEL = 'members.User'
 
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -121,10 +120,7 @@ USE_L10N = True
 
 USE_TZ = False
 
-
-
 # Private uploaded files
-
 PRIVATE_STORAGE_ROOT = os.path.join(BASE_DIR, 'private_media/')
 PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_authenticated'
 
@@ -144,7 +140,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024
 
 
 # Google OAuth 2
-AUTHENTICATION_BACKENDS = ( 
+AUTHENTICATION_BACKENDS = (
     'social_core.backends.open_id.OpenIdAuth',
     'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
@@ -160,7 +156,7 @@ SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
-
+GOOGLE_CALENDAR_API_KEY = env('GOOGLE_CALENDAR_API_KEY')
 
 SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
 # Google 認証のurlもスラッシュを外したモノに変更する必要
@@ -173,9 +169,7 @@ SOCIAL_AUTH_AUTH0_SCOPE = [
     "openid",
     "email",
     "email_verified",
-    ]
-
-
+]
 
 # other settings
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
@@ -203,7 +197,7 @@ SOCIAL_AUTH_PIPELINE = (
     # Make up a username for this person, appends a random string at the end if
     # there's any collision.
     'social_core.pipeline.user.get_username',
-    
+
     # Create a user account if we haven't found one yet.
     'config.social_auth.create_user_override.create_user',
 
