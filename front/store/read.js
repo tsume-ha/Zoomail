@@ -29,7 +29,11 @@ export default {
       })
       .then(res => {
         context.commit('addMessages', res.data.message_list);
-      });
+      })
+      .catch(error => {
+        context.state.page -= 1;
+        // pageを追加していたので戻す
+      })
           
     }
   }
