@@ -4,28 +4,25 @@ export default {
   namespaced: true,
   state: {
     messages: [],
-    page: 1,
+    loadNum: 10,
   },
   mutations: {
     addMessages (state, payload) {
       state.messages = state.messages.concat(payload);
       console.log(state.messages)
     },
-    pageUpdate (state, payload) {
-      state.page = payload;
-    },
   },
   actions: {
     async loadMessages (context) {
-      console.log('vuex _ access url: ', String(context.state.page));
+      const page = Math.ceil(context.state.messages.length / context.state.loadNum) + 1;
+      console.log('vuex _ access url: ', String(page));
       await axios.get('/read/_/json/', {
         params: {
-          'page': context.state.page
+          'page': page
         }
       })
       .then(res => {
         context.commit('addMessages', res.data.message_list);
-        context.commit('pageUpdate', context.state.page + 1);
       })          
     }
   }
