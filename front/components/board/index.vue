@@ -19,7 +19,6 @@ export default {
     oneContent
   },
   data: () => ({
-    isInitial: true,
   }),
   computed: {
     messages () {
@@ -27,22 +26,24 @@ export default {
     }
   },
   created () {
-    console.log('com _ created')
-    console.log('com _ ' + String(this.messages.length))
+    // 発火するのは次の2パターン
+    // - /read/にアクセスしてきたとき
+    //   -> Vuexは初期状態で、`this.messages.length === 0`
+    // - /read/content/(number)から戻ってきたとき
+    //   -> Vuexにmessagesが残ってる。APIを叩かない。
     if (this.messages.length > 0) {
       return;
     }
-    this.$store.dispatch('read/loadMessages').then(() => {
-      console.log('com _ created finish')
-    })
+    this.$store.dispatch('read/loadMessages');
+    // この書き方だとVuexが初期状態のときに
+    // 下のmethods.infiniteLoadも発火するので
+    // APIは2回叩かれますが、これは仕様です。
   },
   methods: {
-    async infiniteLoad ($state) {
-      console.log('com _ infinite load axios start')
-      await this.$store.dispatch('read/loadMessages')
-        console.log('com _ vuex.then')
+    infiniteLoad ($state) {
+      this.$store.dispatch('read/loadMessages').then(() => {
         $state.loaded();
-
+      });
     }
   }
 }

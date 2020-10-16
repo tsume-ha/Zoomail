@@ -13,7 +13,6 @@ export default {
     },
     pageUpdate (state, payload) {
       state.page = payload;
-      console.log(state.page)
     },
   },
   actions: {
@@ -30,7 +29,6 @@ export default {
       })
       .then(res => {
         context.commit('addMessages', res.data.message_list);
-        console.log('vuex _ action done')
       });
           
     }
