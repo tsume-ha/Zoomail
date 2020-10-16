@@ -25,23 +25,6 @@ export default {
       return this.$store.state.read.messages;
     }
   },
-  created () {
-    // // 発火するのは次の2パターン
-    // // - /read/にアクセスしてきたとき
-    // //   -> Vuexは初期状態で、`this.messages.length === 0`
-    // // - /read/content/(number)から戻ってきたとき
-    // //   -> Vuexにmessagesが残ってる。APIを叩かない。
-    // if (this.messages.length > 0) {
-    //   this.isInitial = false;
-    //   return;
-    // }
-    // this.$store.dispatch('read/loadMessages').then(() => {
-    //   this.isInitial = false;
-    // })
-    // // この書き方だとVuexが初期状態のときに
-    // // 下のmethods.infiniteLoadも発火するので
-    // // APIは2回叩かれますが、これは仕様です。
-  },
   methods: {
     infiniteLoad ($state) {
       this.$store.dispatch('read/loadMessages').then((h) => {
