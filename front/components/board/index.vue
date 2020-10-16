@@ -26,28 +26,26 @@ export default {
       return this.$store.state.read.messages;
     }
   },
-  created () {
-    console.log('com _ created')
-    console.log('com _ ' + String(this.messages.length))
-    if (this.messages.length > 0) {
-      return;
-    }
-    this.$store.dispatch('read/loadMessages');
-  },
+  // created () {
+  //   console.log('com _ created')
+  //   console.log('com _ ' + String(this.messages.length))
+  //   if (this.messages.length > 0) {
+  //     return;
+  //   }
+  //   this.$store.dispatch('read/loadMessages');
+  // },
   methods: {
-    infiniteLoad ($state) {
+    async infiniteLoad ($state) {
       // console.log('infinite load start')
       // if (this.isInitial) {
       //   this.isInitial = false;
       //   // return $state.loaded();
       // }
       console.log('com _ infinite load axios start')
-      this.$store.dispatch('read/loadMessages').then(
-        () => {
-          console.log('com _ vuex.then')
-          $state.loaded();
-        }
-      )
+      await this.$store.dispatch('read/loadMessages')
+        console.log('com _ vuex.then')
+        // $state.loaded();
+
     }
   }
 }

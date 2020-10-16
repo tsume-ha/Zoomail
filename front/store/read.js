@@ -17,14 +17,14 @@ export default {
     },
   },
   actions: {
-    loadMessages (context) {
-      return new Promise(() => {
+    async loadMessages (context) {
+      // return new Promise(() => {
         if (context.state.messages.length == 0) {
           console.log('vuex _ access url: ', String(context.state.page));
           context.commit('pageUpdate', context.state.page + 1);
           // 先にpage数を追加しておく
           // responseが帰ってくる前にpage数は変えておきたい
-          axios.get('/read/_/json/', {
+          await axios.get('/read/_/json/', {
             params: {
               'page': context.state.page - 1
               // ここで引いておく
@@ -34,8 +34,10 @@ export default {
             context.commit('addMessages', res.data.message_list);
             console.log('vuex _ action done')
           });
+          
+          return true;
         }
-      });
+      // });
     }
   }
 }

@@ -99,7 +99,8 @@ def indexJsonResponse(request):
     params = {
         'page': page.get_page(page_num),
     }
-
+    import time
+    time.sleep(3)
     return render(request, 'board/messages.json', params, content_type='application/json')
 
 
