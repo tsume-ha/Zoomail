@@ -7,7 +7,10 @@
       :message="message" />
     <infinite-loading
       @infinite="infiniteLoad"
-    ></infinite-loading>
+    >
+      <div slot="no-more">メーリスは以上です</div>
+      <div slot="no-results">表示できるメーリスはありませんでした</div>
+    </infinite-loading>
   </div>
 </template>
 
@@ -27,9 +30,14 @@ export default {
   },
   methods: {
     infiniteLoad ($state) {
-      this.$store.dispatch('read/loadMessages').then((h) => {
-        console.log(h)
-        $state.loaded();
+      this.$store.dispatch('read/loadMessages').then(response => {
+        console.log(response)
+        if (this.messages.length > 0) {
+          $state.loaded();          
+        }
+        if (response.has_next === false) {
+          $state.complete();
+        }
       }).catch(error => {
         console.log(error)
         $state.error();

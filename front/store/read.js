@@ -16,13 +16,14 @@ export default {
     async loadMessages (context) {
       const page = Math.ceil(context.state.messages.length / context.state.loadNum) + 1;
       console.log('vuex _ access url: ', String(page));
-      await axios.get('/read/_/json/', {
+      return await axios.get('/read/_/json/', {
         params: {
           'page': page
         }
       })
       .then(res => {
         context.commit('addMessages', res.data.message_list);
+        return res.data;
       })          
     }
   }

@@ -13,5 +13,6 @@
                 "is_bookmarked": {% is_bookmarked message request.user %}
             }{% if not forloop.last %},{% endif %}
         {% endfor %}
-    ]
+    ],
+    "has_next": {{page.has_next | lower}}
 }
