@@ -92,15 +92,32 @@ def indexJsonResponse(request):
 
     query = Message.objects.filter(
         Q(years__year=now_user.year) | Q(years__year=0)
-        ).order_by('updated_at').reverse()
+        ).order_by('updated_at')
+
+    # 検索クエリ
+    if 'text' in request.GET:
+        q = request.GET['text']
+        if q != '':
+            query = query.filter(Q(content__contains=q) | Q(title__contains=q))
+    if 'is_kaisei' in request.GET:
+        if request.GET['is_kaisei'] == 'true':
+            query = query.filter(years__year=now_user.year)
+    if 'is_zenkai' in request.GET:
+        if request.GET['is_zenkai'] == 'true':
+            query = query.filter(years__year=0)
+    if 'is_bookmark' in request.GET:
+        if request.GET['is_bookmark'] == 'true':
+            query = query.filter(bookmark_message__user=now_user)
+
+    query = query.reverse()
 
     page = Paginator(query, 10)
 
     params = {
         'page': page.get_page(page_num),
     }
-    # import time
-    # time.sleep(1)
+    import time
+    time.sleep(1)
     return render(request, 'board/messages.json', params, content_type='application/json')
 
 

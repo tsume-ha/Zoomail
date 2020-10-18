@@ -9,6 +9,7 @@
       :key="message.id"
       :message="message" />
     <infinite-loading
+      :identifier="searchData"
       @infinite="infiniteLoad"
     >
       <div slot="no-more" class="text-center alert alert-secondary my-2 p-2">メーリスは以上です</div>
@@ -27,6 +28,7 @@ export default {
     searchform
   },
   data: () => ({
+    searchData: {}
   }),
   computed: {
     messages () {
@@ -35,8 +37,9 @@ export default {
   },
   methods: {
     infiniteLoad ($state) {
-      this.$store.dispatch('read/loadMessages').then(response => {
-        console.log(response)
+      console.log($state)
+      this.$store.dispatch('read/loadMessages', this.searchData).then(response => {
+        // console.log(response)
         if (this.messages.length > 0) {
           $state.loaded();          
         }
@@ -49,8 +52,9 @@ export default {
       })
     },
     search (data) {
-      console.log('search')
-      console.log(data)
+      this.$store.commit('read/clearMessages')
+      this.searchData = data;
+      // identiferが変更され、自動でinfiniteLoadが発火する
     }
   }
 }
