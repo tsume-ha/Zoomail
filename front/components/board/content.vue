@@ -53,8 +53,9 @@ export default {
     console.log('直接アクセス')
     this.axios.get('/read/api/content/' + String(this.id) + '/')
       .then(res => {
+        console.log(res.data.message)
         this.messageExists = true;
-        this.message = res.data.message_list[0];
+        this.message = res.data.message;
       })
       .catch(error => {
         console.log(error)

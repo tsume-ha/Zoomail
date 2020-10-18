@@ -9,7 +9,7 @@
 export default {
   props: {
     id: {type: Number, required: true},
-    is_bookmarked: {type: Boolean, required: true}
+    is_bookmarked: {type: Boolean, required: false, default: false}
   },
   methods: {
     onclick () {

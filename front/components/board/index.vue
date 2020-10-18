@@ -9,11 +9,20 @@
       :key="message.id"
       :message="message" />
     <infinite-loading
+      spinner="circles"
       :identifier="searchData"
       @infinite="infiniteLoad"
     >
-      <div slot="no-more" class="text-center alert alert-secondary my-2 p-2">メーリスは以上です</div>
-      <div slot="no-results">表示できるメーリスはありませんでした</div>
+      <div
+        slot="no-more"
+        class="text-center alert alert-secondary my-2 p-2">
+        メーリスは以上です
+      </div>
+      <div
+        slot="no-results"
+         class="text-center alert alert-secondary my-2 p-2">
+         表示できるメーリスはありませんでした
+      </div>
     </infinite-loading>
   </div>
 </template>

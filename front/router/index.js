@@ -5,13 +5,13 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/read/_/',
+    path: '/read/',
     name: 'index',
     component: () => import(/* webpackChunkName: "read" */ '../components/board/index.vue'),
     meta: 'read:index',
   },
   {
-    path: '/read/_/content/:id/',
+    path: '/read/content/:id/',
     name: 'content',
     component: () => import(/* webpackChunkName: "read" */ '../components/board/content.vue'),
     props: routes => ({

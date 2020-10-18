@@ -28,7 +28,7 @@ def is_updated(created_at, updated_at):
     return created_at + datetime.timedelta(seconds=5) < updated_at
 
 @login_required()
-def index(request, page_num=1):
+def index_old(request, page_num=1):
     now_user = request.user
     # ログインしているユーザーの年度だけ含める
     query = Message.objects.filter(Q(years__year=now_user.year) | Q(years__year=0))
@@ -75,7 +75,7 @@ def index(request, page_num=1):
     return render(request, 'board/index.html', params)
 
 @login_required()
-def index_(request, int=0):
+def index(request, p=''):
     return render(request, 'board/index_.html')
 
 @login_required()
@@ -166,14 +166,32 @@ def contentJson(request, id):
     #     message.attachments.all()
     # )
     params = {
-        'page': [message],
+        'message': message,
         # 'attachments': attachments,
         # 'edit_allowed': EditPermisson(user=now_user, content_id=id),
         # 'is_updated': is_updated(message.created_at, message.updated_at),
     }
-    return render(request, 'board/messages.json', params)
+    return render(request, 'board/message.json', params)
 
 
+@login_required()
+def bookmarkJson(request, pk):
+    now_user = request.user
+    if (request.method == 'POST'):
+        if Bookmark.objects.filter(message_id__pk=pk).filter(user=now_user).exists():
+            content = Bookmark.objects.filter(message_id__pk=pk).filter(user=now_user)
+            content.delete()
+            bookmark = 'false'
+        else:
+            message = get_object_or_404(Message, pk=pk)
+            content = Bookmark(message=message, user=now_user)
+            content.save()
+            bookmark = 'true'
+        return HttpResponse('bookmark='+bookmark)
+
+
+
+# old
 @login_required()
 def ajax_bookmark(request, pk):
     now_user = request.user
