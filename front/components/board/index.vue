@@ -1,6 +1,9 @@
 <template>
   <div>
     <h3>メーリス一覧</h3>
+    <searchform
+      @search="search"
+     />
     <one-content
       v-for="message in messages"
       :key="message.id"
@@ -8,7 +11,7 @@
     <infinite-loading
       @infinite="infiniteLoad"
     >
-      <div slot="no-more">メーリスは以上です</div>
+      <div slot="no-more" class="text-center alert alert-secondary my-2 p-2">メーリスは以上です</div>
       <div slot="no-results">表示できるメーリスはありませんでした</div>
     </infinite-loading>
   </div>
@@ -16,10 +19,12 @@
 
 <script>
 import oneContent from './index-one-content.vue';
+import searchform from './index-searchform.vue';
 export default {
   name: 'index',
   components: {
-    oneContent
+    oneContent,
+    searchform
   },
   data: () => ({
   }),
@@ -42,6 +47,10 @@ export default {
         console.log(error)
         $state.error();
       })
+    },
+    search (data) {
+      console.log('search')
+      console.log(data)
     }
   }
 }
