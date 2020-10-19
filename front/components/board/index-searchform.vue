@@ -43,6 +43,14 @@ export default {
     submit (e) {
       e.preventDefault();
 
+      if (
+           !this.is_kaisei
+        && !this.is_kaisei
+        && !this.is_bookmark
+      ) {
+        this.showButton = false;
+      }
+
       const data = {
         is_kaisei: this.is_kaisei,
         is_zenkai: this.is_zenkai,
