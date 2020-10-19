@@ -176,6 +176,30 @@ def contentJson(request, id):
 
 
 @login_required()
+def contentOtherData(request, id):
+    # attachment, permissionなどのデータ
+    message = get_object_or_404(Message, id=id)
+    now_user = request.user
+
+    # 閲覧できないならば/read にリダイレクトする
+    if not message.years.all().filter(Q(year=now_user.year)|Q(year=0)).exists():
+        if not EditPermisson(now_user, id):
+            raise PermissionDenied
+
+    return JsonResponse({
+        "attachments": [{
+            "path": file.attachment_file.url,
+            "is_image": file.isImage(),
+            "filename": file.fileName(),
+            "pk": file.pk,
+            "fileext": file.extension()
+        } for file in message.attachments.all()]
+    })
+
+
+
+
+@login_required()
 def bookmarkJson(request, pk):
     now_user = request.user
     if (request.method == 'POST'):

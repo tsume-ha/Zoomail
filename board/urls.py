@@ -6,10 +6,12 @@ urlpatterns = [
     # apis
     path('api/json/', views.indexJsonResponse, name='messages_json'),
     path('api/content/<int:id>/', views.contentJson, name='content_json'),
+    path('api/contentothers/<int:id>/', views.contentOtherData, name='content_other_json'),
     path('api/bookmark/<int:pk>/', views.bookmarkJson, name='bookmark_json'),
 
     # new pages
     path('', views.index, name='read'),
+    path('content/<int:message_pk>/attachment/<int:file_pk>/', views.FileDownloadView, name='attachment_DL'),
 
 
 
