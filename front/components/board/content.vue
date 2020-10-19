@@ -15,8 +15,10 @@
       <bookmark-star :id="Number(message.id)" :is_bookmarked="message.is_bookmarked" />
     </div>
     <hr>
-    <p class="content" v-text="message.content"></p>
-
+    <div
+      class="col-sm-12 col-md-8 content p-0"
+      v-html="message.html"
+      ></div>
     <template v-if="message.writer!=message.sender">
     <hr>
     <p class="small">このメーリスは {{message.sender}} によって代理送信されました。</p>

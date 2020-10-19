@@ -48,7 +48,7 @@ export default {
     infiniteLoad ($state) {
       console.log($state)
       this.$store.dispatch('read/loadMessages', this.searchData).then(response => {
-        // console.log(response)
+        console.log(response)
         if (this.messages.length > 0) {
           $state.loaded();          
         }

@@ -1,4 +1,5 @@
 from django import template
+from django.utils.safestring import mark_safe
 
 from board.models import Bookmark, Attachment
 
@@ -16,4 +17,9 @@ def is_bookmarked(message, user):
 #     for item in query:
 #         result += str(item.)
 #     return result
+
+@register.filter("target_blank")
+def target_blank(content):
+    content = content.replace('<a ', '<a target="_blank" rel="nofollow ugc noopener" class="text-break" ')
+    return mark_safe(content)
 
