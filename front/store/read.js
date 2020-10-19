@@ -13,6 +13,15 @@ export default {
     },
     clearMessages (state) {
       state.messages.length = 0;
+    },
+    updateBookmarked (state, payload) {
+      // payload: {id: <id>, bool: <Boolean>}
+      const target = state.messages.find(content => content.id == String(payload.id))
+      if (target) {
+        // contentに直接したときは
+        // state.messages[]が空でundefinedになってる
+        target.is_bookmarked = payload.bool;
+      }
     }
   },
   actions: {

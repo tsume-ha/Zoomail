@@ -6,7 +6,7 @@ urlpatterns = [
     # apis
     path('api/json/', views.indexJsonResponse, name='messages_json'),
     path('api/content/<int:id>/', views.contentJson, name='content_json'),
-    path('api/bookmark/<int:id>/', views.bookmarkJson, name='bookmark_json'),
+    path('api/bookmark/<int:pk>/', views.bookmarkJson, name='bookmark_json'),
 
     # new pages
     path('', views.index, name='read'),

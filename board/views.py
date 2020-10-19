@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
@@ -187,8 +188,9 @@ def bookmarkJson(request, pk):
             content = Bookmark(message=message, user=now_user)
             content.save()
             bookmark = 'true'
-        return HttpResponse('bookmark='+bookmark)
-
+        return JsonResponse({
+            'updated-to': bookmark
+        })
 
 
 # old
