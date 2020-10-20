@@ -31,6 +31,7 @@ urlpatterns = [
     path('mypage/', include('members.urls')),
     path('read/', include('board.urls')),
     path('send/', board.send_, name="send"),
+    # sendのAPIは全て/read/api/へ
     path('send_old/', board.send, name="send_old"),
     path('sound/', include('sound.urls')),
     path('kansou/', include('kansou.urls')),
