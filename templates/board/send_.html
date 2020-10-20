@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}メーリス送信 | Unplugged Message{% endblock %}
+
+{% block extrastyle %}
+{% render_bundle 'send' 'js' attrs='defer' %}
+{% endblock %}
+
+{% block vuebody %}
+<router-view></router-view>
+{% endblock %}
+

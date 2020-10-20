@@ -316,6 +316,12 @@ def mail_compose(from_email_adress, to_list, message_data):
 
     return response
 
+
+@login_required()
+def send_(request):
+
+    return render(request, 'board/send_.html')
+
 @login_required()
 def send(request):
     messageForm = SendMessage(

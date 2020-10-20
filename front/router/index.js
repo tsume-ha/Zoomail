@@ -19,6 +19,12 @@ const routes = [
     }),
     meta: 'read:content'
   },
+  {
+    path: '/send/',
+    name: 'send',
+    component: () => import(/* webpackChunkName: "send" */ '../components/board/send.vue'),
+    meta: 'send:index',
+  },
 ]
 
 const router = new VueRouter({
