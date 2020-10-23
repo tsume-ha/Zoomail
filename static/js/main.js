@@ -11,6 +11,10 @@ import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 // infinite loading
 import InfiniteLoading from 'vue-infinite-loading';
 
+// vue-select
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
+
 // 共通コンポーネント
 import back from '../../front/components/back-arrow.vue';
 
@@ -38,6 +42,8 @@ Vue.use(InfiniteLoading, {
 
 Vue.component('v-calendar', Calendar)
 Vue.component('v-date-picker', DatePicker)
+
+Vue.component('v-select', vSelect)
 
 var app = new Vue({
   router,

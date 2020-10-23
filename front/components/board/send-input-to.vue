@@ -1,6 +1,6 @@
 <template>
   <div class="my-2">
-    To: 
+    To: <v-select :options="['Canada', 'United States']"></v-select>
     <span class="selection">全回</span>
   </div>
 </template>
