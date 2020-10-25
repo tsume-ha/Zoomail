@@ -1,7 +1,17 @@
 <template>
   <div class="my-2">
-    To: <v-select :options="['Canada', 'United States']"></v-select>
-    <span class="selection">全回</span>
+    <div class="v-select-label">
+     To: 
+    </div>
+    <div class="v-select-wraper">
+      <v-select
+        v-model="selected"
+        :options="years"
+        label="label"
+        :reduce="obj => obj.year"
+        multiple
+      ></v-select>
+    </div>
   </div>
 </template>
 
@@ -9,23 +19,25 @@
 export default {
   data: () => {
     return {
-      years: [2020, 2019, 2018, 2017],
+      years: [
+        {'year': 0, 'label': '全回メーリス'},
+        {'year': 2020, 'label': '2020 26期'},
+        {'year': 2019, 'label': '2019 25期 会長：'},
+        {'year': 2018, 'label': '2018 24期 会長：'},
+      ],
       selected: null
     }
   },
-  methods: {
-    yearToKi (year) {
-      return year - 1994;
-    }
-  }
 }
 </script>
 
 <style scoped>
-.selection{
-  padding: 6px;
-  border-radius: 30%;
-  font-size: 0.8rem;
-  border: 1px solid #dddddd;
+.v-select-label{
+  display: inline-block;
+  width: 3rem;
+}
+.v-select-wraper{
+  display: inline-block;
+  width: calc(100% - 4rem);
 }
 </style>
