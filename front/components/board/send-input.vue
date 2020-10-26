@@ -12,8 +12,8 @@
         class="col-sm-12 col-md-10 col-lg-8 p-0"><input-content /></div>
       <div
         class="col-sm-12 col-md-10 col-lg-8 p-0"><input-attachment /></div>
-      <div
-        class="col-sm-12 col-md-10 col-lg-8 p-0"><input-send-at /></div>
+      <!-- <div
+        class="col-sm-12 col-md-10 col-lg-8 p-0"><input-send-at /></div> -->
     </form>
   </section>
 </template>

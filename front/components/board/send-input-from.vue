@@ -3,22 +3,16 @@
     <div class="v-select-label">
      From: 
     </div>
-    <div class="v-select-wraper-year">
-      <v-select
-        v-model="selectedYear"
-        :options="years"
-        :clearable="false"
-      ></v-select>
-    </div>
-    <div class="v-select-wraper-member">
-      <v-select
-        v-model="selectedMember"
-        :options="members[selectedYear]"
-        label="name"
-        :reduce="obj=>obj.id"
-        :clearable="false"
-      ></v-select>
-    </div>
+    <select name="year_choice" v-model="selectedYear" class="form-control" id="year_choice">
+      <option v-for="year in years" :value="year" :key="year">
+        {{year}}
+      </option>
+    </select>
+    <select name="member_choice" v-model="selectedMember" class="form-control" id="member_choice">
+      <option v-for="member in memberChoices" :value="member.id" :key="member.id">
+        {{member.name}}
+      </option>
+    </select>
   </div>
 </template>
 
@@ -33,7 +27,12 @@ export default {
       ]
     },
     selectedMember: null
-  })
+  }),
+  computed: {
+    memberChoices () {
+      return this.members[String(this.selectedYear)];
+    }
+  }
 }
 </script>
 
@@ -42,14 +41,15 @@ export default {
   display: inline-block;
   width: 3rem;
 }
-.v-select-wraper-year{
+#year_choice{
   display: inline-block;
-  min-width: 6rem;
-  width: 40%;
+  width: 5rem;
+  padding: 6px;
 }
-.v-select-wraper-member{
+#member_choice{
   display: inline-block;
-  width: calc(60% - 4rem);
+  width: calc(100% - 9rem);
   min-width: 8rem;
+  max-width: 18rem;
 }
 </style>
