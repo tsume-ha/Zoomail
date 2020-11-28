@@ -1,11 +1,14 @@
 <template>
-  <div class="attachent-wrapper p-0 my-2"
-    @dragenter="dragEnter"
-    @dragleave="dragLeave"
-    @dragover.prevent
-    @drop.prevent="dropFile" 
-  >
-    <label for="attachment-input" class="my-0" :class="{'attachment-opened':opened}">
+  <div class="attachent-wrapper p-0 my-2">
+    <label
+      for="attachment-input"
+      class="my-0"
+      :class="{'attachment-opened':opened}"
+      @dragenter="dragEnter"
+      @dragleave="dragLeave"
+      @dragover.prevent
+      @drop.prevent="dropFile"
+    >
       <span v-if="opened">ここに添付するファイルをドロップ</span>
       <span v-else>添付ファイルを選択、もしくはここにドラッグ＆ドロップ</span>
       <input type="file" multiple id="attachment-input" ref="attachments" @change="onFileChange">
@@ -31,7 +34,9 @@ export default {
     onFileChange () {
       let files = this.$refs.attachments.files;
       console.log(files)
-      this.files = files;
+      for (const file of files) {
+        this.files.push(file);
+      }
     },
     dragEnter (e) {
       console.log('Enter Drop Area');
@@ -45,14 +50,17 @@ export default {
       console.log('Drop File');
       this.opened = false;
       console.log(event.dataTransfer.files)
-      this.files = [...event.dataTransfer.files]
+      // this.files = [...event.dataTransfer.files]
+      for (const file of event.dataTransfer.files) {
+        this.files.push(file);
+      }
     }
   },
 }
 </script>
 
 <style scoped>
-.attachent-wrapper *{
+.attachent-wrapper label *{
   pointer-events: none;
 }
 
