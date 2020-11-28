@@ -13,11 +13,16 @@
       <span v-else>添付ファイルを選択、もしくはここにドラッグ＆ドロップ</span>
       <input type="file" multiple id="attachment-input" ref="attachments" @change="onFileChange">
     </label>
-    <ul class="attachment-list my-0">
-      <li v-for="file in files" :key="file.name">
-        {{file.name}}
-      </li>
-    </ul>
+    <div class="attachment-preview">
+      <div class="attachment-preview-wrapper"
+          v-for="file in files"
+          :key="file.name+file.size"
+        >
+        <attachment-preview
+        :file="file"
+        />
+      </div>
+    </div>
     <div v-if="files.length>0">
       {{files.length}}件が選択されています
     </div>
@@ -25,11 +30,15 @@
 </template>
 
 <script>
+import attachmentPreview from "./send-input-attachment-preview";
 export default {
   data: () => ({
     opened: false,
     files: [],
   }),
+  components: {
+    attachmentPreview
+  },
   methods: {
     onFileChange () {
       let files = this.$refs.attachments.files;
@@ -82,4 +91,14 @@ export default {
 #attachment-input{
   display: none;
 }
+
+.attachment-preview{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.attachment-preview-wrapper{
+  position: relative;
+}
+
 </style>
