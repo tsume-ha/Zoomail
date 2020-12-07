@@ -13,6 +13,9 @@
       <span v-else>添付ファイルを選択、もしくはここにドラッグ＆ドロップ</span>
       <input type="file" multiple id="attachment-input" ref="attachments" @change="onFileChange">
     </label>
+    <div v-if="files.length>0" class="small text-secondary mx-2">
+      クリックすると新しいタブでファイルを確認できます
+    </div>
     <div class="attachment-preview">
       <div class="attachment-preview-wrapper"
           v-for="file in files"
