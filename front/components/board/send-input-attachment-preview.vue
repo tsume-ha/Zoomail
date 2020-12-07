@@ -56,6 +56,7 @@ export default {
   margin: 0.5rem;
   padding: 0.5rem;
   overflow: hidden;
+  z-index: 1;
 }
 img{
   margin: 0 auto;

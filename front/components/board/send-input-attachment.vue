@@ -24,6 +24,10 @@
         <attachment-preview
         :file="file"
         />
+        <div
+          class="file-cansel"
+          @click="cansel(file)"
+        >×</div>
       </div>
     </div>
     <div v-if="files.length>0">
@@ -66,6 +70,10 @@ export default {
       for (const file of event.dataTransfer.files) {
         this.files.push(file);
       }
+    },
+    cansel (file) {
+      const i = this.files.indexOf(file);
+      this.files.splice(i, 1);
     }
   },
 }
@@ -102,6 +110,26 @@ export default {
 }
 .attachment-preview-wrapper{
   position: relative;
+}
+
+.file-cansel{
+  position: absolute;
+  text-align: center;
+  top: 0;
+  right: 0;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  margin: 0.5rem;
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+  font-size: 20px;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: .2s;
+  z-index: 2;
+}
+.file-cansel:hover{
+  background-color: rgb(250, 75, 75);
 }
 
 </style>
