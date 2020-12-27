@@ -15,6 +15,7 @@
       <!-- <div
         class="col-sm-12 col-md-10 col-lg-8 p-0"><input-send-at /></div> -->
     </form>
+    <button @click="validate" class="btn btn-info">確認画面へ</button>
   </section>
 </template>
 
@@ -34,6 +35,12 @@ export default {
     inputAttachment,
     inputSendAt
   },
+  methods: {
+    validate () {
 
+      // validation ok
+      this.$emit('confirm');
+    }
+  }
 }
 </script>

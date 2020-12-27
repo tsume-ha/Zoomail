@@ -1,6 +1,11 @@
 <template>
-  <send-input v-if="process==0" />
-  <send-confirm v-else-if="process==1" />
+  <send-input
+    v-if="process==0"
+    @confirm="toConfirm" />
+  <send-confirm
+    v-else-if="process==1"
+    @send="send"
+    @backToInput="backToInput" />
   <send-finish v-else-if="process==2" />
   <div v-else>error</div>
 </template>
@@ -19,6 +24,18 @@ export default {
   data: () => {
     return {
       process: 0,
+    }
+  },
+  methods: {
+    toConfirm (){
+      this.process = 1;
+    },
+    backToInput () {
+      this.process = 0;
+    },
+    send () {
+      this.process = 2;
+      // axios
     }
   }
 }
