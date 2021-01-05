@@ -1,3 +1,5 @@
+import * as validations from "../send-form-validations";
+
 export default {
   namespaced: true,
   state: {
@@ -18,4 +20,21 @@ export default {
       },
     ]
   },
+  mutations: {
+    titleInput (state, payload) {
+      // const validation = validations.titleValidation(payload);
+      // if (validation.length === 0) {
+      //   console.log('validated!')
+        state.title = payload;
+      // }
+      // return validation;
+    }
+  },
+  getters: {
+    validateTitle(state) {
+      const result = validations.titleValidation(state.title);
+      console.log(result)
+      return result
+    }
+  }
 }
