@@ -35,6 +35,10 @@ export default {
       state.content = payload;
     },
     fileInput(state, payload) {
+      if (!payload.length) {
+        state.attachments = [];
+        return;
+      }
       for (let i  = 0; i < payload.length; i++) {
         this._vm.$set(state.attachments, i, payload[i])
       }
@@ -45,13 +49,11 @@ export default {
   },
   getters: {
     isAllValid(state, getters) {
-      return (
-        getters.validateTitle.length === 0
-     && getters.validateContent.length === 0
-     && getters.validateWriter.length === 0
-     && getters.validateTo.length === 0
-     && getters.validateAttachments.length === 0
-      );
+      return (!getters.validateTitle.length
+           && !getters.validateContent.length
+           && !getters.validateWriter.length
+           && !getters.validateTo.length
+           && !getters.validateAttachments.length);
     },
     validateTitle(state) {
       return validations.titleValidation(state.title);
