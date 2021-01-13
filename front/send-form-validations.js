@@ -17,6 +17,25 @@ export function contentValidation(text) {
   return result;
 }
 
+export function writerValidation(writer_id) {
+  let result = [];
+  if (!writer_id) {
+    result.push("差出人を指定してください")
+  }
+  return result;
+}
+
+export function toValidation(to_list) {
+  let result = [];
+  if (to_list === null) {
+    return ["宛先を指定してください"];
+  }
+  if (!to_list || to_list.length === 0) {
+    result.push("宛先を指定してください")
+  }
+  return result;
+}
+
 export function attachmentsValidation(files) {
   let result = [];
   if (files.length === 0) {

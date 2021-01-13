@@ -30,7 +30,7 @@
         >×</div>
       </div>
     </div>
-    <div v-if="files.length>0">
+    <div v-if="files.length>0" class="mx-2">
       {{files.length}}件が選択されています
     </div>
     <validation-error-messages

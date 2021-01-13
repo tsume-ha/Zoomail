@@ -6,7 +6,7 @@ export default {
     title: "",
     content: "",
     to: null,
-    writer_id: null,
+    writer_id: 1,
     writer_year: null,
     attachments: [],
     send_at: null,
@@ -18,7 +18,8 @@ export default {
           {name: "京大次郎", furigana: "きょうだいじろう"},
         ]
       },
-    ]
+    ],
+    validate_clicked: false,
   },
   mutations: {
     titleInput (state, payload) {
@@ -37,14 +38,32 @@ export default {
       for (let i  = 0; i < payload.length; i++) {
         this._vm.$set(state.attachments, i, payload[i])
       }
+    },
+    validate(state) {
+      state.validate_clicked = true;
     }
   },
   getters: {
+    isAllValid(state, getters) {
+      return (
+        getters.validateTitle.length === 0
+     && getters.validateContent.length === 0
+     && getters.validateWriter.length === 0
+     && getters.validateTo.length === 0
+     && getters.validateAttachments.length === 0
+      );
+    },
     validateTitle(state) {
       return validations.titleValidation(state.title);
     },
     validateContent(state) {
       return validations.contentValidation(state.content);
+    },
+    validateWriter(state) {
+      return validations.writerValidation(state.writer_id);
+    },
+    validateTo(state) {
+      return validations.toValidation(state.to);
     },
     validateAttachments(state) {
       return validations.attachmentsValidation(state.attachments);

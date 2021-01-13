@@ -10,7 +10,7 @@
     required="">
     </textarea>
   <validation-error-messages
-    v-if="is_valid.length > 0 && isTouched"
+    v-if="is_valid.length > 0 && isValidationDisplay"
     :messages="is_valid" />
   </div>
 </template>
@@ -36,6 +36,9 @@ export default {
     },
     is_valid() {
       return this.$store.getters['send/validateContent'];
+    },
+    isValidationDisplay () {
+      return this.$store.state.send.validate_clicked || this.isTouched;
     }
   }
 }

@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="my-2">
     <div class="v-select-label">
      From: 
@@ -14,10 +15,18 @@
       </option>
     </select>
   </div>
+  <validation-error-messages
+    v-if="is_valid.length > 0"
+    :messages="is_valid" />
+  </div>
 </template>
 
 <script>
+import validationErrorMessages from './send-validation-error.vue';
 export default {
+  components: {
+    validationErrorMessages
+  },
   data: () => ({
     years: [2020, 2019, 2018, 2017],
     selectedYear: 2018,
@@ -38,6 +47,9 @@ export default {
     },
     memberChoices () {
       return this.members[String(this.selectedYear)];
+    },
+    is_valid () {
+      return this.$store.getters['send/validateWriter'];
     }
   }
 }

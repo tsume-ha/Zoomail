@@ -15,7 +15,13 @@
       <!-- <div
         class="col-sm-12 col-md-10 col-lg-8 p-0"><input-send-at /></div> -->
     </form>
-    <button @click="validate" class="btn btn-info">確認画面へ</button>
+    <button
+      @click="onclick"
+      class="btn"
+      :class="{'btn-info': is_valid, 'btn-secondary': !is_valid}"
+      >
+      確認画面へ
+    </button>
   </section>
 </template>
 
@@ -36,10 +42,18 @@ export default {
     inputSendAt
   },
   methods: {
-    validate () {
-
+    onclick () {
+      if (!this.is_valid) {
+        this.$store.commit('send/validate');
+        return false;
+      }
       // validation ok
       this.$emit('confirm');
+    }
+  },
+  computed: {
+    is_valid () {
+      return this.$store.getters['send/isAllValid'];
     }
   }
 }
