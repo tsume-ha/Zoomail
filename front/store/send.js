@@ -5,7 +5,7 @@ export default {
   state: {
     title: "",
     content: "",
-    to: [],
+    to: null,
     writer_id: null,
     writer_year: null,
     attachments: [],
@@ -22,19 +22,24 @@ export default {
   },
   mutations: {
     titleInput (state, payload) {
-      // const validation = validations.titleValidation(payload);
-      // if (validation.length === 0) {
-      //   console.log('validated!')
         state.title = payload;
-      // }
-      // return validation;
+    },
+    fromInput(state, payload) {
+      state.writer_id = payload;
+    },
+    toInput(state, payload) {
+      state.to = payload;
+    },
+    contentInput(state, payload) {
+      state.content = payload;
     }
   },
   getters: {
     validateTitle(state) {
-      const result = validations.titleValidation(state.title);
-      console.log(result)
-      return result
+      return validations.titleValidation(state.title);
+    },
+    validateContent(state) {
+      return validations.contentValidation(state.content);
     }
-  }
+  },
 }

@@ -26,9 +26,16 @@ export default {
         {id:1,name:'あああああ'},{id:2,name:'い'},{id:3,name:'う'}
       ]
     },
-    selectedMember: null
   }),
   computed: {
+    selectedMember: {
+      get () {
+        return this.$store.state.send.writer_id;
+      },
+      set (value) {
+        this.$store.commit('send/fromInput', value);
+      }
+    },
     memberChoices () {
       return this.members[String(this.selectedYear)];
     }

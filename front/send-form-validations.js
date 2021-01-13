@@ -8,3 +8,11 @@ export function titleValidation(text) {
   }
   return result;
 }
+
+export function contentValidation(text) {
+  let result = [];
+  if (text.length < 1) {
+    result.push("本文を入力してください")
+  }
+  return result;
+}

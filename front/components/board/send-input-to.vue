@@ -25,9 +25,19 @@ export default {
         {'year': 2019, 'label': '2019 25期 会長：'},
         {'year': 2018, 'label': '2018 24期 会長：'},
       ],
-      selected: null
+      // selected: null
     }
   },
+  computed: {
+    selected: {
+      get() {
+        return this.$store.state.send.to;
+      },
+      set(value) {
+        this.$store.commit('send/toInput', value);
+      }
+    }
+  }
 }
 </script>
 

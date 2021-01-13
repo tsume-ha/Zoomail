@@ -4,7 +4,6 @@
     type="text"
     name="title"
     v-model="title"
-    @change="isTouched=true"
     placeholder="件名"
     class="form-control"
     required
@@ -26,6 +25,7 @@ export default {
         return this.$store.state.send.title;
       },
       set (value) {
+        this.isTouched = true;
         this.$store.commit('send/titleInput', value);
       }
     },
