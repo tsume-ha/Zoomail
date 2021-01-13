@@ -33,10 +33,14 @@
     <div v-if="files.length>0">
       {{files.length}}件が選択されています
     </div>
+    <validation-error-messages
+      v-if="is_valid.length > 0"
+      :messages="is_valid" />
   </div>
 </template>
 
 <script>
+import validationErrorMessages from './send-validation-error.vue';
 import attachmentPreview from "./send-input-attachment-preview";
 export default {
   data: () => ({
@@ -44,15 +48,16 @@ export default {
     files: [],
   }),
   components: {
-    attachmentPreview
+    attachmentPreview,
+    validationErrorMessages
   },
   methods: {
     onFileChange () {
       let files = this.$refs.attachments.files;
-      console.log(files)
       for (const file of files) {
         this.files.push(file);
       }
+      this.commit();
     },
     dragEnter (e) {
       console.log('Enter Drop Area');
@@ -66,16 +71,35 @@ export default {
       console.log('Drop File');
       this.opened = false;
       console.log(event.dataTransfer.files)
-      // this.files = [...event.dataTransfer.files]
       for (const file of event.dataTransfer.files) {
         this.files.push(file);
       }
+      this.commit();
     },
     cansel (file) {
       const i = this.files.indexOf(file);
       this.files.splice(i, 1);
+      this.commit();
+    },
+    commit () {
+      // ファイルの重複を判定
+      const uniques = this.files.reduce((a, v) => {
+        if (!a.some((e) => (e.size === v.size && e.name === v.name))) {
+          a.push(v);
+        } else {
+          console.log('重複あり')
+        }
+        return a;
+      }, []);
+      this.files = uniques;
+      this.$store.commit('send/fileInput', this.files);
     }
   },
+  computed: {
+    is_valid () {
+      return this.$store.getters['send/validateAttachments'];
+    }
+  }
 }
 </script>
 

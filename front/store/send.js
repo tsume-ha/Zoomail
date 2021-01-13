@@ -32,6 +32,11 @@ export default {
     },
     contentInput(state, payload) {
       state.content = payload;
+    },
+    fileInput(state, payload) {
+      for (let i  = 0; i < payload.length; i++) {
+        this._vm.$set(state.attachments, i, payload[i])
+      }
     }
   },
   getters: {
@@ -40,6 +45,9 @@ export default {
     },
     validateContent(state) {
       return validations.contentValidation(state.content);
+    },
+    validateAttachments(state) {
+      return validations.attachmentsValidation(state.attachments);
     }
   },
 }
