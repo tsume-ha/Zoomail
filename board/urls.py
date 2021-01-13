@@ -13,7 +13,8 @@ urlpatterns = [
     path('', views.index, name='read'),
     path('content/<int:message_pk>/attachment/<int:file_pk>/', views.FileDownloadView, name='attachment_DL'),
 
-
+    # from mypage
+    path('content/<int:p>', views.index, name='content'),
 
     # old pages
     # path('old', views.index, name='read'),

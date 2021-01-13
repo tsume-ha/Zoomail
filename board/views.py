@@ -76,7 +76,7 @@ def index_old(request, page_num=1):
     return render(request, 'board/index.html', params)
 
 @login_required()
-def index(request, p=''):
+def index(request, p='', *args):
     return render(request, 'board/index_.html')
 
 @login_required()
