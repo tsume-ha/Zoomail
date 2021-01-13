@@ -44,12 +44,19 @@ import validationErrorMessages from './send-validation-error.vue';
 import attachmentPreview from "./send-input-attachment-preview";
 export default {
   data: () => ({
-    opened: false,
-    files: [],
+    opened: false,// drop時に大きくなる
+    files: [],// 選択されたファイル
   }),
   components: {
     attachmentPreview,
     validationErrorMessages
+  },
+  beforeMount () {
+    // confirmから戻ってきたときにVuexから取得する
+    const attachments = this.$store.state.send.attachments;
+    for (let i  = 0; i < attachments.length; i++) {
+      this.$set(this.files, i, attachments[i]);
+    }
   },
   methods: {
     onFileChange () {
@@ -153,7 +160,7 @@ export default {
   z-index: 2;
 }
 .file-cansel:hover{
-  background-color: rgb(250, 75, 75);
+  background-color: rgba(255, 255, 255, 0.95);
 }
 
 </style>

@@ -4,7 +4,7 @@
 
     <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
       <div class="p-1 label">件名：</div>
-      <div class="p-1 border rounded display">タイトル</div>
+      <div class="p-1 border rounded display">{{title}}</div>
     </div>
 
     <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
@@ -18,9 +18,16 @@
       </div>
     </div>
 
-    <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
+    <div v-if="attachments.length" class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
       <div class="p-1 label">添付ファイル：</div>
-      <div class="p-1 border rounded display">2件添付</div>
+      <div class="p-1 border rounded display attachment-wraper">
+        <attachment-preview
+          v-for="file in attachments"
+          :key="file.name+file.size"
+          :file="file"
+        />
+        <div class="mx-2">{{attachments.length}}件添付</div>
+      </div>
     </div>
 
     <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-4 mx-0" id="send-button-wraper">
@@ -31,7 +38,11 @@
 </template>
 
 <script>
+import attachmentPreview from "./send-input-attachment-preview";
 export default {
+  components: {
+    attachmentPreview
+  },
   methods: {
     backToInput () {
       this.$emit('backToInput');
@@ -40,13 +51,17 @@ export default {
       return false;
     }
   },
-  data: () => ({
-    content: `本文本文本文本文本文本文本文本文本文
-本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文
-
-本文本文  本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本
-文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文`
-  })
+  computed: {
+    title () {
+      return this.$store.state.send.title;
+    },
+    content () {
+      return this.$store.state.send.content;
+    },
+    attachments () {
+      return this.$store.state.send.attachments;
+    },
+  }
 }
 </script>
 
@@ -67,5 +82,11 @@ export default {
 #send-button-wraper{
   display: flex;
   justify-content: space-between;
+}
+
+.attachment-wraper{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
 }
 </style>

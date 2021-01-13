@@ -1,7 +1,7 @@
 <template>
   <send-input
     v-if="process==0"
-    @confirm="toConfirm" />
+    @confirm="goToConfirm" />
   <send-confirm
     v-else-if="process==1"
     @send="send"
@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    toConfirm (){
+    goToConfirm (){
       this.process = 1;
     },
     backToInput () {
