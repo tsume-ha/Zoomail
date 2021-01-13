@@ -8,17 +8,21 @@
     class="form-control"
     required
     id="id_title" />
-  <ul v-if="is_valid.length > 0 && isTouched">
-    <li v-for="message in is_valid" :key="message" v-text="message"></li>
-  </ul>
+  <validation-error-messages
+    v-if="is_valid.length > 0 && isTouched"
+    :messages="is_valid" />
 </div>
 </template>
 
 <script>
+import validationErrorMessages from './send-validation-error.vue';
 export default {
   data: () => ({
     isTouched: false,
   }),
+  components: {
+    validationErrorMessages
+  },
   computed: {
     title: {
       get () {
