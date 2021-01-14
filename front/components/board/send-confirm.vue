@@ -9,7 +9,9 @@
 
     <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
       <div class="p-1 label">送信先：</div>
-      <div class="p-1 border rounded display">24期（会長：だれだれ）, 25期（会長：だれだれ）</div>
+      <div class="p-1 border rounded display">
+        <span v-for="obj in to_selected" :key="obj.label" class="badge badge-pill badge-light mx-2 border rounded">{{obj.label}}</span>
+      </div>
     </div>
 
     <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
@@ -57,6 +59,15 @@ export default {
     },
     content () {
       return this.$store.state.send.content;
+    },
+    to () {
+      return this.$store.state.send.to;
+    },
+    to_groups () {
+      return this.$store.state.send.to_groups;
+    },
+    to_selected () {
+      return this.to_groups.filter(obj => this.to.includes(obj.year));
     },
     attachments () {
       return this.$store.state.send.attachments;

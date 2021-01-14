@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import NotFoundComponent from '../components/404.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,10 @@ const routes = [
     component: () => import(/* webpackChunkName: "send" */ '../components/board/send.vue'),
     meta: 'send:index',
   },
+  {
+    path: '*',
+    component: NotFoundComponent
+  }
 ]
 
 const router = new VueRouter({
