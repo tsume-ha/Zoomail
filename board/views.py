@@ -19,7 +19,8 @@ from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileN
 from sendgrid.helpers.mail import Attachment as helper_Attachment
 
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
-from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
+from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset, MessageForm
+from .to import to_groups
 from members.models import User
 from mail.models import SendMailAddress, MessageProcess
 
@@ -204,15 +205,7 @@ def contentOtherData(request, id):
 @login_required()
 def toGroups(request):
     return JsonResponse({
-        "togropus": [
-            {"year": 2020, "label": "2020 26期"},
-            {"year": 2019, "label": "2019 25期（会長 : 和波俊亮）"},
-            {"year": 2018, "label": "2018 24期（会長 : 成基進）"},
-            {"year": 2017, "label": "2017 23期（会長 : 宮武功貴）"},
-            {"year": 2016, "label": "2016 22期（会長 : 木内幹也）"},
-            {"year": 2015, "label": "2015 21期（会長 : 飯干歩）"},
-            {"year": 2014, "label": "2014 20期（会長 : 緒方悠介）",}
-        ]
+        "togropus": [{"year": year, "label": text} for year, text in to_groups]
     })
 
 @login_required()
@@ -254,8 +247,19 @@ def bookmarkJson(request, pk):
 
 @login_required()
 def sendAPI(request):
-    print(request.POST)
-    print(request.FILES)
+    # print(request.POST)
+    # # => <QueryDict: {'title': ['title1'], 'written_by': ['1'], 'to': ['2020,2019'], 'content': ['test']}>
+    # print(request.FILES)
+    # # => <MultiValueDict: {'attachments': [<TemporaryUploadedFile: DSC_0109.JPG (image/jpeg)>, <TemporaryUploadedFile: u197001large.jpg (image/jpeg)>]}>
+    message = MessageForm(request.POST)
+    if message.is_valid():
+        print('validated')
+        print(message.cleaned_data['title'])
+        print(message.cleaned_data['to'])
+
+
+    print(message)
+
     return HttpResponse('200')
 
 

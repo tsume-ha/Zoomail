@@ -108,8 +108,10 @@ export default {
       console.log("validaion OK")
       let data = new FormData();
       data.append("title", context.state.title)
-      data.append("written_by", context.state.writer_id)
-      data.append("to", context.state.to)
+      data.append("writer", context.state.writer_id)
+      for (let i = 0; i < context.state.to.length; i++) {
+        data.append("to", context.state.to[i])
+      }
       data.append("content", context.state.content)
       for (let i = 0; i < context.state.attachments.length; i++) {
         data.append("attachments", context.state.attachments[i])
