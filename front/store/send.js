@@ -49,8 +49,8 @@ export default {
       state.content = payload;
     },
     fileInput(state, payload) {
+      state.attachments = [];
       if (!payload.length) {
-        state.attachments = [];
         return;
       }
       for (let i  = 0; i < payload.length; i++) {
@@ -63,6 +63,7 @@ export default {
   },
   getters: {
     isAllValid(state, getters) {
+      // return true// debug
       return (!getters.validateTitle.length
            && !getters.validateContent.length
            && !getters.validateWriter.length
@@ -99,6 +100,24 @@ export default {
           console.log(res.data)
           context.commit('setWriterFroms', res.data)
         })
+    },
+    send (context) {
+      if (!context.getters.isAllValid) {
+        console.log('validation error')
+      }
+      console.log("validaion OK")
+      let data = new FormData();
+      data.append("title", context.state.title)
+      data.append("written_by", context.state.writer_id)
+      data.append("to", context.state.to)
+      data.append("content", context.state.content)
+      for (let i = 0; i < context.state.attachments.length; i++) {
+        data.append("attachments", context.state.attachments[i])
+      }
+      axios.post("/read/api/send/send/", data)
+      .then(res => (
+        console.log(res)
+      ))
     }
   }
 }

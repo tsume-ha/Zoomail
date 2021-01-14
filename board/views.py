@@ -252,6 +252,14 @@ def bookmarkJson(request, pk):
         })
 
 
+@login_required()
+def sendAPI(request):
+    print(request.POST)
+    print(request.FILES)
+    return HttpResponse('200')
+
+
+
 # old
 @login_required()
 def ajax_bookmark(request, pk):

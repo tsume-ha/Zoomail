@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/bookmark/<int:pk>/', views.bookmarkJson, name='bookmark_json'),
     path('api/send/togroups/', views.toGroups, name="send_to_groups"),
     path('api/send/froms/', views.froms, name="send_froms"),
+    path('api/send/send/', views.sendAPI, name="sendAPI"),
 
     # new pages
     path('', views.index, name='read'),
