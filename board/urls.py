@@ -8,13 +8,15 @@ urlpatterns = [
     path('api/content/<int:id>/', views.contentJson, name='content_json'),
     path('api/contentothers/<int:id>/', views.contentOtherData, name='content_other_json'),
     path('api/bookmark/<int:pk>/', views.bookmarkJson, name='bookmark_json'),
+    path('api/send/togroups/', views.toGroups, name="send_to_groups"),
+    path('api/send/froms/', views.froms, name="send_froms"),
 
     # new pages
     path('', views.index, name='read'),
     path('content/<int:message_pk>/attachment/<int:file_pk>/', views.FileDownloadView, name='attachment_DL'),
 
     # from mypage
-    path('content/<int:p>', views.index, name='content'),
+    path('content/<int:id>', views.index, name='content'),
 
     # old pages
     # path('old', views.index, name='read'),

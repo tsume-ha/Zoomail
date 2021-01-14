@@ -1,3 +1,7 @@
+import os
+import datetime
+import base64
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http.response import JsonResponse
@@ -9,16 +13,14 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
+from sendgrid.helpers.mail import Attachment as helper_Attachment
+
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
 from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
 from members.models import User
 from mail.models import SendMailAddress, MessageProcess
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
-from sendgrid.helpers.mail import Attachment as helper_Attachment
-import datetime
-import base64
-import os
 
 def EditPermisson(user, content_id):
     return user.is_superuser or\
@@ -76,7 +78,7 @@ def index_old(request, page_num=1):
     return render(request, 'board/index.html', params)
 
 @login_required()
-def index(request, p='', *args):
+def index(request, *args, **kwargs):
     return render(request, 'board/index_.html')
 
 @login_required()
@@ -117,11 +119,11 @@ def indexJsonResponse(request):
     params = {
         'page': page.get_page(page_num),
     }
-    import time
-    time.sleep(1)
+    # import time
+    # time.sleep(1)
     return render(request, 'board/messages.json', params, content_type='application/json')
 
-
+# old
 @login_required()
 def content(request, id):
     message = get_object_or_404(Message, id=id)
@@ -197,7 +199,39 @@ def contentOtherData(request, id):
     })
 
 
+# send from, to 選択肢
+@login_required()
+def toGroups(request):
+    return JsonResponse({
+        "togropus": [
+            {"year": 2020, "text": "2020 26期"},
+            {"year": 2019, "text": "2019 25期（会長 : 和波俊亮）"},
+            {"year": 2018, "text": "2018 24期（会長 : 成基進）"},
+            {"year": 2017, "text": "2017 23期（会長 : 宮武功貴）"},
+            {"year": 2016, "text": "2016 22期（会長 : 木内幹也）"},
+            {"year": 2015, "text": "2015 21期（会長 : 飯干歩）"},
+            {"year": 2014, "text": "2014 20期（会長 : 緒方悠介）",}
+        ]
+    })
 
+@login_required()
+def froms(request, year=None):
+    if not year:
+        year = request.user.year
+    return JsonResponse({
+        "members": {
+            "year": year,
+            "list": [
+                {"id":1, "name":'あああああ'},
+                {"id":2, "name":'い'},
+                {"id":3, "name":'う'}
+            ]
+        },
+        "user": {
+            "year": year,
+            "id": request.user.id
+        }
+    })
 
 @login_required()
 def bookmarkJson(request, pk):
