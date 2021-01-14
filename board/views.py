@@ -204,13 +204,13 @@ def contentOtherData(request, id):
 def toGroups(request):
     return JsonResponse({
         "togropus": [
-            {"year": 2020, "text": "2020 26期"},
-            {"year": 2019, "text": "2019 25期（会長 : 和波俊亮）"},
-            {"year": 2018, "text": "2018 24期（会長 : 成基進）"},
-            {"year": 2017, "text": "2017 23期（会長 : 宮武功貴）"},
-            {"year": 2016, "text": "2016 22期（会長 : 木内幹也）"},
-            {"year": 2015, "text": "2015 21期（会長 : 飯干歩）"},
-            {"year": 2014, "text": "2014 20期（会長 : 緒方悠介）",}
+            {"year": 2020, "label": "2020 26期"},
+            {"year": 2019, "label": "2019 25期（会長 : 和波俊亮）"},
+            {"year": 2018, "label": "2018 24期（会長 : 成基進）"},
+            {"year": 2017, "label": "2017 23期（会長 : 宮武功貴）"},
+            {"year": 2016, "label": "2016 22期（会長 : 木内幹也）"},
+            {"year": 2015, "label": "2015 21期（会長 : 飯干歩）"},
+            {"year": 2014, "label": "2014 20期（会長 : 緒方悠介）",}
         ]
     })
 
@@ -219,14 +219,15 @@ def froms(request, year=None):
     if not year:
         year = request.user.year
     return JsonResponse({
-        "members": {
+        "years": [2019, 2018, 2017],
+        "members": [{
             "year": year,
             "list": [
                 {"id":1, "name":'あああああ'},
                 {"id":2, "name":'い'},
                 {"id":3, "name":'う'}
             ]
-        },
+        }],
         "user": {
             "year": year,
             "id": request.user.id

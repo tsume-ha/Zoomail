@@ -26,17 +26,9 @@ export default {
   components: {
     validationErrorMessages
   },
-  data: () => {
-    return {
-      years: [
-        {'year': 0, 'label': '全回メーリス'},
-        {'year': 2020, 'label': '2020 26期'},
-        {'year': 2019, 'label': '2019 25期 会長：'},
-        {'year': 2018, 'label': '2018 24期 会長：'},
-      ],
+  data: () => ({
       isTouched: false,
-    }
-  },
+  }),
   computed: {
     selected: {
       get() {
@@ -46,6 +38,9 @@ export default {
         this.isTouched = true;
         this.$store.commit('send/toInput', value);
       }
+    },
+    years () {
+      return this.$store.state.send.to_groups;
     },
     is_valid () {
       return this.$store.getters['send/validateTo'];

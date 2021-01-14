@@ -16,7 +16,7 @@
     </select>
   </div>
   <validation-error-messages
-    v-if="is_valid.length > 0"
+    v-if="is_valid.length > 0 && isValidationDisplay"
     :messages="is_valid" />
   </div>
 </template>
@@ -27,15 +27,6 @@ export default {
   components: {
     validationErrorMessages
   },
-  data: () => ({
-    years: [2020, 2019, 2018, 2017],
-    selectedYear: 2018,
-    members: {
-      '2018': [
-        {id:1,name:'あああああ'},{id:2,name:'い'},{id:3,name:'う'}
-      ]
-    },
-  }),
   computed: {
     selectedMember: {
       get () {
@@ -45,11 +36,32 @@ export default {
         this.$store.commit('send/fromInput', value);
       }
     },
+    selectedYear: {
+      get () {
+        return this.$store.state.send.writer_year;
+      },
+      set (value) {
+        this.$store.commit('send/setWriterYear', value);
+      }
+    },
+    years () {
+      return this.$store.state.send.writer_years;
+    },
+    members () {
+      return this.$store.state.send.writer_choices;
+    },
     memberChoices () {
-      return this.members[String(this.selectedYear)];
+      const tmp = this.members.find(obj => obj.year === this.selectedYear);
+      if (tmp) {
+        return tmp.list;
+      }
+      return [];
     },
     is_valid () {
       return this.$store.getters['send/validateWriter'];
+    },
+    isValidationDisplay () {
+      return this.$store.state.send.validate_clicked;
     }
   }
 }

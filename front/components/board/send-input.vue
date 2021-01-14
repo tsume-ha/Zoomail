@@ -55,6 +55,10 @@ export default {
     is_valid () {
       return this.$store.getters['send/isAllValid'];
     }
+  },
+  created () {
+    this.$store.dispatch('send/getToGroups');
+    this.$store.dispatch('send/getFROMs');
   }
 }
 </script>
