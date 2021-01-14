@@ -216,32 +216,23 @@ def toGroups(request):
     })
 
 @login_required()
-def froms(request, year=None):
-    # import time
-    # time.sleep(5)
+def froms(request):
     years = [y['year'] for y in User.objects.order_by('year').values('year').distinct()]
-    # members = [{
-    #     "year": year,
-    #     "list": [{
-    #         "id": user.id,
-    #         "name": user.nickname if user.nickname else user.last_name + user.first_name
-    #         } for user in User.objects.filter(year=year).order_by('furigana')]
-    #     } for year in years]
-
     return JsonResponse({
         "years": years,
         "members": [{
         "year": year,
         "list": [{
             "id": user.id,
-            "name": user.nickname if user.nickname else user.last_name + user.first_name
+            "name": user.nickname if user.nickname else user.last_name + user.first_name# get_short_nameは使えない
             } for user in User.objects.filter(year=year).order_by('furigana')]
         } for year in years],
         "user": {
-            "year": year,
+            "year": request.user.year,
             "id": request.user.id
         }
     }, safe=False)
+
 
 @login_required()
 def bookmarkJson(request, pk):
