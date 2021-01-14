@@ -19,7 +19,7 @@ from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileN
 from sendgrid.helpers.mail import Attachment as helper_Attachment
 
 from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
-from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset, MessageForm
+from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset, MessageForm, AttachmentForm
 from .to import to_groups
 from members.models import User
 from mail.models import SendMailAddress, MessageProcess
@@ -251,14 +251,25 @@ def sendAPI(request):
     # # => <QueryDict: {'title': ['title1'], 'written_by': ['1'], 'to': ['2020,2019'], 'content': ['test']}>
     # print(request.FILES)
     # # => <MultiValueDict: {'attachments': [<TemporaryUploadedFile: DSC_0109.JPG (image/jpeg)>, <TemporaryUploadedFile: u197001large.jpg (image/jpeg)>]}>
-    message = MessageForm(request.POST)
-    if message.is_valid():
-        print('validated')
-        print(message.cleaned_data['title'])
-        print(message.cleaned_data['to'])
+    message_form = MessageForm(request.POST)
+    if request.method == 'POST' and message_form.is_valid():
+        message = message_form.save(commit=False)
+        message.sender = request.user
+        message.save()
+
+        filelist = request.FILES.getlist('attachments')
+        has_attachment = False
+        if filelist:
+            for file in filelist:
+                attachment = Attachment(attachment_file=file, message=message)
+                attachment.save()
+            has_attachment = True
+
+        for to in message_form.cleaned_data["to"]:
+            message.years.create(year=to)
 
 
-    print(message)
+        
 
     return HttpResponse('200')
 

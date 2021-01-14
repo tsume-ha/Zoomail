@@ -47,7 +47,6 @@ class SendMessage(forms.Form):
         widget=forms.Textarea(attrs={
             'placeholder': '本文を入力',
         }),
-        required = True,
         error_messages={'required': validation_error_messages['no_content']}
     )
     def __init__(self, *args, **kwargs):
@@ -70,12 +69,19 @@ class MessageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-
     to = forms.MultipleChoiceField(
-        choices = to_groups
+        choices = to_groups,
+        required = True
     )
 
+class AttachmentForm(forms.ModelForm):
+    class Meta:
+        model = Attachment
+        fields = ['attachment_file']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.fields['attachment_file'].widget = forms.FileInput(attrs={'multiple': True})
 
 
 
