@@ -11,7 +11,11 @@
           label="label"
           :reduce="obj => obj.year"
           multiple
-        ></v-select>
+        >
+        <span slot="no-options" @click="$refs.select.open = false">
+          情報を取得中です
+        </span>
+        </v-select>
       </div>
     </div>
     <validation-error-messages

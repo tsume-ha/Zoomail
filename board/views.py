@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
+from django.core import serializers
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
@@ -216,23 +217,31 @@ def toGroups(request):
 
 @login_required()
 def froms(request, year=None):
-    if not year:
-        year = request.user.year
+    # import time
+    # time.sleep(5)
+    years = [y['year'] for y in User.objects.order_by('year').values('year').distinct()]
+    # members = [{
+    #     "year": year,
+    #     "list": [{
+    #         "id": user.id,
+    #         "name": user.nickname if user.nickname else user.last_name + user.first_name
+    #         } for user in User.objects.filter(year=year).order_by('furigana')]
+    #     } for year in years]
+
     return JsonResponse({
-        "years": [2019, 2018, 2017],
+        "years": years,
         "members": [{
-            "year": year,
-            "list": [
-                {"id":1, "name":'あああああ'},
-                {"id":2, "name":'い'},
-                {"id":3, "name":'う'}
-            ]
-        }],
+        "year": year,
+        "list": [{
+            "id": user.id,
+            "name": user.nickname if user.nickname else user.last_name + user.first_name
+            } for user in User.objects.filter(year=year).order_by('furigana')]
+        } for year in years],
         "user": {
             "year": year,
             "id": request.user.id
         }
-    })
+    }, safe=False)
 
 @login_required()
 def bookmarkJson(request, pk):
