@@ -261,6 +261,9 @@ def sendAPI(request):
         has_attachment = False
         if filelist:
             for file in filelist:
+                if file.size > 10*1000*1000:
+                    message.delete()
+                    return HttpResponse('400', status=400)
                 attachment = Attachment(attachment_file=file, message=message)
                 attachment.save()
             has_attachment = True

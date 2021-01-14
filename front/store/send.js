@@ -63,7 +63,7 @@ export default {
   },
   getters: {
     isAllValid(state, getters) {
-      // return true// debug
+      return true// debug
       return (!getters.validateTitle.length
            && !getters.validateContent.length
            && !getters.validateWriter.length
