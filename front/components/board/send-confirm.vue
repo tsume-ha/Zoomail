@@ -50,7 +50,7 @@ export default {
       this.$emit('backToInput');
     },
     send () {
-      this.$store.dispatch("send/send")
+      this.$emit('send');
     }
   },
   computed: {

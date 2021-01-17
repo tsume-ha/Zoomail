@@ -35,7 +35,7 @@ export default {
     },
     send () {
       this.process = 2;
-      // axios
+      this.$store.dispatch("send/send")
     }
   }
 }
