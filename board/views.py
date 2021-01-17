@@ -261,7 +261,7 @@ def sendAPI(request):
         has_attachment = False
         if filelist:
             for file in filelist:
-                if file.size > 10*1000*1000:
+                if file.size > 10*1024*1024:
                     message.delete()
                     return HttpResponse('400', status=400)
                 attachment = Attachment(attachment_file=file, message=message)
@@ -271,10 +271,34 @@ def sendAPI(request):
         for to in message_form.cleaned_data["to"]:
             message.years.create(year=to)
 
+        # sendgrid mail
+        if settings.SEND_MAIL is not True:
+            return JsonResponse({
+                "total_send_num": 0,
+                "response": "SEND_MAIL was False."
+            })
+        year_query = MessageYear.objects.filter(message=message).values('year')
 
-        
+        if year_query.filter(year=0).exists():
+            from_email_adress = 'zenkai@message.ku-unplugged.net'
+            to_list = SendMailAddress.objects.all().values_list('email', flat=True)
+            mail_compose(from_email_adress, to_list, message)
 
-    return HttpResponse('200')
+        else:
+            ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
+            for year in year_query:
+                from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
+                to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
+                mail_compose(from_email_adress, to_list, message)
+
+        total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
+        return JsonResponse({
+            "total_send_num": total_send_num,
+            "response": ""
+        })
+
+
+    return HttpResponse('Bad request', status=400)
 
 
 
@@ -374,7 +398,7 @@ def mail_compose(from_email_adress, to_list, message_data):
                 )
             process_list.append(obj)
         MessageProcess.objects.bulk_create(process_list)
-
+    print(response)
     return response
 
 
