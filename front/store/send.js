@@ -22,7 +22,9 @@ export default {
       },
     ],
     validate_clicked: false,
-    progress: 0
+    progress: 0,
+    complete: false,
+    complete_num: null,
   },
   mutations: {
     setToGroups (state, payload) {
@@ -63,6 +65,10 @@ export default {
     },
     onUpload(state, payload) {
       state.progress = Math.floor((payload.loaded * 100) / payload.total);
+    },
+    onComplete(state, payload) {
+      state.complete = true;
+      state.complete_num = payload.total_send_num;
     }
   },
   getters: {
@@ -122,9 +128,10 @@ export default {
       }
       // upload progress
       axios.post("/read/api/send/send/", data, {onUploadProgress: e => context.commit('onUpload', e) })
-      .then(res => (
+      .then(res => {
         console.log(res)
-      ))
+        context.commit('onComplete', res.data)
+      })
     }
   }
 }

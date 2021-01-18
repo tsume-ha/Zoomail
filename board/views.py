@@ -247,6 +247,8 @@ def bookmarkJson(request, pk):
 
 @login_required()
 def sendAPI(request):
+    import time
+    time.sleep(3)
     # print(request.POST)
     # # => <QueryDict: {'title': ['title1'], 'written_by': ['1'], 'to': ['2020,2019'], 'content': ['test']}>
     # print(request.FILES)
