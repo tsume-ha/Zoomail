@@ -14,6 +14,7 @@ module.exports = {
   },
   output: {
     path: path.resolve("./static/dist/"), // 出力
+    publicPath: '/static/dist/',// 追加
     filename: "[name]-[hash].js",
   },
   resolve: {

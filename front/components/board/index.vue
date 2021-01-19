@@ -25,10 +25,10 @@
       </div>
     </infinite-loading>
     <div id="sendlink">
-      <a href="/send/">
+      <router-link to="../../send/">
         <span>メーリスを送信する</span>
         <img src="/static/img/send.svg" height="50" width="50">
-      </a>
+      </router-link>
     </div>
   </div>
 </template>

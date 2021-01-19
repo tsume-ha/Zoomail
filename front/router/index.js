@@ -8,13 +8,13 @@ const routes = [
   {
     path: '/read/',
     name: 'index',
-    component: () => import(/* webpackChunkName: "read" */ '../components/board/index.vue'),
+    component: () => import(/* webpackChunkName: "read" */'../components/board/index.vue'),
     meta: 'read:index',
   },
   {
     path: '/read/content/:id/',
     name: 'content',
-    component: () => import(/* webpackChunkName: "read" */ '../components/board/content.vue'),
+    component: () => import(/* webpackChunkName: "read" */'../components/board/content.vue'),
     props: routes => ({
       id: Number(routes.params.id)
     }),
@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/send/',
     name: 'send',
-    component: () => import(/* webpackChunkName: "send" */ '../components/board/send.vue'),
+    component: () => import(/* webpackChunkName: "send" */'../components/board/send.vue'),
     meta: 'send:index',
   },
   {
