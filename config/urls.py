@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 import board.views as board
 import home.views as home
 import private_storage.urls
+from .views import SPA
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +31,11 @@ urlpatterns = [
     path('private-media/', include(private_storage.urls), name="private_media"),
     path('mypage/', include('members.urls')),
     path('read/', include('board.urls')),
-    path('send/', board.send_, name="send"),
+
+
+    # SPAの転送先
+    path('send/', SPA, name="send"),
+
     # sendのAPIは全て/read/api/へ
     path('send_old/', board.send, name="send_old"),
     path('sound/', include('sound.urls')),

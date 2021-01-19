@@ -1,0 +1,48 @@
+{% load static %}
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	{% render_bundle 'main' 'css' %}
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+{% block extrastyle %}{% endblock %}
+</head>
+<body>
+<input type="checkbox" id="nav_open">
+<header>
+	<div class="container">
+		<h1><a href="{% url 'home:index' %}">U Message</a></h1>
+		<label id="nav_SW" for="nav_open"><span></span></label>
+		<nav id="nav">
+			<ul>
+				{% if user.is_authenticated %}
+				<li><a href="{% url 'board:read' %}">メーリス</a></li>
+				<li><a href="{% url 'kansou:index' %}">感想用紙</a></li>
+				<li><a href="{% url 'sound:index' %}">リハ音源</a></li>
+				<li><a href="{% url 'movie:index' %}">ライブ映像</a></li>
+				<li><a href="{% url 'pictures:index' %}">写真</a></li>
+				<li><a href="{% url 'otherdocs:index' %}">その他資料</a></li>
+				<li><a href="{% url 'awase:index' %}">あわせのあわせ</a></li>
+				<li><a href="{% url 'members:index' %}">My Page</a></li>
+				<li><a href="{% url 'howto:index' %}">使い方</a></li>
+				{% else %}
+				<li><a href="/login/">Login with Google</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</div>
+</header>
+
+<div id="vue-app" class="container mt-3">
+<router-view></router-view>
+</div>
+
+{% render_bundle 'main' 'js' attrs='defer' %}
+</body>
+</html>
