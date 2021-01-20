@@ -46,4 +46,10 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+section h4 a{
+	color: #0058B3;
+}
+section:hover h4 a{
+	color: #0058B3;
+}
 </style>
