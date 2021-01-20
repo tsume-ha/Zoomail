@@ -81,7 +81,7 @@ def index_old(request, page_num=1):
 
 @login_required()
 def index(request, *args, **kwargs):
-    return render(request, 'board/index_.html')
+    return render(request, 'SPA.html')
 
 @login_required()
 def indexJsonResponse(request):

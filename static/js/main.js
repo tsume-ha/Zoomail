@@ -16,6 +16,8 @@ import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 
 // 共通コンポーネント
+import App from '../../front/components/App.vue';
+
 import back from '../../front/components/back-arrow.vue';
 
 import MeetingRoom from "../../front/components/meeting-room.vue";
@@ -50,6 +52,9 @@ var app = new Vue({
   store,
   el: "#vue-app",
   components: {
+    // 共通コンポーネント、Wrapper
+    'App': App,
+
     // 「戻る」リンク用のコンポーネント
     'back': back,
 
