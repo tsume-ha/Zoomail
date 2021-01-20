@@ -52,6 +52,12 @@ export default {
     bookmarkStar,
     routerBackArrow
   },
+  metaInfo() {
+    const message = this.message;
+    return {
+      title: message.title
+    }
+  },
   data: () => ({
     messageExists: false,
     message: {},

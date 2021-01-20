@@ -8,7 +8,7 @@
       <label id="nav_SW" for="nav_open"><span></span></label>
       <nav id="nav">
         <ul>
-          <li><a href="/read/">メーリス</a></li>
+          <li><router-link to="/read/">メーリス</router-link></li>
           <li><a href="/kansou/">感想用紙</a></li>
           <li><a href="/sound/">リハ音源</a></li>
           <li><a href="/movie/">ライブ映像</a></li>
@@ -28,3 +28,14 @@
 
 </div>
 </template>
+
+<script>
+  export default {
+    name: 'App',
+    metaInfo: {
+      titleTemplate: chunk => (
+          chunk ? `${chunk} | Zoomail` : 'Zoomail'
+        )
+      }
+  }
+</script>

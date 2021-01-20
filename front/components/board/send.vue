@@ -16,6 +16,9 @@ import sendConfirm from './send-confirm.vue';
 import sendFinish from './send-finish-and-complete.vue';
 export default {
   name: 'send',
+  metaInfo: {
+    title: 'メーリス送信'
+  },
   components: {
     sendInput,
     sendConfirm,

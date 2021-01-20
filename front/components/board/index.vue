@@ -38,6 +38,9 @@ import oneContent from './index-one-content.vue';
 import searchform from './index-searchform.vue';
 export default {
   name: 'index',
+  metaInfo: {
+    title: 'メーリス一覧'
+  },
   components: {
     oneContent,
     searchform

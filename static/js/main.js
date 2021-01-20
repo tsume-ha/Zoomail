@@ -4,6 +4,8 @@ import router from '../../front/router'
 import store from '../../front/store'
 import VueAxios from 'vue-axios'
 import VueMoment from 'vue-moment'
+import VueMeta from 'vue-meta'
+
 // v-calendar
 import Calendar from 'v-calendar/lib/components/calendar.umd'
 import DatePicker from 'v-calendar/lib/components/date-picker.umd'
@@ -36,7 +38,8 @@ import awaseUpdateHours from "../../front/components/awase/update-hours.vue";
 import MemberEmailConfirm from "../../front/components/email_confirm.vue";
 
 Vue.use(VueAxios, axios)
-Vue.use(VueMoment);
+Vue.use(VueMoment)
+Vue.use(VueMeta)
 
 Vue.use(InfiniteLoading, {
   
