@@ -24,9 +24,6 @@ import back from '../../front/components/back-arrow.vue';
 
 import MeetingRoom from "../../front/components/meeting-room.vue";
 
-import soundUpload from "../../front/components/sound/upload.vue";
-import soundPlaylist from "../../front/components/sound/playlist.vue";
-
 import awaseUpdateForm from "../../front/components/awase/update-calendar-form.vue";
 
 import MemberEmailConfirm from "../../front/components/email_confirm.vue";
@@ -57,10 +54,6 @@ var app = new Vue({
 
     // home/index 用の例会教室表示コンポーネント
     'meeting-room': MeetingRoom,
-
-    // sound のコンポーネント
-    'sound-upload': soundUpload,
-    'sound-playlist': soundPlaylist,
 
     // awase のコンポーネント
     'awase-update-calendar-form': awaseUpdateForm,

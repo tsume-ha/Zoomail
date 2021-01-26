@@ -27,6 +27,18 @@ const routes = [
     meta: 'send:index',
   },
   {
+    path: '/sound/upload/',
+    name: 'sound:upload',
+    component: () => import(/* webpackChunkName: "sound" */'../components/sound/upload.vue'),
+    meta: 'sound:upload',
+  },
+  {
+    path: '/sound/:id/',
+    name: 'sound:playlist',
+    component: () => import(/* webpackChunkName: "sound" */'../components/sound/playlist.vue'),
+    meta: 'sound:playlist',
+  },
+  {
     path: '/awase/create/',
     name: 'awase:create',
     component: () => import(/* webpackChunkName: "awase" */'../components/awase/create.vue'),
