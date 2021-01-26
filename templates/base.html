@@ -23,7 +23,7 @@
 		<nav id="nav">
 			<ul>
 				{% if user.is_authenticated %}
-				<li><a href="{% url 'board:read' %}">メーリス</a></li>
+				<li><a href="{% url 'read' %}">メーリス</a></li>
 				<li><a href="{% url 'kansou:index' %}">感想用紙</a></li>
 				<li><a href="{% url 'sound:index' %}">リハ音源</a></li>
 				<li><a href="{% url 'movie:index' %}">ライブ映像</a></li>

@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     onclick () {
-      this.axios.post('/read/api/bookmark/' + String(this.id) +'/', {
+      this.axios.post('/api/board/bookmark/' + String(this.id) +'/', {
         'data': 'data'
       }).then(res => {
         this.bookmarked = (res.data['updated-to'] === 'true');

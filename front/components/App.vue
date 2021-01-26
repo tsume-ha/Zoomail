@@ -15,7 +15,7 @@
           <li><a href="/pictures/">写真</a></li>
           <li><a href="/others/">その他資料</a></li>
           <li><a href="/awase/">あわせのあわせ</a></li>
-          <li><a href="/members/">My Page</a></li>
+          <li><a href="/mypage/">My Page</a></li>
           <li><a href="/howto/">使い方</a></li>
         </ul>
       </nav>

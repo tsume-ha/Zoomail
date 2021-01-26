@@ -99,13 +99,13 @@ export default {
   actions: {
     // 呼ぶのはsend-input.vueから
     getToGroups (context) {
-      axios.get("/read/api/send/togroups/")
+      axios.get("/api/board/send/togroups/")
         .then(res => {
           context.commit('setToGroups', res.data.togropus)
         })
     },
     getFROMs(context) {
-      axios.get("/read/api/send/froms/")
+      axios.get("/api/board/send/froms/")
         .then(res => {
           console.log(res.data)
           context.commit('setWriterFroms', res.data)
@@ -127,7 +127,7 @@ export default {
         data.append("attachments", context.state.attachments[i])
       }
       // upload progress
-      axios.post("/read/api/send/send/", data, {onUploadProgress: e => context.commit('onUpload', e) })
+      axios.post("/api/board/send/send/", data, {onUploadProgress: e => context.commit('onUpload', e) })
       .then(res => {
         console.log(res)
         context.commit('onComplete', res.data)

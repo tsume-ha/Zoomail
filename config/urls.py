@@ -30,14 +30,21 @@ urlpatterns = [
     path('auth/', include('social_django.urls', namespace='social')),
     path('private-media/', include(private_storage.urls), name="private_media"),
     path('mypage/', include('members.urls')),
-    path('read/', include('board.urls')),
+    # path('read/', include('board.urls')),
 
 
     # SPAの転送先
+    # パスコンバータ <path> は、1文字以上のURLにマッチ
     path('send/', SPA, name="send"),
+    path('send/<path:p>', SPA),
+    path('read/', SPA, name="read"),
+    path('read/<path:p>', SPA),
+    
 
-    # sendのAPIは全て/read/api/へ
-    path('send_old/', board.send, name="send_old"),
+    # API
+    path('api/', include('config.urls_api')),
+
+
     path('sound/', include('sound.urls')),
     path('kansou/', include('kansou.urls')),
     path('pictures/', include('pictures.urls')),

@@ -33,7 +33,7 @@ export default {
       }
       params['page'] = page;
       console.log('vuex _ access url: ', String(page));
-      return await axios.get('/read/api/json/', {
+      return await axios.get('/api/board/json/', {
         params: params
       })
       .then(res => {

@@ -25,7 +25,7 @@
       <h6>添付ファイル</h6>
       <template v-for="file in attachments">
         <img v-if="file.is_image" :src="file.path" style="width: 100%;max-width: 560px;" :key="file.pk" />
-        <a v-else :href="'./attachment/'+file.pk+'/'" :key="file.pk">
+        <a v-else :href="'/api/board/download/' + id + '/' +file.pk+'/'" :key="file.pk">
           {{file.filename}}
         </a>
       </template>
@@ -65,7 +65,7 @@ export default {
   }),
   created () {
     // attachmentsなどのデータ
-    this.axios.get('/read/api/contentothers/' + String(this.id) + '/')
+    this.axios.get('/api/board/contentothers/' + String(this.id) + '/')
       .then(res => {
         console.log(res)
         this.attachments = res.data.attachments;
@@ -83,7 +83,7 @@ export default {
     }
     // 直接アクセスして来た場合
     console.log('直接アクセス')
-    this.axios.get('/read/api/content/' + String(this.id) + '/')
+    this.axios.get('/api/board/content/' + String(this.id) + '/')
       .then(res => {
         console.log(res.data.message)
         this.messageExists = true;
@@ -92,8 +92,6 @@ export default {
       .catch(error => {
         console.log(error)
       })
-    // this.$store.dispatch('read/loadMessages');
-    // /read/api/contentothers/
   },
 
 
