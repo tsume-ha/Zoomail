@@ -69,12 +69,14 @@
 <script>
 import moment from "moment";
 import nowloading from "../nowloading.vue";
+import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 export default {
   metaInfo: {
     title: '日程調整を作成'
   },
   components: {
-    nowloading
+    nowloading,
+    'v-date-picker': DatePicker
   },
   data: function () {
     return {

@@ -6,10 +6,6 @@ import VueAxios from 'vue-axios'
 import VueMoment from 'vue-moment'
 import VueMeta from 'vue-meta'
 
-// v-calendar
-import Calendar from 'v-calendar/lib/components/calendar.umd'
-import DatePicker from 'v-calendar/lib/components/date-picker.umd'
-
 // infinite loading
 import InfiniteLoading from 'vue-infinite-loading';
 
@@ -35,9 +31,6 @@ Vue.use(VueMeta)
 Vue.use(InfiniteLoading, {
   
 });
-
-Vue.component('v-calendar', Calendar)
-Vue.component('v-date-picker', DatePicker)
 
 Vue.component('v-select', vSelect)
 

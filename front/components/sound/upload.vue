@@ -99,7 +99,11 @@
 </template>
 
 <script>
+import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 export default {
+  components: {
+    'v-date-picker': DatePicker
+  },
   metaInfo: {
     title: '音源登録'
   },

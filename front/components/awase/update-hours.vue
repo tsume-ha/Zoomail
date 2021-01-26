@@ -55,6 +55,7 @@
 <script>
 import customDayContent from './update-hours-custom-day-content.vue';
 import timeSelector from './update-hours-time-selector.vue';
+import Calendar from 'v-calendar/lib/components/calendar.umd'
 export default {
   metaInfo: {
     title: '集計時間を変更'
@@ -62,6 +63,7 @@ export default {
   components: {
     "custom-day-content": customDayContent,
     "time-selector": timeSelector,
+    "v-calendar": Calendar,
   },
   data: function () {
     return {

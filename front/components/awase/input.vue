@@ -63,7 +63,7 @@
 <script>
 import customDayContent from './input-custom-day-content.vue';
 import forms from './input-forms.vue';
-
+import Calendar from 'v-calendar/lib/components/calendar.umd'
 export default {
   metaInfo: {
     title: '日程調整に回答'
@@ -71,6 +71,7 @@ export default {
   components: {
     "custom-day-content": customDayContent,
     "input-forms": forms,
+    "v-calendar": Calendar,
   },
   data: function() {
     return {
