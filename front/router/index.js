@@ -27,6 +27,18 @@ const routes = [
     meta: 'send:index',
   },
   {
+    path: '/awase/:id/',
+    name: 'awase:calendar',
+    component: () => import(/* webpackChunkName: "awase" */'../components/awase/calendar-index.vue'),
+    meta: 'awase:calendar',
+  },
+  {
+    path: '/awase/:id/input',
+    name: 'awase:calendar',
+    component: () => import(/* webpackChunkName: "awase" */'../components/awase/input.vue'),
+    meta: 'awase:calendar',
+  },
+  {
     path: '*',
     component: NotFoundComponent
   }

@@ -65,9 +65,9 @@ import customDayContent from './input-custom-day-content.vue';
 import forms from './input-forms.vue';
 
 export default {
-  props: {
-    jsonUrl: {type: String, required: true}
-  },
+  // props: {
+  //   jsonUrl: {type: String, required: true}
+  // },
   components: {
     "custom-day-content": customDayContent,
     "input-forms": forms,
@@ -89,7 +89,7 @@ export default {
   },
   created: function(){
     this.axios
-      .get(this.jsonUrl)
+      .get('./json/')
       .then((res) => {
         console.log(res);
         this.timeRangeData = res.data.HourRange;
@@ -148,7 +148,7 @@ export default {
           counter += 1;
         }
         this.axios
-          .post(this.jsonUrl, data).then(response => {
+          .post('./json/', data).then(response => {
             console.log(response);
             this.isProcessError = false;
             for (var key of inProcess) {

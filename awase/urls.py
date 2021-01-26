@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from config.views import SPA
 
 app_name = 'awase'
 urlpatterns = [
@@ -7,9 +8,9 @@ urlpatterns = [
     path('create/', views.create, name='create'),
     path('invited/key=<str:key>/', views.invited, name='invited'),
     
-    path('<int:pk>/', views.CalendarView, name='calendar'),
+    path('<int:pk>/', SPA, name='calendar'),# SPA
     path('<int:pk>/json/', views.CalendarJsonResponse, name='calendar_json'),
-    path('<int:pk>/input/', views.input, name='input'),
+    path('<int:pk>/input/', SPA, name='input'),# SPA
     path('<int:pk>/input/json/', views.inputJSON, name='input_json'),
     path('<int:pk>/urlkey/', views.CalendarURLKey, name='url_key'),
     path('<int:pk>/update/', views.UpdateCalendarView, name='calendar_update'),
