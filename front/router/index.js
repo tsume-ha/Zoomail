@@ -27,19 +27,32 @@ const routes = [
     meta: 'send:index',
   },
   {
+    path: '/awase/create/',
+    name: 'awase:create',
+    component: () => import(/* webpackChunkName: "awase" */'../components/awase/create.vue'),
+    meta: 'awase:create',
+  },
+  {
     path: '/awase/:id/',
     name: 'awase:calendar',
     component: () => import(/* webpackChunkName: "awase" */'../components/awase/calendar-index.vue'),
     meta: 'awase:calendar',
   },
   {
-    path: '/awase/:id/input',
-    name: 'awase:calendar',
+    path: '/awase/:id/input/',
+    name: 'awase:input',
     component: () => import(/* webpackChunkName: "awase" */'../components/awase/input.vue'),
-    meta: 'awase:calendar',
+    meta: 'awase:input',
   },
   {
-    path: '*',
+    path: '/awase/:id/hours/',
+    name: 'awase:update-hours',
+    component: () => import(/* webpackChunkName: "awase" */'../components/awase/update-hours.vue'),
+    meta: 'awase:update-hours',
+  },
+  {
+    path: '/*',
+    name: '404',
     component: NotFoundComponent
   }
 ]

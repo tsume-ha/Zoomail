@@ -23,6 +23,6 @@ export default {
     awaseCalendar,
     awaseCalendarMenu,
     awaseCalendarExample
-  }
+  },
 }
 </script>

@@ -65,9 +65,9 @@ import customDayContent from './input-custom-day-content.vue';
 import forms from './input-forms.vue';
 
 export default {
-  // props: {
-  //   jsonUrl: {type: String, required: true}
-  // },
+  metaInfo: {
+    title: '日程調整に回答'
+  },
   components: {
     "custom-day-content": customDayContent,
     "input-forms": forms,
@@ -97,6 +97,9 @@ export default {
         this.selectedDate = res.data.InitialDate;
 
         this.jsonLoaded = true;
+      }).catch((error) => {
+        console.log(error);
+        this.$router.push({name: '404'})
       });
   },
   mounted: function(){
