@@ -1,5 +1,6 @@
 <template>
 <section>
+  <h3 class="mb-4">リハ音源登録</h3>
     <template v-if="!states.isPostClicked">
     <h5>1.イベント名、収録日を入力してください。</h5>
     <form id="live-name" class="my-3">
@@ -99,6 +100,9 @@
 
 <script>
 export default {
+  metaInfo: {
+    title: '音源登録'
+  },
   data: function () {
     return{
       date: new Date(),

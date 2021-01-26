@@ -4,7 +4,7 @@
   <input type="checkbox" id="nav_open">
   <header>
     <div class="container">
-      <h1><a href="/">U Message</a></h1>
+      <h1><a href="/">Zoomail</a></h1>
       <label id="nav_SW" for="nav_open"><span></span></label>
       <nav id="nav">
         <ul>

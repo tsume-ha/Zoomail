@@ -1,10 +1,11 @@
 from django.urls import path
 from . import views
+from config.views import SPA
 
 app_name = 'sound'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('<int:live_id>/', views.playlist, name='playlist'),
+    path('<int:live_id>/', SPA, name='playlist'),
     path('<int:live_id>/json/', views.playlistJson, name='playlist_json'),
     path('<int:live_id>/edit/', views.edit, name='edit'),
     path('upload/', views.upload, name='upload'),
