@@ -24,7 +24,7 @@ from mail.models import SendMailAddress, MessageProcess
 
 
 @login_required()
-def indexJsonResponse(request):
+def get_messages_list(request):
     now_user = request.user
 
     if 'page' in request.GET:
@@ -65,7 +65,7 @@ def indexJsonResponse(request):
 
 
 @login_required()
-def contentJson(request, id):
+def get_one_message(request, id):
     message = get_object_or_404(Message, id=id)
     now_user = request.user
 
@@ -81,7 +81,7 @@ def contentJson(request, id):
 
 
 @login_required()
-def contentOtherData(request, id):
+def get_message_attachments(request, id):
     # attachment, permissionなどのデータ
     message = get_object_or_404(Message, id=id)
     now_user = request.user
@@ -104,14 +104,14 @@ def contentOtherData(request, id):
 
 # send from, to 選択肢
 @login_required()
-def toGroups(request):
+def to_groups_data(request):
     return JsonResponse({
         "togropus": [{"year": year, "label": text} for year, text in to_groups]
     })
 
 
 @login_required()
-def froms(request):
+def froms_data(request):
     years = [y['year'] for y in User.objects.order_by('year').values('year').distinct()]
     return JsonResponse({
         "years": years,
@@ -130,7 +130,7 @@ def froms(request):
 
 
 @login_required()
-def bookmarkJson(request, pk):
+def bookmarkAPI(request, pk):
     now_user = request.user
     if (request.method == 'POST'):
         if Bookmark.objects.filter(message_id__pk=pk).filter(user=now_user).exists():
@@ -149,12 +149,6 @@ def bookmarkJson(request, pk):
 
 @login_required()
 def sendAPI(request):
-    import time
-    time.sleep(3)
-    # print(request.POST)
-    # # => <QueryDict: {'title': ['title1'], 'written_by': ['1'], 'to': ['2020,2019'], 'content': ['test']}>
-    # print(request.FILES)
-    # # => <MultiValueDict: {'attachments': [<TemporaryUploadedFile: DSC_0109.JPG (image/jpeg)>, <TemporaryUploadedFile: u197001large.jpg (image/jpeg)>]}>
     message_form = MessageForm(request.POST)
     if request.method == 'POST' and message_form.is_valid():
         message = message_form.save(commit=False)
