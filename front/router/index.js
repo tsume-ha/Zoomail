@@ -63,6 +63,12 @@ const routes = [
     meta: 'awase:update-hours',
   },
   {
+    path: '/mypage/',
+    name: 'mypage:index',
+    component: () => import(/* webpackChunkName: "mypage" */'../components/mypage/index.vue'),
+    meta: 'mypage:index',
+  },
+  {
     path: '/*',
     name: '404',
     component: NotFoundComponent
