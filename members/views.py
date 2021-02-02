@@ -304,6 +304,10 @@ def getUserInfo(request):
             "year": user.year,
             "created_at": user.created_at,
             "updated_at": user.updated_at,
+            'google_oauth2': UserSocialAuth.objects.filter(
+                user=user, provider="google-oauth2").exists(),
+            'livelog_auth0': UserSocialAuth.objects.filter(
+                user=user, provider="auth0").exists(),
         }
     )
 
@@ -320,3 +324,36 @@ def OAuthRegisterView(request):
         ).exists(),
     }
     return render(request, "members/oauth_register.html", params)
+
+
+@login_required()
+def googleOauthUnlink(request):
+    user = request.user
+    if request.method != "POST" or not request.body:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+
+    json_dict = json.loads(request.body)
+    if json_dict["unlink"] is not True:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+    
+    has_livelog = UserSocialAuth.objects.filter(
+            user=user, provider="auth0"
+        ).exists()
+
+    if has_livelog:
+        query = UserSocialAuth.objects.filter(user=user, provider="google-oauth2")
+        assert query.count() < 3
+        # 一応安全確認 なんかのバグで全件取得とかできてしまったら怖い
+        query.delete()
+        return JsonResponse({
+            "deleted": True
+        })
+
+    else:
+        return JsonResponse({
+            "deleted": False
+        })

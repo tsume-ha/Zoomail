@@ -69,6 +69,12 @@ const routes = [
     meta: 'mypage:index',
   },
   {
+    path: '/mypage/oauth/',
+    name: 'mypage:oauth',
+    component: () => import(/* webpackChunkName: "mypage" */'../components/mypage/oauth.vue'),
+    meta: 'mypage:oauth',
+  },
+  {
     path: '/*',
     name: '404',
     component: NotFoundComponent
