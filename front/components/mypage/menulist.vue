@@ -69,7 +69,7 @@ export default {
 }
 </script>
 
-<style type="text/css">
+<style scoped>
 section :first-child{
   font-size: 1.25rem;
   color: #212529 !important;
