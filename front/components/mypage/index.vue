@@ -31,7 +31,7 @@ export default {
         borderColorClass: 'info',
         header: {text: '登録情報'},
         menu: [
-          {text: '登録情報変更', path: './'},
+          {text: '登録情報変更', path: './info-update/'},
           {text: 'メーリス受信設定', path: './'},
           {text: 'メーリス受信テスト', path: './'},
           {text: 'LiveLog・Google認証', path: './oauth/', vueRouter: true},

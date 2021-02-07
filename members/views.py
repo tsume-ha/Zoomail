@@ -357,3 +357,37 @@ def googleOauthUnlink(request):
         return JsonResponse({
             "deleted": False
         })
+
+
+@login_required()
+def userUpdateAPI(request):
+    user = request.user
+    if request.method != "POST" or not request.body:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+
+    json_dict = json.loads(request.body)
+    form = UserUpdateForm(json_dict or None, instance=user)
+
+    response = []
+    if not form.is_valid():
+        response.append("更新できませんでした")
+        for field_name in form._errors:
+            # print(form._errors[field_name].as_text())
+            response.append(form._errors[field_name].as_text())
+        return JsonResponse({
+            "successed": False,
+            "messages": response
+        })
+
+    else:
+        content = form.save(commit=False)
+        content.updated_at = datetime.datetime.now()
+        content.save()
+        response.append("更新しました")
+
+        return JsonResponse({
+            "successed": True,
+            "messages": response
+        })

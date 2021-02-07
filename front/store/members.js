@@ -11,10 +11,9 @@ export default {
     }
   },
   actions: {
-    getUserInfo (context) {
-      axios.get('/mypage/api/user/')
+    async getUserInfo (context) {
+      return await axios.get('/mypage/api/user/')
       .then(res => {
-        console.log(res.data)
         context.commit('updateUserInfo', res.data)
       })
       .catch(error => {

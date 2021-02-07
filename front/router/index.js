@@ -75,6 +75,12 @@ const routes = [
     meta: 'mypage:oauth',
   },
   {
+    path: '/mypage/info-update/',
+    name: 'mypage:info-update',
+    component: () => import(/* webpackChunkName: "mypage" */'../components/mypage/info-update.vue'),
+    meta: 'mypage:info-update',
+  }, 
+  {
     path: '/*',
     name: '404',
     component: NotFoundComponent
