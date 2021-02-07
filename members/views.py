@@ -19,7 +19,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.urls import reverse
 
 from .models import User, TmpMember, TestMail
-from .forms import UserUpdateForm, RegisterForm, RegisterCSV
+from .forms import UserUpdateForm, MailSettingsForm, RegisterForm, RegisterCSV
 from config.permissions import MemberRegisterPermission, AdminEnterPermission
 from board.models import Message, Kidoku
 from .create_google_user import DuplicateGmailAccountError
@@ -375,6 +375,39 @@ def userUpdateAPI(request):
         response.append("更新できませんでした")
         for field_name in form._errors:
             # print(form._errors[field_name].as_text())
+            response.append(form._errors[field_name].as_text())
+        return JsonResponse({
+            "successed": False,
+            "messages": response
+        })
+
+    else:
+        content = form.save(commit=False)
+        content.updated_at = datetime.datetime.now()
+        content.save()
+        response.append("更新しました")
+
+        return JsonResponse({
+            "successed": True,
+            "messages": response
+        })
+
+
+@login_required()
+def mailSettingsAPI(request):
+    user = request.user
+    if request.method != "POST" or not request.body:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+
+    json_dict = json.loads(request.body)
+    form = MailSettingsForm(json_dict, instance=user)
+
+    response = []
+    if not form.is_valid():
+        response.append("更新できませんでした")
+        for field_name in form._errors:
             response.append(form._errors[field_name].as_text())
         return JsonResponse({
             "successed": False,

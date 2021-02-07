@@ -79,6 +79,12 @@ const routes = [
     name: 'mypage:info-update',
     component: () => import(/* webpackChunkName: "mypage" */'../components/mypage/info-update.vue'),
     meta: 'mypage:info-update',
+  },
+  {
+    path: '/mypage/mail-settings/',
+    name: 'mypage:mail-settings',
+    component: () => import(/* webpackChunkName: "mypage" */'../components/mypage/mail-settings.vue'),
+    meta: 'mypage:mail-settings',
   }, 
   {
     path: '/*',
