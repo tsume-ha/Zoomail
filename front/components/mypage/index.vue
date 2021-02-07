@@ -41,7 +41,7 @@ export default {
         borderColorClass: 'info',
         header: {text: 'メーリス'},
         menu: [
-          {text: '送信ボックス', path: './'},
+          {text: '送信ボックス', path: './sendbox/'},
         ]
       },
       {

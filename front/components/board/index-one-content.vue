@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     link () {
-      return './content/' + String(this.message.id) + '/'
+      return '/read/content/' + String(this.message.id) + '/'
     }
   }
 }

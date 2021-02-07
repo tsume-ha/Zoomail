@@ -9,6 +9,7 @@ urlpatterns = [
     path('mail-settings/', SPA, name='mail_settings'),
     path('mail-test/', SPA, name='email_confirm'),
     path('oauth/', SPA, name='oauth'),
+    path('sendbox/', SPA, name='sendbox'),
     # path('register/', views.UserRegistration, name='register_form'),
     # path('register/csv/', views.UserRegistrationCSV, name='register_CSV'),
     # path('register/csv/preview/', views.UserRegistrationPreview, name='register_preview'),

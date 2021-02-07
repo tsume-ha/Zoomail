@@ -11,7 +11,15 @@ module.exports = {
   },
   methods: {
     onclick () {
+      if (this.sendboxMode){
+        return this.$router.push('/mypage/sendbox/')
+      }
       this.$router.push(this.href)
+    }
+  },
+  computed: {
+    sendboxMode () {
+      return this.$store.state.read.sendboxMode;
     }
   }
 };

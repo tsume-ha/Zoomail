@@ -5,6 +5,7 @@ export default {
   state: {
     messages: [],
     loadNum: 10,
+    sendboxMode: false,
   },
   mutations: {
     addMessages (state, payload) {
@@ -22,6 +23,9 @@ export default {
         // state.messages[]が空でundefinedになってる
         target.is_bookmarked = payload.bool;
       }
+    },
+    setSendboxMode (state, payload) {
+      state.sendboxMode = payload;
     }
   },
   actions: {
@@ -31,8 +35,14 @@ export default {
       if (data) {
         params = data;
       }
+
       params['page'] = page;
-      console.log('vuex _ access url: ', String(page));
+      
+      // sendbox mode
+      if (context.state.sendboxMode){
+        params['sendbox'] = 'true';
+      }
+
       return await axios.get('/api/board/json/', {
         params: params
       })

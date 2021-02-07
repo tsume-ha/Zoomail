@@ -91,7 +91,13 @@ const routes = [
     name: 'mypage:mail-test',
     component: () => import(/* webpackChunkName: "mypage" */'../components/mypage/mail-test.vue'),
     meta: 'mypage:mail-test',
-  }, 
+  },
+  {
+    path: '/mypage/sendbox/',
+    name: 'mypage:sendbox',
+    component: () => import(/* webpackChunkName: "mypage-sendbox" */'../components/mypage/sendbox.vue'),
+    meta: 'mypage:sendbox',
+  },
   {
     path: '/*',
     name: '404',
