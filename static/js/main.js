@@ -26,8 +26,6 @@ import MeetingRoom from "../../front/components/meeting-room.vue";
 
 import awaseUpdateForm from "../../front/components/awase/update-calendar-form.vue";
 
-import MemberEmailConfirm from "../../front/components/email_confirm.vue";
-
 Vue.use(VueAxios, axios)
 Vue.use(VueMoment)
 Vue.use(VueMeta)
@@ -57,8 +55,6 @@ var app = new Vue({
 
     // awase のコンポーネント
     'awase-update-calendar-form': awaseUpdateForm,
-
-    'member-email-confirm': MemberEmailConfirm,
   }
 })
 

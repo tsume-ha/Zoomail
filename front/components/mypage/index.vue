@@ -34,7 +34,7 @@ export default {
           {text: '登録情報変更', path: './info-update/'},
           {text: 'メーリス受信設定', path: './mail-settings/'},
           {text: 'メーリス受信テスト', path: './mail-test/'},
-          {text: 'LiveLog・Google認証', path: './oauth/', vueRouter: true},
+          {text: 'LiveLog・Google認証', path: './oauth/'},
         ]
       },
       {

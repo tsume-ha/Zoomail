@@ -2,7 +2,11 @@
   <div>
     <h3>登録情報変更</h3>
   <section>
-    <p>メールアドレス関係の設定はこちらに移行しました</p>
+    <p class="small my-2">
+      メールアドレス関係の設定は
+      <router-link to="/mypage/mail-settings/">こちら</router-link>
+      に移行しました
+    </p>
 
     <form>
       <div class="form-group">
