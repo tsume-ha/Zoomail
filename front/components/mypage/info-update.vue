@@ -13,7 +13,6 @@
           v-model="formData.last_name"
           maxlength="255"
           class="form-control"
-          placeholder="京大"
           required=""
           id="id_last_name">
       </div>
@@ -26,7 +25,6 @@
           v-model="formData.first_name"
           maxlength="255"
           class="form-control"
-          placeholder="太郎"
           required=""
           id="id_first_name">
       </div>
@@ -39,7 +37,6 @@
           v-model="formData.furigana"
           maxlength="255"
           class="form-control"
-          placeholder="きょうだいたろう"
           required=""
           id="id_furigana">
       </div>
@@ -52,15 +49,14 @@
           v-model="formData.nickname"
           maxlength="255"
           class="form-control"
-          placeholder="たろー"
           id="id_nickname">
       </div>
 
+      <router-link to="../"  class="btn btn-secondary mx-2 my-3">戻る</router-link>
       <button @click.prevent="onclicked" class="btn btn-info mx-2 my-3">
         更新
       </button>
     </form>
-
 
   </section>
   <nowloading v-if="nowloading" text="通信中です..." />
@@ -73,6 +69,9 @@ export default {
   name: 'mypage-info-update',
   components: {
     nowloading
+  },
+  metaInfo: {
+    title: '登録情報変更'
   },
   created() {
     this.nowloading = true;

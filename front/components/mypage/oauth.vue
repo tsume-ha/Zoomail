@@ -37,6 +37,9 @@
 import nowloading from '../nowloading.vue';
 export default {
   name: 'mypage-oauth',
+  metaInfo: {
+    title: 'LiveLog・Google認証'
+  },
   components: {
     nowloading
   },
