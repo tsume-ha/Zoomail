@@ -13,6 +13,10 @@ import InfiniteLoading from 'vue-infinite-loading';
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 
+// vue-toast-notification
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
 // 共通コンポーネント
 import App from '../../front/components/App.vue';
 
@@ -29,7 +33,10 @@ Vue.use(VueMoment)
 Vue.use(VueMeta)
 
 Vue.use(InfiniteLoading, {
-  
+});
+
+Vue.use(VueToast, {
+  position: 'bottom-right'
 });
 
 Vue.component('v-select', vSelect)

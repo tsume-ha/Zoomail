@@ -109,11 +109,10 @@ export default {
       this.axios.post('/mypage/api/info-update/', this.formData)
       .then(res => {
         if (res.data.successed === true) {
-          
+          this.$toast.success('更新しました');
         } else {
-          for (let i = 0; i < res.data.messages.length; i++) {
-            const element = res.data.messages[i];
-            console.log(element)
+          for (const message of res.data.messages) {
+            this.$toast.error(message, {duration: 5000});
           }
         }
       })
