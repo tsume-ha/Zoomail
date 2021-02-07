@@ -85,6 +85,12 @@ const routes = [
     name: 'mypage:mail-settings',
     component: () => import(/* webpackChunkName: "mypage" */'../components/mypage/mail-settings.vue'),
     meta: 'mypage:mail-settings',
+  },
+  {
+    path: '/mypage/mail-test/',
+    name: 'mypage:mail-test',
+    component: () => import(/* webpackChunkName: "mypage" */'../components/mypage/mail-test.vue'),
+    meta: 'mypage:mail-test',
   }, 
   {
     path: '/*',

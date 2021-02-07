@@ -236,16 +236,15 @@ def UserRegistrationPreview(request):
 
 
 @login_required()
-def EmailConfirm(request):
+def mailTestAPI(request):
     now_user = request.user
-    params = {
-        "user": now_user,
-    }
     if request.method != "POST" or not request.body:
-        return render(request, "members/email_confirm.html", params)
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
 
     json_dict = json.loads(request.body)
-    if json_dict["send"] != "true":
+    if "send" not in json_dict or json_dict["send"] != "true":
         response = HttpResponse("BAD REQUEST")
         response.status_code = 400
         return response
