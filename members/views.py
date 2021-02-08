@@ -9,7 +9,6 @@ from social_django.models import UserSocialAuth
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
@@ -82,27 +81,6 @@ def UserUpdate(request):
         "form": form,
     }
     return render(request, "members/user_update.html", params)
-
-
-@login_required()
-def NewFromLiveLog(request):
-    now_user = request.user
-    form = UserUpdateForm(request.POST or None, instance=now_user)
-    if request.method == "POST":
-        if form.is_valid():
-            content = form.save(commit=False)
-            if content.receive_email == "":
-                content.receive_email = now_user.email
-            content.updated_at = datetime.datetime.now()
-            content.save()
-            messages.success(request, "初回登録が完了しました。ようこそ、アンプラ公式メーリスへ！")
-            return redirect("/")
-        else:
-            messages.error(request, "更新できませんでした。入力を確認してください。")
-    params = {
-        "form": form,
-    }
-    return render(request, "members/new_from_livelog.html", params)
 
 
 @login_required()

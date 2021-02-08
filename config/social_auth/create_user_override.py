@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.urls import reverse
 
 USER_FIELDS = ['username', 'email', 'year']
 
@@ -21,7 +22,7 @@ def create_user(strategy, details, backend, user=None, *args, **kwargs):
         return
     
     #nextリンクはsessionに保存されている、これを書き換える
-    strategy.session_set('next', '/members/first_register/')
+    strategy.session_set(reverse('home:first-register'))
     return {
         'is_new': True,
         'user': strategy.create_user(**fields)
