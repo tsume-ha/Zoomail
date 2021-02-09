@@ -217,6 +217,8 @@ SOCIAL_AUTH_PIPELINE = (
     # Update the user record with any changed info from the auth service.
     'social_core.pipeline.user.user_details',
 
+    # Livelogのメールアドレスを保存
+    'config.social_auth.social_auth_pipelines.save_livelog_email'
 )
 
 WEBPACK_LOADER = {
