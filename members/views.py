@@ -277,6 +277,7 @@ def getUserInfo(request):
             "nickname": user.nickname,
             "email": user.email,
             "receive_email": user.get_receive_email(),
+            "livelog_email": user.livelog_email,
             "send_mail": user.send_mail,
             "year": user.year,
             "created_at": user.created_at,
@@ -316,16 +317,16 @@ def googleOauthUnlink(request):
         response = HttpResponse("BAD REQUEST")
         response.status_code = 400
         return response
-    
-    has_livelog = UserSocialAuth.objects.filter(
-            user=user, provider="auth0"
-        ).exists()
 
-    if has_livelog:
+    if UserSocialAuth.objects.filter(
+            user=user, provider="auth0"
+            ).exists() and user.livelog_email:
         query = UserSocialAuth.objects.filter(user=user, provider="google-oauth2")
         assert query.count() < 3
         # 一応安全確認 なんかのバグで全件取得とかできてしまったら怖い
         query.delete()
+        user.email = user.livelog_email
+        user.save()
         return JsonResponse({
             "deleted": True
         })
