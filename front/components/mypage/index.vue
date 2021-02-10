@@ -13,6 +13,20 @@
     :header="item.header"
     :menu="item.menu"
     />
+    <menulist
+    v-if="registerMenu"
+    :key="registerMenu.header.text"
+    :border-color-class="registerMenu.borderColorClass"
+    :header="registerMenu.header"
+    :menu="registerMenu.menu"
+    />
+    <menulist
+    v-if="canAdminDisplay"
+    :key="adminMenu.header.text"
+    :border-color-class="adminMenu.borderColorClass"
+    :header="adminMenu.header"
+    :menu="adminMenu.menu"
+    />
   </div>
 
 </div>
@@ -52,6 +66,48 @@ export default {
         ]
       },
     ],
-  })
+    adminMenu: {
+      borderColorClass: 'danger',
+      header: {text: '管理サイト'},
+      menu: [
+        {text: 'DB管理サイト', path: '/admin/', vueRouter: false},
+      ]
+    },
+    registerMenu: {
+      borderColorClass: 'warning',
+      header: {text: 'ユーザー登録'},
+      menu: [
+        {text: 'ユーザー登録フォーム', path: './'},
+      ]
+    }
+  }),
+  created () {
+    this.$store.dispatch('members/getUserInfo')
+  },
+  computed: {
+    user () {
+      return this.$store.state.members.user;
+    },
+    canAdminDisplay () {
+      if (this.user && this.user.permissions){
+        if (
+          this.user.permissions.is_admin
+          || this.user.permissions.is_superuser) {
+          return true;
+        }
+      }
+      return false;
+    },
+    canRegisterDisplay () {
+      if (this.user && this.user.permissions){
+        if (
+          this.user.permissions.can_register_user
+          || this.user.permissions.is_superuser) {
+          return true;
+        }
+      }
+      return false;
+    },
+  }
 }
 </script>

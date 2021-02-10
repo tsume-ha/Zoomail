@@ -287,6 +287,11 @@ def getUserInfo(request):
                 user=user, provider="google-oauth2").exists(),
             'livelog_auth0': UserSocialAuth.objects.filter(
                 user=user, provider="auth0").exists(),
+            'permissions': {
+                "is_superuser": user.is_superuser,
+                "is_admin": AdminEnterPermission(user),
+                "can_register_user": MemberRegisterPermission(user)
+            }
         }
     )
 
