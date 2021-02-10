@@ -16,6 +16,7 @@ from django.http.response import JsonResponse
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 from django.urls import reverse
+from django.db.utils import IntegrityError
 
 from .models import User, TmpMember, TestMail
 from .forms import UserUpdateForm, MailSettingsForm, RegisterForm, RegisterCSV
@@ -325,8 +326,16 @@ def googleOauthUnlink(request):
         assert query.count() < 3
         # 一応安全確認 なんかのバグで全件取得とかできてしまったら怖い
         query.delete()
-        user.email = user.livelog_email
-        user.save()
+        try:
+            user.email = user.livelog_email
+            user.save()
+        except IntegrityError:
+            response = JsonResponse({
+                "deleted": False,
+                "message": "Googleアカウントでのログインは無効化されましたが、データを全て削除できませんでした。"
+            })
+            response.status_code = 500
+            return response
         return JsonResponse({
             "deleted": True
         })

@@ -14,6 +14,9 @@
           <td v-if="canUnlink">
             <a @click="onclicked" class="text-warning">紐付けを解除する</a>
           </td>
+          <td v-else-if="needLivelogLogin">
+            <span>紐付けを解除するまえに、もう一度LiveLogへログインしてください</span>
+          </td>
         </tr>
         <tr>
           <td>LiveLog</td>
@@ -24,6 +27,11 @@
             </a>
           </td>
           <td v-if="canUnlink"></td>
+          <td v-else-if="needLivelogLogin">
+            <a href="/auth/login/auth0?next=/mypage/oauth/">
+              LiveLogにログイン
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -59,8 +67,14 @@ export default {
     livelog () {
       return this.userInfo.livelog_auth0;
     },
+    hasLivelogEmail () {
+      return Boolean(this.userInfo.livelog_email);
+    },
     canUnlink () {
-      return this.google && this.livelog;
+      return this.google && this.livelog && this.hasLivelogEmail;
+    },
+    needLivelogLogin () {
+      return this.google && this.livelog && !this.hasLivelogEmail;
     }
   },
   methods: {
@@ -68,7 +82,24 @@ export default {
       this.nowloading = true;
       this.axios.post('/mypage/api/google_unlink/', { 'unlink': true })
       .then(res => {
-        console.log(res)
+        if (res.data.deleted) {
+          this.$toast.success('Gogleアカウントの紐付けを解除しました');
+        } else {
+          this.$toast.warning('Gogleアカウントの紐付けを解除ができませんでした。お手数ですが開発者までお問い合わせください');
+        }
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        if (error.response.data && 'message' in error.response.data){
+          this.$toast.error(
+            error.response.data['message'],
+            {duration: 5000}
+            )
+        }
+        this.$toast.error(
+          '処理が完了しませんでした。',
+            {duration: 5000}
+          )
       })
       .finally(() => {
         this.$store.dispatch('members/getUserInfo');
