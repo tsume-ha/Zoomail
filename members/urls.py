@@ -10,14 +10,12 @@ urlpatterns = [
     path('mail-test/', SPA, name='email_confirm'),
     path('oauth/', SPA, name='oauth'),
     path('sendbox/', SPA, name='sendbox'),
-    # path('register/', views.UserRegistration, name='register_form'),
-    # path('register/csv/', views.UserRegistrationCSV, name='register_CSV'),
-    # path('register/csv/preview/', views.UserRegistrationPreview, name='register_preview'),
+    path('register/', SPA, name='register_form'),
     
     path('api/user/', views.getUserInfo, name='api_get_user'),
     path('api/google_unlink/', views.googleOauthUnlink),
     path('api/info-update/', views.userUpdateAPI),
     path('api/mail-settings/', views.mailSettingsAPI),
     path('api/mail-test/', views.mailTestAPI),
-    
+    path('api/register/', views.registerAPI),
 ]

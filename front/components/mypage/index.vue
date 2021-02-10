@@ -14,7 +14,7 @@
     :menu="item.menu"
     />
     <menulist
-    v-if="registerMenu"
+    v-if="canRegisterDisplay"
     :key="registerMenu.header.text"
     :border-color-class="registerMenu.borderColorClass"
     :header="registerMenu.header"
@@ -77,7 +77,7 @@ export default {
       borderColorClass: 'warning',
       header: {text: 'ユーザー登録'},
       menu: [
-        {text: 'ユーザー登録フォーム', path: './'},
+        {text: 'ユーザー登録フォーム', path: './register/'},
       ]
     }
   }),

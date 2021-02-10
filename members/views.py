@@ -19,7 +19,7 @@ from django.urls import reverse
 from django.db.utils import IntegrityError
 
 from .models import User, TmpMember, TestMail
-from .forms import UserUpdateForm, MailSettingsForm, RegisterForm, RegisterCSV
+from .forms import UserUpdateForm, MailSettingsForm, RegisterForm
 from config.permissions import MemberRegisterPermission, AdminEnterPermission
 from board.models import Message, Kidoku
 from .create_google_user import DuplicateGmailAccountError
@@ -366,7 +366,6 @@ def userUpdateAPI(request):
     if not form.is_valid():
         response.append("更新できませんでした")
         for field_name in form._errors:
-            # print(form._errors[field_name].as_text())
             response.append(form._errors[field_name].as_text())
         return JsonResponse({
             "successed": False,
@@ -416,3 +415,51 @@ def mailSettingsAPI(request):
             "successed": True,
             "messages": response
         })
+
+@login_required()
+def registerAPI(request):
+    now_user = request.user
+    is_allowed = MemberRegisterPermission(now_user)
+    if not is_allowed:
+        response = HttpResponse("Forbidden")
+        response.status_code = 403
+        return response
+
+    if request.method != "POST" or not request.body:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+
+    json_dict = json.loads(request.body)
+    form = RegisterForm(json_dict)
+
+    messages = []
+    if not form.is_valid():
+        messages.append("登録に失敗しました。入力した値を確かめてください。")
+        for field_name in form._errors:
+            messages.append(form._errors[field_name].as_text())
+        return JsonResponse({
+            "successed": False,
+            "messages": messages
+        })
+
+    try:
+        register(
+            email=form.cleaned_data['email'],
+            year=int(form.cleaned_data['year']),
+            last_name=form.cleaned_data['last_name'],
+            first_name=form.cleaned_data['first_name'],
+            furigana=form.cleaned_data['furigana'],
+        )
+        messages.append(form.cleaned_data['email'] + "を登録しました。")
+    except DuplicateGmailAccountError:
+        messages.append(form.cleaned_data['email'] + " はすでに登録されているアカウントのため登録できませんでした。")
+        return JsonResponse({
+            "successed": False,
+            "messages": messages
+        })
+
+    return JsonResponse({
+        "successed": True,
+        "messages": messages
+    })

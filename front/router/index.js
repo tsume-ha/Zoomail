@@ -99,6 +99,12 @@ const routes = [
     meta: 'mypage:sendbox',
   },
   {
+    path: '/mypage/register/',
+    name: 'mypage:register',
+    component: () => import(/* webpackChunkName: "mypage-register" */'../components/mypage/register.vue'),
+    meta: 'mypage:register',
+  },
+  {
     path: '/*',
     name: '404',
     component: NotFoundComponent
