@@ -12,7 +12,7 @@ export default {
   },
   actions: {
     async getUserInfo (context) {
-      return await axios.get('/mypage/api/user/')
+      return await axios.get('/api/mypage/user/')
       .then(res => {
         context.commit('updateUserInfo', res.data)
       })

@@ -80,7 +80,7 @@ export default {
   methods: {
     onclicked () {
       this.nowloading = true;
-      this.axios.post('/mypage/api/google_unlink/', { 'unlink': true })
+      this.axios.post('/api/mypage/google_unlink/', { 'unlink': true })
       .then(res => {
         if (res.data.deleted) {
           this.$toast.success('Gogleアカウントの紐付けを解除しました');

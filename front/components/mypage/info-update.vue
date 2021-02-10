@@ -109,7 +109,7 @@ export default {
   methods: {
     onclicked () {
       this.nowloading = true;
-      this.axios.post('/mypage/api/info-update/', this.formData)
+      this.axios.post('/api/mypage/info-update/', this.formData)
       .then(res => {
         if (res.data.successed === true) {
           this.$toast.success('更新しました');

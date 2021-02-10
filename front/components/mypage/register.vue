@@ -112,7 +112,7 @@ export default {
         || !this.formData.furigana
       ) {return false;}
       this.nowloading = true;
-      this.axios.post('/mypage/api/register/', this.formData)
+      this.axios.post('/api/mypage/register/', this.formData)
       .then(res => {
         if (res.data.successed === true) {
           for (const message of res.data.messages) {
