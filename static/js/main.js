@@ -60,3 +60,8 @@ var app = new Vue({
 
 app.axios.defaults.xsrfCookieName = "csrftoken";
 app.axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+
+
+Vue.config.devtools = false
+Vue.config.debug = false
+Vue.config.silent = true

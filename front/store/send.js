@@ -73,7 +73,6 @@ export default {
   },
   getters: {
     isAllValid(state, getters) {
-      return true// debug
       return (!getters.validateTitle.length
            && !getters.validateContent.length
            && !getters.validateWriter.length
@@ -107,7 +106,7 @@ export default {
     getFROMs(context) {
       axios.get("/api/board/send/froms/")
         .then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           context.commit('setWriterFroms', res.data)
         })
     },
@@ -129,7 +128,7 @@ export default {
       // upload progress
       axios.post("/api/board/send/send/", data, {onUploadProgress: e => context.commit('onUpload', e) })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         context.commit('onComplete', res.data)
       })
     }

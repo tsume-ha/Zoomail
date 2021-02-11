@@ -10,7 +10,7 @@ export default {
   mutations: {
     addMessages (state, payload) {
       state.messages = state.messages.concat(payload);
-      console.log(state.messages)
+      // console.log(state.messages)
     },
     clearMessages (state) {
       state.messages.length = 0;
