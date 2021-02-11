@@ -67,7 +67,7 @@ export default {
     onclicked () {
       if (!window.confirm('送信しますか？')) {return false;}
       this.nowloading = true;
-      this.axios.post('/mypage/api/mail-test/', {send: "true"})
+      this.axios.post('/api/mypage/mail-test/', {send: "true"})
       .then(res => {
         console.log(res)
         this.$toast.success('送信しました');

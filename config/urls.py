@@ -29,7 +29,7 @@ urlpatterns = [
     path('logout/', home.logoutview, name='logout'),
     path('auth/', include('social_django.urls', namespace='social')),
     path('private-media/', include(private_storage.urls), name="private_media"),
-    path('mypage/', include('members.urls')),
+    # path('mypage/', include('members.urls')),
     # path('read/', include('board.urls')),
 
 
@@ -39,6 +39,8 @@ urlpatterns = [
     path('send/<path:p>', SPA),
     path('read/', SPA, name="read"),
     path('read/<path:p>', SPA),
+    path('mypage/', SPA, name="members"),
+    path('mypage/<path:p>', SPA),
     
 
     # API

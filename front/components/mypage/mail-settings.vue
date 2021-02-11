@@ -85,7 +85,7 @@ export default {
   methods: {
     onclicked () {
       this.nowloading = true;
-      this.axios.post('/mypage/api/mail-settings/', this.formData)
+      this.axios.post('/api/mypage/mail-settings/', this.formData)
       .then(res => {
         if (res.data.successed === true) {
           this.$toast.success('更新しました');
