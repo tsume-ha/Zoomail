@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from config.views import SPA
 
 app_name = 'members'
 urlpatterns = [

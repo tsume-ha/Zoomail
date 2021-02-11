@@ -42,7 +42,8 @@ header div h1 a{
 	border: 1px #d6eef5 soild;
 	border-radius: 8px;
 }
-header div h1 a.hover{
+header div h1 a.hover,
+header div h1 a:hover{
 	color: #333;
 	background-color: #bbe3ee;
 	border: 1px #666 soild;
@@ -66,7 +67,8 @@ nav a{
 	color: #666;
 }
 
-nav a.hover{
+nav a.hover,
+nav a:hover{
 	text-decoration: underline;
 	color: #333;
 }
