@@ -10,11 +10,11 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 
-from django.conf import settings
-
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
 from sendgrid.helpers.mail import Attachment as helper_Attachment
+
+from django.conf import settings
 
 from .models import Message, MessageYear, Attachment, Bookmark
 from .forms import MessageForm, AttachmentForm
@@ -74,18 +74,19 @@ def get_messages_list(request):
 
 @login_required()
 def get_one_message(request, id):
+    # attachment, permissionなどのデータ
     message = get_object_or_404(Message, id=id)
     now_user = request.user
 
     # 閲覧できないならば/read にリダイレクトする
-    if not message.years.all().filter(Q(year=now_user.year)|Q(year=0)).exists():
-        if not EditPermisson(now_user, id):
+    if not message.years.filter(Q(year=now_user.year)|Q(year=0)).exists():
+        if message.writer is not now_user or message.sender is not now_user:
             raise PermissionDenied
 
     params = {
         'message': message,
     }
-    return render(request, 'board/message.json', params)
+    return render(request, 'board/message.json', params, content_type='application/json')
 
 
 @login_required()
@@ -95,8 +96,8 @@ def get_message_attachments(request, id):
     now_user = request.user
 
     # 閲覧できないならば/read にリダイレクトする
-    if not message.years.all().filter(Q(year=now_user.year)|Q(year=0)).exists():
-        if not EditPermisson(now_user, id):
+    if not message.years.filter(Q(year=now_user.year)|Q(year=0)).exists():
+        if message.writer is not now_user or message.sender is not now_user:
             raise PermissionDenied
 
     return JsonResponse({
