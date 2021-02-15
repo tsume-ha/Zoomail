@@ -165,8 +165,6 @@ class APIReadTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         pass
-        # for year in YEARS:
-        #     make_user(cls, year=year)
     
     def test_sendAPI_kaisei_without_attachment(self):
         user = make_user(self, year=2019)
@@ -190,6 +188,59 @@ class APIReadTest(TestCase):
             for y in sendyear:
                 self.assertIn(y, years)
                 
+    def test_sendAPI_kaisei_INVALID_request(self):
+        user = make_user(self, year=2019)
+        login(self, user)
+
+        __sendyears = [[2019], [2018], [2017], [2019, 2018], [2019, 2018, 2017]]
+        for sendyear in __sendyears:
+            data = {
+                "title": "no content test" + str(sendyear),
+                "writer": str(user.id),
+                "to": [str(y) for y in sendyear],
+                "content": ""
+            }
+            request = self.client.post('/api/board/send/send/', data)
+            self.assertEqual(request.status_code, 400)
+            self.assertFalse(
+                Message.objects.filter(title=data["title"]).exists()
+                )
+
+            data = {
+                "title": "",
+                "writer": str(user.id),
+                "to": [str(y) for y in sendyear],
+                "content": "no title test"
+            }
+            request = self.client.post('/api/board/send/send/', data)
+            self.assertEqual(request.status_code, 400)
+            self.assertFalse(
+                Message.objects.filter(content=data["content"]).exists()
+                )
+
+            data = {
+                "title": "no writer test",
+                "writer": "",
+                "to": [str(y) for y in sendyear],
+                "content": "no writer test"
+            }
+            request = self.client.post('/api/board/send/send/', data)
+            self.assertEqual(request.status_code, 400)
+            self.assertFalse(
+                Message.objects.filter(title=data["title"]).exists()
+                )
+
+            data = {
+                "title": "no 'to' test",
+                "writer": "str(user.id)",
+                "to": "",
+                "content": "no 'to' test"
+            }
+            request = self.client.post('/api/board/send/send/', data)
+            self.assertEqual(request.status_code, 400)
+            self.assertFalse(
+                Message.objects.filter(title=data["title"]).exists()
+                )
 
 
     #   data.append("title", context.state.title)
@@ -201,3 +252,46 @@ class APIReadTest(TestCase):
     #   for (let i = 0; i < context.state.attachments.length; i++) {
     #     data.append("attachments", context.state.attachments[i])
     #   }
+    
+    def test_sendAPI_kaisei_with_attachment(self):
+        user = make_user(self, year=2019)
+        login(self, user)
+
+        __sendyears = [[2019], [2018], [2017], [2019, 2018], [2019, 2018, 2017]]
+        __testfiles = [
+            ('9MB.txt', 9*1024*1024),
+            ('11MB.txt', 11*1024*1024)
+            ]
+        for sendyear in __sendyears:
+            for file in __testfiles:
+                with open(
+                    os.path.join(settings.BASE_DIR, 'board', file[0]),
+                    'rb') as f:
+                    upload = SimpleUploadedFile(file[0], f.read())
+                data = {
+                    "title": "attachment test" + file[0] + str(sendyear),
+                    "writer": str(user.id),
+                    "to": [str(y) for y in sendyear],
+                    "content": "send text content",
+                    "attachments": [upload]
+                }
+                request = self.client.post('/api/board/send/send/', data)
+
+                if file[1] < 10*1024*1024:
+                    self.assertEqual(request.status_code, 200)
+                    new_message = Message.objects.get(title=data["title"])
+                    self.assertEqual(new_message.content, data['content'])
+                    years = MessageYear.objects.filter(message=new_message).values_list('year', flat=True)
+                    for y in sendyear:
+                        self.assertIn(y, years)
+
+                    # 添付ファイルのmodelが作られているか
+                    self.assertTrue(new_message.attachments.exists())
+
+                else:
+                    self.assertEqual(request.status_code, 400)
+                    self.assertFalse(
+                        Message.objects.filter(title=data["title"]).exists()
+                        )
+
+
