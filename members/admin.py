@@ -6,7 +6,7 @@ from .models import User, TmpMember, TestMail
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'year')}),
-        (('Personal info'), {'fields': ('receive_email', 'last_name', 'first_name', 'nickname', 'furigana')}),
+        (('Personal info'), {'fields': ('receive_email', 'livelog_email', 'last_name', 'first_name', 'nickname', 'furigana')}),
         (('Permissions'), {'fields': ('is_staff', 'groups',)}),
     )
     add_fieldsets = (

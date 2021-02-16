@@ -1,4 +1,11 @@
 <template>
+<div>
+  <h3>集計時間を変更</h3>
+  <p class="mb-4">
+      各日にちの中で日程調整したい時間帯を変更できます。<br>
+      時間は24時間表記で、9時(AM9:00)～26時(翌AM2:00)まで1時間単位で指定できます。<br>
+      また、期間内の任意の日を、「集計しない日」に設定することも出きます。
+  </p>
   <div v-if="!jsonLoaded">
     <p>読み込み中...</p>
   </div>
@@ -40,17 +47,23 @@
     </div>
     <div v-if="isInAccess" class="small text-secondary is-in-access">サーバーと通信中...</div>
     <hr>  
-    <a href="../" class="btn btn-secondary mx-2 my-3">戻る</a>
+    <router-link to="../" class="btn btn-secondary mx-2 my-3">戻る</router-link>
   </div>
+</div>
 </template>
 
 <script>
 import customDayContent from './update-hours-custom-day-content.vue';
 import timeSelector from './update-hours-time-selector.vue';
+import Calendar from 'v-calendar/lib/components/calendar.umd'
 export default {
+  metaInfo: {
+    title: '集計時間を変更'
+  },
   components: {
     "custom-day-content": customDayContent,
     "time-selector": timeSelector,
+    "v-calendar": Calendar,
   },
   data: function () {
     return {
@@ -71,6 +84,9 @@ export default {
       .then((res) => {
         this.timedata = res.data;
         this.jsonLoaded = true;
+      }).catch((error) => {
+        console.log(error);
+        this.$router.push({name: '404'})
       });
   },
   methods: {

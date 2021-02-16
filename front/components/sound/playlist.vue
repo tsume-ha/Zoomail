@@ -67,7 +67,14 @@
 
 <script>
 import moment from "moment"
+import WaveSurfer from "../../plugins/wavesurfer.min.js"
 export default {
+  metaInfo() {
+    const live = this.live;
+    return {
+      title: live.live_name + ' 音源'
+    }
+  },
   data: function () {
     return {
       wavesurfer: null,

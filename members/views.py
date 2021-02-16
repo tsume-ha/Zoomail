@@ -1,251 +1,34 @@
 import datetime
 import json
-import csv
 
-from io import TextIOWrapper
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent
 from social_django.models import UserSocialAuth
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.db.models import Q
-from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.http.response import JsonResponse
-from django.conf import settings
-from django.core.serializers.json import DjangoJSONEncoder
-from django.urls import reverse
+from django.db.utils import IntegrityError
 
-from .models import User, TmpMember, TestMail
-from .forms import UserUpdateForm, RegisterForm, RegisterCSV
+from django.conf import settings
+from .models import User, TestMail
+from .forms import UserUpdateForm, MailSettingsForm, RegisterForm
 from config.permissions import MemberRegisterPermission, AdminEnterPermission
-from board.models import Message, Kidoku
 from .create_google_user import DuplicateGmailAccountError
 from .create_google_user import Create_Google_User as register
 
 
 @login_required()
-def index(request):
+def mailTestAPI(request):
     now_user = request.user
-    register_allowed = MemberRegisterPermission(now_user)
-    adminenter_allowed = AdminEnterPermission(now_user)
-    midoku = (
-        Message.objects.filter(Q(years__year=request.user.year) | Q(years__year=0))
-        .exclude(kidoku_message__user=now_user)
-        .order_by("updated_at")
-        .reverse()
-    )
-    messages_you_send = (
-        Message.objects.filter(sender=now_user).order_by("updated_at").reverse()
-    )
-    messages_you_wrote = (
-        Message.objects.filter(writer=now_user)
-        .exclude(sender=now_user)
-        .order_by("updated_at")
-        .reverse()
-    )
-
-    if request.method == "POST":
-        is_kidoku = request.POST["kidoku"]
-        if is_kidoku == "true":
-            for message in midoku:
-                content = Kidoku(message=message, user=now_user)
-                content.save()
-    params = {
-        "register_allowed": register_allowed,
-        "adminenter_allowed": adminenter_allowed,
-        "midoku": midoku,
-        "yousend": messages_you_send,
-        "yourmessage_otherssend": messages_you_wrote,
-    }
-    return render(request, "members/index.html", params)
-
-
-@login_required()
-def UserUpdate(request):
-    now_user = request.user
-    form = UserUpdateForm(request.POST or None, instance=now_user)
-    if request.method == "POST":
-        if form.is_valid():
-            content = form.save(commit=False)
-            if content.receive_email == "":
-                content.receive_email = now_user.email
-            content.updated_at = datetime.datetime.now()
-            content.save()
-            messages.success(request, "更新しました")
-            return redirect(to=reverse('members:index'))
-        else:
-            messages.error(request, "更新できませんでした")
-    params = {
-        "form": form,
-    }
-    return render(request, "members/user_update.html", params)
-
-
-@login_required()
-def NewFromLiveLog(request):
-    now_user = request.user
-    form = UserUpdateForm(request.POST or None, instance=now_user)
-    if request.method == "POST":
-        if form.is_valid():
-            content = form.save(commit=False)
-            if content.receive_email == "":
-                content.receive_email = now_user.email
-            content.updated_at = datetime.datetime.now()
-            content.save()
-            messages.success(request, "初回登録が完了しました。ようこそ、アンプラ公式メーリスへ！")
-            return redirect("/")
-        else:
-            messages.error(request, "更新できませんでした。入力を確認してください。")
-    params = {
-        "form": form,
-    }
-    return render(request, "members/new_from_livelog.html", params)
-
-
-@login_required()
-def UserRegistration(request):
-    now_user = request.user
-    is_allowed = MemberRegisterPermission(now_user)
-    if not is_allowed:
-        return redirect(to=reverse('members:index'))
-    form = RegisterForm(request.POST or None)
-    params = {
-        "RegisterForm": form,
-    }
-    if request.method == "POST":
-        if form.is_valid():
-            email = request.POST["email"]
-            year = request.POST["year"]
-            last_name = request.POST["last_name"]
-            first_name = request.POST["first_name"]
-            furigana = request.POST["furigana"]
-            try:
-                register(
-                    email=email,
-                    year=int(year),
-                    last_name=last_name,
-                    first_name=first_name,
-                    furigana=furigana,
-                )
-                messages.success(request, email + "を登録しました。")
-                params["RegisterForm"] = RegisterForm(None)
-            except DuplicateGmailAccountError:
-                messages.error(request, email + " はすでに登録されているアカウントのため登録できませんでした。")
-        else:
-            messages.error(request, "登録に失敗しました。入力した値を確かめてください。")
-            params["RegisterForm"] = RegisterForm(request.POST)
-    return render(request, "members/register.html", params)
-
-
-# LiveLogに一括登録は任せます。
-# （CSV登録はメンテナンス放置します（やる気が...））
-@login_required()
-def UserRegistrationCSV(request):
-    now_user = request.user
-    is_allowed = MemberRegisterPermission(now_user)
-    if not is_allowed:
-        return redirect(to=reverse('members:index'))
-    csvform = RegisterCSV(request.POST or None, request.FILES or None)
-    params = {
-        "RegisterCSV": csvform,
-    }
-    if request.method == "POST" and csvform.is_valid():
-        form_file = request.FILES["csv_file"]
-        if not form_file.name.endswith(".csv"):
-            messages.error(request, "拡張子がcsvのファイルをアップロードしてください")
-            return render(request, "members/registerCSV.html", params)
-        form_data = TextIOWrapper(form_file, encoding="utf_8")
-        reader = csv.reader(form_data)
-        session = request.session.session_key
-        try:
-            for row in reader:
-                if int(row[4]) == 0 or 1990 < int(row[4]) < 2100:
-                    try:
-                        content = TmpMember(
-                            session=session,
-                            last_name=row[0],
-                            first_name=row[1],
-                            furigana=row[2],
-                            email=row[3],
-                            year=int(row[4]),
-                        )
-                        content.save()
-                    except ValidationError:
-                        messages.error(
-                            request, ",".join(row) + "の入力情報が正しくないため、以下のリストから外れました。"
-                        )
-                        continue
-                else:
-                    messages.error(
-                        request, ",".join(row) + "の入部年度情報が正しくないため、以下のリストから外れました。"
-                    )
-            return redirect("preview/")
-        except UnicodeDecodeError:
-            messages.error(request, "ファイルのエンコーディングや、正しいCSVファイルか確認ください。")
-            return render(request, "members/registerCSV.html", params)
-        except ValueError:
-            messages.error(request, "ファイルのエンコーディングや、正しいCSVファイルか確認ください。")
-            return render(request, "members/registerCSV.html", params)
-        except:
-            messages.error(
-                request, "ファイルのエンコーディングや、正しいCSVファイルか確認ください。直らない場合は、管理者に連絡してください。"
-            )
-            return render(request, "members/registerCSV.html", params)
-        return redirect("preview/")
-    return render(request, "members/registerCSV.html", params)
-
-
-@login_required()
-def UserRegistrationPreview(request):
-    now_user = request.user
-    is_allowed = MemberRegisterPermission(now_user)
-    if not is_allowed:
-        return redirect(to=reverse('members:index'))
-    TmpMembers = TmpMember.objects.filter(session=request.session.session_key).order_by(
-        "id"
-    )
-    params = {"TmpMembers": TmpMembers}
-    if request.method == "POST":
-        MembersToRegister = TmpMembers
-        is_error = False
-        for member in MembersToRegister:
-            try:
-                register(
-                    email=member.email,
-                    year=member.year,
-                    last_name=member.last_name,
-                    first_name=member.first_name,
-                    furigana=member.furigana,
-                )
-                member.delete()
-            except DuplicateGmailAccountError:
-                messages.error(
-                    request, member.email + " はすでに登録されているアカウントのため登録できませんでした。"
-                )
-                is_error = True
-        if is_error:
-            messages.error(request, "一部ユーザーが登録できませんでした。登録できなかったユーザーが以下の表に残されています。")
-            return render(request, "members/register_preview.html", params)
-        else:
-            messages.success(request, "登録しました")
-            return redirect("/mypage/register/csv/")
-    return render(request, "members/register_preview.html", params)
-
-
-@login_required()
-def EmailConfirm(request):
-    now_user = request.user
-    params = {
-        "user": now_user,
-    }
     if request.method != "POST" or not request.body:
-        return render(request, "members/email_confirm.html", params)
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
 
     json_dict = json.loads(request.body)
-    if json_dict["send"] != "true":
+    if "send" not in json_dict or json_dict["send"] != "true":
         response = HttpResponse("BAD REQUEST")
         response.status_code = 400
         return response
@@ -300,10 +83,20 @@ def getUserInfo(request):
             "nickname": user.nickname,
             "email": user.email,
             "receive_email": user.get_receive_email(),
+            "livelog_email": user.livelog_email,
             "send_mail": user.send_mail,
             "year": user.year,
             "created_at": user.created_at,
             "updated_at": user.updated_at,
+            'google_oauth2': UserSocialAuth.objects.filter(
+                user=user, provider="google-oauth2").exists(),
+            'livelog_auth0': UserSocialAuth.objects.filter(
+                user=user, provider="auth0").exists(),
+            'permissions': {
+                "is_superuser": user.is_superuser,
+                "is_admin": AdminEnterPermission(user),
+                "can_register_user": MemberRegisterPermission(user)
+            }
         }
     )
 
@@ -320,3 +113,158 @@ def OAuthRegisterView(request):
         ).exists(),
     }
     return render(request, "members/oauth_register.html", params)
+
+
+@login_required()
+def googleOauthUnlink(request):
+    user = request.user
+    if request.method != "POST" or not request.body:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+
+    json_dict = json.loads(request.body)
+    if json_dict["unlink"] is not True:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+
+    if UserSocialAuth.objects.filter(
+            user=user, provider="auth0"
+            ).exists() and user.livelog_email:
+        query = UserSocialAuth.objects.filter(user=user, provider="google-oauth2")
+        assert query.count() < 3
+        # 一応安全確認 なんかのバグで全件取得とかできてしまったら怖い
+        query.delete()
+        try:
+            user.email = user.livelog_email
+            user.save()
+        except IntegrityError:
+            response = JsonResponse({
+                "deleted": False,
+                "message": "Googleアカウントでのログインは無効化されましたが、データを全て削除できませんでした。"
+            })
+            response.status_code = 500
+            return response
+        return JsonResponse({
+            "deleted": True
+        })
+
+    else:
+        return JsonResponse({
+            "deleted": False
+        })
+
+
+@login_required()
+def userUpdateAPI(request):
+    user = request.user
+    if request.method != "POST" or not request.body:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+
+    json_dict = json.loads(request.body)
+    form = UserUpdateForm(json_dict or None, instance=user)
+
+    response = []
+    if not form.is_valid():
+        response.append("更新できませんでした")
+        for field_name in form._errors:
+            response.append(form._errors[field_name].as_text())
+        return JsonResponse({
+            "successed": False,
+            "messages": response
+        })
+
+    else:
+        content = form.save(commit=False)
+        content.updated_at = datetime.datetime.now()
+        content.save()
+        response.append("更新しました")
+
+        return JsonResponse({
+            "successed": True,
+            "messages": response
+        })
+
+
+@login_required()
+def mailSettingsAPI(request):
+    user = request.user
+    if request.method != "POST" or not request.body:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+
+    json_dict = json.loads(request.body)
+    form = MailSettingsForm(json_dict, instance=user)
+
+    response = []
+    if not form.is_valid():
+        response.append("更新できませんでした")
+        for field_name in form._errors:
+            response.append(form._errors[field_name].as_text())
+        return JsonResponse({
+            "successed": False,
+            "messages": response
+        })
+
+    else:
+        content = form.save(commit=False)
+        content.updated_at = datetime.datetime.now()
+        content.save()
+        response.append("更新しました")
+
+        return JsonResponse({
+            "successed": True,
+            "messages": response
+        })
+
+@login_required()
+def registerAPI(request):
+    now_user = request.user
+    is_allowed = MemberRegisterPermission(now_user)
+    if not is_allowed:
+        response = HttpResponse("Forbidden")
+        response.status_code = 403
+        return response
+
+    if request.method != "POST" or not request.body:
+        response = HttpResponse("BAD REQUEST")
+        response.status_code = 400
+        return response
+
+    json_dict = json.loads(request.body)
+    form = RegisterForm(json_dict)
+
+    messages = []
+    if not form.is_valid():
+        messages.append("登録に失敗しました。入力した値を確かめてください。")
+        for field_name in form._errors:
+            messages.append(form._errors[field_name].as_text())
+        return JsonResponse({
+            "successed": False,
+            "messages": messages
+        })
+
+    try:
+        register(
+            email=form.cleaned_data['email'],
+            year=int(form.cleaned_data['year']),
+            last_name=form.cleaned_data['last_name'],
+            first_name=form.cleaned_data['first_name'],
+            furigana=form.cleaned_data['furigana'],
+        )
+        messages.append(form.cleaned_data['email'] + "を登録しました。")
+    except DuplicateGmailAccountError:
+        messages.append(form.cleaned_data['email'] + " はすでに登録されているアカウントのため登録できませんでした。")
+        return JsonResponse({
+            "successed": False,
+            "messages": messages
+        })
+
+    return JsonResponse({
+        "successed": True,
+        "messages": messages
+    })

@@ -70,7 +70,7 @@ def upload(request):
     params = {
         'form': form,
     }
-    return render(request, 'sound/upload.html', params)
+    return render(request, 'SPA.html', params)
 
 
 @login_required()

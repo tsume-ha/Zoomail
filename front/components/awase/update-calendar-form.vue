@@ -74,7 +74,11 @@
 
 <script>
 import moment from "moment"
+import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 export default {
+  components: {
+    'v-date-picker': DatePicker
+  },
   props: {
     csrftoken: {type: String, required: true},
     initTitle: {type: String, required: true},
