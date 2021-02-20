@@ -8,8 +8,8 @@
         <div v-if="progress < 100" key="uploading">
           サーバーにデータを転送中（{{progress}}%）
         </div>
-        <div v-else-if="!complete" key="processing">
-          サーバーからメーリスを送信中...
+        <div v-else-if="!complete" key="processing"
+          v-html="processingMessage[messageFrag]">
         </div>
         <div v-else-if="complete" key="complete">
           メーリスが{{complete_num}}件送信されました
@@ -28,6 +28,13 @@
 
 <script>
 export default {
+  data: () => ({
+    processingMessage: [
+      'サーバーからメーリスを送信中',
+      'サーバーからメーリスを送信中...<br>10秒程度かかることもます。この画面のまましばらくお待ちください。'
+    ],
+    messageFrag: 0,
+  }),
   computed: {
     progress () {
       return this.$store.state.send.progress;
@@ -45,6 +52,16 @@ export default {
         return false
       }
       window.location.href='/read/';
+    }
+  },
+  watch: {
+    progress (newVal, oldVal) {
+      if (newVal) {
+        window.setTimeout(
+          () => {this.messageFrag = 1},
+          2000
+        )
+      }
     }
   }
 }
