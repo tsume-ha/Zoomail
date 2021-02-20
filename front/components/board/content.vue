@@ -1,9 +1,5 @@
 <template>
-  <div v-if="!messageExists">
-    <!-- message does not exist -->
-    message does not exist
-  </div>
-  <div v-else>
+  <div v-if="status.messageLoaded && status.canRead">
     <!-- message exists -->
     <div class="message-title mb-2">
       <router-back-arrow :href="'../../'" />
@@ -39,6 +35,18 @@
     <hr>
 
   </div>
+
+  <div v-else-if="!status.messageLoaded">
+    <!-- ローディング中 -->
+    Now loading...
+  </div>
+  <div v-else-if="!status.canRead">
+    <!-- message does not exist -->
+    You can not read this message or message does not exist.
+  </div>
+  <div v-else>
+    some error occured
+  </div>
 </template>
 
 <script>
@@ -59,7 +67,10 @@ export default {
     }
   },
   data: () => ({
-    messageExists: false,
+    status: {
+      messageLoaded: false,
+      canRead: false,
+    },
     message: {},
     attachments: [],
   }),
@@ -77,7 +88,8 @@ export default {
     // messageデータ
     let message = this.$store.state.read.messages.find(obj => obj.id == this.id);
     if (message) {
-      this.messageExists = true;
+      this.$set(this.status, 'messageLoaded', true);
+      this.$set(this.status, 'canRead', true);
       this.message = message;
       return;
     }
@@ -85,12 +97,14 @@ export default {
     console.log('直接アクセス')
     this.axios.get('/api/board/content/' + String(this.id) + '/')
       .then(res => {
-        console.log(res.data.message)
-        this.messageExists = true;
         this.message = res.data.message;
+        this.$set(this.status, 'messageLoaded', true);
+        this.$set(this.status, 'canRead', true);
       })
       .catch(error => {
         console.log(error)
+        this.$set(this.status, 'messageLoaded', true);
+        this.$set(this.status, 'canRead', false);
       })
   },
 
