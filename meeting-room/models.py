@@ -1,6 +1,6 @@
 # import datetime
 from . import service
-
+from django.conf import settings
 
 class Room:
     # def __init__(self):
@@ -18,7 +18,7 @@ class Room:
         end = date.replace(hour=23, minute=59, second=59)
         calendarService = service.createService()
         events_result = calendarService.events().list(
-            calendarId='meeting-room@ku-unplugged.net',
+            calendarId=settings.GOOGLE_CALENDAR_ID,
             timeMin=start.isoformat() + 'Z',
             timeMax=end.isoformat() + 'Z',
             maxResults=1,
@@ -26,6 +26,7 @@ class Room:
             orderBy='startTime'
         ).execute()
         events = events_result.get('items', [])
+        print(events_result)
         # self.__dateCache(date, events[0]['summary'])
         return events[0]['summary']
 
