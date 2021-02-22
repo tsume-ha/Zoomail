@@ -46,11 +46,11 @@ class Room:
         event = {
             'summary': room,
             'start': {
-                'dateTime': '2021-02-23T12:30:00+09:00',
+                'date': date.strftime('%Y-%m-%d'),
                 'timeZone': 'Asia/Tokyo',
             },
             'end': {
-                'dateTime': '2021-02-23T14:30:00+09:00',
+                'date': date.strftime('%Y-%m-%d'),
                 'timeZone': 'Asia/Tokyo',
             }
         }

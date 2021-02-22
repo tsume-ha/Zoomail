@@ -11,9 +11,8 @@ def index(request):
 
 def create(request):
     room = Room()
-    now = datetime.datetime.now()
-    room.createByDateAPI(now, '4共31')
-    # rooms = {"date": now.strftime("%Y-%m-%d"), "room": 'hoge'}
+    today = datetime.date.today()
+    room.createByDateAPI(today, '4共21')
     return JsonResponse({
         'a': True
     })
