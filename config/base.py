@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'movie',
     'otherdocs',
     'awase',
-    'mail'
+    'mail',
+    'meeting_room'
 ]
 
 MIDDLEWARE = [

@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class MeetingRoomConfig(AppConfig):
-    name = 'meeting-room'
+    name = 'meeting_room'

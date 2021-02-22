@@ -1,6 +1,14 @@
-# import datetime
-from . import service
+import datetime
+from django.db import models
+
 from django.conf import settings
+from . import service
+
+class Cashe(models.Model):
+    date = models.DateField()
+    room = models.CharField(
+        max_length=200
+    )
 
 class Room:
     # def __init__(self):
