@@ -38,5 +38,5 @@ urlpatterns = [
     path('special/<str:url>/', home.special),
     path('awase/', include('awase.urls')),
     path('howto/', include('howto.urls')),
-    path('meeting-room/', include('meeting-room.urls'))
+    path('meeting_room/', include('meeting_room.urls'))
 ]
