@@ -13,6 +13,7 @@ class Cashe(models.Model):
     def __str__(self):
         return self.date.strftime('%Y-%m-%d') + ': ' + self.room
 
+
 class Room:
     def getByDate(self, date):
         cashe = Cashe.objects.filter(date=date)
@@ -40,3 +41,22 @@ class Room:
         ).execute()
         events = events_result.get('items', [])
         return events[0]['summary']
+
+    def createByDateAPI(self, date, room):
+        event = {
+            'summary': room,
+            'start': {
+                'dateTime': '2021-02-23T12:30:00+09:00',
+                'timeZone': 'Asia/Tokyo',
+            },
+            'end': {
+                'dateTime': '2021-02-23T14:30:00+09:00',
+                'timeZone': 'Asia/Tokyo',
+            }
+        }
+        calendarService = service.createService()
+        events_result = calendarService.events().insert(
+            calendarId=settings.GOOGLE_CALENDAR_ID,
+            body=event
+            ).execute()
+        print(events_result.get('htmlLink'))
