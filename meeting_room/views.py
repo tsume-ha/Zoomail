@@ -15,3 +15,11 @@ def create(request):
     return JsonResponse({
         'a': True
     })
+
+def delete(request):
+    room = Room()
+    today = datetime.date.today()
+    room.deleteByDate(today)
+    return JsonResponse({
+        'delete': True
+    })

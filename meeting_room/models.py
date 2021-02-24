@@ -1,6 +1,9 @@
 import datetime
+import json
+from googleapiclient.errors import HttpError
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.conf import settings
 from . import service
@@ -74,6 +77,34 @@ class Room:
                 room=room,
                 event_id=result['id']
             )
-            print(object.event_id)
 
+    def deleteByDateAPI(self, date):
+        """ 
+        dateで受け渡された日付のデータを削除します
+        """
+        cashe = Cashe.objects.get(date=date)
+        calendarService = service.createService()
+        calendarService.events().delete(
+            calendarId=settings.GOOGLE_CALENDAR_ID,
+            eventId=cashe.event_id
+            ).execute()
         
+    def deleteByDate(self, *date):
+        for d in date:
+            try:
+                cashe = Cashe.objects.get(date=d)
+                self.deleteByDateAPI(date=d)
+                cashe.delete()
+            except ObjectDoesNotExist:
+                # Casheが無かったらこのままおわり
+                continue
+            except HttpError as e:
+                reason = json.loads(e.content).get('error').get('errors')[0].get('message')
+                # if e.resp.status == 410:
+                if reason == 'Resource has been deleted':
+                    # Casheは残り、Calendarは削除済み
+                    cashe.delete()
+                    continue
+                # 他のエラーがあったら追加する
+                print(reason)
+
