@@ -1,7 +1,6 @@
+import datetime
 from django.http.response import JsonResponse
 from .models import Room
-import datetime
-
 
 def index(request):
     room = Room()
@@ -12,7 +11,7 @@ def index(request):
 def create(request):
     room = Room()
     today = datetime.date.today()
-    room.createByDateAPI(today, '4共21')
+    room.createByDate(today, '4共21')
     return JsonResponse({
         'a': True
     })

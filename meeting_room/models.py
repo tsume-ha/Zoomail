@@ -6,9 +6,10 @@ from django.conf import settings
 from . import service
 
 class Cashe(models.Model):
-    date = models.DateField()
+    date = models.DateField(unique=True)
     room = models.CharField(max_length=200)
     updated_at = models.DateTimeField(default=timezone.now)
+    event_id = models.CharField(max_length=255)
 
     def __str__(self):
         return self.date.strftime('%Y-%m-%d') + ': ' + self.room
@@ -40,6 +41,7 @@ class Room:
             orderBy='startTime'
         ).execute()
         events = events_result.get('items', [])
+        print(events)
         return events[0]['summary']
 
     def createByDateAPI(self, date, room):
@@ -52,11 +54,26 @@ class Room:
             'end': {
                 'date': date.strftime('%Y-%m-%d'),
                 'timeZone': 'Asia/Tokyo',
-            }
+            },
         }
         calendarService = service.createService()
         events_result = calendarService.events().insert(
             calendarId=settings.GOOGLE_CALENDAR_ID,
             body=event
             ).execute()
-        print(events_result.get('htmlLink'))
+        return events_result
+
+    def createByDate(self, date, room):
+        if type(date) is not list:
+            date = [date,]
+        for d in date:
+            result = self.createByDateAPI(
+                date=d, room=room)
+            object = Cashe.objects.create(
+                date=d,
+                room=room,
+                event_id=result['id']
+            )
+            print(object.event_id)
+
+        
