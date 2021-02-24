@@ -20,7 +20,7 @@ def register(request):
     room = Room()
     today = datetime.date.today()
     tomorrow = today + datetime.timedelta(days=1)
-    room.updateOrCreate('4共20', *[today, tomorrow])
+    room.updateOrCreate('4共24', *[today, tomorrow])
     return JsonResponse({
         'update': True
     })

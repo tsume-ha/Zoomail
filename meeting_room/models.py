@@ -160,9 +160,9 @@ class Room:
                 reason = json.loads(e.content).get('error').get('errors')[0].get('message')
                 # if e.resp.status == 410:
 
-    def syncFromCalendarToCashe(self, *date=None):
-        """
-        Google Calendarからデータを取得しキャッシュに保存させる
-        キャッシュは全て上書きする
-        """
-        pass
+    # def syncFromCalendarToCashe(self, *date=None):
+    #     """
+    #     Google Calendarからデータを取得しキャッシュに保存させる
+    #     キャッシュは全て上書きする
+    #     """
+    #     pass
