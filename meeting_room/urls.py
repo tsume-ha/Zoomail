@@ -4,6 +4,6 @@ from . import views
 app_name = 'meeting-room'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('create/', views.create, name='create'),
     path('delete/', views.delete, name='delete'),
+    path('register/', views.register, name='register'),
 ]

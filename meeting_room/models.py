@@ -47,7 +47,7 @@ class Room:
         print(events)
         return events[0]['summary']
 
-    def createByDateAPI(self, date, room):
+    def createAPI(self, room, date):
         event = {
             'summary': room,
             'start': {
@@ -66,17 +66,19 @@ class Room:
             ).execute()
         return events_result
 
-    def createByDate(self, date, room):
-        if type(date) is not list:
-            date = [date,]
-        for d in date:
-            result = self.createByDateAPI(
-                date=d, room=room)
-            object = Cashe.objects.create(
-                date=d,
-                room=room,
-                event_id=result['id']
-            )
+    def create(self, room, date):
+        """
+        Casheに登録されていないことを前提に
+        （updateOrCreateで確認する）
+        """
+        result = self.createAPI(
+            room=room, date=date)
+        Cashe.objects.create(
+            room=room,
+            date=date,
+            event_id=result['id']
+        )
+        return result
 
     def deleteByDateAPI(self, date):
         """ 
@@ -90,6 +92,10 @@ class Room:
             ).execute()
         
     def deleteByDate(self, *date):
+        """
+        キャッシュとGoogle Calendarの両方とも消す
+        キャッシュが先に消えてる場合はGoogle Calendarはさわらない
+        """
         for d in date:
             try:
                 cashe = Cashe.objects.get(date=d)
@@ -105,6 +111,58 @@ class Room:
                     # Casheは残り、Calendarは削除済み
                     cashe.delete()
                     continue
-                # 他のエラーがあったら追加する
+                # 他のエラーがあったらコードを追加する
                 print(reason)
 
+    def updateAPI(self, room, date):
+        cashe = Cashe.objects.get(date=date)
+        event = {
+            'summary': room,
+            'start': {
+                'date': date.strftime('%Y-%m-%d'),
+                'timeZone': 'Asia/Tokyo',
+            },
+            'end': {
+                'date': date.strftime('%Y-%m-%d'),
+                'timeZone': 'Asia/Tokyo',
+            },
+        }
+        calendarService = service.createService()
+        updated_event = calendarService.events().update(
+            calendarId=settings.GOOGLE_CALENDAR_ID,
+            eventId=cashe.event_id,
+            body=event
+            ).execute()
+        return updated_event['updated']
+
+    def update(self, room, date):
+        """
+        前提：キャッシュが存在する
+        存在の保証はupdateOrCreateで確認する
+        """
+        cashe = Cashe.objects.get(date=date)
+        response = self.updateAPI(room, date)
+        cashe.room = room
+        cashe.save()
+
+    def updateOrCreate(self, room, *date):
+        """
+        dateで複数のdatetime.dateを受けることを明示するために
+        可変長引数に
+        """
+        for d in date:
+            try:
+                cashe = Cashe.objects.get(date=d)
+                self.update(room=room, date=d)
+            except ObjectDoesNotExist:
+                self.create(room=room, date=d)
+            except HttpError as e:
+                reason = json.loads(e.content).get('error').get('errors')[0].get('message')
+                # if e.resp.status == 410:
+
+    def syncFromCalendarToCashe(self, *date=None):
+        """
+        Google Calendarからデータを取得しキャッシュに保存させる
+        キャッシュは全て上書きする
+        """
+        pass

@@ -8,18 +8,19 @@ def index(request):
     rooms = {"date": now.strftime("%Y-%m-%d"), "room": room.getByDate(now)}
     return JsonResponse(rooms)
 
-def create(request):
-    room = Room()
-    today = datetime.date.today()
-    room.createByDate(today, '4共21')
-    return JsonResponse({
-        'a': True
-    })
-
 def delete(request):
     room = Room()
     today = datetime.date.today()
     room.deleteByDate(today)
     return JsonResponse({
         'delete': True
+    })
+
+def register(request):
+    room = Room()
+    today = datetime.date.today()
+    tomorrow = today + datetime.timedelta(days=1)
+    room.updateOrCreate('4共20', *[today, tomorrow])
+    return JsonResponse({
+        'update': True
     })
