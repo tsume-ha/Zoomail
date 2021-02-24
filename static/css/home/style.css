@@ -83,13 +83,18 @@ a.livelogin{
 #announcement ul li{
 	display: block;
 	position: relative;
-	padding: 0.5rem 0;
+	padding: 0.25rem 0;
+	border-bottom: 1px dotted #aaa;
 }
-#announcement ul li span.date{
+#announcement ul li:first-child{
+	border-top: 1px dotted #aaa;
+}
+#announcement ul li span{
 	display: block;
 	position: relative;
 	font-size: 0.75rem;
 }
 #announcement ul li p{
 	margin: 0;
+	font-size: 0.75rem;
 }
