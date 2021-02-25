@@ -1,52 +1,43 @@
-from django.test import TestCase, Client, override_settings
-from django.db.models import Count
-from members.models import User
 import os
 import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import SimpleUploadedFile
-from .models import Message, MessageYear
-from .forms import validation_error_messages
+from django.test import TestCase, Client, override_settings
+# from django.db.models import Count
+
 from django.conf import settings
-
-# >> py manage.py test board.tests.AuthentificationSendTest
-# でclassごとにテストできる
-
-
-# HTTP CODE
-    # 200 success
-    # 302 redial
-    # 403 forbidden
-    # 404 not found
-    # 500 server error
+from members.models import User
+from .models import Message, MessageYear
+# from .forms import validation_error_messages
 
 
-def User_LogOUT(self):
-    self.client = Client()
-    self.client.logout()
-
-def Make_User_and_LogIN(self,year=2019):
+def make_user(self, year=2019):
     self.user = User.objects.create_user(
         email=str(year) + 'mail@gmail.com',
-        year=year)
+        year=year
+        )
     self.user.last_name = '京大'
     self.user.first_name = '太郎'
     self.user.furigana = 'きょうだいたろう'
     self.user.save()
-    self.client = Client()
-    self.client.force_login(self.user)
+    return self.user
 
-def User_LogIN(self,year=2019):
-    user = User.objects.get(email=str(year) + 'mail@gmail.com')
+def login(self, user):
+    self.client = Client()
     self.client.force_login(user)
     return user
 
-def CreateMessage(self, year, is_attachment=False):
+def logout(self):
+    self.client = Client()
+    self.client.logout()
+
+def make_message(self, year=2019, is_attachment=False):
     nowtime = datetime.datetime.now()
-    user = User.objects.get(email=str(year) + 'mail@gmail.com') # changed from google_account
+    user = User.objects.get(email=str(year) + 'mail@gmail.com')
     for messageyear in [0,year]: # 全回と回生の２件を作る
         content_data = Message(
-            title='Title Example ' + str(messageyear),
+            title=str(messageyear),
             content='Content Example \n'*10,
             sender=user,
             writer=user,
@@ -60,418 +51,247 @@ def CreateMessage(self, year, is_attachment=False):
             content_data.attachments.create(attachment_file=file)
         content_data.save()
 
-def CreateMessages(self, TestYears):
-    for User_Year in TestYears:
-        Make_User_and_LogIN(self,year=User_Year)
-        CreateMessage(self, year=User_Year)
-        User_LogOUT(self)
+def URLS(id=1):
+    return [
+        '/read/',
+        '/send/',
+        '/api/board/json/',
+        '/api/board/content/{}/'.format(id),
+        '/api/board/contentothers/{}/'.format(id),
+        '/api/board/bookmark/{}/'.format(id),
+        '/api/board/send/togroups/',
+        '/api/board/send/froms/',
+        '/api/board/send/send/',
+    ]
+YEARS = (2018,2019,2020)
 
 
-class AuthentificationReadViewTest(TestCase):
+
+@override_settings(SEND_MAIL=False)
+class LoginLogoutTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.TestYears = list(range(2015,2020))
-        CreateMessages(cls, cls.TestYears)
-        cls.MessageCount = Message.objects.aggregate(Count('pk'))['pk__count']
-        # => 5学年*2通 = 合計10通
+        for year in YEARS:
+            make_user(cls, year=year)
 
-
-    def test_read_index_logOUT(self):
-        User_LogOUT(self)
-        response = self.client.get('/read/')
-        self.assertEqual(response.status_code, 302)
-        url_redial_to = response.url
-        response = self.client.get(url_redial_to)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'admin/login.html')
-
-    def test_read_index_logIN(self):
-        User_LogIN(self)
-        response = self.client.get('/read/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'board/index.html')
-
-    def test_read_index_lonIN_with_content(self):
-       for User_Year in self.TestYears:
-            User_LogIN(self,year=User_Year)
-            response = self.client.get('/read/')
-            self.assertEqual(response.status_code, 200)
-            self.assertContains(response, 'Title Example ' + str(User_Year)) # 同回の回生メーリスは見れているか
-            self.assertContains(response, 'Title Example ' + str(0)) # 全回メーリスは見れているか
-            self.assertContains(response, 'Content Example') # 詳細まで見れているか
-
-            # 同回以外の学年を抽出
-            for DeniedYear in [y for y in self.TestYears if y != User_Year]:
-                self.assertNotContains(response, 'Title Example ' + str(DeniedYear)) # 違う学年の回生メーリスが見れていないか
-
-    def test_read_content_logOUT(self):
-        User_LogOUT(self)
-        for index in range(self.MessageCount+3):
-            pk = index + 1
-            target = '/read/content/' + str(pk)
-            response = self.client.get(target)
+    def test_SPA_logOUT(self):
+        logout(self)
+        for url in URLS():
+            response = self.client.get(url)
             self.assertEqual(response.status_code, 302)
             url_redial_to = response.url
             response = self.client.get(url_redial_to)
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed(response, 'admin/login.html')
 
-    def test_read_content_logIN(self):
-        for User_Year in self.TestYears:
-            User_LogIN(self,year=User_Year)
-            for index in range(self.MessageCount+3):
-                pk = index + 1
-                target = '/read/content/' + str(pk)
-                response = self.client.get(target)
-                if index < self.MessageCount:
-                    Message_Year = MessageYear.objects.get(message=Message.objects.get(pk=pk)).year
-                    if Message_Year == 0 or Message_Year == User_Year:
-                        self.assertEqual(response.status_code, 200)
-                    else:
-                        self.assertEqual(response.status_code, 403)
-                else:
-                    self.assertEqual(response.status_code, 404)
+    def test_SPA_logIN(self):
+        for year in YEARS:
+            user = User.objects.get(email=str(year) + 'mail@gmail.com')
+            login(self, user=user)
+            response = self.client.get('/read/')
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'SPA.html')
+            response = self.client.get('/send/')
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'SPA.html')
+            logout(self)
 
 
 @override_settings(SEND_MAIL=False)
-class AuthentificationSendTest(TestCase):
+class APIReadTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        Make_User_and_LogIN(cls)
+        for year in YEARS:
+            make_user(cls, year=year)
+            make_message(cls, year=year)
 
-    def test_send_view_logOUT(self):
-        User_LogOUT(self)
-        response = self.client.get('/send/')
-        self.assertEqual(response.status_code, 302)
-        url_redial_to = response.url
-        response = self.client.get(url_redial_to)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'admin/login.html')
+    def test_read_index_api(self):
+        for year in YEARS:
+            user = User.objects.get(email=str(year) + 'mail@gmail.com')
+            login(self, user=user)
+            response = self.client.get('/api/board/json/')
+            content = response.json()
+            for message in content['message_list']:
+                # 全回か、userの回生メーリスが含まれている
+                self.assertIn(message['title'], ['0', str(year)])
+                # それ以外の回生メーリスは含まれていない
+                # print([y for y in YEARS if y != year])
+                self.assertNotIn(message['title'], [y for y in YEARS if y != year])
 
-    def test_send_POST_logOUT(self):
-        data = {
-            'title': ['LogOUT POST test'],
-            'year_choice': ['2019'],
-            'written_by': ['2019-1'],
-            'to': ['0'],
-            'content': ['LogOUT POST test message'],
-            'attachments-TOTAL_FORMS': ['3'],
-            'attachments-INITIAL_FORMS': ['0'],
-            'attachments-MIN_NUM_FORMS': ['0'],
-            'attachments-MAX_NUM_FORMS': ['6'],
-            'attachments-0-attachment_file': [''],
-            'attachments-0-id': [''],
-            'attachments-0-message': [''],
-            'attachments-1-attachment_file': [''],
-            'attachments-1-id': [''],
-            'attachments-1-message': [''],
-            'attachments-2-attachment_file': [''],
-            'attachments-2-id': [''],
-            'attachments-2-message': [''],
+    def test_read_content_api(self):
+        for year in YEARS:
+            user = User.objects.get(email=str(year) + 'mail@gmail.com')
+            login(self, user=user)
+            for message in Message.objects.all():
+                response = self.client.get('/api/board/content/{}/'.format(message.id))
+                if response.status_code == 200:
+                    content = response.json()
+                    data = content['message']
+                    # 全回か、userの回生メーリスが含まれている
+                    self.assertIn(data['title'], ['0', str(year)])
+                    # それ以外の回生メーリスは含まれていない
+                    self.assertNotIn(data['title'], [str(y) for y in YEARS if y != year])
+                elif response.status_code == 403:
+                    # 403を受けるのは全回ではなく、回生でも無い場合
+                    self.assertNotIn(message.title, ['0', str(year)])
+                else:
+                    self.assertTrue(False)
+
+
+# attachmentのあるMessageはそれを登録してから
+
+    # def test_read_attachment_api(self):
+    #     for year in YEARS:
+    #         user = User.objects.get(email=str(year) + 'mail@gmail.com')
+    #         login(self, user=user)
+    #         for message in Message.objects.all():
+    #             response = self.client.get('/api/board/contentothers/{}/'.format(message.id))
+    #             if response.status_code == 200:
+    #                 content = response.json()
+    #                 data = content['message']
+    #                 # 全回か、userの回生メーリスが含まれている
+    #                 self.assertIn(data['title'], ['0', str(year)])
+    #                 # それ以外の回生メーリスは含まれていない
+    #                 self.assertNotIn(data['title'], [str(y) for y in YEARS if y != year])
+    #             elif response.status_code == 403:
+    #                 # 403を受けるのは全回ではなく、回生でも無い場合
+    #                 self.assertNotIn(message.title, ['0', str(year)])
+    #             else:
+    #                 self.assertTrue(False)
+
+
+@override_settings(SEND_MAIL=False)
+class APIReadTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        pass
+    
+    def test_sendAPI_kaisei_without_attachment(self):
+        user = make_user(self, year=2019)
+        login(self, user)
+
+        __sendyears = [[2019], [2018], [2017], [2019, 2018], [2019, 2018, 2017]]
+        for sendyear in __sendyears:
+            data = {
+                "title": "send test title" + str(sendyear),
+                "writer": str(user.id),
+                "to": [str(y) for y in sendyear],
+                "content": "send text content"
             }
-        User_LogOUT(self)
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 302)
-        url_redial_to = request.url
-        response = self.client.get(url_redial_to)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'admin/login.html')
+            request = self.client.post('/api/board/send/send/', data)
 
-        try:
-            saved_content = Message.objects.get(title=data['title'][0])
-            self.assertTrue(False)
-        except ObjectDoesNotExist:
-            self.assertTrue(True)
-        
+            self.assertEqual(request.status_code, 200)
+            
+            new_message = Message.objects.get(title=data["title"])
+            self.assertEqual(new_message.content, data['content'])
+            years = MessageYear.objects.filter(message=new_message).values_list('year', flat=True)
+            for y in sendyear:
+                self.assertIn(y, years)
+                
+    def test_sendAPI_kaisei_INVALID_request(self):
+        user = make_user(self, year=2019)
+        login(self, user)
 
-    def test_send_POST_logIN(self):
-        user = User_LogIN(self)
-        data = {
-            'title': ['LogIN POST test'],
-            'year_choice': [str(user.year)],
-            'written_by': [str(user.year).zfill(4) + '-' + str(user.pk)],
-            'to': ['0'],
-            'content': ['LogIN POST test message'],
-            'attachments-TOTAL_FORMS': ['3'],
-            'attachments-INITIAL_FORMS': ['0'],
-            'attachments-MIN_NUM_FORMS': ['0'],
-            'attachments-MAX_NUM_FORMS': ['6'],
-            'attachments-0-attachment_file': [''],
-            'attachments-0-id': [''],
-            'attachments-0-message': [''],
-            'attachments-1-attachment_file': [''],
-            'attachments-1-id': [''],
-            'attachments-1-message': [''],
-            'attachments-2-attachment_file': [''],
-            'attachments-2-id': [''],
-            'attachments-2-message': [''],
-        }
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 302)
-        url_redial_to = request.url
-        self.assertEqual(url_redial_to, '../read/')
+        __sendyears = [[2019], [2018], [2017], [2019, 2018], [2019, 2018, 2017]]
+        for sendyear in __sendyears:
+            data = {
+                "title": "no content test" + str(sendyear),
+                "writer": str(user.id),
+                "to": [str(y) for y in sendyear],
+                "content": ""
+            }
+            request = self.client.post('/api/board/send/send/', data)
+            self.assertEqual(request.status_code, 400)
+            self.assertFalse(
+                Message.objects.filter(title=data["title"]).exists()
+                )
 
-        response = self.client.get('/read/')
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['title'][0])
-        
-        saved_content = Message.objects.get(title=data['title'][0])
-        target = '/read/content/' + str(saved_content.pk)
-        response = self.client.get(target)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['content'][0])
+            data = {
+                "title": "",
+                "writer": str(user.id),
+                "to": [str(y) for y in sendyear],
+                "content": "no title test"
+            }
+            request = self.client.post('/api/board/send/send/', data)
+            self.assertEqual(request.status_code, 400)
+            self.assertFalse(
+                Message.objects.filter(content=data["content"]).exists()
+                )
 
-    def test_send_POST_logIN_missing_TITLE(self):
-        data = {
-            'title': [''],
-            'year_choice': ['2019'],
-            'written_by': ['2019-1'],
-            'to': ['0'],
-            'content': ['LogIN POST test message missing TITLE'],
-            'attachments-TOTAL_FORMS': ['3'],
-            'attachments-INITIAL_FORMS': ['0'],
-            'attachments-MIN_NUM_FORMS': ['0'],
-            'attachments-MAX_NUM_FORMS': ['6'],
-            'attachments-0-attachment_file': [''],
-            'attachments-0-id': [''],
-            'attachments-0-message': [''],
-            'attachments-1-attachment_file': [''],
-            'attachments-1-id': [''],
-            'attachments-1-message': [''],
-            'attachments-2-attachment_file': [''],
-            'attachments-2-id': [''],
-            'attachments-2-message': [''],
-        }
-        User_LogIN(self)
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 200)
-        self.assertTemplateUsed(request, 'board/send.html')
-        self.assertContains(request, validation_error_messages['no_title'])
-        try:
-            saved_content = Message.objects.get(title=data['title'][0])
-            self.assertTrue(False)
-        except ObjectDoesNotExist:
-            self.assertTrue(True)
+            data = {
+                "title": "no writer test",
+                "writer": "",
+                "to": [str(y) for y in sendyear],
+                "content": "no writer test"
+            }
+            request = self.client.post('/api/board/send/send/', data)
+            self.assertEqual(request.status_code, 400)
+            self.assertFalse(
+                Message.objects.filter(title=data["title"]).exists()
+                )
 
-    def test_send_POST_logIN_missing_CONTENT(self):
-        data = {
-            'title': ['LogIN POST test missing CONTENT'],
-            'year_choice': ['2019'],
-            'written_by': ['2019-1'],
-            'to': ['0'],
-            'content': [''],
-            'attachments-TOTAL_FORMS': ['3'],
-            'attachments-INITIAL_FORMS': ['0'],
-            'attachments-MIN_NUM_FORMS': ['0'],
-            'attachments-MAX_NUM_FORMS': ['6'],
-        }
-        User_LogIN(self)
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 200)
-        self.assertTemplateUsed(request, 'board/send.html')
-        self.assertContains(request, validation_error_messages['no_content'])
-        try:
-            saved_content = Message.objects.get(title=data['title'][0])
-            self.assertTrue(False)
-        except ObjectDoesNotExist:
-            self.assertTrue(True)
-
-    def test_send_POST_logIN_missing_writtenby(self):
-        data = {
-            'title': ['LogIN POST test missing Written By'],
-            'year_choice': ['2019'],
-            'written_by': [''],
-            'to': ['0'],
-            'content': ['LogIN POST test missing Written By content'],
-            'attachments-TOTAL_FORMS': ['3'],
-            'attachments-INITIAL_FORMS': ['0'],
-            'attachments-MIN_NUM_FORMS': ['0'],
-            'attachments-MAX_NUM_FORMS': ['6'],
-        }
-        User_LogIN(self)
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 200)
-        self.assertTemplateUsed(request, 'board/send.html')
-        self.assertContains(request, validation_error_messages['no_writer'])
-        try:
-            saved_content = Message.objects.get(title=data['title'][0])
-            self.assertTrue(False)
-        except ObjectDoesNotExist:
-            self.assertTrue(True)
-
-    def test_send_POST_logIN_no_year_choice(self):
-        data = {
-            'title': ['LogIN POST test no year choice'],
-            'year_choice': [''],
-            'written_by': ['2019-1'],
-            'to': ['0'],
-            'content': ['LogIN POST test no year choice content'],
-            'attachments-TOTAL_FORMS': ['3'],
-            'attachments-INITIAL_FORMS': ['0'],
-            'attachments-MIN_NUM_FORMS': ['0'],
-            'attachments-MAX_NUM_FORMS': ['6'],
-        }
-        User_LogIN(self)
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 302)
-        url_redial_to = request.url
-        self.assertEqual(url_redial_to, '../read/')
-
-        response = self.client.get('/read/')
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['title'][0])
-        
-        saved_content = Message.objects.get(title=data['title'][0])
-        target = '/read/content/' + str(saved_content.pk)
-        response = self.client.get(target)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['content'][0])
+            data = {
+                "title": "no 'to' test",
+                "writer": "str(user.id)",
+                "to": "",
+                "content": "no 'to' test"
+            }
+            request = self.client.post('/api/board/send/send/', data)
+            self.assertEqual(request.status_code, 400)
+            self.assertFalse(
+                Message.objects.filter(title=data["title"]).exists()
+                )
 
 
-    def test_send_POST_logIN_with_TextFile(self):
-        self.testfiles = [['9MB.txt', 9*1024*1024], ['11MB.txt', 11*1024*1024]]
-        user = User_LogIN(self)
-        for textfile in self.testfiles:
-            filedir = os.path.join(settings.BASE_DIR, 'board', textfile[0])
-            with open(filedir, 'rb') as file:
+    #   data.append("title", context.state.title)
+    #   data.append("writer", context.state.writer_id)
+    #   for (let i = 0; i < context.state.to.length; i++) {
+    #     data.append("to", context.state.to[i])
+    #   }
+    #   data.append("content", context.state.content)
+    #   for (let i = 0; i < context.state.attachments.length; i++) {
+    #     data.append("attachments", context.state.attachments[i])
+    #   }
+    
+    def test_sendAPI_kaisei_with_attachment(self):
+        user = make_user(self, year=2019)
+        login(self, user)
+
+        __sendyears = [[2019], [2018], [2017], [2019, 2018], [2019, 2018, 2017]]
+        __testfiles = [
+            ('9MB.txt', 9*1024*1024),
+            ('11MB.txt', 11*1024*1024)
+            ]
+        for sendyear in __sendyears:
+            for file in __testfiles:
+                with open(
+                    os.path.join(settings.BASE_DIR, 'board', file[0]),
+                    'rb') as f:
+                    upload = SimpleUploadedFile(file[0], f.read())
                 data = {
-                    'title': ['LogIN POST test with' + textfile[0]],
-                    'year_choice': [str(user.year)],
-                    'written_by': [str(user.year).zfill(4) + '-' + str(user.pk)],
-                    'to': ['0'],
-                    'content': ['LogIN POST test with' + textfile[0]],
-                    'attachments-TOTAL_FORMS': ['3'],
-                    'attachments-INITIAL_FORMS': ['0'],
-                    'attachments-MIN_NUM_FORMS': ['0'],
-                    'attachments-MAX_NUM_FORMS': ['6'],
-                    'attachments-0-attachment_file': [SimpleUploadedFile(textfile[0], file.read())],
+                    "title": "attachment test" + file[0] + str(sendyear),
+                    "writer": str(user.id),
+                    "to": [str(y) for y in sendyear],
+                    "content": "send text content",
+                    "attachments": [upload]
                 }
-                request = self.client.post('/send/', data)
-                if textfile[1] < 10*1000*1000:
-                    self.assertEqual(request.status_code, 302) # => 成功、read/へ転送
-                    url_redial_to = request.url
-                    self.assertEqual(url_redial_to, '../read/')
+                request = self.client.post('/api/board/send/send/', data)
 
-                    response = self.client.get('/read/')
-                    self.assertEqual(response.status_code, 200)
-                    self.assertContains(response, data['title'][0])
-                    
-                    saved_content = Message.objects.get(title=data['title'][0])
-                    target = '/read/content/' + str(saved_content.pk)
-                    response = self.client.get(target)
-                    self.assertEqual(response.status_code, 200)
-                    self.assertContains(response, data['content'][0])
-                    self.assertContains(response, data['title'][0] + '_添付')
+                if file[1] < 10*1024*1024:
+                    self.assertEqual(request.status_code, 200)
+                    new_message = Message.objects.get(title=data["title"])
+                    self.assertEqual(new_message.content, data['content'])
+                    years = MessageYear.objects.filter(message=new_message).values_list('year', flat=True)
+                    for y in sendyear:
+                        self.assertIn(y, years)
+
+                    # 添付ファイルのmodelが作られているか
+                    self.assertTrue(new_message.attachments.exists())
 
                 else:
-                    self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
-                    self.assertTemplateUsed(request, 'board/send.html')
-                    self.assertContains(request, data['title'][0])
-                    self.assertContains(request, 'どの添付ファイルのサイズも9MB未満にしてください')
-                    try:
-                        saved_content = Message.objects.get(title=data['title'][0])
-                        self.assertTrue(False)
-                    except ObjectDoesNotExist:
-                        self.assertTrue(True)
+                    self.assertEqual(request.status_code, 400)
+                    self.assertFalse(
+                        Message.objects.filter(title=data["title"]).exists()
+                        )
 
-    def test_send_POST_logIN_multiple_send_to(self):
-        send_to = ['2018', '2019']
-        data = {
-            'title': ['LogIN POST test mutiple send to'],
-            'year_choice': [''],
-            'written_by': ['2019-1'],
-            'to': send_to,
-            'content': ['LogIN POST test mutiple send to content'],
-            'attachments-TOTAL_FORMS': ['3'],
-            'attachments-INITIAL_FORMS': ['0'],
-            'attachments-MIN_NUM_FORMS': ['0'],
-            'attachments-MAX_NUM_FORMS': ['6'],
-        }
-        User_LogIN(self)
-        request = self.client.post('/send/', data)
-        self.assertEqual(request.status_code, 302)
-        url_redial_to = request.url
-        self.assertEqual(url_redial_to, '../read/')
 
-        response = self.client.get('/read/')
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['title'][0])
-        
-        saved_content = Message.objects.get(title=data['title'][0])
-        target = '/read/content/' + str(saved_content.pk)
-        response = self.client.get(target)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['content'][0])
-
-    def test_send_POST_logIN_with_multiple_TextFile(self):
-        self.testfiles = ['1KB.txt', '2KB.txt', '4KB.txt']
-        user = User_LogIN(self)
-        filedir = [os.path.join(settings.BASE_DIR, 'board', testfile) for testfile in self.testfiles]
-        with open(filedir[0], 'rb') as file0:
-            with open(filedir[1], 'rb') as file1:
-                with open(filedir[2], 'rb') as file2:
-                    data = {
-                        'title': ['LogIN POST test with multiple TextFile'],
-                        'year_choice': [str(user.year)],
-                        'written_by': [str(user.year).zfill(4) + '-' + str(user.pk)],
-                        'to': ['0'],
-                        'content': ['LogIN POST test with multiple TextFile'],
-                        'attachments-TOTAL_FORMS': ['3'],
-                        'attachments-INITIAL_FORMS': ['0'],
-                        'attachments-MIN_NUM_FORMS': ['0'],
-                        'attachments-MAX_NUM_FORMS': ['6'],
-                        'attachments-0-attachment_file': [SimpleUploadedFile(self.testfiles[0], file0.read())],
-                        'attachments-1-attachment_file': [SimpleUploadedFile(self.testfiles[1], file1.read())],
-                        'attachments-2-attachment_file': [SimpleUploadedFile(self.testfiles[2], file2.read())],
-                    }
-                    request = self.client.post('/send/', data)
-
-        self.assertEqual(request.status_code, 302) # => 成功、read/へ転送
-        url_redial_to = request.url
-        self.assertEqual(url_redial_to, '../read/')
-
-        response = self.client.get('/read/')
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['title'][0])
-        
-        saved_content = Message.objects.get(title=data['title'][0])
-        target = '/read/content/' + str(saved_content.pk)
-        response = self.client.get(target)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data['content'][0])
-        self.assertContains(response, data['title'][0] + '_添付1')
-        self.assertContains(response, data['title'][0] + '_添付2')
-        self.assertContains(response, data['title'][0] + '_添付3')
-
-    def test_send_POST_logIN_with_multiple_TextFile_FileSizeOVER(self):
-        self.testfiles = ['1KB.txt', '2KB.txt', '11MB.txt']
-        user = User_LogIN(self)
-        filedir = [os.path.join(settings.BASE_DIR, 'board', testfile) for testfile in self.testfiles]
-        with open(filedir[0], 'rb') as file0:
-            with open(filedir[1], 'rb') as file1:
-                with open(filedir[2], 'rb') as file2:
-                    data = {
-                        'title': ['LogIN POST test with multiple TextFile'],
-                        'year_choice': [str(user.year)],
-                        'written_by': [str(user.year).zfill(4) + '-' + str(user.pk)],
-                        'to': ['0'],
-                        'content': ['LogIN POST test with multiple TextFile'],
-                        'attachments-TOTAL_FORMS': ['3'],
-                        'attachments-INITIAL_FORMS': ['0'],
-                        'attachments-MIN_NUM_FORMS': ['0'],
-                        'attachments-MAX_NUM_FORMS': ['6'],
-                        'attachments-0-attachment_file': [SimpleUploadedFile(self.testfiles[0], file0.read())],
-                        'attachments-1-attachment_file': [SimpleUploadedFile(self.testfiles[1], file1.read())],
-                        'attachments-2-attachment_file': [SimpleUploadedFile(self.testfiles[2], file2.read())],
-                    }
-                    request = self.client.post('/send/', data)
-
-        self.assertEqual(request.status_code, 200) # => 失敗、sendにとどまる
-        self.assertTemplateUsed(request, 'board/send.html')
-        self.assertContains(request, data['title'][0])
-        self.assertContains(request, 'どの添付ファイルのサイズも9MB未満にしてください')
-        try:
-            saved_content = Message.objects.get(title=data['title'][0])
-            self.assertTrue(False)
-        except ObjectDoesNotExist:
-            self.assertTrue(True)

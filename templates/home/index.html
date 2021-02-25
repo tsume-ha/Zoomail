@@ -23,12 +23,13 @@
 			</p>
 		</div>
 		<div class="col-sm-2"></div>
-		<div class="col-12 version" data-ver="2.3.1">Version 2.3.1</div>
+		<div class="col-12 version" data-ver="2.4.2">Version 2.4.2</div>
 	</div>
 	
 	<div class="row center-block my-2">
+
 		{% if user.is_authenticated %}
-		<div class="col-sm-8 my-2" id="newcontents">
+		<div class="col-md-12 col-lg-6 my-3" id="newcontents">
 			<h4>New Contents</h4>
 			<ul>
 				{% for content in content_log %}
@@ -39,6 +40,18 @@
 				{% endfor %}
 			</ul>
 		</div>
+		<div class="col-md-12 col-lg-6 my-3" id="announcement">
+			<h4>お知らせ</h4>
+			<ul>
+				{% for announcement in announcements %}
+				<li>
+					<span>{{ announcement.created_at|date:"Y/m/d" }}</span>
+					<div>{{ announcement.text | linebreaks | urlize }}</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+
 		{% else %}
 		<p class="col-12 text-center">
 			ログインはこちらから<br>
@@ -60,22 +73,6 @@
 				});
 			})
 		</script>
-		{% endif %}
-		<div class="col-sm-4 my-2 p-2" id="meeting-room">
-			<meeting-room />
-		</div>
-		{% if user.is_authenticated %}
-		<div class="col-sm-12 my-3" id="announcement">
-			<h4>お知らせ</h4>
-			<ul>
-				{% for announcement in announcements %}
-				<li>
-					<span>{{ announcement.created_at|date:"Y/m/d" }}</span>
-					<p>{{ announcement.text | linebreaks | urlize }}</p>
-				</li>
-				{% endfor %}
-			</ul>
-		</div>
 		{% endif %}
 	</div>
 {% endblock %}

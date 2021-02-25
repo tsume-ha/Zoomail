@@ -152,7 +152,7 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_LOGIN_URL = '/login/'
 LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = 'members:index'
+LOGIN_REDIRECT_URL = 'home:index'
 SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
@@ -213,6 +213,8 @@ SOCIAL_AUTH_PIPELINE = (
     # Update the user record with any changed info from the auth service.
     'social_core.pipeline.user.user_details',
 
+    # Livelogのメールアドレスを保存
+    'config.social_auth.social_auth_pipelines.save_livelog_email'
 )
 
 WEBPACK_LOADER = {

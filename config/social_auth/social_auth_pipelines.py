@@ -95,3 +95,10 @@ def load_extra_data(backend, details, response, uid, user, *args, **kwargs):
         extra_data = backend.extra_data(user, uid, response, details,
                                         *args, **kwargs)
         social.set_extra_data(extra_data)
+
+
+def save_livelog_email(backend, user, details, *args, **kwargs):
+    if user:
+        if backend.name == 'auth0':
+            user.livelog_email = details.get('email')
+            user.save()
