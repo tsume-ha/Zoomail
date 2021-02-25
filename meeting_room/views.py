@@ -24,3 +24,11 @@ def register(request):
     return JsonResponse({
         'update': True
     })
+
+def sync(request):
+    room = Room()
+    today = datetime.date.today()
+    room.syncFromCalendarToCashe()
+    return JsonResponse({
+        'sync': True
+    })

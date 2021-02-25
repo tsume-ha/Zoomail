@@ -160,9 +160,56 @@ class Room:
                 reason = json.loads(e.content).get('error').get('errors')[0].get('message')
                 # if e.resp.status == 410:
 
-    # def syncFromCalendarToCashe(self, *date=None):
-    #     """
-    #     Google Calendarからデータを取得しキャッシュに保存させる
-    #     キャッシュは全て上書きする
-    #     """
-    #     pass
+    def syncFromCalendarToCashe(self):
+        """
+        Google Calendarからデータを取得しキャッシュに保存させる
+        キャッシュは全て上書きする
+        """
+        now = datetime.datetime.now()
+        start = now.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=10)
+        end = now.replace(hour=23, minute=59, second=59) + datetime.timedelta(days=50)
+        calendarService = service.createService()
+        events_result = calendarService.events().list(
+            calendarId=settings.GOOGLE_CALENDAR_ID,
+            timeMin=start.isoformat() + 'Z',
+            timeMax=end.isoformat() + 'Z',
+            singleEvents=True,
+            maxResults=70,
+            orderBy='startTime'
+        ).execute()
+        events = events_result.get('items', [])
+
+        for e in events:
+            if 'start' in e and 'date' in e['start']:
+                # 終日の予定だけ読み込む
+                s_dt = datetime.datetime.strptime(
+                    e['start']['date'], '%Y-%m-%d')
+                start_date = datetime.date(s_dt.year, s_dt.month, s_dt.day)
+                e_dt = datetime.datetime.strptime(
+                    e['end']['date'], '%Y-%m-%d')
+                end_date = datetime.date(e_dt.year, e_dt.month, e_dt.day)
+                if start_date == end_date:
+                    Cashe.objects.update_or_create(
+                        date=start_date,
+                        defaults={
+                            'room': e['summary'],
+                            'event_id': e['id']
+                        }
+                    )
+                else:
+                    '''
+                    連続した日にちがあるときは
+                    一旦これを消して、1日ごとに作り直す
+                    '''
+                    event_id = e['id']
+                    calendarService.events().delete(
+                        calendarId=settings.GOOGLE_CALENDAR_ID,
+                        eventId=event_id
+                        ).execute()
+                    Cashe.objects.filter(event_id=event_id).delete()
+                    datelist = [
+                        start_date + datetime.timedelta(days=i)
+                        for i in range((end_date - start_date).days)
+                    ]
+                    self.updateOrCreate(e['summary'], *datelist)
+                
