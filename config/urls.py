@@ -40,6 +40,8 @@ urlpatterns = [
     path('read/<path:p>', SPA),
     path('mypage/', SPA, name="members"),
     path('mypage/<path:p>', SPA),
+    path('meeting_room/', SPA, name="meeting_room"),
+    path('meeting_room/<path:p>', SPA),
     
 
     # API
@@ -54,5 +56,4 @@ urlpatterns = [
     path('special/<str:url>/', home.special),
     path('awase/', include('awase.urls')),
     path('howto/', include('howto.urls')),
-    path('meeting_room/', include('meeting_room.urls'))
 ]

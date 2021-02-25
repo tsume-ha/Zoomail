@@ -105,6 +105,12 @@ const routes = [
     meta: 'mypage:register',
   },
   {
+    path: '/meeting_room/',
+    name: 'meeting_room',
+    component: () => import(/* webpackChunkName: "meeting_room" */'../components/meeting_room/index.vue'),
+    meta: 'meeting_room',
+  },
+  {
     path: '/*',
     name: '404',
     component: NotFoundComponent

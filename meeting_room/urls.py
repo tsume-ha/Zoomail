@@ -7,4 +7,5 @@ urlpatterns = [
     path('delete/', views.delete, name='delete'),
     path('register/', views.register, name='register'),
     path('sync/', views.sync, name='sync'),
+    path('get31day/', views.get31day),
 ]
