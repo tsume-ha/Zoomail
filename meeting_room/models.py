@@ -10,7 +10,7 @@ from . import service
 
 class Cashe(models.Model):
     date = models.DateField(unique=True)
-    room = models.CharField(max_length=200)
+    room = models.CharField(max_length=200, null=True)
     updated_at = models.DateTimeField(default=timezone.now)
     event_id = models.CharField(max_length=255)
 
@@ -21,15 +21,23 @@ class Cashe(models.Model):
 class Room:
     def getByDate(self, date):
         cashe = Cashe.objects.filter(date=date)
-        if not cashe.exists():
+        if cashe.exists():
+            return {
+                "date": date.strftime("%Y-%m-%d"),
+                "room": cashe[0].room
+                #dateはuniqueなので初めの1つだけとる
+            }
+        else:
             room = self.getByDateAPI(date)
             content = Cashe(
                 date=date,
                 room=room,
             )
             content.save()
-            return room
-        return cashe[0].room
+            return {
+                "date": date.strftime("%Y-%m-%d"),
+                "room": room
+            }
 
     def getByDateAPI(self, date):
         start = date.replace(hour=0, minute=0, second=0)
@@ -46,6 +54,31 @@ class Room:
         events = events_result.get('items', [])
         print(events)
         return events[0]['summary']
+
+    def getByDateRange(self, start_date, end_date):
+        """
+        start_date から end_date までの例会教室のデータを
+        [{"date": "YYYY-MM-DD", "room": "4共21"}, ...]
+        の形で返す
+        """
+        query = Cashe.objects.filter(
+            date__gte=start_date, date__lte=end_date
+            ).order_by('date').values('date', 'room')
+        date_list = [
+            datetime.date.today() + datetime.timedelta(days=i)
+            for i in range((end_date - start_date).days)
+        ]
+        rooms = [{
+                "date": d.strftime("%Y-%m-%d"),
+                # queryで返ってこなかった日にちは未登録として処理
+                "room": next(
+                    filter(
+                        lambda q: q["date"]==d, query),
+                        {"date": d, "room": '未登録'}
+                    )["room"]
+            } for d in date_list
+        ]
+        return rooms
 
     def createAPI(self, room, date):
         event = {

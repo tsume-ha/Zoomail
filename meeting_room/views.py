@@ -35,7 +35,8 @@ def sync(request):
 
 def get31day(request):
     room = Room()
-    now = datetime.datetime.now()
-    # WIP
-    rooms = {"date": now.strftime("%Y-%m-%d"), "room": room.getByDate(now)}
-    return JsonResponse(rooms)
+    contents = room.getByDateRange(
+        start_date=datetime.date.today(),
+        end_date=datetime.date.today() + datetime.timedelta(days=31)
+        )
+    return JsonResponse({"rooms": contents})
