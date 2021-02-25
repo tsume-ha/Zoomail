@@ -40,8 +40,15 @@ class Room:
             }
 
     def getByDateAPI(self, date):
-        start = date.replace(hour=0, minute=0, second=0)
-        end = date.replace(hour=23, minute=59, second=59)
+        """
+        カレンダーに情報がある：summaryでタイトル部分を返す
+        （返り値はString型）
+        カレンダーに情報がない：Noneを返す
+        """
+        start = datetime.datetime.combine(
+            date, datetime.time(hour=0, minute=0, second=0))
+        end = datetime.datetime.combine(
+            date, datetime.time(hour=23, minute=59, second=59))
         calendarService = service.createService()
         events_result = calendarService.events().list(
             calendarId=settings.GOOGLE_CALENDAR_ID,
@@ -52,8 +59,9 @@ class Room:
             orderBy='startTime'
         ).execute()
         events = events_result.get('items', [])
-        print(events)
-        return events[0]['summary']
+        # print(events)
+        return events[0]['summary'] if events else None
+        # カレンダーにも登録されていなかったらNoneを返す
 
     def getByDateRange(self, start_date, end_date):
         """
@@ -74,7 +82,10 @@ class Room:
                 "room": next(
                     filter(
                         lambda q: q["date"]==d, query),
-                        {"date": d, "room": '未登録'}
+                        # lambdaがTrueのとき：queryがそのまま返る
+                        self.getByDate(d)
+                        # Falseのとき：getByDateでもう一度叩く
+                        # 初めの1回でキャッシュは保存される
                     )["room"]
             } for d in date_list
         ]

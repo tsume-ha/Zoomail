@@ -40,3 +40,9 @@ def get31day(request):
         end_date=datetime.date.today() + datetime.timedelta(days=31)
         )
     return JsonResponse({"rooms": contents})
+
+def today(request):
+    room = Room()
+    return JsonResponse(
+        room.getByDate(datetime.date.today())
+    )

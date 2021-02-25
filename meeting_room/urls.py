@@ -8,4 +8,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('sync/', views.sync, name='sync'),
     path('get31day/', views.get31day),
+    path('today/', views.today),
 ]
