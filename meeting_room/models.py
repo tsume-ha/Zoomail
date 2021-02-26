@@ -15,7 +15,7 @@ class Cashe(models.Model):
     event_id = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.date.strftime('%Y-%m-%d') + ': ' + self.room
+        return self.date.strftime('%Y-%m-%d') + ': ' + str(self.room)
 
 
 class Room:
@@ -76,17 +76,21 @@ class Room:
             datetime.date.today() + datetime.timedelta(days=i)
             for i in range((end_date - start_date).days)
         ]
+
+        def seikei(query, date):
+            result = list(filter(lambda q: q["date"]==date, query))
+            # lambdaがTrueのとき：queryがそのまま返る
+            if len(result) == 1:
+                return result[0]["room"]
+            else:
+                return self.getByDate(date)["room"]
+                # getByDateでもう一度叩く
+                # 初めの1回でキャッシュは保存される
+
         rooms = [{
                 "date": d.strftime("%Y-%m-%d"),
                 # queryで返ってこなかった日にちは未登録として処理
-                "room": next(
-                    filter(
-                        lambda q: q["date"]==d, query),
-                        # lambdaがTrueのとき：queryがそのまま返る
-                        self.getByDate(d)
-                        # Falseのとき：getByDateでもう一度叩く
-                        # 初めの1回でキャッシュは保存される
-                    )["room"]
+                "room": seikei(query, d)
             } for d in date_list
         ]
         return rooms
@@ -226,6 +230,7 @@ class Room:
         for e in events:
             if 'start' in e and 'date' in e['start']:
                 # 終日の予定だけ読み込む
+                # print(e['start']['date'], e['summary'])
                 s_dt = datetime.datetime.strptime(
                     e['start']['date'], '%Y-%m-%d')
                 start_date = datetime.date(s_dt.year, s_dt.month, s_dt.day)
