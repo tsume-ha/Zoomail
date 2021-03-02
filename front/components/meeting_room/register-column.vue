@@ -1,11 +1,10 @@
 <template>
-  <div>
+  <div class="mb-5">
     <row
       v-for="room in rooms" :key="room.date"
       :data="room"
-      :selected="Boolean(room.date in selectedDate)"
-      @dayadd="dayadd"
-      @dayremove="dayremove"
+      :notselected="multipleMode && (!Boolean(room.date in selectedDate))"
+      @dayclicked="dayclicked"
       @oninput="oninput"
     />
     <datalist id="room-choices">
@@ -13,6 +12,29 @@
       <option value="4共22" />
       <option value="終日使用不可" />
     </datalist>
+
+    <div
+      v-if="canSend || multipleMode"
+      class="send-menu container"
+    >
+      <div class="row mb-3 mt-2">
+        <div class="col-sm-6">
+          <button
+            v-if="multipleMode"
+            @click="selectedDate={}"
+            class="btn btn-sm btn-secondary"
+            >選択を解除する</button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            v-if="canSend"
+            @click=""
+            class="btn btn-info"
+            >送信</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -28,7 +50,7 @@ export default {
   data: () => ({
     // 内部データ
     rooms: [],
-    queue: [],
+    queue: {},
     selectedDate: {},
 
     // 画面表示用データ
@@ -38,6 +60,15 @@ export default {
       // 1 => 範囲で選択
 
   }),
+  computed: {
+    multipleMode () {
+      // 一括変更モード Boolean
+      return Object.keys(this.selectedDate).length > 0;
+    },
+    canSend () {
+      return Object.keys(this.queue).length > 0;
+    }
+  },
   created () {
     this.axios.get('/api/meeting_room/get_all/')
     .then(res => {
@@ -46,28 +77,53 @@ export default {
   },
   //props.day.date
   methods: {
-    dayadd: function(e){
+    dayclicked: function(e){
       let id = e.format('YYYY-MM-DD');
-      if (!(id in this.selectedDate)) {
+      if (id in this.selectedDate) {
+        this.$delete(this.selectedDate, id);
+      } else {
         this.$set(this.selectedDate, id, e);
       }
     },
     dayremove: function(e){
       let id = e.format('YYYY-MM-DD');
       if (id in this.selectedDate) {
-        this.$delete(this.selectedDate, id);
+        
       }
     },
     oninput (payload) {
-      const targetIndex = this.rooms.indexOf(
-        this.rooms.find(item=>item.date == payload.date)
-      )
-      this.$set(this.rooms, targetIndex, payload)
-      this.$set(this.queue, payload.date, payload)
+      let dates = [];
+      if (this.multipleMode){
+        dates = Object.keys(this.selectedDate);
+      } else {
+        dates = [payload.date];
+      }
+      for (const date of dates) {
+        const tmp = {
+          "date": date,
+          "room": payload.room
+        };
+        const targetIndex = this.rooms.indexOf(
+          this.rooms.find(item=>item.date == date)
+        );
+        this.$set(this.rooms, targetIndex, tmp);
+        this.$set(this.queue, date, tmp);
+      }
+      // selectedDateを初期化
+      this.selectedDate = {};
     }
   }
 }
 </script>
 
 <style scoped>
+.send-menu{
+  position: fixed;
+  display: block;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-top: 0.25rem #fff solid;
+}
 </style>

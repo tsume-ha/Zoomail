@@ -1,9 +1,10 @@
 <template>
-  <div class="row row-wraper" :class="{selected: selected}">
+  <div class="row row-wraper" :class="{notselected: notselected}">
     <div
       class="date col-3"
+      :class="date | dayColor"
       @click="onclicked">
-      {{date | md}}<!--  <br> -->
+      {{date | md}}<wbr>
       ({{date | youbi}})
     </div>
     <div
@@ -12,7 +13,8 @@
         type="text"
         v-model="room"
         autocomplete="on"
-        list="room-choices">
+        list="room-choices"
+        class="form-control">
     </div>
   </div>
 </template>
@@ -23,23 +25,8 @@ moment.locale('ja')
 export default {
   props: {
     data: {type: Object, required: true, default: {"date": null, "room": null}},
-    selected: {type: Boolean, required: false, default: false}
+    notselected: {type: Boolean, required: false, default: false}
   },
-  // data: () => ({
-  //   // room: "",
-  //   choices: [
-  //     '4共21',
-  //     '4共22',
-  //     '4共30',
-  //     '終日使用不可'
-  //   ]
-  // }),
-  // mounted () {
-  //   if (!this.data.room) {
-  //       this.room = '未登録';
-  //     }
-  //   this.room = this.data.room;
-  // },
   computed: {
     date () {
       if (this.data['date']==null){
@@ -61,15 +48,8 @@ export default {
   },
   methods: {
     onclicked () {
-      if (this.selected) {
-        this.$emit('dayremove', this.date);
-      } else {
-        this.$emit('dayadd', this.date);
-      }
+      this.$emit('dayclicked', this.date);
     },
-    // oninput () {
-    //   this.$emit('input', {"str": this.})
-    // }
   },
   filters: {
     md (date) {
@@ -77,7 +57,18 @@ export default {
     },
     youbi (date) {
       return date.format('dd')
-    }
+    },
+    dayColor(date) {
+      let day = date.format('d')
+      switch (day) {
+        case '0':
+          return 'text-danger';
+        case '6':
+          return 'text-primary';
+        default:
+          return '';
+      }
+    },
   }
 }
 </script>
@@ -86,7 +77,7 @@ export default {
 .row-wraper{
   border-top: 1px solid #ddd;
 }
-.row-wraper.selected{
+.row-wraper.notselected{
   background-color: #ddd;
 }
 .date{
