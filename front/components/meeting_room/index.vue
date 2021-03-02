@@ -2,6 +2,7 @@
   <div>
     <h3>例会教室</h3>
     <div>
+      <router-link to="./register/" class="btn btn-warning mb-3">修正・登録</router-link>
       <p v-if="rooms.length === 0">
         Now Loading...
       </p>
@@ -33,6 +34,9 @@ export default {
     return {
       rooms: []
     }
+  },
+  metaInfo: {
+    title: '例会教室'
   },
   created: function() {
     this.axios

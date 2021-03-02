@@ -9,4 +9,5 @@ urlpatterns = [
     path('sync/', views.sync, name='sync'),
     path('get31day/', views.get31day),
     path('today/', views.today),
+    path('get_all/', views.get_all),
 ]

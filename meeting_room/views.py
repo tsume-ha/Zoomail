@@ -46,3 +46,18 @@ def today(request):
     return JsonResponse(
         room.getByDate(datetime.date.today())
     )
+
+def get_all(request, page=0):
+    """
+    page: -1 で前30日
+    page: 0で次の30日
+    page: 1でその次の30日
+    それぞれだいたい1ヶ月ごとにroomsを返す
+    """
+    room = Room()
+    today = datetime.date.today()
+    contents = room.getByDateRange(
+        start_date=today + datetime.timedelta(days=30 * page),
+        end_date=today + datetime.timedelta(days=30 * (page + 1))
+        )
+    return JsonResponse({"rooms": contents})
