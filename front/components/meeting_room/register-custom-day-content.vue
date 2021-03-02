@@ -52,12 +52,16 @@ export default {
 /* Calendar内のcss */
 .ceil{
   cursor: pointer;
+  max-width: 12vw;
+  padding: 0 3px 5px;
+  line-height: 0.75rem;
 }
 .ceil.selected{
   background-color: #adddeb;
 }
 .ceil .room-detail{
   font-size: 0.5rem;
-  
+  padding: 0;
+  word-break: break-all;
 }
 </style>

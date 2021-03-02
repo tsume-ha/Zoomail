@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="calendar-wraper">
     <v-calendar
       :first-day-of-week="2"
       is-expanded
@@ -70,3 +70,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.calendar-wraper{
+  max-width: 100%;
+  overflow-x: scroll;
+}
+</style>
