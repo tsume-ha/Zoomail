@@ -28,7 +28,7 @@
         <div class="col-sm-6">
           <button
             v-if="canSend"
-            @click=""
+            @click="send()"
             class="btn btn-info"
             >送信</button>
         </div>
@@ -111,6 +111,13 @@ export default {
       }
       // selectedDateを初期化
       this.selectedDate = {};
+    },
+    send () {
+      this.axios.post(
+        '/api/meeting_room/register/', this.queue
+      ).then(res => {
+        console.log(res)
+      })
     }
   }
 }

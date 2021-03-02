@@ -205,6 +205,7 @@ class Room:
             except ObjectDoesNotExist:
                 self.create(room=room, date=d)
             except HttpError as e:
+                print(e)
                 reason = json.loads(e.content).get('error').get('errors')[0].get('message')
                 # if e.resp.status == 410:
 

@@ -1,4 +1,5 @@
 import datetime
+import json
 from django.http.response import JsonResponse
 from .models import Room
 
@@ -17,10 +18,14 @@ def delete(request):
     })
 
 def register(request):
+    content = json.loads(request.body)
     room = Room()
-    today = datetime.date.today()
-    tomorrow = today + datetime.timedelta(days=1)
-    room.updateOrCreate('4共24', *[today, tomorrow])
+    for key in content:
+        dt = datetime.datetime.strptime(content[key]['date'], '%Y-%m-%d')
+        room.updateOrCreate(
+            content[key]['room'],
+            datetime.date(dt.year, dt.month, dt.day)
+            )
     return JsonResponse({
         'update': True
     })
