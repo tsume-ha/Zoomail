@@ -1,17 +1,28 @@
 <template>
-  <div class="mb-5">
-    <row
-      v-for="room in rooms" :key="room.date"
-      :data="room"
-      :notselected="multipleMode && (!Boolean(room.date in selectedDate))"
-      @dayclicked="dayclicked"
-      @oninput="oninput"
-    />
-    <datalist id="room-choices">
-      <option value="4共21" />
-      <option value="4共22" />
-      <option value="終日使用不可" />
-    </datalist>
+  <div>
+    <h3>例会教室登録</h3>
+    <div class="row">
+      <div class="col-12 mb-2">
+        <button
+          class="btn btn-danger btn-sm"
+          @click="sync">Googleカレンダーと同期</button>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <row
+        v-for="room in rooms" :key="room.date"
+        :data="room"
+        :notselected="multipleMode && (!Boolean(room.date in selectedDate))"
+        @dayclicked="dayclicked"
+        @oninput="oninput"
+      />
+      <datalist id="room-choices">
+        <option value="4共21" />
+        <option value="4共22" />
+        <option value="終日使用不可" />
+      </datalist>
+    </div>
 
     <div
       v-if="canSend || multipleMode"
@@ -35,17 +46,20 @@
       </div>
     </div>
 
+    <nowloading v-if="nowLoading" text="通信中..."/>
   </div>
 </template>
 
 <script>
 import row from "./register-column-row";
+import nowloading from "../nowloading.vue"
 export default {
   metaInfo: {
     title: '教室係用ページ - 例会教室'
   },
   components: {
-    row
+    row,
+    nowloading
   },
   data: () => ({
     // 内部データ
@@ -110,13 +124,28 @@ export default {
         this.$set(this.queue, date, tmp);
       }
       // selectedDateを初期化
-      this.selectedDate = {};
+      // this.selectedDate = {};
     },
     send () {
+      this.nowLoading = true;
       this.axios.post(
         '/api/meeting_room/register/', this.queue
       ).then(res => {
         console.log(res)
+        this.queue = {};
+      })
+      .finally(()=> {
+        this.nowLoading = false;
+      })
+    },
+    sync () {
+      this.nowLoading = true;
+      this.axios.get('/api/meeting_room/sync/')
+      .then(res => {
+        this.rooms = res.data.rooms;
+      })
+      .finally(()=> {
+        this.nowLoading = false;
       })
     }
   }
