@@ -2,24 +2,39 @@
   <div>
     <h3>例会教室登録</h3>
     <div class="row">
-      <div class="col-12 mb-2">
+      <div class="col-12 mb-1">
         <button
           class="btn btn-danger btn-sm"
           @click="sync">Googleカレンダーと同期</button>
       </div>
+      <div class="col-12 mb-2">
+        <button
+          class="btn btn-secondary btn-sm mr-3"
+          @click="move(-1)">前の月</button>
+        <button
+          class="btn btn-secondary btn-sm mr-3"
+          @click="move(1)">次の月</button>
+      </div>
     </div>
 
-    <div class="mb-5">
+    <div class="mb-5 pb-5">
       <row
         v-for="room in rooms" :key="room.date"
         :data="room"
         :notselected="multipleMode && (!Boolean(room.date in selectedDate))"
+        :queued="Boolean(room.date in queue)"
         @dayclicked="dayclicked"
         @oninput="oninput"
       />
       <datalist id="room-choices">
         <option value="4共21" />
+        <option value="4共11" />
+        <option value="4共31" />
+        <option value="4共20" />
         <option value="4共22" />
+        <option value="4共30" />
+        <option value="4共21(20時まで音出し不可)" />
+        <option value="4共31(20時まで音出し不可)" />
         <option value="終日使用不可" />
       </datalist>
     </div>
@@ -29,18 +44,16 @@
       class="send-menu container"
     >
       <div class="row mb-3 mt-2">
-        <div class="col-sm-6">
+        <div class="col-12">
           <button
             v-if="multipleMode"
             @click="selectedDate={}"
             class="btn btn-sm btn-secondary"
             >選択を解除する</button>
-        </div>
-        <div class="col-sm-6">
           <button
             v-if="canSend"
             @click="send()"
-            class="btn btn-info"
+            class="btn btn-info float-right"
             >送信</button>
         </div>
       </div>
@@ -66,6 +79,7 @@ export default {
     rooms: [],
     queue: {},
     selectedDate: {},
+    page: 0,
 
     // 画面表示用データ
     nowLoading: false,
@@ -145,6 +159,22 @@ export default {
         this.rooms = res.data.rooms;
       })
       .finally(()=> {
+        this.nowLoading = false;
+      })
+    },
+    move (diff) {
+      this.page += diff;
+      if (this.page > 2) {
+        this.page = 2;
+      } else if (this.page < -2) {
+        this.page = -2;
+      }
+      this.nowLoading = true;
+      this.axios.get('/api/meeting_room/get_all/', {params: {'page': this.page}})
+      .then(res => {
+        this.rooms = res.data.rooms;
+      })
+      .finally(()=>{
         this.nowLoading = false;
       })
     }

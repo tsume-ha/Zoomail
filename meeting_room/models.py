@@ -73,7 +73,7 @@ class Room:
             date__gte=start_date, date__lte=end_date
             ).order_by('date').values('date', 'room')
         date_list = [
-            datetime.date.today() + datetime.timedelta(days=i)
+            start_date + datetime.timedelta(days=i)
             for i in range((end_date - start_date).days)
         ]
 

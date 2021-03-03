@@ -14,7 +14,8 @@
         v-model="room"
         autocomplete="on"
         list="room-choices"
-        class="form-control">
+        class="form-control"
+        :class="{queued}">
     </div>
   </div>
 </template>
@@ -25,7 +26,8 @@ moment.locale('ja')
 export default {
   props: {
     data: {type: Object, required: true, default: {"date": null, "room": null}},
-    notselected: {type: Boolean, required: false, default: false}
+    notselected: {type: Boolean, required: false, default: false},
+    queued: {type: Boolean, required: false, default: false}
   },
   computed: {
     date () {
@@ -84,5 +86,9 @@ export default {
   display: inline-block;
   font-size: 0.75rem;
   text-align: center;
+  padding-top: 0.5rem;
+}
+input.queued{
+  box-shadow: 0 0 2px 2px #28a745 inset;
 }
 </style>
