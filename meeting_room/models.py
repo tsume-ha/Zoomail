@@ -122,9 +122,11 @@ class Room:
         result = self.createAPI(
             room=room, date=date)
         Cashe.objects.update_or_create(
-            room=room,
-            event_id=result['id'],
-            defaults={'date':date}
+            date=date,
+            defaults={
+                "room": room,
+                "event_id": result['id'],
+            }
         )
         return result
 
