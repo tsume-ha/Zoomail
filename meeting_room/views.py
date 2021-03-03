@@ -32,11 +32,8 @@ def register(request):
 
 def sync(request):
     room = Room()
-    today = datetime.date.today()
     room.syncFromCalendarToCashe()
-    return JsonResponse({
-        'sync': True
-    })
+    return get_all(request)
 
 def get31day(request):
     room = Room()

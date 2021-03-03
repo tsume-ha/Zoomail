@@ -121,10 +121,10 @@ class Room:
         """
         result = self.createAPI(
             room=room, date=date)
-        Cashe.objects.create(
+        Cashe.objects.update_or_create(
             room=room,
-            date=date,
-            event_id=result['id']
+            event_id=result['id'],
+            defaults={'date':date}
         )
         return result
 
@@ -193,21 +193,28 @@ class Room:
         cashe.room = room
         cashe.save()
 
-    def updateOrCreate(self, room, *date):
+    def updateOrCreate(self, room, date):
         """
-        dateで複数のdatetime.dateを受けることを明示するために
-        可変長引数に
+        Casheを見てcreateかupdateを発火する
         """
-        for d in date:
-            try:
-                cashe = Cashe.objects.get(date=d)
-                self.update(room=room, date=d)
-            except ObjectDoesNotExist:
-                self.create(room=room, date=d)
-            except HttpError as e:
-                print(e)
-                reason = json.loads(e.content).get('error').get('errors')[0].get('message')
-                # if e.resp.status == 410:
+        cashe = Cashe.objects.filter(date=date).exclude(room=None)
+        try:
+            if cashe.exists():
+                self.update(room=room, date=date)
+            else:
+                self.create(room=room, date=date)
+        except HttpError as e:
+            print(e)
+            print(e.content)
+            # reason = json.loads(e.content)#.get('error').get('errors')[0].get('message')
+            # if e.resp.status == 410:
+            # print(reason)
+
+            # これまでに確認したエラーたち
+            ## 404  update  Casheにあるevent_idがGoogleに存在しない
+            ## 410  ------  
+
+            return e
 
     def syncFromCalendarToCashe(self):
         """
@@ -228,6 +235,16 @@ class Room:
         ).execute()
         events = events_result.get('items', [])
 
+        # 余分なキャッシュを削除する
+        event_id_list = [e['id'] for e in events]
+        update_query = []
+        for query in Cashe.objects.filter(date__gte=start, date__lte=end):
+            if query.event_id not in event_id_list and query.room is not None:
+                query.room = None
+                update_query.append(query)
+        Cashe.objects.bulk_update(update_query, fields=['room'])
+        
+        # 不足しているキャッシュを追加する
         for e in events:
             if 'start' in e and 'date' in e['start']:
                 # 終日の予定だけ読み込む
@@ -262,4 +279,5 @@ class Room:
                         for i in range((end_date - start_date).days)
                     ]
                     self.updateOrCreate(e['summary'], *datelist)
+
                 
