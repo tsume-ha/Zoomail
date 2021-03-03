@@ -1,5 +1,6 @@
 import datetime
 import json
+from dateutil.relativedelta import relativedelta
 from django.http.response import JsonResponse
 from .models import Room
 
@@ -51,19 +52,18 @@ def today(request):
 
 def get_all(request):
     """
-    page: -1 で大体先月
+    page: -1 で先月
     page: 0で今月
-    page: 1でだいたい来月
-    といった風にだいたい1ヶ月ごとにroomsを返す
-    （ひと月の日数計算はしておらす、31日固定です）
+    page: 1で来月
+    といった風に1ヶ月ごとにroomsを返す
     """
     page = 0
     if 'page' in request.GET:
         page = int(request.GET['page'])
     room = Room()
     today = datetime.date.today()
-    start = today.replace(day=1) + datetime.timedelta(days=31 * page)
-    end = today.replace(day=1) + datetime.timedelta(days=31 * (page + 1))
+    start = today.replace(day=1) + relativedelta(months=page)
+    end = today.replace(day=1) + relativedelta(months=page+1) - datetime.timedelta(days=1)
     contents = room.getByDateRange(
         start_date=start, end_date=end
         )

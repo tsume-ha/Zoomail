@@ -74,7 +74,7 @@ class Room:
             ).order_by('date').values('date', 'room')
         date_list = [
             start_date + datetime.timedelta(days=i)
-            for i in range((end_date - start_date).days)
+            for i in range((end_date - start_date).days+1)
         ]
 
         def seikei(query, date):
@@ -214,7 +214,7 @@ class Room:
 
             # これまでに確認したエラーたち
             ## 404  update  Casheにあるevent_idがGoogleに存在しない
-            ## 410  ------  
+            ## 410  update  Calendarで削除済みのeventにevent_idからアクセス
 
             return e
 
