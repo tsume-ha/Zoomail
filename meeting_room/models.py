@@ -12,7 +12,7 @@ class Cashe(models.Model):
     date = models.DateField(unique=True)
     room = models.CharField(max_length=200, null=True)
     updated_at = models.DateTimeField(default=timezone.now)
-    event_id = models.CharField(max_length=255)
+    event_id = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.date.strftime('%Y-%m-%d') + ': ' + str(self.room)
@@ -141,28 +141,33 @@ class Room:
             eventId=cashe.event_id
             ).execute()
         
-    def deleteByDate(self, *date):
+    def deleteByDate(self, date):
         """
         キャッシュとGoogle Calendarの両方とも消す
         キャッシュが先に消えてる場合はGoogle Calendarはさわらない
         """
-        for d in date:
-            try:
-                cashe = Cashe.objects.get(date=d)
-                self.deleteByDateAPI(date=d)
-                cashe.delete()
-            except ObjectDoesNotExist:
-                # Casheが無かったらこのままおわり
-                continue
-            except HttpError as e:
-                reason = json.loads(e.content).get('error').get('errors')[0].get('message')
-                # if e.resp.status == 410:
-                if reason == 'Resource has been deleted':
-                    # Casheは残り、Calendarは削除済み
-                    cashe.delete()
-                    continue
-                # 他のエラーがあったらコードを追加する
-                print(reason)
+        try:
+            cashe = Cashe.objects.get(date=date)
+            self.deleteByDateAPI(date=date)
+            cashe.room = None
+            cashe.event_id = None
+            cashe.save()
+        except ObjectDoesNotExist:
+            # Casheが無かったらこのままおわり
+            pass
+        except HttpError as e:
+            if e.resp and e.resp.status and e.resp.status == 410:
+            # if reason == 'Resource has been deleted':
+                # Casheは残り、Calendarは削除済み
+                cashe.room = None
+                cashe.event_id = None
+                cashe.save()
+                return
+
+            # 他のエラーがあったらコードを追加する
+            print(e)
+            reason = json.loads(e.content).get('error').get('errors')[0].get('message')
+            print(reason)
 
     def updateAPI(self, room, date):
         cashe = Cashe.objects.get(date=date)
@@ -197,26 +202,38 @@ class Room:
 
     def updateOrCreate(self, room, date):
         """
+        room(新規登録データ)が空の時はdeleteを発火する
         Casheを見てcreateかupdateを発火する
         """
+        if not room:
+            self.deleteByDate(date)
+            return {"status": "deleted"}
         cashe = Cashe.objects.filter(date=date).exclude(room=None)
         try:
             if cashe.exists():
                 self.update(room=room, date=date)
+                return {"status": "updated"}
             else:
                 self.create(room=room, date=date)
+                return {"status": "created"}
         except HttpError as e:
             print(e)
             print(e.content)
-            # reason = json.loads(e.content)#.get('error').get('errors')[0].get('message')
-            # if e.resp.status == 410:
-            # print(reason)
+            reason = "http error"
+            reason = json.loads(e.content).get('error').get('errors')[0].get('message')
+            if e.resp.status == 410:
+                print(reason)
 
             # これまでに確認したエラーたち
-            ## 404  update  Casheにあるevent_idがGoogleに存在しない
-            ## 410  update  Calendarで削除済みのeventにevent_idからアクセス
+            # 404  update  Casheにあるevent_idがGoogleに存在しない
+            # 410  delete  Calendarで削除済みのeventにevent_idからアクセス
 
-            return e
+            return {
+                "status": "http error",
+                "message": reason,
+                "status_code": e.resp.status
+                }
+
 
     def syncFromCalendarToCashe(self):
         """

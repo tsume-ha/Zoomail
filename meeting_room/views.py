@@ -21,14 +21,17 @@ def delete(request):
 def register(request):
     content = json.loads(request.body)
     room = Room()
+    results = []
     for key in content:
         dt = datetime.datetime.strptime(content[key]['date'], '%Y-%m-%d')
-        room.updateOrCreate(
+        result = room.updateOrCreate(
             content[key]['room'],
             datetime.date(dt.year, dt.month, dt.day)
             )
+        results.append({key: result})
+    print(results)
     return JsonResponse({
-        'update': True
+        "results": results
     })
 
 def sync(request):
