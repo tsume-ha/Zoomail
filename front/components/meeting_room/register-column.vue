@@ -21,10 +21,11 @@
       <row
         v-for="room in rooms" :key="room.date"
         :data="room"
-        :notselected="multipleMode && (!Boolean(room.date in selectedDate))"
+        :selected="Boolean(room.date in selectedDate)"
         :queued="Boolean(room.date in queue)"
         @dayclicked="dayclicked"
         @oninput="oninput"
+        @onchange="onchange"
       />
       <datalist id="room-choices">
         <option value="4共21" />
@@ -115,7 +116,6 @@ export default {
       this.rooms = res.data.rooms;
     })
   },
-  //props.day.date
   methods: {
     dayclicked: function(e){
       let id = e.format('YYYY-MM-DD');
@@ -149,8 +149,10 @@ export default {
         this.$set(this.rooms, targetIndex, tmp);
         this.$set(this.queue, date, tmp);
       }
+    },
+    onchange () {
       // selectedDateを初期化
-      // this.selectedDate = {};
+      this.selectedDate = {};
     },
     send () {
       this.nowLoading = true;

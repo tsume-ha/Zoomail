@@ -1,5 +1,5 @@
 <template>
-  <div class="row row-wraper" :class="{notselected: notselected}">
+  <div class="row row-wraper" :class="{selected: selected}">
     <div
       class="date col-3"
       :class="date | dayColor"
@@ -12,6 +12,7 @@
       <input
         type="text"
         v-model="room"
+        @change="onChange"
         autocomplete="on"
         list="room-choices"
         class="form-control"
@@ -26,7 +27,7 @@ moment.locale('ja')
 export default {
   props: {
     data: {type: Object, required: true, default: {"date": null, "room": null}},
-    notselected: {type: Boolean, required: false, default: false},
+    selected: {type: Boolean, required: false, default: false},
     queued: {type: Boolean, required: false, default: false}
   },
   computed: {
@@ -52,6 +53,11 @@ export default {
     onclicked () {
       this.$emit('dayclicked', this.date);
     },
+    onChange () {
+      // change event => 入力が完了を通知
+      // 複数選択を解除させる
+      this.$emit('onchange');
+    }
   },
   filters: {
     md (date) {
@@ -79,14 +85,16 @@ export default {
 .row-wraper{
   border-top: 1px solid #ddd;
 }
-.row-wraper.notselected{
-  background-color: #ddd;
-}
 .date{
   display: inline-block;
   font-size: 0.75rem;
   text-align: center;
   padding-top: 0.5rem;
+  border-radius: 8px;
+}
+.row-wraper.selected .date{
+  border: 2px solid orange;
+  padding-top: calc(0.5rem - 4px);
 }
 input.queued{
   box-shadow: 0 0 2px 2px #28a745 inset;
