@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="mb-5 pb-5">
+    <div>
       <row
         v-for="room in rooms" :key="room.date"
         :data="room"
@@ -56,6 +56,18 @@
             class="btn btn-info float-right"
             >送信</button>
         </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col my-2">
+        <router-link to="../" class="btn btn-sm btn-secondary">戻る</router-link>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col mb-5 pb-5">
+        <!-- blank for fixed div bix -->
       </div>
     </div>
 
@@ -145,7 +157,7 @@ export default {
       this.axios.post(
         '/api/meeting_room/register/', this.queue
       ).then(res => {
-        console.log(res)
+        console.log(res.data.results)
         this.queue = {};
       })
       .finally(()=> {

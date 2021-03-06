@@ -29,7 +29,6 @@ def register(request):
             datetime.date(dt.year, dt.month, dt.day)
             )
         results.append({key: result})
-    print(results)
     return JsonResponse({
         "results": results
     })
