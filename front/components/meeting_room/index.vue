@@ -2,7 +2,10 @@
   <div>
     <h3>例会教室</h3>
     <div>
-      <router-link to="./register/" class="btn btn-warning mb-3">修正・登録</router-link>
+      <router-link
+      v-if="is_staff"
+        to="./register/"
+        class="btn btn-warning mb-3">修正・登録</router-link>
       <p v-if="rooms.length === 0">
         Now Loading...
       </p>
@@ -32,7 +35,8 @@ moment.locale('ja')
 export default {
   data: function() {
     return {
-      rooms: []
+      rooms: [],
+      is_staff: false,
     }
   },
   metaInfo: {
@@ -43,6 +47,11 @@ export default {
       .get('/api/meeting_room/get31day/')
       .then(res => {
         this.rooms = res.data.rooms
+      })
+    this.axios
+      .get('/api/meeting_room/')
+      .then(res => {
+        this.is_staff = res.data.meeting_room_permission
       })
   },
   filters: {

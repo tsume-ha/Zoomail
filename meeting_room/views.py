@@ -2,23 +2,24 @@ import datetime
 import json
 from dateutil.relativedelta import relativedelta
 from django.http.response import JsonResponse
+from django.contrib.auth.decorators import login_required
+
+from config.permissions import MeetingroomPermission
 from .models import Room
 
+@login_required()
 def index(request):
-    room = Room()
-    now = datetime.datetime.now()
-    rooms = {"date": now.strftime("%Y-%m-%d"), "room": room.getByDate(now)}
-    return JsonResponse(rooms)
-
-def delete(request):
-    room = Room()
-    today = datetime.date.today()
-    room.deleteByDate(today)
+    # return permission
     return JsonResponse({
-        'delete': True
+        "meeting_room_permission": MeetingroomPermission(request.user)
     })
 
+@login_required()
 def register(request):
+    if not MeetingroomPermission(request.user):
+        return JsonResponse({
+            "results": "403 Forbidden"
+        })
     content = json.loads(request.body)
     room = Room()
     results = []
@@ -33,7 +34,12 @@ def register(request):
         "results": results
     })
 
+@login_required()
 def sync(request):
+    if not MeetingroomPermission(request.user):
+        return JsonResponse({
+            "results": "403 Forbidden"
+        })
     room = Room()
     room.syncFromCalendarToCashe()
     return get_all(request)
@@ -52,6 +58,7 @@ def today(request):
         room.getByDate(datetime.date.today())
     )
 
+@login_required()
 def get_all(request):
     """
     page: -1 で先月
@@ -59,6 +66,10 @@ def get_all(request):
     page: 1で来月
     といった風に1ヶ月ごとにroomsを返す
     """
+    if not MeetingroomPermission(request.user):
+        return JsonResponse({
+            "results": "403 Forbidden"
+        })
     page = 0
     if 'page' in request.GET:
         page = int(request.GET['page'])
