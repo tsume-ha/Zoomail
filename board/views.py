@@ -36,7 +36,7 @@ def get_messages_list(request):
         page_num = 1
 
     query = Message.objects.filter(
-        Q(years__year=now_user.year) | Q(years__year=0)
+        Q(years__year=now_user.year) | Q(years__year=0) | Q(sender=now_user) | Q(writer=now_user)
         ).order_by('updated_at')
 
 
@@ -80,8 +80,9 @@ def get_one_message(request, id):
 
     # 閲覧できないならば/read にリダイレクトする
     if not message.years.filter(Q(year=now_user.year)|Q(year=0)).exists():
-        if message.writer is not now_user or message.sender is not now_user:
-            raise PermissionDenied
+        if message.sender != now_user:
+            if message.writer != now_user:
+                raise PermissionDenied
 
     params = {
         'message': message,
@@ -97,8 +98,9 @@ def get_message_attachments(request, id):
 
     # 閲覧できないならば/read にリダイレクトする
     if not message.years.filter(Q(year=now_user.year)|Q(year=0)).exists():
-        if message.writer is not now_user or message.sender is not now_user:
-            raise PermissionDenied
+        if message.sender != now_user:
+            if message.writer != now_user:
+                raise PermissionDenied
 
     return JsonResponse({
         "attachments": [{
@@ -304,7 +306,9 @@ def FileDownloadView(request, message_pk, file_pk):
     except ObjectDoesNotExist:
         return redirect('/read/content/' + str(message_pk))
 
-    can_read = year == 0 or year == request.user.year
+    can_read = (year == 0) or (year == request.user.year)\
+               or (message.writer == request.user)\
+               or (message.sender == request.user)
     if not can_read:
         return redirect('/read/content/' + str(message_pk))
 
