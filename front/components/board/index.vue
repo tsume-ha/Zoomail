@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h3 v-if="!sendboxMode">メーリス一覧</h3>
-    <h3 v-else>送信ボックス</h3>
+    <h3>メーリス一覧</h3>
     <searchform
       @search="search"
      />
@@ -25,7 +24,7 @@
          表示できるメーリスはありませんでした
       </div>
     </infinite-loading>
-    <div id="sendlink" v-if="!sendboxMode">
+    <div id="sendlink">
       <router-link to="../../send/">
         <span>メーリスを送信する</span>
         <img src="/static/img/send.svg" height="50" width="50">
@@ -41,12 +40,6 @@ export default {
   name: 'index',
   metaInfo: {
     title: 'メーリス一覧'
-  },
-  props: {
-    sendboxMode: {required: false, default: false, type: Boolean}
-  },
-  mounted () {
-    this.$store.commit('read/setSendboxMode', this.sendboxMode)
   },
   components: {
     oneContent,

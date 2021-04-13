@@ -93,12 +93,6 @@ const routes = [
     meta: 'mypage:mail-test',
   },
   {
-    path: '/mypage/sendbox/',
-    name: 'mypage:sendbox',
-    component: () => import(/* webpackChunkName: "mypage-sendbox" */'../components/mypage/sendbox.vue'),
-    meta: 'mypage:sendbox',
-  },
-  {
     path: '/mypage/register/',
     name: 'mypage:register',
     component: () => import(/* webpackChunkName: "mypage-register" */'../components/mypage/register.vue'),
