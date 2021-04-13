@@ -39,14 +39,6 @@ def get_messages_list(request):
         Q(years__year=now_user.year) | Q(years__year=0) | Q(sender=now_user) | Q(writer=now_user)
         ).order_by('updated_at')
 
-
-    # 送信ボックスモード
-    # if 'sendbox' in request.GET:# and request.GET['sendbox'] == "true":
-    #     query = Message.objects.filter(
-    #         Q(sender=now_user) | Q(writer=now_user)
-    #         ).order_by('updated_at')
-    #     print('sendbox mode on')
-
     # 検索クエリ
     if 'text' in request.GET:
         q = request.GET['text']
