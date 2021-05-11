@@ -54,6 +54,5 @@ urlpatterns = [
     path('movie/', include('movie.urls')),
     path('others/', include('otherdocs.urls')),
     path('special/<str:url>/', home.special),
-    path('awase/', include('awase.urls')),
     path('howto/', include('howto.urls')),
 ]

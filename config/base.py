@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'pictures',
     'movie',
     'otherdocs',
-    'awase',
     'mail',
     'meeting_room'
 ]
