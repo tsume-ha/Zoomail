@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'movie',
     'otherdocs',
     'awase',
-    'mail'
+    'mail',
+    'meeting_room'
 ]
 
 MIDDLEWARE = [
@@ -151,12 +152,12 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_LOGIN_URL = '/login/'
 LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = 'members:index'
+LOGIN_REDIRECT_URL = 'home:index'
 SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
-GOOGLE_CALENDAR_API_KEY = env('GOOGLE_CALENDAR_API_KEY')
+# GOOGLE_CALENDAR_API_KEY = env('GOOGLE_CALENDAR_API_KEY')
 GOOGLE_CALENDAR_ID = 'meeting-room@ku-unplugged.net'
 
 SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
@@ -212,6 +213,8 @@ SOCIAL_AUTH_PIPELINE = (
     # Update the user record with any changed info from the auth service.
     'social_core.pipeline.user.user_details',
 
+    # Livelogのメールアドレスを保存
+    'config.social_auth.social_auth_pipelines.save_livelog_email'
 )
 
 WEBPACK_LOADER = {

@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.urls import reverse
 
 USER_FIELDS = ['username', 'email', 'year']
 
@@ -15,13 +16,21 @@ def create_user(strategy, details, backend, user=None, *args, **kwargs):
     # return
     # #ここまで、新入生が入ってきたら消す
 
+    # 2019よりも上回はLiveLogでの新規登録はさせないように
+    if details.get('year') <= 2019:
+        messages.warning(
+            backend.strategy.request,
+            "2019年度入会以上の上回生は、先にGoogleアカウントでログインしてからLiveLogアカウントへの紐付けを行ってください。"
+            )
+        return
+
     fields = dict((name, kwargs.get(name, details.get(name)))
                   for name in backend.setting('USER_FIELDS', USER_FIELDS))
     if not fields:
         return
     
     #nextリンクはsessionに保存されている、これを書き換える
-    strategy.session_set('next', '/members/first_register/')
+    strategy.session_set('next', reverse('home:first-register'))
     return {
         'is_new': True,
         'user': strategy.create_user(**fields)

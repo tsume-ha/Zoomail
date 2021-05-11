@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a href="./input/" class="enter text-center text-sm-left">入力する</a>
+    <router-link to="./input/" class="enter text-center text-sm-left">入力する</router-link>
     <span
       @click="isOpened=!isOpened"
       id="menu_sw"
@@ -13,7 +13,7 @@
       >
       <a href="./update/" class="text-center text-sm-left">カレンダーの名前、説明文の変更</a>
       <a href="./update/" class="text-center text-sm-left">集計期間（日にち）の変更</a>
-      <a href="./hours/" class="text-center text-sm-left">集計時間（時間帯）の変更</a>
+      <router-link to="./hours/" class="text-center text-sm-left">集計時間（時間帯）の変更</router-link>
       <a href="./urlkey/" class="text-center text-sm-left">招待URLの確認</a>
       <a href="./user/" class="text-center text-sm-left">カレンダーユーザーの変更</a>
       <a href="./leave/" class="text-center text-sm-left text-danger">この日程調整から退会する</a>

@@ -63,14 +63,15 @@
 <script>
 import customDayContent from './input-custom-day-content.vue';
 import forms from './input-forms.vue';
-
+import Calendar from 'v-calendar/lib/components/calendar.umd'
 export default {
-  props: {
-    jsonUrl: {type: String, required: true}
+  metaInfo: {
+    title: '日程調整に回答'
   },
   components: {
     "custom-day-content": customDayContent,
     "input-forms": forms,
+    "v-calendar": Calendar,
   },
   data: function() {
     return {
@@ -89,7 +90,7 @@ export default {
   },
   created: function(){
     this.axios
-      .get(this.jsonUrl)
+      .get('./json/')
       .then((res) => {
         console.log(res);
         this.timeRangeData = res.data.HourRange;
@@ -97,6 +98,9 @@ export default {
         this.selectedDate = res.data.InitialDate;
 
         this.jsonLoaded = true;
+      }).catch((error) => {
+        console.log(error);
+        this.$router.push({name: '404'})
       });
   },
   mounted: function(){
@@ -148,7 +152,7 @@ export default {
           counter += 1;
         }
         this.axios
-          .post(this.jsonUrl, data).then(response => {
+          .post('./json/', data).then(response => {
             console.log(response);
             this.isProcessError = false;
             for (var key of inProcess) {

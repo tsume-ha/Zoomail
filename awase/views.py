@@ -28,14 +28,6 @@ def index(request):
     return render(request, 'awase/index.html', params)
 
 @login_required()
-def CalendarView(request, pk):
-    now_user = request.user
-    calendar = get_object_or_404(Calendar, pk=pk)
-    if not calendar_permission(calendar, now_user):
-        raise Http404()
-    return render(request, 'awase/calendar.html')
-
-@login_required()
 def CalendarJsonResponse(request, pk):
     now_user = request.user
     calendar = get_object_or_404(Calendar, pk=pk)
@@ -86,12 +78,6 @@ def CalendarJsonResponse(request, pk):
         data['calendar_data'].append(day_json)
 
     return JsonResponse(data)
-
-
-@login_required()
-def create(request):
-    return render(request, 'awase/create.html')
-
 
 @login_required()
 def createJson(request):
@@ -152,21 +138,6 @@ def invited(request, key):
         'calendar': calendar,
     }
     return render(request, 'awase/invited.html', params)
-
-
-@login_required()
-def input(request, pk):
-    now_user = request.user
-    calendar = get_object_or_404(Calendar, pk=pk)
-    if not calendar_permission(calendar, now_user):
-        raise Http404()
-
-    params = {
-        'calendar': calendar,
-    }
-
-
-    return render(request, 'awase/input.html', params)
 
 
 @login_required()
@@ -267,11 +238,7 @@ def UpdateCollectHourView(request, pk):
             updateFormset.save()
             return redirect(to=reverse('awase:calendar', args=[calendar.pk]))
 
-    params = {
-        'calendar': calendar,
-    }
-
-    return render(request, 'awase/update_hours.html', params)
+    return render(request, 'SPA.html', params)
 
 @login_required()
 def CollectHourJsonResponse(request, pk):

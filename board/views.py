@@ -1,109 +1,145 @@
+import datetime
+import base64
+
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages as django_messages
-from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.core.exceptions import PermissionDenied
-from django.conf import settings
-from .models import Message, MessageYear, Attachment, Kidoku, Bookmark
-from .forms import SendMessage, SearchAdvanced, Edit, AttachmentFileFormset
-from members.models import User
-from mail.models import SendMailAddress, MessageProcess
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
 from sendgrid.helpers.mail import Attachment as helper_Attachment
-import datetime
-import base64
-import os
 
-def EditPermisson(user, content_id):
-    return user.is_superuser or\
-           Message.objects.get(id=content_id).sender == user or\
-           Message.objects.get(id=content_id).writer == user
+from django.conf import settings
 
-def is_updated(created_at, updated_at):
-    return created_at + datetime.timedelta(seconds=5) < updated_at
+from .models import Message, MessageYear, Attachment, Bookmark
+from .forms import MessageForm, AttachmentForm
+from .to import to_groups
+from members.models import User
+from mail.models import SendMailAddress, MessageProcess
+
 
 @login_required()
-def index(request, page_num=1):
+def get_messages_list(request):
     now_user = request.user
-    # ログインしているユーザーの年度だけ含める
-    query = Message.objects.filter(Q(years__year=now_user.year) | Q(years__year=0))
 
-    searched = False
+    if 'page' in request.GET:
+        try:
+            page_num = int(request.GET['page'])
+        except ValueError:
+            page_num = 1
+    else:
+        page_num = 1
+
+    query = Message.objects.filter(
+        Q(years__year=now_user.year) | Q(years__year=0)
+        ).order_by('updated_at')
+
+
+    # 送信ボックスモード
+    if 'sendbox' in request.GET:# and request.GET['sendbox'] == "true":
+        query = Message.objects.filter(
+            Q(sender=now_user) | Q(writer=now_user)
+            ).order_by('updated_at')
+        print('sendbox mode on')
+
+    # 検索クエリ
     if 'text' in request.GET:
         q = request.GET['text']
         if q != '':
             query = query.filter(Q(content__contains=q) | Q(title__contains=q))
-            searched = True
     if 'is_kaisei' in request.GET:
-        if request.GET['is_kaisei'] == 'on':
+        if request.GET['is_kaisei'] == 'true':
             query = query.filter(years__year=now_user.year)
-            searched = True
     if 'is_zenkai' in request.GET:
-        if request.GET['is_zenkai'] == 'on':
+        if request.GET['is_zenkai'] == 'true':
             query = query.filter(years__year=0)
-            searched = True
-    if 'is_midoku' in request.GET:
-        if request.GET['is_midoku'] == 'on':
-            query = query.exclude(kidoku_message__user=now_user)
-            searched = True
-    if 'is_marked' in request.GET:
-        if request.GET['is_marked'] == 'on':
+    if 'is_bookmark' in request.GET:
+        if request.GET['is_bookmark'] == 'true':
             query = query.filter(bookmark_message__user=now_user)
-            searched = True
 
-    message_letters = query.order_by('updated_at').reverse()  # 逆順で取得
-    page = Paginator(message_letters, 10)
+    query = query.reverse()
 
-    querydict = dict(request.GET)
-    getquery = ''
-    for key, value in querydict.items():
-        if value[0] == "":
-            continue
-        tmp = key + '=' + value[0]
-        getquery += '&' + tmp
+    page = Paginator(query, 10)
+
     params = {
-        'search_advanced': SearchAdvanced(request.GET),
-        'message_letters': page.get_page(page_num),
-        'is_seached': searched,
-        'getquery': getquery,
+        'page': page.get_page(page_num),
     }
-    return render(request, 'board/index.html', params)
+    return render(request, 'board/messages.json', params, content_type='application/json')
+
 
 @login_required()
-def content(request, id):
+def get_one_message(request, id):
+    # attachment, permissionなどのデータ
     message = get_object_or_404(Message, id=id)
     now_user = request.user
 
     # 閲覧できないならば/read にリダイレクトする
-    if not message.years.all().filter(Q(year=now_user.year)|Q(year=0)).exists():
-        if not EditPermisson(now_user, id):
+    if not message.years.filter(Q(year=now_user.year)|Q(year=0)).exists():
+        if message.writer is not now_user or message.sender is not now_user:
             raise PermissionDenied
 
-
-    attachments = map(
-        lambda file: {"path": file.attachment_file, "isImage": file.isImage(), "fileName": file.fileName(), "pk": file.pk, "fileext": file.extension()},
-        message.attachments.all()
-    )
     params = {
         'message': message,
-        'attachments': attachments,
-        'edit_allowed': EditPermisson(user=now_user, content_id=id),
-        'is_updated': is_updated(message.created_at, message.updated_at),
     }
+    return render(request, 'board/message.json', params, content_type='application/json')
 
-    if not Kidoku.objects.filter(message=message).filter(user=now_user).exists():
-        kidoku_content = Kidoku(message=message, user=now_user)
-        kidoku_content.save()
-
-    return render(request, 'board/content.html', params)
 
 @login_required()
-def ajax_bookmark(request, pk):
+def get_message_attachments(request, id):
+    # attachment, permissionなどのデータ
+    message = get_object_or_404(Message, id=id)
+    now_user = request.user
+
+    # 閲覧できないならば/read にリダイレクトする
+    if not message.years.filter(Q(year=now_user.year)|Q(year=0)).exists():
+        if message.writer is not now_user or message.sender is not now_user:
+            raise PermissionDenied
+
+    return JsonResponse({
+        "attachments": [{
+            "path": file.attachment_file.url,
+            "is_image": file.isImage(),
+            "filename": file.fileName(),
+            "pk": file.pk,
+            "fileext": file.extension()
+        } for file in message.attachments.all()]
+    })
+
+
+# send from, to 選択肢
+@login_required()
+def to_groups_data(request):
+    return JsonResponse({
+        "togropus": [{"year": year, "label": text} for year, text in to_groups]
+    })
+
+
+@login_required()
+def froms_data(request):
+    years = [y['year'] for y in User.objects.order_by('year').values('year').distinct()]
+    return JsonResponse({
+        "years": years,
+        "members": [{
+        "year": year,
+        "list": [{
+            "id": user.id,
+            "name": user.nickname if user.nickname else user.last_name + user.first_name# get_short_nameは使えない
+            } for user in User.objects.filter(year=year).order_by('furigana')]
+        } for year in years],
+        "user": {
+            "year": request.user.year,
+            "id": request.user.id
+        }
+    }, safe=False)
+
+
+@login_required()
+def bookmarkAPI(request, pk):
     now_user = request.user
     if (request.method == 'POST'):
         if Bookmark.objects.filter(message_id__pk=pk).filter(user=now_user).exists():
@@ -115,7 +151,63 @@ def ajax_bookmark(request, pk):
             content = Bookmark(message=message, user=now_user)
             content.save()
             bookmark = 'true'
-        return HttpResponse('bookmark='+bookmark)
+        return JsonResponse({
+            'updated-to': bookmark
+        })
+
+
+@login_required()
+def sendAPI(request):
+    message_form = MessageForm(request.POST)
+    if request.method == 'POST' and message_form.is_valid():
+        message = message_form.save(commit=False)
+        message.sender = request.user
+        message.save()
+
+        filelist = request.FILES.getlist('attachments')
+        has_attachment = False
+        if filelist:
+            for file in filelist:
+                if file.size > 10*1024*1024:
+                    message.delete()
+                    return HttpResponse('400', status=400)
+                attachment = Attachment(attachment_file=file, message=message)
+                attachment.save()
+            has_attachment = True
+
+        for to in message_form.cleaned_data["to"]:
+            message.years.create(year=to)
+
+        # sendgrid mail
+        if settings.SEND_MAIL is not True:
+            return JsonResponse({
+                "total_send_num": 0,
+                "response": "SEND_MAIL was False."
+            })
+        year_query = MessageYear.objects.filter(message=message).values('year')
+
+        if year_query.filter(year=0).exists():
+            from_email_adress = 'zenkai@message.ku-unplugged.net'
+            to_list = SendMailAddress.objects.all().values_list('email', flat=True)
+            mail_compose(from_email_adress, to_list, message)
+
+        else:
+            ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
+            for year in year_query:
+                from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
+                to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
+                mail_compose(from_email_adress, to_list, message)
+
+        total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
+        return JsonResponse({
+            "total_send_num": total_send_num,
+            "response": ""
+        })
+
+
+    return HttpResponse('Bad request', status=400)
+
+
 
 def mail_compose(from_email_adress, to_list, message_data):
     '''
@@ -197,99 +289,8 @@ def mail_compose(from_email_adress, to_list, message_data):
                 )
             process_list.append(obj)
         MessageProcess.objects.bulk_create(process_list)
-
+    print(response)
     return response
-
-@login_required()
-def send(request):
-    messageForm = SendMessage(
-        request.POST or None,
-        request.FILES or None,
-        initial={'written_by': str(request.user.year)+'-'+str(request.user.pk),
-                 'year_choice': request.user.year}
-    )
-    years = User.objects.order_by('year').values('year').distinct()
-    messageForm.fields['year_choice'].choices = [(q['year'],q['year']) for q in years]
-    messageForm.fields['written_by'].choices = [(str(user.year).zfill(4)+'-'+str(user.pk), user.get_full_name) for user in User.objects.all().order_by('year').order_by('furigana')]
-    params = {
-        'message_form': messageForm,
-        'attachment_form': AttachmentFileFormset(),
-    }
-    if (request.method == 'POST'):
-        if messageForm.is_valid():
-            to_list = request.POST.getlist("to")
-            writer_pk = request.POST["written_by"]
-            title = request.POST["title"]
-            content = request.POST["content"]
-            nowtime = datetime.datetime.now()
-            now_user = request.user
-            content_data = Message(
-                title=title,
-                content=content,
-                sender=now_user,
-                writer=User.objects.get(pk=int(writer_pk[5:])),
-                updated_at=nowtime,
-                created_at=nowtime,
-            )
-            formset = AttachmentFileFormset(request.POST, files=request.FILES, instance=content_data)
-            if formset.is_valid():
-                content_data.save()
-                formset.save()
-                for to in to_list:
-                    content_data.years.create(year=to)
-
-                # sendgrid mail
-                if settings.SEND_MAIL == True:
-                    year_query = MessageYear.objects.filter(message=content_data).values('year')
-
-                    if year_query.filter(year=0).exists():
-                        from_email_adress = 'zenkai@message.ku-unplugged.net'
-                        to_list = SendMailAddress.objects.all().values_list('email', flat=True)
-                        mail_compose(from_email_adress, to_list, content_data)
-
-                    else:
-                        ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
-                        for year in year_query:
-                            from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
-                            to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
-                            mail_compose(from_email_adress, to_list, content_data)
-
-                    django_messages.success(request, 'メッセージを送信しました。 件名 : '+title)
-
-                return redirect(to='../read/')
-            else:
-                django_messages.error(request, 'どの添付ファイルのサイズも9MB未満にしてください')
-        else:
-            # print('validation error')
-            params['JSstop'] = True
-
-    return render(request, 'board/send.html', params)
-
-
-@login_required()
-def edit(request, id):
-    before_edit = get_object_or_404(Message, id=id)
-    if EditPermisson(user=request.user, content_id=id):
-        editForm = Edit(request.POST or None, instance=before_edit)
-        if (request.method == 'POST'):
-            if editForm.is_valid:
-                if request.POST['title'] != before_edit.title or request.POST['content'] != before_edit.content:
-                    content = editForm.save(commit=False)
-                    content.updated_at = datetime.datetime.now()
-                    content.save()
-                    django_messages.success(request, '更新しました')
-                else:
-                    django_messages.success(request, '変更はありませんでした')
-                return redirect('/read/content/' + str(id))
-            else:
-                django_messages.error(request, '更新できませんでした')
-        params = {
-            'before_edit': before_edit,
-            'EditForm': editForm,
-        }
-        return render(request, 'board/edit.html', params)
-    else:
-        return redirect('/read/content/' + str(id))
 
 
 

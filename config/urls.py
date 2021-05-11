@@ -19,6 +19,7 @@ from django.urls import include
 import board.views as board
 import home.views as home
 import private_storage.urls
+from .views import SPA
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,9 +28,26 @@ urlpatterns = [
     path('logout/', home.logoutview, name='logout'),
     path('auth/', include('social_django.urls', namespace='social')),
     path('private-media/', include(private_storage.urls), name="private_media"),
-    path('mypage/', include('members.urls')),
-    path('read/', include('board.urls')),
-    path('send/', board.send, name="send"),
+    # path('mypage/', include('members.urls')),
+    # path('read/', include('board.urls')),
+
+
+    # SPAの転送先
+    # パスコンバータ <path> は、1文字以上のURLにマッチ
+    path('send/', SPA, name="send"),
+    path('send/<path:p>', SPA),
+    path('read/', SPA, name="read"),
+    path('read/<path:p>', SPA),
+    path('mypage/', SPA, name="members"),
+    path('mypage/<path:p>', SPA),
+    path('meeting_room/', SPA, name="meeting_room"),
+    path('meeting_room/<path:p>', SPA),
+    
+
+    # API
+    path('api/', include('config.urls_api')),
+
+
     path('sound/', include('sound.urls')),
     path('kansou/', include('kansou.urls')),
     path('pictures/', include('pictures.urls')),
@@ -38,5 +56,4 @@ urlpatterns = [
     path('special/<str:url>/', home.special),
     path('awase/', include('awase.urls')),
     path('howto/', include('howto.urls')),
-    path('meeting-room/', include('meeting-room.urls'))
 ]

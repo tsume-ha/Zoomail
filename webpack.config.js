@@ -3,6 +3,7 @@ var webpack = require("webpack");
 var BundleTracker = require("webpack-bundle-tracker");
 var VueLoaderPlugin = require("vue-loader/lib/plugin");
 var MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: "development",
@@ -14,6 +15,7 @@ module.exports = {
   },
   output: {
     path: path.resolve("./static/dist/"), // 出力
+    publicPath: '/static/dist/',// 追加
     filename: "[name]-[hash].js",
   },
   resolve: {
@@ -37,6 +39,7 @@ module.exports = {
     new BundleTracker({ filename: "./static/dist/webpack-stats.json" }),
     new VueLoaderPlugin(),
     new MomentLocalesPlugin({ localesToKeep: ['ja'] }),
+    // new BundleAnalyzerPlugin(),
   ],
   resolve: {
     extensions: [".js", ".vue"],

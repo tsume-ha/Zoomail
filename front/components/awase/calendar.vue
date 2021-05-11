@@ -41,6 +41,12 @@ export default {
     calendarDetail,
     back
   },
+  metaInfo() {
+    const title = this.title;
+    return {
+      title: title
+    }
+  },
   data: function () {
     return {
       title: '',
@@ -107,6 +113,10 @@ export default {
       .get('./json/')
       .then(res => {
         this.dataList = res.data.calendar_data;
+      })
+      .catch((error) => {
+        console.log(error);
+        this.$router.push({name: '404'})
       });
     this.axios
       .get('./api/info/')
@@ -120,6 +130,10 @@ export default {
         } else {
           this.currentDate = today;
         }
+      })
+      .catch((error) => {
+        console.log(error);
+        this.$router.push({name: '404'})
       });
   },
 }
