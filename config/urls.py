@@ -14,9 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path
+from django.urls import include
 import board.views as board
 import home.views as home
 import private_storage.urls
@@ -41,6 +40,8 @@ urlpatterns = [
     path('read/<path:p>', SPA),
     path('mypage/', SPA, name="members"),
     path('mypage/<path:p>', SPA),
+    path('meeting_room/', SPA, name="meeting_room"),
+    path('meeting_room/<path:p>', SPA),
     
 
     # API
@@ -53,6 +54,5 @@ urlpatterns = [
     path('movie/', include('movie.urls')),
     path('others/', include('otherdocs.urls')),
     path('special/<str:url>/', home.special),
-    path('awase/', include('awase.urls')),
     path('howto/', include('howto.urls')),
 ]

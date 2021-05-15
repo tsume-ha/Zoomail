@@ -29,3 +29,7 @@ def RecordingPermisson(user):
 # other documents
 def OtherDocsPermission(user):
     return user.has_perm('otherdocs.view_content')
+
+# meeting room
+def MeetingroomPermission(user):
+    return user.has_perm('meeting_room.add_cashe')

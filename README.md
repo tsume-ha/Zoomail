@@ -25,3 +25,8 @@ webpack を導入しました.
 npm 6.14.4, node v13.13.0 をインストールしてください. 
 
 `npm ci`
+
+## 例会教室API
+- 当日分のみ：`https://message.ku-unplugged.net/api/meeting_room/today/`
+- 1か月分：`https://message.ku-unplugged.net/api/meeting_room/get31day/`
+
