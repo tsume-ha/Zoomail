@@ -13,6 +13,10 @@
         <input type="checkbox" name="is_bookmark" class="d-none" id="is_bookmark" v-model="is_bookmark" @change="toggleChanged">
         <label for="is_bookmark">ブックマークのみ:</label>
       </div>
+      <div class="d-inline-block">
+        <input type="checkbox" name="is_sender" class="d-none" id="is_sender" v-model="is_sender" @change="toggleChanged">
+        <label for="is_sender">送信したメーリスのみ:</label>
+      </div>
     </div>
     <div class="col-12 my-2" v-if="showButton">
       <input type="submit" value="絞り込み" class="submit btn btn-warning btn-sm ml-2">
@@ -32,6 +36,7 @@ export default {
       is_kaisei: false,
       is_zenkai: false,
       is_bookmark: false,
+      is_sender: false,
       text: '',
       showButton: false,
     }
@@ -47,6 +52,7 @@ export default {
            !this.is_kaisei
         && !this.is_kaisei
         && !this.is_bookmark
+        && !this.is_sender
       ) {
         this.showButton = false;
       }
@@ -55,6 +61,7 @@ export default {
         is_kaisei: this.is_kaisei,
         is_zenkai: this.is_zenkai,
         is_bookmark: this.is_bookmark,
+        is_sender: this.is_sender,
         text: this.text,
       };
       this.$emit('search', data)

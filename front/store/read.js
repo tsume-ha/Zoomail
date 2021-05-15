@@ -5,7 +5,6 @@ export default {
   state: {
     messages: [],
     loadNum: 10,
-    sendboxMode: false,
   },
   mutations: {
     addMessages (state, payload) {
@@ -24,9 +23,6 @@ export default {
         target.is_bookmarked = payload.bool;
       }
     },
-    setSendboxMode (state, payload) {
-      state.sendboxMode = payload;
-    }
   },
   actions: {
     async loadMessages (context, data) {
@@ -38,11 +34,6 @@ export default {
 
       params['page'] = page;
       
-      // sendbox mode
-      if (context.state.sendboxMode){
-        params['sendbox'] = 'true';
-      }
-
       return await axios.get('/api/board/json/', {
         params: params
       })
