@@ -93,7 +93,7 @@ class SoundViewTest(TestCase):
         Force_Login(self)
         for index in range(self.live_num+3):
             pk = index + 1
-            response = self.client.get('/sound/' + str(pk) + '/')
+            response = self.client.get('/sound/' + str(pk) + '/json/')
             if index < self.live_num:
                 self.assertEqual(response.status_code, 200)
             else:
@@ -160,7 +160,7 @@ class uploadTest(TestCase):
         Force_Login(self, 2019)
         response = self.client.get('/sound/upload/')
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'sound/upload.html')
+        self.assertTemplateUsed(response, 'SPA.html')
 
         mp3dir = os.path.join(settings.BASE_DIR, 'sound', 'test.mp3')
         with open(mp3dir, 'rb') as file:
