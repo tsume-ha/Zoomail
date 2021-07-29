@@ -159,13 +159,12 @@ def googleOauthUnlink(request):
 @login_required()
 def userUpdateAPI(request):
     user = request.user
-    if request.method != "POST" or not request.body:
+    if request.method != "POST":
         response = HttpResponse("BAD REQUEST")
         response.status_code = 400
         return response
-
-    json_dict = json.loads(request.body)
-    form = UserUpdateForm(json_dict or None, instance=user)
+        
+    form = UserUpdateForm(request.POST, instance=user)
 
     response = []
     if not form.is_valid():

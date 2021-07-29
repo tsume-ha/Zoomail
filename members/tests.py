@@ -53,11 +53,11 @@ class MemberUpdateFormTest(TestCase):
         User_LogIN(self)
         response = self.client.get("/mypage/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "members/index.html")
+        self.assertTemplateUsed(response, "SPA.html")
 
     def test_members_update_logOUT(self):
         User_LogOUT(self)
-        response = self.client.get("/mypage/update/")
+        response = self.client.get("/mypage/info-update/")
         self.assertEqual(response.status_code, 302)
         url_redial_to = response.url
         response = self.client.get(url_redial_to)
@@ -66,9 +66,9 @@ class MemberUpdateFormTest(TestCase):
 
     def test_members_update_logIN(self):
         User_LogIN(self)
-        response = self.client.get("/mypage/update/")
+        response = self.client.get("/mypage/info-update/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "members/user_update.html")
+        self.assertTemplateUsed(response, "SPA.html")
 
     def test_members_update_POST_logOUT(self):
         data = {
@@ -78,7 +78,7 @@ class MemberUpdateFormTest(TestCase):
             "nickname": "タロー",
         }
         User_LogOUT(self)
-        request = self.client.post("/mypage/update/", data)
+        request = self.client.post("/api/mypage/info-update/", data)
         self.assertEqual(request.status_code, 302)
         url_redial_to = request.url
         response = self.client.get(url_redial_to)
@@ -99,14 +99,9 @@ class MemberUpdateFormTest(TestCase):
             "nickname": "タロー",
         }
         self.user = User_LogIN(self)
-        request = self.client.post("/mypage/update/", data)
-        self.assertEqual(request.status_code, 302)
-        url_redial_to = request.url
-        self.assertEqual(url_redial_to, "/mypage/")
-
-        response = self.client.get("/mypage/update/")
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, data["last_name"])
+        request = self.client.post("/api/mypage/info-update/", data)
+        # request = self.client.post("/api/mypage/info-update/", json.dumps(data))
+        self.assertEqual(request.status_code, 200)
 
         updated_user = User.objects.get(pk=self.user.pk)
         self.assertTrue(updated_user.last_name == data["last_name"])
@@ -130,14 +125,8 @@ class MemberRegisterFormTest(TestCase):
             "nickname": "タロー",
         }
         User_LogIN(self)
-        request = self.client.post("/mypage/register/", data)
-        self.assertEqual(request.status_code, 302)
-        url_redial_to = request.url
-        self.assertEqual(url_redial_to, "/mypage/")
-        response = self.client.get(url_redial_to)
-        # print(response)
-        # self.assertEqual(response.status_code, 301)
-        # self.assertTemplateUsed(response, 'members/index.html')
+        request = self.client.post("/api/mypage/register/", data)
+        self.assertEqual(request.status_code, 403)
         try:
             saved_content = User.objects.get(email=data["email"])
             self.assertTrue(False)
@@ -155,10 +144,6 @@ class MemberRegisterFormTest(TestCase):
         }
         self.user = User_LogIN_and_Get_a_Permission(self)
         request = self.client.post("/mypage/register/", data)
-
-        self.assertEqual(request.status_code, 200)
-        self.assertContains(request, data["email"])
-        self.assertTemplateUsed(request, "members/register.html")
 
         created_user = User.objects.get(email=data["email"])
         self.assertTrue(created_user.last_name == data["last_name"])
@@ -195,7 +180,7 @@ class OauthViewTest(TestCase):
 
     def test_get_oauth_logout(self):
         User_LogOUT(self)
-        response = self.client.get(reverse("members:oauth"))
+        response = self.client.get("/mypage/oauth/")
         self.assertEqual(response.status_code, 302)
         url_redial_to = response.url
         response = self.client.get(url_redial_to)
@@ -204,9 +189,9 @@ class OauthViewTest(TestCase):
 
     def test_get_oauth_logIN(self):
         User_LogIN(self)
-        response = self.client.get(reverse("members:oauth"))
+        response = self.client.get("/mypage/oauth/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "members/oauth_register.html")
+        self.assertTemplateUsed(response, "SPA.html")
 
 
 class ApiGetUserTest(TestCase):
