@@ -107,6 +107,9 @@ DATABASES = {
 # CustomUserModel
 AUTH_USER_MODEL = 'members.User'
 
+# auto primary key
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -141,11 +144,9 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024
 
 # Google OAuth 2
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.open_id.OpenIdAuth',
-    'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
     'config.social_auth.auth0backend.Auth0',
-    'django.contrib.auth.backends.ModelBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_LOGIN_URL = '/login/'

@@ -24,8 +24,6 @@ import back from '../../front/components/back-arrow.vue';
 
 import MeetingRoom from "../../front/components/meeting-room.vue";
 
-import awaseUpdateForm from "../../front/components/awase/update-calendar-form.vue";
-
 Vue.use(VueAxios, axios)
 Vue.use(VueMoment)
 Vue.use(VueMeta)
@@ -52,9 +50,6 @@ var app = new Vue({
 
     // home/index 用の例会教室表示コンポーネント
     'meeting-room': MeetingRoom,
-
-    // awase のコンポーネント
-    'awase-update-calendar-form': awaseUpdateForm,
   }
 })
 

@@ -106,6 +106,9 @@ class APIReadTest(TestCase):
             make_message(cls, year=year)
 
     def test_read_index_api(self):
+        """
+        indexで正しいメーリスのjsonが返されているかテスト
+        """
         for year in YEARS:
             user = User.objects.get(email=str(year) + 'mail@gmail.com')
             login(self, user=user)
@@ -119,6 +122,9 @@ class APIReadTest(TestCase):
                 self.assertNotIn(message['title'], [y for y in YEARS if y != year])
 
     def test_read_content_api(self):
+        """
+        contentで正しくメーリスのjsonが返されているかテスト
+        """
         for year in YEARS:
             user = User.objects.get(email=str(year) + 'mail@gmail.com')
             login(self, user=user)
@@ -138,30 +144,36 @@ class APIReadTest(TestCase):
                     self.assertTrue(False)
 
 
-# attachmentのあるMessageはそれを登録してから
+    def test_read_attachment_api(self):
+        """
+        添付ファイルのjsonに正しくアクセスできるかテスト
+        """
+        for year in YEARS:
+            user = User.objects.get(email=str(year) + 'mail@gmail.com')
+            login(self, user=user)
+            for message in Message.objects.all():
+                
+                with open(os.path.join(settings.BASE_DIR, 'board', '1KB.txt'), 'rb') as f:
+                    file = SimpleUploadedFile('1KB.txt', f.read())
+                message.attachments.create(attachment_file=file)
 
-    # def test_read_attachment_api(self):
-    #     for year in YEARS:
-    #         user = User.objects.get(email=str(year) + 'mail@gmail.com')
-    #         login(self, user=user)
-    #         for message in Message.objects.all():
-    #             response = self.client.get('/api/board/contentothers/{}/'.format(message.id))
-    #             if response.status_code == 200:
-    #                 content = response.json()
-    #                 data = content['message']
-    #                 # 全回か、userの回生メーリスが含まれている
-    #                 self.assertIn(data['title'], ['0', str(year)])
-    #                 # それ以外の回生メーリスは含まれていない
-    #                 self.assertNotIn(data['title'], [str(y) for y in YEARS if y != year])
-    #             elif response.status_code == 403:
-    #                 # 403を受けるのは全回ではなく、回生でも無い場合
-    #                 self.assertNotIn(message.title, ['0', str(year)])
-    #             else:
-    #                 self.assertTrue(False)
+                response = self.client.get('/api/board/contentothers/{}/'.format(message.id))
+                if response.status_code == 200:
+                    content = response.json()
+                    # data = content['message']
+                    # 全回か、userの回生メーリスが含まれている
+                    self.assertIn(message.title, ['0', str(year)])
+                    # それ以外の回生メーリスは含まれていない
+                    self.assertNotIn(message.title, [str(y) for y in YEARS if y != year])
+                elif response.status_code == 403:
+                    # 403を受けるのは全回ではなく、回生でも無い場合
+                    self.assertNotIn(message.title, ['0', str(year)])
+                else:
+                    self.assertTrue(False)
 
 
 @override_settings(SEND_MAIL=False)
-class APIReadTest(TestCase):
+class APISendTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         pass
