@@ -7,10 +7,8 @@ module.exports = {
     outputDir: '../',
     //サーバーを起動した時のルートパス
     publicPath: process.env.NODE_ENV === 'production' 
-        ? '/static/dist/'
+        ? '/'
         : 'http://localhost:8080/',
-    // //outputDir起点でindex.htmlを格納する場所を指定
-    // indexPath: 'templates/index.html',
     //outputDir起点でstaticファイルを格納する場所を指定
     assetsDir: 'static/dist',
 

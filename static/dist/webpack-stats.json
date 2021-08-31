@@ -4,55 +4,34 @@
     "static/dist/img/logo.26bd867d.png": {
       "name": "static/dist/img/logo.26bd867d.png",
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\img\\logo.26bd867d.png",
-      "publicPath": "/static/dist/static/dist/img/logo.26bd867d.png"
+      "publicPath": "http://localhost:8080/static/dist/img/logo.26bd867d.png"
     },
-    "static/dist/css/app.215be693.css": {
-      "name": "static/dist/css/app.215be693.css",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\css\\app.215be693.css",
-      "publicPath": "/static/dist/static/dist/css/app.215be693.css"
+    "static/dist/js/app.js": {
+      "name": "static/dist/js/app.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\app.js",
+      "publicPath": "http://localhost:8080/static/dist/js/app.js"
     },
-    "static/dist/js/app.98ec55f5.js": {
-      "name": "static/dist/js/app.98ec55f5.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\app.98ec55f5.js",
-      "publicPath": "/static/dist/static/dist/js/app.98ec55f5.js"
-    },
-    "static/dist/js/chunk-vendors.bfd1766d.js": {
-      "name": "static/dist/js/chunk-vendors.bfd1766d.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\chunk-vendors.bfd1766d.js",
-      "publicPath": "/static/dist/static/dist/js/chunk-vendors.bfd1766d.js"
+    "static/dist/js/chunk-vendors.js": {
+      "name": "static/dist/js/chunk-vendors.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\chunk-vendors.js",
+      "publicPath": "http://localhost:8080/static/dist/js/chunk-vendors.js"
     },
     "favicon.ico": {
       "name": "favicon.ico",
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\favicon.ico",
-      "publicPath": "/static/dist/favicon.ico"
-    },
-    "static/dist/css/app.215be693.css.map": {
-      "name": "static/dist/css/app.215be693.css.map",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\css\\app.215be693.css.map",
-      "publicPath": "/static/dist/static/dist/css/app.215be693.css.map"
-    },
-    "static/dist/js/app.98ec55f5.js.map": {
-      "name": "static/dist/js/app.98ec55f5.js.map",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\app.98ec55f5.js.map",
-      "publicPath": "/static/dist/static/dist/js/app.98ec55f5.js.map"
-    },
-    "static/dist/js/chunk-vendors.bfd1766d.js.map": {
-      "name": "static/dist/js/chunk-vendors.bfd1766d.js.map",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\chunk-vendors.bfd1766d.js.map",
-      "publicPath": "/static/dist/static/dist/js/chunk-vendors.bfd1766d.js.map"
+      "publicPath": "http://localhost:8080/favicon.ico"
     },
     "index.html": {
       "name": "index.html",
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\index.html",
-      "publicPath": "/static/dist/index.html"
+      "publicPath": "http://localhost:8080/index.html"
     }
   },
   "chunks": {
     "app": [
-      "static/dist/js/chunk-vendors.bfd1766d.js",
-      "static/dist/css/app.215be693.css",
-      "static/dist/js/app.98ec55f5.js"
+      "static/dist/js/chunk-vendors.js",
+      "static/dist/js/app.js"
     ]
   },
-  "publicPath": "/static/dist/"
+  "publicPath": "http://localhost:8080/"
 }
