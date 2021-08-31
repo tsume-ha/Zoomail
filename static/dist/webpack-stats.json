@@ -11,6 +11,11 @@
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\app.js",
       "publicPath": "http://localhost:8080/static/dist/js/app.js"
     },
+    "static/dist/js/about.js": {
+      "name": "static/dist/js/about.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\about.js",
+      "publicPath": "http://localhost:8080/static/dist/js/about.js"
+    },
     "static/dist/js/chunk-vendors.js": {
       "name": "static/dist/js/chunk-vendors.js",
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\chunk-vendors.js",
