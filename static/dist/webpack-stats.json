@@ -1,1 +1,58 @@
-{"status":"done","chunks":{"main":["main-21d385f3b2a7a9c63751.js"]},"publicPath":"/static/dist/","assets":{"vendors~meeting_room~meeting_room-register-21d385f3b2a7a9c63751.js":{"name":"vendors~meeting_room~meeting_room-register-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\vendors~meeting_room~meeting_room-register-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/vendors~meeting_room~meeting_room-register-21d385f3b2a7a9c63751.js"},"main-21d385f3b2a7a9c63751.js":{"name":"main-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\main-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/main-21d385f3b2a7a9c63751.js"},"meeting_room-21d385f3b2a7a9c63751.js":{"name":"meeting_room-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\meeting_room-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/meeting_room-21d385f3b2a7a9c63751.js"},"meeting_room-register-21d385f3b2a7a9c63751.js":{"name":"meeting_room-register-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\meeting_room-register-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/meeting_room-register-21d385f3b2a7a9c63751.js"},"mypage-21d385f3b2a7a9c63751.js":{"name":"mypage-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\mypage-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/mypage-21d385f3b2a7a9c63751.js"},"mypage-register-21d385f3b2a7a9c63751.js":{"name":"mypage-register-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\mypage-register-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/mypage-register-21d385f3b2a7a9c63751.js"},"read-21d385f3b2a7a9c63751.js":{"name":"read-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\read-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/read-21d385f3b2a7a9c63751.js"},"send-21d385f3b2a7a9c63751.js":{"name":"send-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\send-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/send-21d385f3b2a7a9c63751.js"},"sound-21d385f3b2a7a9c63751.js":{"name":"sound-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\sound-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/sound-21d385f3b2a7a9c63751.js"},"vendors~sound-21d385f3b2a7a9c63751.js":{"name":"vendors~sound-21d385f3b2a7a9c63751.js","path":"C:\\Users\\雅史\\Documents\\UnpluggedMessage\\static\\dist\\vendors~sound-21d385f3b2a7a9c63751.js","publicPath":"/static/dist/vendors~sound-21d385f3b2a7a9c63751.js"}}}
+{
+  "status": "done",
+  "assets": {
+    "static/dist/img/logo.26bd867d.png": {
+      "name": "static/dist/img/logo.26bd867d.png",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\img\\logo.26bd867d.png",
+      "publicPath": "/static/dist/static/dist/img/logo.26bd867d.png"
+    },
+    "static/dist/css/app.215be693.css": {
+      "name": "static/dist/css/app.215be693.css",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\css\\app.215be693.css",
+      "publicPath": "/static/dist/static/dist/css/app.215be693.css"
+    },
+    "static/dist/js/app.98ec55f5.js": {
+      "name": "static/dist/js/app.98ec55f5.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\app.98ec55f5.js",
+      "publicPath": "/static/dist/static/dist/js/app.98ec55f5.js"
+    },
+    "static/dist/js/chunk-vendors.bfd1766d.js": {
+      "name": "static/dist/js/chunk-vendors.bfd1766d.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\chunk-vendors.bfd1766d.js",
+      "publicPath": "/static/dist/static/dist/js/chunk-vendors.bfd1766d.js"
+    },
+    "favicon.ico": {
+      "name": "favicon.ico",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\favicon.ico",
+      "publicPath": "/static/dist/favicon.ico"
+    },
+    "static/dist/css/app.215be693.css.map": {
+      "name": "static/dist/css/app.215be693.css.map",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\css\\app.215be693.css.map",
+      "publicPath": "/static/dist/static/dist/css/app.215be693.css.map"
+    },
+    "static/dist/js/app.98ec55f5.js.map": {
+      "name": "static/dist/js/app.98ec55f5.js.map",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\app.98ec55f5.js.map",
+      "publicPath": "/static/dist/static/dist/js/app.98ec55f5.js.map"
+    },
+    "static/dist/js/chunk-vendors.bfd1766d.js.map": {
+      "name": "static/dist/js/chunk-vendors.bfd1766d.js.map",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\chunk-vendors.bfd1766d.js.map",
+      "publicPath": "/static/dist/static/dist/js/chunk-vendors.bfd1766d.js.map"
+    },
+    "index.html": {
+      "name": "index.html",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\index.html",
+      "publicPath": "/static/dist/index.html"
+    }
+  },
+  "chunks": {
+    "app": [
+      "static/dist/js/chunk-vendors.bfd1766d.js",
+      "static/dist/css/app.215be693.css",
+      "static/dist/js/app.98ec55f5.js"
+    ]
+  },
+  "publicPath": "/static/dist/"
+}
