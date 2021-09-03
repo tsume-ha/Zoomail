@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'private_storage',
     'social_django',
     'imagekit',
@@ -66,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'config.social_auth.newliveloguser.NewUserRedirectMiddleware'
 ]
@@ -172,6 +174,15 @@ SOCIAL_AUTH_AUTH0_SCOPE = [
     "email",
     "email_verified",
 ]
+
+# allow CORS origin
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3333',
+    'https://ku-unplugged.net',
+    'https://message.ku-unplugged.net'
+]
+# レスポンスを公開する
+CORS_ALLOW_CREDENTIALS = True
 
 # other settings
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
