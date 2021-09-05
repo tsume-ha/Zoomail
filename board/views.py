@@ -16,7 +16,7 @@ from sendgrid.helpers.mail import Attachment as helper_Attachment
 
 from django.conf import settings
 
-from .models import Message, MessageYear, Attachment, Bookmark, To
+from .models import Message, MessageYear, Attachment, Bookmark
 from .forms import MessageForm, AttachmentForm
 from .to import to_groups
 from members.models import User
@@ -113,24 +113,8 @@ def get_message_attachments(request, id):
 # send from, to 選択肢
 @login_required()
 def to_groups_data(request):
-    to_groups = To.objects.all().order_by("year")
-    
-    def label(item):
-        if item.year == 0:
-            return item.label
-        if 2000 < item.year < 2100:
-            if item.label:
-                return item.label
-            if item.leader:
-                return "{} {}期（会長：{}）".format(item.year, item.year-1994, item.leader.get_full_name())
-            if not item.leader:
-                return "{} {}期".format(item.year, item.year-1994)
-
     return JsonResponse({
-        "togropus": [{
-            "year": item.year,
-            "label": label(item)
-            } for item in to_groups]
+        "togropus": [{"year": year, "label": text} for year, text in to_groups]
     })
 
 
