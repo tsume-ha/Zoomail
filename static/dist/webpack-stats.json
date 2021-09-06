@@ -30,12 +30,23 @@
       "name": "index.html",
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\index.html",
       "publicPath": "http://localhost:8080/index.html"
+    },
+    "app.327a16a5ca9be6069d5b.hot-update.js": {
+      "name": "app.327a16a5ca9be6069d5b.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.327a16a5ca9be6069d5b.hot-update.js",
+      "publicPath": "http://localhost:8080/app.327a16a5ca9be6069d5b.hot-update.js"
+    },
+    "app.327a16a5ca9be6069d5b.hot-update.json": {
+      "name": "app.327a16a5ca9be6069d5b.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.327a16a5ca9be6069d5b.hot-update.json",
+      "publicPath": "http://localhost:8080/app.327a16a5ca9be6069d5b.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "static/dist/js/chunk-vendors.js",
-      "static/dist/js/app.js"
+      "static/dist/js/app.js",
+      "app.327a16a5ca9be6069d5b.hot-update.js"
     ]
   },
   "publicPath": "http://localhost:8080/"
