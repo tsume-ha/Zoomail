@@ -27,12 +27,3 @@ class Announcement(models.Model):
         default=timezone.now)
     def __str__(self):
         return self.created_at.strftime('%Y_%m_%d') + ' ' + self.text
-
-class SpecialPage(models.Model):
-    title = models.CharField(max_length=200)
-    url = models.CharField(max_length=200)
-    key = models.CharField(max_length=64)
-    html_name = models.CharField(max_length=200)
-    
-    def __str__(self):
-        return self.title + ' ' + self.html_name

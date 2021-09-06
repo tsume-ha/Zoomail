@@ -2,6 +2,7 @@ from django.urls import path
 from django.urls import include
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView
 from django.views.generic.base import TemplateView
 from . import views as home
 import private_storage.urls
@@ -14,7 +15,7 @@ urlpatterns = [
     path('', home.index, name='index'),
     path('first_register/', home.firstRegister, name='first-register'),
     path('login/', home.login, name='login'),
-    path('logout/', home.logoutview, name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 
 
     # API

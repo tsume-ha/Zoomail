@@ -1,19 +1,18 @@
 import datetime
 
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.contrib.auth import logout
-from django.conf import settings
-from urllib.parse import urlencode
+from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
-from .models import SpecialPage, ContentLog, Announcement
+
+from .models import ContentLog, Announcement
 from .forms import FirstRegisterForm
 
 def index(request):
     if not request.user.is_authenticated:
+        if 'loggedout' in request.GET:
+            messages.success(request, "ログアウトが完了しました")
         return render(request, 'public.html')
     else:
         return render(request, 'SPA.html')
@@ -26,13 +25,6 @@ def login(request):
     if 'next' in request.GET:
         params['next'] = request.GET['next'] 
     return render(request, 'admin/login.html', params)
-
-def logoutview(request):
-    logout(request)
-    return_to = urlencode({'returnTo': request.build_absolute_uri('/')})
-    logout_url = 'https://%s/v2/logout?client_id=%s&%s' % \
-                 (settings.SOCIAL_AUTH_AUTH0_DOMAIN, settings.SOCIAL_AUTH_AUTH0_KEY, return_to)
-    return HttpResponseRedirect(logout_url)
 
 
 @login_required()
