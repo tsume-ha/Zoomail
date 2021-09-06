@@ -70,7 +70,7 @@ MIDDLEWARE = [
     'config.social_auth.newliveloguser.NewUserRedirectMiddleware'
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'home.urls'
 
 
 TEMPLATES = [
@@ -152,7 +152,7 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_LOGIN_URL = '/login/'
 LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = 'home:index'
+LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
