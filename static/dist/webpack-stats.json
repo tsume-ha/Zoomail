@@ -30,43 +30,12 @@
       "name": "index.html",
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\index.html",
       "publicPath": "http://localhost:8080/index.html"
-    },
-    "app.6269cad818ea491bb636.hot-update.js": {
-      "name": "app.6269cad818ea491bb636.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.6269cad818ea491bb636.hot-update.js",
-      "publicPath": "http://localhost:8080/app.6269cad818ea491bb636.hot-update.js"
-    },
-    "app.6269cad818ea491bb636.hot-update.json": {
-      "name": "app.6269cad818ea491bb636.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.6269cad818ea491bb636.hot-update.json",
-      "publicPath": "http://localhost:8080/app.6269cad818ea491bb636.hot-update.json"
-    },
-    "app.f3168147dccac2dbe4e8.hot-update.js": {
-      "name": "app.f3168147dccac2dbe4e8.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.f3168147dccac2dbe4e8.hot-update.js",
-      "publicPath": "http://localhost:8080/app.f3168147dccac2dbe4e8.hot-update.js"
-    },
-    "app.f3168147dccac2dbe4e8.hot-update.json": {
-      "name": "app.f3168147dccac2dbe4e8.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.f3168147dccac2dbe4e8.hot-update.json",
-      "publicPath": "http://localhost:8080/app.f3168147dccac2dbe4e8.hot-update.json"
-    },
-    "app.27da6806bb95b31abcb0.hot-update.js": {
-      "name": "app.27da6806bb95b31abcb0.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.27da6806bb95b31abcb0.hot-update.js",
-      "publicPath": "http://localhost:8080/app.27da6806bb95b31abcb0.hot-update.js"
-    },
-    "app.27da6806bb95b31abcb0.hot-update.json": {
-      "name": "app.27da6806bb95b31abcb0.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.27da6806bb95b31abcb0.hot-update.json",
-      "publicPath": "http://localhost:8080/app.27da6806bb95b31abcb0.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "static/dist/js/chunk-vendors.js",
-      "static/dist/js/app.js",
-      "app.27da6806bb95b31abcb0.hot-update.js"
+      "static/dist/js/app.js"
     ]
   },
   "publicPath": "http://localhost:8080/"

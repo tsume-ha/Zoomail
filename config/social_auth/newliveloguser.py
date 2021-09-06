@@ -11,7 +11,7 @@ class NewUserRedirectMiddleware:
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         user = request.user
-        form_path = reverse('home:first-register')
+        form_path = reverse('first-register')
 
         flag = user.is_authenticated\
                and (user.first_name == '' or user.last_name == '' or user.furigana == '')\

@@ -14,45 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import path
 from django.urls import include
-import board.views as board
+from django.views.generic.base import TemplateView
 import home.views as home
 import private_storage.urls
-from .views import SPA
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls')),
-    path('login/', home.login, name='login'),
-    path('logout/', home.logoutview, name='logout'),
     path('auth/', include('social_django.urls', namespace='social')),
     path('private-media/', include(private_storage.urls), name="private_media"),
-    # path('mypage/', include('members.urls')),
-    # path('read/', include('board.urls')),
+    
+    path('', TemplateView.as_view(template_name='index.html')),
+    path('first_register/', home.firstRegister, name='first-register'),
+    path('login/', home.login, name='login'),
+    path('logout/', home.logoutview, name='logout'),
 
-
-    # SPAの転送先
-    # パスコンバータ <path> は、1文字以上のURLにマッチ
-    path('send/', SPA, name="send"),
-    path('send/<path:p>', SPA),
-    path('read/', SPA, name="read"),
-    path('read/<path:p>', SPA),
-    path('mypage/', SPA, name="members"),
-    path('mypage/<path:p>', SPA),
-    path('meeting_room/', SPA, name="meeting_room"),
-    path('meeting_room/<path:p>', SPA),
     
 
     # API
     path('api/', include('config.urls_api')),
 
-
-    path('sound/', include('sound.urls')),
-    path('kansou/', include('kansou.urls')),
-    path('pictures/', include('pictures.urls')),
-    path('movie/', include('movie.urls')),
-    path('others/', include('otherdocs.urls')),
-    path('special/<str:url>/', home.special),
-    path('howto/', include('howto.urls')),
+    # SPA
+    path('_/', login_required(TemplateView.as_view(template_name='SPA.html'))),
 ]
