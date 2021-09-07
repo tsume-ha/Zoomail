@@ -1,3 +1,4 @@
+import time
 from urllib.parse import quote
 from django.contrib.messages import get_messages
 
@@ -11,9 +12,10 @@ class AjaxMessageMiddleware:
             return response
 
         i = 0
+        now = int(time.time())
         storage = get_messages(request)# ここでmessageは削除される
         for message in storage:
-            response.set_cookie("message_{:02}_{}".format(i, message.tags), quote(message.message, safe='~'))
+            response.set_cookie("message_{:010}_{:02}_{}".format(now, i, message.tags), quote(message.message, safe='~'))
             i += 1
 
         return response

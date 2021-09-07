@@ -4,8 +4,19 @@
     <router-link to="/about">About</router-link>
   </div>
   <router-view/>
+  <message />
 </template>
 
+<script>
+import message from './components/message'
+export default {
+  components: {
+    message
+  },
+  setup() {
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

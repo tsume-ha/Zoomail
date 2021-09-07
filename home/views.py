@@ -52,7 +52,7 @@ def firstRegister(request):
 @login_required()
 def homeAPI(request):
     messages.success(request, "メッセージを送信できる")
-    messages.success(request, "メッセージを送信できる2")
+    messages.info(request, "メッセージを送信できる2")
     messages.success(request, "メッセージを送信できる3")
     announcements = Announcement.objects.order_by('-created_at')[:5]
     return JsonResponse({
