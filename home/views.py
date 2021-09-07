@@ -53,7 +53,8 @@ def firstRegister(request):
 def homeAPI(request):
     messages.success(request, "メッセージを送信できる")
     messages.info(request, "メッセージを送信できる2")
-    messages.success(request, "メッセージを送信できる3")
+    messages.warning(request, "メッセージを送信できる3")
+    messages.error(request, "メッセージを送信できる4")
     announcements = Announcement.objects.order_by('-created_at')[:5]
     return JsonResponse({
         'content_log': [

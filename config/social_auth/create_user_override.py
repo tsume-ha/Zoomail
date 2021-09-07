@@ -5,6 +5,7 @@ USER_FIELDS = ['username', 'email', 'year']
 
 def create_user(strategy, details, backend, user=None, *args, **kwargs):
     if user:
+        messages.success(backend.strategy.request, "ログインに成功しました")
         return {'is_new': False}
     if backend.name != 'auth0':
         messages.error(backend.strategy.request, 'あなたのGoogleアカウントは登録されていないため、ログインできませんでいた。')
