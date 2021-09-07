@@ -1,4 +1,5 @@
 import datetime
+from django.http.response import JsonResponse
 
 from django.shortcuts import render
 from django.contrib import messages
@@ -46,3 +47,27 @@ def firstRegister(request):
         "form": form,
     }
     return render(request, "home/first_register.html", params)
+
+
+@login_required()
+def homeAPI(request):
+    messages.success(request, "メッセージを送信できる")
+    messages.success(request, "メッセージを送信できる2")
+    messages.success(request, "メッセージを送信できる3")
+    announcements = Announcement.objects.order_by('-created_at')[:5]
+    return JsonResponse({
+        'content_log': [
+            {
+                "genre": i[1],
+                "title": i[3],
+                "url": i[4]
+            } for i in ContentLog(LIST_NUM=5)
+        ],
+        'announcements': [
+            {
+                "date": announcement.created_at.strftime("%Y/%m/%d"),
+                "text": announcement.text
+            } for announcement in announcements
+        ]
+
+    })
