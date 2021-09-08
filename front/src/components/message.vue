@@ -1,9 +1,11 @@
 <template>
   <div class="message-wraper">
-    <div v-for="key in displaying" :key="key" class="popup-message" :class="[select(key).level]">
-      <button @click="close(key)" class="popup-close"></button>
-      {{select(key).message}}
-    </div>
+    <transition-group name="message">
+      <div v-for="key in displaying" :key="key" class="popup-message" :class="[select(key).level]">
+        <button @click="close(key)" class="popup-close"></button>
+        {{select(key).message}}
+      </div>
+    </transition-group>
   </div>
 </template>
 
@@ -76,6 +78,25 @@ export default {
   border-radius: 0.5rem;
   font-size: 12px;
 }
+
+/* animation */
+.message-enter-active{
+  transition: all 0.25s ease;
+}
+.message-leave-active {
+  /* position: absolute; */
+  transition: all 0.5s ease;
+}
+.message-enter-from,
+.message-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+/* .message-move {
+  transition: transform 1s;
+} */
+
+/* colors */
 .popup-message.success{
   border-color: #28a745;
   background-color: #f3fcf5;
