@@ -17,8 +17,7 @@ from sendgrid.helpers.mail import Attachment as helper_Attachment
 from django.conf import settings
 
 from .models import Message, MessageYear, Attachment, Bookmark, To
-from .forms import MessageForm, AttachmentForm
-# from .to import to_groups
+from .forms import MessageForm
 from members.models import User
 from mail.models import SendMailAddress, MessageProcess
 
@@ -172,7 +171,6 @@ def sendAPI(request):
         message.save()
 
         filelist = request.FILES.getlist('attachments')
-        has_attachment = False
         if filelist:
             for file in filelist:
                 if file.size > 10*1024*1024:
@@ -180,7 +178,6 @@ def sendAPI(request):
                     return HttpResponse('400', status=400)
                 attachment = Attachment(attachment_file=file, message=message)
                 attachment.save()
-            has_attachment = True
 
         for to in message_form.cleaned_data["to"]:
             message.years.create(year=to)
