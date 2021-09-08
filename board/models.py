@@ -4,6 +4,8 @@ from django.db import models
 from members.models import User
 from private_storage.fields import PrivateFileField
 from django.utils import timezone
+from .to_label import label as to_label
+
 
 class Message(models.Model):
     title = models.CharField(max_length=200)
@@ -82,3 +84,11 @@ class Bookmark(models.Model):
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE, related_name='bookmark_user')
     def __str__(self):
         return self.user.get_full_name() + ' - ' + self.message.title
+
+
+class To(models.Model):
+    year = models.PositiveSmallIntegerField(null=False, blank=False)
+    leader = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL , related_name='to_kaichou')
+    label = models.CharField(max_length=40, null=True, blank=True, help_text="If label is specified, auto generateed label is replaced to this.")
+    def __str__(self):
+        return to_label(self)
