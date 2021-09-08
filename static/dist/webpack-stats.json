@@ -160,13 +160,93 @@
       "name": "app.60a571f591a6cf249992.hot-update.json",
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.60a571f591a6cf249992.hot-update.json",
       "publicPath": "http://localhost:8080/app.60a571f591a6cf249992.hot-update.json"
+    },
+    "app.d487e3e5773750191f7f.hot-update.js": {
+      "name": "app.d487e3e5773750191f7f.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.d487e3e5773750191f7f.hot-update.js",
+      "publicPath": "http://localhost:8080/app.d487e3e5773750191f7f.hot-update.js"
+    },
+    "app.d487e3e5773750191f7f.hot-update.json": {
+      "name": "app.d487e3e5773750191f7f.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.d487e3e5773750191f7f.hot-update.json",
+      "publicPath": "http://localhost:8080/app.d487e3e5773750191f7f.hot-update.json"
+    },
+    "app.78acae91a5a38d970cd2.hot-update.js": {
+      "name": "app.78acae91a5a38d970cd2.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.78acae91a5a38d970cd2.hot-update.js",
+      "publicPath": "http://localhost:8080/app.78acae91a5a38d970cd2.hot-update.js"
+    },
+    "home.78acae91a5a38d970cd2.hot-update.js": {
+      "name": "home.78acae91a5a38d970cd2.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\home.78acae91a5a38d970cd2.hot-update.js",
+      "publicPath": "http://localhost:8080/home.78acae91a5a38d970cd2.hot-update.js"
+    },
+    "app.78acae91a5a38d970cd2.hot-update.json": {
+      "name": "app.78acae91a5a38d970cd2.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.78acae91a5a38d970cd2.hot-update.json",
+      "publicPath": "http://localhost:8080/app.78acae91a5a38d970cd2.hot-update.json"
+    },
+    "app.2cb2d74496ea3b1a0a80.hot-update.js": {
+      "name": "app.2cb2d74496ea3b1a0a80.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.2cb2d74496ea3b1a0a80.hot-update.js",
+      "publicPath": "http://localhost:8080/app.2cb2d74496ea3b1a0a80.hot-update.js"
+    },
+    "home.2cb2d74496ea3b1a0a80.hot-update.js": {
+      "name": "home.2cb2d74496ea3b1a0a80.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\home.2cb2d74496ea3b1a0a80.hot-update.js",
+      "publicPath": "http://localhost:8080/home.2cb2d74496ea3b1a0a80.hot-update.js"
+    },
+    "app.2cb2d74496ea3b1a0a80.hot-update.json": {
+      "name": "app.2cb2d74496ea3b1a0a80.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.2cb2d74496ea3b1a0a80.hot-update.json",
+      "publicPath": "http://localhost:8080/app.2cb2d74496ea3b1a0a80.hot-update.json"
+    },
+    "app.df2b81300eb4a896f10a.hot-update.js": {
+      "name": "app.df2b81300eb4a896f10a.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.df2b81300eb4a896f10a.hot-update.js",
+      "publicPath": "http://localhost:8080/app.df2b81300eb4a896f10a.hot-update.js"
+    },
+    "home.df2b81300eb4a896f10a.hot-update.js": {
+      "name": "home.df2b81300eb4a896f10a.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\home.df2b81300eb4a896f10a.hot-update.js",
+      "publicPath": "http://localhost:8080/home.df2b81300eb4a896f10a.hot-update.js"
+    },
+    "app.df2b81300eb4a896f10a.hot-update.json": {
+      "name": "app.df2b81300eb4a896f10a.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.df2b81300eb4a896f10a.hot-update.json",
+      "publicPath": "http://localhost:8080/app.df2b81300eb4a896f10a.hot-update.json"
+    },
+    "app.6a125b64c411986152e8.hot-update.js": {
+      "name": "app.6a125b64c411986152e8.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.6a125b64c411986152e8.hot-update.js",
+      "publicPath": "http://localhost:8080/app.6a125b64c411986152e8.hot-update.js"
+    },
+    "home.6a125b64c411986152e8.hot-update.js": {
+      "name": "home.6a125b64c411986152e8.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\home.6a125b64c411986152e8.hot-update.js",
+      "publicPath": "http://localhost:8080/home.6a125b64c411986152e8.hot-update.js"
+    },
+    "app.6a125b64c411986152e8.hot-update.json": {
+      "name": "app.6a125b64c411986152e8.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.6a125b64c411986152e8.hot-update.json",
+      "publicPath": "http://localhost:8080/app.6a125b64c411986152e8.hot-update.json"
+    },
+    "app.8119d939ab7b24768d29.hot-update.js": {
+      "name": "app.8119d939ab7b24768d29.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.8119d939ab7b24768d29.hot-update.js",
+      "publicPath": "http://localhost:8080/app.8119d939ab7b24768d29.hot-update.js"
+    },
+    "app.8119d939ab7b24768d29.hot-update.json": {
+      "name": "app.8119d939ab7b24768d29.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.8119d939ab7b24768d29.hot-update.json",
+      "publicPath": "http://localhost:8080/app.8119d939ab7b24768d29.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/app.js",
-      "app.60a571f591a6cf249992.hot-update.js"
+      "app.8119d939ab7b24768d29.hot-update.js"
     ]
   },
   "publicPath": "http://localhost:8080/"

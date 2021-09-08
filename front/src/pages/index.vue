@@ -13,10 +13,9 @@ export default {
     const counter = ref(0)
     console.log(props)
 
-    const getAnnouncementsAndContentLogs = axios({
-        method: 'get',
-        url: '/api/home/index/',
-      }).then(response =>{
+    const getAnnouncementsAndContentLogs = axios.get(
+      '/api/home/index/'
+      ).then(response =>{
         console.log(response)
       })
     onMounted(getAnnouncementsAndContentLogs)

@@ -9,10 +9,9 @@ const instance = axios.create({
   xsrfHeaderName: "X-CSRFTOKEN"
 });
 
+instance.interceptors.response.use((response) => {
+  store.commit('message/storeMessageFromCokie');
+  return response;
+});
 
-export default async function(kwargs) {
-  return await instance(kwargs).then(res => {
-    store.commit('message/storeMessageFromCokie');
-    return res
-  })
-}
+export default instance;
