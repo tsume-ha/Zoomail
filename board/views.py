@@ -16,12 +16,19 @@ from sendgrid.helpers.mail import Attachment as helper_Attachment
 
 from django.conf import settings
 
-from .models import Message, MessageYear, Attachment, Bookmark
+from .models import Message, MessageYear, Attachment, Bookmark, To
 from .forms import MessageForm, AttachmentForm
-from .to import to_groups
+# from .to import to_groups
 from members.models import User
 from mail.models import SendMailAddress, MessageProcess
 
+# 送信先グループ（全回・回生）の取得
+def tos():
+    return[
+        (item.year, item.text()) for item in To.objects.filter(year=0)
+    ] + [
+        (item.year, item.text()) for item in To.objects.filter(year__gt=0).order_by("year").reverse()
+    ]
 
 @login_required()
 def get_messages_list(request):
@@ -114,7 +121,7 @@ def get_message_attachments(request, id):
 @login_required()
 def to_groups_data(request):
     return JsonResponse({
-        "togropus": [{"year": year, "label": text} for year, text in to_groups]
+        "togropus": [{"year": year, "label": text} for year, text in tos()]
     })
 
 
@@ -158,6 +165,7 @@ def bookmarkAPI(request, pk):
 @login_required()
 def sendAPI(request):
     message_form = MessageForm(request.POST)
+    message_form.fields["to"].choices = tos()
     if request.method == 'POST' and message_form.is_valid():
         message = message_form.save(commit=False)
         message.sender = request.user

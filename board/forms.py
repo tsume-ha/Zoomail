@@ -1,7 +1,7 @@
 from django import forms
-from django.core import validators
+# from django.core import validators
 from .models import Message, Attachment
-from .to import to_groups
+# from .to import to_groups
 
 
 ## new API form
@@ -14,7 +14,7 @@ class MessageForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
     to = forms.MultipleChoiceField(
-        choices = to_groups,
+        # choices = to_groups,
         required = True
     )
 
