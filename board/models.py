@@ -5,7 +5,6 @@ from members.models import User
 from private_storage.fields import PrivateFileField
 from django.utils import timezone
 
-
 class Message(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
@@ -96,3 +95,4 @@ class ToGroup(models.Model):
                 return "{} {}期（会長：{}）".format(self.year, self.year-1994, self.leader.get_full_name())
             if not self.leader:
                 return "{} {}期".format(self.year, self.year-1994)
+
