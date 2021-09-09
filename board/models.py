@@ -79,7 +79,7 @@ class Bookmark(models.Model):
         return self.user.get_full_name() + ' - ' + self.message.title
 
 
-class To(models.Model):
+class ToGroup(models.Model):
     year = models.PositiveSmallIntegerField(null=False, blank=False)
     leader = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL , related_name='to_kaichou')
     label = models.CharField(max_length=40, null=True, blank=True, help_text="If label is specified, auto generateed label is replaced to this.")

@@ -16,7 +16,7 @@ from sendgrid.helpers.mail import Attachment as helper_Attachment
 
 from django.conf import settings
 
-from .models import Message, MessageYear, Attachment, Bookmark, To
+from .models import Message, MessageYear, Attachment, Bookmark, ToGroup
 from .forms import MessageForm
 from members.models import User
 from mail.models import SendMailAddress, MessageProcess
@@ -24,9 +24,9 @@ from mail.models import SendMailAddress, MessageProcess
 # 送信先グループ（全回・回生）の取得
 def tos():
     return[
-        (item.year, item.text()) for item in To.objects.filter(year=0)
+        (item.year, item.text()) for item in ToGroup.objects.filter(year=0)
     ] + [
-        (item.year, item.text()) for item in To.objects.filter(year__gt=0).order_by("year").reverse()
+        (item.year, item.text()) for item in ToGroup.objects.filter(year__gt=0).order_by("year").reverse()
     ]
 
 @login_required()
