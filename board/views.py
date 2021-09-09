@@ -16,12 +16,18 @@ from sendgrid.helpers.mail import Attachment as helper_Attachment
 
 from django.conf import settings
 
-from .models import Message, MessageYear, Attachment, Bookmark
-from .forms import MessageForm, AttachmentForm
-from .to import to_groups
+from .models import Message, MessageYear, Attachment, Bookmark, ToGroup
+from .forms import MessageForm
 from members.models import User
 from mail.models import SendMailAddress, MessageProcess
 
+# 送信先グループ（全回・回生）の取得
+def tos():
+    return[
+        (item.year, item.text()) for item in ToGroup.objects.filter(year=0)
+    ] + [
+        (item.year, item.text()) for item in ToGroup.objects.filter(year__gt=0).order_by("year").reverse()
+    ]
 
 @login_required()
 def get_messages_list(request):
@@ -114,7 +120,7 @@ def get_message_attachments(request, id):
 @login_required()
 def to_groups_data(request):
     return JsonResponse({
-        "togropus": [{"year": year, "label": text} for year, text in to_groups]
+        "togropus": [{"year": year, "label": text} for year, text in tos()]
     })
 
 
@@ -158,13 +164,13 @@ def bookmarkAPI(request, pk):
 @login_required()
 def sendAPI(request):
     message_form = MessageForm(request.POST)
+    message_form.fields["to"].choices = tos()
     if request.method == 'POST' and message_form.is_valid():
         message = message_form.save(commit=False)
         message.sender = request.user
         message.save()
 
         filelist = request.FILES.getlist('attachments')
-        has_attachment = False
         if filelist:
             for file in filelist:
                 if file.size > 10*1024*1024:
@@ -172,7 +178,6 @@ def sendAPI(request):
                     return HttpResponse('400', status=400)
                 attachment = Attachment(attachment_file=file, message=message)
                 attachment.save()
-            has_attachment = True
 
         for to in message_form.cleaned_data["to"]:
             message.years.create(year=to)

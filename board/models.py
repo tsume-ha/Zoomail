@@ -71,14 +71,28 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-# class Kidoku(models.Model):
-#     message = models.ForeignKey(Message, null=False, on_delete=models.CASCADE, related_name='kidoku_message')
-#     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE, related_name='kidoku_user')
-#     def __str__(self):
-#         return self.user.get_full_name() + ' - ' + self.message.title
-
 class Bookmark(models.Model):
     message = models.ForeignKey(Message, null=False, on_delete=models.CASCADE, related_name='bookmark_message')
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE, related_name='bookmark_user')
     def __str__(self):
         return self.user.get_full_name() + ' - ' + self.message.title
+
+
+class ToGroup(models.Model):
+    year = models.PositiveSmallIntegerField(null=False, blank=False)
+    leader = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL , related_name='to_kaichou')
+    label = models.CharField(max_length=40, null=True, blank=True, help_text="If label is specified, auto generateed label is replaced to this.")
+    def __str__(self):
+        return self.text()
+
+    def text(self):
+        if self.year == 0:
+            return self.label
+        if 2000 < self.year < 2100:
+            if self.label:
+                return self.label
+            if self.leader:
+                return "{} {}期（会長：{}）".format(self.year, self.year-1994, self.leader.get_full_name())
+            if not self.leader:
+                return "{} {}期".format(self.year, self.year-1994)
+
