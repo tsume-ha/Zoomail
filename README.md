@@ -7,6 +7,11 @@
 
 ## Setting
 
+### Requirements
+
+- Python 3.6
+- Node.js v13.13.0
+
 ### 全体設定
 
     $ git clone
@@ -60,7 +65,7 @@ Googleにログインできるものでないと不可
 migrateされてしまう
 
 
-## webpack
+### webpack
 
 webpack を導入しました.
 
@@ -70,14 +75,25 @@ npm 6.14.4, node v13.13.0 をインストールしてください.
 
 `npm ci`
 
-### webpack移行中
+#### webpack移行中
 フロント部分をvue3に移行中です
 
 
+## コントリビュート
+改善や機能の要望は気軽にissueに挙げてください。いらないと判断されたら閉じるだけです。
+
+セキュリティー関連のバグや脆弱性は、Twitterなどで公開せず、[開発者メール](mailto:message@ku-unplugged.net)までご連絡していただきたいです。
+
+GNUライセンスに則り、他サークルや他大学・他団体がこのプログラムを利用することも許可しますが、
+内部のコードの汎用性は低いと思われます。
+
 
 ## 例会教室API
+公式HPなどに例会教室情報を提供するAPIです
+
+アクセスするとJson返します
+
 - 当日分のみ：`https://message.ku-unplugged.net/api/meeting_room/today/`
 - 1か月分：`https://message.ku-unplugged.net/api/meeting_room/get31day/`
 
-アクセスするとJson返します
 
