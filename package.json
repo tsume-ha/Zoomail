@@ -31,7 +31,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.4",
     "moment": "^2.25.1",
     "moment-locales-webpack-plugin": "^1.2.0",
     "v-calendar": "^1.0.6",
