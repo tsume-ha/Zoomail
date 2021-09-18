@@ -44,6 +44,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     updated_at = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    livelog_login = models.BooleanField(default=False)
+    google_login = models.BooleanField(default=False)
 
     objects = UserManager()
 
@@ -69,6 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         return self.last_name + self.first_name
+    get_full_name.short_description = 'フルネーム'
 
     def get_receive_email(self):
         if self.receive_email == "" or self.receive_email is None:
@@ -77,21 +80,6 @@ class User(AbstractBaseUser, PermissionsMixin):
             return self.receive_email
 
 
-class TmpMember(models.Model):
-    session = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    first_name = models.CharField(max_length=100)
-    furigana = models.CharField(
-        max_length=255,
-        validators=[
-            RegexValidator(regex=u"^[ぁ-ん]+$", message="ふりがなは全角ひらがなのみで入力してください。")
-        ],
-    )
-    year = models.IntegerField(default=0)
-    email = models.EmailField()
-
-    def __str__(self):
-        return self.session + self.email
 
 
 class TestMail(models.Model):
