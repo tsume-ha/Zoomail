@@ -12,8 +12,8 @@ def create_default_group(sender, **kwargs):
             Q(codename='delete_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             Q(codename='view_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             
-            Q(codename='add_user', content_type__app_label='members', content_type__model='user') |
             Q(codename='change_user', content_type__app_label='members', content_type__model='user') |
+            Q(codename='delete_user', content_type__app_label='members', content_type__model='user') |
             Q(codename='view_user', content_type__app_label='members', content_type__model='user') |
            
             Q(codename='add_content', content_type__app_label='otherdocs', content_type__model='content') |
@@ -33,8 +33,8 @@ def create_default_group(sender, **kwargs):
             Q(codename='delete_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             Q(codename='view_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             
-            Q(codename='add_user', content_type__app_label='members', content_type__model='user') |
             Q(codename='change_user', content_type__app_label='members', content_type__model='user') |
+            Q(codename='delete_user', content_type__app_label='members', content_type__model='user') |
             Q(codename='view_user', content_type__app_label='members', content_type__model='user') |
            
             Q(codename='add_content', content_type__app_label='otherdocs', content_type__model='content') |
@@ -104,8 +104,8 @@ def create_default_group(sender, **kwargs):
             Q(codename='delete_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             Q(codename='view_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             
-            Q(codename='add_user', content_type__app_label='members', content_type__model='user') |
             Q(codename='change_user', content_type__app_label='members', content_type__model='user') |
+            Q(codename='delete_user', content_type__app_label='members', content_type__model='user') |
             Q(codename='view_user', content_type__app_label='members', content_type__model='user') |
             
             Q(codename='add_content', content_type__app_label='otherdocs', content_type__model='content') |

@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
@@ -62,6 +63,9 @@ class User(AbstractBaseUser, PermissionsMixin):
             + self.email
             + ")"
         )
+        
+    def set_password(self, *args, **kwargs):
+        raise ValidationError('Password can not be set!')
 
     def get_short_name(self):
         if self.nickname == "":

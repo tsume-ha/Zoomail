@@ -33,7 +33,8 @@ class BasicUserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'year')
+            'fields': ('email', ('last_name', 'first_name'), 'year'),
+            'description': 'testmessage'
         }),
     )
 
@@ -42,7 +43,7 @@ class BasicUserAdmin(BaseUserAdmin):
     get_all_groups.short_description = '係・役職'
     list_display = ('year', 'get_full_name', 'google_login', 'livelog_login', 'is_staff', 'get_all_groups')
     list_display_links = ('year', 'get_full_name')
-    list_filter = ('year',)
+    list_filter = ('year', 'is_staff')
     search_fields = ('last_name', 'first_name',)
     ordering = ('year', 'furigana',)
     filter_horizontal = ('groups',)
