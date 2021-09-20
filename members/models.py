@@ -10,17 +10,17 @@ from social_django.models import UserSocialAuth
 
 class UserManager(BaseUserManager):
     def create_user(self, email, year=0):
-        if not email:  # changed from google_account
+        if not email:
             raise ValueError("Users must have a Google account")
-        user = self.model(email=email, year=year,)  # changed from google_account
+        user = self.model(email=email, year=year,)
         user.set_unusable_password()
         user.save(using=self._db)
         return user
 
     def create_superuser(
         self, email, year, password=None
-    ):  # changed from google_account
-        user = self.create_user(email, year=year,)  # changed from google_account
+    ):
+        user = self.create_user(email, year=year,)
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)

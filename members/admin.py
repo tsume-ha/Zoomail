@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib import messages
 from social_django.models import UserSocialAuth
 from custom_admin.admin import custom_admin_site
 from .models import User, TestMail
@@ -70,6 +71,13 @@ class BasicUserAdmin(BaseUserAdmin):
     search_fields = ('last_name', 'first_name',)
     ordering = ('year', 'furigana',)
     filter_horizontal = ('groups',)
+
+    def delete_queryset(self, request, queryset):
+        for query in queryset:
+            if query.is_superuser:
+                messages.error(request, '開発者アカウントは削除できません')
+            else:
+                query.delete()
 
 
 admin.site.register(User, SuperuserUserAdmin)
