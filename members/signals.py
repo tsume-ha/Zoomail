@@ -6,6 +6,8 @@ def create_default_group(sender, **kwargs):
     if kanbu_creted:
         permission_list = Permission.objects.filter(
             Q(codename='view_logentry', content_type__app_label='admin', content_type__model='logentry') |
+            Q(codename='change_group', content_type__app_label='auth', content_type__model='group') |
+            Q(codename='view_group', content_type__app_label='auth', content_type__model='group') |
             
             Q(codename='add_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             Q(codename='change_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
@@ -27,6 +29,8 @@ def create_default_group(sender, **kwargs):
     if HP_created:
         permission_list = Permission.objects.filter(
             Q(codename='view_logentry', content_type__app_label='admin', content_type__model='logentry') |
+            Q(codename='change_group', content_type__app_label='auth', content_type__model='group') |
+            Q(codename='view_group', content_type__app_label='auth', content_type__model='group') |
             
             Q(codename='add_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             Q(codename='change_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
@@ -77,6 +81,8 @@ def create_default_group(sender, **kwargs):
     if meetingroom_creted:
         permission_list = Permission.objects.filter(
             Q(codename='view_logentry', content_type__app_label='admin', content_type__model='logentry') |
+            Q(codename='change_group', content_type__app_label='auth', content_type__model='group') |
+            Q(codename='view_group', content_type__app_label='auth', content_type__model='group') |
             Q(codename='add_cashe', content_type__app_label='meeting_room', content_type__model='cashe') |
             Q(codename='change_cashe', content_type__app_label='meeting_room', content_type__model='cashe') |
             Q(codename='delete_cashe', content_type__app_label='meeting_room', content_type__model='cashe') |
@@ -88,6 +94,8 @@ def create_default_group(sender, **kwargs):
     if kansou_creted:
         permission_list = Permission.objects.filter(
             Q(codename='view_logentry', content_type__app_label='admin', content_type__model='logentry') |
+            Q(codename='change_group', content_type__app_label='auth', content_type__model='group') |
+            Q(codename='view_group', content_type__app_label='auth', content_type__model='group') |
             Q(codename='add_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             Q(codename='change_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             Q(codename='delete_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
@@ -99,6 +107,8 @@ def create_default_group(sender, **kwargs):
     if PA_creted:
         permission_list = Permission.objects.filter(
             Q(codename='view_logentry', content_type__app_label='admin', content_type__model='logentry') |
+            Q(codename='change_group', content_type__app_label='auth', content_type__model='group') |
+            Q(codename='view_group', content_type__app_label='auth', content_type__model='group') |
             Q(codename='add_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             Q(codename='change_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
             Q(codename='delete_kansouyoushi', content_type__app_label='kansou', content_type__model='kansouyoushi') |
@@ -128,6 +138,8 @@ def create_default_group(sender, **kwargs):
     if photo_creted:
         permission_list = Permission.objects.filter(
             Q(codename='view_logentry', content_type__app_label='admin', content_type__model='logentry') |
+            Q(codename='change_group', content_type__app_label='auth', content_type__model='group') |
+            Q(codename='view_group', content_type__app_label='auth', content_type__model='group') |
             Q(codename='add_album', content_type__app_label='pictures', content_type__model='album') |
             Q(codename='change_album', content_type__app_label='pictures', content_type__model='album') |
             Q(codename='delete_album', content_type__app_label='pictures', content_type__model='album') |
@@ -139,6 +151,8 @@ def create_default_group(sender, **kwargs):
     if recording_creted:
         permission_list = Permission.objects.filter(
             Q(codename='view_logentry', content_type__app_label='admin', content_type__model='logentry') |
+            Q(codename='change_group', content_type__app_label='auth', content_type__model='group') |
+            Q(codename='view_group', content_type__app_label='auth', content_type__model='group') |
             Q(codename='add_live', content_type__app_label='sound', content_type__model='live') |
             Q(codename='change_live', content_type__app_label='sound', content_type__model='live') |
             Q(codename='delete_live', content_type__app_label='sound', content_type__model='live') |

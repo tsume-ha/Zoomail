@@ -1,29 +1,31 @@
 from django.contrib import messages
-from django.contrib.admin import AdminSite
+from django.contrib import admin
+from django.contrib.auth.models import Group
 from django.shortcuts import render
 
-class CustomAdminSite(AdminSite):
-    site_header = 'Zoomail 管理者用サイト'
-    def password_change(self, request, extra_context=None):
-        """
-        Handle the "change password" task -- both form display and validation.
-        """
-        # from django.contrib.admin.forms import AdminPasswordChangeForm
-        # from django.contrib.auth.views import PasswordChangeView
-        # url = reverse('admin:password_change_done', current_app=self.name)
-        # defaults = {
-        #     'form_class': AdminPasswordChangeForm,
-        #     'success_url': url,
-        #     'extra_context': {**self.each_context(request), **(extra_context or {})},
-        # }
-        # if self.password_change_template is not None:
-        #     defaults['template_name'] = self.password_change_template
-        # request.current_app = self.name
-        
-        messages.error(request, 'Zoomailではパスワードを設定しません')
+from .forms import GroupAdminForm
 
+class CustomAdminSite(admin.AdminSite):
+    site_header = 'Zoomail 管理者用サイト'
+
+    def password_change(self, request, extra_context=None):
+        messages.error(request, 'Zoomailではパスワードを設定しません')
         return render(request, 'registration/password_change_form.html')
 
-
-        
+       
 custom_admin_site = CustomAdminSite(name='custom_admin')
+
+class GroupBasicAdmin(admin.ModelAdmin):
+    fieldsets = ((
+        None, {
+            'fields': ('name', 'users'),
+            'description': '「利用可能 users」から係に登録したい人を選んで「選択された users 」に移動させてください。<br>'
+                         + '自分自身を係から外すと、このページに戻ることができなくなるので注意してください。'
+            }), )
+    readonly_fields = ('name', )
+    form = GroupAdminForm
+
+    def get_queryset(self, request):
+        return request.user.groups
+
+custom_admin_site.register(Group, GroupBasicAdmin)

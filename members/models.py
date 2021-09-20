@@ -54,15 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["year"]
 
     def __str__(self):
-        return (
-            str(self.year)
-            + " : "
-            + self.last_name
-            + self.first_name
-            + "("
-            + self.email
-            + ")"
-        )
+        return (str(self.year) + ' ' + self.get_full_name())
         
     def set_password(self, *args, **kwargs):
         raise ValidationError('Password can not be set!')
