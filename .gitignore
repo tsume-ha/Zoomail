@@ -29,3 +29,5 @@ static/dist/webpack-stats.json
 
 credentials.json
 token.pickle
+
+log/*
