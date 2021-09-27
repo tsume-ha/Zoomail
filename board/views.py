@@ -1,4 +1,4 @@
-import datetime
+import logging
 import base64
 
 from django.shortcuts import render
@@ -163,12 +163,15 @@ def bookmarkAPI(request, pk):
 
 @login_required()
 def sendAPI(request):
+    logger = logging.getLogger(__name__)
+    logger.info('Send API called')
     message_form = MessageForm(request.POST)
     message_form.fields["to"].choices = tos()
     if request.method == 'POST' and message_form.is_valid():
         message = message_form.save(commit=False)
         message.sender = request.user
         message.save()
+        logger.info(message.title)
 
         filelist = request.FILES.getlist('attachments')
         if filelist:
@@ -228,6 +231,8 @@ def mail_compose(from_email_adress, to_list, message_data):
         board.models.Message のオブジェクト
     '''
 
+    logger = logging.getLogger(__name__)
+    logger.info('mail_compose called')
     subject = message_data.title
     text_content = message_data.content
 
@@ -266,6 +271,7 @@ def mail_compose(from_email_adress, to_list, message_data):
     # message.send_at = int(datetime.datetime.now().timestamp() + 100)
 
     try:
+        logger.info('try sending begin')
         sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sendgrid_client.send(message)
         x_message_id = response.headers['X-Message-Id']
@@ -275,12 +281,14 @@ def mail_compose(from_email_adress, to_list, message_data):
         error_detail = ''
 
     except Exception as e:
+        logger.info('try sending error')
         x_message_id = ''
         requested = False
         error_occurd = True
         error_detail = e
 
     finally:
+        logger.info('before bulk create')
         process_list = []
         for email in to_list:
             obj = MessageProcess(
@@ -294,6 +302,7 @@ def mail_compose(from_email_adress, to_list, message_data):
             process_list.append(obj)
         MessageProcess.objects.bulk_create(process_list)
     print(response)
+    logger.info('after bulk create')
     return response
 
 
