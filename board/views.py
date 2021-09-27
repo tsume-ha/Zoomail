@@ -206,14 +206,11 @@ def sendAPI(request):
                 mail_compose(from_email_adress, to_list, message)
 
         logger.info('send complete')
-        logger.info('before count sent messages')
-        total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
-        logger.info('after count sent messages')
-        logger.info(str(total_send_num))
-        return JsonResponse({
-            "total_send_num": total_send_num,
-            "response": ""
-        })
+        # logger.info('before count sent messages')
+        # total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
+        # logger.info('after count sent messages')
+        # logger.info(str(total_send_num))
+        return HttpResponse('Done')
 
 
     return HttpResponse('Bad request', status=400)
