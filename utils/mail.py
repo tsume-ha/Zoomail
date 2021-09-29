@@ -1,24 +1,22 @@
 import base64
+from logging import error
+
+from django.conf import settings
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent, Attachment, FileContent, FileName, FileType, Disposition
 
-from django.conf import settings
-
 from board.models import Message
 from mail.models import SendMailAddress, MessageProcess
 
+
+class ZeroTosError(Exception):
+    pass
+
 class SendGridClient(SendGridAPIClient):
     def __init__(self) -> None:
-        self.api_key = settings.SENDGRID_API_KEY
-        self.mail = None
-        super(SendGridClient, self).__init__(self.api_key)
-
-    def send(self, message):
-        response = super().send(message)
-        return response
-
-
+        api_key = settings.SENDGRID_API_KEY
+        super(SendGridClient, self).__init__(api_key)
 
 
 class SendgridMail(Mail):    
@@ -71,6 +69,10 @@ class SendgridMail(Mail):
             to_list = SendMailAddress.objects.all().values_list('email', flat=True)
         else:
             to_list = SendMailAddress.objects.filter(year=self.year).values_list('email', flat=True)
+
+        if len(to_list) == 0:
+            raise ZeroTosError('宛先が0件です。メールは送信されませんでした。')
+
         return [To(email=eml) for eml in to_list]
 
     def __generate_plain_text_content(self):
@@ -79,13 +81,50 @@ class SendgridMail(Mail):
         return PlainTextContent(original_text + ADD_TEXT)
 
 
-def MailingList(message: Message):
-    """
-    message -> board.models.Message object
-    """
-    to_years = message.years.all()
-    if to_years.filter(year=0).exists():
-        return [SendgridMail(message=message, year=0), ]
-    else:
-        to_years.exclude(year=0)
-        return [SendgridMail(message=message, year=y.year) for y in to_years]
+class MailingList(SendGridClient):
+    def send(self, message):
+        """
+        message -> board.models.Message object
+        """
+        to_years = message.years.all()
+        sendgrid_objects = []
+        if to_years.filter(year=0).exists():
+            sendgrid_objects = [SendgridMail(message=message, year=0), ]
+        else:
+            to_years.exclude(year=0)
+            sendgrid_objects = [SendgridMail(message=message, year=y.year) for y in to_years]
+
+        # send messages for each year groups
+        for sendgrid_object in sendgrid_objects:
+            try:
+                # send emails here
+                response = super().send(sendgrid_object)
+
+                # error handring follows
+                x_message_id = response.headers['X-Message-Id']
+                requested = True
+                error_occurd = False
+                error_detail = ''
+            except Exception as e:
+                x_message_id = ""
+                requested = False
+                error_occurd = True
+                error_detail = e
+            finally:
+                # save sending logs in MessageProcess
+                to_list = [to_emails.email for to_emails in sendgrid_object.to_emails]
+                process_list = []
+                for email in to_list:
+                    obj = MessageProcess(
+                        message=message,
+                        x_message_id=x_message_id,
+                        email=email,
+                        Requested=requested,
+                        Error_occurd=error_occurd,
+                        Error_detail=error_detail,
+                        )
+                    process_list.append(obj)
+                MessageProcess.objects.bulk_create(process_list)
+
+        total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
+        return total_send_num
