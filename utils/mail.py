@@ -1,10 +1,10 @@
 import base64
-from logging import error
+import mimetypes
 
 from django.conf import settings
 
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent, Attachment, FileContent, FileName, FileType, Disposition
+from sendgrid.helpers.mail import Mail, To, PlainTextContent, Attachment, FileContent, FileName, FileType, Disposition, ContentId
 
 from board.models import Message
 from mail.models import SendMailAddress, MessageProcess
@@ -48,10 +48,20 @@ class SendgridMail(Mail):
             encoded = base64.b64encode(a_data).decode()
             attachment_file = Attachment(
                 file_content = FileContent(encoded),
-                file_type = FileType('application/octet-stream'),
                 file_name = FileName(attachment.fileName()),
-                disposition = Disposition('attachment'),
                 )
+            # disposition
+            if attachment.isImage():
+                attachment_file.disposition = Disposition('inline')
+                attachment_file.content_id = ContentId(str(attachment.pk))
+            else:
+                attachment_file.disposition = Disposition('attachment')
+            # MINE type
+            mine_type = mimetypes.guess_type(file_path)[0]
+            if mine_type is not None:
+                attachment_file.file_type = FileType(mine_type)
+            else:
+                attachment_file.file_type = FileType('application/octet-stream')
             super().add_attachment(attachment_file)
 
 
@@ -110,6 +120,7 @@ class MailingList(SendGridClient):
                 requested = False
                 error_occurd = True
                 error_detail = e
+                # print(e.body)
             finally:
                 # save sending logs in MessageProcess
                 to_list = [to_emails.email for to_emails in sendgrid_object.to_emails]

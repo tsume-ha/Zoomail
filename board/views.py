@@ -1,5 +1,4 @@
 import logging
-import base64
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -10,16 +9,12 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
-from sendgrid.helpers.mail import Attachment as helper_Attachment
-
 from django.conf import settings
 
 from .models import Message, MessageYear, Attachment, Bookmark, ToGroup
 from .forms import MessageForm
 from members.models import User
-from mail.models import SendMailAddress, MessageProcess
+
 
 # 送信先グループ（全回・回生）の取得
 def tos():
@@ -194,124 +189,15 @@ def sendAPI(request):
 
         from utils.mail import MailingList
         client = MailingList()
-        sent_num = client.send(message)
+        total_send_num = client.send(message)
         
-
-
-        # year_query = MessageYear.objects.filter(message=message).values('year')
-
-        # if year_query.filter(year=0).exists():
-        #     from_email_adress = 'zenkai@message.ku-unplugged.net'
-        #     to_list = SendMailAddress.objects.all().values_list('email', flat=True)
-        #     mail_compose(from_email_adress, to_list, message)
-
-        # else:
-        #     ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
-        #     for year in year_query:
-        #         from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
-        #         to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
-        #         mail_compose(from_email_adress, to_list, message)
-
-        # logger.info('send complete')
-        # # logger.info(str(total_send_num))
         return JsonResponse({
-            "total_send_num": sent_num,
+            "total_send_num": total_send_num,
             "response": "done"
         })
 
 
     return HttpResponse('Bad request', status=400)
-
-
-
-# def mail_compose(from_email_adress, to_list, message_data):
-#     '''
-#     宛先リストとメッセージコンテントからメールを構成、送信するところまで行う。
-
-#     Parameters
-#     ----------
-#     from_email_adress: str
-#         送信元のメールアドレス
-#         全回なら'zenkai@message.ku-unplugged.net'
-#     to_list: list
-#         emailアドレスのリスト
-#     message_data: Query Object
-#         board.models.Message のオブジェクト
-#     '''
-
-#     logger = logging.getLogger(__name__)
-#     logger.info('mail_compose called')
-#     subject = message_data.title
-#     text_content = message_data.content
-
-#     added_text = '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(message_data.pk)
-
-#     from_email_name = message_data.writer.get_short_name()
-#     to_emails = [To(email=eml) for eml in to_list]
-#     message = Mail(
-#         from_email=(from_email_adress, from_email_name),
-#         to_emails=to_emails,
-#         subject=subject,
-#         plain_text_content=PlainTextContent(text_content + added_text),
-#         is_multiple=True
-#         )
-    
-#     is_attachment = Attachment.objects.filter(message=message_data).exists()
-#     if is_attachment:
-#         file_list = Attachment.objects.filter(message=message_data).order_by('id').reverse()
-#         attachment_list = []
-#         for file in file_list:
-#             file_path = file.attachment_file.path
-#             with open(file_path, 'rb') as f:
-#                 a_data = f.read()
-#                 f.close()
-#             encoded = base64.b64encode(a_data).decode()
-#             attachment = helper_Attachment(
-#                 file_content = FileContent(encoded),
-#                 file_type = FileType('application/octet-stream'),
-#                 file_name = FileName(file.fileName()),
-#                 disposition = Disposition('attachment'),
-#                 )
-#             attachment_list.append(attachment)
-
-#         message.attachment = attachment_list
-
-#     # message.send_at = int(datetime.datetime.now().timestamp() + 100)
-
-#     try:
-#         logger.info('try sending begin')
-#         sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
-#         response = sendgrid_client.send(message)
-#         x_message_id = response.headers['X-Message-Id']
-
-#         requested = True
-#         error_occurd = False
-#         error_detail = ''
-
-#     except Exception as e:
-#         logger.info('try sending error')
-#         x_message_id = ''
-#         requested = False
-#         error_occurd = True
-#         error_detail = e
-
-#     finally:
-#         logger.info('before bulk create')
-#         process_list = []
-#         for email in to_list:
-#             obj = MessageProcess(
-#                 message=message_data,
-#                 x_message_id=x_message_id,
-#                 email=email,
-#                 Requested=requested,
-#                 Error_occurd=error_occurd,
-#                 Error_detail=error_detail,
-#                 )
-#             process_list.append(obj)
-#         MessageProcess.objects.bulk_create(process_list)
-#     print(response)
-#     logger.info('after bulk create')
-#     return response
 
 
 
