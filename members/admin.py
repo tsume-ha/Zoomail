@@ -14,7 +14,7 @@ class SuperuserUserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', ('last_name', 'first_name'), 'year'),
+            'fields': ('email', ('last_name', 'first_name'), 'year', 'furigana'),
         }),
     )
 
@@ -51,8 +51,7 @@ class BasicUserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', ('last_name', 'first_name'), 'year'),
-            'description': 'testmessage'
+            'fields': ('email', ('last_name', 'first_name'), 'year', 'furigana'),
         }),
     )
 
@@ -71,6 +70,15 @@ class BasicUserAdmin(BaseUserAdmin):
     search_fields = ('last_name', 'first_name',)
     ordering = ('year', 'furigana',)
     filter_horizontal = ('groups',)
+
+    def get_deleted_objects(self, objs, request):
+        for query in objs:
+            if query.is_superuser:
+                messages.error(request, '開発者アカウントは削除できません')
+                deleted_objects, model_count, perms_needed, protected = super().get_deleted_objects(objs, request)
+                protected = ['開発者アカウント']
+                return (deleted_objects, model_count, perms_needed, protected)
+        return super().get_deleted_objects(objs, request)
 
     def delete_queryset(self, request, queryset):
         for query in queryset:
