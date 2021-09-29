@@ -191,25 +191,32 @@ def sendAPI(request):
                 "total_send_num": 0,
                 "response": "SEND_MAIL was False."
             })
-        year_query = MessageYear.objects.filter(message=message).values('year')
 
-        if year_query.filter(year=0).exists():
-            from_email_adress = 'zenkai@message.ku-unplugged.net'
-            to_list = SendMailAddress.objects.all().values_list('email', flat=True)
-            mail_compose(from_email_adress, to_list, message)
+        from utils.mail import SendGridClient, MailingList
+        for message_oneyear in MailingList(message):
+            client = SendGridClient()
+            client.send(message_oneyear)
 
-        else:
-            ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
-            for year in year_query:
-                from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
-                to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
-                mail_compose(from_email_adress, to_list, message)
 
-        logger.info('send complete')
-        # logger.info('before count sent messages')
-        # total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
-        # logger.info('after count sent messages')
-        # logger.info(str(total_send_num))
+        # year_query = MessageYear.objects.filter(message=message).values('year')
+
+        # if year_query.filter(year=0).exists():
+        #     from_email_adress = 'zenkai@message.ku-unplugged.net'
+        #     to_list = SendMailAddress.objects.all().values_list('email', flat=True)
+        #     mail_compose(from_email_adress, to_list, message)
+
+        # else:
+        #     ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
+        #     for year in year_query:
+        #         from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
+        #         to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
+        #         mail_compose(from_email_adress, to_list, message)
+
+        # logger.info('send complete')
+        # # logger.info('before count sent messages')
+        # # total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
+        # # logger.info('after count sent messages')
+        # # logger.info(str(total_send_num))
         return HttpResponse('Done')
 
 

@@ -251,36 +251,36 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'production': {
-            'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d '
-                      '%(pathname)s:%(lineno)d %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
-            'when':'D',
-            'interval':1,
-            'backupCount':100,
-            'delay':False
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'django': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'production': {
+#             'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d '
+#                       '%(pathname)s:%(lineno)d %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
+#             'when':'D',
+#             'interval':1,
+#             'backupCount':100,
+#             'delay':False
+#         },
+#     },
+#     'loggers': {
+#         '': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     },
+# }
