@@ -4,6 +4,7 @@ from django.contrib import messages
 from social_django.models import UserSocialAuth
 from custom_admin.admin import custom_admin_site
 from .models import User, TestMail
+from .forms import RegisterForm
 
 
 class SuperuserUserAdmin(BaseUserAdmin):
@@ -41,6 +42,7 @@ class SuperuserUserAdmin(BaseUserAdmin):
     search_fields = ('last_name', 'first_name',)
     ordering = ('year', 'furigana',)
     filter_horizontal = ('groups',)
+    add_form = RegisterForm
 
 
 class BasicUserAdmin(BaseUserAdmin):
@@ -70,6 +72,7 @@ class BasicUserAdmin(BaseUserAdmin):
     search_fields = ('last_name', 'first_name',)
     ordering = ('year', 'furigana',)
     filter_horizontal = ('groups',)
+    add_form = RegisterForm
 
     def get_deleted_objects(self, objs, request):
         for query in objs:
