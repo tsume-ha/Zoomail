@@ -38,9 +38,9 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
         return list(obj.years.all())
     
     def sent_num(self, obj):
-        return obj.x_message_id.all().count()
+        return obj.process.all().count()
     def error_num(self, obj):
-        return obj.x_message_id.filter(Error_occurd=True).count()
+        return obj.process.filter(Error_occurd=True).count()
 
 
 admin.site.register(Message, MessageSuperuserAdmin)

@@ -12,7 +12,7 @@ class SendMailAddress(models.Model):
         return str(self.year) + ' - ' + self.user.get_full_name() +' - ' + self.email
 
 class MessageProcess(models.Model):
-    message = models.ForeignKey(Message, null=False, on_delete=models.CASCADE, related_name='x_message_id')
+    message = models.ForeignKey(Message, null=False, on_delete=models.CASCADE, related_name='process')
     x_message_id = models.CharField(max_length=100, editable=False, null=True, blank=True)
     email = models.EmailField(null=False, blank=False, verbose_name="送信時メールアドレス")
     Requested = models.BooleanField(default=False, verbose_name="SendGridへ転送")
