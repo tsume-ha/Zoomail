@@ -42,7 +42,8 @@ def index(request):
         'exist_years': exist_years(records)
     }
     return render(request, 'pictures/index.html', params)
-
+# ToDo
+# 画像の縮小をSignalsに移動したのでその部分を消す
 @login_required()
 def PhotoRegister(request):
     now_user = request.user

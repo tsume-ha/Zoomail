@@ -2,11 +2,16 @@ from django.db import models
 from members.models import User
 from private_storage.fields import PrivateFileField
 
+
+# To Do
+# live をChoiceFieldに
+# upload_toでファイル名を指定してしまう
+
 class Kansouyoushi(models.Model):
     live = models.CharField(max_length=200, verbose_name='ライブ名')
-    detail = models.CharField(max_length=200, blank=True, verbose_name='その他特記事項')
-    numbering = models.IntegerField(default=1, verbose_name='ナンバリング')
-    file = PrivateFileField(upload_to='kansoyoshi/%Y/', null=True, verbose_name='PDFファイル')
+    detail = models.CharField(max_length=200, blank=True, verbose_name='その他特記事項', help_text='「2回生の分のみ」など')
+    numbering = models.IntegerField(default=1, verbose_name='ナンバリング', help_text='ファイルが大きくなり、分割したときに〇〇ライブ1, 〇〇ライブ2という風に区切ってください。<br>特になければ1にしてください。')
+    file = PrivateFileField(upload_to='kansoyoshi/%Y/', null=True, verbose_name='PDFファイル', help_text="おおむね10MB以下にしてください。大きいファイルの場合は分割してください。")
     performed_at = models.DateField(verbose_name='ライブ日')
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='kansou_creater')
