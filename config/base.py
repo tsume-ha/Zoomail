@@ -251,36 +251,52 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'production': {
-#             'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d '
-#                       '%(pathname)s:%(lineno)d %(message)s'
-#         },
-#     },
-#     'handlers': {
-#         'file': {
-#             'level': 'INFO',
-#             'class': 'logging.handlers.TimedRotatingFileHandler',
-#             'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
-#             'when':'D',
-#             'interval':1,
-#             'backupCount':100,
-#             'delay':False
-#         },
-#     },
-#     'loggers': {
-#         '': {
-#             'handlers': ['file'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#         'django': {
-#             'handlers': ['file'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#     },
-# }
+# log file create
+if not os.path.isdir(os.path.join(BASE_DIR, 'log')):
+    os.mkdir(os.path.join(BASE_DIR, 'log'))
+if not os.path.isfile(os.path.join(BASE_DIR, 'log', 'debug.log')):
+    f = open(os.path.join(BASE_DIR, 'log', 'debug.log'), 'w')
+    f.close()
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'production': {
+            'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d '
+                      '%(pathname)s:%(lineno)d %(message)s'
+        },
+    },
+    'handlers': {
+        # 'file': {
+        #     'level': 'INFO',
+        #     'class': 'logging.handlers.TimedRotatingFileHandler',
+        #     'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
+        #     'when':'D',
+        #     'interval':1,
+        #     'backupCount':100,
+        #     'delay':False
+        # },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': './log/debug.log',
+            'maxBytes': 10*1000,
+            'backupCount': 100,
+            'delay':False
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
