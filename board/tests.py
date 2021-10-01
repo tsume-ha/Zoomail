@@ -4,10 +4,12 @@ import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client, override_settings
+# from django.db.models import Count
 
 from django.conf import settings
 from members.models import User
-from .models import Message, MessageYear, ToGroup
+from .models import Message, MessageYear
+# from .forms import validation_error_messages
 
 
 def make_user(self, year=2019):
@@ -61,11 +63,8 @@ def URLS(id=1):
         '/api/board/send/froms/',
         '/api/board/send/send/',
     ]
-YEARS = (2017,2018,2019)
+YEARS = (2018,2019,2020)
 
-def create_togroup(self, year):
-    obj = ToGroup(year=year)
-    obj.save()
 
 
 @override_settings(SEND_MAIL=False)
@@ -105,7 +104,6 @@ class APIReadTest(TestCase):
         for year in YEARS:
             make_user(cls, year=year)
             make_message(cls, year=year)
-            create_togroup(cls, year=year)
 
     def test_read_index_api(self):
         """
@@ -178,8 +176,7 @@ class APIReadTest(TestCase):
 class APISendTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        for year in YEARS:
-            create_togroup(cls, year=year)
+        pass
     
     def test_sendAPI_kaisei_without_attachment(self):
         user = make_user(self, year=2019)
@@ -188,17 +185,17 @@ class APISendTest(TestCase):
         __sendyears = [[2019], [2018], [2017], [2019, 2018], [2019, 2018, 2017]]
         for sendyear in __sendyears:
             data = {
-                "title": ["send test title" + str(sendyear)],
-                "writer": [str(user.id)],
-                "to": [y for y in sendyear],
-                "content": ["send text content"]
+                "title": "send test title" + str(sendyear),
+                "writer": str(user.id),
+                "to": [str(y) for y in sendyear],
+                "content": "send text content"
             }
             request = self.client.post('/api/board/send/send/', data)
 
             self.assertEqual(request.status_code, 200)
-           
-            new_message = Message.objects.get(title=data["title"][0])
-            self.assertEqual(new_message.content, data['content'][0])
+            
+            new_message = Message.objects.get(title=data["title"])
+            self.assertEqual(new_message.content, data['content'])
             years = MessageYear.objects.filter(message=new_message).values_list('year', flat=True)
             for y in sendyear:
                 self.assertIn(y, years)
@@ -210,10 +207,10 @@ class APISendTest(TestCase):
         __sendyears = [[2019], [2018], [2017], [2019, 2018], [2019, 2018, 2017]]
         for sendyear in __sendyears:
             data = {
-                "title": ["no content test" + str(sendyear)],
-                "writer": [str(user.id)],
-                "to": [y for y in sendyear],
-                "content": [""]
+                "title": "no content test" + str(sendyear),
+                "writer": str(user.id),
+                "to": [str(y) for y in sendyear],
+                "content": ""
             }
             request = self.client.post('/api/board/send/send/', data)
             self.assertEqual(request.status_code, 400)
@@ -222,10 +219,10 @@ class APISendTest(TestCase):
                 )
 
             data = {
-                "title": [""],
-                "writer": [str(user.id)],
-                "to": [y for y in sendyear],
-                "content": ["no title test"]
+                "title": "",
+                "writer": str(user.id),
+                "to": [str(y) for y in sendyear],
+                "content": "no title test"
             }
             request = self.client.post('/api/board/send/send/', data)
             self.assertEqual(request.status_code, 400)
@@ -234,10 +231,10 @@ class APISendTest(TestCase):
                 )
 
             data = {
-                "title": ["no writer test"],
+                "title": "no writer test",
                 "writer": "",
-                "to": [y for y in sendyear],
-                "content": ["no writer test"]
+                "to": [str(y) for y in sendyear],
+                "content": "no writer test"
             }
             request = self.client.post('/api/board/send/send/', data)
             self.assertEqual(request.status_code, 400)
@@ -246,10 +243,10 @@ class APISendTest(TestCase):
                 )
 
             data = {
-                "title": ["no 'to' test"],
+                "title": "no 'to' test",
                 "writer": "str(user.id)",
                 "to": "",
-                "content": ["no 'to' test"]
+                "content": "no 'to' test"
             }
             request = self.client.post('/api/board/send/send/', data)
             self.assertEqual(request.status_code, 400)
@@ -257,6 +254,16 @@ class APISendTest(TestCase):
                 Message.objects.filter(title=data["title"]).exists()
                 )
 
+
+    #   data.append("title", context.state.title)
+    #   data.append("writer", context.state.writer_id)
+    #   for (let i = 0; i < context.state.to.length; i++) {
+    #     data.append("to", context.state.to[i])
+    #   }
+    #   data.append("content", context.state.content)
+    #   for (let i = 0; i < context.state.attachments.length; i++) {
+    #     data.append("attachments", context.state.attachments[i])
+    #   }
     
     def test_sendAPI_kaisei_with_attachment(self):
         user = make_user(self, year=2019)
@@ -274,18 +281,18 @@ class APISendTest(TestCase):
                     'rb') as f:
                     upload = SimpleUploadedFile(file[0], f.read())
                 data = {
-                    "title": ["attachment test" + file[0] + str(sendyear)],
-                    "writer": [str(user.id)],
-                    "to": [y for y in sendyear],
-                    "content": ["send text content"],
+                    "title": "attachment test" + file[0] + str(sendyear),
+                    "writer": str(user.id),
+                    "to": [str(y) for y in sendyear],
+                    "content": "send text content",
                     "attachments": [upload]
                 }
                 request = self.client.post('/api/board/send/send/', data)
 
                 if file[1] < 10*1024*1024:
                     self.assertEqual(request.status_code, 200)
-                    new_message = Message.objects.get(title=data["title"][0])
-                    self.assertEqual(new_message.content, data['content'][0])
+                    new_message = Message.objects.get(title=data["title"])
+                    self.assertEqual(new_message.content, data['content'])
                     years = MessageYear.objects.filter(message=new_message).values_list('year', flat=True)
                     for y in sendyear:
                         self.assertIn(y, years)
