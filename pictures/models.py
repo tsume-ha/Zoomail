@@ -20,8 +20,8 @@ class Album(models.Model):
         blank=True,
         verbose_name='サムネイル',
         upload_to=custom_upload_to,
-        help_text='5kB以上のファイルをアップロードすると自動的に縮小されます。',
-        content_types=['image/jpeg', 'image/png'])
+        help_text='JPEGファイルのみ対応しています。<br>5kB以上のファイルをアップロードすると自動的に縮小されます。',
+        content_types=['image/jpeg'])
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='created_album')
     def __str__(self):
