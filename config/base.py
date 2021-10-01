@@ -251,6 +251,14 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
+# log file create
+if not os.path.isdir(os.path.join(BASE_DIR, 'log')):
+    os.mkdir(os.path.join(BASE_DIR, 'log'))
+if not os.path.isfile(os.path.join(BASE_DIR, 'log', 'debug.log')):
+    f = open(os.path.join(BASE_DIR, 'log', 'debug.log'), 'w')
+    f.close()
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -261,13 +269,21 @@ LOGGING = {
         },
     },
     'handlers': {
+        # 'file': {
+        #     'level': 'INFO',
+        #     'class': 'logging.handlers.TimedRotatingFileHandler',
+        #     'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
+        #     'when':'D',
+        #     'interval':1,
+        #     'backupCount':100,
+        #     'delay':False
+        # },
         'file': {
             'level': 'INFO',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
-            'when':'D',
-            'interval':1,
-            'backupCount':100,
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': './log/debug.log',
+            'maxBytes': 10*1000,
+            'backupCount': 100,
             'delay':False
         },
     },
