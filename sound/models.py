@@ -25,7 +25,7 @@ class Live(models.Model):
         User, null=True, on_delete=models.SET_NULL, related_name='live_updated_by')
 
     def __str__(self):
-        return str(self.id) + self.live_name
+        return self.live_name
 
 
 class Song(models.Model):

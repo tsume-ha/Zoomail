@@ -1,6 +1,7 @@
 from django import forms
 from django.core import validators
 
+from social_django.models import UserSocialAuth
 from .models import User
 
 
@@ -33,5 +34,20 @@ class RegisterForm(forms.ModelForm):
         if not ( year == 0 or 1990 < year < 2100 ):
             raise forms.ValidationError('無効な入部年度です。第24期などでなく、入部年度（2018）を入力してください。')
         return year
+    
+    def save(self, commit=True):
+        user = super(RegisterForm, self).save(commit=commit)
+        user.receive_email = self.cleaned_data['email']
+        user.save()
 
+        content_social = UserSocialAuth(
+            user = user,
+            provider = 'google-oauth2',
+            uid = self.cleaned_data['email'],
+            )
+        content_social.save()
+
+        # send a mail
+
+        return user
 
