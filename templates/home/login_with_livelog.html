@@ -1,0 +1,51 @@
+{% load static %}
+
+<a href="/auth/login/auth0" class="livelogin">
+  <span>Log in with</span><img src="{% static 'img/livelog.png' %}" width="80" height="59" alt="LiveLog" />
+</a>
+
+<style type="text/css">
+<!--
+a.livelogin{
+  display: inline-flex;
+  position: relative;
+  background-color: #fcf8e3;
+  width: 200px;
+  height: 88px;
+  border-radius: 4px;
+  color: #666!important;
+  align-items: center;
+  margin: 1px calc(1px + 0.5rem);
+  padding: 0;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+a.livelogin.hover{
+  text-decoration: underline;
+  margin: 0 0.5rem;
+  border: #f9f0c4 1px solid;
+}
+a.livelogin span{
+  display: inline-block;
+  font-size: 16px;
+  margin: 0;
+  padding: 0 6px 0 15px;
+}
+a.livelogin img{
+  margin: 0;
+  padding: 0 12px 0 0;
+}
+-->
+</style>
+
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+  $('.livelogin')
+  .on('mouseenter touchstart',function() {
+    $('.livelogin').addClass('hover');
+  })
+  .on('mouseleave touchend',function() {
+     $('.livelogin').removeClass('hover');
+  });
+});
+</script>

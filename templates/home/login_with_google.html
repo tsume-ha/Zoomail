@@ -1,0 +1,39 @@
+{% load static %}
+
+<a href="{% url 'social:begin' 'google-oauth2' %}" id="G-login" alt="Sign in with Google">
+  Sign in with Google
+</a>
+
+<style type="text/css">
+<!--
+a#G-login{
+  display: inline-block;
+  color: #000;
+  text-decoration: none;
+  background-image: url("{% static 'img/btn_google_signin_light_normal_web@2x.png' %}");
+  background-size: 192px 46px;
+  background-color: transparent;
+  height: 46px;
+  width: 192px;
+  margin: 1px calc(1px + 0.5rem) 8px;
+  flex-shrink: 0;
+  font-size: 0;
+}
+a#G-login.hover{
+  text-decoration: none;
+  background-image: url("{% static 'img/btn_google_signin_light_focus_web@2x.png' %}");
+}
+-->
+</style>
+
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+  var img = document.createElement('img');
+  img.src = "{% static 'img/btn_google_signin_light_focus_web@2x.png' %}";
+  $('#G-login').bind('touchstart mouseenter', function () {
+    $('#G-login').addClass('hover');
+  }).bind('touchend mouseleave', function () {
+    $('#G-login').removeClass('hover');
+  });
+});
+</script>
