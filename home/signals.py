@@ -42,11 +42,7 @@ def update_send_mail_address(sender, instance, **kwargs):
 
     log_list = kansou_list + movie_list + pictures_list + sound_list
     log_list.sort(key=lambda obj: obj['date'], reverse=True)
-    print(LIST_NUM)
-    print(len(log_list))
     for i in range(min(LIST_NUM - 1, len(log_list))):
-        print(log_list)
-        print(i)
         NewContent.objects.update_or_create(
             index = i,
             defaults={

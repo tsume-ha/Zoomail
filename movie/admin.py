@@ -8,6 +8,10 @@ class YoutubeURLAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'created_by')
     list_display = ('title', 'url', 'held_at')
     list_display_links = ('title', 'held_at')
+    def save_model(self, request, obj, form, change) -> None:
+        if not change:
+            obj.created_by = request.user
+        return super().save_model(request, obj, form, change)
 
 
 admin.site.register(YoutubeURL, YoutubeURLAdmin)
