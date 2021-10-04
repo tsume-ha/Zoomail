@@ -60,9 +60,9 @@ def homeAPI(request):
     return JsonResponse({
         'content_log': [
             {
-                "genre": newcontent['genre'],
-                "title": newcontent['title'],
-                "path": newcontent['path']
+                "genre": newcontent.genre,
+                "title": newcontent.title,
+                "path": newcontent.path
             } for newcontent in newcontents
         ],
         'announcements': [
