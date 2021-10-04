@@ -16,13 +16,14 @@ class Thumbnail(ImageSpec):
 
 @receiver(post_save, sender=Album)
 def diminish_thumbnail(sender, instance, *args, **kwargs):
-    if instance.thumbnail.size > 50*1000:# 50kB
-        source_file = open(instance.thumbnail.path, 'rb')
-        image_generator = Thumbnail(source=source_file)
-        result = image_generator.generate()
-        dest = open(instance.thumbnail.path, 'wb')
-        dest.write(result.read())
-        dest.close()
+    if instance.thumbnail:
+        if instance.thumbnail.size > 50*1000:# 50kB
+            source_file = open(instance.thumbnail.path, 'rb')
+            image_generator = Thumbnail(source=source_file)
+            result = image_generator.generate()
+            dest = open(instance.thumbnail.path, 'wb')
+            dest.write(result.read())
+            dest.close()
 
 
 @receiver(post_delete, sender=Album)

@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
 
-from .models import ContentLog, Announcement
+from .models import Announcement, NewContent
 from .forms import FirstRegisterForm
 
 def index(request):
@@ -56,13 +56,14 @@ def homeAPI(request):
     messages.warning(request, "メッセージを送信できる3")
     messages.error(request, "メッセージを送信できる4")
     announcements = Announcement.objects.order_by('-created_at')[:5]
+    newcontents = NewContent.objects.order_by('index')[:5]
     return JsonResponse({
         'content_log': [
             {
-                "genre": i[1],
-                "title": i[3],
-                "url": i[4]
-            } for i in ContentLog(LIST_NUM=5)
+                "genre": newcontent['genre'],
+                "title": newcontent['title'],
+                "path": newcontent['path']
+            } for newcontent in newcontents
         ],
         'announcements': [
             {
