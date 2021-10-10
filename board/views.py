@@ -1,5 +1,3 @@
-import logging
-
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http.response import JsonResponse
@@ -158,15 +156,12 @@ def bookmarkAPI(request, pk):
 
 @login_required()
 def sendAPI(request):
-    logger = logging.getLogger(__name__)
-    logger.info('Send API called')
     message_form = MessageForm(request.POST)
     message_form.fields["to"].choices = tos()
     if request.method == 'POST' and message_form.is_valid():
         message = message_form.save(commit=False)
         message.sender = request.user
         message.save()
-        logger.info(message.title)
 
         filelist = request.FILES.getlist('attachments')
         if filelist:
