@@ -251,6 +251,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
+
 # # log file create
 # if not os.path.isdir(os.path.join(BASE_DIR, 'log')):
 #     os.mkdir(os.path.join(BASE_DIR, 'log'))
