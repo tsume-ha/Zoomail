@@ -106,36 +106,37 @@ class MailingList(SendGridClient):
 
         # send messages for each year groups
         for sendgrid_object in sendgrid_objects:
-            try:
+            # try:
                 # send emails here
                 response = super().send(sendgrid_object)
 
-                # error handring follows
-                x_message_id = response.headers['X-Message-Id']
-                requested = True
-                error_occurd = False
-                error_detail = ''
-            except Exception as e:
-                x_message_id = ""
-                requested = False
-                error_occurd = True
-                error_detail = e
-                # print(e.body)
-            finally:
-                # save sending logs in MessageProcess
-                to_list = [to_emails.email for to_emails in sendgrid_object.to_emails]
-                process_list = []
-                for email in to_list:
-                    obj = MessageProcess(
-                        message=message,
-                        x_message_id=x_message_id,
-                        email=email,
-                        Requested=requested,
-                        Error_occurd=error_occurd,
-                        Error_detail=error_detail,
-                        )
-                    process_list.append(obj)
-                MessageProcess.objects.bulk_create(process_list)
+        #         # error handring follows
+        #         x_message_id = response.headers['X-Message-Id']
+        #         requested = True
+        #         error_occurd = False
+        #         error_detail = ''
+        #     except Exception as e:
+        #         x_message_id = ""
+        #         requested = False
+        #         error_occurd = True
+        #         error_detail = e
+        #         # print(e.body)
+        #     finally:
+        #         # save sending logs in MessageProcess
+        #         to_list = [to_emails.email for to_emails in sendgrid_object.to_emails]
+        #         process_list = []
+        #         for email in to_list:
+        #             obj = MessageProcess(
+        #                 message=message,
+        #                 x_message_id=x_message_id,
+        #                 email=email,
+        #                 Requested=requested,
+        #                 Error_occurd=error_occurd,
+        #                 Error_detail=error_detail,
+        #                 )
+        #             process_list.append(obj)
+        #         MessageProcess.objects.bulk_create(process_list)
 
-        total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
-        return total_send_num
+        # total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
+        # return total_send_num
+        return None
