@@ -17,9 +17,9 @@ export function contentValidation(content) {
   return result;
 }
 
-export function writerValidation(writer_id) {
+export function writerValidation(writer) {
   let result = [];
-  if (!writer_id) {
+  if (!writer) {
     result.push("差出人を指定してください")
   }
   return result;

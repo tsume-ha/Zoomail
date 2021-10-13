@@ -24,7 +24,7 @@ export default {
       is_dirty: false,
       error_messages: []
     },
-    writer_id: {
+    writer: {
       value: null,
       is_dirty: false,
       error_messages: []
@@ -59,11 +59,11 @@ export default {
       state.tos.error_messages = tosValidation(state.tos.value);
       state.tos.is_dirty = true;
     },
-    setWriter_id (state, payload) {
-      // payload: Number, writer_id value
-      state.writer_id.value = payload;
-      state.writer_id.error_messages = writerValidation(state.writer_id.value);
-      state.writer_id.is_dirty = true;
+    setWriter (state, payload) {
+      // payload: Number, writer value
+      state.writer.value = payload;
+      state.writer.error_messages = writerValidation(state.writer.value);
+      state.writer.is_dirty = true;
     },
     setAttachments (state, payload) {
       // payload: List of File, attachments value

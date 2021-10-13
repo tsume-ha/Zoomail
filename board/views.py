@@ -124,17 +124,14 @@ def froms_data(request):
     return JsonResponse({
         "years": years,
         "members": [{
-        "year": year,
-        "list": [{
-            "id": user.id,
-            "name": user.nickname if user.nickname else user.last_name + user.first_name# get_short_nameは使えない
-            } for user in User.objects.filter(year=year).order_by('furigana')]
-        } for year in years],
-        "user": {
-            "year": request.user.year,
-            "id": request.user.id
-        }
-    }, safe=False)
+            "year": year,
+            "list": [{
+                "id": user.id,
+                "name": user.get_short_name(),
+                "year": user.year
+                } for user in User.objects.filter(year=year).order_by('furigana')]
+            } for year in years]
+        }, safe=False)
 
 
 @login_required()
