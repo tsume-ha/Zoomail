@@ -9,9 +9,9 @@ export function titleValidation(text) {
   return result;
 }
 
-export function textValidation(text) {
+export function contentValidation(content) {
   let result = [];
-  if (text.length < 1) {
+  if (content.length < 1) {
     result.push("本文を入力してください")
   }
   return result;

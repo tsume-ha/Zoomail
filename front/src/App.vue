@@ -1,19 +1,24 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">About</router-link> | 
+    <router-link to="/mail/send">Send</router-link>
   </div>
   <router-view/>
   <message />
 </template>
 
 <script>
+import { onMounted } from '@vue/runtime-core';
+import { useStore } from 'vuex'
 import message from './components/message'
 export default {
   components: {
     message
   },
   setup() {
+    const store = useStore();
+    onMounted(store.dispatch("user/getUserInfo"));
   }
 }
 </script>

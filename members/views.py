@@ -77,10 +77,12 @@ def getUserInfo(request):
     user = request.user
     return JsonResponse(
         {
+            "id": user.id,
             "last_name": user.last_name,
             "first_name": user.first_name,
             "furigana": user.furigana,
             "nickname": user.nickname,
+            "shortname": user.get_short_name(),
             "email": user.email,
             "receive_email": user.get_receive_email(),
             "livelog_email": user.livelog_email,
@@ -96,7 +98,8 @@ def getUserInfo(request):
                 "is_superuser": user.is_superuser,
                 "is_admin": AdminEnterPermission(user),
                 "can_register_user": MemberRegisterPermission(user)
-            }
+            },
+            "is_staff": user.is_staff,
         }
     )
 

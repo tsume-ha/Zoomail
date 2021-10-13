@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import message from './message'
+import user from './user'
 import send from './send'
 
 export default createStore({
@@ -12,6 +13,7 @@ export default createStore({
   },
   modules: {
     message,
+    user,
     send
   }
 })
