@@ -108,6 +108,7 @@ export default {
   },
   actions: {
     send (context) {
+      // Validation
       context.commit('validateAll');
       if (!context.getters.isValid) {
         context.commit('message/addMessage', {
@@ -115,8 +116,10 @@ export default {
           message: "不正なフィールドがあり、送信できませんでした。",
           appname: "mail/send"
         }, { root: true })
-        return
+        return Promise.reject(new Error('form validation error'))
       }
+
+      // Form construction
       let form = new FormData();
       form.append("title", context.state.title.value);
       form.append("content", context.state.content.value);
@@ -127,6 +130,8 @@ export default {
       context.state.attachments.value.forEach(file => {
         form.append("attachments", file);
       })
+      
+      // POST
       return axios.post(
           '/api/board/send/send/', form, {onUploadProgress: e => console.log(e) }
         ).then(res => {
@@ -136,6 +141,7 @@ export default {
             message: "送信されました。",
             appname: "mail/send"
           }, { root: true })
+          return res
         });
     }
   }

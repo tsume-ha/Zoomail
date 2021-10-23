@@ -71,7 +71,13 @@ export default {
     }
     const send = e => {
       e.preventDefault();
-      store.dispatch('send/send')
+      store.dispatch('send/send').then(res => {
+        // 正常にPOSTできた時。メーリスのトップページに遷移する
+        console.log(res)
+      }).catch(err => {
+        // 送信エラーが起こった時。遷移しない。
+        console.log(err)
+      })
     }
     return{
       title, content, writer, attachments, tos,
