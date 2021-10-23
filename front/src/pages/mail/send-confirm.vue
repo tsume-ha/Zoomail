@@ -60,10 +60,10 @@ export default {
       router.push('/mail/send');
     }
     const title = computed(() => store.state.send.title.value)
+    const tos = computed(() => store.state.send.tos.value)
     const content = computed(() => store.state.send.content.value)
     const writer = computed(() => store.state.send.writer.value)
     const attachments = computed(() => store.state.send.attachments.value)
-    const tos = computed(() => [{ year: 0, label: "全回メーリス" }])
 
     const backToInput = e => {
       e.preventDefault();
@@ -71,45 +71,13 @@ export default {
     }
     const send = e => {
       e.preventDefault();
-      // send to server.
-      console.log('send')
+      store.dispatch('send/send')
     }
     return{
       title, content, writer, attachments, tos,
       backToInput, send
     }
   }
-  // components: {
-  //   attachmentPreview
-  // },
-  // methods: {
-  //   backToInput () {
-  //     this.$emit('backToInput');
-  //   },
-  //   send () {
-  //     this.$emit('send');
-  //   }
-  // },
-  // computed: {
-  //   title () {
-  //     return this.$store.state.send.title;
-  //   },
-  //   content () {
-  //     return this.$store.state.send.content;
-  //   },
-  //   to () {
-  //     return this.$store.state.send.to;
-  //   },
-  //   to_groups () {
-  //     return this.$store.state.send.to_groups;
-  //   },
-  //   to_selected () {
-  //     return this.to_groups.filter(obj => this.to.includes(obj.year));
-  //   },
-  //   attachments () {
-  //     return this.$store.state.send.attachments;
-  //   },
-  // }
 }
 </script>
 

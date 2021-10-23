@@ -4,6 +4,7 @@
     <form>
       <send-input-title />
       <send-input-content />
+      <send-input-to />
       <send-input-from />
       <send-input-attachments />
       <button
@@ -23,13 +24,13 @@ import { useStore } from "vuex"
 import { useRouter } from 'vue-router'
 import sendInputTitle from "./components/send-input-title.vue"
 import sendInputContent from "./components/send-input-content.vue"
-// import sendInputTo from "./components/send-input-to.vue"
-// vue-selectがvue3にまだ対応していないので保留
+import sendInputTo from "./components/send-input-to.vue"
+// vue-selectをVue3対応の @beta で利用
 import sendInputFrom from "./components/send-input-from.vue"
 import sendInputAttachments from "./components/send-input-attachments.vue"
 export default {
   components: {
-    sendInputTitle, sendInputContent, sendInputFrom, sendInputAttachments
+    sendInputTitle, sendInputContent, sendInputTo, sendInputFrom, sendInputAttachments
   },
   setup() {
     const store = useStore();
@@ -43,7 +44,7 @@ export default {
 
       if (isValid.value) {
         // validの時は確認画面へ
-        router.push('/mail/send/confirm/');
+        router.push('/mail/send/confirm');
       } else {
         // invalidの時はメッセージを出して遷移させない
         store.commit('message/addMessage', {

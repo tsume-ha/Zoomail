@@ -5,6 +5,7 @@ import {
   writerValidation,
   attachmentsValidation
 } from "./send_validate"
+import axios from '../utils/axios';
 
 export default {
   namespaced: true,
@@ -103,6 +104,39 @@ export default {
         state.title.is_dirty &&
         state.content.is_dirty
       )
+    }
+  },
+  actions: {
+    send (context) {
+      context.commit('validateAll');
+      if (!context.getters.isValid) {
+        context.commit('message/addMessage', {
+          level: "error",
+          message: "不正なフィールドがあり、送信できませんでした。",
+          appname: "mail/send"
+        }, { root: true })
+        return
+      }
+      let form = new FormData();
+      form.append("title", context.state.title.value);
+      form.append("content", context.state.content.value);
+      context.state.tos.value.forEach(obj => {
+        form.append("to", obj.year);
+      });
+      form.append("writer", context.state.writer.value.id);
+      context.state.attachments.value.forEach(file => {
+        form.append("attachments", file);
+      })
+      return axios.post(
+          '/api/board/send/send/', form, {onUploadProgress: e => console.log(e) }
+        ).then(res => {
+          console.log(res)
+          context.commit('message/addMessage', {
+            level: "info",
+            message: "送信されました。",
+            appname: "mail/send"
+          }, { root: true })
+        });
     }
   }
 }

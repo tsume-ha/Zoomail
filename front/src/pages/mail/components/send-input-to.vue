@@ -9,7 +9,6 @@
           v-model="tos"
           :options="years"
           label="label"
-          :reduce="obj => obj.year"
           multiple
         >
         </v-select>
@@ -57,7 +56,10 @@ export default {
     ])
     onMounted(() => {
       axios.get("/api/board/send/togroups/").then(res => {
-        years.value = res.data.togropus
+        years.value.length = 0;
+        res.data.togropus.forEach(y => {
+          years.value.push(y)
+        })
       })
     })
     return {
