@@ -4,6 +4,7 @@
     <send-input-title />
     <send-input-content />
     <send-input-from />
+    <send-input-attachments />
 
   </div>
 </template>
@@ -16,9 +17,10 @@ import sendInputContent from "./components/send-input-content.vue"
 // import sendInputTo from "./components/send-input-to.vue"
 // vue-selectがvue3にまだ対応していないので保留
 import sendInputFrom from "./components/send-input-from.vue"
+import sendInputAttachments from "./components/send-input-attachments.vue"
 export default {
   components: {
-    sendInputTitle, sendInputContent, sendInputFrom
+    sendInputTitle, sendInputContent, sendInputFrom, sendInputAttachments
   },
   setup() {
     // const store = useStore();
