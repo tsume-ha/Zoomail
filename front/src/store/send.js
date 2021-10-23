@@ -71,5 +71,38 @@ export default {
       state.attachments.error_messages = attachmentsValidation(state.attachments.value);
       state.attachments.is_dirty = true;
     },
+    validateAll (state) {
+      // すべてのフィールドをValidate
+      state.title.error_messages = titleValidation(state.title.value);
+      state.content.error_messages = contentValidation(state.content.value);
+      // state.tos.error_messages = tosValidation(state.tos.value);
+      state.writer.error_messages = writerValidation(state.writer.value);
+      state.attachments.error_messages = attachmentsValidation(state.attachments.value);
+      // 一度入力されたものとしてis_dirtyをtrueに
+      state.title.is_dirty = true;
+      state.content.is_dirty = true;
+      // state.tos.is_dirty = true;
+      state.writer.is_dirty = true;
+      state.attachments.is_dirty = true;
+    }
+  },
+  getters: {
+    isValid (state) {
+      return (
+        !state.title.error_messages.length &&
+        !state.content.error_messages.length &&
+        !state.tos.error_messages.length &&
+        !state.writer.error_messages.length &&
+        !state.attachments.error_messages.length &&
+        !state.send_at.error_messages.length
+      )
+    },
+    isValidAndDirty (state, getters) {
+      return (
+        getters.isValid &&
+        state.title.is_dirty &&
+        state.content.is_dirty
+      )
+    }
   }
 }
