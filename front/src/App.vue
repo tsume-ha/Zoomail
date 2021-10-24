@@ -2,6 +2,7 @@
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> | 
+    <router-link to="/mail">Read - index</router-link> | 
     <router-link to="/mail/send">Send</router-link>
   </div>
   <router-view/>
