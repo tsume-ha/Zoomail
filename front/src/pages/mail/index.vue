@@ -1,6 +1,9 @@
 <template>
   <div>
     <h1>mail/read - index</h1>
+    <div v-for="mes in messages" :key="mes.id">
+      <h6>ID: {{mes.id}}</h6>
+    </div>
   </div>
 </template>
 

@@ -3,7 +3,7 @@
     "message_list": [
         {% for message in page %}
             {
-                "id": "{{message.id}}",
+                "id": {{message.id}},
                 "title": "{{message.title | escapejs}}",
                 "content": "{{message.content | slice:":100" | escapejs}}",
                 "html": "{{message.content | linebreaks | urlize | target_blank | escapejs}}",

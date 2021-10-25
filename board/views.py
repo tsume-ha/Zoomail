@@ -25,6 +25,8 @@ from mail.models import SendMailAddress, MessageProcess
 
 @login_required()
 def get_messages_list(request):
+    import time
+    time.sleep(10)
     now_user = request.user
 
     if 'page' in request.GET:
@@ -61,7 +63,7 @@ def get_messages_list(request):
 
     query = query.reverse()
 
-    page = Paginator(query, 10)
+    page = Paginator(query, 30)
 
     params = {
         'page': page.get_page(page_num),
