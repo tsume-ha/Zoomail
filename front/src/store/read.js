@@ -46,6 +46,13 @@ export default {
     finishAPILoading (state) {
       state.nowLoading = false;
       console.log('finishAPILoading')
+    },
+    updateBookmarked (state, payload) {
+      const target = state.messages.find(item => item.id === payload.id)
+      if (target) {
+        // state.messages[]が空でtargetがundefinedになってる場合を弾く
+        target.is_bookmarked = payload.bool;
+      }
     }
   },
   actions: {
@@ -73,7 +80,13 @@ export default {
     async getMessagesFromAPI (context, params) {
       // APIを叩く
       context.commit('startAPILoading');
-      const res = await axios.get('/api/board/json/', {params});
+      const res = await axios.get('/api/board/json/', {params})
+      .catch(e => {
+        console.log("name", e.name)
+        console.log("message", e.message)
+        console.log("response", e.response)
+        console.log("response.status", e.response.status)
+      })
       context.commit('finishAPILoading')
 
       // page数などの更新
@@ -96,6 +109,32 @@ export default {
           new Date(lastData.updated_at).getTime() > new Date(item.updated_at).getTime()
         }).delete();
       }
+    },
+    async loadOneMessage (context, id) {
+      const res = await axios.get('/api/board/content/' + String(id) + '/');
+      context.commit('addMessages', [res.data.message]);
+      return res.data.message;
+    },
+    toggleBookmark (context, id) {
+      const message = context.state.messages.find(item => item.id === id);
+      context.commit('updateBookmarked', {
+        'id': id,
+        'bool': !message.is_bookmarked
+      })
+      axios.post('/api/board/bookmark/' + String(id) +'/', {
+        'data': 'data'
+      }).then(res => {
+        context.commit('updateBookmarked', {
+          'id': id,
+          'bool': (res.data['updated-to'] === 'true')
+        })
+        return res.data['updated-to'] === 'true';
+      }).then(bool => {
+        return db.messages.get(id).then(message => {
+          message.is_bookmarked = bool;
+          return db.messages.put(message);
+        })
+      })
     }
   }
 }

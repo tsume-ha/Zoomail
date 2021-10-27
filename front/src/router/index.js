@@ -12,6 +12,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "read" */ '../pages/mail/index.vue')
   },
   {
+    path: '/mail/:id(\\d+)',
+    name: 'mail:content',
+    component: () => import(/* webpackChunkName: "read" */ '../pages/mail/content.vue')
+  },
+  {
     path: '/mail/send',
     name: 'mail:send',
     component: () => import(/* webpackChunkName: "send" */ '../pages/mail/send.vue')

@@ -5,7 +5,9 @@
     <router-link to="/mail">Read - index</router-link> | 
     <router-link to="/mail/send">Send</router-link>
   </div>
-  <router-view/>
+  <main class="container">
+    <router-view />
+  </main>
   <message />
 </template>
 

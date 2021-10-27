@@ -1,25 +1,22 @@
 <template>
   <div>
     <h1>mail/read - index</h1>
-    <div v-for="mes in messages" :key="mes.id">
-      <h6>ID: {{mes.id}}</h6>
-    </div>
+    <one-message-row v-for="mes in messages" :key="mes.id" :message="mes" />
   </div>
 </template>
 
 <script>
 import { computed } from 'vue'
 import { useStore } from "vuex"
-// import { useRouter } from 'vue-router'
+import oneMessageRow from './components/one-message-row.vue'
 export default {
+  components: {
+    oneMessageRow
+  },
   setup() {
     const store = useStore();
-    // const router = useRouter();
-
     const messages = computed(() => store.state.read.messages);
-
-    // console.log(router)
-    store.dispatch('read/firstLoadMessage')
+    store.dispatch('read/firstLoadMessage');
     return{
       messages
     }
