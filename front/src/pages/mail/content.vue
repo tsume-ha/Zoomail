@@ -7,6 +7,7 @@
   </div>
   <div v-else-if="!status.loading && !status.loaded">
     please retry.
+    <button @click="reload">再読み込み</button>
   </div>
   <div v-else-if="status.loaded">
     {{id}} {{message.title}}
@@ -33,11 +34,10 @@ export default {
 
     const message = computed(() => store.state.read.messages.find(item => item.id === id));
 
-    if (message.value) {
-      status.loaded = true;
-      status.loading = false;
-    } else {
-      // キャッシュにmessageがなかったとき
+
+    const reload = () => {
+      status.loading = true;
+      status.loaded = false;
       store.dispatch('read/loadOneMessage', id).then(() => {
         status.loading = false;
         status.loaded = true;
@@ -61,8 +61,18 @@ export default {
         store.dispatch('read/firstLoadMessage');
       })
     }
+
+    if (message.value) {
+      status.loaded = true;
+      status.loading = false;
+    } else {
+      // キャッシュにmessageがなかったとき
+      reload();
+    }
+
     return {
-      id, message, status
+      id, message, status,
+      reload
     }
   },
 }
