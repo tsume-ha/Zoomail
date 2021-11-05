@@ -19,7 +19,9 @@ export default {
       //   is_bookmarked: false
       // }
     ],
-    query: {},
+    query: {
+      page: 0,
+    },
     updated: null,// Date
     nowLoading: false,
   },
@@ -53,6 +55,9 @@ export default {
         // state.messages[]が空でtargetがundefinedになってる場合を弾く
         target.is_bookmarked = payload.bool;
       }
+    },
+    updateFetchedPage (state, payload) {
+      state.query.page = payload;
     }
   },
   actions: {
@@ -90,6 +95,7 @@ export default {
       context.commit('finishAPILoading')
 
       // page数などの更新
+      context.commit('updateFetchedPage', (params.page || 1))
       
       // messages を返す
       console.log('messages from API', res.data.message_list)

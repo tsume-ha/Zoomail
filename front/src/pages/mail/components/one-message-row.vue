@@ -1,6 +1,6 @@
 <template>
   <section class="content row border-bottom" :id="'message-id-'+String(message.id)">
-    <h4 class="col-12 my-1"><router-link :to="link">{{message.title}}</router-link></h4>
+    <h4 class="col-12 my-1"><router-link :to="link">{{String(message.id)}} - {{message.title}}</router-link></h4>
     <div class="col-12">
       <span class="float-left date small p-1">{{message.created_at}}</span>
       <span class="float-left ml-4 whosent">{{message.writer}}</span>

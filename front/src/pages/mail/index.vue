@@ -4,6 +4,7 @@
     <transition-group name="message-row">
       <one-message-row v-for="mes in messages" :key="mes.id" :message="mes" class="one-message-row" />
     </transition-group>
+    <router-link :to="{path: '/mail/search', query: {page:2}}">次のページ (search)</router-link>
   </div>
 </template>
 

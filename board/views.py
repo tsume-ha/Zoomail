@@ -25,8 +25,8 @@ from mail.models import SendMailAddress, MessageProcess
 
 @login_required()
 def get_messages_list(request):
-    import time
-    time.sleep(10)
+    # import time
+    # time.sleep(10)
     now_user = request.user
 
     if 'page' in request.GET:

@@ -17,6 +17,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "read" */ '../pages/mail/content.vue')
   },
   {
+    path: '/mail/search',
+    name: 'mail:search',
+    component: () => import(/* webpackChunkName: "read" */ '../pages/mail/search.vue')
+  },
+  {
     path: '/mail/send',
     name: 'mail:send',
     component: () => import(/* webpackChunkName: "send" */ '../pages/mail/send.vue')
