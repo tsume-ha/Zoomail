@@ -1,27 +1,81 @@
 <template>
   <div>
-    <h1>mail/read - index</h1>
-    <transition-group name="message-row">
+    <h1>mail/read - search</h1>
+    <search-form />
+    
+    <div v-if="nowLoading">now loading</div>
+    <transition-group name="message-row" v-else>
       <one-message-row v-for="mes in messages" :key="mes.id" :message="mes" class="one-message-row" />
     </transition-group>
-    <router-link :to="{path: '/mail/search', query: {page:2}}">次のページ (search)</router-link>
+
+    <router-link :to="{query: differentPageQuery(2)}">Next</router-link>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, watch } from "vue"
 import { useStore } from "vuex"
-import oneMessageRow from './components/one-message-row.vue'
+import oneMessageRow from "./components/one-message-row.vue"
+import searchForm from "./components/search-form.vue"
+import { useRoute } from 'vue-router'
 export default {
   components: {
-    oneMessageRow
+    oneMessageRow,
+    searchForm
   },
   setup() {
     const store = useStore();
+    const route = useRoute();
+
+    watch(route, () => { updateMessage(); });
+
     const messages = computed(() => store.state.read.messages);
-    store.dispatch('read/firstLoadMessage');
+    const nowLoading = computed(() => store.state.read.nowLoading)
+
+    const cleanQuery = computed(() => {
+      // console.log(route.query);
+      let query = {};
+      if (route.query.is_kaisei && route.query.is_kaisei === "true") {
+        query.is_kaisei = true;
+      }
+      if (route.query.is_zenkai && route.query.is_zenkai === "true") {
+        query.is_zenkai = true;
+      }
+      if (route.query.is_bookmark && route.query.is_bookmark === "true") {
+        query.is_bookmark = true;
+      }
+      if (route.query.is_sender && route.query.is_sender === "true") {
+        query.is_sender = true;
+      }
+      if (route.query.text) {
+        query.text = route.query.text;
+      }
+      if (route.query.page && Number(route.query.page) > 1) {
+        query.page = Number(route.query.page);
+      }
+      return query
+    });
+
+    const differentPageQuery = pageNum => {
+      return {
+        ...cleanQuery.value,
+        page: pageNum
+      }
+    }
+
+    const updateMessage = () => {
+      store.dispatch(
+        'read/getMessagesFromAPI', cleanQuery.value
+      )
+    }
+
+    if (messages.value.length === 0) {
+      updateMessage();
+    }
+
     return{
-      messages
+      messages, nowLoading,
+      differentPageQuery
     }
   }
 }

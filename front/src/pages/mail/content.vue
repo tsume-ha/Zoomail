@@ -57,8 +57,6 @@ export default {
         } else {
           console.log(error.message);
         }
-      }).then(() => {
-        store.dispatch('read/firstLoadMessage');
       })
     }
 

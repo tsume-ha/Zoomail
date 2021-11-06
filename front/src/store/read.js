@@ -1,7 +1,4 @@
 import axios from "../utils/axios";
-import db from "../utils/db";
-
-const PER_PAGE = 30;
 
 export default {
   namespaced: true,
@@ -19,27 +16,13 @@ export default {
       //   is_bookmarked: false
       // }
     ],
-    query: {
-      page: 0,
-    },
-    updated: null,// Date
+    params: {},
     nowLoading: false,
   },
   mutations: {
-    addMessages (state, messages) {
-      // messages: Array of Object (message)
-      // new ... [a, b, c] + [c, d, e, f] => [a, b, c, d, e, f] ... old 
-      // のような結合をしたい
-      messages.reverse();
-      // なるべく古い順から追加していく。
-      for (const message of messages) {
-        if (!state.messages.some(m => m.id === message.id)) {
-          state.messages.unshift(message);
-        }
-      }
-    },
-    clearMessage (state) {
+    setMessages (state, messages) {
       state.messages.length = 0;
+      state.messages = messages
     },
     startAPILoading (state) {
       state.nowLoading = true;
@@ -56,69 +39,39 @@ export default {
         target.is_bookmarked = payload.bool;
       }
     },
-    updateFetchedPage (state, payload) {
-      state.query.page = payload;
+    updateParams (state, payload) {
+      state.params = payload;
     }
   },
   actions: {
-    async firstLoadMessage (context) {
-      // 1度だけ必ずAPIから取得し、非同期でDBとVuexを更新する
-
-      // localDBから取得を試みる
-      db.messages.orderBy("updated_at").reverse().limit(PER_PAGE).toArray().then(cached => {
-        context.commit('addMessages', cached)
-      }).catch(error => {
-        // localDB失敗
-        console.log(error)
-      })
-
-      // APIを叩いてVuexを更新。localDBにも保存。
-      context.dispatch('getMessagesFromAPI', { page:1 }).then(messages => {
-        context.commit('addMessages', messages);
-        return messages;
-      }).then(messages => {
-        context.dispatch('addLocalDB', messages).catch(() => {
-          console.log('Local DB add was fail.')
-        })
-      })
-    },
-    async getMessagesFromAPI (context, params) {
+    getMessagesFromAPI (context, params) {
       // APIを叩く
       context.commit('startAPILoading');
-      const res = await axios.get('/api/board/json/', {params})
-      .catch(e => {
-        console.log("name", e.name)
-        console.log("message", e.message)
-        console.log("response", e.response)
-        console.log("response.status", e.response.status)
+      axios.get('/api/board/json/', {params}).then(res => {
+        // messages を更新;
+        context.commit('setMessages', res.data.message_list);
+        context.commit('updateParams', params);
       })
-      context.commit('finishAPILoading')
-
-      // page数などの更新
-      context.commit('updateFetchedPage', (params.page || 1))
-      
-      // messages を返す
-      console.log('messages from API', res.data.message_list)
-      return res.data.message_list;
-    },
-    async addLocalDB (context, messages) {
-      // localDBに保存する。
-      // 保存前の最新のメーリスまで更新できなかったときは、
-      // 間に未取得のメーリスがあるとしてそれまでのデータを消しておく。
-      // [a, b, c] + [c, d, e] => [a, b, c, d, e, f]
-      // [a, b, c] + [g, h ,i] => [a, b, c]
-      const lastMessageBeforeAdd = await db.messages.orderBy("updated_at").reverse().first();
-      const lastKey = await db.messages.bulkPut(messages);
-      const lastData = await db.messages.get(lastKey);
-      if (new Date(lastData.updated_at).getTime() > new Date(lastMessageBeforeAdd.updated_at).getTime()) {
-        await db.messages.filter(item => {
-          new Date(lastData.updated_at).getTime() > new Date(item.updated_at).getTime()
-        }).delete();
-      }
+      .catch(e => {
+        console.log("name", e.name);
+        console.log("message", e.message);
+        console.log("response", e.response);
+        console.log("response.status", e.response.status);
+      }).finally(() => {
+        context.commit('finishAPILoading');
+      })
     },
     async loadOneMessage (context, id) {
-      const res = await axios.get('/api/board/content/' + String(id) + '/');
-      context.commit('addMessages', [res.data.message]);
+      context.commit('startAPILoading');
+      const res = await axios.get('/api/board/content/' + String(id) + '/')
+      .catch(e => {
+        console.log("name", e.name);
+        console.log("message", e.message);
+        console.log("response", e.response);
+        console.log("response.status", e.response.status);
+      })
+      context.commit('finishAPILoading');
+      context.commit('setMessages', [res.data.message]);
       return res.data.message;
     },
     toggleBookmark (context, id) {
@@ -133,12 +86,6 @@ export default {
         context.commit('updateBookmarked', {
           'id': id,
           'bool': (res.data['updated-to'] === 'true')
-        })
-        return res.data['updated-to'] === 'true';
-      }).then(bool => {
-        return db.messages.get(id).then(message => {
-          message.is_bookmarked = bool;
-          return db.messages.put(message);
         })
       })
     }
