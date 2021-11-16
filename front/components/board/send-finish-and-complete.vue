@@ -12,7 +12,7 @@
           v-html="processingMessage[messageFrag]">
         </div>
         <div v-else-if="complete" key="complete">
-          メーリスが{{complete_num}}件送信されました
+          メーリスを{{complete_num}}人に送信しました。
         </div>
       </transition>
     </div>
