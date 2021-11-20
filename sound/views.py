@@ -24,13 +24,13 @@ def index(request):
             "id": live.id,
             "date": live.recorded_at,
             "title": live.live_name,
-            "sounds": [{
+            "songs": [{
                 "id": sound.id,
-                "track_num": sound.track_num,
+                "trackNum": sound.track_num,
                 "title": sound.song_name,
                 "path": sound.file.url,
                 "length": sound.length
-              } for sound in live.sounds.all()]
+              } for sound in live.songs.all()]
         } for live in lives]
     })
 
@@ -42,13 +42,13 @@ def content(request, id):
         "id": live.id,
         "date": live.recorded_at,
         "title": live.live_name,
-        "sounds": [{
+        "songs": [{
             "id": sound.id,
-            "track_num": sound.track_num,
+            "trackNum": sound.track_num,
             "title": sound.song_name,
             "path": sound.file.url,
             "length": sound.length
-            } for sound in live.sounds.all()
+            } for sound in live.songs.all()
         ]
     })
 

@@ -12,11 +12,11 @@
           <h6 class="card-subtitle float-right small">Recorded : {{ displayDate(live.date) }}
           </h6>
           <p class="songdetail mb-2">
-            <span v-for="sound in live.sounds" :key="'sound-' + sound.id">
-              {{ sound.track_num }}. {{ sound.title }}
+            <span v-for="song in live.songs" :key="'song-' + song.id">
+              {{ song.track_num }}. {{ song.title }}
             </span>
           </p>
-          <span class="p-0 pr-2 text-right small">ほか、全{{ live.sounds.length }}曲</span>
+          <span class="p-0 pr-2 text-right small">ほか、全{{ live.songs.length }}曲</span>
         </router-link>
       </article>
     </div>
@@ -46,16 +46,10 @@ export default {
     })
     const displayDate = dateStr => moment(dateStr).format("YYYY/MM/DD (ddd)");
     const soundStaff = computed(() => store.state.user.is_staff);
-    const secondToMMSS = seconds => {
-      if (!(typeof seconds === "number")) {
-        throw new Error("second must be a number")
-      }
-      const duration = moment.duration(seconds, "seconds");
-      return `${duration.minutes}:${("00" + duration.seconds).slice(-2)}`
-    }
+
     return {
       lives, soundStaff,
-      displayDate, secondToMMSS
+      displayDate
     }
   },
 }

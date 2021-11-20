@@ -15,7 +15,8 @@
     "vue": "^3.0.4",
     "vue-router": "^4.0.3",
     "vue-select": "^4.0.0-beta.1",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "wavesurfer.js": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
