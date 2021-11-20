@@ -13,5 +13,5 @@ def index(reqest):
             "date": photo.held_at.strftime("%Y-%m-%d"),
             "url": photo.url,
             "thumbnail": photo.thumbnail.url if photo.thumbnail else None
-        } for photo in Album.objects.all()]
+        } for photo in Album.objects.all().order_by('held_at')]
     })

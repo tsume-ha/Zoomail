@@ -30,7 +30,25 @@ const routes = [
     path: '/photo',
     name: 'photo:index',
     component: () => import(/* webpackChunkName: "photo" */ '../pages/photo/index.vue')
-  }
+  },
+  {
+    path: '/sound',
+    name: 'sound:index',
+    component: () => import(/* webpackChunkName: "sound" */ '../pages/sound/index.vue')
+  },
+  {
+    path: '/sound/:id(\\d+)',
+    name: 'sound:content',
+    component: () => import(/* webpackChunkName: "sound" */ '../pages/sound/content.vue'),
+    props: route => ({
+      id: Number(route.params.id)
+    })
+  },
+  {
+    path: '/test',
+    name: 'test:index',
+    component: () => import(/* webpackChunkName: "test" */ '../pages/test/test.vue')
+  },
 ]
 
 const router = createRouter({

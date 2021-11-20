@@ -29,7 +29,7 @@ class Live(models.Model):
 
 
 class Song(models.Model):
-    live = models.ForeignKey(Live, on_delete=models.CASCADE)
+    live = models.ForeignKey(Live, on_delete=models.CASCADE, related_name="sounds")
     track_num = models.IntegerField()
     song_name = models.CharField(max_length=500)
     file = PrivateFileField(upload_to=custom_upload_to, null=True)

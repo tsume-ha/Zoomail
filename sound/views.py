@@ -19,22 +19,38 @@ from config.permissions import RecordingPermisson
 @login_required()
 def index(request):
     lives = Live.objects.all().order_by('updated_at').reverse()
-    now_user = request.user
-    is_allowed = RecordingPermisson(now_user)
-    params = {
-        'lives': lives,
-        'is_allowed': is_allowed,
-    }
-    return render(request, 'sound/index.html', params)
+    return JsonResponse({
+        "lives": [{
+            "id": live.id,
+            "date": live.recorded_at,
+            "title": live.live_name,
+            "sounds": [{
+                "id": sound.id,
+                "track_num": sound.track_num,
+                "title": sound.song_name,
+                "path": sound.file.url,
+                "length": sound.length
+              } for sound in live.sounds.all()]
+        } for live in lives]
+    })
 
 
 @login_required()
-def playlist(request, live_id):
-    live = get_object_or_404(Live, id=live_id)
-    params = {
-        'live': live,
-    }
-    return render(request, 'sound/playlist.html', params)
+def content(request, id):
+    live = get_object_or_404(Live, id=id)
+    return JsonResponse({
+        "id": live.id,
+        "date": live.recorded_at,
+        "title": live.live_name,
+        "sounds": [{
+            "id": sound.id,
+            "track_num": sound.track_num,
+            "title": sound.song_name,
+            "path": sound.file.url,
+            "length": sound.length
+            } for sound in live.sounds.all()
+        ]
+    })
 
 
 @login_required()
