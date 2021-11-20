@@ -5,11 +5,14 @@
       アンプラのイベントの写真を公開しています。<br>
       LiveLogに登録されていないBBQやお花見のイベントの写真もあります！
     </p>
+    <div class="row" v-if="photoStaff" v-cloak>
+      <a href="/admin/pictures/album/">アルバムの登録・編集はこちらから</a>
+    </div>
     <div v-for="y in yearsSet" :key="y" class="row">
       <h4 class="col-12">{{y}}年度</h4>
-      <div v-for="item in getItems(y)" :key="item.url" class="cardwrap col-6 col-xs-6 col-sm-6 col-md-4 col-lg-3 my-2">
+      <div v-for="item in getItems(y)" :key="item.id" class="cardwrap col-6 col-xs-6 col-sm-6 col-md-4 col-lg-3 my-2">
         <article class="card">
-          <img class="card-img-top" src="/static/img/album_thum_default.jpg" />
+          <img class="card-img-top" :src="thumbnailPath(item)" />
           <a :href="item.url" class="card-img-overlay" target="_blank">
             <h5 class="card-title" v-text="item.title"></h5>
             <span>{{ displayDate(item.date) }}</span>
@@ -23,25 +26,24 @@
 <script>
 import moment from "../../utils/moment";
 import { computed, reactive } from "vue";
+import axios from "../../utils/axios";
+import { useStore } from "vuex";
 export default {
   setup() {
-    const photos = reactive([
-      {
-        title: "ライブ1",
-        date: "2021-01-01",
-        url: "yahoo.co.jp"
-      },
-      {
-        title: "ライブ2",
-        date: "2021-05-01",
-        url: "yahoo.co.jp"
-      },
-      {
-        title: "ライブ3",
-        date: "2021-06-01",
-        url: "yahoo.co.jp"
-      },
-    ]);
+    const store = useStore();
+    const photos = reactive([]);
+
+    axios.get("/api/photo/").then(res => {
+      photos.length = 0;
+      photos.push(...res.data.photos);
+    }).catch(error => {
+      console.error(error.response);
+      store.commit('message/addMessage', {
+        level: "warning",
+        message: "アルバムを取得できませんでした。",
+        appname: "photos/index"
+      });
+    });
 
     const years = computed(() => photos.map(item => {
       const date = moment(item.date);
@@ -60,17 +62,28 @@ export default {
 
     const getItems = year => {
       return photos.filter(item => moment(item.date).isBetween(
-        moment().set({year:year, month:3, day:1}),
-        moment().set({year:year+1, month:3, day:1},
+        moment(`${year}-04-01`),
+        moment(`${year+1}-04-01`),
         undefined, "[)")
-      )).reverse();
+      ).reverse();
     }
 
-    const displayDate = dateStr => moment(dateStr).format("YYYY/MM/DD")
+    
+
+    const displayDate = dateStr => moment(dateStr).format("YYYY/MM/DD");
+    const thumbnailPath = item => {
+      if (item.thumbnail) {
+        return item.thumbnail;
+      } else {
+        return "/static/img/album_thum_default.jpg"
+      }
+    }
+
+    const photoStaff = computed(() => store.state.user.is_staff);
 
     return {
-      photos, years, yearsSet,
-      getItems, displayDate
+      photos, years, yearsSet, photoStaff,
+      getItems, displayDate, thumbnailPath
     }
   },
 }
@@ -113,5 +126,8 @@ h6.card-subtitle{
 a.card-img-overlay.hover h6.card-subtitle{
   color: #000;
   text-decoration: none;
+}
+[v-cloak] {
+  display: none;
 }
 </style>
