@@ -1,76 +1,44 @@
 <template>
-  <div v-if="status.loading">
-    loading...
-  </div>
-  <div v-else-if="status.notFound">
-    404
-  </div>
-  <div v-else-if="!status.loading && !status.loaded">
-    please retry.
-    <button @click="reload">再読み込み</button>
-  </div>
-  <div v-else-if="status.loaded">
-    {{id}} {{message.title}}
-  </div>
-  <div v-else>
-  </div>
+  <abstract-content
+    :id="id"
+    :dataList="messages"
+    :oneContentAPIPath="apiPath"
+    @setContent="setMessage"
+  >
+    <template #header>
+      <abstract-content-header :path="{name: 'mail:index'}" :text="message.title"/>
+    </template>
+    <div>content example</div>
+  
+  </abstract-content>
 </template>
 
 <script>
-import { computed, reactive } from 'vue';
-import { useRoute } from 'vue-router';
-import { useStore } from 'vuex';
+import AbstractContent from "../../components/AbstractContent.vue"
+import AbstractContentHeader from "../../components/AbstractContentHeader.vue"
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
 export default {
-  setup() {
-    const route = useRoute();
+  components: {
+    AbstractContent,
+    AbstractContentHeader
+  },
+  props: {
+    id: {required: true, type: Number}
+  },
+  setup(props) {
     const store = useStore();
-    const id = Number(route.params.id);
-
-    const status = reactive({
-      loading: true,
-      loaded: false,
-      notFound: false,
-    })
-
-    const message = computed(() => store.state.read.messages.find(item => item.id === id));
-
-
-    const reload = () => {
-      status.loading = true;
-      status.loaded = false;
-      store.dispatch('read/loadOneMessage', id).then(() => {
-        status.loading = false;
-        status.loaded = true;
-      }).catch(error => {
-        status.loading = false;
-        if (error.message == 'Network Error' && error.response === undefined) {
-          console.log('通信エラー');
-        } else if (error.response.status === 500) {
-          status.loaded = true;
-          console.log('500')
-        } else if (error.response.status === 403){
-          status.loaded = true;
-          status.notFound = true;
-        } else if (error.response.status === 404){
-          status.loaded = true;
-          status.notFound = true;
-        } else {
-          console.log(error.message);
-        }
-      })
+    // for AbstractContent.vue
+    const messages = computed(() => store.state.read.messages);
+    const message = ref({});
+    const setMessage = item => {
+      message.value = item;
     }
-
-    if (message.value) {
-      status.loaded = true;
-      status.loading = false;
-    } else {
-      // キャッシュにmessageがなかったとき
-      reload();
-    }
+    const apiPath = computed(() => `/api/board/content/${String(props.id)}/`)
 
     return {
-      id, message, status,
-      reload
+      messages, message, apiPath, 
+      setMessage
     }
   },
 }

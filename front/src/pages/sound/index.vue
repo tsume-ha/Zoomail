@@ -13,7 +13,7 @@
           </h6>
           <p class="songdetail mb-2">
             <span v-for="sound in live.sounds" :key="'sound-' + sound.id">
-              {{ sound.track_num }}. {{sound.title}}
+              {{ sound.track_num }}. {{ sound.title }}
             </span>
           </p>
           <span class="p-0 pr-2 text-right small">ほか、全{{ live.sounds.length }}曲</span>

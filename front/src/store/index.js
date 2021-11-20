@@ -8,8 +8,12 @@ import sound from './sound'
 export default createStore({
   strict: process.env.NODE_ENV !== 'production',
   state: {
+    lastPath: null,
   },
   mutations: {
+    updateLastPath(state, payload) {
+      state.lastPath = payload;
+    }
   },
   actions: {
   },

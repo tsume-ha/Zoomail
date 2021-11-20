@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import { computed, watch } from "vue"
-import { useStore } from "vuex"
-import oneMessageRow from "./components/one-message-row.vue"
-import searchForm from "./components/search-form.vue"
-import { useRoute } from 'vue-router'
+import { computed, onMounted, watch } from "vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import oneMessageRow from "./components/one-message-row.vue";
+import searchForm from "./components/search-form.vue";
 export default {
   components: {
     oneMessageRow,
@@ -33,7 +33,6 @@ export default {
     const nowLoading = computed(() => store.state.read.nowLoading)
 
     const cleanQuery = computed(() => {
-      // console.log(route.query);
       let query = {};
       if (route.query.is_kaisei && route.query.is_kaisei === "true") {
         query.is_kaisei = true;
@@ -72,6 +71,8 @@ export default {
     if (messages.value.length === 0) {
       updateMessage();
     }
+    
+    onMounted(() => updateMessage());
 
     return{
       messages, nowLoading,

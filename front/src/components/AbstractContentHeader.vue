@@ -1,15 +1,31 @@
 <template>
   <header class="row content-header">
-    <router-link :to="path" class="back-arrow"></router-link>
+    <router-link :to="to" class="back-arrow"></router-link>
     <h3>{{text}}</h3>
   </header>
 </template>
 
 <script>
+import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
   props: {
-    path: {type: String, required: false, default: "../"},
+    path: {type: [String, Object], required: false, default: () => "../"},
     text: {type: String, required: true}
+  },
+  setup (props) {
+    const store = useStore();
+    const to = computed(() => {
+      if (store.state.lastPath) {
+        const { name, params, query } = store.state.lastPath;
+        return { name, params, query };
+      } else {
+        return props.path;
+      }
+    })
+    return {
+      to
+    }
   }
 }
 </script>
@@ -21,7 +37,6 @@ export default {
   padding: 0;
   height: 2rem;
   width: 100%;
-  border-bottom: 1px solid #333;
 }
 .content-header h3{
   font-size: 1.5rem;

@@ -26,20 +26,19 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
-// import { useStore } from "vuex";
-import { useRouter } from 'vue-router';
+import { onMounted, reactive } from "vue";
+import { useRoute, useRouter } from "vue-router";
 export default {
-  name: 'searchform',
+  name: "searchform",
   setup() {
-    // const store = useStore();
     const router = useRouter();
+    const route = useRoute();
     const params = reactive({
       is_kaisei: false,
       is_zenkai: false,
       is_bookmark: false,
       is_sender: false,
-      text: '',
+      text: "",
       page: 1,
     });
 
@@ -69,6 +68,28 @@ export default {
 
       router.push({ query });
     }
+
+    onMounted(() => {
+      if (route.query.is_kaisei && route.query.is_kaisei === "true") {
+        params.is_kaisei = true;
+      }
+      if (route.query.is_zenkai && route.query.is_zenkai === "true") {
+        params.is_zenkai = true;
+      }
+      if (route.query.is_bookmark && route.query.is_bookmark === "true") {
+        params.is_bookmark = true;
+      }
+      if (route.query.is_sender && route.query.is_sender === "true") {
+        params.is_sender = true;
+      }
+      if (route.query.text) {
+        params.text = route.query.text;
+      }
+      if (route.query.page && Number(route.query.page) > 1) {
+        params.page = Number(route.query.page);
+      }
+    })
+
     return {
       params,
       submit

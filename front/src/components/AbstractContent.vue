@@ -72,6 +72,8 @@ export default {
     if (props.dataList.some(item => Number(item.id) === id)) {
       const item = {...props.dataList.find(item => Number(item.id) === id)}
       context.emit("setContent", item)
+      status.loading = false;
+      status.loaded = true;
     } else {
       loadAPI();
     }

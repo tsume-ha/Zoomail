@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store'
 
 const routes = [
   {
@@ -14,7 +15,10 @@ const routes = [
   {
     path: '/mail/:id(\\d+)',
     name: 'mail:content',
-    component: () => import(/* webpackChunkName: "read" */ '../pages/mail/content.vue')
+    component: () => import(/* webpackChunkName: "read" */ '../pages/mail/content.vue'),
+    props: route => ({
+      id: Number(route.params.id)
+    })
   },
   {
     path: '/mail/send',
@@ -55,6 +59,11 @@ const router = createRouter({
   history: createWebHistory("/"),
   routes,
   base: "/"
+})
+
+router.beforeEach((to, from, next) => {
+  store.commit("updateLastPath", from);
+  next();
 })
 
 export default router
