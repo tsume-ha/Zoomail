@@ -24,9 +24,7 @@ def GetKansouList(year):
         text_return += '<a href="'
         text_return += record.file.url
         text_return += '" target="_blank" class="list-group-item list-group-item-action p-2"><h6 class="d-inline-block m-0">'
-        text_return += record.translate_livename()
-        if record.numbering > 1:
-            text_return += '_' + str(record.numbering)
+        text_return += record.title
         text_return += ' ('
         text_return += readable_size(record.file.size)
         text_return += ')</h6><span class="small m-2 p-1 pl-2 text-dark">'
