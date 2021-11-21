@@ -8,31 +8,23 @@ from private_storage.fields import PrivateFileField
 # upload_toでファイル名を指定してしまう
 
 class Kansouyoushi(models.Model):
-    live = models.CharField(max_length=200, verbose_name='ライブ名')
-    detail = models.CharField(max_length=200, blank=True, verbose_name='その他特記事項', help_text='「2回生の分のみ」など')
-    numbering = models.IntegerField(default=1, verbose_name='ナンバリング', help_text='ファイルが大きくなり、分割したときに〇〇ライブ1, 〇〇ライブ2という風に区切ってください。<br>特になければ1にしてください。')
-    file = PrivateFileField(upload_to='kansoyoshi/%Y/', null=True, verbose_name='PDFファイル', help_text="おおむね10MB以下にしてください。大きいファイルの場合は分割してください。")
+    title = models.CharField(max_length=200, verbose_name='ライブ名')
+    detail = models.CharField(max_length=200, blank=True, verbose_name='その他特記事項')
+    file = PrivateFileField(upload_to='kansoyoshi/%Y/', null=True, verbose_name='PDFファイル')
     performed_at = models.DateField(verbose_name='ライブ日')
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='kansou_creater')
     def __str__(self):
-        return self.performed_at.strftime('%Y-%m-%d') + ' : ' + self.live
+        return self.performed_at.strftime('%Y-%m-%d') + ' : ' + self.title
 
-    livename = [
-        ('sinkanlive','新歓ライブ'),
-        ('junelive','6月ライブ'),
-        ('freshmanlive','新人ライブ'),
-        ('septemberlive','9月ライブ'),
-        ('octoberlive','10月ライブ'),
-        ('christmaslive','クリスマスライブ'),
-        ('newyearlive','あけおめライブ'),
-        ('marchlive','3月ライブ'),
-        ('other','その他'),
-    ]
-
-    def translate_livename(self):
-        for l_name in self.livename:
-            if l_name[0] == self.live:
-                return l_name[1]
-        return '（ライブ名不明）'#見つからなかった場合にこれを返す
-        
+    # livename = [
+    #     ('sinkanlive','新歓ライブ'),
+    #     ('junelive','6月ライブ'),
+    #     ('freshmanlive','新人ライブ'),
+    #     ('septemberlive','9月ライブ'),
+    #     ('octoberlive','10月ライブ'),
+    #     ('christmaslive','クリスマスライブ'),
+    #     ('newyearlive','あけおめライブ'),
+    #     ('marchlive','3月ライブ'),
+    #     ('other','その他'),
+    # ]
