@@ -31,10 +31,10 @@
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\sound.js",
       "publicPath": "http://localhost:8080/static/dist/js/sound.js"
     },
-    "static/dist/js/test.js": {
-      "name": "static/dist/js/test.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\test.js",
-      "publicPath": "http://localhost:8080/static/dist/js/test.js"
+    "static/dist/js/kansou.js": {
+      "name": "static/dist/js/kansou.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\kansou.js",
+      "publicPath": "http://localhost:8080/static/dist/js/kansou.js"
     },
     "static/dist/js/chunk-vendors.js": {
       "name": "static/dist/js/chunk-vendors.js",
@@ -55,91 +55,13 @@
       "name": "index.html",
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\index.html",
       "publicPath": "http://localhost:8080/index.html"
-    },
-    "app.10aca83fa56bce9171c9.hot-update.js": {
-      "name": "app.10aca83fa56bce9171c9.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.10aca83fa56bce9171c9.hot-update.js",
-      "publicPath": "http://localhost:8080/app.10aca83fa56bce9171c9.hot-update.js"
-    },
-    "app.10aca83fa56bce9171c9.hot-update.json": {
-      "name": "app.10aca83fa56bce9171c9.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.10aca83fa56bce9171c9.hot-update.json",
-      "publicPath": "http://localhost:8080/app.10aca83fa56bce9171c9.hot-update.json"
-    },
-    "app.3960a355feba12608165.hot-update.js": {
-      "name": "app.3960a355feba12608165.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.3960a355feba12608165.hot-update.js",
-      "publicPath": "http://localhost:8080/app.3960a355feba12608165.hot-update.js"
-    },
-    "app.3960a355feba12608165.hot-update.json": {
-      "name": "app.3960a355feba12608165.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.3960a355feba12608165.hot-update.json",
-      "publicPath": "http://localhost:8080/app.3960a355feba12608165.hot-update.json"
-    },
-    "static/dist/js/kansou.js": {
-      "name": "static/dist/js/kansou.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\kansou.js",
-      "publicPath": "http://localhost:8080/static/dist/js/kansou.js"
-    },
-    "app.46348c5b5d083e9b26eb.hot-update.js": {
-      "name": "app.46348c5b5d083e9b26eb.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.46348c5b5d083e9b26eb.hot-update.js",
-      "publicPath": "http://localhost:8080/app.46348c5b5d083e9b26eb.hot-update.js"
-    },
-    "app.46348c5b5d083e9b26eb.hot-update.json": {
-      "name": "app.46348c5b5d083e9b26eb.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.46348c5b5d083e9b26eb.hot-update.json",
-      "publicPath": "http://localhost:8080/app.46348c5b5d083e9b26eb.hot-update.json"
-    },
-    "app.43234b9981b2278696c7.hot-update.js": {
-      "name": "app.43234b9981b2278696c7.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.43234b9981b2278696c7.hot-update.js",
-      "publicPath": "http://localhost:8080/app.43234b9981b2278696c7.hot-update.js"
-    },
-    "app.43234b9981b2278696c7.hot-update.json": {
-      "name": "app.43234b9981b2278696c7.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.43234b9981b2278696c7.hot-update.json",
-      "publicPath": "http://localhost:8080/app.43234b9981b2278696c7.hot-update.json"
-    },
-    "app.22256e61b64f4fd4a03c.hot-update.js": {
-      "name": "app.22256e61b64f4fd4a03c.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.22256e61b64f4fd4a03c.hot-update.js",
-      "publicPath": "http://localhost:8080/app.22256e61b64f4fd4a03c.hot-update.js"
-    },
-    "kansou.22256e61b64f4fd4a03c.hot-update.js": {
-      "name": "kansou.22256e61b64f4fd4a03c.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\kansou.22256e61b64f4fd4a03c.hot-update.js",
-      "publicPath": "http://localhost:8080/kansou.22256e61b64f4fd4a03c.hot-update.js"
-    },
-    "app.22256e61b64f4fd4a03c.hot-update.json": {
-      "name": "app.22256e61b64f4fd4a03c.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.22256e61b64f4fd4a03c.hot-update.json",
-      "publicPath": "http://localhost:8080/app.22256e61b64f4fd4a03c.hot-update.json"
-    },
-    "app.1e710f4bb2336ade1c6e.hot-update.js": {
-      "name": "app.1e710f4bb2336ade1c6e.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.1e710f4bb2336ade1c6e.hot-update.js",
-      "publicPath": "http://localhost:8080/app.1e710f4bb2336ade1c6e.hot-update.js"
-    },
-    "kansou.1e710f4bb2336ade1c6e.hot-update.js": {
-      "name": "kansou.1e710f4bb2336ade1c6e.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\kansou.1e710f4bb2336ade1c6e.hot-update.js",
-      "publicPath": "http://localhost:8080/kansou.1e710f4bb2336ade1c6e.hot-update.js"
-    },
-    "app.1e710f4bb2336ade1c6e.hot-update.json": {
-      "name": "app.1e710f4bb2336ade1c6e.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.1e710f4bb2336ade1c6e.hot-update.json",
-      "publicPath": "http://localhost:8080/app.1e710f4bb2336ade1c6e.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "static/dist/js/chunk-vendors.js",
-      "static/dist/js/app.js",
-      "app.1e710f4bb2336ade1c6e.hot-update.js"
+      "static/dist/js/app.js"
     ]
   },
-  "publicPath": "http://localhost:8080/",
-  "error": "ModuleNotFoundError",
-  "message": "Module not found: Error: Can't resolve '../pages/test/test.vue' in 'C:\\Users\\mhash\\Documents\\UnpluggedMessage\\front\\src\\router'"
+  "publicPath": "http://localhost:8080/"
 }
