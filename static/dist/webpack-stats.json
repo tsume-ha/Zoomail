@@ -56,405 +56,90 @@
       "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\index.html",
       "publicPath": "http://localhost:8080/index.html"
     },
-    "app.d373e2e04f68480454a7.hot-update.js": {
-      "name": "app.d373e2e04f68480454a7.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.d373e2e04f68480454a7.hot-update.js",
-      "publicPath": "http://localhost:8080/app.d373e2e04f68480454a7.hot-update.js"
-    },
-    "sound.d373e2e04f68480454a7.hot-update.js": {
-      "name": "sound.d373e2e04f68480454a7.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.d373e2e04f68480454a7.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.d373e2e04f68480454a7.hot-update.js"
-    },
-    "app.d373e2e04f68480454a7.hot-update.json": {
-      "name": "app.d373e2e04f68480454a7.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.d373e2e04f68480454a7.hot-update.json",
-      "publicPath": "http://localhost:8080/app.d373e2e04f68480454a7.hot-update.json"
-    },
-    "app.5140a08ebd3a83906946.hot-update.js": {
-      "name": "app.5140a08ebd3a83906946.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.5140a08ebd3a83906946.hot-update.js",
-      "publicPath": "http://localhost:8080/app.5140a08ebd3a83906946.hot-update.js"
-    },
-    "sound.5140a08ebd3a83906946.hot-update.js": {
-      "name": "sound.5140a08ebd3a83906946.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.5140a08ebd3a83906946.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.5140a08ebd3a83906946.hot-update.js"
-    },
-    "app.5140a08ebd3a83906946.hot-update.json": {
-      "name": "app.5140a08ebd3a83906946.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.5140a08ebd3a83906946.hot-update.json",
-      "publicPath": "http://localhost:8080/app.5140a08ebd3a83906946.hot-update.json"
-    },
-    "app.83a272960883f63e4149.hot-update.js": {
-      "name": "app.83a272960883f63e4149.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.83a272960883f63e4149.hot-update.js",
-      "publicPath": "http://localhost:8080/app.83a272960883f63e4149.hot-update.js"
-    },
-    "sound.83a272960883f63e4149.hot-update.js": {
-      "name": "sound.83a272960883f63e4149.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.83a272960883f63e4149.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.83a272960883f63e4149.hot-update.js"
-    },
-    "app.83a272960883f63e4149.hot-update.json": {
-      "name": "app.83a272960883f63e4149.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.83a272960883f63e4149.hot-update.json",
-      "publicPath": "http://localhost:8080/app.83a272960883f63e4149.hot-update.json"
-    },
-    "app.6fae1e7a12f1fcb77061.hot-update.js": {
-      "name": "app.6fae1e7a12f1fcb77061.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.6fae1e7a12f1fcb77061.hot-update.js",
-      "publicPath": "http://localhost:8080/app.6fae1e7a12f1fcb77061.hot-update.js"
-    },
-    "sound.6fae1e7a12f1fcb77061.hot-update.js": {
-      "name": "sound.6fae1e7a12f1fcb77061.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.6fae1e7a12f1fcb77061.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.6fae1e7a12f1fcb77061.hot-update.js"
-    },
-    "app.6fae1e7a12f1fcb77061.hot-update.json": {
-      "name": "app.6fae1e7a12f1fcb77061.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.6fae1e7a12f1fcb77061.hot-update.json",
-      "publicPath": "http://localhost:8080/app.6fae1e7a12f1fcb77061.hot-update.json"
-    },
-    "app.4d6fa46b26f2752a548a.hot-update.js": {
-      "name": "app.4d6fa46b26f2752a548a.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.4d6fa46b26f2752a548a.hot-update.js",
-      "publicPath": "http://localhost:8080/app.4d6fa46b26f2752a548a.hot-update.js"
-    },
-    "sound.4d6fa46b26f2752a548a.hot-update.js": {
-      "name": "sound.4d6fa46b26f2752a548a.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.4d6fa46b26f2752a548a.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.4d6fa46b26f2752a548a.hot-update.js"
-    },
-    "app.4d6fa46b26f2752a548a.hot-update.json": {
-      "name": "app.4d6fa46b26f2752a548a.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.4d6fa46b26f2752a548a.hot-update.json",
-      "publicPath": "http://localhost:8080/app.4d6fa46b26f2752a548a.hot-update.json"
-    },
-    "app.805b0075d0dae0e8d16d.hot-update.js": {
-      "name": "app.805b0075d0dae0e8d16d.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.805b0075d0dae0e8d16d.hot-update.js",
-      "publicPath": "http://localhost:8080/app.805b0075d0dae0e8d16d.hot-update.js"
-    },
-    "sound.805b0075d0dae0e8d16d.hot-update.js": {
-      "name": "sound.805b0075d0dae0e8d16d.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.805b0075d0dae0e8d16d.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.805b0075d0dae0e8d16d.hot-update.js"
-    },
-    "app.805b0075d0dae0e8d16d.hot-update.json": {
-      "name": "app.805b0075d0dae0e8d16d.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.805b0075d0dae0e8d16d.hot-update.json",
-      "publicPath": "http://localhost:8080/app.805b0075d0dae0e8d16d.hot-update.json"
-    },
-    "app.2644475289158bd2ea72.hot-update.js": {
-      "name": "app.2644475289158bd2ea72.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.2644475289158bd2ea72.hot-update.js",
-      "publicPath": "http://localhost:8080/app.2644475289158bd2ea72.hot-update.js"
-    },
-    "sound.2644475289158bd2ea72.hot-update.js": {
-      "name": "sound.2644475289158bd2ea72.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.2644475289158bd2ea72.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.2644475289158bd2ea72.hot-update.js"
-    },
-    "app.2644475289158bd2ea72.hot-update.json": {
-      "name": "app.2644475289158bd2ea72.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.2644475289158bd2ea72.hot-update.json",
-      "publicPath": "http://localhost:8080/app.2644475289158bd2ea72.hot-update.json"
-    },
-    "app.5e39e44fdcb23ea977d9.hot-update.js": {
-      "name": "app.5e39e44fdcb23ea977d9.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.5e39e44fdcb23ea977d9.hot-update.js",
-      "publicPath": "http://localhost:8080/app.5e39e44fdcb23ea977d9.hot-update.js"
-    },
-    "sound.5e39e44fdcb23ea977d9.hot-update.js": {
-      "name": "sound.5e39e44fdcb23ea977d9.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.5e39e44fdcb23ea977d9.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.5e39e44fdcb23ea977d9.hot-update.js"
-    },
-    "app.5e39e44fdcb23ea977d9.hot-update.json": {
-      "name": "app.5e39e44fdcb23ea977d9.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.5e39e44fdcb23ea977d9.hot-update.json",
-      "publicPath": "http://localhost:8080/app.5e39e44fdcb23ea977d9.hot-update.json"
-    },
-    "app.92f2c150bb62dc3461d2.hot-update.js": {
-      "name": "app.92f2c150bb62dc3461d2.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.92f2c150bb62dc3461d2.hot-update.js",
-      "publicPath": "http://localhost:8080/app.92f2c150bb62dc3461d2.hot-update.js"
-    },
-    "sound.92f2c150bb62dc3461d2.hot-update.js": {
-      "name": "sound.92f2c150bb62dc3461d2.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.92f2c150bb62dc3461d2.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.92f2c150bb62dc3461d2.hot-update.js"
-    },
-    "app.92f2c150bb62dc3461d2.hot-update.json": {
-      "name": "app.92f2c150bb62dc3461d2.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.92f2c150bb62dc3461d2.hot-update.json",
-      "publicPath": "http://localhost:8080/app.92f2c150bb62dc3461d2.hot-update.json"
-    },
-    "app.a2b1cf4146d31ae78c21.hot-update.js": {
-      "name": "app.a2b1cf4146d31ae78c21.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.a2b1cf4146d31ae78c21.hot-update.js",
-      "publicPath": "http://localhost:8080/app.a2b1cf4146d31ae78c21.hot-update.js"
-    },
-    "sound.a2b1cf4146d31ae78c21.hot-update.js": {
-      "name": "sound.a2b1cf4146d31ae78c21.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.a2b1cf4146d31ae78c21.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.a2b1cf4146d31ae78c21.hot-update.js"
-    },
-    "app.a2b1cf4146d31ae78c21.hot-update.json": {
-      "name": "app.a2b1cf4146d31ae78c21.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.a2b1cf4146d31ae78c21.hot-update.json",
-      "publicPath": "http://localhost:8080/app.a2b1cf4146d31ae78c21.hot-update.json"
-    },
-    "app.1b980c96dd645b17a4cf.hot-update.js": {
-      "name": "app.1b980c96dd645b17a4cf.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.1b980c96dd645b17a4cf.hot-update.js",
-      "publicPath": "http://localhost:8080/app.1b980c96dd645b17a4cf.hot-update.js"
-    },
-    "sound.1b980c96dd645b17a4cf.hot-update.js": {
-      "name": "sound.1b980c96dd645b17a4cf.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.1b980c96dd645b17a4cf.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.1b980c96dd645b17a4cf.hot-update.js"
-    },
-    "app.1b980c96dd645b17a4cf.hot-update.json": {
-      "name": "app.1b980c96dd645b17a4cf.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.1b980c96dd645b17a4cf.hot-update.json",
-      "publicPath": "http://localhost:8080/app.1b980c96dd645b17a4cf.hot-update.json"
-    },
-    "app.a99f2edec253ed17d5df.hot-update.js": {
-      "name": "app.a99f2edec253ed17d5df.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.a99f2edec253ed17d5df.hot-update.js",
-      "publicPath": "http://localhost:8080/app.a99f2edec253ed17d5df.hot-update.js"
-    },
-    "sound.a99f2edec253ed17d5df.hot-update.js": {
-      "name": "sound.a99f2edec253ed17d5df.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.a99f2edec253ed17d5df.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.a99f2edec253ed17d5df.hot-update.js"
-    },
-    "app.a99f2edec253ed17d5df.hot-update.json": {
-      "name": "app.a99f2edec253ed17d5df.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.a99f2edec253ed17d5df.hot-update.json",
-      "publicPath": "http://localhost:8080/app.a99f2edec253ed17d5df.hot-update.json"
-    },
-    "app.d9b90cc64812ff8c36e3.hot-update.js": {
-      "name": "app.d9b90cc64812ff8c36e3.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.d9b90cc64812ff8c36e3.hot-update.js",
-      "publicPath": "http://localhost:8080/app.d9b90cc64812ff8c36e3.hot-update.js"
-    },
-    "sound.d9b90cc64812ff8c36e3.hot-update.js": {
-      "name": "sound.d9b90cc64812ff8c36e3.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.d9b90cc64812ff8c36e3.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.d9b90cc64812ff8c36e3.hot-update.js"
-    },
-    "app.d9b90cc64812ff8c36e3.hot-update.json": {
-      "name": "app.d9b90cc64812ff8c36e3.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.d9b90cc64812ff8c36e3.hot-update.json",
-      "publicPath": "http://localhost:8080/app.d9b90cc64812ff8c36e3.hot-update.json"
-    },
-    "app.e0a49944da9e28f8dc7c.hot-update.js": {
-      "name": "app.e0a49944da9e28f8dc7c.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.e0a49944da9e28f8dc7c.hot-update.js",
-      "publicPath": "http://localhost:8080/app.e0a49944da9e28f8dc7c.hot-update.js"
-    },
-    "sound.e0a49944da9e28f8dc7c.hot-update.js": {
-      "name": "sound.e0a49944da9e28f8dc7c.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.e0a49944da9e28f8dc7c.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.e0a49944da9e28f8dc7c.hot-update.js"
-    },
-    "app.e0a49944da9e28f8dc7c.hot-update.json": {
-      "name": "app.e0a49944da9e28f8dc7c.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.e0a49944da9e28f8dc7c.hot-update.json",
-      "publicPath": "http://localhost:8080/app.e0a49944da9e28f8dc7c.hot-update.json"
-    },
-    "app.394ba66ddb399471230b.hot-update.js": {
-      "name": "app.394ba66ddb399471230b.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.394ba66ddb399471230b.hot-update.js",
-      "publicPath": "http://localhost:8080/app.394ba66ddb399471230b.hot-update.js"
-    },
-    "sound.394ba66ddb399471230b.hot-update.js": {
-      "name": "sound.394ba66ddb399471230b.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.394ba66ddb399471230b.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.394ba66ddb399471230b.hot-update.js"
-    },
-    "app.394ba66ddb399471230b.hot-update.json": {
-      "name": "app.394ba66ddb399471230b.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.394ba66ddb399471230b.hot-update.json",
-      "publicPath": "http://localhost:8080/app.394ba66ddb399471230b.hot-update.json"
-    },
-    "app.b8e399635b44026f581b.hot-update.js": {
-      "name": "app.b8e399635b44026f581b.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.b8e399635b44026f581b.hot-update.js",
-      "publicPath": "http://localhost:8080/app.b8e399635b44026f581b.hot-update.js"
-    },
-    "sound.b8e399635b44026f581b.hot-update.js": {
-      "name": "sound.b8e399635b44026f581b.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.b8e399635b44026f581b.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.b8e399635b44026f581b.hot-update.js"
-    },
-    "app.b8e399635b44026f581b.hot-update.json": {
-      "name": "app.b8e399635b44026f581b.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.b8e399635b44026f581b.hot-update.json",
-      "publicPath": "http://localhost:8080/app.b8e399635b44026f581b.hot-update.json"
-    },
-    "app.753307b62ad979efdf4a.hot-update.js": {
-      "name": "app.753307b62ad979efdf4a.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.753307b62ad979efdf4a.hot-update.js",
-      "publicPath": "http://localhost:8080/app.753307b62ad979efdf4a.hot-update.js"
-    },
-    "sound.753307b62ad979efdf4a.hot-update.js": {
-      "name": "sound.753307b62ad979efdf4a.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.753307b62ad979efdf4a.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.753307b62ad979efdf4a.hot-update.js"
-    },
-    "app.753307b62ad979efdf4a.hot-update.json": {
-      "name": "app.753307b62ad979efdf4a.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.753307b62ad979efdf4a.hot-update.json",
-      "publicPath": "http://localhost:8080/app.753307b62ad979efdf4a.hot-update.json"
-    },
-    "app.0d8240f1cf84eb2dcfc9.hot-update.js": {
-      "name": "app.0d8240f1cf84eb2dcfc9.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.0d8240f1cf84eb2dcfc9.hot-update.js",
-      "publicPath": "http://localhost:8080/app.0d8240f1cf84eb2dcfc9.hot-update.js"
-    },
-    "sound.0d8240f1cf84eb2dcfc9.hot-update.js": {
-      "name": "sound.0d8240f1cf84eb2dcfc9.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.0d8240f1cf84eb2dcfc9.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.0d8240f1cf84eb2dcfc9.hot-update.js"
-    },
-    "app.0d8240f1cf84eb2dcfc9.hot-update.json": {
-      "name": "app.0d8240f1cf84eb2dcfc9.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.0d8240f1cf84eb2dcfc9.hot-update.json",
-      "publicPath": "http://localhost:8080/app.0d8240f1cf84eb2dcfc9.hot-update.json"
-    },
-    "app.2b0a2030af7d84320191.hot-update.js": {
-      "name": "app.2b0a2030af7d84320191.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.2b0a2030af7d84320191.hot-update.js",
-      "publicPath": "http://localhost:8080/app.2b0a2030af7d84320191.hot-update.js"
-    },
-    "sound.2b0a2030af7d84320191.hot-update.js": {
-      "name": "sound.2b0a2030af7d84320191.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.2b0a2030af7d84320191.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.2b0a2030af7d84320191.hot-update.js"
-    },
-    "app.2b0a2030af7d84320191.hot-update.json": {
-      "name": "app.2b0a2030af7d84320191.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.2b0a2030af7d84320191.hot-update.json",
-      "publicPath": "http://localhost:8080/app.2b0a2030af7d84320191.hot-update.json"
-    },
-    "app.a590c6db77f167cb1954.hot-update.js": {
-      "name": "app.a590c6db77f167cb1954.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.a590c6db77f167cb1954.hot-update.js",
-      "publicPath": "http://localhost:8080/app.a590c6db77f167cb1954.hot-update.js"
-    },
-    "sound.a590c6db77f167cb1954.hot-update.js": {
-      "name": "sound.a590c6db77f167cb1954.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.a590c6db77f167cb1954.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.a590c6db77f167cb1954.hot-update.js"
-    },
-    "app.a590c6db77f167cb1954.hot-update.json": {
-      "name": "app.a590c6db77f167cb1954.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.a590c6db77f167cb1954.hot-update.json",
-      "publicPath": "http://localhost:8080/app.a590c6db77f167cb1954.hot-update.json"
-    },
-    "app.42334c472a16e9e6a86b.hot-update.js": {
-      "name": "app.42334c472a16e9e6a86b.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.42334c472a16e9e6a86b.hot-update.js",
-      "publicPath": "http://localhost:8080/app.42334c472a16e9e6a86b.hot-update.js"
-    },
-    "sound.42334c472a16e9e6a86b.hot-update.js": {
-      "name": "sound.42334c472a16e9e6a86b.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.42334c472a16e9e6a86b.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.42334c472a16e9e6a86b.hot-update.js"
-    },
-    "app.42334c472a16e9e6a86b.hot-update.json": {
-      "name": "app.42334c472a16e9e6a86b.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.42334c472a16e9e6a86b.hot-update.json",
-      "publicPath": "http://localhost:8080/app.42334c472a16e9e6a86b.hot-update.json"
-    },
-    "app.97239cc57b60bb447a80.hot-update.js": {
-      "name": "app.97239cc57b60bb447a80.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.97239cc57b60bb447a80.hot-update.js",
-      "publicPath": "http://localhost:8080/app.97239cc57b60bb447a80.hot-update.js"
-    },
-    "sound.97239cc57b60bb447a80.hot-update.js": {
-      "name": "sound.97239cc57b60bb447a80.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.97239cc57b60bb447a80.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.97239cc57b60bb447a80.hot-update.js"
-    },
-    "app.97239cc57b60bb447a80.hot-update.json": {
-      "name": "app.97239cc57b60bb447a80.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.97239cc57b60bb447a80.hot-update.json",
-      "publicPath": "http://localhost:8080/app.97239cc57b60bb447a80.hot-update.json"
-    },
-    "app.17af14c78a0ebffeaf5f.hot-update.js": {
-      "name": "app.17af14c78a0ebffeaf5f.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.17af14c78a0ebffeaf5f.hot-update.js",
-      "publicPath": "http://localhost:8080/app.17af14c78a0ebffeaf5f.hot-update.js"
-    },
-    "sound.17af14c78a0ebffeaf5f.hot-update.js": {
-      "name": "sound.17af14c78a0ebffeaf5f.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.17af14c78a0ebffeaf5f.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.17af14c78a0ebffeaf5f.hot-update.js"
-    },
-    "app.17af14c78a0ebffeaf5f.hot-update.json": {
-      "name": "app.17af14c78a0ebffeaf5f.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.17af14c78a0ebffeaf5f.hot-update.json",
-      "publicPath": "http://localhost:8080/app.17af14c78a0ebffeaf5f.hot-update.json"
-    },
-    "app.13fe58899fbf3c210238.hot-update.js": {
-      "name": "app.13fe58899fbf3c210238.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.13fe58899fbf3c210238.hot-update.js",
-      "publicPath": "http://localhost:8080/app.13fe58899fbf3c210238.hot-update.js"
-    },
-    "sound.13fe58899fbf3c210238.hot-update.js": {
-      "name": "sound.13fe58899fbf3c210238.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.13fe58899fbf3c210238.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.13fe58899fbf3c210238.hot-update.js"
-    },
-    "app.13fe58899fbf3c210238.hot-update.json": {
-      "name": "app.13fe58899fbf3c210238.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.13fe58899fbf3c210238.hot-update.json",
-      "publicPath": "http://localhost:8080/app.13fe58899fbf3c210238.hot-update.json"
-    },
-    "app.80a96b172e87480af883.hot-update.js": {
-      "name": "app.80a96b172e87480af883.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.80a96b172e87480af883.hot-update.js",
-      "publicPath": "http://localhost:8080/app.80a96b172e87480af883.hot-update.js"
-    },
-    "sound.80a96b172e87480af883.hot-update.js": {
-      "name": "sound.80a96b172e87480af883.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.80a96b172e87480af883.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.80a96b172e87480af883.hot-update.js"
-    },
-    "app.80a96b172e87480af883.hot-update.json": {
-      "name": "app.80a96b172e87480af883.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.80a96b172e87480af883.hot-update.json",
-      "publicPath": "http://localhost:8080/app.80a96b172e87480af883.hot-update.json"
-    },
-    "app.b39f1a0de2ab50b74ad8.hot-update.js": {
-      "name": "app.b39f1a0de2ab50b74ad8.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.b39f1a0de2ab50b74ad8.hot-update.js",
-      "publicPath": "http://localhost:8080/app.b39f1a0de2ab50b74ad8.hot-update.js"
-    },
-    "sound.b39f1a0de2ab50b74ad8.hot-update.js": {
-      "name": "sound.b39f1a0de2ab50b74ad8.hot-update.js",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\sound.b39f1a0de2ab50b74ad8.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.b39f1a0de2ab50b74ad8.hot-update.js"
-    },
-    "app.b39f1a0de2ab50b74ad8.hot-update.json": {
-      "name": "app.b39f1a0de2ab50b74ad8.hot-update.json",
-      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.b39f1a0de2ab50b74ad8.hot-update.json",
-      "publicPath": "http://localhost:8080/app.b39f1a0de2ab50b74ad8.hot-update.json"
+    "app.10aca83fa56bce9171c9.hot-update.js": {
+      "name": "app.10aca83fa56bce9171c9.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.10aca83fa56bce9171c9.hot-update.js",
+      "publicPath": "http://localhost:8080/app.10aca83fa56bce9171c9.hot-update.js"
+    },
+    "app.10aca83fa56bce9171c9.hot-update.json": {
+      "name": "app.10aca83fa56bce9171c9.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.10aca83fa56bce9171c9.hot-update.json",
+      "publicPath": "http://localhost:8080/app.10aca83fa56bce9171c9.hot-update.json"
+    },
+    "app.3960a355feba12608165.hot-update.js": {
+      "name": "app.3960a355feba12608165.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.3960a355feba12608165.hot-update.js",
+      "publicPath": "http://localhost:8080/app.3960a355feba12608165.hot-update.js"
+    },
+    "app.3960a355feba12608165.hot-update.json": {
+      "name": "app.3960a355feba12608165.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.3960a355feba12608165.hot-update.json",
+      "publicPath": "http://localhost:8080/app.3960a355feba12608165.hot-update.json"
+    },
+    "static/dist/js/kansou.js": {
+      "name": "static/dist/js/kansou.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\static\\dist\\js\\kansou.js",
+      "publicPath": "http://localhost:8080/static/dist/js/kansou.js"
+    },
+    "app.46348c5b5d083e9b26eb.hot-update.js": {
+      "name": "app.46348c5b5d083e9b26eb.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.46348c5b5d083e9b26eb.hot-update.js",
+      "publicPath": "http://localhost:8080/app.46348c5b5d083e9b26eb.hot-update.js"
+    },
+    "app.46348c5b5d083e9b26eb.hot-update.json": {
+      "name": "app.46348c5b5d083e9b26eb.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.46348c5b5d083e9b26eb.hot-update.json",
+      "publicPath": "http://localhost:8080/app.46348c5b5d083e9b26eb.hot-update.json"
+    },
+    "app.43234b9981b2278696c7.hot-update.js": {
+      "name": "app.43234b9981b2278696c7.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.43234b9981b2278696c7.hot-update.js",
+      "publicPath": "http://localhost:8080/app.43234b9981b2278696c7.hot-update.js"
+    },
+    "app.43234b9981b2278696c7.hot-update.json": {
+      "name": "app.43234b9981b2278696c7.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.43234b9981b2278696c7.hot-update.json",
+      "publicPath": "http://localhost:8080/app.43234b9981b2278696c7.hot-update.json"
+    },
+    "app.22256e61b64f4fd4a03c.hot-update.js": {
+      "name": "app.22256e61b64f4fd4a03c.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.22256e61b64f4fd4a03c.hot-update.js",
+      "publicPath": "http://localhost:8080/app.22256e61b64f4fd4a03c.hot-update.js"
+    },
+    "kansou.22256e61b64f4fd4a03c.hot-update.js": {
+      "name": "kansou.22256e61b64f4fd4a03c.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\kansou.22256e61b64f4fd4a03c.hot-update.js",
+      "publicPath": "http://localhost:8080/kansou.22256e61b64f4fd4a03c.hot-update.js"
+    },
+    "app.22256e61b64f4fd4a03c.hot-update.json": {
+      "name": "app.22256e61b64f4fd4a03c.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.22256e61b64f4fd4a03c.hot-update.json",
+      "publicPath": "http://localhost:8080/app.22256e61b64f4fd4a03c.hot-update.json"
+    },
+    "app.1e710f4bb2336ade1c6e.hot-update.js": {
+      "name": "app.1e710f4bb2336ade1c6e.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.1e710f4bb2336ade1c6e.hot-update.js",
+      "publicPath": "http://localhost:8080/app.1e710f4bb2336ade1c6e.hot-update.js"
+    },
+    "kansou.1e710f4bb2336ade1c6e.hot-update.js": {
+      "name": "kansou.1e710f4bb2336ade1c6e.hot-update.js",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\kansou.1e710f4bb2336ade1c6e.hot-update.js",
+      "publicPath": "http://localhost:8080/kansou.1e710f4bb2336ade1c6e.hot-update.js"
+    },
+    "app.1e710f4bb2336ade1c6e.hot-update.json": {
+      "name": "app.1e710f4bb2336ade1c6e.hot-update.json",
+      "path": "C:\\Users\\mhash\\Documents\\UnpluggedMessage\\app.1e710f4bb2336ade1c6e.hot-update.json",
+      "publicPath": "http://localhost:8080/app.1e710f4bb2336ade1c6e.hot-update.json"
     }
   },
   "chunks": {
     "app": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/app.js",
-      "app.b39f1a0de2ab50b74ad8.hot-update.js"
+      "app.1e710f4bb2336ade1c6e.hot-update.js"
     ]
   },
   "publicPath": "http://localhost:8080/",
-  "error": "ESLintError",
-  "message": "error: 'moment' is defined but never used (no-unused-vars) at src\\pages\\sound\\components\\player.vue:62:8:\n  60 | import { computed, onMounted, reactive, ref } from \"vue\";\n  61 | import WaveSurfer from \"wavesurfer.js\";\n> 62 | import moment from \"../../../utils/moment\";\n     |        ^\n  63 | export default {\n  64 |   props: {\n  65 |     songs: {type: Array, required: true}\n\n\n1 error found."
+  "error": "ModuleNotFoundError",
+  "message": "Module not found: Error: Can't resolve '../pages/test/test.vue' in 'C:\\Users\\mhash\\Documents\\UnpluggedMessage\\front\\src\\router'"
 }

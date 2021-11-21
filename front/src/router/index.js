@@ -49,9 +49,9 @@ const routes = [
     })
   },
   {
-    path: '/test',
-    name: 'test:index',
-    component: () => import(/* webpackChunkName: "test" */ '../pages/test/test.vue')
+    path: '/kansou',
+    name: 'kansou:index',
+    component: () => import(/* webpackChunkName: "kansou" */ '../pages/kansou/index.vue')
   },
 ]
 

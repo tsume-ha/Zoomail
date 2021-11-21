@@ -3,6 +3,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/photo">Photo</router-link> | 
     <router-link to="/sound">Sound</router-link> | 
+    <router-link to="/kansou">Kansou</router-link> | 
     <router-link to="/mail">Read - index</router-link> | 
     <router-link to="/mail/send">Send</router-link>
   </div>
