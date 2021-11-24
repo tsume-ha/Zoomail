@@ -1,7 +1,12 @@
 <template>
   <main>
-    <section v-for="year in yearSet" :key="year">
-      <a :href="item.path" v-for="item in getItems(year)" :key="item.id">item.title</a>
+    <section v-for="year in yearsSet" :key="year">
+      <h4>{{year}}年度</h4>
+      <p v-for="item in getItems(year)" :key="item.id">
+        <a :href="item.url" target="_blank">{{item.title}}</a><br>
+        {{item.performedAt}}
+
+      </p>
     </section>
 
   </main>

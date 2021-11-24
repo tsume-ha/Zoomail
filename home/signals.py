@@ -17,7 +17,7 @@ LIST_NUM = 5
 def update_send_mail_address(sender, instance, **kwargs):
     kansou_list = [{
         'genre': '感想用紙',
-        'title': q.translate_livename,
+        'title': q.title,
         'date': q.created_at,
         'path': '/kansou/'
     } for q in Kansouyoushi.objects.order_by('-created_at')[:LIST_NUM]]
