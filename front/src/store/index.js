@@ -4,6 +4,7 @@ import user from './user'
 import read from './read'
 import send from './send'
 import sound from './sound'
+import mypage from './mypage'
 
 export default createStore({
   strict: process.env.NODE_ENV !== 'production',
@@ -22,6 +23,7 @@ export default createStore({
     user,
     read,
     send,
-    sound
+    sound,
+    mypage
   }
 })

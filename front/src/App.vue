@@ -4,6 +4,7 @@
     <router-link to="/photo">Photo</router-link> | 
     <router-link to="/sound">Sound</router-link> | 
     <router-link to="/kansou">Kansou</router-link> | 
+    <router-link to="/mypage">Mypage</router-link> | 
     <router-link to="/mail">Read - index</router-link> | 
     <router-link to="/mail/send">Send</router-link>
   </div>
@@ -23,7 +24,7 @@ export default {
   },
   setup() {
     const store = useStore();
-    onMounted(store.dispatch("user/getUserInfo"));
+    onMounted(store.dispatch("mypage/getUserInfo"));
   }
 }
 </script>

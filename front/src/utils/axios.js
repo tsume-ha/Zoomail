@@ -9,9 +9,12 @@ const instance = axios.create({
   xsrfHeaderName: "X-CSRFTOKEN"
 });
 
-instance.interceptors.response.use((response) => {
+instance.interceptors.response.use(response => {
   store.commit('message/storeMessageFromCokie');
   return response;
+}, error => {
+  store.commit('message/storeMessageFromCokie');
+  return Promise.reject(error)
 });
 
 export default instance;

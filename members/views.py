@@ -7,6 +7,7 @@ from social_django.models import UserSocialAuth
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.db.utils import IntegrityError
@@ -73,35 +74,30 @@ def mailTestAPI(request):
 
 
 @login_required()
-def getUserInfo(request):
+def userInfo(request, status_code=200):
     user = request.user
-    return JsonResponse(
-        {
+    return JsonResponse({
+        "userInfo": {
             "id": user.id,
-            "last_name": user.last_name,
-            "first_name": user.first_name,
+            "lastName": user.last_name,
+            "firstName": user.first_name,
             "furigana": user.furigana,
             "nickname": user.nickname,
             "shortname": user.get_short_name(),
             "email": user.email,
-            "receive_email": user.get_receive_email(),
-            "livelog_email": user.livelog_email,
-            "send_mail": user.send_mail,
+            "receiveEmail": user.get_receive_email(),
+            "livelogEmail": user.livelog_email,
+            "sendMail": user.send_mail,
             "year": user.year,
-            "created_at": user.created_at,
-            "updated_at": user.updated_at,
-            'google_oauth2': UserSocialAuth.objects.filter(
-                user=user, provider="google-oauth2").exists(),
-            'livelog_auth0': UserSocialAuth.objects.filter(
-                user=user, provider="auth0").exists(),
-            'permissions': {
-                "is_superuser": user.is_superuser,
-                "is_admin": AdminEnterPermission(user),
-                "can_register_user": MemberRegisterPermission(user)
-            },
-            "is_staff": user.is_staff,
+            "createdAt": user.created_at,
+            "updatedAt": user.updated_at,
+            "googleOauth2": UserSocialAuth.objects.filter(user=user, provider="google-oauth2").exists(),
+            "livelogAuth0": UserSocialAuth.objects.filter( user=user, provider="auth0" ).exists(),
+            "isSuperuser": user.is_superuser,
+            "isStaff": user.is_staff,
+            "canRegisterUser": MemberRegisterPermission(user)
         }
-    )
+    }, status=status_code)
 
 
 @login_required()
@@ -160,35 +156,27 @@ def googleOauthUnlink(request):
 
 
 @login_required()
-def userUpdateAPI(request):
+def profile(request):
     user = request.user
     if request.method != "POST":
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+        messages.warning(request, "無効なリクエストです")
+        return userInfo(request, status_code=400)
         
     form = UserUpdateForm(request.POST, instance=user)
 
-    response = []
     if not form.is_valid():
-        response.append("更新できませんでした")
+        messages.error(request, "更新できませんでした")
         for field_name in form._errors:
-            response.append(form._errors[field_name].as_text())
-        return JsonResponse({
-            "successed": False,
-            "messages": response
-        })
+            messages.error(request, field_name + form._errors[field_name].as_text())
+        return userInfo(request, status_code=400)
 
     else:
         content = form.save(commit=False)
         content.updated_at = datetime.datetime.now()
         content.save()
-        response.append("更新しました")
+        messages.success(request, "更新しました")
 
-        return JsonResponse({
-            "successed": True,
-            "messages": response
-        })
+    return userInfo(request)
 
 
 @login_required()

@@ -53,6 +53,16 @@ const routes = [
     name: 'kansou:index',
     component: () => import(/* webpackChunkName: "kansou" */ '../pages/kansou/index.vue')
   },
+  {
+    path: '/mypage',
+    name: 'mypage:index',
+    component: () => import(/* webpackChunkName: "mypage" */ '../pages/mypage/index.vue')
+  },
+  {
+    path: '/mypage/profile',
+    name: 'mypage:profile',
+    component: () => import(/* webpackChunkName: "mypage" */ '../pages/mypage/profile.vue')
+  },
 ]
 
 const router = createRouter({
