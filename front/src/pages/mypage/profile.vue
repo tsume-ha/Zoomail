@@ -1,5 +1,5 @@
 <template>
-  <abstract-setting>
+  <abstract-setting :loading="loading">
     <form @submit="submit">
       <ul>
         <li class="form-group row">
@@ -61,9 +61,9 @@
 </template>
 
 <script>
-import { onMounted, reactive } from "vue";
-import { useStore } from "vuex"
-import AbstractSetting from "../../components/AbstractSetting.vue"
+import { computed, onMounted, reactive } from "vue";
+import { useStore } from "vuex";
+import AbstractSetting from "../../components/AbstractSetting.vue";
 export default {
   components: {
     AbstractSetting
@@ -76,6 +76,8 @@ export default {
       furigana: "",
       nickname: ""
     });
+    
+    const loading = computed(() => store.state.mypage.loading);
 
     onMounted(() => {
       // formDataの初期値設定
@@ -93,10 +95,12 @@ export default {
       cleanFormData.append("first_name", formData.firstName);
       cleanFormData.append("furigana", formData.furigana);
       cleanFormData.append("nickname", formData.nickname);
-      store.dispatch("mypage/post", {path: "/api/mypage/profile/", formData: cleanFormData})
-    }
+      store.dispatch("mypage/post", {path: "/api/mypage/profile/", formData: cleanFormData});
+    };
+
+
     return {
-      formData,
+      formData, loading,
       submit
     }
   },

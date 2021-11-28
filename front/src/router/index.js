@@ -63,6 +63,16 @@ const routes = [
     name: 'mypage:profile',
     component: () => import(/* webpackChunkName: "mypage" */ '../pages/mypage/profile.vue')
   },
+  {
+    path: '/mypage/mail-settings',
+    name: 'mypage:mail-settings',
+    component: () => import(/* webpackChunkName: "mypage" */ '../pages/mypage/mail-settings.vue')
+  },
+  {
+    path: '/mypage/mail-test',
+    name: 'mypage:mail-test',
+    component: () => import(/* webpackChunkName: "mypage" */ '../pages/mypage/mail-test.vue')
+  },
 ]
 
 const router = createRouter({

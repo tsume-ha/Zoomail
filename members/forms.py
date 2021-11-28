@@ -51,3 +51,10 @@ class RegisterForm(forms.ModelForm):
 
         return user
 
+class MailTestForm(forms.Form):
+    send = forms.BooleanField(required=True)
+    def clean_send(self):
+        bool = self.cleaned_data["send"]
+        if not bool:
+            raise forms.ValidationError("リクエストの形式が無効です")
+        return bool

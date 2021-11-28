@@ -3,8 +3,8 @@
     <section>
       <h4>登録情報</h4>
       <router-link :to="{name: 'mypage:profile'}">登録情報変更</router-link>
-      <router-link to="/">メーリス受信設定</router-link>
-      <router-link to="/">メーリス受信テスト</router-link>
+      <router-link :to="{name: 'mypage:mail-settings'}">メーリス受信設定</router-link>
+      <router-link :to="{name: 'mypage:mail-test'}">メーリス受信テスト</router-link>
       <router-link to="/">LiveLog・Google認証</router-link>
     </section>
     <section>

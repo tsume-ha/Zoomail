@@ -14,7 +14,7 @@ from django.db.utils import IntegrityError
 
 from django.conf import settings
 from .models import User, TestMail
-from .forms import UserUpdateForm, MailSettingsForm, RegisterForm
+from .forms import UserUpdateForm, MailSettingsForm, RegisterForm, MailTestForm
 from config.permissions import MemberRegisterPermission, AdminEnterPermission
 from .create_google_user import DuplicateGmailAccountError
 from .create_google_user import Create_Google_User as register
@@ -22,30 +22,32 @@ from .create_google_user import Create_Google_User as register
 
 @login_required()
 def mailTestAPI(request):
-    now_user = request.user
-    if request.method != "POST" or not request.body:
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    user = request.user
+    if request.method != "POST":
+        messages.warning(request, "無効なリクエストです")
+        return userInfo(request, status_code=400)
 
-    json_dict = json.loads(request.body)
-    if "send" not in json_dict or json_dict["send"] != "true":
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    form = MailTestForm(request.POST)
 
+    if not form.is_valid():
+        messages.error(request, "フォームが無効で、送信されませんでした")
+        return userInfo(request, status_code=400)
+
+    # 5分に1回しか送れない制限
     now = datetime.datetime.now()
     is_sent_in_5_min = TestMail.objects.filter(
-        user=now_user, sent_at__gte=now - datetime.timedelta(minutes=5)
+        user=user, sent_at__gte=now - datetime.timedelta(minutes=5)
     ).exists()
     if is_sent_in_5_min:
+        messages.error(request, "テストメールを送信できるのは5分に1回です。時間をおいてもう一度お試しください。")
         response = HttpResponse("Rate Limiting")
         response.status_code = 429
         return response
 
-    email = now_user.get_receive_email()
-    obj, created = TestMail.objects.update_or_create(
-        user=now_user, defaults={"email": email, "sent_at": now}
+    # sendrifで送信
+    email = user.get_receive_email()
+    obj, _ = TestMail.objects.update_or_create(
+        user=user, defaults={"email": email, "sent_at": now}
     )
     text_content = """京大アンプラグド　メーリングリストサービスのUnplugged Messageです。
     このメールはテストメールです。
@@ -53,24 +55,28 @@ def mailTestAPI(request):
 
     ---------------
     https://message.ku-unplugged.net/"""
-    message = Mail(
-        from_email=("zenkai@message.ku-unplugged.net", "テスト用メール"),
-        to_emails=[To(email)],
-        subject="テストメール【UnpluggedMessage】",
-        plain_text_content=PlainTextContent(text_content),
-        is_multiple=True,
-    )
-    if settings.SEND_MAIL:
-        sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        response = sendgrid_client.send(message)
-        try:
-            x_message_id = response.headers["X-Message-Id"]
-            obj.x_message_id = x_message_id
-            obj.save()
-        except Exception:
-            return JsonResponse({'error': 'cannot send email'})
+    # message = Mail(
+    #     from_email=("zenkai@message.ku-unplugged.net", "テスト用メール"),
+    #     to_emails=[To(email)],
+    #     subject="テストメール【UnpluggedMessage】",
+    #     plain_text_content=PlainTextContent(text_content),
+    #     is_multiple=True,
+    # )
+    # if settings.SEND_MAIL:
+    #     sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
+    #     response = sendgrid_client.send(message)
+    #     try:
+    #         x_message_id = response.headers["X-Message-Id"]
+    #         obj.x_message_id = x_message_id
+    #         obj.save()
+    #     except Exception:
+    #         response = HttpResponse("Send mail faild")
+    #         response.status_code = 500
+    #         return response
 
-    return JsonResponse({'success': 'send mail'})
+    response = HttpResponse("Test mail was sent.")
+    response.status_code = 200
+    return response
 
 
 @login_required()
@@ -161,8 +167,14 @@ def profile(request):
     if request.method != "POST":
         messages.warning(request, "無効なリクエストです")
         return userInfo(request, status_code=400)
-        
-    form = UserUpdateForm(request.POST, instance=user)
+    
+    initial = {
+        "last_name": user.last_name,
+        "first_name": user.first_name,
+        "furigana": user.furigana,
+        "nickname": user.nickname
+    }
+    form = UserUpdateForm(request.POST, instance=user, initial=initial)
 
     if not form.is_valid():
         messages.error(request, "更新できませんでした")
@@ -170,11 +182,14 @@ def profile(request):
             messages.error(request, field_name + form._errors[field_name].as_text())
         return userInfo(request, status_code=400)
 
-    else:
+    elif form.has_changed():
         content = form.save(commit=False)
         content.updated_at = datetime.datetime.now()
         content.save()
         messages.success(request, "更新しました")
+
+    else:
+        messages.info(request, "更新はありませんでした")
 
     return userInfo(request)
 
@@ -182,34 +197,32 @@ def profile(request):
 @login_required()
 def mailSettingsAPI(request):
     user = request.user
-    if request.method != "POST" or not request.body:
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    if request.method != "POST":
+        messages.warning(request, "無効なリクエストです")
+        return userInfo(request, status_code=400)
+    
+    initial = {
+        "receive_email": user.receive_email,
+        "send_mail": user.send_mail
+    }
+    form = MailSettingsForm(request.POST, instance=user, initial=initial)
 
-    json_dict = json.loads(request.body)
-    form = MailSettingsForm(json_dict, instance=user)
-
-    response = []
     if not form.is_valid():
-        response.append("更新できませんでした")
+        messages.error(request, "更新できませんでした")
         for field_name in form._errors:
-            response.append(form._errors[field_name].as_text())
-        return JsonResponse({
-            "successed": False,
-            "messages": response
-        })
+            messages.error(request, field_name + form._errors[field_name].as_text())
+        return userInfo(request, status_code=400)
 
-    else:
+    elif form.has_changed():
         content = form.save(commit=False)
         content.updated_at = datetime.datetime.now()
         content.save()
-        response.append("更新しました")
+        messages.success(request, "更新しました")
 
-        return JsonResponse({
-            "successed": True,
-            "messages": response
-        })
+    else:
+        messages.info(request, "更新はありませんでした")
+
+    return userInfo(request)
 
 @login_required()
 def registerAPI(request):
