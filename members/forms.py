@@ -58,3 +58,11 @@ class MailTestForm(forms.Form):
         if not bool:
             raise forms.ValidationError("リクエストの形式が無効です")
         return bool
+
+class GoogleUnlinkForm(forms.Form):
+    unlink = forms.BooleanField(required=True)
+    def clean_send(self):
+        bool = self.cleaned_data["unlink"]
+        if not bool:
+            raise forms.ValidationError("リクエストの形式が無効です")
+        return bool

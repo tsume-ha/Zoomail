@@ -14,7 +14,7 @@ from django.db.utils import IntegrityError
 
 from django.conf import settings
 from .models import User, TestMail
-from .forms import UserUpdateForm, MailSettingsForm, RegisterForm, MailTestForm
+from .forms import UserUpdateForm, MailSettingsForm, RegisterForm, MailTestForm, GoogleUnlinkForm
 from config.permissions import MemberRegisterPermission, AdminEnterPermission
 from .create_google_user import DuplicateGmailAccountError
 from .create_google_user import Create_Google_User as register
@@ -107,32 +107,18 @@ def userInfo(request, status_code=200):
 
 
 @login_required()
-def OAuthRegisterView(request):
-    now_user = request.user
-    params = {
-        "google": UserSocialAuth.objects.filter(
-            user=now_user, provider="google-oauth2"
-        ).exists(),
-        "livelog": UserSocialAuth.objects.filter(
-            user=now_user, provider="auth0"
-        ).exists(),
-    }
-    return render(request, "members/oauth_register.html", params)
-
-
-@login_required()
 def googleOauthUnlink(request):
     user = request.user
-    if request.method != "POST" or not request.body:
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    if request.method != "POST":
+        messages.warning(request, "無効なリクエストです")
+        return userInfo(request, status_code=400)
 
-    json_dict = json.loads(request.body)
-    if json_dict["unlink"] is not True:
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    form = GoogleUnlinkForm(request.POST)
+    if not form.is_valid():
+        messages.error(request, "解除できませんでした。開発者にお問い合わせください。")
+        for field_name in form._errors:
+            messages.error(request, field_name + form._errors[field_name].as_text())
+        return userInfo(request, status_code=400)
 
     if UserSocialAuth.objects.filter(
             user=user, provider="auth0"
@@ -144,21 +130,13 @@ def googleOauthUnlink(request):
         try:
             user.email = user.livelog_email
             user.save()
+            messages.success(request, "Googleアカウントの紐づけを解除しました。")
+            return userInfo(request)
         except IntegrityError:
-            response = JsonResponse({
-                "deleted": False,
-                "message": "Googleアカウントでのログインは無効化されましたが、データを全て削除できませんでした。"
-            })
-            response.status_code = 500
-            return response
-        return JsonResponse({
-            "deleted": True
-        })
+            messages.error(request, "Googleアカウントでのログインは無効化されましたが、データを全て削除できませんでした。")
+            return userInfo(request, status_code=500)
 
-    else:
-        return JsonResponse({
-            "deleted": False
-        })
+    return userInfo(request, status_code=400)
 
 
 @login_required()
