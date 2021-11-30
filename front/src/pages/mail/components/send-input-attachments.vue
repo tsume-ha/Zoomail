@@ -41,8 +41,8 @@
 
 <script>
 import validationErrorMessages from '../../../components/validation-error-messages.vue';
-import attachmentPreview from './send-input-attachment-preview.vue'
-import { computed, onBeforeMount, ref } from 'vue'
+import attachmentPreview from './send-input-attachment-preview.vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useStore } from "vuex";
 export default {
   components: {
@@ -63,28 +63,28 @@ export default {
     const opened = ref(false);
 
     // methods
-    const internalAttachments = ref([])
+    const internalAttachments = ref([]);
     const onFileChange = inputFile => {
       const files = inputFile.target.files;
       for (let i = 0; i < files.length; i++) {
-        internalAttachments.value.push(files[i])
+        internalAttachments.value.push(files[i]);
       }
       commit();
     };
-    const dragEnter = () => { opened.value = true };
-    const dragLeave = () => { opened.value = false };
+    const dragEnter = () => { opened.value = true; };
+    const dragLeave = () => { opened.value = false; };
     const dropFile = e => {
       opened.value = false;
       const files = e.dataTransfer.files;
       for (let i = 0; i < files.length; i++) {
-        internalAttachments.value.push(files[i])
+        internalAttachments.value.push(files[i]);
       }
       commit();
     };
     const cansel = file => {
       internalAttachments.value = internalAttachments.value.filter(f => {
         return !(f.size === file.size && f.name === file.name);
-      })
+      });
       commit();
     };
 
@@ -102,27 +102,27 @@ export default {
           });
           return [...prev];
         }
-      }, [])
+      }, []);
       internalAttachments.value.length = 0;
       // internalAttachmentsの上書き
-      uniques.forEach(f => { internalAttachments.value.push(f) });
+      uniques.forEach(f => { internalAttachments.value.push(f); });
       store.commit('send/setAttachments', uniques);
-    }
+    };
 
     onBeforeMount(() => {
       // confirmから戻ってきたときにVuexから取得する
       attachments.value.forEach(a => {
         internalAttachments.value.push(a);
       });
-    })
+    });
 
     return {
       attachments, is_dirty, error_messages,
       opened, internalAttachments,
       onFileChange, dragEnter, dragLeave, dropFile, cansel
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

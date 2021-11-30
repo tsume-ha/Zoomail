@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from "vuex"
-import { useRouter } from 'vue-router'
+import { computed } from 'vue';
+import { useStore } from "vuex";
+import { useRouter } from 'vue-router';
 import attachmentPreview from "./components/send-input-attachment-preview";
 export default {
   components: {
@@ -59,32 +59,32 @@ export default {
       });
       router.push('/mail/send');
     }
-    const title = computed(() => store.state.send.title.value)
-    const tos = computed(() => store.state.send.tos.value)
-    const content = computed(() => store.state.send.content.value)
-    const writer = computed(() => store.state.send.writer.value)
-    const attachments = computed(() => store.state.send.attachments.value)
+    const title = computed(() => store.state.send.title.value);
+    const tos = computed(() => store.state.send.tos.value);
+    const content = computed(() => store.state.send.content.value);
+    const writer = computed(() => store.state.send.writer.value);
+    const attachments = computed(() => store.state.send.attachments.value);
 
     const backToInput = e => {
       e.preventDefault();
       router.push('/mail/send');
-    }
+    };
     const send = e => {
       e.preventDefault();
       store.dispatch('send/send').then(res => {
         // 正常にPOSTできた時。メーリスのトップページに遷移する
-        console.log(res)
+        console.log(res);
       }).catch(err => {
         // 送信エラーが起こった時。遷移しない。
-        console.log(err)
-      })
-    }
+        console.log(err);
+      });
+    };
     return{
       title, content, writer, attachments, tos,
       backToInput, send
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

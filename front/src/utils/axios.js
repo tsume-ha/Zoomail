@@ -1,5 +1,5 @@
-import axios from 'axios'
-import store from '../store'
+import axios from 'axios';
+import store from '../store';
 
 const instance = axios.create({
   headers: {
@@ -14,7 +14,7 @@ instance.interceptors.response.use(response => {
   return response;
 }, error => {
   store.commit('message/storeMessageFromCokie');
-  return Promise.reject(error)
+  return Promise.reject(error);
 });
 
 export default instance;

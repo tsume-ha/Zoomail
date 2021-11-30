@@ -67,7 +67,7 @@ export default {
       }
 
       router.push({ query });
-    }
+    };
 
     onMounted(() => {
       if (route.query.is_kaisei && route.query.is_kaisei === "true") {
@@ -88,14 +88,14 @@ export default {
       if (route.query.page && Number(route.query.page) > 1) {
         params.page = Number(route.query.page);
       }
-    })
+    });
 
     return {
       params,
       submit
-    }
+    };
   }
-}
+};
 </script>
 
 

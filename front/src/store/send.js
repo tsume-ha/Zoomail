@@ -4,7 +4,7 @@ import {
   tosValidation,
   writerValidation,
   attachmentsValidation
-} from "./send_validate"
+} from "./send_validate";
 import axios from '../utils/axios';
 
 export default {
@@ -96,14 +96,14 @@ export default {
         !state.writer.error_messages.length &&
         !state.attachments.error_messages.length &&
         !state.send_at.error_messages.length
-      )
+      );
     },
     isValidAndDirty (state, getters) {
       return (
         getters.isValid &&
         state.title.is_dirty &&
         state.content.is_dirty
-      )
+      );
     }
   },
   actions: {
@@ -115,8 +115,8 @@ export default {
           level: "error",
           message: "不正なフィールドがあり、送信できませんでした。",
           appname: "mail/send"
-        }, { root: true })
-        return Promise.reject(new Error('form validation error'))
+        }, { root: true });
+        return Promise.reject(new Error('form validation error'));
       }
 
       // Form construction
@@ -129,20 +129,20 @@ export default {
       form.append("writer", context.state.writer.value.id);
       context.state.attachments.value.forEach(file => {
         form.append("attachments", file);
-      })
+      });
       
       // POST
       return axios.post(
           '/api/board/send/send/', form, {onUploadProgress: e => console.log(e) }
         ).then(res => {
-          console.log(res)
+          console.log(res);
           context.commit('message/addMessage', {
             level: "info",
             message: "送信されました。",
             appname: "mail/send"
-          }, { root: true })
-          return res
+          }, { root: true });
+          return res;
         });
     }
   }
-}
+};

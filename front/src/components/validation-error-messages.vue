@@ -14,7 +14,7 @@ export default {
   props: {
     messages: {required: true, type: Array}
   }
-}
+};
 </script>
 
 <style scoped>

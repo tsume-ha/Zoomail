@@ -37,19 +37,19 @@ export default {
       loading: true,
       loaded: false,
       notFound: false,
-    })
+    });
 
     const loadAPI = () => {
       axios.get(props.oneContentAPIPath).then(res => {
         status.loaded = true;
-        const item = {...res.data}
-        context.emit("setContent", item)
+        const item = {...res.data};
+        context.emit("setContent", item);
       }).catch(error => {
         if (error.message == 'Network Error' && error.response === undefined) {
           console.log('通信エラー');
         } else if (error.response.status === 500) {
           status.loaded = true;
-          console.log('500')
+          console.log('500');
         } else if (error.response.status === 403){
           status.loaded = true;
           status.notFound = true;
@@ -62,16 +62,16 @@ export default {
             level: "error",
             message: "予想外のエラーが帰ってきました。: " + error.message,
             appname: "abscractComtent"
-          })
+          });
         }
       }).finally(() => {
         status.loading = false;
-      })
-    }
+      });
+    };
 
     if (props.dataList.some(item => Number(item.id) === id)) {
-      const item = {...props.dataList.find(item => Number(item.id) === id)}
-      context.emit("setContent", item)
+      const item = {...props.dataList.find(item => Number(item.id) === id)};
+      context.emit("setContent", item);
       status.loading = false;
       status.loaded = true;
     } else {
@@ -83,7 +83,7 @@ export default {
     return {
       status,
       reload
-    }
+    };
   },
-}
+};
 </script>

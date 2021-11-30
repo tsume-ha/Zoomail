@@ -19,22 +19,22 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from "vuex"
-import { useRouter } from 'vue-router'
-import sendInputTitle from "./components/send-input-title.vue"
-import sendInputContent from "./components/send-input-content.vue"
-import sendInputTo from "./components/send-input-to.vue"
+import { computed } from 'vue';
+import { useStore } from "vuex";
+import { useRouter } from 'vue-router';
+import sendInputTitle from "./components/send-input-title.vue";
+import sendInputContent from "./components/send-input-content.vue";
+import sendInputTo from "./components/send-input-to.vue";
 // vue-selectをVue3対応の @beta で利用
-import sendInputFrom from "./components/send-input-from.vue"
-import sendInputAttachments from "./components/send-input-attachments.vue"
+import sendInputFrom from "./components/send-input-from.vue";
+import sendInputAttachments from "./components/send-input-attachments.vue";
 export default {
   components: {
     sendInputTitle, sendInputContent, sendInputTo, sendInputFrom, sendInputAttachments
   },
   setup() {
     const store = useStore();
-    const isValid = computed(() => store.getters['send/isValidAndDirty'])
+    const isValid = computed(() => store.getters['send/isValidAndDirty']);
 
     const router = useRouter();
     const onClick = e => {
@@ -53,11 +53,11 @@ export default {
           appname: "mail/send"
         });
       }
-    }
+    };
     return{
       isValid,
       onClick
-    }
+    };
   }
-}
+};
 </script>

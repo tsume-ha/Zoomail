@@ -55,13 +55,13 @@ export default {
     
     const unlink = () => {
       const formData = new FormData();
-      formData.append("unlink", true)
+      formData.append("unlink", true);
       store.dispatch("mypage/post", {path: "/api/mypage/google-unlink/", formData});
-    }
+    };
     return {
       loading, livelogAuth0, googleOauth2,
       unlink
-    }
+    };
   }
-}
+};
 </script>

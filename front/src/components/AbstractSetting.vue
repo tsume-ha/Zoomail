@@ -16,7 +16,7 @@ export default {
 
     return {
       loading
-    }
+    };
   }
-}
+};
 </script>

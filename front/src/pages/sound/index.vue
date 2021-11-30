@@ -37,22 +37,22 @@ export default {
       if (error.message == 'Network Error' && error.response === undefined) {
         console.log('通信エラー');
       } else if (error.response.status === 500) {
-        console.log('500')
+        console.log('500');
       // } else if (error.response.status === 403){
       // } else if (error.response.status === 404){
       // } else {
       //   console.log(error.message);
       }
-    })
+    });
     const displayDate = dateStr => moment(dateStr).format("YYYY/MM/DD (ddd)");
     const soundStaff = computed(() => store.state.user.is_staff);
 
     return {
       lives, soundStaff,
       displayDate
-    }
+    };
   },
-}
+};
 </script>
 
 <style scoped>

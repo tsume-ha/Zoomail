@@ -70,7 +70,7 @@ export default {
       title: "曲を選択してください",
       trackNum: 0,
       path: "",
-    })
+    });
     const wavesurfer = ref(null);
     const status = reactive({
       currentTime: null,// 再生している曲の現在位置
@@ -79,7 +79,7 @@ export default {
       beforeLoading: true,
       loadSongTitle: "下のリストでロードする曲をクリックしてください",
       loadProgressText: "",
-    })
+    });
 
     onMounted(() => {
       wavesurfer.value = WaveSurfer.create({
@@ -91,7 +91,7 @@ export default {
         scrollParent: false,
         skipLength: 10,
         normalize: true,
-      })
+      });
       // イベント登録
       wavesurfer.value.on('loading', (value) => {
         if (value >= 100) {
@@ -169,7 +169,7 @@ export default {
       nowPlaying.value = {...song};
       status.loadSongTitle = "Now Loading... " + song.title;
       wavesurfer.value.load(song.path);
-    }
+    };
 
     const prev = () => {
       if (!isPlaying.value || status.currentTime > 10) {
@@ -181,7 +181,7 @@ export default {
       } else {
         wavesurfer.value.stop();
       }
-    }
+    };
 
     const next = () => {
       const nextsong = props.songs[(props.songs.indexOf(nowPlaying.value) + 1) % props.songs.length];
@@ -189,7 +189,7 @@ export default {
       wavesurfer.value.on('ready', () => {
         wavesurfer.value.play();
       });
-    }
+    };
 
     const barMoved = () => {
       if (wavesurfer.value === null) {
@@ -204,7 +204,7 @@ export default {
       } else {
         status.barProgress = bar_width - 90;
       }
-    }
+    };
 
     const isReady = computed(() => {
       if (wavesurfer.value === null) {
@@ -228,14 +228,14 @@ export default {
       let second = seconds % 60;
       second = ('00' + second).slice(-2);
       return minute + ':' + second;
-    }
+    };
 
     return {
       wavesurfer, nowPlaying, isReady, isPlaying, status,
       load, prev, next, secondToMMSS
-    }
+    };
   },
-}
+};
 </script>
 
 

@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import AbstractContent from "../../components/AbstractContent.vue"
-import AbstractContentHeader from "../../components/AbstractContentHeader.vue"
+import AbstractContent from "../../components/AbstractContent.vue";
+import AbstractContentHeader from "../../components/AbstractContentHeader.vue";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 export default {
@@ -33,13 +33,13 @@ export default {
     const message = ref({});
     const setMessage = item => {
       message.value = item;
-    }
-    const apiPath = computed(() => `/api/board/content/${String(props.id)}/`)
+    };
+    const apiPath = computed(() => `/api/board/content/${String(props.id)}/`);
 
     return {
       messages, message, apiPath, 
       setMessage
-    }
+    };
   },
-}
+};
 </script>

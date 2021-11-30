@@ -1,5 +1,5 @@
 // import Vue from 'vue'
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 
 export default {
   namespaced: true,
@@ -19,20 +19,20 @@ export default {
           message: allCookies[key],
           displayed: false,
           completed: false,
-        }}
-        Cookies.remove(key)
+        }};
+        Cookies.remove(key);
       }
     },
     displayed(state, payload) {
       // payload: key String
       if(Object.hasOwnProperty.call(state.messages, payload)){
-        state.messages[payload] = {...state.messages[payload], displayed: true}
+        state.messages[payload] = {...state.messages[payload], displayed: true};
       }
     },
     completed(state, payload) {
       // payload: key String
       if(Object.hasOwnProperty.call(state.messages, payload)){
-        state.messages[payload] = {...state.messages[payload], completed: true}
+        state.messages[payload] = {...state.messages[payload], completed: true};
       }
     },
     addMessage(state, payload) {
@@ -43,7 +43,7 @@ export default {
         message: payload.message,
         displayed: false,
         completed: false,
-      }}
+      }};
     }
   }
-}
+};

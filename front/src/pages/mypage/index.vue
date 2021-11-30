@@ -31,7 +31,7 @@ export default {
     const permissions = reactive({
       canRegisterUser: false,
       canEnterAdmin: false
-    })
+    });
 
     const permissionsUpdate = () => {
       const userData = store.state.user;
@@ -40,12 +40,12 @@ export default {
       } else {
         permissions.canEnterAdmin = false;
       }
-    }
-    onMounted(() => permissionsUpdate())
+    };
+    onMounted(() => permissionsUpdate());
 
     return {
       permissions
-    }
+    };
   },
-}
+};
 </script>

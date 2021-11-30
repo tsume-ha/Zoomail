@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from "vuex"
+import { computed } from 'vue';
+import { useStore } from "vuex";
 export default {
   props: {
     message: {required: true, type: Object}
@@ -25,7 +25,7 @@ export default {
   setup(props) {
     const store = useStore();
 
-    const message = computed(() => props.message)
+    const message = computed(() => props.message);
     const trimed = computed(() => {
       const text = message.value.content;
       let count = text.indexOf('\n');
@@ -33,18 +33,18 @@ export default {
         count = 0;
       }
       return text.slice(count, count+200);
-    })
+    });
     const link = computed(() => '/mail/' + String(message.value.id));
 
     const bookmark = () => {
-      store.dispatch('read/toggleBookmark', message.value.id)
-    }
+      store.dispatch('read/toggleBookmark', message.value.id);
+    };
     return {
       bookmark,
       trimed, link
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

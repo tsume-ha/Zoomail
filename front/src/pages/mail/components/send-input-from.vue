@@ -23,7 +23,7 @@
 
 <script>
 import validationErrorMessages from '../../../components/validation-error-messages.vue';
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue';
 import { useStore } from "vuex";
 import axios from '../../../utils/axios';
 export default {
@@ -37,12 +37,12 @@ export default {
       get: () => store.state.send.writer.value,
       set: value => store.commit('send/setWriter', value)
     });
-    const is_dirty = computed(() => store.state.send.writer.is_dirty)
-    const error_messages = computed(() => store.state.send.writer.error_messages)
+    const is_dirty = computed(() => store.state.send.writer.is_dirty);
+    const error_messages = computed(() => store.state.send.writer.error_messages);
 
     // コンポーネント内ディレクティブ
-    const selectedYear = ref(store.state.user.year)
-    const years = ref([store.state.user.year])
+    const selectedYear = ref(store.state.user.year);
+    const years = ref([store.state.user.year]);
     const members = ref([{
       year: store.state.user.year,
       list: [{
@@ -58,33 +58,33 @@ export default {
         id: store.state.user.id,
         name: store.state.user.shortname,
         year: store.state.user.year
-      })
+      });
     }
 
     onMounted(() => {
       axios.get("/api/board/send/froms/").then(res => {
         members.value = res.data.members;
-        years.value = res.data.years
-      })
-    })
+        years.value = res.data.years;
+      });
+    });
 
     watch(selectedYear, newSelectedYear => {
       if (writer.value.year !== newSelectedYear) {
-        store.commit('send/setWriter', null)
+        store.commit('send/setWriter', null);
       }
-    })
+    });
 
     // yearで絞り込むユーザーの選択肢
     const memberChoices = computed(() => {
-      return members.value.find(obj => obj.year === selectedYear.value)["list"]
-    })
+      return members.value.find(obj => obj.year === selectedYear.value)["list"];
+    });
     
     return {
       writer, is_dirty, error_messages, selectedYear,
       years, memberChoices
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

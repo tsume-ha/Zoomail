@@ -14,7 +14,7 @@ export default {
       // 一時的に
       const keys = ["id", "shortname", "year", "is_staff"];
       for (const key of keys) {
-        state[key] = payload[key]
+        state[key] = payload[key];
       }
       state.data_fetched = new Date();
     }
@@ -23,7 +23,7 @@ export default {
     getUserInfo(context) {
       axios.get("/api/mypage/user/").then(res => {
         context.commit("set", res.data);
-      })
+      });
     }
   }
-}
+};

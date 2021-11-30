@@ -16,8 +16,8 @@
 
 <script>
 import { onMounted } from '@vue/runtime-core';
-import { useStore } from 'vuex'
-import message from './components/message'
+import { useStore } from 'vuex';
+import message from './components/message';
 export default {
   components: {
     message
@@ -26,7 +26,7 @@ export default {
     const store = useStore();
     onMounted(store.dispatch("mypage/getUserInfo"));
   }
-}
+};
 </script>
 <style>
 #app {

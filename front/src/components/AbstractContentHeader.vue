@@ -22,12 +22,12 @@ export default {
       } else {
         return props.path;
       }
-    })
+    });
     return {
       to
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

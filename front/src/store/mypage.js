@@ -13,7 +13,7 @@ export default {
       state.loading = bool;
     },
     setUserInfo (state, payload) {
-      state.userInfo = {...payload}
+      state.userInfo = {...payload};
     }
   },
   actions: {
@@ -36,7 +36,7 @@ export default {
     getUserInfo(context) {
       axios.get("/api/mypage/user/").then(res => {
         context.commit("setUserInfo", res.data.userInfo);
-      })
+      });
     }
   }
-}
+};

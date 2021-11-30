@@ -51,18 +51,18 @@ export default {
     const store = useStore();
     const showEmailAddress = ref(false);
     const receiveEmail = computed(() => store.state.mypage.userInfo.receiveEmail);
-    const loading = computed(() => store.state.mypage.loading)
+    const loading = computed(() => store.state.mypage.loading);
 
     const send = () => {
       const formData = new FormData();
-      formData.append("send", true)
+      formData.append("send", true);
       store.dispatch("mypage/post", {path: "/api/mypage/mail-test/", formData});
     };
 
     return {
       receiveEmail, showEmailAddress, loading,
       send
-    }
+    };
   },
-}
+};
 </script>

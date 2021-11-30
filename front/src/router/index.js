@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import store from '../store'
+import { createRouter, createWebHistory } from 'vue-router';
+import store from '../store';
 
 const routes = [
   {
@@ -78,17 +78,17 @@ const routes = [
     name: 'mypage:oauth',
     component: () => import(/* webpackChunkName: "mypage" */ '../pages/mypage/oauth.vue')
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory("/"),
   routes,
   base: "/"
-})
+});
 
 router.beforeEach((to, from, next) => {
   store.commit("updateLastPath", from);
   next();
-})
+});
 
-export default router
+export default router;

@@ -22,25 +22,25 @@ export default {
     const messages = computed(() => store.state.message.messages);
     const before_display = computed(() => {
       const keys = Object.keys(messages.value);
-      return keys.filter(key => !messages.value[key].completed && !messages.value[key].displayed)
-    })
+      return keys.filter(key => !messages.value[key].completed && !messages.value[key].displayed);
+    });
     const displaying = computed(() => {
       const keys = Object.keys(messages.value);
-      return keys.filter(key => !messages.value[key].completed && messages.value[key].displayed)
-    })
+      return keys.filter(key => !messages.value[key].completed && messages.value[key].displayed);
+    });
 
     watchEffect(() => {
       for (const key of before_display.value) {
-        store.commit('message/displayed', key)
+        store.commit('message/displayed', key);
         setTimeout(() => {
-          store.commit('message/completed', key)
+          store.commit('message/completed', key);
         }, MESSAGE_DURATION);
       }
-    })
+    });
 
     const select = key => messages.value[key];
 
-    const close = key => store.commit('message/completed', key)
+    const close = key => store.commit('message/completed', key);
 
     return {
       messages,
@@ -48,9 +48,9 @@ export default {
       displaying,
       select,
       close
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

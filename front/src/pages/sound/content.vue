@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import AbstractContent from "../../components/AbstractContent.vue"
-import AbstractContentHeader from "../../components/AbstractContentHeader.vue"
-import Player from "./components/player.vue"
-import { useStore } from "vuex"
+import AbstractContent from "../../components/AbstractContent.vue";
+import AbstractContentHeader from "../../components/AbstractContentHeader.vue";
+import Player from "./components/player.vue";
+import { useStore } from "vuex";
 import { computed, ref } from "vue";
 export default {
   components: {
@@ -42,5 +42,5 @@ export default {
       setContent
     };
   },
-}
+};
 </script>

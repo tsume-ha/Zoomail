@@ -22,18 +22,18 @@ export default {
   mutations: {
     setMessages (state, messages) {
       state.messages.length = 0;
-      state.messages = messages
+      state.messages = messages;
     },
     startAPILoading (state) {
       state.nowLoading = true;
-      console.log('startAPILoading')
+      console.log('startAPILoading');
     },
     finishAPILoading (state) {
       state.nowLoading = false;
-      console.log('finishAPILoading')
+      console.log('finishAPILoading');
     },
     updateBookmarked (state, payload) {
-      const target = state.messages.find(item => item.id === payload.id)
+      const target = state.messages.find(item => item.id === payload.id);
       if (target) {
         // state.messages[]が空でtargetがundefinedになってる場合を弾く
         target.is_bookmarked = payload.bool;
@@ -59,7 +59,7 @@ export default {
         console.log("response.status", e.response.status);
       }).finally(() => {
         context.commit('finishAPILoading');
-      })
+      });
     },
     async loadOneMessage (context, id) {
       context.commit('startAPILoading');
@@ -69,7 +69,7 @@ export default {
         console.log("message", e.message);
         console.log("response", e.response);
         console.log("response.status", e.response.status);
-      })
+      });
       context.commit('finishAPILoading');
       context.commit('setMessages', [res.data.message]);
       return res.data.message;
@@ -79,15 +79,15 @@ export default {
       context.commit('updateBookmarked', {
         'id': id,
         'bool': !message.is_bookmarked
-      })
+      });
       axios.post('/api/board/bookmark/' + String(id) +'/', {
         'data': 'data'
       }).then(res => {
         context.commit('updateBookmarked', {
           'id': id,
           'bool': (res.data['updated-to'] === 'true')
-        })
-      })
+        });
+      });
     }
   }
-}
+};

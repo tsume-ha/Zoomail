@@ -40,7 +40,7 @@ export default {
       if (date.isBefore(moment().set({year:date.year(), month:3, day:1}))) {
         year = date.year() - 1;//                       month:3 => 4月
       } else {
-        year = date.year()
+        year = date.year();
       }
       return year;
     }));
@@ -55,7 +55,7 @@ export default {
         moment(`${year+1}-04-01`),
         undefined, "[)")
       ).reverse();
-    }
+    };
 
     
 
@@ -65,8 +65,8 @@ export default {
     return {
       yearsSet, kansouStaff,
       getItems, displayDate
-    }
+    };
 
   },
-}
+};
 </script>

@@ -38,11 +38,11 @@ export default {
       get: () => store.state.send.tos["value"],
       set: value => store.commit('send/setTos', value)
     });
-    const is_dirty = computed(() => store.state.send.tos["is_dirty"])
-    const error_messages = computed(() => store.state.send.tos["error_messages"])
+    const is_dirty = computed(() => store.state.send.tos["is_dirty"]);
+    const error_messages = computed(() => store.state.send.tos["error_messages"]);
 
-    const toGrouplabel = year => String(year) + " " + String(year - 1994) + "期"
-    const userYear = store.state.user.year
+    const toGrouplabel = year => String(year) + " " + String(year - 1994) + "期";
+    const userYear = store.state.user.year;
     // 選択肢
     const years = ref([
       {
@@ -53,20 +53,20 @@ export default {
         year: userYear,
         label: toGrouplabel(userYear)
       }
-    ])
+    ]);
     onMounted(() => {
       axios.get("/api/board/send/togroups/").then(res => {
         years.value.length = 0;
         res.data.togropus.forEach(y => {
-          years.value.push(y)
-        })
-      })
-    })
+          years.value.push(y);
+        });
+      });
+    });
     return {
       tos, is_dirty, error_messages, years
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

@@ -10,7 +10,7 @@ export default {
   mutations: {
     set (state, payload) {
       state.lives.length = 0;
-      state.lives.push(...payload)
+      state.lives.push(...payload);
       state.updated = moment();
     }
   },
@@ -21,13 +21,13 @@ export default {
          ) {
           axios.get("/api/sound/").then(res => {
             context.commit("set", res.data.lives);
-          })
+          });
       }
     },
     loadOneSoundContent(context) {
       axios.get("/api/sound/").then(res => {
         context.commit("set", res.data.lives);
-      })
+      });
     }
   }
-}
+};

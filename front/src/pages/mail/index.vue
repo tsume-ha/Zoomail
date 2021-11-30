@@ -30,7 +30,7 @@ export default {
     watch(route, () => { updateMessage(); });
 
     const messages = computed(() => store.state.read.messages);
-    const nowLoading = computed(() => store.state.read.nowLoading)
+    const nowLoading = computed(() => store.state.read.nowLoading);
 
     const cleanQuery = computed(() => {
       let query = {};
@@ -52,21 +52,21 @@ export default {
       if (route.query.page && Number(route.query.page) > 1) {
         query.page = Number(route.query.page);
       }
-      return query
+      return query;
     });
 
     const differentPageQuery = pageNum => {
       return {
         ...cleanQuery.value,
         page: pageNum
-      }
-    }
+      };
+    };
 
     const updateMessage = () => {
       store.dispatch(
         'read/getMessagesFromAPI', cleanQuery.value
-      )
-    }
+      );
+    };
 
     if (messages.value.length === 0) {
       updateMessage();
@@ -77,9 +77,9 @@ export default {
     return{
       messages, nowLoading,
       differentPageQuery
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

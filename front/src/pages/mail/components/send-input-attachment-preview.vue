@@ -18,21 +18,21 @@ export default {
     const objectURL = ref('');
     const file = computed(() => props.file);
 
-    const isImage = computed(() => file.value.type.startsWith('image/'))
+    const isImage = computed(() => file.value.type.startsWith('image/'));
 
     const openFile = () => {
       if (objectURL.value) {
-        window.open(objectURL.value, "filePreview")
+        window.open(objectURL.value, "filePreview");
       }
-    }
+    };
     onMounted(() => {
       let reader = new FileReader();
       reader.onload = e => {
         imageURL.value = e.target.result;
-      }
+      };
       reader.readAsDataURL(file.value);
       objectURL.value = URL.createObjectURL(file.value);
-    })
+    });
 
 
     onUnmounted(() => {
@@ -40,9 +40,9 @@ export default {
     });
     return {
       openFile, isImage, imageURL
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

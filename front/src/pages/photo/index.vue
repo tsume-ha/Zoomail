@@ -51,7 +51,7 @@ export default {
       if (date.isBefore(moment().set({year:date.year(), month:3, day:1}))) {
         year = date.year() - 1;//                       month:3 => 4月
       } else {
-        year = date.year()
+        year = date.year();
       }
       return year;
     }));
@@ -66,7 +66,7 @@ export default {
         moment(`${year+1}-04-01`),
         undefined, "[)")
       ).reverse();
-    }
+    };
 
     
 
@@ -75,18 +75,18 @@ export default {
       if (item.thumbnail) {
         return item.thumbnail;
       } else {
-        return "/static/img/album_thum_default.jpg"
+        return "/static/img/album_thum_default.jpg";
       }
-    }
+    };
 
     const photoStaff = computed(() => store.state.user.is_staff);
 
     return {
       photos, years, yearsSet, photoStaff,
       getItems, displayDate, thumbnailPath
-    }
+    };
   },
-}
+};
 </script>
 
 <style scoped>
