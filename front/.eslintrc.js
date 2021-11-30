@@ -23,6 +23,18 @@ module.exports = {
     "no-unreachable": "error",
 
     "quotes": ["error", "double", "avoid-escape"],
+    "curly": "error",
+    "guard-for-in": "error",
+    "no-caller": "error",
+    "no-eq-null": "error",
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-script-url": "error",
+    "no-multi-spaces": "error",
+    "no-native-reassign": "error",
+    "no-self-compare": "error",
+    "no-useless-concat": "error",
+    "yoda": ["error", "never", { "exceptRange": true }],
 
     "arrow-body-style": "off",//
     "arrow-parens": "off",//
@@ -32,7 +44,7 @@ module.exports = {
     "no-useless-constructor": "error",
     "no-useless-rename": "error",
     "no-var": "error",
-    "object-shorthand": "off",
+    "object-shorthand": "off",//
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
     "prefer-rest-params": "error",
