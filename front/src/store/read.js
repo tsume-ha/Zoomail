@@ -63,7 +63,7 @@ export default {
     },
     async loadOneMessage (context, id) {
       context.commit("startAPILoading");
-      const res = await axios.get("/api/board/content/" + String(id) + "/")
+      const res = await axios.get(`/api/board/content/${String(id)}/`)
       .catch(e => {
         console.log("name", e.name);
         console.log("message", e.message);
@@ -80,7 +80,7 @@ export default {
         "id": id,
         "bool": !message.is_bookmarked
       });
-      axios.post("/api/board/bookmark/" + String(id) +"/", {
+      axios.post(`/api/board/bookmark/${String(id)}/`, {
         "data": "data"
       }).then(res => {
         context.commit("updateBookmarked", {

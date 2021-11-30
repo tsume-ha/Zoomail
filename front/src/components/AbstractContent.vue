@@ -60,7 +60,7 @@ export default {
           console.log(error.message);
           store.commit("message/addMessage", {
             level: "error",
-            message: "予想外のエラーが帰ってきました。: " + error.message,
+            message: `予想外のエラーが帰ってきました。: ${error.message}`,
             appname: "abscractComtent"
           });
         }

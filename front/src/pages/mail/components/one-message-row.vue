@@ -34,7 +34,7 @@ export default {
       }
       return text.slice(count, count+200);
     });
-    const link = computed(() => "/mail/" + String(message.value.id));
+    const link = computed(() => `/mail/${String(message.value.id)}`);
 
     const bookmark = () => {
       store.dispatch("read/toggleBookmark", message.value.id);

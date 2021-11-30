@@ -59,7 +59,7 @@ export default {
       sendMail: true
     });
 
-    const loading = computed(()=> store.state.mypage.loading);
+    const loading = computed(() => store.state.mypage.loading);
 
 
     onMounted(() => {

@@ -97,7 +97,7 @@ export default {
           // 重複あり
           store.commit("message/addMessage", {
             level: "warning",
-            message: "重複したファイルが検出されました。" + current.name + "は追加されていません。",
+            message: `重複したファイルが検出されました。${current.name}は追加されていません。`,
             appname: "mail/send"
           });
           return [...prev];

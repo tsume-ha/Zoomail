@@ -41,7 +41,7 @@ export default {
     const is_dirty = computed(() => store.state.send.tos["is_dirty"]);
     const error_messages = computed(() => store.state.send.tos["error_messages"]);
 
-    const toGrouplabel = year => String(year) + " " + String(year - 1994) + "期";
+    const toGrouplabel = year => `${String(year)} ${String(year - 1994)}期`;
     const userYear = store.state.user.year;
     // 選択肢
     const years = ref([

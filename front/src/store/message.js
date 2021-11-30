@@ -37,7 +37,7 @@ export default {
     },
     addMessage(state, payload) {
       // payload: object, {level: String, message: String, appname: String}
-      const key = "local_" + payload.appname + String(Object.keys(state.messages).length + 1);
+      const key = `local_${payload.appname}${String(Object.keys(state.messages).length + 1)}`;
       state.messages = {...state.messages, [key]: {
         level: payload.level,
         message: payload.message,

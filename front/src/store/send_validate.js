@@ -1,5 +1,5 @@
 export function titleValidation(text) {
-  let result = [];
+  const result = [];
   if (text.length < 1) {
     result.push("タイトルを入力してください");
   }
@@ -10,7 +10,7 @@ export function titleValidation(text) {
 }
 
 export function contentValidation(content) {
-  let result = [];
+  const result = [];
   if (content.length < 1) {
     result.push("本文を入力してください");
   }
@@ -18,7 +18,7 @@ export function contentValidation(content) {
 }
 
 export function writerValidation(writer) {
-  let result = [];
+  const result = [];
   if (!writer) {
     result.push("差出人を指定してください");
   }
@@ -26,7 +26,7 @@ export function writerValidation(writer) {
 }
 
 export function tosValidation(to_list) {
-  let result = [];
+  const result = [];
   if (to_list === null) {
     return ["宛先を指定してください"];
   }
@@ -37,7 +37,7 @@ export function tosValidation(to_list) {
 }
 
 export function attachmentsValidation(files) {
-  let result = [];
+  const result = [];
   if (files.length === 0) {
     return [];
   }
@@ -50,7 +50,7 @@ export function attachmentsValidation(files) {
       result.push("ファイルが無効です(zero file size)");
     }
     if (file.size > 10*1000*1000) {// 1000*1000 < 1024*1024
-      result.push("ファイルサイズが上限(10MB)を超えています：" + file.name);
+      result.push(`ファイルサイズが上限(10MB)を超えています：${file.name}`);
     }
     totalFileSize += file.size;
   }

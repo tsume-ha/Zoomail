@@ -21,6 +21,24 @@ module.exports = {
     "no-extra-semi": "error",
     "no-unexpected-multiline": "error",
     "no-unreachable": "error",
-    "quotes": [2, "double", "avoid-escape"]
+
+    "quotes": ["error", "double", "avoid-escape"],
+
+    "arrow-body-style": "off",//
+    "arrow-parens": "off",//
+    "arrow-spacing":  ["error", { "before": true, "after": true }],
+    "no-duplicate-imports": "error",
+    "no-useless-computed-key": "error",
+    "no-useless-constructor": "error",
+    "no-useless-rename": "error",
+    "no-var": "error",
+    "object-shorthand": "off",
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "prefer-template": "error",
+    "rest-spread-spacing": ["error", "never"],
+    "template-curly-spacing": ["error", "never"],
   }
 };

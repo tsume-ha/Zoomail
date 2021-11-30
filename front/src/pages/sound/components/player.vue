@@ -95,9 +95,9 @@ export default {
       // イベント登録
       wavesurfer.value.on("loading", (value) => {
         if (value >= 100) {
-          status.loadProgressText = " ..." + String(value) + " % 波形出力中";
+          status.loadProgressText = ` ...${String(value)} % 波形出力中`;
         } else {
-          status.loadProgressText = " ..." + String(value) + " %";
+          status.loadProgressText = ` ...${String(value)} %`;
         }
       });
       wavesurfer.value.on("ready", () => barMoved());
@@ -167,7 +167,7 @@ export default {
 
     const load = song => {
       nowPlaying.value = {...song};
-      status.loadSongTitle = "Now Loading... " + song.title;
+      status.loadSongTitle = `Now Loading... ${song.title}`;
       wavesurfer.value.load(song.path);
     };
 
@@ -224,10 +224,10 @@ export default {
       if (!(typeof seconds === "number")) {
         return 0;
       }
-      let minute = Math.floor(seconds / 60);
+      const minute = Math.floor(seconds / 60);
       let second = seconds % 60;
-      second = ("00" + second).slice(-2);
-      return minute + ":" + second;
+      second = (`00${second}`).slice(-2);
+      return `${minute}:${second}`;
     };
 
     return {

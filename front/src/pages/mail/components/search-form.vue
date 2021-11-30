@@ -46,7 +46,7 @@ export default {
       e.preventDefault();
 
       // clean params
-      let query = {};
+      const query = {};
       if (params.is_kaisei) {
         query.is_kaisei = true;
       }

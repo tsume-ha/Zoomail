@@ -26,7 +26,7 @@ export default {
       }
     };
     onMounted(() => {
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.onload = e => {
         imageURL.value = e.target.result;
       };

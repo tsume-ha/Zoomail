@@ -1,4 +1,4 @@
-var BundleTracker = require("webpack-bundle-tracker");
+const BundleTracker = require("webpack-bundle-tracker");
 // var VueLoaderPlugin = require("vue-loader/lib/plugin");
 // var MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 

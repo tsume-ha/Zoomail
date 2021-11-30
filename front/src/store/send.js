@@ -120,7 +120,7 @@ export default {
       }
 
       // Form construction
-      let form = new FormData();
+      const form = new FormData();
       form.append("title", context.state.title.value);
       form.append("content", context.state.content.value);
       context.state.tos.value.forEach(obj => {

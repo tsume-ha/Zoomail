@@ -25,7 +25,7 @@ export default {
       }).catch(err => {
         store.commit("message/addMessage", {
           level: "error",
-          message: String(err.response.status) + " " +  err.response.statusText,
+          message: `${String(err.response.status)} ${err.response.statusText}`,
           appname: "index/index"
         });
         console.error(err.response);

@@ -33,7 +33,7 @@ export default {
     const nowLoading = computed(() => store.state.read.nowLoading);
 
     const cleanQuery = computed(() => {
-      let query = {};
+      const query = {};
       if (route.query.is_kaisei && route.query.is_kaisei === "true") {
         query.is_kaisei = true;
       }
