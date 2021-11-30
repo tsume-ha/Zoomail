@@ -38,7 +38,7 @@ export default {
       photos.push(...res.data.photos);
     }).catch(error => {
       console.error(error.response);
-      store.commit('message/addMessage', {
+      store.commit("message/addMessage", {
         level: "warning",
         message: "アルバムを取得できませんでした。",
         appname: "photos/index"

@@ -45,11 +45,11 @@ export default {
         const item = {...res.data};
         context.emit("setContent", item);
       }).catch(error => {
-        if (error.message == 'Network Error' && error.response === undefined) {
-          console.log('通信エラー');
+        if (error.message == "Network Error" && error.response === undefined) {
+          console.log("通信エラー");
         } else if (error.response.status === 500) {
           status.loaded = true;
-          console.log('500');
+          console.log("500");
         } else if (error.response.status === 403){
           status.loaded = true;
           status.notFound = true;
@@ -58,7 +58,7 @@ export default {
           status.notFound = true;
         } else {
           console.log(error.message);
-          store.commit('message/addMessage', {
+          store.commit("message/addMessage", {
             level: "error",
             message: "予想外のエラーが帰ってきました。: " + error.message,
             appname: "abscractComtent"

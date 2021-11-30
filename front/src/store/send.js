@@ -5,7 +5,7 @@ import {
   writerValidation,
   attachmentsValidation
 } from "./send_validate";
-import axios from '../utils/axios';
+import axios from "../utils/axios";
 
 export default {
   namespaced: true,
@@ -109,14 +109,14 @@ export default {
   actions: {
     send (context) {
       // Validation
-      context.commit('validateAll');
+      context.commit("validateAll");
       if (!context.getters.isValid) {
-        context.commit('message/addMessage', {
+        context.commit("message/addMessage", {
           level: "error",
           message: "不正なフィールドがあり、送信できませんでした。",
           appname: "mail/send"
         }, { root: true });
-        return Promise.reject(new Error('form validation error'));
+        return Promise.reject(new Error("form validation error"));
       }
 
       // Form construction
@@ -133,10 +133,10 @@ export default {
       
       // POST
       return axios.post(
-          '/api/board/send/send/', form, {onUploadProgress: e => console.log(e) }
+          "/api/board/send/send/", form, {onUploadProgress: e => console.log(e) }
         ).then(res => {
           console.log(res);
-          context.commit('message/addMessage', {
+          context.commit("message/addMessage", {
             level: "info",
             message: "送信されました。",
             appname: "mail/send"

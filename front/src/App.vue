@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import { onMounted } from '@vue/runtime-core';
-import { useStore } from 'vuex';
-import message from './components/message';
+import { onMounted } from "@vue/runtime-core";
+import { useStore } from "vuex";
+import message from "./components/message";
 export default {
   components: {
     message

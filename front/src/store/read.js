@@ -26,11 +26,11 @@ export default {
     },
     startAPILoading (state) {
       state.nowLoading = true;
-      console.log('startAPILoading');
+      console.log("startAPILoading");
     },
     finishAPILoading (state) {
       state.nowLoading = false;
-      console.log('finishAPILoading');
+      console.log("finishAPILoading");
     },
     updateBookmarked (state, payload) {
       const target = state.messages.find(item => item.id === payload.id);
@@ -46,11 +46,11 @@ export default {
   actions: {
     getMessagesFromAPI (context, params) {
       // APIを叩く
-      context.commit('startAPILoading');
-      axios.get('/api/board/json/', {params}).then(res => {
+      context.commit("startAPILoading");
+      axios.get("/api/board/json/", {params}).then(res => {
         // messages を更新;
-        context.commit('setMessages', res.data.message_list);
-        context.commit('updateParams', params);
+        context.commit("setMessages", res.data.message_list);
+        context.commit("updateParams", params);
       })
       .catch(e => {
         console.log("name", e.name);
@@ -58,34 +58,34 @@ export default {
         console.log("response", e.response);
         console.log("response.status", e.response.status);
       }).finally(() => {
-        context.commit('finishAPILoading');
+        context.commit("finishAPILoading");
       });
     },
     async loadOneMessage (context, id) {
-      context.commit('startAPILoading');
-      const res = await axios.get('/api/board/content/' + String(id) + '/')
+      context.commit("startAPILoading");
+      const res = await axios.get("/api/board/content/" + String(id) + "/")
       .catch(e => {
         console.log("name", e.name);
         console.log("message", e.message);
         console.log("response", e.response);
         console.log("response.status", e.response.status);
       });
-      context.commit('finishAPILoading');
-      context.commit('setMessages', [res.data.message]);
+      context.commit("finishAPILoading");
+      context.commit("setMessages", [res.data.message]);
       return res.data.message;
     },
     toggleBookmark (context, id) {
       const message = context.state.messages.find(item => item.id === id);
-      context.commit('updateBookmarked', {
-        'id': id,
-        'bool': !message.is_bookmarked
+      context.commit("updateBookmarked", {
+        "id": id,
+        "bool": !message.is_bookmarked
       });
-      axios.post('/api/board/bookmark/' + String(id) +'/', {
-        'data': 'data'
+      axios.post("/api/board/bookmark/" + String(id) +"/", {
+        "data": "data"
       }).then(res => {
-        context.commit('updateBookmarked', {
-          'id': id,
-          'bool': (res.data['updated-to'] === 'true')
+        context.commit("updateBookmarked", {
+          "id": id,
+          "bool": (res.data["updated-to"] === "true")
         });
       });
     }

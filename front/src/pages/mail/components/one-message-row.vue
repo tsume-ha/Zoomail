@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed } from "vue";
 import { useStore } from "vuex";
 export default {
   props: {
@@ -28,16 +28,16 @@ export default {
     const message = computed(() => props.message);
     const trimed = computed(() => {
       const text = message.value.content;
-      let count = text.indexOf('\n');
+      let count = text.indexOf("\n");
       if (count < 0) {
         count = 0;
       }
       return text.slice(count, count+200);
     });
-    const link = computed(() => '/mail/' + String(message.value.id));
+    const link = computed(() => "/mail/" + String(message.value.id));
 
     const bookmark = () => {
-      store.dispatch('read/toggleBookmark', message.value.id);
+      store.dispatch("read/toggleBookmark", message.value.id);
     };
     return {
       bookmark,

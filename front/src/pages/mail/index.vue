@@ -64,7 +64,7 @@ export default {
 
     const updateMessage = () => {
       store.dispatch(
-        'read/getMessagesFromAPI', cleanQuery.value
+        "read/getMessagesFromAPI", cleanQuery.value
       );
     };
 

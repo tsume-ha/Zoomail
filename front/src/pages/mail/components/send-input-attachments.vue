@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import validationErrorMessages from '../../../components/validation-error-messages.vue';
-import attachmentPreview from './send-input-attachment-preview.vue';
-import { computed, onBeforeMount, ref } from 'vue';
+import validationErrorMessages from "../../../components/validation-error-messages.vue";
+import attachmentPreview from "./send-input-attachment-preview.vue";
+import { computed, onBeforeMount, ref } from "vue";
 import { useStore } from "vuex";
 export default {
   components: {
@@ -54,7 +54,7 @@ export default {
     const store = useStore();
     const attachments = computed({
       get: () => store.state.send.attachments["value"],
-      set: value => store.commit('send/setAttachments', value)
+      set: value => store.commit("send/setAttachments", value)
     });
     const is_dirty = computed(() => store.state.send.attachments["is_dirty"]);
     const error_messages = computed(() => store.state.send.attachments["error_messages"]);
@@ -95,7 +95,7 @@ export default {
           return [...prev, current];
         } else {
           // 重複あり
-          store.commit('message/addMessage', {
+          store.commit("message/addMessage", {
             level: "warning",
             message: "重複したファイルが検出されました。" + current.name + "は追加されていません。",
             appname: "mail/send"
@@ -106,7 +106,7 @@ export default {
       internalAttachments.value.length = 0;
       // internalAttachmentsの上書き
       uniques.forEach(f => { internalAttachments.value.push(f); });
-      store.commit('send/setAttachments', uniques);
+      store.commit("send/setAttachments", uniques);
     };
 
     onBeforeMount(() => {

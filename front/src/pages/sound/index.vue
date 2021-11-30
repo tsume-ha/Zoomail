@@ -34,10 +34,10 @@ export default {
     const lives = computed(() => store.state.sound.lives);
 
     store.dispatch("sound/getSoundsFromAPI").catch(error => {
-      if (error.message == 'Network Error' && error.response === undefined) {
-        console.log('通信エラー');
+      if (error.message == "Network Error" && error.response === undefined) {
+        console.log("通信エラー");
       } else if (error.response.status === 500) {
-        console.log('500');
+        console.log("500");
       // } else if (error.response.status === 403){
       // } else if (error.response.status === 404){
       // } else {

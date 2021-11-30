@@ -83,29 +83,29 @@ export default {
 
     onMounted(() => {
       wavesurfer.value = WaveSurfer.create({
-        container: '#waveform',
+        container: "#waveform",
         barWidth: 1,
         barHeight: 1.8,
-        waveColor: '#33abcc',
-        progressColor: '#144552',
+        waveColor: "#33abcc",
+        progressColor: "#144552",
         scrollParent: false,
         skipLength: 10,
         normalize: true,
       });
       // イベント登録
-      wavesurfer.value.on('loading', (value) => {
+      wavesurfer.value.on("loading", (value) => {
         if (value >= 100) {
-          status.loadProgressText = ' ...' + String(value) + ' % 波形出力中';
+          status.loadProgressText = " ..." + String(value) + " % 波形出力中";
         } else {
-          status.loadProgressText = ' ...' + String(value) + ' %';
+          status.loadProgressText = " ..." + String(value) + " %";
         }
       });
-      wavesurfer.value.on('ready', () => barMoved());
-      wavesurfer.value.on('audioprocess', () => barMoved());
-      wavesurfer.value.on('seek', () => barMoved());
+      wavesurfer.value.on("ready", () => barMoved());
+      wavesurfer.value.on("audioprocess", () => barMoved());
+      wavesurfer.value.on("seek", () => barMoved());
 
       // 波形ウィンドウのマウス・タッチ操作
-      const wavediv = document.querySelector('#waveform');
+      const wavediv = document.querySelector("#waveform");
       let x;
       const div_width = wavediv.clientWidth;
 
@@ -175,7 +175,7 @@ export default {
       if (!isPlaying.value || status.currentTime > 10) {
         const prevsong = props.songs[(props.songs.indexOf(nowPlaying.value) + props.songs.length - 1) % props.songs.length];
         load(prevsong);
-        wavesurfer.value.on('ready', () => {
+        wavesurfer.value.on("ready", () => {
           wavesurfer.value.play();
         });
       } else {
@@ -186,7 +186,7 @@ export default {
     const next = () => {
       const nextsong = props.songs[(props.songs.indexOf(nowPlaying.value) + 1) % props.songs.length];
       load(nextsong);
-      wavesurfer.value.on('ready', () => {
+      wavesurfer.value.on("ready", () => {
         wavesurfer.value.play();
       });
     };
@@ -226,8 +226,8 @@ export default {
       }
       let minute = Math.floor(seconds / 60);
       let second = seconds % 60;
-      second = ('00' + second).slice(-2);
-      return minute + ':' + second;
+      second = ("00" + second).slice(-2);
+      return minute + ":" + second;
     };
 
     return {

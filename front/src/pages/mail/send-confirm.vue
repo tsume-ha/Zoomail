@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 import attachmentPreview from "./components/send-input-attachment-preview";
 export default {
   components: {
@@ -51,13 +51,13 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    if (!store.getters['send/isValidAndDirty']) {
-      store.commit('message/addMessage', {
+    if (!store.getters["send/isValidAndDirty"]) {
+      store.commit("message/addMessage", {
         level: "warning",
         message: "フォームに正しく入力してください。",
         appname: "mail/send"
       });
-      router.push('/mail/send');
+      router.push("/mail/send");
     }
     const title = computed(() => store.state.send.title.value);
     const tos = computed(() => store.state.send.tos.value);
@@ -67,11 +67,11 @@ export default {
 
     const backToInput = e => {
       e.preventDefault();
-      router.push('/mail/send');
+      router.push("/mail/send");
     };
     const send = e => {
       e.preventDefault();
-      store.dispatch('send/send').then(res => {
+      store.dispatch("send/send").then(res => {
         // 正常にPOSTできた時。メーリスのトップページに遷移する
         console.log(res);
       }).catch(err => {

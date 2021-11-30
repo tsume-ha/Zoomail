@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import validationErrorMessages from '../../../components/validation-error-messages.vue';
-import { computed, onMounted, ref } from 'vue';
+import validationErrorMessages from "../../../components/validation-error-messages.vue";
+import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import axios from '../../../utils/axios';
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
+import axios from "../../../utils/axios";
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 export default {
   components: {
     validationErrorMessages,
@@ -36,7 +36,7 @@ export default {
     const store = useStore();
     const tos = computed({
       get: () => store.state.send.tos["value"],
-      set: value => store.commit('send/setTos', value)
+      set: value => store.commit("send/setTos", value)
     });
     const is_dirty = computed(() => store.state.send.tos["is_dirty"]);
     const error_messages = computed(() => store.state.send.tos["error_messages"]);

@@ -1,5 +1,5 @@
 // import Vue from 'vue'
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export default {
   namespaced: true,

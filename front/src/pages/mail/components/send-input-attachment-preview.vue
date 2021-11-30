@@ -8,17 +8,17 @@
 </template>
 
 <script>
-import { computed, ref, onMounted, onUnmounted } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from "vue";
 export default {
   props: {
     file: {required: true, type: File}
   },
   setup(props) {
-    const imageURL = ref('');
-    const objectURL = ref('');
+    const imageURL = ref("");
+    const objectURL = ref("");
     const file = computed(() => props.file);
 
-    const isImage = computed(() => file.value.type.startsWith('image/'));
+    const isImage = computed(() => file.value.type.startsWith("image/"));
 
     const openFile = () => {
       if (objectURL.value) {

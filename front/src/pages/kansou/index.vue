@@ -27,7 +27,7 @@ export default {
       kansou.push(...res.data.kansou);
     }).catch(error => {
       console.error(error.response);
-      store.commit('message/addMessage', {
+      store.commit("message/addMessage", {
         level: "warning",
         message: "感想用紙のデータを取得できませんでした。",
         appname: "kansou/index"

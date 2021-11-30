@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import validationErrorMessages from '../../../components/validation-error-messages.vue';
-import { computed, onMounted, ref, watch } from 'vue';
+import validationErrorMessages from "../../../components/validation-error-messages.vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
-import axios from '../../../utils/axios';
+import axios from "../../../utils/axios";
 export default {
   components: {
     validationErrorMessages
@@ -35,7 +35,7 @@ export default {
     const store = useStore();
     const writer = computed({
       get: () => store.state.send.writer.value,
-      set: value => store.commit('send/setWriter', value)
+      set: value => store.commit("send/setWriter", value)
     });
     const is_dirty = computed(() => store.state.send.writer.is_dirty);
     const error_messages = computed(() => store.state.send.writer.error_messages);
@@ -54,7 +54,7 @@ export default {
 
     // craeted時、writerが設定されていなかったら自分を設定
     if (writer.value === null) {
-      store.commit('send/setWriter', {
+      store.commit("send/setWriter", {
         id: store.state.user.id,
         name: store.state.user.shortname,
         year: store.state.user.year
@@ -70,7 +70,7 @@ export default {
 
     watch(selectedYear, newSelectedYear => {
       if (writer.value.year !== newSelectedYear) {
-        store.commit('send/setWriter', null);
+        store.commit("send/setWriter", null);
       }
     });
 

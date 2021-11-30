@@ -16,8 +16,8 @@
 </template>s
 
 <script>
-import validationErrorMessages from '../../../components/validation-error-messages.vue';
-import { computed } from 'vue';
+import validationErrorMessages from "../../../components/validation-error-messages.vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 export default {
   components: {
@@ -27,7 +27,7 @@ export default {
     const store = useStore();
     const content = computed({
       get: () => store.state.send.content["value"],
-      set: value => store.commit('send/setContent', value)
+      set: value => store.commit("send/setContent", value)
     });
     const is_dirty = computed(() => store.state.send.content["is_dirty"]);
     const error_messages = computed(() => store.state.send.content["error_messages"]);

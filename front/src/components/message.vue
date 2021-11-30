@@ -31,16 +31,16 @@ export default {
 
     watchEffect(() => {
       for (const key of before_display.value) {
-        store.commit('message/displayed', key);
+        store.commit("message/displayed", key);
         setTimeout(() => {
-          store.commit('message/completed', key);
+          store.commit("message/completed", key);
         }, MESSAGE_DURATION);
       }
     });
 
     const select = key => messages.value[key];
 
-    const close = key => store.commit('message/completed', key);
+    const close = key => store.commit("message/completed", key);
 
     return {
       messages,
