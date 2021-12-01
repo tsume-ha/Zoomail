@@ -65,17 +65,61 @@
       "name": "private.html",
       "path": "private.html",
       "publicPath": "http://localhost:8080/private.html"
+    },
+    "public.9a92c4f74f67b456d656.hot-update.js": {
+      "name": "public.9a92c4f74f67b456d656.hot-update.js",
+      "path": "public.9a92c4f74f67b456d656.hot-update.js",
+      "publicPath": "http://localhost:8080/public.9a92c4f74f67b456d656.hot-update.js"
+    },
+    "private.9a92c4f74f67b456d656.hot-update.js": {
+      "name": "private.9a92c4f74f67b456d656.hot-update.js",
+      "path": "private.9a92c4f74f67b456d656.hot-update.js",
+      "publicPath": "http://localhost:8080/private.9a92c4f74f67b456d656.hot-update.js"
+    },
+    "public.9a92c4f74f67b456d656.hot-update.json": {
+      "name": "public.9a92c4f74f67b456d656.hot-update.json",
+      "path": "public.9a92c4f74f67b456d656.hot-update.json",
+      "publicPath": "http://localhost:8080/public.9a92c4f74f67b456d656.hot-update.json"
+    },
+    "private.9a92c4f74f67b456d656.hot-update.json": {
+      "name": "private.9a92c4f74f67b456d656.hot-update.json",
+      "path": "private.9a92c4f74f67b456d656.hot-update.json",
+      "publicPath": "http://localhost:8080/private.9a92c4f74f67b456d656.hot-update.json"
+    },
+    "public.7f5d772a901d61797368.hot-update.js": {
+      "name": "public.7f5d772a901d61797368.hot-update.js",
+      "path": "public.7f5d772a901d61797368.hot-update.js",
+      "publicPath": "http://localhost:8080/public.7f5d772a901d61797368.hot-update.js"
+    },
+    "private.7f5d772a901d61797368.hot-update.js": {
+      "name": "private.7f5d772a901d61797368.hot-update.js",
+      "path": "private.7f5d772a901d61797368.hot-update.js",
+      "publicPath": "http://localhost:8080/private.7f5d772a901d61797368.hot-update.js"
+    },
+    "public.7f5d772a901d61797368.hot-update.json": {
+      "name": "public.7f5d772a901d61797368.hot-update.json",
+      "path": "public.7f5d772a901d61797368.hot-update.json",
+      "publicPath": "http://localhost:8080/public.7f5d772a901d61797368.hot-update.json"
+    },
+    "private.7f5d772a901d61797368.hot-update.json": {
+      "name": "private.7f5d772a901d61797368.hot-update.json",
+      "path": "private.7f5d772a901d61797368.hot-update.json",
+      "publicPath": "http://localhost:8080/private.7f5d772a901d61797368.hot-update.json"
     }
   },
   "chunks": {
     "public": [
       "static/dist/js/chunk-vendors.js",
-      "static/dist/js/public.js"
+      "static/dist/js/public.js",
+      "public.7f5d772a901d61797368.hot-update.js"
     ],
     "private": [
       "static/dist/js/chunk-vendors.js",
-      "static/dist/js/private.js"
+      "static/dist/js/private.js",
+      "private.7f5d772a901d61797368.hot-update.js"
     ]
   },
-  "publicPath": "http://localhost:8080/"
+  "publicPath": "http://localhost:8080/",
+  "error": "ESLintError",
+  "message": "error: Strings must use doublequote (quotes) at src\\public.js:2:27:\n  1 | import { createApp } from \"vue\";\n> 2 | import BootstrapVue3 from 'bootstrap-vue-3'\n    |                           ^\n  3 | import App from \"./PublicApp.vue\";\n  4 | \n  5 | import 'bootstrap/dist/css/bootstrap.css'\n\n\nerror: Missing semicolon (semi) at src\\public.js:2:44:\n  1 | import { createApp } from \"vue\";\n> 2 | import BootstrapVue3 from 'bootstrap-vue-3'\n    |                                            ^\n  3 | import App from \"./PublicApp.vue\";\n  4 | \n  5 | import 'bootstrap/dist/css/bootstrap.css'\n\n\nerror: Strings must use doublequote (quotes) at src\\public.js:5:8:\n  3 | import App from \"./PublicApp.vue\";\n  4 | \n> 5 | import 'bootstrap/dist/css/bootstrap.css'\n    |        ^\n  6 | import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'\n  7 | \n  8 | createApp(App).use(BootstrapVue3).mount(\"#app\");\n\n\nerror: Missing semicolon (semi) at src\\public.js:5:42:\n  3 | import App from \"./PublicApp.vue\";\n  4 | \n> 5 | import 'bootstrap/dist/css/bootstrap.css'\n    |                                          ^\n  6 | import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'\n  7 | \n  8 | createApp(App).use(BootstrapVue3).mount(\"#app\");\n\n\nerror: Strings must use doublequote (quotes) at src\\public.js:6:8:\n  4 | \n  5 | import 'bootstrap/dist/css/bootstrap.css'\n> 6 | import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'\n    |        ^\n  7 | \n  8 | createApp(App).use(BootstrapVue3).mount(\"#app\");\n  9 | \n\n\nerror: Missing semicolon (semi) at src\\public.js:6:50:\n  4 | \n  5 | import 'bootstrap/dist/css/bootstrap.css'\n> 6 | import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'\n    |                                                  ^\n  7 | \n  8 | createApp(App).use(BootstrapVue3).mount(\"#app\");\n  9 | \n\n\n6 errors found.\n6 errors potentially fixable with the `--fix` option."
 }
