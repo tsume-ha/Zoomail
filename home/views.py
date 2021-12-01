@@ -16,7 +16,7 @@ def index(request):
             messages.success(request, "ログアウトが完了しました")
         return render(request, 'public.html')
     else:
-        return render(request, 'SPA.html')
+        return render(request, 'private.html')
 
 
 def login(request):

@@ -53,7 +53,7 @@ class MemberUpdateFormTest(TestCase):
         User_LogIN(self)
         response = self.client.get("/mypage/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "SPA.html")
+        self.assertTemplateUsed(response, "private.html")
 
     def test_members_update_logOUT(self):
         User_LogOUT(self)
@@ -68,7 +68,7 @@ class MemberUpdateFormTest(TestCase):
         User_LogIN(self)
         response = self.client.get("/mypage/info-update/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "SPA.html")
+        self.assertTemplateUsed(response, "private.html")
 
     def test_members_update_POST_logOUT(self):
         data = {
@@ -191,7 +191,7 @@ class OauthViewTest(TestCase):
         User_LogIN(self)
         response = self.client.get("/mypage/oauth/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "SPA.html")
+        self.assertTemplateUsed(response, "private.html")
 
 
 class ApiGetUserTest(TestCase):

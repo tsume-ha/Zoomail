@@ -90,10 +90,10 @@ class LoginLogoutTest(TestCase):
             login(self, user=user)
             response = self.client.get('/read/')
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed(response, 'SPA.html')
+            self.assertTemplateUsed(response, 'private.html')
             response = self.client.get('/send/')
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed(response, 'SPA.html')
+            self.assertTemplateUsed(response, 'private.html')
             logout(self)
 
 

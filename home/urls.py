@@ -30,6 +30,6 @@ urlpatterns = [
     path('api/', include('home.urls_api')),
 
     # SPA
-    path('<path:p>', login_required(TemplateView.as_view(template_name='SPA.html'))),
+    path('<path:p>', login_required(TemplateView.as_view(template_name='private.html'))),
 ]
 

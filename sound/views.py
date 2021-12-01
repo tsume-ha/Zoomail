@@ -86,7 +86,7 @@ def upload(request):
     params = {
         'form': form,
     }
-    return render(request, 'SPA.html', params)
+    return render(request, 'private.html', params)
 
 
 @login_required()

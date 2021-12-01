@@ -160,7 +160,7 @@ class uploadTest(TestCase):
         Force_Login(self, 2019)
         response = self.client.get('/sound/upload/')
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'SPA.html')
+        self.assertTemplateUsed(response, 'private.html')
 
         mp3dir = os.path.join(settings.BASE_DIR, 'sound', 'test.mp3')
         with open(mp3dir, 'rb') as file:
