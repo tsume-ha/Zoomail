@@ -1,3 +1,27 @@
 <template>
-  <div class="container">public</div>
+  <div class="container">
+    <Header />
+
+    <main>
+      <article>
+        <router-view />
+      </article>
+    </main>
+
+    <Footer />
+  </div>
 </template>
+
+
+<script>
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+export default {
+  components: {
+    Header, Footer
+  },
+  setup() {
+    
+  },
+};
+</script>
