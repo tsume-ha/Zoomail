@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="row">
     <router-link to="/">Zoomail ✉</router-link>
     <NavSW :status="navStatus" @navSWClicked="navSWClicked" />
   </header>
@@ -38,7 +38,7 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 3rem;
-  padding: 0 0.5rem;
+  background-color: $bg-dark;
 
   a,
   button {
