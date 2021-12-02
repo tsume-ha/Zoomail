@@ -1,5 +1,5 @@
 const BundleTracker = require("webpack-bundle-tracker");
-var MomentLocalesPlugin = require("moment-locales-webpack-plugin");
+const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 // const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
 module.exports = {
