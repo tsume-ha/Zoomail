@@ -1,6 +1,8 @@
 <template>
-  <header class="row">
-    <router-link to="/">Zoomail ✉</router-link>
+  <header class="container">
+    <router-link to="/">
+      <h1>Zoomail ✉</h1>
+    </router-link>
     <NavSW :status="navStatus" @navSWClicked="navSWClicked" />
   </header>
 </template>
@@ -38,12 +40,17 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 3rem;
-  background-color: $bg-dark;
 
-  a,
-  button {
+  & > *{
     flex: auto 0 0;
     align-self: center;
+    margin: 0;
+  }
+  & h1 {
+    height: 30px;
+    line-height: 30px;
+    font-size: 30px;
+    margin: 4px 0 0 0;
   }
 }
 </style>

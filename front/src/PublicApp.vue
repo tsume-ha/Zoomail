@@ -1,7 +1,6 @@
 <template>
+  <Header />
   <div class="container">
-    <Header />
-
     <main>
       <article>
         <router-view />
@@ -24,3 +23,9 @@ export default {
   setup() {},
 };
 </script>
+
+<style lang="scss" scoped>
+header {
+  background-color: $bg-dark;
+}
+</style>

@@ -30,9 +30,8 @@ export default {
   display: inline-block;
   height: 30px;
   width: 35px;
-  margin: 2px;
   background: transparent;
-  border: 1px solid #eee;
+  border: 1px solid $text-white;
   border-radius: 8px;
 
   span,
@@ -42,8 +41,7 @@ export default {
     content:'';
     height:1px;
     width:20px;
-    background:#666;
-    border-radius:2px;
+    background: $text-white;
     display:block;
     transition: .5s;
   }
@@ -67,7 +65,6 @@ export default {
     top: 0px;
     left: 0px;
     transform: rotate(90deg);
-    opacity: 0.5;
   }
 
 }
