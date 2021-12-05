@@ -21,6 +21,7 @@ urlpatterns = [
     path('private-media/', include(private_storage.urls), name="private_media"),
     
     path('', home.index, name='index'),
+    path('howto/', include("howto.urls"), name='howto'),
     path('first_register/', home.firstRegister, name='first-register'),
     path('login/', home.login, name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

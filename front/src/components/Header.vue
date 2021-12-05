@@ -37,7 +37,8 @@ header {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  height: 3rem;
+  color: $text-white;
+  background-color: $bg-dark;
 
   & > *{
     flex: auto 0 0;
@@ -46,8 +47,8 @@ header {
   }
   & h1 {
     height: 30px;
-    line-height: 30px;
     font-size: 30px;
+    line-height: 1;
     margin: 4px 0 0 0;
   }
 }

@@ -21,10 +21,11 @@ a.livelogin{
   text-decoration: none;
   flex-shrink: 0;
   background-color: #fcf8e3;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
-a.livelogin.hover{
+a.livelogin:hover{
   text-decoration: underline;
-  border: #f9f0c4 2px solid;
+  border: $text-white 2px solid;
 }
 a.livelogin span{
   display: inline-block;

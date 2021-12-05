@@ -41,11 +41,12 @@ export default {
 </script>
 
 <style lang="scss">
-// header {
-//   background-color: $bg-dark;
-// }
+header, footer {
+  background-color: transparent!important;
+}
 div#bg-wraper {
   min-height: 100vh;
+  color: $text-white;
   transition: background 0.5s;
   &.toClose {
     background-color: $bg-dark;

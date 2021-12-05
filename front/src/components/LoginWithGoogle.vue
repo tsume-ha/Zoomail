@@ -7,7 +7,7 @@
 <style lang="scss" scoped>
 a#G-login{
   display: inline-block;
-  color: #000;
+  color: transparent;
   text-decoration: none;
   background-image: url("../assets/img/btn_google_signin_light_normal_web@2x.png");
   background-size: 192px 46px;
@@ -20,7 +20,7 @@ a#G-login{
   font-size: 0;
   border: transparent 2px solid;
 }
-a#G-login.hover{
+a#G-login:hover{
   text-decoration: none;
   background-image: url("../assets/img/btn_google_signin_light_focus_web@2x.png");
   border: $text-white 2px solid;

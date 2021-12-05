@@ -1,44 +1,59 @@
+* {
+  box-sizing: border-box;
+}
+
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    /* Set your content font stack here: */
+    font-family: serif;
+}
+
 h1, h2, h3, h4, h5, h6{
   margin: 0;
 }
 
+p {
+  line-height: 1.75;
+}
+
 .container {
-  display: flex;
-  width: calc(100% - 2rem);
+  width: 100%;
   padding: 0 1rem;
   
   @media screen and (min-width: 35.5em) {
     padding: 0 10%;
-    width: 80%;
   }
   @media screen and (min-width: 48em) {
     padding: 0 15%;
-    width: 70%;
   }
   @media screen and (min-width: 64em) {
     padding: 0 20%;
-    width: 60%;
   }
   @media screen and (min-width: 80em) {
     padding: 0 25%;
-    width: 50%;
   }
 }
 
 a, a:active, a:focus {
   background-color: transparent;
   text-decoration: none;
-  color: $text-white;
+  color: inherit;
   outline: none;
-}
-
-main > article {
-  width: 100%;
-  border-top: 1px solid $text-white;
-  padding-top: 1rem;
-  padding-bottom: 5rem;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .small{
   font-size: 0.75rem;
+}
+
+.btn-flat{
+  display: inline-block;
+  border: 2px solid $text-white;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  &:hover {
+    text-decoration: underline;
+  }
 }
