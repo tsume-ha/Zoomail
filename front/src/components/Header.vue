@@ -3,30 +3,28 @@
     <router-link to="/">
       <h1>Zoomail ✉</h1>
     </router-link>
-    <NavSW :status="navStatus" @navSWClicked="navSWClicked" />
+    <NavSW :status="props.status" @navSWClicked="navSWClicked" />
   </header>
 </template>
 
 <script>
 import NavSW from "@/components/NavSW.vue";
-import { ref } from "vue";
 export default {
   components: {
     NavSW,
   },
-  setup() {
-    const navStatus = ref("toMenu");
+  props: {
+    status: {
+      required: true,
+      validator: value => ["toMenu", "toClose", "toReturn"].indexOf(value) !== -1
+    }
+  },
+  setup(props, context) {
     const navSWClicked = () => {
-      if (navStatus.value === "toMenu") {
-        navStatus.value = "toClose";
-      } else if (navStatus.value === "toClose") {
-        navStatus.value = "toMenu";
-      } else if (navStatus.value === "toReturn") {
-        //
-      }
+      context.emit("navSWClicked");
     };
     return {
-      navStatus,
+      props,
       navSWClicked,
     };
   },

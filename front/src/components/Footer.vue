@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="container">
     ©京大アンプラグド
   </footer>
 </template>

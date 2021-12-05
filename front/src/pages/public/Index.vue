@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <article>
     LOGO
-  </section>
+  </article>
 </template>
