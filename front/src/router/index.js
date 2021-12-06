@@ -87,6 +87,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.path.slice(-1) !== "/") {
+    return next(`${to.path}/`);
+  }
   store.commit("updateLastPath", from);
   next();
 });

@@ -8,6 +8,7 @@ import "@/assets/sass/main.scss";
 // router settings
 import Index from "@/pages/public/Index.vue";
 import Login from "@/pages/public/Login.vue";
+import LoggedOut from "@/pages/public/LoggedOut.vue";
 const routes = [
   {
     path: "/",
@@ -15,9 +16,14 @@ const routes = [
     component: Index
   },
   {
-    path: "/login",
+    path: "/login/",
     name: "login",
     component: Login
+  },
+  {
+    path: "/logged_out/",
+    name: "logged_out",
+    component: LoggedOut
   },
 ];
 const router = createRouter({
@@ -26,10 +32,13 @@ const router = createRouter({
   base: "/"
 });
 router.beforeEach((to, from, next) => {
-  if (to.name === "login") {
-    store.commit("set", true);
+  if (to.path.slice(-1) !== "/") {
+    return next(`${to.path}/`);
+  }
+  if (to.name === "login" || to.name === "logged_out") {
+    store.commit("setIsMenuOpen", true);
   } else {
-    store.commit("set", false);
+    store.commit("setIsMenuOpen", false);
   }
   next();
 });
@@ -41,7 +50,7 @@ const store = createStore({
     isMenuOpen: false,
   },
   mutations: {
-    set (state, bool) {
+    setIsMenuOpen(state, bool) {
       state.isMenuOpen = bool;
     }
   }
