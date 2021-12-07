@@ -2,7 +2,9 @@
   <div id="bg-wraper" :class="{'menuOpen': isMenuOpen, 'menuClose': !isMenuOpen}">
     <Header @navSWClicked="navSWClicked" :status="navStatus" />
     <main class="container content-wraper">
-      <router-view />
+      <transition mode="out-in" name="transition-router">
+        <router-view />
+      </transition>
     </main>
 
     <Footer />
@@ -56,15 +58,34 @@ export default {
 header, footer {
   background-color: transparent!important;
 }
+div#app {
+    background-image: linear-gradient(rgba(56, 100, 113, .8), rgba(56, 100, 113, .8)),
+                      url("@/assets/img/LP-BG.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 div#bg-wraper {
   min-height: 100vh;
   color: $text-white;
-  transition: background 0.5s;
+  transition: background-color .5s;
+
   &.menuOpen {
     background-color: $bg-dark;
   }
   &.menuClose {
-    background-color: $bg-light;
+    background-color: transparent;
   }
 }
+// article {
+//     transition: opacity 5s;
+//   // &.transition-router-enter-active,
+//   // &.transition-router-leave-active{
+//   // }
+//   &.transition-router-enter{
+//     opacity: 0;
+//   }
+//   &.transition-router-leave-to{
+//     opacity: 0;
+//   }
+// }
 </style>
