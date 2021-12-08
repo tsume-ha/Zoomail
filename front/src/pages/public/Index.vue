@@ -1,9 +1,7 @@
 <template>
   <article>
-    <div class="pure-g">
-      <div class="pure-u-1-1">
-Logo
-      </div>
+    <div class="logo-wraper">
+      <img id="logo" class="pure-img" src="@/assets/img/zoomail.png">
     </div>
 
     <router-link :to="{name: 'login'}" id="login-button" class="btn-flat">LOG IN</router-link>
@@ -22,6 +20,12 @@ article{
 
   p {
     text-shadow: 0 0 0.25rem #000;
+  }
+
+  .logo-wraper {
+    display: block;
+    max-width: 400px;
+    margin: 1rem auto 2rem;
   }
 }
 </style>
