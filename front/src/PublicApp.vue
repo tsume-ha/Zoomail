@@ -80,18 +80,21 @@ div#bg-wraper {
     background-color: transparent;
   }
 }
-article {
-  &.transition-router-enter-active,
-  &.transition-router-leave-active{
-    transition: opacity .25s;
-  }
-  &.transition-router-enter,
-  &.transition-router-leave-to{
-    opacity: 0;
-  }
-  &.transition-router-leave,
-  &.transition-router-enter-to{
-    opacity: 1;
-  }
+main > article {
+  border-top: 1px solid $text-white;
 }
+// article {
+//   &.transition-router-enter-active,
+//   &.transition-router-leave-active{
+//     transition: opacity .25s;
+//   }
+//   &.transition-router-enter,
+//   &.transition-router-leave-to{
+//     opacity: 0;
+//   }
+//   &.transition-router-leave,
+//   &.transition-router-enter-to{
+//     opacity: 1;
+//   }
+// }
 </style>

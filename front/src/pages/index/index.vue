@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <article>
     <h1>index</h1>
     text{{counter}}
-  </div>
+  </article>
 </template>
 
 <script>

@@ -49,7 +49,6 @@ header {
     height: 30px;
     font-size: 30px;
     line-height: 1;
-    margin: 4px 0 0 0;
   }
 }
 </style>
