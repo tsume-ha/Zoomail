@@ -2,9 +2,11 @@
   <div id="bg-wraper" :class="{'menuOpen': isMenuOpen, 'menuClose': !isMenuOpen}">
     <Header @navSWClicked="navSWClicked" :status="navStatus" />
     <main class="container content-wraper">
-      <transition mode="out-in" name="transition-router">
-        <router-view />
-      </transition>
+      <router-view v-slot="{ Component }">
+        <transition mode="out-in" name="transition-router">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </main>
 
     <Footer />
@@ -21,12 +23,11 @@ import Footer from "@/components/Footer.vue";
 export default {
   components: {
     Header,
-    Footer,
+    Footer
   },
   setup() {
     const router = useRouter();
     const store = useStore();
-
     const navStatus = ref("toMenu");
     const navSWClicked = () => {
       if (navStatus.value === "toMenu") {
@@ -76,16 +77,18 @@ div#bg-wraper {
     background-color: transparent;
   }
 }
-// article {
-//     transition: opacity 5s;
-//   // &.transition-router-enter-active,
-//   // &.transition-router-leave-active{
-//   // }
-//   &.transition-router-enter{
-//     opacity: 0;
-//   }
-//   &.transition-router-leave-to{
-//     opacity: 0;
-//   }
-// }
+article {
+  &.transition-router-enter-active,
+  &.transition-router-leave-active{
+    transition: opacity .25s;
+  }
+  &.transition-router-enter,
+  &.transition-router-leave-to{
+    opacity: 0;
+  }
+  &.transition-router-leave,
+  &.transition-router-enter-to{
+    opacity: 1;
+  }
+}
 </style>
