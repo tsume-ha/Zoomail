@@ -10,6 +10,7 @@
     </main>
 
     <Footer />
+    <Message />
   </div>
 </template>
 
@@ -20,10 +21,12 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import Message from "./components/message";
 export default {
   components: {
     Header,
-    Footer
+    Footer,
+    Message
   },
   setup() {
     const router = useRouter();

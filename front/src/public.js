@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { createStore } from "vuex";
+import message from "./store/message";
 import App from "./PublicApp.vue";
 
 import "@/assets/sass/main.scss";
@@ -53,7 +54,8 @@ const store = createStore({
     setIsMenuOpen(state, bool) {
       state.isMenuOpen = bool;
     }
-  }
+  },
+  modules: { message }
 });
 
 

@@ -10,7 +10,15 @@ class AjaxMessageMiddleware:
         response = self.get_response(request)
         if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest':
             return response
+        
+        return self.__setCookieMessage(response, request)
 
+    def process_template_response(self, request, response):
+        if "public.html" in response.template_name or "private.html" in response.template_name:
+            return self.__setCookieMessage(response, request)
+        return response
+
+    def __setCookieMessage(self, response, request):
         i = 0
         now = int(time.time())
         storage = get_messages(request)# ここでmessageは削除される
@@ -19,4 +27,3 @@ class AjaxMessageMiddleware:
             i += 1
 
         return response
-

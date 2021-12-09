@@ -20,6 +20,8 @@
 <script>
 import LoginWithLiveLog from "@/components/LoginWithLiveLog.vue";
 import LoginWithGoogle from "@/components/LoginWithGoogle.vue";
+import { onMounted } from "vue";
+import { useStore } from "vuex";
 
 export default {
   components: {
@@ -27,7 +29,8 @@ export default {
     LoginWithGoogle
   },
   setup() {
-    
+    const store = useStore();
+    onMounted(() => store.commit("message/storeMessageFromCokie"));
   },
 };
 </script>
