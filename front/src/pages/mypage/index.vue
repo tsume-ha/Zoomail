@@ -9,7 +9,7 @@
     </section>
     <section>
       <h4>ログアウト</h4>
-      <router-link to="/">ログアウトする</router-link>
+      <a href="/logout/">ログアウトする</a>
     </section>
     <section v-if="permissions.canRegisterUser">
       <h4>ユーザー登録</h4>

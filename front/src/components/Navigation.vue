@@ -34,11 +34,12 @@
 </template>
 <style lang="scss" scoped>
 nav {
-  position: fixed;
-  top: 3rem;
+  position: absolute;
+  top: 0;
   left: 0;
-  width: 100vw;
-  height: 100%;
+  width: 100%;
+  // min-height: calc(100vh - 3rem);
+  min-height: 100%;
   z-index: 3;
   text-align: center;
   background-color: $bg-dark;
@@ -46,8 +47,7 @@ nav {
 
   ul {
     border-top: 1px solid $text-white;
-    border-bottom: 1px solid $text-white;
-    padding: 1.5rem 0 0;
+    padding: 1.25rem 0 3rem;
     margin: 0;
 
     li {
@@ -65,6 +65,11 @@ nav {
     }
     hr {
       max-width: 14rem;
+      // background-color: $text-white;
+      // border-top: 1px dotted $text-white;
+      border-width: 1px 0 0 0;
+      border-style: solid;
+      border-color: $text-white;
     }
   }
 }

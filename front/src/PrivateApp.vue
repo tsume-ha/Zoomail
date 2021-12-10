@@ -1,8 +1,8 @@
 <template>
   <Header @navSWClicked="navSWClicked" :status="navStatus" />
   <main class="container">
-    <transition name="side-nav">
-      <SideNavigation v-if="navStatus === 'menuOpened'" />
+    <transition name="nav-transition">
+      <Navigation v-if="navStatus === 'menuOpened'" />
     </transition>
     <router-view />
   </main>
@@ -11,22 +11,22 @@
 </template>
 
 <script>
-import { onMounted, computed } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import SideNavigation from "@/components/SideNavigation.vue";
+import Navigation from "@/components/Navigation.vue";
 import Message from "@/components/Message";
 export default {
   components: {
     Header,
     Footer,
-    SideNavigation,
+    Navigation,
     Message,
   },
   setup() {
     const store = useStore();
-    onMounted(store.dispatch("mypage/getUserInfo"));
+    store.dispatch("mypage/getUserInfo");
 
     const navStatus = computed(() => store.state.menuStatus);
     const navSWClicked = () => {
@@ -55,12 +55,12 @@ main {
   }
 }
 nav {
-  &.side-nav-enter-active,
-  &.side-nav-leave-active {
+  &.nav-transition-enter-active,
+  &.nav-transition-leave-active {
     transition: opacity 0.25s;
   }
-  &.side-nav-enter-from,
-  &.side-nav-leave-to {
+  &.nav-transition-enter-from,
+  &.nav-transition-leave-to {
     opacity: 0;
   }
 }
