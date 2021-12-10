@@ -90,6 +90,7 @@ router.beforeEach((to, from, next) => {
   if (to.path.slice(-1) !== "/") {
     return next(`${to.path}/`);
   }
+  store.commit("setMenuStatus", "menuClosed");
   store.commit("updateLastPath", from);
   next();
 });

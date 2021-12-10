@@ -16,8 +16,9 @@ export default {
   props: {
     status: {
       required: true,
-      validator: value => ["toMenu", "toClose", "toReturn"].indexOf(value) !== -1
-    }
+      validator: (value) =>
+        ["menuClosed", "menuOpened", "detail"].indexOf(value) !== -1,
+    },
   },
   setup(props, context) {
     const navSWClicked = () => {
@@ -40,7 +41,7 @@ header {
   color: $text-white;
   background-color: $bg-dark;
 
-  & > *{
+  & > * {
     flex: auto 0 0;
     align-self: center;
     margin: 0;

@@ -1,5 +1,5 @@
 <template>
-  <div id="bg-wraper" :class="{'menuOpen': isMenuOpen, 'menuClose': !isMenuOpen}">
+  <div id="bg-wraper" :class="{ menuOpen: isMenuOpen, menuClose: !isMenuOpen }">
     <Header @navSWClicked="navSWClicked" :status="navStatus" />
     <main class="container content-wraper">
       <router-view v-slot="{ Component }">
@@ -21,57 +21,63 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import Message from "./components/message";
+import Message from "@/components/Message";
 export default {
   components: {
     Header,
     Footer,
-    Message
+    Message,
   },
   setup() {
     const router = useRouter();
     const store = useStore();
-    const navStatus = ref("toMenu");
+    const navStatus = ref("menuClosed");
     const navSWClicked = () => {
-      if (navStatus.value === "toMenu") {
-        router.push({name: "login"});
-      } else if (navStatus.value === "toClose") {
-        router.push({name: "index"});
+      if (navStatus.value === "menuClosed") {
+        router.push({ name: "login" });
+      } else if (navStatus.value === "menuOpened") {
+        router.push({ name: "index" });
       }
     };
     const isMenuOpen = computed(() => store.state.isMenuOpen);
     watch(
-      () => isMenuOpen.value,// target
-      (val, _) => {// new, old => {}
+      () => isMenuOpen.value, // target
+      (val, _) => {
+        // new, old => {}
         if (val) {
-          navStatus.value = "toClose";
+          navStatus.value = "menuOpened";
         } else {
-          navStatus.value = "toMenu";
+          navStatus.value = "menuClosed";
         }
       }
     );
     return {
-      navStatus, isMenuOpen,
-      navSWClicked
+      navStatus,
+      isMenuOpen,
+      navSWClicked,
     };
   },
 };
 </script>
 
 <style lang="scss">
-header, footer {
-  background-color: transparent!important;
+header,
+footer {
+  background-color: transparent !important;
 }
 div#app {
-    background-image: linear-gradient(rgba(56, 100, 113, .8), rgba(56, 100, 113, .8)),
-                      url("@/assets/img/LP-BG.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-image: linear-gradient(
+      rgba(56, 100, 113, 0.8),
+      rgba(56, 100, 113, 0.8)
+    ),
+    url("@/assets/img/LP-BG.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 div#bg-wraper {
   min-height: 100vh;
   color: $text-white;
-  transition: background-color .5s;
+  transition: background-color 0.5s;
 
   &.menuOpen {
     background-color: $bg-dark;
@@ -83,18 +89,14 @@ div#bg-wraper {
 main > article {
   border-top: 1px solid $text-white;
 }
-// article {
-//   &.transition-router-enter-active,
-//   &.transition-router-leave-active{
-//     transition: opacity .25s;
-//   }
-//   &.transition-router-enter,
-//   &.transition-router-leave-to{
-//     opacity: 0;
-//   }
-//   &.transition-router-leave,
-//   &.transition-router-enter-to{
-//     opacity: 1;
-//   }
-// }
+article {
+  &.transition-router-enter-active,
+  &.transition-router-leave-active {
+    transition: opacity 0.1s;
+  }
+  &.transition-router-enter-from,
+  &.transition-router-leave-to {
+    opacity: 0;
+  }
+}
 </style>
