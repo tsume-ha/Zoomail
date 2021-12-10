@@ -1,5 +1,6 @@
 <template>
-  <main>
+  <article>
+    <h3>感想用紙</h3>
     <section v-for="year in yearsSet" :key="year">
       <h4>{{year}}年度</h4>
       <p v-for="item in getItems(year)" :key="item.id">
@@ -9,7 +10,7 @@
       </p>
     </section>
 
-  </main>
+  </article>
 </template>
 
 <script>

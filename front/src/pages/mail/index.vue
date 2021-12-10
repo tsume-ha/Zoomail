@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>mail/read - search</h1>
+  <article>
+    <h3>メーリス・受信ボックス</h3>
     <search-form />
     
     <div v-if="nowLoading">now loading</div>
@@ -9,7 +9,7 @@
     </transition-group>
 
     <router-link :to="{query: differentPageQuery(2)}">Next</router-link>
-  </div>
+  </article>
 </template>
 
 <script>

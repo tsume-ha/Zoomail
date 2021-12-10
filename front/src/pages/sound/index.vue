@@ -1,27 +1,27 @@
 <template>
-<div>
-  <h3>リハ音源</h3>
-  <div class="row" v-if="soundStaff" v-cloak>
-    <a href="/admin/sound/live/">編集はこちらから</a>
-  </div>
-  <section class="row">
-    <div v-for="live in lives" :key="'live-' + live.id" class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
-      <article class="card m-2">
-        <router-link :to="{name: 'sound:content', params: {id: live.id}}" class="card-body pb-1">
-          <h5 class="card-title float-left mb-2">{{ live.title }}</h5>
-          <h6 class="card-subtitle float-right small">Recorded : {{ displayDate(live.date) }}
-          </h6>
-          <p class="songdetail mb-2">
-            <span v-for="song in live.songs" :key="'song-' + song.id">
-              {{ song.track_num }}. {{ song.title }}
-            </span>
-          </p>
-          <span class="p-0 pr-2 text-right small">ほか、全{{ live.songs.length }}曲</span>
-        </router-link>
-      </article>
+  <article>
+    <h3>リハ音源</h3>
+    <div class="row" v-if="soundStaff" v-cloak>
+      <a href="/admin/sound/live/">編集はこちらから</a>
     </div>
-  </section>
-</div>
+    <section class="row">
+      <div v-for="live in lives" :key="'live-' + live.id" class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <article class="card m-2">
+          <router-link :to="{name: 'sound:content', params: {id: live.id}}" class="card-body pb-1">
+            <h5 class="card-title float-left mb-2">{{ live.title }}</h5>
+            <h6 class="card-subtitle float-right small">Recorded : {{ displayDate(live.date) }}
+            </h6>
+            <p class="songdetail mb-2">
+              <span v-for="song in live.songs" :key="'song-' + song.id">
+                {{ song.track_num }}. {{ song.title }}
+              </span>
+            </p>
+            <span class="p-0 pr-2 text-right small">ほか、全{{ live.songs.length }}曲</span>
+          </router-link>
+        </article>
+      </div>
+    </section>
+  </article>
 </template>
 
 <script>

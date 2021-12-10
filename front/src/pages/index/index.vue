@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1>index</h1>
+    <h3>index</h3>
     text{{counter}}
   </article>
 </template>
