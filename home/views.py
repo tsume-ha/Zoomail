@@ -51,15 +51,16 @@ def firstRegister(request):
 
 @login_required()
 def homeAPI(request):
-    messages.success(request, "メッセージを送信できる")
-    messages.info(request, "メッセージを送信できる2")
-    messages.warning(request, "メッセージを送信できる3")
-    messages.error(request, "メッセージを送信できる4")
+    # messages.success(request, "メッセージを送信できる")
+    # messages.info(request, "メッセージを送信できる2")
+    # messages.warning(request, "メッセージを送信できる3")
+    # messages.error(request, "メッセージを送信できる4")
     announcements = Announcement.objects.order_by('-created_at')[:5]
     newcontents = NewContent.objects.order_by('index')[:5]
     return JsonResponse({
-        'content_log': [
+        'newContents': [
             {
+                "id": newcontent.id,
                 "genre": newcontent.genre,
                 "title": newcontent.title,
                 "path": newcontent.path
@@ -67,6 +68,7 @@ def homeAPI(request):
         ],
         'announcements': [
             {
+                "id": announcement.id,
                 "date": announcement.created_at.strftime("%Y/%m/%d"),
                 "text": announcement.text
             } for announcement in announcements

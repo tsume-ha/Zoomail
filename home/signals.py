@@ -31,7 +31,7 @@ def update_send_mail_address(sender, instance, **kwargs):
         'genre': '写真',
         'title': q.title,
         'date': q.created_at,
-        'path': '/pictures/'
+        'path': '/photo/'
     } for q in Album.objects.order_by('-created_at')[:LIST_NUM]]
     sound_list = [{
         'genre': 'リハ音源',

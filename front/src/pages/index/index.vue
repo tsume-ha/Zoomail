@@ -8,6 +8,43 @@
       「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a
       >」の部内連絡管理アプリ
     </p>
+
+    <div id="top-info" class="container">
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-1-2">
+          <section>
+            <span class="pure-menu-heading">New Contents</span>
+            <ul class="pure-menu-list">
+              <li
+                v-for="item in newContents"
+                :key="item.id"
+                class="pure-menu-item"
+              >
+                <router-link :to="item.path" class="pure-menu-link">
+                  【{{ item.genre }}】 {{ item.title }}
+                </router-link>
+              </li>
+            </ul>
+          </section>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2">
+          <section>
+            <span class="pure-menu-heading">Announcements</span>
+            <ul class="pure-menu-list">
+              <li
+                v-for="item in announcements"
+                :key="item.id"
+                class="pure-menu-item"
+              >
+                <div class="announcement-content">
+                  <time class="small">{{ item.date }}</time> {{ item.text }}
+                </div>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
   </article>
 </template>
 
@@ -18,14 +55,13 @@ import axios from "../../utils/axios";
 export default {
   setup() {
     const store = useStore();
-    const contentLog = ref([]);
+    const newContents = ref([]);
     const announcements = ref([]);
     onMounted(() => {
       axios
         .get("/api/home/index/")
         .then((res) => {
-          console.log(res.data);
-          contentLog.value = res.data.contentLog;
+          newContents.value = res.data.newContents;
           announcements.value = res.data.announcements;
         })
         .catch((err) => {
@@ -41,7 +77,7 @@ export default {
     });
 
     return {
-      contentLog,
+      newContents,
       announcements,
     };
   },
@@ -50,7 +86,6 @@ export default {
 
 <style lang="scss" scoped>
 article {
-  text-align: center;
   background-image: linear-gradient(
       rgba(56, 100, 113, 0.8),
       rgba(56, 100, 113, 0.8)
@@ -58,6 +93,7 @@ article {
     url("@/assets/img/LP-BG.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
+  text-shadow: 0 0 0.25rem #000;
 
   .logo-wraper {
     display: block;
@@ -66,8 +102,25 @@ article {
   }
 
   p {
-    text-shadow: 0 0 0.25rem #000;
     color: $text-white;
+    text-align: center;
+  }
+
+  div#top-info {
+    color: $text-white;
+    margin-top: 3rem;
+
+    section {
+      margin: 1rem;
+    }
+
+    .announcement-content {
+      padding: 0.5em 1em;
+      line-height: 1.5;
+      time {
+        padding: 0 0.5rem;
+      }
+    }
   }
 }
 </style>

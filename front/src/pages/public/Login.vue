@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h4>LOG IN</h4>
+    <h2>LOG IN</h2>
     <div class="login-wraper">
       <LoginWithLiveLog />
       <LoginWithGoogle />
@@ -41,8 +41,9 @@ article {
   text-align: center;
   position: relative;
 
-  h4 {
+  h2 {
     margin: 1rem;
+    font-size: 1.25rem;
   }
   .login-wraper {
     display: flex;

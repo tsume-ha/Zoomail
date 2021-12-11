@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h4>LOG OUT</h4>
+    <h2>LOG OUT</h2>
 
     <p>ログアウトが完了しました。</p>
 
@@ -22,8 +22,9 @@ article {
   text-align: center;
   position: relative;
 
-  h4 {
+  h2 {
     margin: 1rem;
+    font-size: 1.25rem;
   }
 }
 </style>
