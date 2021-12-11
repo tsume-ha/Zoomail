@@ -35,6 +35,31 @@ p {
     padding: 0 25%;
   }
 }
+.cancel-parent-container {
+  width: calc(100% + 2rem);
+  margin-left: -1rem;
+  margin-right: -1rem;
+  @media screen and (min-width: 35.5em) {
+    width: calc(100% / 0.8);
+    margin-left: calc(-1 * 100% / 0.8 * 0.1 );
+    margin-right: calc(-1 * 100% / 0.8 * 0.1 );
+  }
+  @media screen and (min-width: 48em) {
+    width: calc(100% / 0.7);
+    margin-left: calc(-1 * 100% / 0.7 * 0.15 );
+    margin-right: calc(-1 * 100% / 0.7 * 0.15 );
+  }
+  @media screen and (min-width: 64em) {
+    width: calc(100% / 0.6);
+    margin-left: calc(-1 * 100% / 0.6 * 0.2 );
+    margin-right: calc(-1 * 100% / 0.6 * 0.2 );
+  }
+  @media screen and (min-width: 80em) {
+    width: calc(100% / 0.5);
+    margin-left: calc(-1 * 100% / 0.5 * 0.25 );
+    margin-right: calc(-1 * 100% / 0.5 * 0.25 );
+  }
+}
 
 a, a:active, a:focus {
   background-color: transparent;

@@ -1,13 +1,13 @@
 <template>
   <article>
-    <h3>LOG IN</h3>
+    <h4>LOG IN</h4>
     <div class="login-wraper">
       <LoginWithLiveLog />
       <LoginWithGoogle />
     </div>
 
     <p class="small">
-      Googleアカウントでログインするには事前の登録が必要です。<br>
+      Googleアカウントでログインするには事前の登録が必要です。<br />
       詳しくはHP係までご連絡ください。
     </p>
 
@@ -26,7 +26,7 @@ import { useStore } from "vuex";
 export default {
   components: {
     LoginWithLiveLog,
-    LoginWithGoogle
+    LoginWithGoogle,
   },
   setup() {
     const store = useStore();
@@ -36,12 +36,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-article{
+article {
   color: $text-white;
   text-align: center;
   position: relative;
 
-  h3 {
+  h4 {
     margin: 1rem;
   }
   .login-wraper {
