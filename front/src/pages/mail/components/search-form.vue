@@ -1,27 +1,20 @@
 <template>
-  <form class="content row pb-3 border-bottom" @submit="submit">
-    <div class="col-12">
-      <input type="text" name="text" placeholder="件名・本文で検索" class="form-control formtext" id="id_text" v-model="params.text">
-    </div>
-    <div class="col-12">
-      <div class="d-inline-block">
-        <input type="checkbox" name="is_kaisei" class="" id="is_kaisei" v-model="params.is_kaisei">
-        <label for="is_kaisei">回生メーリスのみ:</label>
-      </div>
-      <div class="d-inline-block">
-        <input type="checkbox" name="is_zenkai" class="" id="is_zenkai" v-model="params.is_zenkai">
-        <label for="is_zenkai">全回メーリスのみ:</label>
-      </div>
-      <div class="d-inline-block">
-        <input type="checkbox" name="is_bookmark" class="" id="is_bookmark" v-model="params.is_bookmark">
-        <label for="is_bookmark">ブックマークのみ:</label>
-      </div>
-      <div class="d-inline-block">
-        <input type="checkbox" name="is_sender" class="" id="is_sender" v-model="params.is_sender">
-        <label for="is_sender">送信したメーリスのみ:</label>
-      </div>
-    </div>
-    <button>検索</button>
+  <form class="pure-form pure-g" @submit="submit">
+      <input type="checkbox" name="is_kaisei" id="is_kaisei" v-model="params.is_kaisei">
+      <label for="is_kaisei">回生メーリスのみ:</label>
+      
+      <input type="checkbox" name="is_zenkai" id="is_zenkai" v-model="params.is_zenkai">
+      <label for="is_zenkai">全回メーリスのみ:</label>
+      
+      <input type="checkbox" name="is_bookmark" id="is_bookmark" v-model="params.is_bookmark">
+      <label for="is_bookmark">ブックマークのみ:</label>
+      
+      <input type="checkbox" name="is_sender" id="is_sender" v-model="params.is_sender">
+      <label for="is_sender">送信したメーリスのみ:</label>
+
+    <input type="text" name="text" placeholder="件名・本文で検索" class="formtext" id="id_text" v-model="params.text">
+    
+    <button class="pure-button search">検索</button>
   </form>
 </template>
 
@@ -65,7 +58,6 @@ export default {
       if (params.page > 1) {
         query.page = params.page;
       }
-
       router.push({ query });
     };
 
@@ -100,14 +92,27 @@ export default {
 
 
 <style scoped>
-
-input.formtext{
-  display: inline-block;
-  width: 100%;
-  max-width: 30rem;
+form {
+  margin-bottom: 1em;
 }
 
-input[type="checkbox"]{
+.formtext{
+  display: inline-block;
+  box-sizing: border-box;
+  width: calc(100% - 4em);
+  min-width: 10em;
+  max-width: 30em;
+  padding: 0.125em .25em;
+  margin: 0 0.5em 0 0;
+}
+.search{
+  display: inline-block;
+  box-sizing: border-box;
+  width: 3.5em;
+  padding: 0.125em 0.5em;
+}
+
+input[type="checkbox"] {
   display: none;
 }
 
@@ -130,7 +135,7 @@ label:before{
   height: 1.2rem;
   margin: 0;
   padding: 0;
-  border: 1px solid #999;
+  border: 1px solid #eee;
   border-radius: 1rem;
   transition: 0.2s;
 }
@@ -143,7 +148,7 @@ label:after{
   width: 0.9rem;
   height: 0.9rem;
   border-radius: 0.75rem;
-  background-color: #999;
+  background-color: #eee;
   transition: 0.2s;
 }
 input:checked + label:before{

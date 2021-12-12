@@ -1,17 +1,17 @@
 <template>
-  <section class="content row border-bottom" :id="'message-id-'+String(message.id)">
-    <h4 class="col-12 my-1"><router-link :to="link">{{String(message.id)}} - {{message.title}}</router-link></h4>
-    <div class="col-12">
-      <span class="float-left date small p-1">{{message.created_at}}</span>
-      <span class="float-left ml-4 whosent">{{message.writer}}</span>
-      <span class="float-right" @click="bookmark">
-        <img src="/static/img/star_yl.png" width="16" height="16" v-if="message.is_bookmarked">
-        <img src="/static/img/star_bk.png" width="16" height="16" v-else>
-      </span>
+  <section class="card" :id="'message-id-'+String(message.id)">
+    <h4><router-link :to="link">{{message.title}}</router-link></h4>
+    <div>
+      <time>{{message.created_at}}</time>
+      <span>{{message.writer}}</span>
+      <button @click="bookmark">
+        <img src="@/assets/img/star_yl.png" width="16" height="16" v-if="message.is_bookmarked" alt="bookmarked"/>
+        <img src="@/assets/img/star_bk.png" width="16" height="16" v-else alt="not bookmarkd yet"/>
+      </button>
     </div>
-    <article class="col-12 my-2">
+    <p>
       {{trimed}}
-    </article>
+    </p>
   </section>
 </template>
 
@@ -47,17 +47,58 @@ export default {
 };
 </script>
 
-<style scoped>
-.content article{
+<style lang="scss" scoped>
+section {
   display: block;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  margin: .4em 0;
+  padding: .5em;
+  
+  > * {
+    margin: .5em;
+  }
+  > div {
+    display: flex;
+    align-items: center;
+    
+    > * {
+      display: inline-block;
+    }
+    time {
+      font-size: .75em;
+      margin-right: .5em;
+      flex-grow: 0.1;
+      flex-shrink: 0;
+      flex-basis: auto;
+    }
+    span {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: auto;
+    }
+    button {
+      background-color: transparent;
+      border: none;
+      width: 16px;
+      height: 16px;
+      margin-right: .5em;
+      flex-grow: 0;
+      flex-shrink: 0;
+      flex-basis: 16px;
+    }
+  }
+  > h4 {
+    display: block;
+    font-size: 1.25em;
+    color: $text-link-blue;
+  }
+
+  > p {
+    display: block;
+    line-height: 1.25;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }
-section h4 a{
-	color: #0058B3;
-}
-section:hover h4 a{
-	color: #0058B3;
-}
+
 </style>
