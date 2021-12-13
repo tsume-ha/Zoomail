@@ -4,7 +4,7 @@
     <search-form />
     
     <div v-if="nowLoading">now loading</div>
-    <transition-group name="message-row" v-else>
+    <transition-group name="message-row" v-else appear>
       <one-message-row v-for="mes in messages" :key="mes.id" :message="mes" class="one-message-row" />
     </transition-group>
 
@@ -90,15 +90,15 @@ export default {
   position: absolute;
 }
 .message-row-move{
-  transition: all 0.5s;
+  transition: all .5s;
 }
-/* .message-row-enter-active{
-  transition: all 5s;
+.message-row-enter-active{
+  transition: all .5s;
 }
-.message-row-enter{
+.message-row-enter-from{
   opacity: 0;
 }
 .message-row-enter-to{
   opacity: 1;
-} */
+}
 </style>
