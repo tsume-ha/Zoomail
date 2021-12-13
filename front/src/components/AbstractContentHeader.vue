@@ -1,7 +1,7 @@
 <template>
   <header class="row content-header">
     <router-link :to="to" class="back-arrow"></router-link>
-    <h3>{{text}}</h3>
+    <h3></h3>
   </header>
 </template>
 

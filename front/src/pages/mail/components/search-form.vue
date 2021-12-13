@@ -100,20 +100,20 @@ form {
 .formtext{
   display: inline-block;
   box-sizing: border-box;
-  height: 2em;
-  width: calc(100% - 4em);
-  min-width: 10em;
-  max-width: 33em;
-  padding: 0.125em .25em;
-  margin-right: .5em;
+  height: 2rem;
+  width: calc(100% - 4rem);
+  min-width: 10rem;
+  max-width: 33rem;
+  padding: 0.125rem .25rem;
+  margin-right: .5rem;
   margin-top: 0!important;
 }
 .search{
   display: inline-block;
   box-sizing: border-box;
-  height: 2em;
-  width: 3.5em;
-  padding: 0.125em 0.5em;
+  height: 2rem;
+  width: 3.5rem;
+  padding: 0.125rem 0.5rem;
   margin-top: 0!important;
 }
 

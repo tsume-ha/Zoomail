@@ -52,6 +52,7 @@ section {
   display: block;
   margin: .4em 0;
   padding: .5em;
+  color: $text-black;
   
   > * {
     margin: .5em;
@@ -89,7 +90,8 @@ section {
   > h4 {
     display: block;
     font-size: 1.25em;
-    color: $text-link-blue;
+    // color: $text-link-blue;
+    text-decoration: underline;
   }
 
   > p {
