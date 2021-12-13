@@ -14,7 +14,7 @@
 
     <input type="text" name="text" placeholder="件名・本文で検索" class="formtext" id="id_text" v-model="params.text">
     
-    <button class="pure-button search">検索</button>
+    <button class="pure-button search" type="submit">検索</button>
   </form>
 </template>
 

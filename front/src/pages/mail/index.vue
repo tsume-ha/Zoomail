@@ -15,7 +15,7 @@
 <script>
 import { computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteLeave } from "vue-router";
 import oneMessageRow from "./components/one-message-row.vue";
 import searchForm from "./components/search-form.vue";
 export default {
@@ -28,6 +28,10 @@ export default {
     const route = useRoute();
 
     watch(route, () => { updateMessage(); });
+    onBeforeRouteLeave((_to, _from, next) => {
+      updateMessage();
+      next();
+    });
 
     const messages = computed(() => store.state.read.messages);
     const nowLoading = computed(() => store.state.read.nowLoading);
