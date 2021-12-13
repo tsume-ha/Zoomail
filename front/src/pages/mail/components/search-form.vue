@@ -1,16 +1,16 @@
 <template>
   <form class="pure-form pure-g" @submit="submit">
-      <input type="checkbox" name="is_kaisei" id="is_kaisei" v-model="params.is_kaisei">
-      <label for="is_kaisei">回生メーリスのみ:</label>
-      
-      <input type="checkbox" name="is_zenkai" id="is_zenkai" v-model="params.is_zenkai">
-      <label for="is_zenkai">全回メーリスのみ:</label>
-      
-      <input type="checkbox" name="is_bookmark" id="is_bookmark" v-model="params.is_bookmark">
-      <label for="is_bookmark">ブックマークのみ:</label>
-      
-      <input type="checkbox" name="is_sender" id="is_sender" v-model="params.is_sender">
-      <label for="is_sender">送信したメーリスのみ:</label>
+    <input type="checkbox" name="is_kaisei" id="is_kaisei" v-model="params.is_kaisei">
+    <label for="is_kaisei">回生メーリスのみ:</label>
+    
+    <input type="checkbox" name="is_zenkai" id="is_zenkai" v-model="params.is_zenkai">
+    <label for="is_zenkai">全回メーリスのみ:</label>
+    
+    <input type="checkbox" name="is_bookmark" id="is_bookmark" v-model="params.is_bookmark">
+    <label for="is_bookmark">ブックマークのみ:</label>
+    
+    <input type="checkbox" name="is_sender" id="is_sender" v-model="params.is_sender">
+    <label for="is_sender">送信したメーリスのみ:</label>
 
     <input type="text" name="text" placeholder="件名・本文で検索" class="formtext" id="id_text" v-model="params.text">
     
@@ -59,6 +59,7 @@ export default {
         query.page = params.page;
       }
       router.push({ query });
+      // change only query
     };
 
     onMounted(() => {
@@ -99,17 +100,21 @@ form {
 .formtext{
   display: inline-block;
   box-sizing: border-box;
+  height: 2em;
   width: calc(100% - 4em);
   min-width: 10em;
-  max-width: 30em;
+  max-width: 33em;
   padding: 0.125em .25em;
-  margin: 0 0.5em 0 0;
+  margin-right: .5em;
+  margin-top: 0!important;
 }
 .search{
   display: inline-block;
   box-sizing: border-box;
+  height: 2em;
   width: 3.5em;
   padding: 0.125em 0.5em;
+  margin-top: 0!important;
 }
 
 input[type="checkbox"] {
