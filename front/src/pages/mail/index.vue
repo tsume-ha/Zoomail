@@ -8,7 +8,8 @@
       <one-message-row v-for="mes in messages" :key="mes.id" :message="mes" class="one-message-row" />
     </transition-group>
 
-    <router-link :to="{query: differentPageQuery(2)}">Next</router-link>
+    <!-- <router-link :to="{query: differentPageQuery(2)}">Next</router-link> -->
+    <Paginator />
   </article>
 </template>
 
@@ -18,10 +19,12 @@ import { useStore } from "vuex";
 import { useRoute, onBeforeRouteLeave } from "vue-router";
 import oneMessageRow from "./components/one-message-row.vue";
 import searchForm from "./components/search-form.vue";
+import Paginator from "@/components/Paginator.vue";
 export default {
   components: {
     oneMessageRow,
-    searchForm
+    searchForm,
+    Paginator
   },
   setup() {
     const store = useStore();
