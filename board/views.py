@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.utils.safestring import mark_safe
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
@@ -21,6 +22,11 @@ from .forms import MessageForm, AttachmentForm
 from .to import to_groups
 from members.models import User
 from mail.models import SendMailAddress, MessageProcess
+
+# html formatter
+def target_blank(content):
+    content = content.replace('<a ', '<a target="_blank" rel="nofollow ugc noopener" class="text-break" ')
+    return mark_safe(content)
 
 
 @login_required()
@@ -68,6 +74,31 @@ def get_messages_list(request):
     params = {
         'page': page.get_page(page_num),
     }
+    from django.utils.html import linebreaks, urlize
+    return JsonResponse({
+        "messages": [{
+            "id": mes.id,
+            "title": mes.title,
+            "content": str(mes.content)[:100],
+            "html": target_blank(urlize(linebreaks(mes.content))),
+            "sender": mes.sender.get_short_name() if mes.sender else "削除されたユーザー",
+            "writer": mes.writer.get_short_name() if mes.writer else "削除されたユーザー",
+            "created_at": mes.created_at.strftime("%Y/%m/%d %H:%M"),
+            "updated_at": mes.updated_at.strftime("%Y/%m/%d %H:%M"),
+            "is_bookmarked": mes.bookmark_message.filter(user=now_user).exists(),
+            "attachments": [{
+                "id": attachment.id,
+                "path": attachment.attachment_file.url,
+                "is_image": attachment.isImage(),
+                "filename": attachment.fileName(),
+                "fileext": attachment.extension()
+            } for attachment in mes.attachments.all()]
+        } for mes in page.get_page(page_num)],
+        "paginator": {
+            "now": page_num,
+            "total": page.num_pages
+        }
+    })
     return render(request, 'board/messages.json', params, content_type='application/json')
 
 

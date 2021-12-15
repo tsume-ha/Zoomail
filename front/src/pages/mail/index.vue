@@ -8,8 +8,7 @@
       <one-message-row v-for="mes in messages" :key="mes.id" :message="mes" class="one-message-row" />
     </transition-group>
 
-    <!-- <router-link :to="{query: differentPageQuery(2)}">Next</router-link> -->
-    <Paginator :pages="30" :page="page" @pageTo="handlePageJump" />
+    <Paginator :pages="totalPages" :page="page" @pageTo="handlePageJump" />
   </article>
 </template>
 
@@ -84,12 +83,13 @@ export default {
 
 
     // pagination
-    const page = computed(() => Number(route.query.page));
+    const page = computed(() => Number(route.query.page) || 1);
+    const totalPages = computed(() => store.state.read.totalPages);
     const handlePageJump = pageTo => {
       router.push({query: differentPageQuery(pageTo)});
     };
     return{
-      messages, nowLoading, page,
+      messages, nowLoading, page, totalPages,
       differentPageQuery, handlePageJump
     };
   }
