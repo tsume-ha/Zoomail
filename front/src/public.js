@@ -4,6 +4,13 @@ import { createStore } from "vuex";
 import message from "./store/message";
 import App from "./PublicApp.vue";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+library.add(fas, fab, far);
+
 import "@/assets/sass/main.scss";
 
 // router settings
@@ -60,4 +67,4 @@ const store = createStore({
 
 
 
-createApp(App).use(router).use(store).mount("#app");
+createApp(App).use(router).use(store).component("Icon", FontAwesomeIcon).mount("#app");

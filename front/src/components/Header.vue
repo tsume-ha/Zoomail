@@ -1,7 +1,7 @@
 <template>
   <header class="container">
     <router-link to="/">
-      <h1>Zoomail ✉</h1>
+      <h1>Zoomail <Icon :icon="['far', 'envelope']" /></h1>
     </router-link>
     <NavSW :status="props.status" @navSWClicked="navSWClicked" />
   </header>

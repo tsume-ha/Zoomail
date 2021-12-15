@@ -9,14 +9,14 @@
     </transition-group>
 
     <!-- <router-link :to="{query: differentPageQuery(2)}">Next</router-link> -->
-    <Paginator />
+    <Paginator :pages="30" :page="page" @pageTo="handlePageJump" />
   </article>
 </template>
 
 <script>
 import { computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-import { useRoute, onBeforeRouteLeave } from "vue-router";
+import { useRoute, onBeforeRouteLeave, useRouter } from "vue-router";
 import oneMessageRow from "./components/one-message-row.vue";
 import searchForm from "./components/search-form.vue";
 import Paginator from "@/components/Paginator.vue";
@@ -29,6 +29,7 @@ export default {
   setup() {
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
 
     watch(route, () => { updateMessage(); });
     onBeforeRouteLeave((_to, _from, next) => {
@@ -81,9 +82,15 @@ export default {
     
     onMounted(() => updateMessage());
 
+
+    // pagination
+    const page = computed(() => Number(route.query.page));
+    const handlePageJump = pageTo => {
+      router.push({query: differentPageQuery(pageTo)});
+    };
     return{
-      messages, nowLoading,
-      differentPageQuery
+      messages, nowLoading, page,
+      differentPageQuery, handlePageJump
     };
   }
 };

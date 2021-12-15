@@ -4,9 +4,11 @@
       © 2019-2022 京大アンプラグド
     </span>
     <a href="https://twitter.com/ku_unplugged_hp">
+      <Icon :icon="['fab', 'twitter']" />
       Twitter
     </a>
     <a href="https://github.com/tsume-ha/Zoomail">
+      <Icon :icon="['fab', 'github']" />
       GitHub
     </a>
   </footer>
