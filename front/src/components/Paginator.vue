@@ -8,7 +8,7 @@
       </li>
     <li @click="clicked(page-1)" v-if="page-1 > 1">
       {{page-1}}</li>
-    <li @click="clicked(page)">
+    <li @click="clicked(page)" class="active">
       {{page}}</li>
     <li @click="clicked(page+1)" v-if="page+1 < pages">
       {{page+1}}</li>
@@ -51,7 +51,7 @@ ul {
   align-items: center;
   margin: 3rem 0 1rem;
   padding: 0;
-  background-color: $bg-dark;
+  // background-color: $bg-dark;
   border-radius: 1rem;
   li {
     list-style: none;
@@ -64,7 +64,7 @@ ul {
     height: 1rem;
     line-height: 100%;
     border-radius: 50%;
-    background-color: $bg-light;
+    background-color: $bg-light-lighten3;
     cursor: pointer;
 
     &.circle {
@@ -75,6 +75,9 @@ ul {
     }
     &.disabled {
       color: $text-dark;
+    }
+    &.active {
+      background-color: $bg-light;
     }
   }
 }

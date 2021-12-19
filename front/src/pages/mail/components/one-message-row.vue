@@ -1,6 +1,9 @@
 <template>
   <section class="card" :id="'message-id-'+String(message.id)">
-    <h4><router-link :to="link">{{message.title}}</router-link></h4>
+    <h4>
+      <router-link :to="link">{{message.title}}</router-link>
+      <Icon icon="paperclip" v-if="message.attachments.length" />
+    </h4>
     <div>
       <time>{{message.created_at}}</time>
       <span>{{message.writer}}</span>
