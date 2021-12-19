@@ -1,52 +1,71 @@
 <template>
-  <section>
+  <article>
     <h3>メーリス送信確認</h3>
 
-    <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
-      <div class="p-1 label">件名：</div>
-      <div class="p-1 border rounded display">{{title}}</div>
-    </div>
-
-    <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
-      <div class="p-1 label">送信先：</div>
-      <div class="p-1 border rounded display">
-        <span v-for="obj in tos" :key="obj.label" class="badge badge-pill badge-light mx-2 border rounded">{{obj.label}}</span>
+    <section class="card">
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-sm-1-5 pure-u-md-5-24">件名</div>
+        <div class="pure-u-1 pure-u-sm-4-5 pure-u-md-19-24">{{ title }}</div>
       </div>
-    </div>
 
-    <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
-      <div class="p-1 label">本文：</div>
-      <div class="p-1 border rounded display" style="white-space: pre-wrap;" v-text="content">
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-sm-1-5 pure-u-md-5-24">From</div>
+        <div class="pure-u-1 pure-u-sm-4-5 pure-u-md-19-24">
+          {{ writer.name }} ({{ writer.year }})
+        </div>
       </div>
-    </div>
 
-    <div v-if="attachments.length" class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-2 mx-0 display-wraper">
-      <div class="p-1 label">添付ファイル：</div>
-      <div class="p-1 border rounded display attachment-wraper">
-        <attachment-preview
-          v-for="file in attachments"
-          :key="file.name+file.size"
-          :file="file"
-        />
-        <div class="mx-2">{{attachments.length}}件添付</div>
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-sm-1-5 pure-u-md-5-24">To</div>
+        <div class="pure-u-1 pure-u-sm-4-5 pure-u-md-19-24">
+          <span v-for="obj in tos" :key="obj.label" class="to-address">{{
+            obj.label
+          }}</span>
+        </div>
       </div>
-    </div>
 
-    <div class="col-sm-12 col-md-10 col-lg-8 py-1 px-0 my-4 mx-0" id="send-button-wraper">
-      <button @click="backToInput" class="btn btn-secondary">戻る</button>
-      <button @click="send" class="btn btn-info">送信する</button>
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-sm-1-5 pure-u-md-5-24">本文</div>
+        <div
+          class="pure-u-1 pure-u-sm-4-5 pure-u-md-19-24"
+          style="white-space: pre-wrap; line-height: 1.5"
+        >
+          {{ content }}
+        </div>
+      </div>
+
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-sm-1-5 pure-u-md-5-24">添付ファイル</div>
+        <div class="pure-u-1 pure-u-sm-4-5 pure-u-md-19-24">
+          <div v-if="attachments.length" class="attachment-wraper">
+            <AttachmentPreview
+              v-for="file in attachments"
+              :key="file.name + file.size"
+              :file="file"
+            />
+            <div>{{ attachments.length }}件添付</div>
+          </div>
+          <div v-else>添付ファイルはありません</div>
+        </div>
+      </div>
+    </section>
+    <div class="send-button-wraper">
+      <button @click="backToInput" class="pure-button">戻る</button>
+      <button @click="send" class="pure-button-primary pure-button">
+        送信する
+      </button>
     </div>
-  </section>
+  </article>
 </template>
 
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import attachmentPreview from "./components/send-input-attachment-preview";
+import AttachmentPreview from "./components/send-input-attachment-preview";
 export default {
   components: {
-    attachmentPreview
+    AttachmentPreview,
   },
   setup() {
     const store = useStore();
@@ -55,7 +74,7 @@ export default {
       store.commit("message/addMessage", {
         level: "warning",
         message: "フォームに正しく入力してください。",
-        appname: "mail/send"
+        appname: "mail/send",
       });
       router.push("/mail/send");
     }
@@ -65,50 +84,68 @@ export default {
     const writer = computed(() => store.state.send.writer.value);
     const attachments = computed(() => store.state.send.attachments.value);
 
-    const backToInput = e => {
+    const backToInput = (e) => {
       e.preventDefault();
       router.push("/mail/send");
     };
-    const send = e => {
+    const send = (e) => {
       e.preventDefault();
-      store.dispatch("send/send").then(res => {
-        // 正常にPOSTできた時。メーリスのトップページに遷移する
-        console.log(res);
-      }).catch(err => {
-        // 送信エラーが起こった時。遷移しない。
-        console.log(err);
-      });
+      store
+        .dispatch("send/send")
+        .then((res) => {
+          // 正常にPOSTできた時。メーリスのトップページに遷移する
+          console.log(res);
+        })
+        .catch((err) => {
+          // 送信エラーが起こった時。遷移しない。
+          console.log(err);
+        });
     };
-    return{
-      title, content, writer, attachments, tos,
-      backToInput, send
+    return {
+      title,
+      content,
+      writer,
+      attachments,
+      tos,
+      backToInput,
+      send,
     };
-  }
+  },
 };
 </script>
 
-<style scoped>
-.display-wraper{
-  display: flex;
+<style lang="scss" scoped>
+section.card {
+  padding: 1rem;
+
+  > div {
+    margin: 0 0 1rem;
+    > div {
+      margin: 0 0 0.5rem;
+    }
+  }
+
+  span.to-address {
+    display: inline-block;
+    background-color: $bg-light-lighten3;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    margin: 0 0.25rem 0.25rem 0;
+    line-height: 1.5;
+  }
+  div.attachment-wraper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
 }
-.display-wraper .label{
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: auto;
-}
-.display-wraper .display{
-  flex-grow: 2;
-  flex-shrink: 2;
-  flex-basis: auto;
-}
-#send-button-wraper{
+div.send-button-wraper {
   display: flex;
   justify-content: space-between;
-}
-
-.attachment-wraper{
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
+  margin: 1.5rem 0 1rem;
+  button {
+    display: inline-block;
+  }
 }
 </style>

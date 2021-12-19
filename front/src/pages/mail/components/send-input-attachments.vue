@@ -17,7 +17,7 @@
         @change="onFileChange"
       />
     </label>
-    <div v-if="attachments.length > 0" class="small text-secondary mx-2">
+    <div v-if="attachments.length">
       クリックすると新しいタブでファイルを確認できます
     </div>
     <div class="attachment-preview">
@@ -30,11 +30,11 @@
         <div class="file-cansel" @click="cansel(file)">×</div>
       </div>
     </div>
-    <div v-if="attachments.length > 0" class="mx-2">
+    <div v-if="attachments.length">
       {{ attachments.length }}件が選択されています
     </div>
     <ValidationErrorMessages
-      v-if="error_messages.length > 0 && is_dirty"
+      v-if="error_messages.length && is_dirty"
       :messages="error_messages"
     />
   </div>
@@ -143,17 +143,20 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.attachent-wrapper {
+  margin: 2rem 0;
+}
 .attachent-wrapper label * {
   pointer-events: none;
 }
 
 .attachent-wrapper > label {
   display: inline-block;
-  border: 1px dotted #d6eef5;
+  border: 1px solid $bg-dark;
   border-radius: 4px;
-  background-color: #f1f9fc;
-  padding: 0.5rem 1rem;
+  background-color: $bg-white;
+  padding: 1rem;
   transition: 0.5s;
 }
 .attachent-wrapper > label.attachment-opened {
