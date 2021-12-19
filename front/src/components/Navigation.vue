@@ -5,6 +5,9 @@
         <router-link :to="{ name: 'mail:index' }"> メーリス </router-link>
       </li>
       <li>
+        <router-link :to="{ name: 'mail:send' }"> メーリス送信 </router-link>
+      </li>
+      <li>
         <router-link :to="{ name: 'sound:index' }"> リハ音源 </router-link>
       </li>
       <li>

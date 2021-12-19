@@ -10,7 +10,7 @@ export default {
     data_fetched: null,
   },
   mutations: {
-    set (state, payload) {
+    set(state, payload) {
       // 一時的に
       const keys = ["id", "shortname", "year", "is_staff"];
       for (const key of keys) {
@@ -22,6 +22,7 @@ export default {
   actions: {
     getUserInfo(context) {
       axios.get("/api/mypage/user/").then(res => {
+        console.log(res.data);
         context.commit("set", res.data);
       });
     }
