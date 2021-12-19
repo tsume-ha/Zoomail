@@ -14,6 +14,20 @@ export function contentValidation(content) {
   if (content.length < 1) {
     result.push("本文を入力してください");
   }
+  const mailAddressReg = /[\w\-._]+@[\w\-._]+\.[A-Za-z]+/;
+  const urlReg = /https?:\/\/[\w!?/+\-_~;.,*&@#$%()'[\]]+/;
+  if (content.search(mailAddressReg) > 0) {
+    const index = content.search(mailAddressReg);
+    if (content[index - 1] !== "\n" && content[index - 1] !== " ") {
+      result.push("メールアドレスの前後には改行または半角スペースを入れてください");
+    }
+  }
+  if (content.search(urlReg) > 0) {
+    const index = content.search(urlReg);
+    if (content[index - 1] !== "\n" && content[index - 1] !== " ") {
+      result.push("URLの前後には半角スペースを入れてください");
+    }
+  }
   return result;
 }
 

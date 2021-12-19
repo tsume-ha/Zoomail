@@ -5,10 +5,6 @@
     :oneContentAPIPath="apiPath"
     @setContent="setMessage"
   >
-    <template #header>
-      <abstract-content-header :path="{name: 'mail:index'}" :text="message.title" hidden/>
-    </template>
-
     <article>
       <header>
         <h4>{{message.title}}</h4>
@@ -22,6 +18,9 @@
         </div>
       </header>
       <div class="message-content card" v-html="message.html"></div>
+      <div v-if="message.attachments.length" class="content-attachments">
+        <h4>添付ファイル: {{message.attachments.length}}件</h4>
+      </div>
     </article>
   
   </abstract-content>
@@ -29,13 +28,11 @@
 
 <script>
 import AbstractContent from "../../components/AbstractContent.vue";
-import AbstractContentHeader from "../../components/AbstractContentHeader.vue";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 export default {
   components: {
     AbstractContent,
-    AbstractContentHeader
   },
   props: {
     id: {required: true, type: Number}

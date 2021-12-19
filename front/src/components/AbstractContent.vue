@@ -10,7 +10,6 @@
     <button @click="reload">再読み込み</button>
   </div>
   <div v-else-if="status.loaded">
-    <slot name="header" />
     <slot />
   </div>
   <div v-else>
