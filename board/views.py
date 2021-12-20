@@ -2,7 +2,7 @@ import datetime
 import base64
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404, FileResponse
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.utils.safestring import mark_safe
+from django.utils.html import linebreaks, urlize
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
@@ -71,10 +72,6 @@ def get_messages_list(request):
 
     page = Paginator(query, 30)
 
-    params = {
-        'page': page.get_page(page_num),
-    }
-    from django.utils.html import linebreaks, urlize
     return JsonResponse({
         "messages": [{
             "id": mes.id,
@@ -99,7 +96,6 @@ def get_messages_list(request):
             "total": page.num_pages
         }
     })
-    return render(request, 'board/messages.json', params, content_type='application/json')
 
 
 @login_required()
@@ -114,10 +110,24 @@ def get_one_message(request, id):
             if message.writer != now_user:
                 raise PermissionDenied
 
-    params = {
-        'message': message,
-    }
-    return render(request, 'board/message.json', params, content_type='application/json')
+    return JsonResponse({
+        "id": message.id,
+        "title": message.title,
+        "content": str(message.content)[:100],
+        "html": target_blank(urlize(linebreaks(message.content))),
+        "sender": message.sender.get_short_name() if message.sender else "削除されたユーザー",
+        "writer": message.writer.get_short_name() if message.writer else "削除されたユーザー",
+        "created_at": message.created_at.strftime("%Y/%m/%d %H:%M"),
+        "updated_at": message.updated_at.strftime("%Y/%m/%d %H:%M"),
+        "is_bookmarked": message.bookmark_message.filter(user=now_user).exists(),
+        "attachments": [{
+            "id": attachment.id,
+            "path": attachment.attachment_file.url,
+            "is_image": attachment.isImage(),
+            "filename": attachment.fileName(),
+            "fileext": attachment.extension()
+        } for attachment in message.attachments.all()]
+    })
 
 
 @login_required()
@@ -323,26 +333,49 @@ def mail_compose(from_email_adress, to_list, message_data):
 
 
 
-from utils.commom import download
+# from utils.commom import download
+# @login_required()
+# def FileDownloadView(request, message_pk, file_pk):
+#     try:
+#         message = Message.objects.get(pk=message_pk)
+#         file = Attachment.objects.get(pk=file_pk)
+#         year = MessageYear.objects.get(message=message).year
+#     except ObjectDoesNotExist:
+#         return redirect('/read/content/' + str(message_pk))
+
+#     can_read = (year == 0) or (year == request.user.year)\
+#                or (message.writer == request.user)\
+#                or (message.sender == request.user)
+#     if not can_read:
+#         return redirect('/read/content/' + str(message_pk))
+
+#     filename = message.title + '_添付' + file.extension()
+#     response = download(
+#         filepath = file.attachment_file.path,
+#         filename = filename,
+#         mimetype = 'application/octet-stream'
+#     )
+#     return response
+
 @login_required()
-def FileDownloadView(request, message_pk, file_pk):
+def AttachmentDownloadView(request, message_id, attachment_id):
+    message = get_object_or_404(Message, id=message_id)
+    user = request.user
+
+    # 閲覧できるか判定
+    if not message.years.filter(Q(year=user.year)|Q(year=0)).exists():
+        if message.sender != user:
+            if message.writer != user:
+                raise PermissionDenied
+    # 添付ファイルを取得
     try:
-        message = Message.objects.get(pk=message_pk)
-        file = Attachment.objects.get(pk=file_pk)
-        year = MessageYear.objects.get(message=message).year
+        attachment = message.attachments.get(id=attachment_id)
     except ObjectDoesNotExist:
-        return redirect('/read/content/' + str(message_pk))
+        raise Http404("Required attachment file does not exist")
 
-    can_read = (year == 0) or (year == request.user.year)\
-               or (message.writer == request.user)\
-               or (message.sender == request.user)
-    if not can_read:
-        return redirect('/read/content/' + str(message_pk))
-
-    filename = message.title + '_添付' + file.extension()
-    response = download(
-        filepath = file.attachment_file.path,
-        filename = filename,
-        mimetype = 'application/octet-stream'
+    return FileResponse(
+      open(attachment.attachment_file.path, "rb"),
+      as_attachment=False,
+      filename=message.title + '_添付' + attachment.extension()
+      # TO DO ファイル名をデータベースに保存しておく
     )
-    return response

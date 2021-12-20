@@ -7,22 +7,43 @@
   >
     <article>
       <header>
-        <h4>{{message.title}}</h4>
+        <h4>{{ message.title }}</h4>
         <div>
-          <time>{{message.created_at}}</time>
-          <span>{{message.writer}}</span>
+          <time>{{ message.created_at }}</time>
+          <span>{{ message.writer }}</span>
           <button @click="bookmark">
-            <img src="@/assets/img/star_yl.png" width="16" height="16" v-if="message.is_bookmarked" alt="bookmarked"/>
-            <img src="@/assets/img/star_bk.png" width="16" height="16" v-else alt="not bookmarkd yet"/>
+            <img
+              src="@/assets/img/star_yl.png"
+              width="16"
+              height="16"
+              v-if="message.is_bookmarked"
+              alt="bookmarked"
+            />
+            <img
+              src="@/assets/img/star_bk.png"
+              width="16"
+              height="16"
+              v-else
+              alt="not bookmarkd yet"
+            />
           </button>
         </div>
       </header>
       <div class="message-content card" v-html="message.html"></div>
       <div v-if="message.attachments.length" class="content-attachments">
-        <h4>添付ファイル: {{message.attachments.length}}件</h4>
+        <h4>添付ファイル: {{ message.attachments.length }}件</h4>
+        <ul>
+          <li v-for="attachment in message.attachments" :key="attachment.id">
+            <a
+              :href="`/download/mail/${message.id}/${attachment.id}/`"
+              target="_blank"
+            >
+              {{ attachment.filename }}
+            </a>
+          </li>
+        </ul>
       </div>
     </article>
-  
   </abstract-content>
 </template>
 
@@ -35,21 +56,23 @@ export default {
     AbstractContent,
   },
   props: {
-    id: {required: true, type: Number}
+    id: { required: true, type: Number },
   },
   setup(props) {
     const store = useStore();
     // for AbstractContent.vue
     const messages = computed(() => store.state.read.messages);
     const message = ref({});
-    const setMessage = item => {
+    const setMessage = (item) => {
       message.value = item;
     };
     const apiPath = computed(() => `/api/board/content/${String(props.id)}/`);
 
     return {
-      messages, message, apiPath, 
-      setMessage
+      messages,
+      message,
+      apiPath,
+      setMessage,
     };
   },
 };
@@ -63,14 +86,14 @@ article {
     > div {
       display: flex;
       align-items: center;
-      margin: .75rem 0;
-      
+      margin: 0.75rem 0;
+
       > * {
         display: inline-block;
       }
       time {
-        font-size: .75em;
-        margin-right: .5em;
+        font-size: 0.75em;
+        margin-right: 0.5em;
         flex-grow: 0.1;
         flex-shrink: 0;
         flex-basis: auto;
@@ -85,7 +108,7 @@ article {
         border: none;
         width: 16px;
         height: 16px;
-        margin-right: .5em;
+        margin-right: 0.5em;
         flex-grow: 0;
         flex-shrink: 0;
         flex-basis: 16px;
@@ -94,7 +117,7 @@ article {
   }
   div.message-content {
     margin: 1.5rem 0;
-    padding: .5rem;
+    padding: 0.5rem;
   }
 }
 </style>

@@ -26,6 +26,7 @@ urlpatterns = [
     path('howto/', include("howto.urls"), name='howto'),
     path('first_register/', home.firstRegister, name='first-register'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('download/', include('home.urls_download')),
 
 
     # API
@@ -34,6 +35,6 @@ urlpatterns = [
     # SPA
     path('login/', TemplateView.as_view(template_name='public.html'), name='login'),
     path('logged_out/', TemplateView.as_view(template_name='public.html'), name='logged_out'),
-    path('<path:p>', login_required(TemplateView.as_view(template_name='private.html'))),
+    path('<path:p>/', login_required(TemplateView.as_view(template_name='private.html'))),
 ]
 
