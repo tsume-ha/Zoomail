@@ -1,26 +1,29 @@
 <template>
   <article>
     <h3>リハ音源</h3>
-    <div class="row" v-if="soundStaff" v-cloak>
-      <a href="/admin/sound/live/">編集はこちらから</a>
+    <div v-if="soundStaff" v-cloak>
+      <a href="/admin/sound/live/" target="_blank">編集はこちらから</a>
     </div>
-    <section class="row">
-      <div v-for="live in lives" :key="'live-' + live.id" class="cardwrap col-xs-12 col-sm-12 col-md-6 col-lg-4">
-        <article class="card m-2">
-          <router-link :to="{name: 'sound:content', params: {id: live.id}}" class="card-body pb-1">
-            <h5 class="card-title float-left mb-2">{{ live.title }}</h5>
-            <h6 class="card-subtitle float-right small">Recorded : {{ displayDate(live.date) }}
-            </h6>
-            <p class="songdetail mb-2">
+
+    <div class="pure-g">
+      <div
+        v-for="live in lives" :key="'live-' + live.id"
+        class="pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3 card-wrapper"
+      >
+        <router-link :to="{name: 'sound:content', params: {id: live.id}}">
+          <article class="card card-sound">
+            <h4 class="card-title">{{ live.title }}</h4>
+            <time :data-date="live.date" class="small">Recorded : {{ displayDate(live.date) }}</time>
+            <p class="songdetail">
               <span v-for="song in live.songs" :key="'song-' + song.id">
-                {{ song.track_num }}. {{ song.title }}
+                {{ song.trackNum }}. {{ song.title }}
               </span>
             </p>
-            <span class="p-0 pr-2 text-right small">ほか、全{{ live.songs.length }}曲</span>
-          </router-link>
-        </article>
+            <span class="small">ほか、全{{ live.songs.length }}曲</span>
+          </article>
+        </router-link>
       </div>
-    </section>
+    </div>
   </article>
 </template>
 
@@ -55,39 +58,43 @@ export default {
 };
 </script>
 
-<style scoped>
-article:hover{
-  background-color: #e4f4f8;
-}
+<style lang="scss" scoped>
+.card-wrapper{
+  padding: .5rem;
+  margin: 0;
+  align-items: stretch;
 
-.card-body{
-  padding: 1rem;
-}
+  :hover {
+    text-decoration: none;
+    background-color: #e4f4f8;
+    h4 {
+      text-decoration: underline;
+    }
+  }
 
-h4.card-title{
-  display: inline;
-}
+  .card-sound{
+    padding: .5rem;
+    margin: 0;
+    height: 100%;
+    > * {
+      display: block;
+      width: 100%;
+      margin: .25rem 0 0;
+    }
 
-h6.card-subtitle{
-  display: inline;
-}
+    time {
+      text-align: right;
+    }
+    .songdetail {
+      flex-grow: 1;
 
-.card a{
-  color: #212529;
-}
+      span {
+        margin-right: 1rem;
+      }
+    }
 
 
-a.card-body{
-  text-decoration: none;
-}
+  }
 
-.songdetail{
-  max-height: 48px;
-  overflow: hidden;
-}
-
-.songdetail span{
-  display: inline-block;
-  white-space: nowrap;
 }
 </style>
