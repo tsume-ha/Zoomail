@@ -12,7 +12,7 @@
     <div id="top-info" class="container">
       <div class="pure-g">
         <div class="pure-u-1 pure-u-md-1-2">
-          <section>
+          <section class="pure-menu-custom">
             <span class="pure-menu-heading">New Contents</span>
             <ul class="pure-menu-list">
               <li
@@ -28,7 +28,7 @@
           </section>
         </div>
         <div class="pure-u-1 pure-u-md-1-2">
-          <section>
+          <section class="pure-menu-custom">
             <span class="pure-menu-heading">Announcements</span>
             <ul class="pure-menu-list">
               <li

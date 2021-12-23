@@ -5,13 +5,14 @@
     :oneContentAPIPath="apiPath"
     @setContent="setContent"
   >
-    <player :songs="content.songs" />
+    <h3>{{ content.title }}</h3>
+    <Player :songs="content.songs" />
   </abstract-content>
 </template>
 
 <script>
 import AbstractContent from "../../components/AbstractContent.vue";
-import Player from "./components/player.vue";
+import Player from "./components/Player.vue";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
 export default {

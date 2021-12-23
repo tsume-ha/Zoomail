@@ -1,16 +1,13 @@
 <template>
-  <section>
+  <section id="wave-wrapper" class="card">
+
     <!-- Song Title -->
-    <div class="row">
-      <div class="col-12" id="songtitle">
-        <h4><span>{{nowPlaying.trackNum}}. </span>{{nowPlaying.title}}</h4>
-      </div>
-    </div>
+    <h4 id="songtitle">{{nowPlaying.trackNum}}. {{nowPlaying.title}}</h4>
     
     <!-- wave display -->
-    <div v-show="!isReady" id="waveloading" class="p-4">
+    <div v-show="!isReady" id="waveloading">
       <span id="loadtext">{{status.loadSongTitle}}</span>
-      <span id="loadprogress">{{status.loadProgressText}}</span>
+      <span id="loadprogress" class="text-break">{{status.loadProgressText}}</span>
     </div>
     <div v-show="isReady" id="timedisplay" :style="{marginLeft: status.barProgress + 'px'}">
       <span id="currenttime">{{secondToMMSS(status.currentTime)}}</span> /
@@ -19,40 +16,43 @@
     <div id="waveform" class=""></div>
 
     <!-- controller -->
-    <div class="row justify-content-around mt-3" id="ctrl">
-      <div class="col-xs-2">
-        <button id="prev" @click="prev"></button>
-      </div>
-      <div class="col-xs-2">
-        <button id="back" @click="wavesurfer.skip(-10)"></button>
-      </div>
-      <div class="col-xs-3">
-        <button id="start" @click="wavesurfer.playPause()" :class="{getstart:!isPlaying, getstop:isPlaying}"></button>
-      </div>
-      <div class="col-xs-2">
-        <button id="forward" @click="wavesurfer.skip(15)"></button>
-      </div>
-      <div class="col-xs-2">
-        <button id="next" @click="next"></button>
-      </div>
+    <div id="controller" class="pure-g">
+      <button id="prev" @click="prev" class="pure-u-1-5">
+        <Icon :icon="['fas', 'step-backward']" />
+      </button>
+      <button id="back" @click="wavesurfer.skip(-10)" class="pure-u-1-5">
+        <Icon :icon="['fas', 'backward']" />
+      </button>
+      <button id="start" @click="wavesurfer.playPause()" :class="{getstart:!isPlaying, getstop:isPlaying}" class="pure-u-1-5">
+        <Icon :icon="['fas', 'play']" v-if="!isPlaying" />
+        <Icon :icon="['fas', 'stop']" v-if="isPlaying" />
+      </button>
+      <button id="forward" @click="wavesurfer.skip(15)" class="pure-u-1-5">
+        <Icon :icon="['fas', 'forward']" />
+      </button>
+      <button id="next" @click="next" class="pure-u-1-5">
+        <Icon :icon="['fas', 'step-forward']" />
+      </button>
+
     </div>
 
     <!-- songlist -->
-    <div id="songlist" class="row my-3">
-      <div
-        v-for="song in songs"
-        :key="song.path"
-        @click="load(song)"
-        class="songselect col-sm-12  border-bottom py-1"
+    <div id="songlist" class="pure-menu">
+      <ul class="pure-menu-list">
+        <li
+          v-for="song in songs"
+          :key="song.id"
+          class="pure-menu-item"
         >
-        <span class="songnum float-left ml-1 mr-2">{{song.trackNum}}.</span>
-        <span class="songname float-left ml-0 pl-0">{{song.title}}</span>
-        <span class="download float-right mx-2" @click.stop>
-          <a :href="'/sound/download/' + song.id"></a></span>
-        <span class="songtime float-right mx-2">{{secondToMMSS(song.length)}}</span>
-      </div>
+        <div @click="load(song)" class="pure-menu-link song-row">
+          <span class="songnum">{{song.trackNum}}.</span>
+          <span class="songname">{{song.title}}</span>
+          <a :href="'/sound/download/' + song.id" class="download"><Icon icon="download" /></a>
+          <span class="songtime">{{secondToMMSS(song.length)}}</span>
+        </div>
+        </li>
+      </ul>
     </div>
-
   </section>
 </template>
 
@@ -199,10 +199,10 @@ export default {
       status.totalTime = parseInt(wavesurfer.value.getDuration());
       const max_width = document.querySelector("#waveform > wave").clientWidth;
       const bar_width = document.querySelector("#waveform > wave > wave").clientWidth;
-      if (bar_width + 90 < max_width) {
+      if (bar_width + 110 < max_width) {
         status.barProgress = bar_width;
       } else {
-        status.barProgress = bar_width - 90;
+        status.barProgress = bar_width - 110;
       }
     };
 
@@ -239,8 +239,93 @@ export default {
 </script>
 
 
-<style scoped>
-#return{
+<style lang="scss" scoped>
+#wave-wrapper {
+  margin: 0;
+  padding: 1rem;
+  position: relative;
+
+  h4#songtitle {
+    margin-bottom: 1.5rem;
+  }
+
+  #controller {
+    margin: 1rem auto;
+    button {
+      display: inline-block;
+      box-sizing: border-box;
+      padding: .5rem;
+      margin: 0;
+      font-size: 1.25rem;
+      background-color: transparent;
+      border: 1px solid $text-dark;
+      color: $text-black;
+    }
+  }
+
+  #songlist {
+
+    .song-row {
+      display: flex;
+      padding: .5rem;
+      margin: 0 -0.5rem;
+      cursor: pointer;
+      align-items: center;
+
+      > * {
+        display: inline-block;
+      }
+      .songnum {
+        margin-right: .5rem;
+      }
+      .songname {
+        flex: 1 1 auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .download {
+        padding: .25rem .5rem;
+        font-size: 1.2rem;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        &:hover {
+          border-color: $text-dark;
+        }
+      }
+      .songtime {
+        width: 3rem;
+        text-align: center;
+      }
+    }
+
+  }
+  #waveform{
+    position: relative;
+  }
+  #wavetimeline{
+    position: relative;
+    display: block;
+    background-color: rgba(255,255,255,0.3);
+  }
+  #waveloading{
+    position: absolute;
+  }
+  #timedisplay{
+    position: absolute;
+    height: 18px;
+    width: 110px;
+    line-height: 16px;
+    padding: 1px 2px;
+    margin: 110px 0 0 auto;
+    text-align: center;
+    font-size: 16px;
+    background-color: #333;
+    color: #eee;
+    z-index: 8;
+  }
+}
+/* #return{
 	height:24px;
 	width:24px;
 	display:block;
@@ -357,5 +442,5 @@ div.songselect{
 	background-color: #333;
 	color: #eee;
 	z-index: 8;
-}
+} */
 </style>

@@ -48,7 +48,7 @@ export default {
       }
     });
     const displayDate = dateStr => moment(dateStr).format("YYYY/MM/DD (ddd)");
-    const soundStaff = computed(() => store.state.user.is_staff);
+    const soundStaff = computed(() => store.state.mypage.userInfo.isStaff);
 
     return {
       lives, soundStaff,
@@ -73,9 +73,11 @@ export default {
   }
 
   .card-sound{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     padding: .5rem;
     margin: 0;
-    height: 100%;
     > * {
       display: block;
       width: 100%;
