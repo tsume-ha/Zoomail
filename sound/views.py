@@ -2,7 +2,7 @@ from utils.commom import download
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, FileResponse
 from django.http.response import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -125,19 +125,20 @@ def edit(request, live_id):
     return render(request, 'sound/edit.html', params)
 
 
+
 @login_required()
-def FileDownloadView(request, song_pk):
+def SongDownloadView(request, song_id):
     try:
-        song = Song.objects.get(pk=song_pk)
+        song = Song.objects.get(id=song_id)
     except ObjectDoesNotExist:
-        raise Http404
+        raise Http404("Required sound file does not exist")
     filename = str(song.track_num).zfill(2) + ' ' + song.song_name + '.mp3'
-    response = download(
-        filepath=song.file.path,
-        filename=filename,
-        mimetype='audio/mpeg'
+
+    return FileResponse(
+      open(song.file.path, "rb"),
+      as_attachment=True,
+      filename=filename
     )
-    return response
 
 
 @login_required()

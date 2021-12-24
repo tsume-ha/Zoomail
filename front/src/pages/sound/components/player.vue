@@ -48,7 +48,10 @@
           <span class="songnum">{{song.trackNum}}.</span>
           <span class="songname">{{song.title}}</span>
           <span class="songtime">{{secondToMMSS(song.length)}}</span>
-          <a :href="'/sound/download/' + song.id" class="download"><Icon icon="download" /></a>
+          <a
+            :href="`/download/sound/${song.id}/`"
+            class="download"
+          ><Icon icon="download" /></a>
         </div>
         </li>
       </ul>
