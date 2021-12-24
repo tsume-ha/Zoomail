@@ -47,8 +47,8 @@
         <div @click="load(song)" class="pure-menu-link song-row">
           <span class="songnum">{{song.trackNum}}.</span>
           <span class="songname">{{song.title}}</span>
-          <a :href="'/sound/download/' + song.id" class="download"><Icon icon="download" /></a>
           <span class="songtime">{{secondToMMSS(song.length)}}</span>
+          <a :href="'/sound/download/' + song.id" class="download"><Icon icon="download" /></a>
         </div>
         </li>
       </ul>
@@ -119,10 +119,10 @@ export default {
         } else {
           event = e.changedTouches[0];
         }
-
-        x = event.pageX - this.offsetLeft;
+        // this: element
+        x = event.pageX - this.getBoundingClientRect().left;
         wavesurfer.value.setVolume(0);
-        wavesurfer.value.seekTo(x / div_width);
+        wavesurfer.value.seekTo(Math.max(0, Math.min((x / div_width), 1)));
         barMoved();
 
         wavediv.addEventListener("mousemove", mmove, false);
@@ -140,9 +140,10 @@ export default {
         } else {
           event = e.changedTouches[0];
         }
-        x = event.pageX - this.offsetLeft;
+        // this: element
+        x = event.pageX - this.getBoundingClientRect().left;
         wavesurfer.value.setVolume(0);
-        wavesurfer.value.seekTo(x / div_width);
+        wavesurfer.value.seekTo(Math.max(0, Math.min((x / div_width), 1)));
         barMoved();
 
         wavediv.addEventListener("mouseup", mup, false);
@@ -298,11 +299,8 @@ export default {
         text-align: center;
       }
     }
+  }
 
-  }
-  #waveform{
-    position: relative;
-  }
   #wavetimeline{
     position: relative;
     display: block;
@@ -325,122 +323,4 @@ export default {
     z-index: 8;
   }
 }
-/* #return{
-	height:24px;
-	width:24px;
-	display:block;
-	position:relative;
-	overflow:hidden;
-	margin: 3px;
-}
-#return:before{
-	content:'';
-	height:12px;
-	width:12px;
-	display:block;
-	border:1px solid #333;
-	border-right-width:0;
-	border-bottom-width:0;
-	transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);-ms-transform:rotate(-45deg);
-	position:absolute;
-	top:5px;
-	left:5px;
-}
-#return:after{
-	content:'';
-	height:1px;
-	width:20px;
-	display:block;
-	background:#333;
-	position:absolute;
-	top:10.5px;
-	left:3px;
-}
-
-#waveform{
-	position: relative;
-}
-#wavetimeline{
-	position: relative;
-	display: block;
-	background-color: rgba(255,255,255,0.3);
-}
-
-div.songselect{
-	cursor: pointer;
-}
-
-#songtitle h4 span{
-	margin-right: 0.5rem;
-	font-size: 1.25rem;
-}
-
-#ctrl button{
-	position: relative;
-	min-width: 40px;
-	min-height: 40px;
-	background-color: #fff;
-	border: 1px solid #aaa;
-	border-radius: 3px;
-}
-
-#prev:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-left-width:0; border-right-color:#333; position:absolute; top:10px; left:18px;}
-#prev:after{content:''; height:20px; width:4px; display:block; background:#333; position:absolute; top:10px; left:12px;}
-
-#back:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-left-width:0; border-right-color:#333; position:absolute; top:10px; left:18px;}
-#back:after{content:''; height:0; width:0; display:block; border:10px transparent solid; border-left-width:0; border-right-color:#333; position:absolute; top:10px; left:8px;}
-
-.getstart:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#333; position:absolute; top:10px; left:16px;}
-.getstop:before, .getstop:after{content:''; height:20px; width:4px; display:block; background:#333; position:absolute; top:10px; left:14px;}
-.getstop:after{left:22px;}
-.getstart:after, .getstart:before, .getstop:before, .getstop:after{transition: .2s}
-
-#forward:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#333; position:absolute; top:10px; left:12px;}
-#forward:after{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#333; position:absolute; top:10px; left:22px;}
-
-#next:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#333; position:absolute; top:10px; left:12px;}
-#next:after{content:''; height:20px; width:4px; display:block; background:#333; position:absolute; top:10px; left:24px;}
-
-
-.download a{display:block; position:relative; width:22px; height:22px; border-bottom:2px #333 solid;}
-.download a:before{content:''; height:0; width:0; display:block; border:11px transparent solid; border-bottom-width:0; border-top-color:#333; position:absolute; bottom:0px; left:0px; }
-.download a:after{content:''; height:10px; width:7px; display:block; background:#333; position:absolute; top:0px; left:7px;}
-
-
-#songlist span{
-	height: 24px;
-	overflow: hidden;
-}
-
-.songnum{
-	width: 21px;
-	text-align: right;
-}
-.songname{
-	width: calc(100% - 120px);
-}
-.songtime{
-	width: 30px;
-}
-.download{
-	width: 22px;
-}
-
-#waveloading{
-	position: absolute;
-}
-
-#timedisplay{
-	position: absolute;
-	height: 18px;
-	width: 90px;
-	line-height: 16px;
-	padding: 1px 2px;
-	margin: 110px 0 0 auto;
-	text-align: center;
-	font-size: 16px;
-	background-color: #333;
-	color: #eee;
-	z-index: 8;
-} */
 </style>
