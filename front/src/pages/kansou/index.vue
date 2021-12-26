@@ -49,7 +49,7 @@ export default {
     });
 
     const years = computed(() => kansou.map(item => {
-      const date = moment(item.date);
+      const date = moment(item.performedAt);
       let year = 0;
       if (date.isBefore(moment().set({year:date.year(), month:3, day:1}))) {
         year = date.year() - 1;//                       month:3 => 4月
@@ -64,7 +64,7 @@ export default {
     // 重複しない年度の数字を取得
 
     const getItems = year => {
-      return kansou.filter(item => moment(item.date).isBetween(
+      return kansou.filter(item => moment(item.performedAt).isBetween(
         moment(`${year}-04-01`),
         moment(`${year+1}-04-01`),
         undefined, "[)")
@@ -77,7 +77,7 @@ export default {
     const kansouStaff = computed(() => store.state.user.is_staff);
 
     return {
-      yearsSet, kansouStaff, kansou,
+      yearsSet, kansouStaff, kansou, years,
       getItems, displayDate
     };
 

@@ -90,7 +90,7 @@ a, a:active, a:focus {
 }
 
 .pure-menu-custom{
-
+  padding: 1rem .5rem;
   .pure-menu-separator,
   .pure-menu-horizontal .pure-menu-children .pure-menu-separator {
     background-color: $text-white;
@@ -100,6 +100,7 @@ a, a:active, a:focus {
       color: inherit;
       border-left: 4px solid $text-white;
       border-bottom: 1px solid $text-white;
+      margin-bottom: .5rem;
   }
   .pure-menu-children {
       background-color: transparent;

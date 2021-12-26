@@ -11,38 +11,34 @@
 
     <div id="top-info" class="container">
       <div class="pure-g">
-        <div class="pure-u-1 pure-u-md-1-2">
-          <section class="pure-menu-custom">
-            <span class="pure-menu-heading">New Contents</span>
-            <ul class="pure-menu-list">
-              <li
-                v-for="item in newContents"
-                :key="item.id"
-                class="pure-menu-item"
-              >
-                <router-link :to="item.path" class="pure-menu-link">
-                  【{{ item.genre }}】 {{ item.title }}
-                </router-link>
-              </li>
-            </ul>
-          </section>
-        </div>
-        <div class="pure-u-1 pure-u-md-1-2">
-          <section class="pure-menu-custom">
-            <span class="pure-menu-heading">Announcements</span>
-            <ul class="pure-menu-list">
-              <li
-                v-for="item in announcements"
-                :key="item.id"
-                class="pure-menu-item"
-              >
-                <div class="announcement-content">
-                  <time class="small">{{ item.date }}</time> {{ item.text }}
-                </div>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <section class="pure-menu-custom pure-u-1 pure-u-md-1-2">
+          <h4 class="pure-menu-heading">New Contents</h4>
+          <ul class="pure-menu-list">
+            <li
+              v-for="item in newContents"
+              :key="item.id"
+              class="pure-menu-item"
+            >
+              <router-link :to="item.path" class="pure-menu-link">
+                【{{ item.genre }}】 {{ item.title }}
+              </router-link>
+            </li>
+          </ul>
+        </section>
+        <section class="pure-menu-custom pure-u-1 pure-u-md-1-2">
+          <h4 class="pure-menu-heading">Announcements</h4>
+          <ul class="pure-menu-list">
+            <li
+              v-for="item in announcements"
+              :key="item.id"
+              class="pure-menu-item"
+            >
+              <div class="announcement-content">
+                <time class="small">{{ item.date }}</time> {{ item.text }}
+              </div>
+            </li>
+          </ul>
+        </section>
       </div>
     </div>
   </article>
@@ -109,10 +105,6 @@ article {
   div#top-info {
     color: $text-white;
     margin-top: 3rem;
-
-    section {
-      margin: 1rem;
-    }
 
     .announcement-content {
       padding: 0.5em 1em;
