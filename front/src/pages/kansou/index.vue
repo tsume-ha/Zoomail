@@ -1,15 +1,28 @@
 <template>
   <article>
     <h3>感想用紙</h3>
-    <section v-for="year in yearsSet" :key="year">
-      <h4>{{year}}年度</h4>
-      <p v-for="item in getItems(year)" :key="item.id">
-        <a :href="item.url" target="_blank">{{item.title}}</a><br>
-        {{item.performedAt}}
-
-      </p>
+    <section v-for="year in yearsSet" :key="year" class="pure-menu-custom">
+      <h4 class="pure-menu-heading">{{year}}年度</h4>
+      <ul class="pure-menu-list">
+        <li
+          v-for="item in getItems(year)" :key="item.id"
+          class="pure-menu-item kansou-item"
+        >
+          <a :href="`/download/kansou/${item.id}/`" target="_blank">
+            {{ item.title }} ( {{ item.size }} )
+          </a>
+          <time :datetime="item.performedAt" class="small">
+            {{ displayDate(item.performedAt) }}
+          </time>
+          <template v-if="item.detail">
+            <br>
+            <span class="small">
+              {{ item.detail }}
+            </span>
+          </template>
+        </li>
+      </ul>
     </section>
-
   </article>
 </template>
 
@@ -64,10 +77,20 @@ export default {
     const kansouStaff = computed(() => store.state.user.is_staff);
 
     return {
-      yearsSet, kansouStaff,
+      yearsSet, kansouStaff, kansou,
       getItems, displayDate
     };
 
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.kansou-item {
+  padding: 0.5em 1em;
+  line-height: 1.5;
+  time {
+    padding: 0 0.5rem;
+  }
+}
+</style>
