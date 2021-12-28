@@ -79,6 +79,8 @@ a, a:active, a:focus {
   font-size: 0.75rem;
 }
 
+// buttons
+
 .btn-flat{
   display: inline-block;
   border: 2px solid $text-white;
@@ -88,6 +90,31 @@ a, a:active, a:focus {
     text-decoration: underline;
   }
 }
+
+.pure-button-primary,
+.pure-button-selected,
+a.pure-button-primary,
+a.pure-button-selected {
+  background-color: $bg-blue-dark;
+  color: $text-white;
+}// override
+
+.button-primary,
+a.button-primary{
+  background-color: $bg-blue-dark;
+  color: $text-white;
+}
+.button-success,
+a.button-success{
+  background-color: $bg-green-dark;
+  color: $text-white;
+}
+.button-danger,
+a.button-danger{
+  background-color: $bg-red-dark;
+  color: $text-white;
+}
+
 
 .pure-menu-custom{
   padding: 1rem .5rem;
@@ -118,6 +145,10 @@ a, a:active, a:focus {
 .pure-menu-selected > .pure-menu-link,
 .pure-menu-selected > .pure-menu-link:visited {
     color: inherit;
+}
+
+.pure-control-group {
+  margin-top: 1.25rem;
 }
 
 .card {

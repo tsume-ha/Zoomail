@@ -50,7 +50,7 @@
     </section>
     <div class="send-button-wraper">
       <button @click="backToInput" class="pure-button">戻る</button>
-      <button @click="send" class="pure-button-primary pure-button">
+      <button @click="send" class="pure-button button-primary">
         送信する
       </button>
     </div>

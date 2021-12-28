@@ -1,42 +1,42 @@
 <template>
   <abstract-setting :loading="loading">
-    <form @submit="submit">
+    <h3>メーリス受信設定</h3>
+    <form @submit="submit" class="pure-form pure-form-stacked">
 
-      <div class="form-group">
+      <div class="pure-control-group">
         <label for="id_last_name">受信用メールアドレス:</label>
         <input
           type="email"
           name="last_name"
           v-model="formData.receiveEmail"
           maxlength="254"
-          class="form-control"
+          class="pure-input-1"
           required="false"
           id="id_last_name"
           >
-        <p class="small text-secondary">
+        <p class="small">
           メーリスを受信するメールアドレスを指定してください。<br>
           空白の場合は、ログインに用いるGmailアドレスか、
           LiveLogアカウントに登録されたメールアドレスになります。
         </p>
       </div>
 
-      <div class="form-group">
+      <div class="pure-control-group">
         <label for="id_send_mail" class="">メーリスを受信する:</label>
         <input
           type="checkbox"
           name="send_mail"
           v-model="formData.sendMail"
-          class="mx-2"
           id="id_send_mail"
         >
-        <p class="small text-secondary">
+        <p class="small">
             メーリスを受け取りたくない場合はチェックを外してください。<br>
             チェックが外されると、全回・回生メーリスともに送信されないようになりますが、<br>
             このサイトにログインし、メーリスを確認することは出来ます。
         </p>
       </div>
 
-      <button type="submit" class="btn btn-info mx-2 my-3">
+      <button type="submit" class="pure-button pure-button-primary">
         更新
       </button>
 

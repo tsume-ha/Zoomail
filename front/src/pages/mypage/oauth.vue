@@ -1,41 +1,26 @@
 <template>
   <abstract-setting :loading="loading">
-    <section>
-      <p>認証を行ったサービスのアカウントでログインすることが出来ます。</p>
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>Google</td>
-            <td>
-              <span v-if="googleOauth2" class="text-success">認証しています</span>
-              <a v-else href="/auth/login/google-oauth2?next=/mypage/oauth/">認証する</a>
-            </td>
-            <td v-if="googleOauth2 && livelogAuth0">
-              <a @click="unlink" class="text-warning">紐付けを解除する</a>
-            </td>
-            <td v-else>
-              <span>紐付けを解除するまえに、もう一度LiveLogへログインしてください</span>
-            </td>
-          </tr>
-          <tr>
-            <td>LiveLog</td>
-            <td>
-              <span v-if="livelogAuth0" class="text-success">認証しています</span>
-              <a v-else href="/auth/login/auth0?next=/mypage/oauth/">
-                認証する
-              </a>
-            </td>
-            <td v-if="googleOauth2 && livelogAuth0"></td>
-            <td v-else>
-              <a href="/auth/login/auth0?next=/mypage/oauth/">
-                LiveLogにログイン
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <router-link :to="{name: 'mypage:index'}" class="btn btn-secondary mr-4">戻る</router-link>
+    <h3>LiveLog・Google認証</h3>
+    <p>認証を行ったサービスのアカウントでログインすることが出来ます。</p>
+    <section class="pure-g">
+      <div class="card-wrapper pure-u-1 pure-u-md-1-2 pure-u-ld-1-3" id="google">
+        <div class="card oauth-card">
+          <div class="oauth-card-row">
+            <img src="@/assets/img/google.png" alt="google" width="512" height="300">
+            <span class="badge" v-text="googleOauth2 ? '認証済み' : '未認証'" />
+          </div>
+          <a href="/auth/login/google-oauth2?next=/mypage/oauth/">認証する</a>
+        </div>
+      </div>
+      <div class="card-wrapper pure-u-1 pure-u-md-1-2 pure-u-ld-1-3" id="livelog">
+        <div class="card oauth-card">
+          <img src="@/assets/img/livelog.png" alt="livelog" width="160" height="118" />
+          <a href="/auth/login/auth0?next=/mypage/oauth/">認証する</a>
+        </div>
+      </div>
     </section>
+
+    <router-link :to="{name: 'mypage:index'}" class="pure-button">戻る</router-link>
   </abstract-setting>
 </template>
 
@@ -65,3 +50,27 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.card-wrapper {
+  padding: 1rem;
+
+  .oauth-card {
+    width: 100%;
+    padding: .75rem;
+  }
+}
+
+#livelog {
+  img {
+    height: 3rem;
+    width: auto;
+  }
+}
+#google {
+  img {
+    height: 3rem;
+    width: auto;
+  }
+}
+</style>

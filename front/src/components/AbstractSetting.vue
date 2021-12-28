@@ -1,8 +1,8 @@
 <template>
-  <div v-if="loading">loading</div>
-  <div v-else>
+  <article v-if="loading">loading</article>
+  <article v-else>
     <slot />
-  </div>
+  </article>
 </template>
 
 <script>

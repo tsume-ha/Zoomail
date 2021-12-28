@@ -4,7 +4,6 @@
       v-for="message in messages"
       :key="message"
       v-text="message"
-      class="text-danger small my-1"
     ></li>
   </ul>
 </template>
@@ -31,7 +30,7 @@ ul {
     padding: 0.25rem;
     margin: 0 0 1px 0;
     border-radius: 4px;
-    background-color: $bg-red;
+    background-color: $bg-red-light;
   }
 }
 </style>

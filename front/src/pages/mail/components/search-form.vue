@@ -1,16 +1,16 @@
 <template>
   <form class="pure-form pure-g" @submit="submit">
     <input type="checkbox" name="is_kaisei" id="is_kaisei" v-model="params.is_kaisei">
-    <label for="is_kaisei">回生メーリスのみ:</label>
+    <label for="is_kaisei">回生メーリス:</label>
     
     <input type="checkbox" name="is_zenkai" id="is_zenkai" v-model="params.is_zenkai">
-    <label for="is_zenkai">全回メーリスのみ:</label>
+    <label for="is_zenkai">全回メーリス:</label>
     
     <input type="checkbox" name="is_bookmark" id="is_bookmark" v-model="params.is_bookmark">
-    <label for="is_bookmark">ブックマークのみ:</label>
+    <label for="is_bookmark">ブックマーク:</label>
     
     <input type="checkbox" name="is_sender" id="is_sender" v-model="params.is_sender">
-    <label for="is_sender">送信したメーリスのみ:</label>
+    <label for="is_sender">送信したメーリス:</label>
 
     <input type="text" name="text" placeholder="件名・本文で検索" class="formtext" id="id_text" v-model="params.text">
     
@@ -92,7 +92,7 @@ export default {
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
 form {
   margin-bottom: 1em;
 }
@@ -140,7 +140,7 @@ label:before{
   height: 1.2rem;
   margin: 0;
   padding: 0;
-  border: 1px solid #eee;
+  border: 1px solid $text-white;
   border-radius: 1rem;
   transition: 0.2s;
 }
@@ -153,15 +153,15 @@ label:after{
   width: 0.9rem;
   height: 0.9rem;
   border-radius: 0.75rem;
-  background-color: #eee;
+  background-color: $text-white;
   transition: 0.2s;
 }
 input:checked + label:before{
-  border-color: #0ee08a;
+  // border-color: $bg-warining-dark;
 }
 input:checked + label:after{
   right: 0.62rem;
-  background-color: #0ee08a;
+  background-color: $text-green;
 }
 
 </style>

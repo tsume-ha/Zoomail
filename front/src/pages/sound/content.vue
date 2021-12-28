@@ -7,6 +7,7 @@
   >
     <h3>{{ content.title }}</h3>
     <Player :songs="content.songs" />
+    <router-link :to="{name: 'sound:index'}" class="pure-button return">戻る</router-link>
   </abstract-content>
 </template>
 
@@ -40,3 +41,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.return {
+  margin-top: 2rem;
+}
+</style>

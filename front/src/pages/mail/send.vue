@@ -12,7 +12,7 @@
         <send-input-attachments />
         <button
           @click="onClick"
-          class="pure-button-primary pure-button"
+          class="pure-button button-primary"
           :disabled="!isValid"
         >
           確認画面へ

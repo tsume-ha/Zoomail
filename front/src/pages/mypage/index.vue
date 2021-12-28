@@ -5,7 +5,8 @@
     <div class="pure-g">
 
       <section class="pure-menu-custom pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3">
-        <h4 class="pure-menu-heading">登録情報</h4>
+        <div class="card">
+        <h4 class="pure-menu-heading border-info">登録情報</h4>
         <ul class="pure-menu-list">
           <li class="pure-menu-item">
             <router-link :to="{name: 'mypage:profile'}" class="pure-menu-link">
@@ -28,33 +29,40 @@
             </router-link>
           </li>
         </ul>
+        </div>
       </section>
 
       <section class="pure-menu-custom pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3">
-        <h4 class="pure-menu-heading">ログアウト</h4>
+        <div class="card">
+        <h4 class="pure-menu-heading border-dark">ログアウト</h4>
         <ul class="pure-menu-list">
           <li class="pure-menu-item">
             <a href="/logout/" class="pure-menu-link">ログアウトする</a>
           </li>
         </ul>
+        </div>
       </section>
 
       <section class="pure-menu-custom pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3">
-        <h4 class="pure-menu-heading">ユーザー登録</h4>
+        <div class="card">
+        <h4 class="pure-menu-heading border-warining">ユーザー登録</h4>
         <ul class="pure-menu-list">
           <li class="pure-menu-item">
             <a href="/" class="pure-menu-link">ユーザー登録フォーム</a>
           </li>
         </ul>
+        </div>
       </section>
 
       <section class="pure-menu-custom pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3">
-        <h4 class="pure-menu-heading">管理サイト</h4>
+        <div class="card">
+        <h4 class="pure-menu-heading border-danger">管理サイト</h4>
         <ul class="pure-menu-list">
           <li class="pure-menu-item">
             <a href="/admin/" class="pure-menu-link">Zoomail 管理者用サイト</a>
           </li>
         </ul>
+        </div>
       </section>
 
     </div>
@@ -88,3 +96,24 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+div.pure-g {
+  section.pure-menu-custom {
+    div.card {
+      padding: 1rem 1rem 1rem 0.75rem;
+}}}
+
+.border-info {
+  border-color: $bg-info-dark;
+}
+.border-dark {
+  border-color: $bg-secondary-dark;
+}
+.border-warining {
+  border-color: $bg-warining-dark;
+}
+.border-danger {
+  border-color: $text-red;
+}
+</style>
