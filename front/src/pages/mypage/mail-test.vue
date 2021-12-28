@@ -15,7 +15,7 @@
           <button
             @click.prevent="showEmailAddress=!showEmailAddress"
             class="pure-button"
-            v-text="showEmailAddress ? 'メールアドレスを表示する' : 'メールアドレスを隠す'"
+            v-text="showEmailAddress ? 'メールアドレスを隠す' : 'メールアドレスを表示する'"
             ></button>
         </div>
 
@@ -26,9 +26,9 @@
         </p>
         </div>
 
-        <div class="pure-control-group">
+        <div class="pure-control-group custom-two-buttons-wrapper">
           <router-link to="../"  class="pure-button">戻る</router-link>
-          <button @click.prevent="send" class="pure-button pure-button-primary">
+          <button @click.prevent="send" class="pure-button button-primary">
             送信する
           </button>
         </div>

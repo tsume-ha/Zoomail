@@ -48,7 +48,7 @@
         </div>
       </div>
     </section>
-    <div class="send-button-wraper">
+    <div class="custom-two-buttons-wrapper">
       <button @click="backToInput" class="pure-button">戻る</button>
       <button @click="send" class="pure-button button-primary">
         送信する
@@ -142,15 +142,6 @@ section.card {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
-  }
-}
-div.send-button-wraper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 1.5rem 0 1rem;
-  button {
-    display: inline-block;
   }
 }
 </style>

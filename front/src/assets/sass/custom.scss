@@ -160,3 +160,14 @@ a.button-danger{
 .text-break {
   word-break: break-all;
 }
+
+
+.custom-two-buttons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0 1rem;
+  > * {
+    display: inline-block;
+  }
+}

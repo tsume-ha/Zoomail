@@ -36,9 +36,14 @@
         </p>
       </div>
 
-      <button type="submit" class="pure-button pure-button-primary">
-        更新
-      </button>
+      
+
+      <div class="custom-two-buttons-wrapper">
+        <router-link :to="{name: 'mypage:index'}" class="pure-button">戻る</router-link>
+        <button type="submit" class="pure-button button-primary">
+          更新
+        </button>
+      </div>
 
     </form>
   </abstract-setting>

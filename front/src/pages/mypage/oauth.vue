@@ -7,15 +7,45 @@
         <div class="card oauth-card">
           <div class="oauth-card-row">
             <img src="@/assets/img/google.png" alt="google" width="512" height="300">
-            <span class="badge" v-text="googleOauth2 ? '認証済み' : '未認証'" />
+            <span
+              v-text="googleOauth2 ? '認証済み' : '未認証'"
+              class="badge"
+              :class="{'true': googleOauth2, 'false': !googleOauth2}"
+            />
           </div>
-          <a href="/auth/login/google-oauth2?next=/mypage/oauth/">認証する</a>
+          <div class="oauth-card-row" v-if="googleOauth2">
+            <!-- Google認証済み -->
+            <button v-if="livelogAuth0" @click="unlink" class="pure-button">
+              <!-- Livelogも認証済み -->
+              紐付けを解除する
+            </button>
+            <p v-else>
+              <!-- Livelogは認証まえ -->
+              紐付けを解除するまえに、もう一度LiveLogへログインしてください
+            </p>
+          </div>
+          <div class="oauth-card-row" v-else>
+            <a href="/auth/login/google-oauth2?next=/mypage/oauth/" class="pure-button button-primary">
+              認証する
+            </a>
+          </div>
         </div>
       </div>
       <div class="card-wrapper pure-u-1 pure-u-md-1-2 pure-u-ld-1-3" id="livelog">
         <div class="card oauth-card">
-          <img src="@/assets/img/livelog.png" alt="livelog" width="160" height="118" />
-          <a href="/auth/login/auth0?next=/mypage/oauth/">認証する</a>
+          <div class="oauth-card-row">
+            <img src="@/assets/img/livelog.png" alt="livelog" width="160" height="118" />
+            <span
+              v-text="livelogAuth0 ? '認証済み' : '未認証'"
+              class="badge"
+              :class="{'true': livelogAuth0, 'false': !livelogAuth0}"
+            />
+          </div>
+          <div class="oauth-card-row" v-if="!livelogAuth0">
+            <a href="/auth/login/auth0?next=/mypage/oauth/" class="pure-button button-primary">
+              認証する
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -58,6 +88,26 @@ export default {
   .oauth-card {
     width: 100%;
     padding: .75rem;
+
+    .oauth-card-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      span.badge {
+        display: inline-block;
+        padding: .5rem;
+        margin: .125rem 1.5rem;
+        border-radius: .5rem;
+
+        &.true {
+          background-color: $bg-light-lighten3;
+        }
+        &.false {
+          background-color: $bg-secondary-light;
+        }
+      }
+    }
   }
 }
 

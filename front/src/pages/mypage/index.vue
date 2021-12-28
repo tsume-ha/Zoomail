@@ -59,7 +59,7 @@
         <h4 class="pure-menu-heading border-danger">管理サイト</h4>
         <ul class="pure-menu-list">
           <li class="pure-menu-item">
-            <a href="/admin/" class="pure-menu-link">Zoomail 管理者用サイト</a>
+            <a href="/admin/" class="pure-menu-link" target="_blank">Zoomail 管理者用サイト</a>
           </li>
         </ul>
         </div>
