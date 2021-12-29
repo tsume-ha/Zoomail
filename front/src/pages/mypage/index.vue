@@ -48,7 +48,9 @@
         <h4 class="pure-menu-heading border-warining">ユーザー登録</h4>
         <ul class="pure-menu-list">
           <li class="pure-menu-item">
-            <a href="/" class="pure-menu-link">ユーザー登録フォーム</a>
+            <router-link :to="{name: 'mypage:register'}" class="pure-menu-link">
+              ユーザー登録フォーム
+            </router-link>
           </li>
         </ul>
         </div>

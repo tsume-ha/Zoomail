@@ -78,6 +78,11 @@ const routes = [
     name: "mypage:oauth",
     component: () => import(/* webpackChunkName: "mypage" */ "../pages/mypage/oauth.vue")
   },
+  {
+    path: "/mypage/register/",
+    name: "mypage:register",
+    component: () => import(/* webpackChunkName: "mypage-register" */ "../pages/mypage/register.vue")
+  },
 ];
 
 const router = createRouter({

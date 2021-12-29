@@ -21,7 +21,7 @@
             </button>
             <p v-else>
               <!-- Livelogは認証まえ -->
-              紐付けを解除するまえに、もう一度LiveLogへログインしてください
+              紐付けを解除するためには、もう一度LiveLogへログインしてください
             </p>
           </div>
           <div class="oauth-card-row" v-else>
