@@ -6,105 +6,86 @@
       LiveLogの場合は不要です。詳しくは
       <a href="">ヘルプ</a>をご覧ください。
     </p>
-    <form @submit.prevent="submit" class="pure-form pure-form-stacked">
-    
+
+    <Form @submit="submit" :validation-schema="schema" v-slot="{ errors }" class="pure-form pure-form-stacked">
       <div class="pure-control-group">
-        <label for="id_email">Gmailアドレス（Googleアカウント）:</label>
-        <input
-          type="email"
-          name="email"
-          v-model="formData.email"
-          maxlength="254"
-          required=""
-          id="id_email"
-          class="pure-input-1">
+        <label>Gmailアドレス（Googleアカウント）:
+          <Field name="email" class="pure-input-1" />
+        </label>
+        <ValidationErrorMessages v-if="errors.email" :messages="[errors.email]" />
       </div>
 
       <div class="pure-control-group">
-        <label for="id_year">入部年度:</label>
-        <input
-          type="number"
-          name="year"
-          v-model="formData.year"
-          placeholder="2020"
-          required=""
-          id="id_year"
-          class="pure-input-1">
+        <label>入部年度:
+          <Field name="year" class="pure-input-1" />
+        </label>
+        <ValidationErrorMessages v-if="errors.year" :messages="[errors.year]" />
       </div>
 
       <div class="pure-control-group">
-        <label for="id_last_name">名字:</label>
-        <input
-          type="text"
-          name="last_name"
-          v-model="formData.lastName"
-          maxlength="255"
-          required=""
-          id="id_last_name"
-          class="pure-input-1">
+        <label>名字:
+          <Field name="lastName" class="pure-input-1" />
+        </label>
+        <ValidationErrorMessages v-if="errors.lastName" :messages="[errors.lastName]" />
       </div>
 
       <div class="pure-control-group">
-        <label for="id_first_name">名前:</label>
-        <input
-          type="text"
-          name="first_name"
-          v-model="formData.firstName"
-          maxlength="255"
-          required=""
-          id="id_first_name"
-          class="pure-input-1">
+        <label>名前:
+          <Field name="firstName" class="pure-input-1" />
+        </label>
+        <ValidationErrorMessages v-if="errors.firstName" :messages="[errors.firstName]" />
       </div>
 
       <div class="pure-control-group">
-        <label for="id_furigana">ふりがな:</label>
-        <input
-          type="text"
-          name="furigana"
-          v-model="formData.furigana"
-          maxlength="255"
-          required=""
-          id="id_furigana"
-          class="pure-input-1">
+        <label>ふりがな:
+          <Field name="furigana" class="pure-input-1" />
+        </label>
+        <ValidationErrorMessages v-if="errors.furigana" :messages="[errors.furigana]" />
       </div>
 
       <div class="custom-two-buttons-wrapper">
         <router-link :to="{name: 'mypage:index'}" class="pure-button">戻る</router-link>
         <button class="pure-button button-primary">登録</button>
       </div>
-    </form>
+    </Form>
+
   </AbstractSetting>
 </template>
 
 <script>
-import { reactive } from "vue";
 import { useStore } from "vuex";
-import AbstractSetting from "../../components/AbstractSetting.vue";
+import { Field, Form } from "vee-validate";
+import * as yup from "yup";
+import AbstractSetting from "@/components/AbstractSetting.vue";
+import ValidationErrorMessages from "@/components/ValidationErrorMessages.vue";
 export default {
   components: {
-    AbstractSetting
+    Field, Form,
+    AbstractSetting, ValidationErrorMessages
   },
   setup() {
     const store = useStore();
-    const formData = reactive({
-      email: "",
-      year: null,
-      lastName: "",
-      firstName: "",
-      furigana: "",
-    });
-    const submit = () => {
+
+    const submit = values => {
       const form = new FormData();
-      form.append("last_name", formData.lastName);
-      form.append("first_name", formData.firstName);
-      form.append("furigana", formData.furigana);
-      form.append("email", formData.email);
-      form.append("year", formData.year);
+      form.append("last_name", values.lastName);
+      form.append("first_name", values.firstName);
+      form.append("furigana", values.furigana);
+      form.append("email", values.email);
+      form.append("year", Number(values.year));
       store.dispatch("mypage/post", {path: "/api/mypage/register/", formData: form});
     };
 
+    const schema = yup.object({
+      email: yup.string().required().email(),
+      year: yup.number().required().min(2000).max(2100),
+      lastName: yup.string().required().max(255),
+      firstName: yup.string().required().max(255),
+      furigana: yup.string().required().max(255).matches(/^[ぁ-んー]+$/, "全角ひらがなのみで入力してください")
+    });
+
     return {
-      formData,
+      schema,
       submit
     };
   }
