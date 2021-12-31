@@ -90,7 +90,9 @@ a, a:active, a:focus {
     text-decoration: underline;
   }
 }
-
+.pure-button {
+  background-color: $bg-secondary-light;
+}
 .pure-button-primary,
 .pure-button-selected,
 a.pure-button-primary,
