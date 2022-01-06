@@ -350,6 +350,81 @@
       "name": "private.efa9ef0724e5909c.hot-update.json",
       "path": "private.efa9ef0724e5909c.hot-update.json",
       "publicPath": "http://localhost:8080/private.efa9ef0724e5909c.hot-update.json"
+    },
+    "public.23efb1ca2d27f694.hot-update.js": {
+      "name": "public.23efb1ca2d27f694.hot-update.js",
+      "path": "public.23efb1ca2d27f694.hot-update.js",
+      "publicPath": "http://localhost:8080/public.23efb1ca2d27f694.hot-update.js"
+    },
+    "private.23efb1ca2d27f694.hot-update.js": {
+      "name": "private.23efb1ca2d27f694.hot-update.js",
+      "path": "private.23efb1ca2d27f694.hot-update.js",
+      "publicPath": "http://localhost:8080/private.23efb1ca2d27f694.hot-update.js"
+    },
+    "kansou.23efb1ca2d27f694.hot-update.js": {
+      "name": "kansou.23efb1ca2d27f694.hot-update.js",
+      "path": "kansou.23efb1ca2d27f694.hot-update.js",
+      "publicPath": "http://localhost:8080/kansou.23efb1ca2d27f694.hot-update.js"
+    },
+    "public.23efb1ca2d27f694.hot-update.json": {
+      "name": "public.23efb1ca2d27f694.hot-update.json",
+      "path": "public.23efb1ca2d27f694.hot-update.json",
+      "publicPath": "http://localhost:8080/public.23efb1ca2d27f694.hot-update.json"
+    },
+    "private.23efb1ca2d27f694.hot-update.json": {
+      "name": "private.23efb1ca2d27f694.hot-update.json",
+      "path": "private.23efb1ca2d27f694.hot-update.json",
+      "publicPath": "http://localhost:8080/private.23efb1ca2d27f694.hot-update.json"
+    },
+    "public.bc177e7b388663a1.hot-update.js": {
+      "name": "public.bc177e7b388663a1.hot-update.js",
+      "path": "public.bc177e7b388663a1.hot-update.js",
+      "publicPath": "http://localhost:8080/public.bc177e7b388663a1.hot-update.js"
+    },
+    "private.bc177e7b388663a1.hot-update.js": {
+      "name": "private.bc177e7b388663a1.hot-update.js",
+      "path": "private.bc177e7b388663a1.hot-update.js",
+      "publicPath": "http://localhost:8080/private.bc177e7b388663a1.hot-update.js"
+    },
+    "kansou.bc177e7b388663a1.hot-update.js": {
+      "name": "kansou.bc177e7b388663a1.hot-update.js",
+      "path": "kansou.bc177e7b388663a1.hot-update.js",
+      "publicPath": "http://localhost:8080/kansou.bc177e7b388663a1.hot-update.js"
+    },
+    "public.bc177e7b388663a1.hot-update.json": {
+      "name": "public.bc177e7b388663a1.hot-update.json",
+      "path": "public.bc177e7b388663a1.hot-update.json",
+      "publicPath": "http://localhost:8080/public.bc177e7b388663a1.hot-update.json"
+    },
+    "private.bc177e7b388663a1.hot-update.json": {
+      "name": "private.bc177e7b388663a1.hot-update.json",
+      "path": "private.bc177e7b388663a1.hot-update.json",
+      "publicPath": "http://localhost:8080/private.bc177e7b388663a1.hot-update.json"
+    },
+    "public.cc1739036706c133.hot-update.js": {
+      "name": "public.cc1739036706c133.hot-update.js",
+      "path": "public.cc1739036706c133.hot-update.js",
+      "publicPath": "http://localhost:8080/public.cc1739036706c133.hot-update.js"
+    },
+    "private.cc1739036706c133.hot-update.js": {
+      "name": "private.cc1739036706c133.hot-update.js",
+      "path": "private.cc1739036706c133.hot-update.js",
+      "publicPath": "http://localhost:8080/private.cc1739036706c133.hot-update.js"
+    },
+    "kansou.cc1739036706c133.hot-update.js": {
+      "name": "kansou.cc1739036706c133.hot-update.js",
+      "path": "kansou.cc1739036706c133.hot-update.js",
+      "publicPath": "http://localhost:8080/kansou.cc1739036706c133.hot-update.js"
+    },
+    "public.cc1739036706c133.hot-update.json": {
+      "name": "public.cc1739036706c133.hot-update.json",
+      "path": "public.cc1739036706c133.hot-update.json",
+      "publicPath": "http://localhost:8080/public.cc1739036706c133.hot-update.json"
+    },
+    "private.cc1739036706c133.hot-update.json": {
+      "name": "private.cc1739036706c133.hot-update.json",
+      "path": "private.cc1739036706c133.hot-update.json",
+      "publicPath": "http://localhost:8080/private.cc1739036706c133.hot-update.json"
     }
   },
   "chunks": {
@@ -357,13 +432,13 @@
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
       "static/dist/js/public.js",
-      "public.efa9ef0724e5909c.hot-update.js"
+      "public.cc1739036706c133.hot-update.js"
     ],
     "private": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
       "static/dist/js/private.js",
-      "private.efa9ef0724e5909c.hot-update.js"
+      "private.cc1739036706c133.hot-update.js"
     ]
   },
   "publicPath": "http://localhost:8080/",

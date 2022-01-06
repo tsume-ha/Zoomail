@@ -1,7 +1,7 @@
 <template>
   <article>
     <h3>感想用紙</h3>
-    <section v-for="year in yearsSet" :key="year" class="pure-menu-custom">
+    <section v-for="year in yearsSet" :key="year" class="pure-menu-custom card">
       <h4 class="pure-menu-heading">{{year}}年度</h4>
       <ul class="pure-menu-list">
         <li
@@ -86,6 +86,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card {
+  margin-bottom: 0.5rem;
+}
+.pure-menu-heading {
+  border-color: $bg-light;
+}
 .kansou-item {
   padding: 0.5em 1em;
   line-height: 1.5;
