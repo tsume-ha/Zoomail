@@ -83,6 +83,11 @@ const routes = [
     name: "mypage:invite",
     component: () => import(/* webpackChunkName: "mypage-invite" */ "../pages/mypage/invite.vue")
   },
+  {
+    path: "/movie/",
+    name: "movie:index",
+    component: () => import(/* webpackChunkName: "movie" */ "../pages/movie/index.vue")
+  },
 ];
 
 const router = createRouter({

@@ -11,7 +11,7 @@
         <router-link :to="{ name: 'sound:index' }"> リハ音源 </router-link>
       </li>
       <li>
-        <router-link :to="{ name: 'mail:index' }"> ライブ映像 </router-link>
+        <router-link :to="{ name: 'movie:index' }"> ライブ映像 </router-link>
       </li>
       <li>
         <router-link :to="{ name: 'photo:index' }"> 写真 </router-link>
