@@ -18,14 +18,17 @@
 footer {
   display: block;
   background-color: $bg-dark;
-  padding-top: 0.5rem;
+  padding: 0.5rem;
   color: $text-white;
   font-size: 0.75rem;
   line-height: 1.25;
   text-align: center;
   
   & > * {
-    margin-left: 0.5rem;
+    display: inline-block;
+    &:not(:first-child) {
+      margin-left: 0.5rem;
+    }
   }
   a:hover {
     text-decoration: underline;

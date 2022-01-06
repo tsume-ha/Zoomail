@@ -82,6 +82,7 @@ export default {
 
 <style lang="scss" scoped>
 article {
+  min-height: calc(100vh - 3rem - (1rem + 0.75rem * 1.25));
   background-image: linear-gradient(
       rgba(56, 100, 113, 0.8),
       rgba(56, 100, 113, 0.8)

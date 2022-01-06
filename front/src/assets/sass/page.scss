@@ -1,3 +1,9 @@
+div#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 header, footer, main{
   box-sizing: border-box;
 }
@@ -6,13 +12,8 @@ header {
   height: 3rem
 }
 
-footer {
-  height: 3rem;
-}
-
-main,
-main > article {
-  min-height: calc( 100vh - 6rem );
+main {
+  flex: 1;
 }
 
 main > article {
