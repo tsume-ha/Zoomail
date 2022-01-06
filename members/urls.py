@@ -8,5 +8,5 @@ urlpatterns = [
     path('profile/', views.profile),
     path('mail-settings/', views.mailSettingsAPI),
     path('mail-test/', views.mailTestAPI),
-    path('register/', views.registerAPI),
+    path('invite/', views.registerAPI),
 ]

@@ -45,11 +45,11 @@
 
       <section class="pure-menu-custom pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3">
         <div class="card">
-        <h4 class="pure-menu-heading border-warining">ユーザー登録</h4>
+        <h4 class="pure-menu-heading border-warining">ユーザー招待</h4>
         <ul class="pure-menu-list">
           <li class="pure-menu-item">
-            <router-link :to="{name: 'mypage:register'}" class="pure-menu-link">
-              ユーザー登録フォーム
+            <router-link :to="{name: 'mypage:invite'}" class="pure-menu-link">
+              招待用フォーム
             </router-link>
           </li>
         </ul>

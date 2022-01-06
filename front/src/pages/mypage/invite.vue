@@ -1,9 +1,9 @@
 <template>
   <AbstractSetting>
-    <h3>ユーザー登録</h3>
+    <h3>ユーザー招待</h3>
     <p>
-      Googleアカウントで新規登録を行うには下のフォームを入力し送信して下さい。<br>
-      LiveLogの場合は不要です。詳しくは
+      Googleアカウントで新規招待を行うには下のフォームを入力し送信して下さい。<br>
+      LiveLogの場合は招待不要です。詳しくは
       <a href="">ヘルプ</a>をご覧ください。
     </p>
 
@@ -45,7 +45,7 @@
 
       <div class="custom-two-buttons-wrapper">
         <router-link :to="{name: 'mypage:index'}" class="pure-button">戻る</router-link>
-        <button class="pure-button button-primary">登録</button>
+        <button class="pure-button button-primary">招待し、招待メールを送信</button>
       </div>
     </Form>
 
@@ -55,7 +55,7 @@
 <script>
 import { useStore } from "vuex";
 import { Field, Form } from "vee-validate";
-import * as yup from "yup";
+import yup from "@/utils/yup.js";
 import AbstractSetting from "@/components/AbstractSetting.vue";
 import ValidationErrorMessages from "@/components/ValidationErrorMessages.vue";
 export default {
@@ -73,12 +73,12 @@ export default {
       form.append("furigana", values.furigana);
       form.append("email", values.email);
       form.append("year", Number(values.year));
-      store.dispatch("mypage/post", {path: "/api/mypage/register/", formData: form});
+      store.dispatch("mypage/post", {path: "/api/mypage/invite/", formData: form});
     };
 
     const schema = yup.object({
       email: yup.string().required().email(),
-      year: yup.number().required().min(2000).max(2100),
+      year: yup.number().integer().required().min(2000).max(2100),
       lastName: yup.string().required().max(255),
       firstName: yup.string().required().max(255),
       furigana: yup.string().required().max(255).matches(/^[ぁ-んー]+$/, "全角ひらがなのみで入力してください")

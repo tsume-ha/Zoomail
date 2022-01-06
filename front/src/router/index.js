@@ -79,9 +79,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "mypage" */ "../pages/mypage/oauth.vue")
   },
   {
-    path: "/mypage/register/",
-    name: "mypage:register",
-    component: () => import(/* webpackChunkName: "mypage-register" */ "../pages/mypage/register.vue")
+    path: "/mypage/invite/",
+    name: "mypage:invite",
+    component: () => import(/* webpackChunkName: "mypage-invite" */ "../pages/mypage/invite.vue")
   },
 ];
 
