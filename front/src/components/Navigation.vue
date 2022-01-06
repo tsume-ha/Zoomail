@@ -23,7 +23,7 @@
         <router-link :to="{ name: 'mail:index' }"> 例会教室 </router-link>
       </li>
       <li>
-        <router-link :to="{ name: 'mail:index' }"> その他資料 </router-link>
+        <router-link :to="{ name: 'others:index' }"> その他資料 </router-link>
       </li>
       <hr />
       <li>
