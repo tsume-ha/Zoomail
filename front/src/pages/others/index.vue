@@ -37,7 +37,7 @@ axios.get("/api/others/").then(res => {
   console.error(error.response);
   store.commit("message/addMessage", {
     level: "warning",
-    message: "ライブ動画のデータを取得できませんでした。",
+    message: "その他資料のデータを取得できませんでした。",
     appname: "others/index"
   });
 });
