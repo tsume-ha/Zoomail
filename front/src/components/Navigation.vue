@@ -20,7 +20,7 @@
         <router-link :to="{ name: 'kansou:index' }"> 感想用紙 </router-link>
       </li>
       <li>
-        <router-link :to="{ name: 'mail:index' }"> 例会教室 </router-link>
+        <router-link :to="{ name: 'meeting_room:index' }"> 例会教室 </router-link>
       </li>
       <li>
         <router-link :to="{ name: 'others:index' }"> その他資料 </router-link>
