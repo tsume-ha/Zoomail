@@ -9,9 +9,9 @@
     please retry.
     <button @click="reload">再読み込み</button>
   </div>
-  <article v-else-if="status.loaded">
+  <template v-else-if="status.loaded">
     <slot />
-  </article>
+  </template>
   <div v-else>
   </div>
 </template>

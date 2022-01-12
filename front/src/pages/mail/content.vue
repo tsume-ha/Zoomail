@@ -43,6 +43,7 @@
           </li>
         </ul>
       </div>
+      <router-link :to="returnTo" class="pure-button">戻る</router-link>
     </article>
   </abstract-content>
 </template>
@@ -67,12 +68,19 @@ export default {
       message.value = item;
     };
     const apiPath = computed(() => `/api/board/content/${String(props.id)}/`);
-
+    
+    const returnTo = computed(() => {
+      if (store.state.lastPath === null || store.state.lastPath === undefined) {
+        return {name: "mail:index"};
+      } else {
+        return {...store.state.lastPath};
+      }
+    });
     return {
       messages,
       message,
       apiPath,
-      setMessage,
+      setMessage, returnTo
     };
   },
 };
@@ -80,7 +88,7 @@ export default {
 
 <style lang="scss" scoped>
 article {
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   header {
     height: auto;
     > div {
@@ -116,7 +124,7 @@ article {
     }
   }
   div.message-content {
-    margin: 1.5rem 0;
+    margin: 1rem 0;
     padding: 0.5rem;
   }
 }

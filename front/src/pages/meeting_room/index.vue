@@ -35,7 +35,7 @@ import moment from "@/utils/moment.js";
 import axios from "@/utils/axios.js";
 import { ref } from "vue";
 const rooms = ref([]);
-const isStaff = true;
+const isStaff = false;
 axios
     .get("/api/meeting_room/get31day/")
     .then(res => {

@@ -2,16 +2,16 @@
   <form class="pure-form pure-g" @submit="submit">
     
     <label>回生メーリス:
-      <input type="checkbox" name="is_kaisei" v-model="params.is_kaisei">
+      <input type="checkbox" name="is_kaisei" v-model="params.is_kaisei" @change="resetPage">
     </label>
     <label>全回メーリス:
-      <input type="checkbox" name="is_zenkai" v-model="params.is_zenkai">
+      <input type="checkbox" name="is_zenkai" v-model="params.is_zenkai" @change="resetPage">
     </label>
     <label>ブックマーク:
-      <input type="checkbox" name="is_bookmark" v-model="params.is_bookmark">
+      <input type="checkbox" name="is_bookmark" v-model="params.is_bookmark" @change="resetPage">
     </label>
     <label>送信したメーリス:
-      <input type="checkbox" name="is_sender" v-model="params.is_sender">
+      <input type="checkbox" name="is_sender" v-model="params.is_sender" @change="resetPage">
     </label>
     <input type="text" name="text" placeholder="件名・本文で検索" class="formtext" id="id_text" v-model="params.text">
     
@@ -83,10 +83,13 @@ export default {
         params.page = Number(route.query.page);
       }
     });
-
+    
+    const resetPage = () => {
+      params.page = 1;
+    };
     return {
       params,
-      submit
+      submit, resetPage
     };
   }
 };
