@@ -47,7 +47,7 @@ const displayDate = dateStr => moment(dateStr).format("YYYY/MM/DD");
   margin-bottom: 0.5rem;
 }
 .pure-menu-heading {
-  border-color: $bg-light;
+  border-color: $bg-light!important;
 }
 h4 time {
   font-size: 0.75rem;

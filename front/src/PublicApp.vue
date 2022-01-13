@@ -75,9 +75,11 @@ div#app {
   background-size: cover;
 }
 div#bg-wraper {
-  min-height: 100vh;
   color: $text-white;
   transition: background-color 0.5s;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
   &.menuOpen {
     background-color: $bg-dark;

@@ -107,15 +107,15 @@ div.pure-g {
 }}}
 
 .border-info {
-  border-color: $bg-info-dark;
+  border-color: $bg-info-dark!important;
 }
 .border-dark {
-  border-color: $bg-secondary-dark;
+  border-color: $bg-secondary-dark!important;
 }
 .border-warining {
-  border-color: $bg-warining-dark;
+  border-color: $bg-warining-dark!important;
 }
 .border-danger {
-  border-color: $text-red;
+  border-color: $text-red!important;
 }
 </style>

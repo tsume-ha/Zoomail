@@ -5,9 +5,9 @@
     </div>
 
     <p>
-      京都大学を中心に活動するアコースティック軽音サークル<br />
-      「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a
-      >」の部内連絡管理アプリ
+      <span>京都大学を中心に活動する</span><span>アコースティック軽音サークル</span><br />
+      <span>「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a
+      >」</span><span>の部内連絡管理アプリ</span>
     </p>
 
     <router-link :to="{ name: 'login' }" id="login-button" class="btn-flat"
@@ -22,6 +22,9 @@ article {
 
   p {
     text-shadow: 0 0 0.25rem #000;
+    > * {
+      display: inline-block;
+    }
   }
 
   .logo-wraper {

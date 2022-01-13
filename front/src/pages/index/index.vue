@@ -4,9 +4,9 @@
       <img id="logo" class="pure-img" src="@/assets/img/zoomail.png" />
     </div>
     <p>
-      京都大学を中心に活動するアコースティック軽音サークル<br />
-      「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a
-      >」の部内連絡管理アプリ
+      <span>京都大学を中心に活動する</span><span>アコースティック軽音サークル</span><br />
+      <span>「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a
+      >」</span><span>の部内連絡管理アプリ</span>
     </p>
 
     <div id="top-info" class="container">
@@ -101,6 +101,9 @@ article {
   p {
     color: $text-white;
     text-align: center;
+    > * {
+      display: inline-block;
+    }
   }
 
   div#top-info {

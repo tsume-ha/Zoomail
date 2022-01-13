@@ -90,7 +90,7 @@ export default {
   margin-bottom: 0.5rem;
 }
 .pure-menu-heading {
-  border-color: $bg-light;
+  border-color: $bg-light!important;
 }
 .kansou-item {
   padding: 0.5em 1em;
