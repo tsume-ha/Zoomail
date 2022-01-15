@@ -1,7 +1,9 @@
 from django import forms
 from django.core import validators
+from django.conf import settings
 
 from social_django.models import UserSocialAuth
+from utils.mail import SympleMessageSendClient
 from .models import User
 
 
@@ -34,20 +36,37 @@ class RegisterForm(forms.ModelForm):
         if not ( year == 0 or 1990 < year < 2100 ):
             raise forms.ValidationError('無効な入部年度です。第24期などでなく、入部年度（2018）を入力してください。')
         return year
-    
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if UserSocialAuth.objects.filter(uid=email).exists():
+            raise forms.ValidationError('このGoogleアカウントはすでに登録されています')
+        return email
+
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=commit)
         user.receive_email = self.cleaned_data['email']
+        user.social_auth.create(
+          provider='google-oauth2', uid=self.cleaned_data['email']
+          )
         user.save()
 
-        content_social = UserSocialAuth(
-            user = user,
-            provider = 'google-oauth2',
-            uid = self.cleaned_data['email'],
-            )
-        content_social.save()
-
         # send a mail
+        sendgridclient = SympleMessageSendClient(
+            title="招待されました！【Zoomail】京大アンプラグド",
+            text="ようこそ、京大アンプラグドへ！{}さん\n\n"\
+                 "京大アンプラグドのメーリスシステム「Zoomail」に招待されました\n"\
+                 "ログインするには、以下のURLからZoomailのウェブサイトへ行き、\n"\
+                 "「Googleでログイン」ボタンからこのGmailのアカウントでログインしてください。\n\n"\
+                 "【ログインURL】\n"\
+                 "https://message.ku-unplugged.net \n\n"\
+                 "ログインできないなど、なにかお困りの時は message@ku-unplugged.net までご連絡ください。\n"\
+                 "京大アンプラグドHP係開発部".format(user.get_full_name()),
+            to_email=user.email,
+            from_email="register@message.ku-unplugged.net"
+        )
+        if settings.SEND_MAIL:
+            sendgridclient.send()
 
         return user
 

@@ -12,7 +12,7 @@ class SendMailAddress(models.Model):
         return str(self.year) + ' - ' + self.user.get_full_name() +' - ' + self.email
 
 class MessageProcess(models.Model):
-    message = models.ForeignKey(Message, null=False, on_delete=models.CASCADE, related_name='process')
+    message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name='process')
     x_message_id = models.CharField(max_length=100, editable=False, null=True, blank=True)
     email = models.EmailField(null=False, blank=False, verbose_name="送信時メールアドレス")
     Requested = models.BooleanField(default=False, verbose_name="SendGridへ転送")
@@ -23,4 +23,7 @@ class MessageProcess(models.Model):
     Error_detail = models.CharField(max_length=1000, null=True, blank=True, verbose_name="エラー詳細")
 
     def __str__(self):
-        return self.message.title + ' - Processed:' + str(self.Processed) + ' Delivered:' + str(self.Delivered)
+        if self.message is not None:
+            return str(self.message.title) + ' - Processed:' + str(self.Processed) + ' Delivered:' + str(self.Delivered)
+        else:
+            return str(self.message) + ' - Processed:' + str(self.Processed) + ' Delivered:' + str(self.Delivered)

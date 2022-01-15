@@ -219,25 +219,17 @@ def registerAPI(request):
 
     form = RegisterForm(request.POST)
     if form.is_valid():
-        try:
-            form.save()
-            messages.success(request, "登録しました。")
-            return JsonResponse({
-                "success": True
-            })
-        except:
-            messages.error(request, "エラーが発生しました。")
-
+        form.save()
+        # save()でメール送信が走る
+        messages.success(request, "登録しました。")
+        return JsonResponse({
+            "success": True
+        })
+    
     else:
-        try:
-            email =request.POST["email"]
-            if UserSocialAuth.objects.filter(uid=email).exists():
-                messages.warning(request, "このユーザーはすでに招待されています")
-            else:
-                messages.error(request, "入力されたデータが不正です。")
-        except:
-            messages.error(request, "エラーが発生しました。")
+        messages.error(request, form.errors.as_text())
 
+    messages.error(request, "入力されたデータが不正です。")
     messages.error(request, "登録に失敗しました。")
     return JsonResponse({
         "success": False

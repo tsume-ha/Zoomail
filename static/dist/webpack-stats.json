@@ -115,40 +115,18 @@
       "name": "private.html",
       "path": "private.html",
       "publicPath": "http://localhost:8080/private.html"
-    },
-    "public.09de525bbc5b92c1.hot-update.js": {
-      "name": "public.09de525bbc5b92c1.hot-update.js",
-      "path": "public.09de525bbc5b92c1.hot-update.js",
-      "publicPath": "http://localhost:8080/public.09de525bbc5b92c1.hot-update.js"
-    },
-    "private.09de525bbc5b92c1.hot-update.js": {
-      "name": "private.09de525bbc5b92c1.hot-update.js",
-      "path": "private.09de525bbc5b92c1.hot-update.js",
-      "publicPath": "http://localhost:8080/private.09de525bbc5b92c1.hot-update.js"
-    },
-    "public.09de525bbc5b92c1.hot-update.json": {
-      "name": "public.09de525bbc5b92c1.hot-update.json",
-      "path": "public.09de525bbc5b92c1.hot-update.json",
-      "publicPath": "http://localhost:8080/public.09de525bbc5b92c1.hot-update.json"
-    },
-    "private.09de525bbc5b92c1.hot-update.json": {
-      "name": "private.09de525bbc5b92c1.hot-update.json",
-      "path": "private.09de525bbc5b92c1.hot-update.json",
-      "publicPath": "http://localhost:8080/private.09de525bbc5b92c1.hot-update.json"
     }
   },
   "chunks": {
     "public": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
-      "static/dist/js/public.js",
-      "public.09de525bbc5b92c1.hot-update.js"
+      "static/dist/js/public.js"
     ],
     "private": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
-      "static/dist/js/private.js",
-      "private.09de525bbc5b92c1.hot-update.js"
+      "static/dist/js/private.js"
     ]
   },
   "publicPath": "http://localhost:8080/"
