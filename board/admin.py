@@ -44,4 +44,3 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Message, MessageSuperuserAdmin)
-

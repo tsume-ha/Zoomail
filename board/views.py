@@ -1,6 +1,3 @@
-import datetime
-import base64
-
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, FileResponse
 from django.http.response import JsonResponse
@@ -12,23 +9,25 @@ from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.utils.safestring import mark_safe
 from django.utils.html import linebreaks, urlize
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent, FileContent, FileName, FileType, Disposition
-from sendgrid.helpers.mail import Attachment as helper_Attachment
-
 from django.conf import settings
 
-from .models import Message, MessageYear, Attachment, Bookmark
-from .forms import MessageForm, AttachmentForm
-from .to import to_groups
+from .models import Message, MessageYear, Attachment, Bookmark, ToGroup
+from .forms import MessageForm
 from members.models import User
-from mail.models import SendMailAddress, MessageProcess
 
 # html formatter
 def target_blank(content):
     content = content.replace('<a ', '<a target="_blank" rel="nofollow ugc noopener" class="text-break" ')
     return mark_safe(content)
 
+
+# 送信先グループ（全回・回生）の取得
+def tos():
+    return[
+        (item.year, item.text()) for item in ToGroup.objects.filter(year=0)
+    ] + [
+        (item.year, item.text()) for item in ToGroup.objects.filter(year__gt=0).order_by("year").reverse()
+    ]
 
 @login_required()
 def get_messages_list(request):
@@ -157,7 +156,7 @@ def get_message_attachments(request, id):
 @login_required()
 def to_groups_data(request):
     return JsonResponse({
-        "togropus": [{"year": year, "label": text} for year, text in to_groups]
+        "togropus": [{"year": year, "label": text} for year, text in tos()]
     })
 
 
@@ -198,13 +197,13 @@ def bookmarkAPI(request, pk):
 @login_required()
 def sendAPI(request):
     message_form = MessageForm(request.POST)
+    message_form.fields["to"].choices = tos()
     if request.method == 'POST' and message_form.is_valid():
         message = message_form.save(commit=False)
         message.sender = request.user
         message.save()
 
         filelist = request.FILES.getlist('attachments')
-        has_attachment = False
         if filelist:
             for file in filelist:
                 if file.size > 10*1024*1024:
@@ -212,7 +211,6 @@ def sendAPI(request):
                     return HttpResponse('400', status=400)
                 attachment = Attachment(attachment_file=file, message=message)
                 attachment.save()
-            has_attachment = True
 
         for to in message_form.cleaned_data["to"]:
             message.years.create(year=to)
@@ -223,139 +221,19 @@ def sendAPI(request):
                 "total_send_num": 0,
                 "response": "SEND_MAIL was False."
             })
-        year_query = MessageYear.objects.filter(message=message).values('year')
 
-        if year_query.filter(year=0).exists():
-            from_email_adress = 'zenkai@message.ku-unplugged.net'
-            to_list = SendMailAddress.objects.all().values_list('email', flat=True)
-            mail_compose(from_email_adress, to_list, message)
-
-        else:
-            ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
-            for year in year_query:
-                from_email_adress = ordinal(int(year['year']) - 1994) + '_kaisei@message.ku-unplugged.net'
-                to_list = SendMailAddress.objects.filter(year=year['year']).values_list('email', flat=True)
-                mail_compose(from_email_adress, to_list, message)
-
-        total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
+        from utils.mail import MailingList
+        client = MailingList()
+        total_send_num = client.send(message)
+        
         return JsonResponse({
             "total_send_num": total_send_num,
-            "response": ""
+            "response": "done"
         })
 
 
     return HttpResponse('Bad request', status=400)
 
-
-
-def mail_compose(from_email_adress, to_list, message_data):
-    '''
-    宛先リストとメッセージコンテントからメールを構成、送信するところまで行う。
-
-    Parameters
-    ----------
-    from_email_adress: str
-        送信元のメールアドレス
-        全回なら'zenkai@message.ku-unplugged.net'
-    to_list: list
-        emailアドレスのリスト
-    message_data: Query Object
-        board.models.Message のオブジェクト
-    '''
-
-    subject = message_data.title
-    text_content = message_data.content
-
-    added_text = '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(message_data.pk)
-
-    from_email_name = message_data.writer.get_short_name()
-    to_emails = [To(email=eml) for eml in to_list]
-    message = Mail(
-        from_email=(from_email_adress, from_email_name),
-        to_emails=to_emails,
-        subject=subject,
-        plain_text_content=PlainTextContent(text_content + added_text),
-        is_multiple=True
-        )
-    
-    is_attachment = Attachment.objects.filter(message=message_data).exists()
-    if is_attachment:
-        file_list = Attachment.objects.filter(message=message_data).order_by('id').reverse()
-        attachment_list = []
-        for file in file_list:
-            file_path = file.attachment_file.path
-            with open(file_path, 'rb') as f:
-                a_data = f.read()
-                f.close()
-            encoded = base64.b64encode(a_data).decode()
-            attachment = helper_Attachment(
-                file_content = FileContent(encoded),
-                file_type = FileType('application/octet-stream'),
-                file_name = FileName(file.fileName()),
-                disposition = Disposition('attachment'),
-                )
-            attachment_list.append(attachment)
-
-        message.attachment = attachment_list
-
-    # message.send_at = int(datetime.datetime.now().timestamp() + 100)
-
-    try:
-        sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        response = sendgrid_client.send(message)
-        x_message_id = response.headers['X-Message-Id']
-
-        requested = True
-        error_occurd = False
-        error_detail = ''
-
-    except Exception as e:
-        x_message_id = ''
-        requested = False
-        error_occurd = True
-        error_detail = e
-
-    finally:
-        process_list = []
-        for email in to_list:
-            obj = MessageProcess(
-                message=message_data,
-                x_message_id=x_message_id,
-                email=email,
-                Requested=requested,
-                Error_occurd=error_occurd,
-                Error_detail=error_detail,
-                )
-            process_list.append(obj)
-        MessageProcess.objects.bulk_create(process_list)
-    print(response)
-    return response
-
-
-
-# from utils.commom import download
-# @login_required()
-# def FileDownloadView(request, message_pk, file_pk):
-#     try:
-#         message = Message.objects.get(pk=message_pk)
-#         file = Attachment.objects.get(pk=file_pk)
-#         year = MessageYear.objects.get(message=message).year
-#     except ObjectDoesNotExist:
-#         return redirect('/read/content/' + str(message_pk))
-
-#     can_read = (year == 0) or (year == request.user.year)\
-#                or (message.writer == request.user)\
-#                or (message.sender == request.user)
-#     if not can_read:
-#         return redirect('/read/content/' + str(message_pk))
-
-#     filename = message.title + '_添付' + file.extension()
-#     response = download(
-#         filepath = file.attachment_file.path,
-#         filename = filename,
-#         mimetype = 'application/octet-stream'
-#     )
-#     return response
 
 @login_required()
 def AttachmentDownloadView(request, message_id, attachment_id):

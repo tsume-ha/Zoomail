@@ -22,9 +22,12 @@ scripts/emails22/*
 static/special/*
 .vscode/*
 
+front/node_modules/*
 node_modules/*
 yarn-error.log
 static/dist/webpack-stats.json
 
 credentials.json
 token.pickle
+
+log/*

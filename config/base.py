@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'private_storage',
     'social_django',
     'imagekit',
@@ -67,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'config.message.ajax_middleware.AjaxMessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'config.social_auth.newliveloguser.NewUserRedirectMiddleware'
 ]
@@ -175,6 +177,15 @@ SOCIAL_AUTH_AUTH0_SCOPE = [
     "email_verified",
 ]
 
+# allow CORS origin
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3333',
+    'https://ku-unplugged.net',
+    'https://message.ku-unplugged.net'
+]
+# レスポンスを公開する
+CORS_ALLOW_CREDENTIALS = True
+
 # other settings
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 SOCIAL_AUTH_CLEAN_USERNAMES = True
@@ -240,3 +251,55 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = env('SENDGRID_API_KEY')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+
+# # log file create
+# if not os.path.isdir(os.path.join(BASE_DIR, 'log')):
+#     os.mkdir(os.path.join(BASE_DIR, 'log'))
+# if not os.path.isfile(os.path.join(BASE_DIR, 'log', 'debug.log')):
+#     f = open(os.path.join(BASE_DIR, 'log', 'debug.log'), 'w')
+#     f.close()
+
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'production': {
+#             'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d '
+#                       '%(pathname)s:%(lineno)d %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         # 'file': {
+#         #     'level': 'INFO',
+#         #     'class': 'logging.handlers.TimedRotatingFileHandler',
+#         #     'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
+#         #     'when':'D',
+#         #     'interval':1,
+#         #     'backupCount':100,
+#         #     'delay':False
+#         # },
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'filename': './log/debug.log',
+#             'maxBytes': 10*1000,
+#             'backupCount': 100,
+#             'delay':False
+#         },
+#     },
+#     'loggers': {
+#         '': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     },
+# }
