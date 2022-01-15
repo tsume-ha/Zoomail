@@ -1,8 +1,155 @@
 {
-  "status": "error",
-  "assets": {},
-  "chunks": {},
-  "publicPath": "/",
-  "error": "ModuleNotFoundError",
-  "message": "Module not found: Error: [CaseSensitivePathsPlugin] `C:\\Users\\mhash\\Documents\\UnpluggedMessage\\front\\src\\components\\Message.vue` does not match the corresponding path on disk `message.vue`."
+  "status": "done",
+  "assets": {
+    "static/dist/js/public.js": {
+      "name": "static/dist/js/public.js",
+      "path": "static\\dist\\js\\public.js",
+      "publicPath": "http://localhost:8080/static/dist/js/public.js"
+    },
+    "static/dist/img/LP-BG.79fce175.jpeg": {
+      "name": "static/dist/img/LP-BG.79fce175.jpeg",
+      "path": "static\\dist\\img\\LP-BG.79fce175.jpeg",
+      "publicPath": "http://localhost:8080/static/dist/img/LP-BG.79fce175.jpeg"
+    },
+    "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png": {
+      "name": "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png",
+      "path": "static\\dist\\img\\btn_google_signin_light_focus_web@2x.c00d9ed0.png",
+      "publicPath": "http://localhost:8080/static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png"
+    },
+    "static/dist/img/livelog.6df3ecdf.png": {
+      "name": "static/dist/img/livelog.6df3ecdf.png",
+      "path": "static\\dist\\img\\livelog.6df3ecdf.png",
+      "publicPath": "http://localhost:8080/static/dist/img/livelog.6df3ecdf.png"
+    },
+    "static/dist/img/zoomail.4c935cf7.png": {
+      "name": "static/dist/img/zoomail.4c935cf7.png",
+      "path": "static\\dist\\img\\zoomail.4c935cf7.png",
+      "publicPath": "http://localhost:8080/static/dist/img/zoomail.4c935cf7.png"
+    },
+    "static/dist/js/private.js": {
+      "name": "static/dist/js/private.js",
+      "path": "static\\dist\\js\\private.js",
+      "publicPath": "http://localhost:8080/static/dist/js/private.js"
+    },
+    "static/dist/js/home.js": {
+      "name": "static/dist/js/home.js",
+      "path": "static\\dist\\js\\home.js",
+      "publicPath": "http://localhost:8080/static/dist/js/home.js"
+    },
+    "static/dist/js/read.js": {
+      "name": "static/dist/js/read.js",
+      "path": "static\\dist\\js\\read.js",
+      "publicPath": "http://localhost:8080/static/dist/js/read.js"
+    },
+    "static/dist/js/send.js": {
+      "name": "static/dist/js/send.js",
+      "path": "static\\dist\\js\\send.js",
+      "publicPath": "http://localhost:8080/static/dist/js/send.js"
+    },
+    "static/dist/js/photo.js": {
+      "name": "static/dist/js/photo.js",
+      "path": "static\\dist\\js\\photo.js",
+      "publicPath": "http://localhost:8080/static/dist/js/photo.js"
+    },
+    "static/dist/img/unplugged_logo.c717fdac.jpg": {
+      "name": "static/dist/img/unplugged_logo.c717fdac.jpg",
+      "path": "static\\dist\\img\\unplugged_logo.c717fdac.jpg",
+      "publicPath": "http://localhost:8080/static/dist/img/unplugged_logo.c717fdac.jpg"
+    },
+    "static/dist/js/sound.js": {
+      "name": "static/dist/js/sound.js",
+      "path": "static\\dist\\js\\sound.js",
+      "publicPath": "http://localhost:8080/static/dist/js/sound.js"
+    },
+    "static/dist/js/kansou.js": {
+      "name": "static/dist/js/kansou.js",
+      "path": "static\\dist\\js\\kansou.js",
+      "publicPath": "http://localhost:8080/static/dist/js/kansou.js"
+    },
+    "static/dist/js/mypage.js": {
+      "name": "static/dist/js/mypage.js",
+      "path": "static\\dist\\js\\mypage.js",
+      "publicPath": "http://localhost:8080/static/dist/js/mypage.js"
+    },
+    "static/dist/img/google.fd4588af.png": {
+      "name": "static/dist/img/google.fd4588af.png",
+      "path": "static\\dist\\img\\google.fd4588af.png",
+      "publicPath": "http://localhost:8080/static/dist/img/google.fd4588af.png"
+    },
+    "static/dist/js/mypage-invite.js": {
+      "name": "static/dist/js/mypage-invite.js",
+      "path": "static\\dist\\js\\mypage-invite.js",
+      "publicPath": "http://localhost:8080/static/dist/js/mypage-invite.js"
+    },
+    "static/dist/js/movie.js": {
+      "name": "static/dist/js/movie.js",
+      "path": "static\\dist\\js\\movie.js",
+      "publicPath": "http://localhost:8080/static/dist/js/movie.js"
+    },
+    "static/dist/js/others.js": {
+      "name": "static/dist/js/others.js",
+      "path": "static\\dist\\js\\others.js",
+      "publicPath": "http://localhost:8080/static/dist/js/others.js"
+    },
+    "static/dist/js/meeting_room.js": {
+      "name": "static/dist/js/meeting_room.js",
+      "path": "static\\dist\\js\\meeting_room.js",
+      "publicPath": "http://localhost:8080/static/dist/js/meeting_room.js"
+    },
+    "static/dist/js/chunk-vendors.js": {
+      "name": "static/dist/js/chunk-vendors.js",
+      "path": "static\\dist\\js\\chunk-vendors.js",
+      "publicPath": "http://localhost:8080/static/dist/js/chunk-vendors.js"
+    },
+    "static/dist/js/chunk-common.js": {
+      "name": "static/dist/js/chunk-common.js",
+      "path": "static\\dist\\js\\chunk-common.js",
+      "publicPath": "http://localhost:8080/static/dist/js/chunk-common.js"
+    },
+    "public.html": {
+      "name": "public.html",
+      "path": "public.html",
+      "publicPath": "http://localhost:8080/public.html"
+    },
+    "private.html": {
+      "name": "private.html",
+      "path": "private.html",
+      "publicPath": "http://localhost:8080/private.html"
+    },
+    "public.09de525bbc5b92c1.hot-update.js": {
+      "name": "public.09de525bbc5b92c1.hot-update.js",
+      "path": "public.09de525bbc5b92c1.hot-update.js",
+      "publicPath": "http://localhost:8080/public.09de525bbc5b92c1.hot-update.js"
+    },
+    "private.09de525bbc5b92c1.hot-update.js": {
+      "name": "private.09de525bbc5b92c1.hot-update.js",
+      "path": "private.09de525bbc5b92c1.hot-update.js",
+      "publicPath": "http://localhost:8080/private.09de525bbc5b92c1.hot-update.js"
+    },
+    "public.09de525bbc5b92c1.hot-update.json": {
+      "name": "public.09de525bbc5b92c1.hot-update.json",
+      "path": "public.09de525bbc5b92c1.hot-update.json",
+      "publicPath": "http://localhost:8080/public.09de525bbc5b92c1.hot-update.json"
+    },
+    "private.09de525bbc5b92c1.hot-update.json": {
+      "name": "private.09de525bbc5b92c1.hot-update.json",
+      "path": "private.09de525bbc5b92c1.hot-update.json",
+      "publicPath": "http://localhost:8080/private.09de525bbc5b92c1.hot-update.json"
+    }
+  },
+  "chunks": {
+    "public": [
+      "static/dist/js/chunk-vendors.js",
+      "static/dist/js/chunk-common.js",
+      "static/dist/js/public.js",
+      "public.09de525bbc5b92c1.hot-update.js"
+    ],
+    "private": [
+      "static/dist/js/chunk-vendors.js",
+      "static/dist/js/chunk-common.js",
+      "static/dist/js/private.js",
+      "private.09de525bbc5b92c1.hot-update.js"
+    ]
+  },
+  "publicPath": "http://localhost:8080/"
 }
