@@ -12,5 +12,5 @@ urlpatterns = [
     path('send/froms/', views.froms_data),
     path('send/send/', views.sendAPI),
 
-    path('download/<int:message_pk>/<int:file_pk>/', views.FileDownloadView, name='attachment_DL'),
+    # path('download/<int:message_pk>/<int:file_pk>/', views.FileDownloadView, name='attachment_DL'),
 ]

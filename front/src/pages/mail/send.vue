@@ -1,21 +1,25 @@
 <template>
-  <div>
-    <h1>mail/send</h1>
+  <article>
+    <h3>メーリス送信・入力</h3>
     <form>
-      <send-input-title />
-      <send-input-content />
+      <div class="pure-form pure-form-stacked">
+        <send-input-title />
+      </div>
       <send-input-to />
-      <send-input-from />
-      <send-input-attachments />
-      <button
-        @click="onClick"
-        class="btn"
-        :class="{'btn-info': isValid, 'btn-secondary': !isValid}"
+      <div class="pure-form pure-form-stacked">
+        <send-input-from />
+        <send-input-content />
+        <send-input-attachments />
+        <button
+          @click="onClick"
+          class="pure-button button-primary"
+          :disabled="!isValid"
         >
-        確認画面へ
-      </button>
+          確認画面へ
+        </button>
+      </div>
     </form>
-  </div>
+  </article>
 </template>
 
 <script>
@@ -30,14 +34,18 @@ import sendInputFrom from "./components/send-input-from.vue";
 import sendInputAttachments from "./components/send-input-attachments.vue";
 export default {
   components: {
-    sendInputTitle, sendInputContent, sendInputTo, sendInputFrom, sendInputAttachments
+    sendInputTitle,
+    sendInputContent,
+    sendInputTo,
+    sendInputFrom,
+    sendInputAttachments,
   },
   setup() {
     const store = useStore();
     const isValid = computed(() => store.getters["send/isValidAndDirty"]);
 
     const router = useRouter();
-    const onClick = e => {
+    const onClick = (e) => {
       e.preventDefault();
       // 確認画面に行く前にValidationを走らせる
       store.commit("send/validateAll");
@@ -50,14 +58,19 @@ export default {
         store.commit("message/addMessage", {
           level: "warning",
           message: "不正なフィールドがあります。",
-          appname: "mail/send"
+          appname: "mail/send",
         });
       }
     };
-    return{
+    return {
       isValid,
-      onClick
+      onClick,
     };
-  }
+  },
 };
 </script>
+<style lang="scss" scoped>
+.form-one-row {
+  margin: 1rem 0;
+}
+</style>

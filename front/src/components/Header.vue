@@ -1,30 +1,31 @@
 <template>
-  <header class="row">
-    <router-link to="/">Zoomail ✉</router-link>
-    <NavSW :status="navStatus" @navSWClicked="navSWClicked" />
+  <header class="container">
+    <router-link to="/">
+      <h1>Zoomail <Icon :icon="['far', 'envelope']" /></h1>
+    </router-link>
+    <NavSW :status="props.status" @navSWClicked="navSWClicked" />
   </header>
 </template>
 
 <script>
 import NavSW from "@/components/NavSW.vue";
-import { ref } from "vue";
 export default {
   components: {
     NavSW,
   },
-  setup() {
-    const navStatus = ref("toMenu");
+  props: {
+    status: {
+      required: true,
+      validator: (value) =>
+        ["menuClosed", "menuOpened", "detail"].indexOf(value) !== -1,
+    },
+  },
+  setup(props, context) {
     const navSWClicked = () => {
-      if (navStatus.value === "toMenu") {
-        navStatus.value = "toClose";
-      } else if (navStatus.value === "toClose") {
-        navStatus.value = "toMenu";
-      } else if (navStatus.value === "toReturn") {
-        //
-      }
+      context.emit("navSWClicked");
     };
     return {
-      navStatus,
+      props,
       navSWClicked,
     };
   },
@@ -37,13 +38,18 @@ header {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  height: 3rem;
+  color: $text-white;
   background-color: $bg-dark;
 
-  a,
-  button {
+  & > * {
     flex: auto 0 0;
     align-self: center;
+    margin: 0;
+  }
+  & h1 {
+    height: 30px;
+    font-size: 30px;
+    line-height: 1;
   }
 }
 </style>

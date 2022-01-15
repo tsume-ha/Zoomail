@@ -30,7 +30,7 @@ module.exports = {
     sourceMap: true,
     loaderOptions: {
       scss: {
-        additionalData: '@import "./src/assets/scss/prepends.scss";'
+        additionalData: '@import "./src/assets/sass/prepends.scss";'
       }
     }
   },

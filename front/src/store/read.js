@@ -18,6 +18,7 @@ export default {
     ],
     params: {},
     nowLoading: false,
+    totalPages: 0,
   },
   mutations: {
     setMessages (state, messages) {
@@ -41,6 +42,9 @@ export default {
     },
     updateParams (state, payload) {
       state.params = payload;
+    },
+    setTotalPages (state, payload) {
+      state.totalPages = Number(payload);
     }
   },
   actions: {
@@ -49,8 +53,9 @@ export default {
       context.commit("startAPILoading");
       axios.get("/api/board/json/", {params}).then(res => {
         // messages を更新;
-        context.commit("setMessages", res.data.message_list);
+        context.commit("setMessages", res.data.messages);
         context.commit("updateParams", params);
+        context.commit("setTotalPages", res.data.paginator.total);
       })
       .catch(e => {
         console.log("name", e.name);

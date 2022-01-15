@@ -1,5 +1,7 @@
 import datetime
 import json
+from django.contrib.messages.api import success
+from django.forms.widgets import EmailInput
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To, PlainTextContent
@@ -207,45 +209,36 @@ def registerAPI(request):
     now_user = request.user
     is_allowed = MemberRegisterPermission(now_user)
     if not is_allowed:
-        response = HttpResponse("Forbidden")
-        response.status_code = 403
-        return response
+        raise PermissionError
 
-    if request.method != "POST" or not request.body:
+    if request.method != "POST":
+        messages.error(request, "不正なリクエストです")
         response = HttpResponse("BAD REQUEST")
         response.status_code = 400
         return response
 
-    json_dict = json.loads(request.body)
-    form = RegisterForm(json_dict)
+    form = RegisterForm(request.POST)
+    if form.is_valid():
+        try:
+            form.save()
+            messages.success(request, "登録しました。")
+            return JsonResponse({
+                "success": True
+            })
+        except:
+            messages.error(request, "エラーが発生しました。")
 
-    messages = []
-    if not form.is_valid():
-        messages.append("登録に失敗しました。入力した値を確かめてください。")
-        for field_name in form._errors:
-            messages.append(form._errors[field_name].as_text())
-        return JsonResponse({
-            "successed": False,
-            "messages": messages
-        })
+    else:
+        try:
+            email =request.POST["email"]
+            if UserSocialAuth.objects.filter(uid=email).exists():
+                messages.warning(request, "このユーザーはすでに招待されています")
+            else:
+                messages.error(request, "入力されたデータが不正です。")
+        except:
+            messages.error(request, "エラーが発生しました。")
 
-    try:
-        register(
-            email=form.cleaned_data['email'],
-            year=int(form.cleaned_data['year']),
-            last_name=form.cleaned_data['last_name'],
-            first_name=form.cleaned_data['first_name'],
-            furigana=form.cleaned_data['furigana'],
-        )
-        messages.append(form.cleaned_data['email'] + "を登録しました。")
-    except DuplicateGmailAccountError:
-        messages.append(form.cleaned_data['email'] + " はすでに登録されているアカウントのため登録できませんでした。")
-        return JsonResponse({
-            "successed": False,
-            "messages": messages
-        })
-
+    messages.error(request, "登録に失敗しました。")
     return JsonResponse({
-        "successed": True,
-        "messages": messages
+        "success": False
     })

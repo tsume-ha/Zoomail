@@ -8,12 +8,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "home" */ "../pages/index/index.vue")
   },
   {
-    path: "/mail",
+    path: "/mail/",
     name: "mail:index",
     component: () => import(/* webpackChunkName: "read" */ "../pages/mail/index.vue")
   },
   {
-    path: "/mail/:id(\\d+)",
+    path: "/mail/:id(\\d+)/",
     name: "mail:content",
     component: () => import(/* webpackChunkName: "read" */ "../pages/mail/content.vue"),
     props: route => ({
@@ -21,27 +21,27 @@ const routes = [
     })
   },
   {
-    path: "/mail/send",
+    path: "/mail/send/",
     name: "mail:send",
     component: () => import(/* webpackChunkName: "send" */ "../pages/mail/send.vue")
   },
   {
-    path: "/mail/send/confirm",
+    path: "/mail/send/confirm/",
     name: "mail:send-confirm",
     component: () => import(/* webpackChunkName: "send" */ "../pages/mail/send-confirm.vue")
   },
   {
-    path: "/photo",
+    path: "/photo/",
     name: "photo:index",
     component: () => import(/* webpackChunkName: "photo" */ "../pages/photo/index.vue")
   },
   {
-    path: "/sound",
+    path: "/sound/",
     name: "sound:index",
     component: () => import(/* webpackChunkName: "sound" */ "../pages/sound/index.vue")
   },
   {
-    path: "/sound/:id(\\d+)",
+    path: "/sound/:id(\\d+)/",
     name: "sound:content",
     component: () => import(/* webpackChunkName: "sound" */ "../pages/sound/content.vue"),
     props: route => ({
@@ -49,34 +49,54 @@ const routes = [
     })
   },
   {
-    path: "/kansou",
+    path: "/kansou/",
     name: "kansou:index",
     component: () => import(/* webpackChunkName: "kansou" */ "../pages/kansou/index.vue")
   },
   {
-    path: "/mypage",
+    path: "/mypage/",
     name: "mypage:index",
     component: () => import(/* webpackChunkName: "mypage" */ "../pages/mypage/index.vue")
   },
   {
-    path: "/mypage/profile",
+    path: "/mypage/profile/",
     name: "mypage:profile",
     component: () => import(/* webpackChunkName: "mypage" */ "../pages/mypage/profile.vue")
   },
   {
-    path: "/mypage/mail-settings",
+    path: "/mypage/mail-settings/",
     name: "mypage:mail-settings",
     component: () => import(/* webpackChunkName: "mypage" */ "../pages/mypage/mail-settings.vue")
   },
   {
-    path: "/mypage/mail-test",
+    path: "/mypage/mail-test/",
     name: "mypage:mail-test",
     component: () => import(/* webpackChunkName: "mypage" */ "../pages/mypage/mail-test.vue")
   },
   {
-    path: "/mypage/oauth",
+    path: "/mypage/oauth/",
     name: "mypage:oauth",
     component: () => import(/* webpackChunkName: "mypage" */ "../pages/mypage/oauth.vue")
+  },
+  {
+    path: "/mypage/invite/",
+    name: "mypage:invite",
+    component: () => import(/* webpackChunkName: "mypage-invite" */ "../pages/mypage/invite.vue")
+  },
+  {
+    path: "/movie/",
+    name: "movie:index",
+    component: () => import(/* webpackChunkName: "movie" */ "../pages/movie/index.vue")
+  },
+  {
+    path: "/others/",
+    name: "others:index",
+    component: () => import(/* webpackChunkName: "others" */ "../pages/others/index.vue")
+  },
+  {
+    path: "/meeting_room/",
+    name: "meeting_room:index",
+    component: () => import(/* webpackChunkName: "meeting_room" */ "../pages/meeting_room/index.vue")
   },
 ];
 
@@ -87,6 +107,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.path.slice(-1) !== "/") {
+    return next({
+      ...to,
+      path: `${to.path}/`,
+    });
+  }
+  store.commit("setMenuStatus", "menuClosed");
   store.commit("updateLastPath", from);
   next();
 });

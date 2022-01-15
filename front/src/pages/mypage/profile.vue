@@ -1,61 +1,64 @@
 <template>
   <abstract-setting :loading="loading">
-    <form @submit="submit">
-      <ul>
-        <li class="form-group row">
-          <label for="id_last_name">名字:</label>
-          <input
-            type="text"
-            name="last_name"
-            v-model="formData.lastName"
-            maxlength="255"
-            class="form-control"
-            required=""
-            id="id_last_name">
-        </li>
-          
-        <li class="form-group row">
-          <label for="id_first_name">名前:</label>
-          <input
-            type="text"
-            name="first_name"
-            v-model="formData.firstName"
-            maxlength="255"
-            class="form-control"
-            required=""
-            id="id_first_name">
-        </li>
-          
-        <li class="form-group row">
-          <label for="id_furigana">ふりがな:</label>
-          <input
-            type="text"
-            name="furigana"
-            v-model="formData.furigana"
-            maxlength="255"
-            class="form-control"
-            required=""
-            id="id_furigana">
-        </li>
+    <h3>登録情報変更</h3>
+    <form @submit="submit" class="pure-form pure-form-stacked">
+      <div class="pure-control-group">
+        <label for="id_last_name">名字:</label>
+        <input
+          type="text"
+          name="last_name"
+          v-model="formData.lastName"
+          maxlength="255"
+          required=""
+          id="id_last_name"
+          class="pure-input-1"
+        />
+      </div>
 
-        <li class="form-group row">
-          <label for="id_nickname">ニックネーム:</label>
-          <input
-            type="text"
-            name="nickname"
-            v-model="formData.nickname"
-            maxlength="255"
-            class="form-control"
-            id="id_nickname">
-        </li>
-        <li>
-          <button type="submit" class="btn btn-info mx-2 my-3">
-            更新
-          </button>
+      <div class="pure-control-group">
+        <label for="id_first_name">名前:</label>
+        <input
+          type="text"
+          name="first_name"
+          v-model="formData.firstName"
+          maxlength="255"
+          required=""
+          id="id_first_name"
+          class="pure-input-1"
+        />
+      </div>
 
-        </li>
+      <div class="pure-control-group">
+        <label for="id_furigana">ふりがな:</label>
+        <input
+          type="text"
+          name="furigana"
+          v-model="formData.furigana"
+          maxlength="255"
+          required=""
+          id="id_furigana"
+          class="pure-input-1"
+        />
+      </div>
 
-      </ul>
+      <div class="pure-control-group">
+        <label for="id_nickname">ニックネーム:</label>
+        <input
+          type="text"
+          name="nickname"
+          v-model="formData.nickname"
+          maxlength="255"
+          id="id_nickname"
+          class="pure-input-1"
+        />
+      </div>
+
+      <div class="pure-controls custom-two-buttons-wrapper">
+        <router-link :to="{ name: 'mypage:index' }" class="pure-button return"
+          >戻る</router-link
+        >
+        <button type="submit" class="pure-button button-primary">更新</button>
+      </div>
     </form>
   </abstract-setting>
 </template>
@@ -66,7 +69,7 @@ import { useStore } from "vuex";
 import AbstractSetting from "../../components/AbstractSetting.vue";
 export default {
   components: {
-    AbstractSetting
+    AbstractSetting,
   },
   setup() {
     const store = useStore();
@@ -74,9 +77,9 @@ export default {
       lastName: "",
       firstName: "",
       furigana: "",
-      nickname: ""
+      nickname: "",
     });
-    
+
     const loading = computed(() => store.state.mypage.loading);
 
     onMounted(() => {
@@ -88,20 +91,23 @@ export default {
       formData.nickname = userInfo.nickname;
     });
 
-    const submit = e => {
+    const submit = (e) => {
       e.preventDefault();
       const cleanFormData = new FormData();
       cleanFormData.append("last_name", formData.lastName);
       cleanFormData.append("first_name", formData.firstName);
       cleanFormData.append("furigana", formData.furigana);
       cleanFormData.append("nickname", formData.nickname);
-      store.dispatch("mypage/post", {path: "/api/mypage/profile/", formData: cleanFormData});
+      store.dispatch("mypage/post", {
+        path: "/api/mypage/profile/",
+        formData: cleanFormData,
+      });
     };
 
-
     return {
-      formData, loading,
-      submit
+      formData,
+      loading,
+      submit,
     };
   },
 };

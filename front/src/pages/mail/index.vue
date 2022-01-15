@@ -1,33 +1,47 @@
 <template>
-  <div>
-    <h1>mail/read - search</h1>
+  <article>
+    <h3>メーリス・受信ボックス</h3>
     <search-form />
-    
+
     <div v-if="nowLoading">now loading</div>
-    <transition-group name="message-row" v-else>
-      <one-message-row v-for="mes in messages" :key="mes.id" :message="mes" class="one-message-row" />
+    <transition-group name="message-row" v-else appear>
+      <one-message-row
+        v-for="mes in messages"
+        :key="mes.id"
+        :message="mes"
+        class="one-message-row"
+      />
     </transition-group>
 
-    <router-link :to="{query: differentPageQuery(2)}">Next</router-link>
-  </div>
+    <Paginator :pages="totalPages" :page="page" @pageTo="handlePageJump" />
+  </article>
 </template>
 
 <script>
 import { computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteLeave, useRouter } from "vue-router";
 import oneMessageRow from "./components/one-message-row.vue";
 import searchForm from "./components/search-form.vue";
+import Paginator from "@/components/Paginator.vue";
 export default {
   components: {
     oneMessageRow,
-    searchForm
+    searchForm,
+    Paginator,
   },
   setup() {
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
 
-    watch(route, () => { updateMessage(); });
+    watch(route, () => {
+      updateMessage();
+    });
+    onBeforeRouteLeave((_to, _from, next) => {
+      updateMessage();
+      next();
+    });
 
     const messages = computed(() => store.state.read.messages);
     const nowLoading = computed(() => store.state.read.nowLoading);
@@ -55,50 +69,58 @@ export default {
       return query;
     });
 
-    const differentPageQuery = pageNum => {
+    const differentPageQuery = (pageNum) => {
       return {
         ...cleanQuery.value,
-        page: pageNum
+        page: pageNum,
       };
     };
 
     const updateMessage = () => {
-      store.dispatch(
-        "read/getMessagesFromAPI", cleanQuery.value
-      );
+      store.dispatch("read/getMessagesFromAPI", cleanQuery.value);
     };
 
     if (messages.value.length === 0) {
       updateMessage();
     }
-    
+
     onMounted(() => updateMessage());
 
-    return{
-      messages, nowLoading,
-      differentPageQuery
+    // pagination
+    const page = computed(() => Number(route.query.page) || 1);
+    const totalPages = computed(() => store.state.read.totalPages);
+    const handlePageJump = (pageTo) => {
+      router.push({ query: differentPageQuery(pageTo) });
     };
-  }
+    return {
+      messages,
+      nowLoading,
+      page,
+      totalPages,
+      differentPageQuery,
+      handlePageJump,
+    };
+  },
 };
 </script>
 
 <style scoped>
-.one-message-row{
+.one-message-row {
   display: block;
 }
-.message-row-leave-active{
+.message-row-leave-active {
   position: absolute;
 }
-.message-row-move{
+.message-row-move {
   transition: all 0.5s;
 }
-/* .message-row-enter-active{
-  transition: all 5s;
+.message-row-enter-active {
+  transition: all 0.5s;
 }
-.message-row-enter{
+.message-row-enter-from {
   opacity: 0;
 }
-.message-row-enter-to{
+.message-row-enter-to {
   opacity: 1;
-} */
+}
 </style>

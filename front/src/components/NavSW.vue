@@ -9,8 +9,9 @@ export default {
   props: {
     status: {
       required: true,
-      validator: value => ["toMenu", "toClose", "toReturn"].indexOf(value) !== -1
-    }
+      validator: (value) =>
+        ["menuClosed", "menuOpened", "detail"].indexOf(value) !== -1,
+    },
   },
   setup(props, context) {
     const onClicked = () => {
@@ -18,7 +19,7 @@ export default {
     };
     return {
       props,
-      onClicked
+      onClicked,
     };
   },
 };
@@ -30,46 +31,41 @@ export default {
   display: inline-block;
   height: 30px;
   width: 35px;
-  margin: 2px;
   background: transparent;
-  border: 1px solid #eee;
+  border: 1px solid $text-white;
   border-radius: 8px;
 
   span,
   span::before,
   span::after {
-    position:absolute;
-    content:'';
-    height:1px;
-    width:20px;
-    background:#666;
-    border-radius:2px;
-    display:block;
-    transition: .5s;
+    position: absolute;
+    content: "";
+    height: 1px;
+    width: 20px;
+    background: $text-white;
+    display: block;
+    transition: 0.5s;
   }
-  span.toMenu{
-    top:14px;
-    left:7px;
+  span.menuClosed {
+    top: 14px;
+    left: 7px;
   }
-  span.toMenu::before{
-    top:-6px;
-    left:0;
+  span.menuClosed::before {
+    top: -6px;
+    left: 0;
   }
-  span.toMenu::after{
-    top:6px;
-    left:0;
+  span.menuClosed::after {
+    top: 6px;
+    left: 0;
   }
-  span.toClose{
+  span.menuOpened {
     transform: rotate(-45deg);
   }
-  span.toClose::before,
-  span.toClose::after{
+  span.menuOpened::before,
+  span.menuOpened::after {
     top: 0px;
     left: 0px;
     transform: rotate(90deg);
-    opacity: 0.5;
   }
-
 }
-
 </style>

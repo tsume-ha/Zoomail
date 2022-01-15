@@ -52,5 +52,6 @@ module.exports = {
     "prefer-template": "error",
     "rest-spread-spacing": ["error", "never"],
     "template-curly-spacing": ["error", "never"],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
   }
 };

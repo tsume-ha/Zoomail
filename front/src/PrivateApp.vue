@@ -1,52 +1,67 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/photo">Photo</router-link> | 
-    <router-link to="/sound">Sound</router-link> | 
-    <router-link to="/kansou">Kansou</router-link> | 
-    <router-link to="/mypage">Mypage</router-link> | 
-    <router-link to="/mail">Read - index</router-link> | 
-    <router-link to="/mail/send">Send</router-link>
-  </div>
+  <Header @navSWClicked="navSWClicked" :status="navStatus" />
   <main class="container">
+    <transition name="nav-transition">
+      <Navigation v-if="navStatus === 'menuOpened'" />
+    </transition>
     <router-view />
   </main>
-  <message />
+  <Footer />
+  <Message />
 </template>
 
 <script>
-import { onMounted } from "@vue/runtime-core";
+import { computed } from "vue";
 import { useStore } from "vuex";
-import message from "./components/message";
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+import Navigation from "@/components/Navigation.vue";
+import Message from "@/components/Message";
 export default {
   components: {
-    message
+    Header,
+    Footer,
+    Navigation,
+    Message,
   },
   setup() {
     const store = useStore();
-    onMounted(store.dispatch("mypage/getUserInfo"));
-  }
+    store.dispatch("mypage/getUserInfo");
+
+    const navStatus = computed(() => store.state.menuStatus);
+    const navSWClicked = () => {
+      if (navStatus.value === "menuClosed") {
+        store.commit("setMenuStatus", "menuOpened");
+      } else if (navStatus.value === "menuOpened") {
+        store.commit("setMenuStatus", "menuClosed");
+      } else if (navStatus.value === "detail") {
+        // return to base
+      }
+    };
+
+    return {
+      navStatus,
+      navSWClicked,
+    };
+  },
 };
 </script>
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style lang="scss" scoped>
+main {
+  position: relative;
+  background-color: $bg-light;
+  > article {
+    color: $text-black;
+  }
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+nav {
+  &.nav-transition-enter-active,
+  &.nav-transition-leave-active {
+    transition: opacity 0.25s;
+  }
+  &.nav-transition-enter-from,
+  &.nav-transition-leave-to {
+    opacity: 0;
+  }
 }
 </style>

@@ -10,10 +10,18 @@ export default createStore({
   strict: process.env.NODE_ENV !== "production",
   state: {
     lastPath: null,
+    menuStatus: "menuClosed"
   },
   mutations: {
     updateLastPath(state, payload) {
       state.lastPath = payload;
+    },
+    setMenuStatus(state, payload) {
+      if (["menuClosed", "menuOpened", "detail"].indexOf(payload) !== -1) {
+        state.menuStatus = payload;
+      } else {
+        throw new Error("invlid menu status");
+      }
     }
   },
   actions: {

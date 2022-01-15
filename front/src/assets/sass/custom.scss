@@ -1,0 +1,175 @@
+* {
+  box-sizing: border-box;
+}
+
+html, button, input, select, textarea,
+.pure-g, [class *= "pure-u"] {
+    /* Set your content font stack here: */
+    font-family: 'Kiwi Maru', serif, Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.pure-g {
+  letter-spacing: normal;
+}
+
+h1, h2, h3, h4, h5, h6{
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  line-height: 1.75;
+}
+
+.container {
+  width: 100%;
+  padding: 0 1rem;
+  
+  @media screen and (min-width: 35.5em) {
+    padding: 0 10%;
+  }
+  @media screen and (min-width: 48em) {
+    padding: 0 12%;
+  }
+  @media screen and (min-width: 64em) {
+    padding: 0 18%;
+  }
+  @media screen and (min-width: 80em) {
+    padding: 0 20%;
+  }
+}
+.cancel-parent-container {
+  width: calc(100% + 2rem);
+  margin-left: -1rem;
+  margin-right: -1rem;
+  @media screen and (min-width: 35.5em) {
+    width: calc(100% / 0.8);
+    margin-left: calc(-1 * 100% / 0.8 * 0.1 );
+    margin-right: calc(-1 * 100% / 0.8 * 0.1 );
+  }
+  @media screen and (min-width: 48em) {
+    width: calc(100% / 0.76);
+    margin-left: calc(-1 * 100% / 0.76 * 0.12 );
+    margin-right: calc(-1 * 100% / 0.76 * 0.12 );
+  }
+  @media screen and (min-width: 64em) {
+    width: calc(100% / 0.64);
+    margin-left: calc(-1 * 100% / 0.64 * 0.18 );
+    margin-right: calc(-1 * 100% / 0.64 * 0.18 );
+  }
+  @media screen and (min-width: 80em) {
+    width: calc(100% / 0.6);
+    margin-left: calc(-1 * 100% / 0.6 * 0.2 );
+    margin-right: calc(-1 * 100% / 0.6 * 0.2 );
+  }
+}
+
+a, a:active, a:focus {
+  background-color: transparent;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.small{
+  font-size: 0.75rem;
+}
+
+// buttons
+
+.btn-flat{
+  display: inline-block;
+  border: 2px solid $text-white;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.pure-button.return {
+  background-color: $bg-secondary-light;
+}
+.pure-button-primary,
+.pure-button-selected,
+a.pure-button-primary,
+a.pure-button-selected {
+  background-color: $bg-blue-dark;
+  color: $text-white;
+}// override
+
+.button-primary,
+a.button-primary{
+  background-color: $bg-blue-dark;
+  color: $text-white;
+}
+.button-success,
+a.button-success{
+  background-color: $bg-green-dark;
+  color: $text-white;
+}
+.button-danger,
+a.button-danger{
+  background-color: $bg-red-dark;
+  color: $text-white;
+}
+
+
+.pure-menu-custom{
+  padding: 1rem .5rem;
+  .pure-menu-separator,
+  .pure-menu-horizontal .pure-menu-children .pure-menu-separator {
+    background-color: $text-white;
+  }
+  .pure-menu-heading {
+      text-transform: none;
+      color: inherit;
+      border-left: 4px solid $bg-light;
+      border-bottom: 1px solid $bg-light;
+      margin-bottom: .5rem;
+  }
+  .pure-menu-children {
+      background-color: transparent;
+  }
+  .pure-menu-active > .pure-menu-link,
+  .pure-menu-link:hover,
+  .pure-menu-link:focus {
+      background-color: transparent;
+      text-decoration: underline;
+  }
+}
+.pure-menu-link {
+  color: inherit;
+}
+.pure-menu-selected > .pure-menu-link,
+.pure-menu-selected > .pure-menu-link:visited {
+    color: inherit;
+}
+
+.pure-control-group {
+  margin-top: 1.25rem;
+}
+
+.card {
+  background-color: $bg-white;
+  border-radius: .5em;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.text-break {
+  word-break: break-all;
+}
+
+
+.custom-two-buttons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0 1rem;
+  > * {
+    display: inline-block;
+  }
+}
