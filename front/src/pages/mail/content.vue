@@ -7,7 +7,7 @@
   >
     <article>
       <header>
-        <h4>{{ message.title }}</h4>
+        <h3>{{ message.title }}</h3>
         <div>
           <time>{{ message.created_at }}</time>
           <span>{{ message.writer }}</span>
@@ -43,7 +43,7 @@
           </li>
         </ul>
       </div>
-      <router-link :to="returnTo" class="pure-button">戻る</router-link>
+      <router-link :to="returnTo" class="pure-button return">戻る</router-link>
     </article>
   </abstract-content>
 </template>
@@ -68,19 +68,20 @@ export default {
       message.value = item;
     };
     const apiPath = computed(() => `/api/board/content/${String(props.id)}/`);
-    
+
     const returnTo = computed(() => {
       if (store.state.lastPath === null || store.state.lastPath === undefined) {
-        return {name: "mail:index"};
+        return { name: "mail:index" };
       } else {
-        return {...store.state.lastPath};
+        return { ...store.state.lastPath };
       }
     });
     return {
       messages,
       message,
       apiPath,
-      setMessage, returnTo
+      setMessage,
+      returnTo,
     };
   },
 };

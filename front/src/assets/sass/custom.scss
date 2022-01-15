@@ -90,7 +90,7 @@ a, a:active, a:focus {
     text-decoration: underline;
   }
 }
-.pure-button {
+.pure-button.return {
   background-color: $bg-secondary-light;
 }
 .pure-button-primary,
@@ -127,8 +127,8 @@ a.button-danger{
   .pure-menu-heading {
       text-transform: none;
       color: inherit;
-      border-left: 4px solid $text-white;
-      border-bottom: 1px solid $text-white;
+      border-left: 4px solid $bg-light;
+      border-bottom: 1px solid $bg-light;
       margin-bottom: .5rem;
   }
   .pure-menu-children {

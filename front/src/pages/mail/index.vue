@@ -2,10 +2,15 @@
   <article>
     <h3>メーリス・受信ボックス</h3>
     <search-form />
-    
+
     <div v-if="nowLoading">now loading</div>
     <transition-group name="message-row" v-else appear>
-      <one-message-row v-for="mes in messages" :key="mes.id" :message="mes" class="one-message-row" />
+      <one-message-row
+        v-for="mes in messages"
+        :key="mes.id"
+        :message="mes"
+        class="one-message-row"
+      />
     </transition-group>
 
     <Paginator :pages="totalPages" :page="page" @pageTo="handlePageJump" />
@@ -23,14 +28,16 @@ export default {
   components: {
     oneMessageRow,
     searchForm,
-    Paginator
+    Paginator,
   },
   setup() {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
 
-    watch(route, () => { updateMessage(); });
+    watch(route, () => {
+      updateMessage();
+    });
     onBeforeRouteLeave((_to, _from, next) => {
       updateMessage();
       next();
@@ -62,57 +69,58 @@ export default {
       return query;
     });
 
-    const differentPageQuery = pageNum => {
+    const differentPageQuery = (pageNum) => {
       return {
         ...cleanQuery.value,
-        page: pageNum
+        page: pageNum,
       };
     };
 
     const updateMessage = () => {
-      store.dispatch(
-        "read/getMessagesFromAPI", cleanQuery.value
-      );
+      store.dispatch("read/getMessagesFromAPI", cleanQuery.value);
     };
 
     if (messages.value.length === 0) {
       updateMessage();
     }
-    
-    onMounted(() => updateMessage());
 
+    onMounted(() => updateMessage());
 
     // pagination
     const page = computed(() => Number(route.query.page) || 1);
     const totalPages = computed(() => store.state.read.totalPages);
-    const handlePageJump = pageTo => {
-      router.push({query: differentPageQuery(pageTo)});
+    const handlePageJump = (pageTo) => {
+      router.push({ query: differentPageQuery(pageTo) });
     };
-    return{
-      messages, nowLoading, page, totalPages,
-      differentPageQuery, handlePageJump
+    return {
+      messages,
+      nowLoading,
+      page,
+      totalPages,
+      differentPageQuery,
+      handlePageJump,
     };
-  }
+  },
 };
 </script>
 
 <style scoped>
-.one-message-row{
+.one-message-row {
   display: block;
 }
-.message-row-leave-active{
+.message-row-leave-active {
   position: absolute;
 }
-.message-row-move{
-  transition: all .5s;
+.message-row-move {
+  transition: all 0.5s;
 }
-.message-row-enter-active{
-  transition: all .5s;
+.message-row-enter-active {
+  transition: all 0.5s;
 }
-.message-row-enter-from{
+.message-row-enter-from {
   opacity: 0;
 }
-.message-row-enter-to{
+.message-row-enter-to {
   opacity: 1;
 }
 </style>

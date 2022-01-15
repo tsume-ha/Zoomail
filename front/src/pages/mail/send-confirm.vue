@@ -26,9 +26,7 @@
 
       <div class="pure-g">
         <div class="pure-u-1 pure-u-sm-1-5 pure-u-md-5-24">本文</div>
-        <div
-          class="pure-u-1 pure-u-sm-4-5 pure-u-md-19-24 message-content"
-        >
+        <div class="pure-u-1 pure-u-sm-4-5 pure-u-md-19-24 message-content">
           {{ content }}
         </div>
       </div>
@@ -49,10 +47,8 @@
       </div>
     </section>
     <div class="custom-two-buttons-wrapper">
-      <button @click="backToInput" class="pure-button">戻る</button>
-      <button @click="send" class="pure-button button-primary">
-        送信する
-      </button>
+      <button @click="backToInput" class="pure-button return">戻る</button>
+      <button @click="send" class="pure-button button-primary">送信する</button>
     </div>
   </article>
 </template>
@@ -132,7 +128,7 @@ section.card {
     margin: 0 0.25rem 0.25rem 0;
     line-height: 1.5;
   }
-  div.message-content{
+  div.message-content {
     white-space: pre-wrap;
     line-height: 1.5;
     word-break: break-all;

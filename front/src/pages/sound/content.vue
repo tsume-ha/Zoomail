@@ -5,9 +5,13 @@
     :oneContentAPIPath="apiPath"
     @setContent="setContent"
   >
-    <h3>{{ content.title }}</h3>
-    <Player :songs="content.songs" />
-    <router-link :to="{name: 'sound:index'}" class="pure-button return">戻る</router-link>
+    <article>
+      <h3>{{ content.title }}</h3>
+      <Player :songs="content.songs" />
+      <router-link :to="{ name: 'sound:index' }" class="pure-button return"
+        >戻る</router-link
+      >
+    </article>
   </abstract-content>
 </template>
 
@@ -19,10 +23,10 @@ import { computed, ref } from "vue";
 export default {
   components: {
     AbstractContent,
-    Player
+    Player,
   },
   props: {
-    id: {required: true, type: Number}
+    id: { required: true, type: Number },
   },
   setup(props) {
     const store = useStore();
@@ -30,13 +34,15 @@ export default {
     const apiPath = computed(() => `/api/sound/${props.id}/`);
 
     const content = ref({});
-    const setContent = item => {
+    const setContent = (item) => {
       content.value = item;
     };
 
     return {
-      lives, apiPath, content, 
-      setContent
+      lives,
+      apiPath,
+      content,
+      setContent,
     };
   },
 };

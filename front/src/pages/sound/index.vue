@@ -7,13 +7,16 @@
 
     <div class="pure-g">
       <div
-        v-for="live in lives" :key="'live-' + live.id"
+        v-for="live in lives"
+        :key="'live-' + live.id"
         class="pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3 card-wrapper"
       >
-        <router-link :to="{name: 'sound:content', params: {id: live.id}}">
+        <router-link :to="{ name: 'sound:content', params: { id: live.id } }">
           <article class="card card-sound">
             <h4 class="card-title">{{ live.title }}</h4>
-            <time :data-date="live.date" class="small">Recorded : {{ displayDate(live.date) }}</time>
+            <time :data-date="live.date" class="small"
+              >Recorded : {{ displayDate(live.date) }}</time
+            >
             <p class="songdetail">
               <span v-for="song in live.songs" :key="'song-' + song.id">
                 {{ song.trackNum }}. {{ song.title }}
@@ -36,31 +39,32 @@ export default {
     const store = useStore();
     const lives = computed(() => store.state.sound.lives);
 
-    store.dispatch("sound/getSoundsFromAPI").catch(error => {
+    store.dispatch("sound/getSoundsFromAPI").catch((error) => {
       if (error.message == "Network Error" && error.response === undefined) {
         console.log("通信エラー");
       } else if (error.response.status === 500) {
         console.log("500");
-      // } else if (error.response.status === 403){
-      // } else if (error.response.status === 404){
-      // } else {
-      //   console.log(error.message);
+        // } else if (error.response.status === 403){
+        // } else if (error.response.status === 404){
+        // } else {
+        //   console.log(error.message);
       }
     });
-    const displayDate = dateStr => moment(dateStr).format("YYYY/MM/DD (ddd)");
+    const displayDate = (dateStr) => moment(dateStr).format("YYYY/MM/DD (ddd)");
     const soundStaff = computed(() => store.state.mypage.userInfo.isStaff);
 
     return {
-      lives, soundStaff,
-      displayDate
+      lives,
+      soundStaff,
+      displayDate,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.card-wrapper{
-  padding: .5rem;
+.card-wrapper {
+  padding: 0.5rem;
   margin: 0;
   align-items: stretch;
 
@@ -72,16 +76,16 @@ export default {
     }
   }
 
-  .card-sound{
+  .card-sound {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: .5rem;
+    padding: 0.5rem;
     margin: 0;
     > * {
       display: block;
       width: 100%;
-      margin: .25rem 0 0;
+      margin: 0.25rem 0 0;
     }
 
     time {
@@ -94,9 +98,6 @@ export default {
         margin-right: 1rem;
       }
     }
-
-
   }
-
 }
 </style>
