@@ -10,7 +10,7 @@ from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.conf import settings
 
 from .models import Message, MessageYear, Attachment, Bookmark, ToGroup
-from .forms import MessageForm
+from .forms import MessageForm, AttachmentForm
 from members.models import User
 
 
@@ -163,14 +163,14 @@ def sendAPI(request):
         message.sender = request.user
         message.save()
 
-        filelist = request.FILES.getlist('attachments')
-        if filelist:
-            for file in filelist:
-                if file.size > 10*1024*1024:
-                    message.delete()
-                    return HttpResponse('400', status=400)
-                attachment = Attachment(attachment_file=file, message=message)
-                attachment.save()
+        attachment_form = AttachmentForm(request.POST, request.FILES)
+        if not attachment_form.is_valid():
+            message.delete()
+            return HttpResponse('400', status=400)
+        else:
+            attachment_files = attachment_form.save(commit=False)
+            attachment_files.message = message
+            attachment_files.save()
 
         for to in message_form.cleaned_data["to"]:
             message.years.create(year=to)
