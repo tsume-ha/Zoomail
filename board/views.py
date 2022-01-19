@@ -168,9 +168,8 @@ def sendAPI(request):
             message.delete()
             return HttpResponse('400', status=400)
         else:
-            attachment_files = attachment_form.save(commit=False)
-            attachment_files.message = message
-            attachment_files.save()
+            attachment_form.save(message=message)
+            # 独自実装: save()
 
         for to in message_form.cleaned_data["to"]:
             message.years.create(year=to)
