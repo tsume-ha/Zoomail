@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, FileResponse
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages as django_messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -11,7 +12,7 @@ from django.utils.html import linebreaks, urlize
 
 from django.conf import settings
 
-from .models import Message, MessageYear, Attachment, Bookmark, ToGroup
+from .models import Message, Bookmark, ToGroup
 from .forms import MessageForm, AttachmentForm
 from members.models import User
 
@@ -186,8 +187,7 @@ def froms_data(request):
                 }
                 for year in years
             ],
-        },
-        safe=False,
+        }
     )
 
 
@@ -209,9 +209,15 @@ def bookmarkAPI(request, pk):
 
 @login_required()
 def sendAPI(request):
+    if request.method != "POST":
+        return HttpResponse("Bad request", status=400)
     message_form = MessageForm(request.POST)
     message_form.fields["to"].choices = tos()
-    if request.method == "POST" and message_form.is_valid():
+    if not message_form.is_valid():
+        django_messages.error(request, "メーリスを送信できませんでした。")
+        django_messages.error(request, message_form.errors.as_text())
+        return HttpResponse("Bad request", status=400)
+    else:
         message = message_form.save(commit=False)
         message.sender = request.user
         message.save()
@@ -219,6 +225,8 @@ def sendAPI(request):
         attachment_form = AttachmentForm(request.POST, request.FILES)
         if not attachment_form.is_valid():
             message.delete()
+            django_messages.error(request, "添付ファイルにエラーがあり、メーリスを送信できませんでした。")
+            django_messages.error(request, attachment_form.errors.as_text())
             return HttpResponse("400", status=400)
         else:
             attachment_form.save(message=message)
@@ -229,16 +237,15 @@ def sendAPI(request):
 
         # sendgrid mail
         if settings.SEND_MAIL is not True:
+            django_messages.info(request, "メール送信のsettingがFalseなので、メールは送信されませんでした。")
             return JsonResponse({"total_send_num": 0, "response": "SEND_MAIL was False."})
 
         from utils.mail import MailingList
 
         client = MailingList()
         total_send_num = client.send(message)
-
+        django_messages.success(request, "メーリスを送信しました。")
         return JsonResponse({"total_send_num": total_send_num, "response": "done"})
-
-    return HttpResponse("Bad request", status=400)
 
 
 @login_required()

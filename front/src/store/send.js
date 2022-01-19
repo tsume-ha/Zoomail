@@ -42,37 +42,37 @@ export default {
     },
   },
   mutations: {
-    setTitle (state, payload) {
+    setTitle(state, payload) {
       // payload: String, title value
       state.title.value = payload;
       state.title.error_messages = titleValidation(state.title.value);
       state.title.is_dirty = true;
     },
-    setContent (state, payload) {
+    setContent(state, payload) {
       // payload: String, content value
       state.content.value = payload;
       state.content.error_messages = contentValidation(state.content.value);
       state.content.is_dirty = true;
     },
-    setTos (state, payload) {
+    setTos(state, payload) {
       // payload: List of Number, tos value
       state.tos.value = payload;
       state.tos.error_messages = tosValidation(state.tos.value);
       state.tos.is_dirty = true;
     },
-    setWriter (state, payload) {
+    setWriter(state, payload) {
       // payload: Number, writer value
       state.writer.value = payload;
       state.writer.error_messages = writerValidation(state.writer.value);
       state.writer.is_dirty = true;
     },
-    setAttachments (state, payload) {
+    setAttachments(state, payload) {
       // payload: List of File, attachments value
       state.attachments.value = payload;
       state.attachments.error_messages = attachmentsValidation(state.attachments.value);
       state.attachments.is_dirty = true;
     },
-    validateAll (state) {
+    validateAll(state) {
       // すべてのフィールドをValidate
       state.title.error_messages = titleValidation(state.title.value);
       state.content.error_messages = contentValidation(state.content.value);
@@ -85,10 +85,42 @@ export default {
       // state.tos.is_dirty = true;
       state.writer.is_dirty = true;
       state.attachments.is_dirty = true;
+    },
+    reset(state) {
+      state.title = {
+        value: "",
+        is_dirty: false,
+        error_messages: []
+      };
+      state.content = {
+        value: "",
+        is_dirty: false,
+        error_messages: []
+      };
+      state.tos = {
+        value: [],
+        is_dirty: false,
+        error_messages: []
+      };
+      state.writer = {
+        value: null,
+        is_dirty: false,
+        error_messages: []
+      };
+      state.attachments = {
+        value: [],
+        is_dirty: false,
+        error_messages: []
+      };
+      state.send_at = {
+        value: null,
+        is_dirty: false,
+        error_messages: []
+      };
     }
   },
   getters: {
-    isValid (state) {
+    isValid(state) {
       return (
         !state.title.error_messages.length &&
         !state.content.error_messages.length &&
@@ -98,7 +130,7 @@ export default {
         !state.send_at.error_messages.length
       );
     },
-    isValidAndDirty (state, getters) {
+    isValidAndDirty(state, getters) {
       return (
         getters.isValid &&
         state.title.is_dirty &&
@@ -107,7 +139,7 @@ export default {
     }
   },
   actions: {
-    send (context) {
+    send(context) {
       // Validation
       context.commit("validateAll");
       if (!context.getters.isValid) {
@@ -130,19 +162,11 @@ export default {
       context.state.attachments.value.forEach(file => {
         form.append("attachments", file);
       });
-      
+
       // POST
       return axios.post(
-          "/api/board/send/send/", form, {onUploadProgress: e => console.log(e) }
-        ).then(res => {
-          console.log(res);
-          context.commit("message/addMessage", {
-            level: "info",
-            message: "送信されました。",
-            appname: "mail/send"
-          }, { root: true });
-          return res;
-        });
+        "/api/board/send/send/", form, { onUploadProgress: e => console.log(e) }
+      );
     }
   }
 };
