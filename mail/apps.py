@@ -2,7 +2,7 @@ from django.apps import AppConfig
 
 
 class MailConfig(AppConfig):
-    name = 'mail'
+    name = "mail"
 
     def ready(self):
         from . import signals

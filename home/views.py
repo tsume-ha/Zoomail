@@ -10,22 +10,21 @@ from django.shortcuts import redirect
 from .models import Announcement, NewContent
 from .forms import FirstRegisterForm
 
+
 def index(request):
     if not request.user.is_authenticated:
-        if 'loggedout' in request.GET:
+        if "loggedout" in request.GET:
             messages.success(request, "ログアウトが完了しました")
-        return render(request, 'public.html')
+        return render(request, "public.html")
     else:
-        return render(request, 'private.html')
+        return render(request, "private.html")
 
 
 def login(request):
-    params = {
-    
-    }
-    if 'next' in request.GET:
-        params['next'] = request.GET['next'] 
-    return render(request, 'admin/login.html', params)
+    params = {}
+    if "next" in request.GET:
+        params["next"] = request.GET["next"]
+    return render(request, "admin/login.html", params)
 
 
 @login_required()
@@ -51,27 +50,21 @@ def firstRegister(request):
 
 @login_required()
 def homeAPI(request):
-    # messages.success(request, "メッセージを送信できる")
-    # messages.info(request, "メッセージを送信できる2")
-    # messages.warning(request, "メッセージを送信できる3")
-    # messages.error(request, "メッセージを送信できる4")
-    announcements = Announcement.objects.order_by('-created_at')[:5]
-    newcontents = NewContent.objects.order_by('index')[:5]
-    return JsonResponse({
-        'newContents': [
-            {
-                "id": newcontent.id,
-                "genre": newcontent.genre,
-                "title": newcontent.title,
-                "path": newcontent.path
-            } for newcontent in newcontents
-        ],
-        'announcements': [
-            {
-                "id": announcement.id,
-                "date": announcement.created_at.strftime("%Y/%m/%d"),
-                "text": announcement.text
-            } for announcement in announcements
-        ]
-
-    })
+    announcements = Announcement.objects.order_by("-created_at")[:5]
+    newcontents = NewContent.objects.order_by("index")[:5]
+    return JsonResponse(
+        {
+            "newContents": [
+                {"id": newcontent.id, "genre": newcontent.genre, "title": newcontent.title, "path": newcontent.path}
+                for newcontent in newcontents
+            ],
+            "announcements": [
+                {
+                    "id": announcement.id,
+                    "date": announcement.created_at.strftime("%Y/%m/%d"),
+                    "text": announcement.text,
+                }
+                for announcement in announcements
+            ],
+        }
+    )

@@ -6,8 +6,8 @@ from .models import Content
 
 
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ('title', 'index', 'updated_at')
-    ordering = ('-index', '-updated_at')
+    list_display = ("title", "index", "updated_at")
+    ordering = ("-index", "-updated_at")
 
     fields = ("title", "file", "detail", "index", "created_by", "updated_by", "created_at", "updated_at")
 
@@ -26,6 +26,7 @@ class ContentAdmin(admin.ModelAdmin):
 
 class ContentCustomAdmin(ContentAdmin):
     readonly_fields = ("created_by", "updated_by", "created_at", "updated_at")
+
 
 admin.site.register(Content, ContentAdmin)
 custom_admin_site.register(Content, ContentCustomAdmin)

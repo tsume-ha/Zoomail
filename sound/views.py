@@ -1,14 +1,11 @@
-from utils.commom import download
 import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, FileResponse
 from django.http.response import JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.forms import formset_factory, modelformset_factory
-from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 
 from .forms import CreateRehasalForm, EditSongForm
@@ -18,39 +15,51 @@ from config.permissions import RecordingPermisson
 
 @login_required()
 def index(request):
-    lives = Live.objects.all().order_by('updated_at').reverse()
-    return JsonResponse({
-        "lives": [{
-            "id": live.id,
-            "date": live.recorded_at,
-            "title": live.live_name,
-            "songs": [{
-                "id": sound.id,
-                "trackNum": sound.track_num,
-                "title": sound.song_name,
-                "path": sound.file.url,
-                "length": sound.length
-              } for sound in live.songs.all()]
-        } for live in lives]
-    })
+    lives = Live.objects.all().order_by("updated_at").reverse()
+    return JsonResponse(
+        {
+            "lives": [
+                {
+                    "id": live.id,
+                    "date": live.recorded_at,
+                    "title": live.live_name,
+                    "songs": [
+                        {
+                            "id": sound.id,
+                            "trackNum": sound.track_num,
+                            "title": sound.song_name,
+                            "path": sound.file.url,
+                            "length": sound.length,
+                        }
+                        for sound in live.songs.all()
+                    ],
+                }
+                for live in lives
+            ]
+        }
+    )
 
 
 @login_required()
 def content(request, id):
     live = get_object_or_404(Live, id=id)
-    return JsonResponse({
-        "id": live.id,
-        "date": live.recorded_at,
-        "title": live.live_name,
-        "songs": [{
-            "id": sound.id,
-            "trackNum": sound.track_num,
-            "title": sound.song_name,
-            "path": sound.file.url,
-            "length": sound.length
-            } for sound in live.songs.all()
-        ]
-    })
+    return JsonResponse(
+        {
+            "id": live.id,
+            "date": live.recorded_at,
+            "title": live.live_name,
+            "songs": [
+                {
+                    "id": sound.id,
+                    "trackNum": sound.track_num,
+                    "title": sound.song_name,
+                    "path": sound.file.url,
+                    "length": sound.length,
+                }
+                for sound in live.songs.all()
+            ],
+        }
+    )
 
 
 @login_required()
@@ -60,15 +69,15 @@ def upload(request):
     if not is_allowed:
         raise PermissionDenied
     form = CreateRehasalForm(request.POST or None)
-    if (request.method == 'POST'):
+    if request.method == "POST":
         songform = EditSongForm(request.POST, request.FILES)
         if not (form.is_valid() and songform.is_valid()):
-            response = HttpResponse('BAD REQUEST')
+            response = HttpResponse("BAD REQUEST")
             response.status_code = 400
             return response
 
-        livename = form.cleaned_data['livename']
-        recorded_at = form.cleaned_data['recorded_at']
+        livename = form.cleaned_data["livename"]
+        recorded_at = form.cleaned_data["recorded_at"]
         live, created = Live.objects.get_or_create(
             live_name=livename,
             recorded_at=recorded_at,
@@ -79,14 +88,14 @@ def upload(request):
         content.updated_by = now_user
         content.save()
 
-        response = HttpResponse('OK')
+        response = HttpResponse("OK")
         response.status_code = 200
         return response
 
     params = {
-        'form': form,
+        "form": form,
     }
-    return render(request, 'private.html', params)
+    return render(request, "private.html", params)
 
 
 @login_required()
@@ -98,14 +107,11 @@ def edit(request, live_id):
 
     live = get_object_or_404(Live, id=live_id)
     FormSetExtraNum = 3
-    EditSongFormSet = modelformset_factory(
-        Song, EditSongForm, extra=FormSetExtraNum)
+    EditSongFormSet = modelformset_factory(Song, EditSongForm, extra=FormSetExtraNum)
     formset = EditSongFormSet(
-        request.POST or None, request.FILES or None,
-        queryset=Song.objects.filter(
-            live=live).order_by('track_num')
+        request.POST or None, request.FILES or None, queryset=Song.objects.filter(live=live).order_by("track_num")
     )
-    if request.method == 'POST':
+    if request.method == "POST":
         if formset.is_valid():
             instances = formset.save(commit=False)
             for instance in formset.deleted_objects:
@@ -115,15 +121,14 @@ def edit(request, live_id):
                 instance.updated_by = now_user
                 instance.updated_at = datetime.datetime.now()
                 instance.save()
-            return redirect('sound:playlist', live_id=live_id)
+            return redirect("sound:playlist", live_id=live_id)
         else:
-            print('validation error')
+            print("validation error")
     params = {
-        'live': live,
-        'formset': formset,
+        "live": live,
+        "formset": formset,
     }
-    return render(request, 'sound/edit.html', params)
-
+    return render(request, "sound/edit.html", params)
 
 
 @login_required()
@@ -132,13 +137,9 @@ def SongDownloadView(request, song_id):
         song = Song.objects.get(id=song_id)
     except ObjectDoesNotExist:
         raise Http404("Required sound file does not exist")
-    filename = str(song.track_num).zfill(2) + ' ' + song.song_name + '.mp3'
+    filename = str(song.track_num).zfill(2) + " " + song.song_name + ".mp3"
 
-    return FileResponse(
-      open(song.file.path, "rb"),
-      as_attachment=True,
-      filename=filename
-    )
+    return FileResponse(open(song.file.path, "rb"), as_attachment=True, filename=filename)
 
 
 @login_required()
@@ -160,6 +161,7 @@ def playlistJson(request, live_id):
                     "fileurl": song.file.url,
                     "length": song.length,
                 }
-            for song in songs],
+                for song in songs
+            ],
         }
     )

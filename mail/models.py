@@ -3,16 +3,18 @@ from members.models import User
 from board.models import Message
 import uuid
 
+
 class SendMailAddress(models.Model):
-    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE, related_name='mail_address_user')
+    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE, related_name="mail_address_user")
     email = models.EmailField(null=False, blank=False, verbose_name="受信用メールアドレス")
-    year = models.IntegerField(verbose_name='入部年度')
+    year = models.IntegerField(verbose_name="入部年度")
 
     def __str__(self):
-        return str(self.year) + ' - ' + self.user.get_full_name() +' - ' + self.email
+        return str(self.year) + " - " + self.user.get_full_name() + " - " + self.email
+
 
 class MessageProcess(models.Model):
-    message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name='process')
+    message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name="process")
     x_message_id = models.CharField(max_length=100, editable=False, null=True, blank=True)
     email = models.EmailField(null=False, blank=False, verbose_name="送信時メールアドレス")
     Requested = models.BooleanField(default=False, verbose_name="SendGridへ転送")
@@ -24,6 +26,8 @@ class MessageProcess(models.Model):
 
     def __str__(self):
         if self.message is not None:
-            return str(self.message.title) + ' - Processed:' + str(self.Processed) + ' Delivered:' + str(self.Delivered)
+            return (
+                str(self.message.title) + " - Processed:" + str(self.Processed) + " Delivered:" + str(self.Delivered)
+            )
         else:
-            return str(self.message) + ' - Processed:' + str(self.Processed) + ' Delivered:' + str(self.Delivered)
+            return str(self.message) + " - Processed:" + str(self.Processed) + " Delivered:" + str(self.Delivered)

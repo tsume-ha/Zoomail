@@ -11,30 +11,27 @@ import private_storage.urls
 # Superuser 用の管理サイト設定
 def has_permission(request):
     return request.user.is_superuser
+
+
 admin.site.has_permission = has_permission
 
 
 urlpatterns = [
     path("db/login/", RedirectView.as_view(url=reverse_lazy("login"), query_string=True)),
     path("admin/login/", RedirectView.as_view(url=reverse_lazy("login"), query_string=True)),
-    path('db/', admin.site.urls),
-    path('admin/', custom_admin_site.urls),
-    path('auth/', include('social_django.urls', namespace='social')),
-    path('private-media/', include(private_storage.urls), name="private_media"),
-    
-    path('', home.index, name='index'),
-    path('howto/', include("howto.urls"), name='howto'),
-    path('first_register/', home.firstRegister, name='first-register'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('download/', include('home.urls_download')),
-
-
+    path("db/", admin.site.urls),
+    path("admin/", custom_admin_site.urls),
+    path("auth/", include("social_django.urls", namespace="social")),
+    path("private-media/", include(private_storage.urls), name="private_media"),
+    path("", home.index, name="index"),
+    path("howto/", include("howto.urls"), name="howto"),
+    path("first_register/", home.firstRegister, name="first-register"),
+    path("logout/", LogoutView.as_view(), name="logout"),
+    path("download/", include("home.urls_download")),
     # API
-    path('api/', include('home.urls_api')),
-
+    path("api/", include("home.urls_api")),
     # SPA
-    path('login/', TemplateView.as_view(template_name='public.html'), name='login'),
-    path('logged_out/', TemplateView.as_view(template_name='public.html'), name='logged_out'),
-    path('<path:p>/', login_required(TemplateView.as_view(template_name='private.html'))),
+    path("login/", TemplateView.as_view(template_name="public.html"), name="login"),
+    path("logged_out/", TemplateView.as_view(template_name="public.html"), name="logged_out"),
+    path("<path:p>/", login_required(TemplateView.as_view(template_name="private.html"))),
 ]
-

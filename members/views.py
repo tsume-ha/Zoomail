@@ -37,9 +37,7 @@ def mailTestAPI(request):
 
     # 5分に1回しか送れない制限
     now = datetime.datetime.now()
-    is_sent_in_5_min = TestMail.objects.filter(
-        user=user, sent_at__gte=now - datetime.timedelta(minutes=5)
-    ).exists()
+    is_sent_in_5_min = TestMail.objects.filter(user=user, sent_at__gte=now - datetime.timedelta(minutes=5)).exists()
     if is_sent_in_5_min:
         messages.error(request, "テストメールを送信できるのは5分に1回です。時間をおいてもう一度お試しください。")
         response = HttpResponse("Rate Limiting")
@@ -48,9 +46,7 @@ def mailTestAPI(request):
 
     # sendrifで送信
     email = user.get_receive_email()
-    obj, _ = TestMail.objects.update_or_create(
-        user=user, defaults={"email": email, "sent_at": now}
-    )
+    obj, _ = TestMail.objects.update_or_create(user=user, defaults={"email": email, "sent_at": now})
     text_content = """京大アンプラグド　メーリングリストサービスのUnplugged Messageです。
     このメールはテストメールです。
     このメールが受信できていたら、現在の設定で今後のメーリスが受信できます。
@@ -84,28 +80,31 @@ def mailTestAPI(request):
 @login_required()
 def userInfo(request, status_code=200):
     user = request.user
-    return JsonResponse({
-        "userInfo": {
-            "id": user.id,
-            "lastName": user.last_name,
-            "firstName": user.first_name,
-            "furigana": user.furigana,
-            "nickname": user.nickname,
-            "shortname": user.get_short_name(),
-            "email": user.email,
-            "receiveEmail": user.get_receive_email(),
-            "livelogEmail": user.livelog_email,
-            "sendMail": user.send_mail,
-            "year": user.year,
-            "createdAt": user.created_at,
-            "updatedAt": user.updated_at,
-            "googleOauth2": UserSocialAuth.objects.filter(user=user, provider="google-oauth2").exists(),
-            "livelogAuth0": UserSocialAuth.objects.filter( user=user, provider="auth0" ).exists(),
-            "isSuperuser": user.is_superuser,
-            "isStaff": user.is_staff,
-            "canRegisterUser": MemberRegisterPermission(user)
-        }
-    }, status=status_code)
+    return JsonResponse(
+        {
+            "userInfo": {
+                "id": user.id,
+                "lastName": user.last_name,
+                "firstName": user.first_name,
+                "furigana": user.furigana,
+                "nickname": user.nickname,
+                "shortname": user.get_short_name(),
+                "email": user.email,
+                "receiveEmail": user.get_receive_email(),
+                "livelogEmail": user.livelog_email,
+                "sendMail": user.send_mail,
+                "year": user.year,
+                "createdAt": user.created_at,
+                "updatedAt": user.updated_at,
+                "googleOauth2": UserSocialAuth.objects.filter(user=user, provider="google-oauth2").exists(),
+                "livelogAuth0": UserSocialAuth.objects.filter(user=user, provider="auth0").exists(),
+                "isSuperuser": user.is_superuser,
+                "isStaff": user.is_staff,
+                "canRegisterUser": MemberRegisterPermission(user),
+            }
+        },
+        status=status_code,
+    )
 
 
 @login_required()
@@ -122,9 +121,7 @@ def googleOauthUnlink(request):
             messages.error(request, field_name + form._errors[field_name].as_text())
         return userInfo(request, status_code=400)
 
-    if UserSocialAuth.objects.filter(
-            user=user, provider="auth0"
-            ).exists() and user.livelog_email:
+    if UserSocialAuth.objects.filter(user=user, provider="auth0").exists() and user.livelog_email:
         query = UserSocialAuth.objects.filter(user=user, provider="google-oauth2")
         assert query.count() < 3
         # 一応安全確認 なんかのバグで全件取得とかできてしまったら怖い
@@ -147,12 +144,12 @@ def profile(request):
     if request.method != "POST":
         messages.warning(request, "無効なリクエストです")
         return userInfo(request, status_code=400)
-    
+
     initial = {
         "last_name": user.last_name,
         "first_name": user.first_name,
         "furigana": user.furigana,
-        "nickname": user.nickname
+        "nickname": user.nickname,
     }
     form = UserUpdateForm(request.POST, instance=user, initial=initial)
 
@@ -180,11 +177,8 @@ def mailSettingsAPI(request):
     if request.method != "POST":
         messages.warning(request, "無効なリクエストです")
         return userInfo(request, status_code=400)
-    
-    initial = {
-        "receive_email": user.receive_email,
-        "send_mail": user.send_mail
-    }
+
+    initial = {"receive_email": user.receive_email, "send_mail": user.send_mail}
     form = MailSettingsForm(request.POST, instance=user, initial=initial)
 
     if not form.is_valid():
@@ -204,6 +198,7 @@ def mailSettingsAPI(request):
 
     return userInfo(request)
 
+
 @login_required()
 def registerAPI(request):
     now_user = request.user
@@ -222,15 +217,11 @@ def registerAPI(request):
         form.save()
         # save()でメール送信が走る
         messages.success(request, "登録しました。")
-        return JsonResponse({
-            "success": True
-        })
-    
+        return JsonResponse({"success": True})
+
     else:
         messages.error(request, form.errors.as_text())
 
     messages.error(request, "入力されたデータが不正です。")
     messages.error(request, "登録に失敗しました。")
-    return JsonResponse({
-        "success": False
-    })
+    return JsonResponse({"success": False})

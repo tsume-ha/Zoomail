@@ -1,7 +1,6 @@
 from django import forms
-# from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.contrib.admin.widgets import FilteredSelectMultiple    
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth.models import Group
 
 
@@ -16,10 +15,10 @@ class GroupAdminForm(forms.ModelForm):
 
     # Add the users field.
     users = forms.ModelMultipleChoiceField(
-         queryset=User.objects.all(), 
-         required=False,
-         # Use the pretty 'filter_horizontal widget'.
-         widget=FilteredSelectMultiple('users', False)
+        queryset=User.objects.all(),
+        required=False,
+        # Use the pretty 'filter_horizontal widget'.
+        widget=FilteredSelectMultiple("users", False),
     )
 
     def __init__(self, *args, **kwargs):
@@ -28,11 +27,11 @@ class GroupAdminForm(forms.ModelForm):
         # If it is an existing group (saved objects have a pk).
         if self.instance.pk:
             # Populate the users field with the current Group users.
-            self.fields['users'].initial = self.instance.user_set.all()
+            self.fields["users"].initial = self.instance.user_set.all()
 
     def save_m2m(self):
         # Add the users to the Group.
-        self.instance.user_set.set(self.cleaned_data['users'])
+        self.instance.user_set.set(self.cleaned_data["users"])
 
     def save(self, *args, **kwargs):
         # Default save

@@ -4,10 +4,11 @@ from .models import Kansouyoushi
 
 
 class KansouAdmin(admin.ModelAdmin):
-    fields = ('title', 'detail', 'file', 'performed_at', 'created_at', 'created_by')
-    readonly_fields = ('created_at', 'created_by')
-    list_display = ('title', 'performed_at')
-    list_display_links = ('title', 'performed_at')
+    fields = ("title", "detail", "file", "performed_at", "created_at", "created_by")
+    readonly_fields = ("created_at", "created_by")
+    list_display = ("title", "performed_at")
+    list_display_links = ("title", "performed_at")
+
     def save_model(self, request, obj, form, change) -> None:
         if not change:
             obj.created_by = request.user
