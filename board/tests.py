@@ -264,6 +264,7 @@ class APISendTest(TestCase):
 
         __sendyears = [[2019], [2018], [2017], [2019, 2018], [2019, 2018, 2017]]
         __testfiles = [
+            ('0B.txt', 0),
             ('9MB.txt', 9*1024*1024),
             ('11MB.txt', 11*1024*1024)
             ]
@@ -282,18 +283,78 @@ class APISendTest(TestCase):
                 }
                 request = self.client.post('/api/board/send/send/', data)
 
-                if file[1] < 10*1024*1024:
+                if 0 < file[1] < 10*1000*1000:
                     self.assertEqual(request.status_code, 200)
                     new_message = Message.objects.get(title=data["title"][0])
                     self.assertEqual(new_message.content, data['content'][0])
                     years = MessageYear.objects.filter(message=new_message).values_list('year', flat=True)
                     for y in sendyear:
                         self.assertIn(y, years)
+                    for y in years:
+                        self.assertIn(y, sendyear)
 
                     # 添付ファイルのmodelが作られているか
                     self.assertTrue(new_message.attachments.exists())
+                    self.assertEqual(new_message.attachments.count(), 1)
 
                 else:
+                    self.assertEqual(request.status_code, 400)
+                    self.assertFalse(
+                        Message.objects.filter(title=data["title"]).exists()
+                        )
+
+
+
+    def test_sendAPI_kaisei_with_two_attachments(self):
+        user = make_user(self, year=2019)
+        login(self, user)
+
+        __sendyears = [[2019], [2018], [2017], [2019, 2018], [2019, 2018, 2017]]
+        __testfiles = [
+              [('0B.txt', 0),('0B.txt', 0)],
+              [('1KB.txt', 1024),('1KB.txt', 1024)],
+              [('9MB.txt', 9*1024*1024),('1KB.txt', 1024)],
+              [('11MB.txt', 11*1024*1024),('1KB.txt', 1024)],
+              [('4KB.txt', 4*1024),('0B.txt', 0)],
+              [('9MB.txt', 9*1024*1024),('9MB.txt', 9*1024*1024)],
+            ]
+        for sendyear in __sendyears:
+            for files in __testfiles:
+                with open(
+                    os.path.join(settings.BASE_DIR, 'board', files[0][0]),
+                    'rb') as f0:
+                    upload0 = SimpleUploadedFile(files[0][0], f0.read())
+                with open(
+                    os.path.join(settings.BASE_DIR, 'board', files[1][0]),
+                    'rb') as f1:
+                    upload1 = SimpleUploadedFile(files[1][0], f1.read())
+                data = {
+                    "title": ["attachment test" + files[0][0] + files[1][0] + str(sendyear)],
+                    "writer": [str(user.id)],
+                    "to": [y for y in sendyear],
+                    "content": ["send text content"],
+                    "attachments": [upload0, upload1]
+                }
+                print(data["title"][0])
+                request = self.client.post('/api/board/send/send/', data)
+
+                if 0 < files[0][1] < 10*1000*1000 and 0 < files[1][1] < 10*1000*1000\
+                  and files[0][1] + files[1][1] < 20*1024*1024:
+                    self.assertEqual(request.status_code, 200)
+                    new_message = Message.objects.get(title=data["title"][0])
+                    self.assertEqual(new_message.content, data['content'][0])
+                    years = MessageYear.objects.filter(message=new_message).values_list('year', flat=True)
+                    for y in sendyear:
+                        self.assertIn(y, years)
+                    for y in years:
+                        self.assertIn(y, sendyear)
+
+                    # 添付ファイルのmodelが作られているか
+                    self.assertTrue(new_message.attachments.exists())
+                    self.assertEqual(new_message.attachments.count(), 2)
+
+                else:
+                    
                     self.assertEqual(request.status_code, 400)
                     self.assertFalse(
                         Message.objects.filter(title=data["title"]).exists()
