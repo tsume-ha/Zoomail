@@ -31,6 +31,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "send" */ "../pages/mail/send-confirm.vue")
   },
   {
+    path: "/mail/send/sending/",
+    name: "mail:send-finish",
+    component: () => import(/* webpackChunkName: "send" */ "../pages/mail/send-finish.vue")
+  },
+  {
     path: "/photo/",
     name: "photo:index",
     component: () => import(/* webpackChunkName: "photo" */ "../pages/photo/index.vue")

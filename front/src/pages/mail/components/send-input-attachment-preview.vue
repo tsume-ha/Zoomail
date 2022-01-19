@@ -1,12 +1,15 @@
 <template>
   <div class="preview-content-wrapper" @click="openFile">
-    <div v-if="(
+    <div
+      v-if="
         file.type === 'image/jpeg' ||
         file.type === 'image/png' ||
         file.type === 'image/bmp' ||
         file.type === 'image/gif' ||
         file.type === 'image/svg+xml'
-      )" class="icon-wrapper">
+      "
+      class="icon-wrapper"
+    >
       <img :src="imageURL" alt="image-preview" width="400" height="300" />
     </div>
     <div v-else-if="file.type === 'application/pdf'" class="icon-wrapper">
@@ -18,21 +21,42 @@
     <div v-else-if="file.type.startsWith('video/')" class="icon-wrapper">
       <Icon icon="file-video" />
     </div>
-    <div v-else-if="file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'" class="icon-wrapper">
+    <div
+      v-else-if="
+        file.type === 'application/msword' ||
+        file.type ===
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      "
+      class="icon-wrapper"
+    >
       <Icon icon="file-word" />
     </div>
-    <div v-else-if="file.type === 'application/vnd.ms-powerpoint' || file.type === 'vnd.openxmlformats-officedocument.presentationml.presentation'" class="icon-wrapper">
+    <div
+      v-else-if="
+        file.type === 'application/vnd.ms-powerpoint' ||
+        file.type ===
+          'vnd.openxmlformats-officedocument.presentationml.presentation'
+      "
+      class="icon-wrapper"
+    >
       <Icon icon="file-powerpoint" />
     </div>
-    <div v-else-if="file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'" class="icon-wrapper">
+    <div
+      v-else-if="
+        file.type === 'application/vnd.ms-excel' ||
+        file.type ===
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      "
+      class="icon-wrapper"
+    >
       <Icon icon="file-excel" />
     </div>
-    
+
     <div v-else class="icon-wrapper">
       <Icon icon="file-alt" />
     </div>
-    
-    <div class="preview-file-name">{{file.name}}</div>
+
+    <div class="preview-file-name">{{ file.name }}</div>
   </div>
 </template>
 
@@ -40,7 +64,7 @@
 import { computed, ref, onMounted, onUnmounted } from "vue";
 export default {
   props: {
-    file: {required: true, type: File}
+    file: { required: true, type: File },
   },
   setup(props) {
     const imageURL = ref("");
@@ -57,7 +81,7 @@ export default {
     onMounted(() => {
       const reader = new FileReader();
       if (isImage.value) {
-        reader.onload = e => {
+        reader.onload = (e) => {
           imageURL.value = e.target.result;
         };
       }
@@ -65,19 +89,20 @@ export default {
       objectURL.value = URL.createObjectURL(file.value);
     });
 
-
     onUnmounted(() => {
       URL.revokeObjectURL(file.value);
     });
     return {
-      openFile, isImage, imageURL
+      openFile,
+      isImage,
+      imageURL,
     };
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.preview-content-wrapper{
+.preview-content-wrapper {
   display: inline-block;
   position: relative;
   align-self: center;
@@ -86,7 +111,7 @@ export default {
   border: 1px solid #aaa;
   border-radius: 0.3rem;
   margin: 0.5rem;
-  padding: .5rem;
+  padding: 0.5rem;
   z-index: 1;
   cursor: pointer;
   background-color: $bg-white;
@@ -99,14 +124,15 @@ export default {
     margin: 0 auto;
     text-align: center;
 
-    img, svg{
+    img,
+    svg {
       display: block;
       margin: 0 auto;
     }
     img {
       width: 100%;
-      height: auto;
-      object-fit: contain;
+      height: 100%;
+      object-fit: scale-down;
     }
     svg {
       width: 4rem;
@@ -114,7 +140,7 @@ export default {
     }
   }
 
-  .preview-file-name{
+  .preview-file-name {
     position: absolute;
     bottom: 0.5rem;
     font-size: 0.6rem;

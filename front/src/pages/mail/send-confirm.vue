@@ -47,8 +47,15 @@
       </div>
     </section>
     <div class="custom-two-buttons-wrapper">
-      <button @click="backToInput" class="pure-button return">戻る</button>
-      <button @click="send" class="pure-button button-primary">送信する</button>
+      <router-link :to="{ name: 'mail:send' }" class="pure-button return">
+        戻る
+      </router-link>
+      <router-link
+        :to="{ name: 'mail:send-finish' }"
+        class="pure-button button-primary"
+      >
+        送信する
+      </router-link>
     </div>
   </article>
 </template>
@@ -85,16 +92,6 @@ export default {
     };
     const send = (e) => {
       e.preventDefault();
-      store
-        .dispatch("send/send")
-        .then((res) => {
-          // 正常にPOSTできた時。メーリスのトップページに遷移する
-          console.log(res);
-        })
-        .catch((err) => {
-          // 送信エラーが起こった時。遷移しない。
-          console.log(err);
-        });
     };
     return {
       title,
