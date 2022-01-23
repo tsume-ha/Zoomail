@@ -1035,6 +1035,171 @@
       "name": "private.d45709566bb068b3.hot-update.json",
       "path": "private.d45709566bb068b3.hot-update.json",
       "publicPath": "http://localhost:8080/private.d45709566bb068b3.hot-update.json"
+    },
+    "public.dce570d11d64ed8f.hot-update.js": {
+      "name": "public.dce570d11d64ed8f.hot-update.js",
+      "path": "public.dce570d11d64ed8f.hot-update.js",
+      "publicPath": "http://localhost:8080/public.dce570d11d64ed8f.hot-update.js"
+    },
+    "private.dce570d11d64ed8f.hot-update.js": {
+      "name": "private.dce570d11d64ed8f.hot-update.js",
+      "path": "private.dce570d11d64ed8f.hot-update.js",
+      "publicPath": "http://localhost:8080/private.dce570d11d64ed8f.hot-update.js"
+    },
+    "public.dce570d11d64ed8f.hot-update.json": {
+      "name": "public.dce570d11d64ed8f.hot-update.json",
+      "path": "public.dce570d11d64ed8f.hot-update.json",
+      "publicPath": "http://localhost:8080/public.dce570d11d64ed8f.hot-update.json"
+    },
+    "private.dce570d11d64ed8f.hot-update.json": {
+      "name": "private.dce570d11d64ed8f.hot-update.json",
+      "path": "private.dce570d11d64ed8f.hot-update.json",
+      "publicPath": "http://localhost:8080/private.dce570d11d64ed8f.hot-update.json"
+    },
+    "static/dist/js/src_pages_404_vue.js": {
+      "name": "static/dist/js/src_pages_404_vue.js",
+      "path": "static\\dist\\js\\src_pages_404_vue.js",
+      "publicPath": "http://localhost:8080/static/dist/js/src_pages_404_vue.js"
+    },
+    "public.564091cdbf223f54.hot-update.js": {
+      "name": "public.564091cdbf223f54.hot-update.js",
+      "path": "public.564091cdbf223f54.hot-update.js",
+      "publicPath": "http://localhost:8080/public.564091cdbf223f54.hot-update.js"
+    },
+    "private.564091cdbf223f54.hot-update.js": {
+      "name": "private.564091cdbf223f54.hot-update.js",
+      "path": "private.564091cdbf223f54.hot-update.js",
+      "publicPath": "http://localhost:8080/private.564091cdbf223f54.hot-update.js"
+    },
+    "public.564091cdbf223f54.hot-update.json": {
+      "name": "public.564091cdbf223f54.hot-update.json",
+      "path": "public.564091cdbf223f54.hot-update.json",
+      "publicPath": "http://localhost:8080/public.564091cdbf223f54.hot-update.json"
+    },
+    "private.564091cdbf223f54.hot-update.json": {
+      "name": "private.564091cdbf223f54.hot-update.json",
+      "path": "private.564091cdbf223f54.hot-update.json",
+      "publicPath": "http://localhost:8080/private.564091cdbf223f54.hot-update.json"
+    },
+    "public.9bfaaf4ab24d3f97.hot-update.js": {
+      "name": "public.9bfaaf4ab24d3f97.hot-update.js",
+      "path": "public.9bfaaf4ab24d3f97.hot-update.js",
+      "publicPath": "http://localhost:8080/public.9bfaaf4ab24d3f97.hot-update.js"
+    },
+    "private.9bfaaf4ab24d3f97.hot-update.js": {
+      "name": "private.9bfaaf4ab24d3f97.hot-update.js",
+      "path": "private.9bfaaf4ab24d3f97.hot-update.js",
+      "publicPath": "http://localhost:8080/private.9bfaaf4ab24d3f97.hot-update.js"
+    },
+    "public.9bfaaf4ab24d3f97.hot-update.json": {
+      "name": "public.9bfaaf4ab24d3f97.hot-update.json",
+      "path": "public.9bfaaf4ab24d3f97.hot-update.json",
+      "publicPath": "http://localhost:8080/public.9bfaaf4ab24d3f97.hot-update.json"
+    },
+    "private.9bfaaf4ab24d3f97.hot-update.json": {
+      "name": "private.9bfaaf4ab24d3f97.hot-update.json",
+      "path": "private.9bfaaf4ab24d3f97.hot-update.json",
+      "publicPath": "http://localhost:8080/private.9bfaaf4ab24d3f97.hot-update.json"
+    },
+    "public.8bec0e32b9202df4.hot-update.js": {
+      "name": "public.8bec0e32b9202df4.hot-update.js",
+      "path": "public.8bec0e32b9202df4.hot-update.js",
+      "publicPath": "http://localhost:8080/public.8bec0e32b9202df4.hot-update.js"
+    },
+    "private.8bec0e32b9202df4.hot-update.js": {
+      "name": "private.8bec0e32b9202df4.hot-update.js",
+      "path": "private.8bec0e32b9202df4.hot-update.js",
+      "publicPath": "http://localhost:8080/private.8bec0e32b9202df4.hot-update.js"
+    },
+    "src_pages_404_vue.8bec0e32b9202df4.hot-update.js": {
+      "name": "src_pages_404_vue.8bec0e32b9202df4.hot-update.js",
+      "path": "src_pages_404_vue.8bec0e32b9202df4.hot-update.js",
+      "publicPath": "http://localhost:8080/src_pages_404_vue.8bec0e32b9202df4.hot-update.js"
+    },
+    "public.8bec0e32b9202df4.hot-update.json": {
+      "name": "public.8bec0e32b9202df4.hot-update.json",
+      "path": "public.8bec0e32b9202df4.hot-update.json",
+      "publicPath": "http://localhost:8080/public.8bec0e32b9202df4.hot-update.json"
+    },
+    "private.8bec0e32b9202df4.hot-update.json": {
+      "name": "private.8bec0e32b9202df4.hot-update.json",
+      "path": "private.8bec0e32b9202df4.hot-update.json",
+      "publicPath": "http://localhost:8080/private.8bec0e32b9202df4.hot-update.json"
+    },
+    "public.6f765755e7cbfdda.hot-update.js": {
+      "name": "public.6f765755e7cbfdda.hot-update.js",
+      "path": "public.6f765755e7cbfdda.hot-update.js",
+      "publicPath": "http://localhost:8080/public.6f765755e7cbfdda.hot-update.js"
+    },
+    "private.6f765755e7cbfdda.hot-update.js": {
+      "name": "private.6f765755e7cbfdda.hot-update.js",
+      "path": "private.6f765755e7cbfdda.hot-update.js",
+      "publicPath": "http://localhost:8080/private.6f765755e7cbfdda.hot-update.js"
+    },
+    "src_pages_404_vue.6f765755e7cbfdda.hot-update.js": {
+      "name": "src_pages_404_vue.6f765755e7cbfdda.hot-update.js",
+      "path": "src_pages_404_vue.6f765755e7cbfdda.hot-update.js",
+      "publicPath": "http://localhost:8080/src_pages_404_vue.6f765755e7cbfdda.hot-update.js"
+    },
+    "public.6f765755e7cbfdda.hot-update.json": {
+      "name": "public.6f765755e7cbfdda.hot-update.json",
+      "path": "public.6f765755e7cbfdda.hot-update.json",
+      "publicPath": "http://localhost:8080/public.6f765755e7cbfdda.hot-update.json"
+    },
+    "private.6f765755e7cbfdda.hot-update.json": {
+      "name": "private.6f765755e7cbfdda.hot-update.json",
+      "path": "private.6f765755e7cbfdda.hot-update.json",
+      "publicPath": "http://localhost:8080/private.6f765755e7cbfdda.hot-update.json"
+    },
+    "public.0c33b298b7d97c7a.hot-update.js": {
+      "name": "public.0c33b298b7d97c7a.hot-update.js",
+      "path": "public.0c33b298b7d97c7a.hot-update.js",
+      "publicPath": "http://localhost:8080/public.0c33b298b7d97c7a.hot-update.js"
+    },
+    "private.0c33b298b7d97c7a.hot-update.js": {
+      "name": "private.0c33b298b7d97c7a.hot-update.js",
+      "path": "private.0c33b298b7d97c7a.hot-update.js",
+      "publicPath": "http://localhost:8080/private.0c33b298b7d97c7a.hot-update.js"
+    },
+    "src_pages_404_vue.0c33b298b7d97c7a.hot-update.js": {
+      "name": "src_pages_404_vue.0c33b298b7d97c7a.hot-update.js",
+      "path": "src_pages_404_vue.0c33b298b7d97c7a.hot-update.js",
+      "publicPath": "http://localhost:8080/src_pages_404_vue.0c33b298b7d97c7a.hot-update.js"
+    },
+    "public.0c33b298b7d97c7a.hot-update.json": {
+      "name": "public.0c33b298b7d97c7a.hot-update.json",
+      "path": "public.0c33b298b7d97c7a.hot-update.json",
+      "publicPath": "http://localhost:8080/public.0c33b298b7d97c7a.hot-update.json"
+    },
+    "private.0c33b298b7d97c7a.hot-update.json": {
+      "name": "private.0c33b298b7d97c7a.hot-update.json",
+      "path": "private.0c33b298b7d97c7a.hot-update.json",
+      "publicPath": "http://localhost:8080/private.0c33b298b7d97c7a.hot-update.json"
+    },
+    "public.3148324ea2839cec.hot-update.js": {
+      "name": "public.3148324ea2839cec.hot-update.js",
+      "path": "public.3148324ea2839cec.hot-update.js",
+      "publicPath": "http://localhost:8080/public.3148324ea2839cec.hot-update.js"
+    },
+    "private.3148324ea2839cec.hot-update.js": {
+      "name": "private.3148324ea2839cec.hot-update.js",
+      "path": "private.3148324ea2839cec.hot-update.js",
+      "publicPath": "http://localhost:8080/private.3148324ea2839cec.hot-update.js"
+    },
+    "src_pages_404_vue.3148324ea2839cec.hot-update.js": {
+      "name": "src_pages_404_vue.3148324ea2839cec.hot-update.js",
+      "path": "src_pages_404_vue.3148324ea2839cec.hot-update.js",
+      "publicPath": "http://localhost:8080/src_pages_404_vue.3148324ea2839cec.hot-update.js"
+    },
+    "public.3148324ea2839cec.hot-update.json": {
+      "name": "public.3148324ea2839cec.hot-update.json",
+      "path": "public.3148324ea2839cec.hot-update.json",
+      "publicPath": "http://localhost:8080/public.3148324ea2839cec.hot-update.json"
+    },
+    "private.3148324ea2839cec.hot-update.json": {
+      "name": "private.3148324ea2839cec.hot-update.json",
+      "path": "private.3148324ea2839cec.hot-update.json",
+      "publicPath": "http://localhost:8080/private.3148324ea2839cec.hot-update.json"
     }
   },
   "chunks": {
@@ -1042,16 +1207,16 @@
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
       "static/dist/js/public.js",
-      "public.d45709566bb068b3.hot-update.js"
+      "public.3148324ea2839cec.hot-update.js"
     ],
     "private": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
       "static/dist/js/private.js",
-      "private.d45709566bb068b3.hot-update.js"
+      "private.3148324ea2839cec.hot-update.js"
     ]
   },
   "publicPath": "http://localhost:8080/",
-  "error": "ModuleError",
-  "message": "Module Error (from ./node_modules/vue-loader/dist/templateLoader.js):\n\nVueCompilerError: v-model value must be a valid JavaScript member expression.\nat C:\\Users\\mhash\\Documents\\UnpluggedMessage\\front\\src\\components\\AbstractSetting.vue:4:30\n2  |    <article>\n3  |      <slot />\n4  |      <Loading v-model:active=\"true\" :can-cancel=\"false\" :is-full-page=\"true\" />\n   |                               ^^^^\n5  |    </article>\n6  |  </template>\n"
+  "error": "ModuleNotFoundError",
+  "message": "Module not found: Error: Can't resolve '../pages/404.vue' in 'C:\\Users\\mhash\\Documents\\UnpluggedMessage\\front\\src\\router'"
 }
