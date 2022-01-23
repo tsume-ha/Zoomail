@@ -30,6 +30,11 @@ def tos():
 
 
 @login_required()
+def redirect_from_old_url(request, id):
+    return redirect(to="/mail/{}/".format(id), permanent=True)
+
+
+@login_required()
 def get_messages_list(request):
     # import time
     # time.sleep(10)

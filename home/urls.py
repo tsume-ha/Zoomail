@@ -7,6 +7,7 @@ from django.views.generic.base import TemplateView, RedirectView
 from custom_admin.admin import custom_admin_site
 from . import views as home
 import private_storage.urls
+from board.views import redirect_from_old_url
 
 # Superuser 用の管理サイト設定
 def has_permission(request):
@@ -28,6 +29,8 @@ urlpatterns = [
     path("first_register/", home.firstRegister, name="first-register"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("download/", include("home.urls_download")),
+    # old path
+    path("read/content/<int:id>/", redirect_from_old_url),
     # API
     path("api/", include("home.urls_api")),
     # SPA
