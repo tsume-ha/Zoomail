@@ -79,6 +79,9 @@ def mailTestAPI(request):
 
 @login_required()
 def userInfo(request, status_code=200):
+    import time
+
+    time.sleep(3)
     user = request.user
     return JsonResponse(
         {

@@ -1,5 +1,5 @@
 <template>
-  <abstract-setting :loading="loading">
+  <AbstractSetting>
     <h3>LiveLog・Google認証</h3>
     <p>認証を行ったサービスのアカウントでログインすることが出来ます。</p>
     <section class="pure-g">
@@ -75,7 +75,7 @@
     <router-link :to="{ name: 'mypage:index' }" class="pure-button return"
       >戻る</router-link
     >
-  </abstract-setting>
+  </AbstractSetting>
 </template>
 
 <script>

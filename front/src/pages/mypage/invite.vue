@@ -78,11 +78,13 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import { useStore } from "vuex";
 import { Field, Form } from "vee-validate";
 import yup from "@/utils/yup.js";
 import AbstractSetting from "@/components/AbstractSetting.vue";
 import ValidationErrorMessages from "@/components/ValidationErrorMessages.vue";
+import { useRouter } from "vue-router";
 export default {
   components: {
     Field,
@@ -92,6 +94,23 @@ export default {
   },
   setup() {
     const store = useStore();
+    const router = useRouter();
+    const canRegisterUser = computed(
+      () => store.state.mypage.userInfo.canRegisterUser
+    );
+    if (!canRegisterUser.value) {
+      store.commit("message/addMessage", {
+        level: "warning",
+        message: "ユーザー登録のための権限が無いようです",
+        appname: "mypage/register",
+      });
+      store.commit("message/addMessage", {
+        level: "info",
+        message: "このページのリンクからもう一度お試しください",
+        appname: "mypage/register",
+      });
+      router.push({ name: "mypage:index" });
+    }
 
     const submit = (values) => {
       const form = new FormData();

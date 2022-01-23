@@ -1,5 +1,5 @@
 <template>
-  <abstract-setting :loading="loading">
+  <AbstractSetting>
     <h3>メーリス受信テスト</h3>
     <form class="pure-form pure-form-stacked">
       <div class="pure-control-group">
@@ -39,7 +39,7 @@
         </button>
       </div>
     </form>
-  </abstract-setting>
+  </AbstractSetting>
 </template>
 
 <script>
@@ -56,7 +56,6 @@ export default {
     const receiveEmail = computed(
       () => store.state.mypage.userInfo.receiveEmail
     );
-    const loading = computed(() => store.state.mypage.loading);
 
     const send = () => {
       const formData = new FormData();
@@ -70,7 +69,6 @@ export default {
     return {
       receiveEmail,
       showEmailAddress,
-      loading,
       send,
     };
   },

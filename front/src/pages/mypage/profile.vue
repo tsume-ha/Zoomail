@@ -81,15 +81,22 @@ export default {
     });
 
     const loading = computed(() => store.state.mypage.loading);
+    const userInfo = computed(() => store.state.mypage.userInfo);
 
-    onMounted(() => {
-      // formDataの初期値設定
-      const userInfo = store.state.mypage.userInfo;
-      formData.lastName = userInfo.lastName;
-      formData.firstName = userInfo.firstName;
-      formData.furigana = userInfo.furigana;
-      formData.nickname = userInfo.nickname;
-    });
+    const setInitialData = () => {
+      formData.lastName = userInfo.value.lastName;
+      formData.firstName = userInfo.value.firstName;
+      formData.furigana = userInfo.value.furigana;
+      formData.nickname = userInfo.value.nickname;
+    };
+
+    onMounted(() => setInitialData());
+    store.watch(
+      (_state, getters) => getters["mypage/hasUserInfo"],
+      () => {
+        setInitialData();
+      }
+    );
 
     const submit = (e) => {
       e.preventDefault();

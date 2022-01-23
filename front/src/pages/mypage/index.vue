@@ -63,6 +63,7 @@
       </section>
 
       <section
+        v-if="canRegisterUser"
         class="
           pure-menu-custom pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3
         "
@@ -83,6 +84,7 @@
       </section>
 
       <section
+        v-if="canEnterAdmin"
         class="
           pure-menu-custom pure-u-1 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3
         "
@@ -102,32 +104,15 @@
   </article>
 </template>
 
-<script>
-import { onMounted, reactive } from "vue";
+<script setup>
+import { computed } from "vue";
 import { useStore } from "vuex";
-export default {
-  setup() {
-    const store = useStore();
-    const permissions = reactive({
-      canRegisterUser: false,
-      canEnterAdmin: false,
-    });
+const store = useStore();
 
-    const permissionsUpdate = () => {
-      const userData = store.state.user;
-      if (userData.is_staff) {
-        permissions.canEnterAdmin = true;
-      } else {
-        permissions.canEnterAdmin = false;
-      }
-    };
-    onMounted(() => permissionsUpdate());
-
-    return {
-      permissions,
-    };
-  },
-};
+const canRegisterUser = computed(
+  () => store.state.mypage.userInfo.canRegisterUser
+);
+const canEnterAdmin = computed(() => store.state.mypage.userInfo.isStaff);
 </script>
 
 <style lang="scss" scoped>

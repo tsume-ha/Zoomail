@@ -1,22 +1,22 @@
 <template>
-  <article v-if="loading">loading</article>
-  <article v-else>
+  <article>
     <slot />
+    <Loading
+      v-model:active="loading"
+      :can-cancel="false"
+      :is-full-page="true"
+      color="#386471"
+    />
   </article>
 </template>
 
-<script>
+<script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
-export default {
-  setup() {
-    const store = useStore();
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
-    const loading = computed(() => store.state.mypage.loading);
+const store = useStore();
 
-    return {
-      loading
-    };
-  }
-};
+const loading = computed(() => store.state.mypage.loading);
 </script>

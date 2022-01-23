@@ -62,12 +62,20 @@ export default {
 
     const loading = computed(() => store.state.mypage.loading);
 
-    onMounted(() => {
+    const setInitialData = () => {
       // formDataの初期値設定
       const userInfo = store.state.mypage.userInfo;
       formData.receiveEmail = userInfo.receiveEmail;
       formData.sendMail = userInfo.sendMail;
-    });
+    };
+
+    onMounted(() => setInitialData());
+    store.watch(
+      (_state, getters) => getters["mypage/hasUserInfo"],
+      () => {
+        setInitialData();
+      }
+    );
 
     const submit = (e) => {
       e.preventDefault();
