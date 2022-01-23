@@ -1,10 +1,13 @@
+from asyncio.proactor_events import constants
+import datetime
+
 from django import forms
 from django.core import validators
 from django.conf import settings
 
 from social_django.models import UserSocialAuth
 from utils.mail import SympleMessageSendClient
-from .models import User
+from .models import User, TestMail
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -71,7 +74,15 @@ class RegisterForm(forms.ModelForm):
         return user
 
 
-class MailTestForm(forms.Form):
+class MailTestForm(forms.ModelForm):
+    def __init__(self, data, user):
+        super().__init__(data)
+        self.__user = user
+
+    class Meta:
+        model = TestMail
+        fields = []
+
     send = forms.BooleanField(required=True)
 
     def clean_send(self):
@@ -79,6 +90,40 @@ class MailTestForm(forms.Form):
         if not bool:
             raise forms.ValidationError("リクエストの形式が無効です")
         return bool
+
+    def clean(self):
+        super().clean()
+        if TestMail.objects.filter(
+            user=self.__user, sent_at__gte=(datetime.datetime.now() - datetime.timedelta(minutes=5))
+        ).exists():
+            raise forms.ValidationError("テストメールを送信できるのは5分に1回です。時間をおいてもう一度お試しください。")
+
+    def save(self):
+        # send a mail
+        sendgridclient = SympleMessageSendClient(
+            title="テストメールです【Zoomail】",
+            text="このメールは、Zoomailからの送信テストメールです\n\n"
+            "このメールが受信できていたら、現在の設定で今後のメーリスが受信できます。ご安心ください。\n"
+            "これからも京大アンプラグドをよろしくお願いします。\n"
+            "-------------\n"
+            "Zoomail - 京大アンプラグドの部内メール配信サービス\n"
+            "https://message.ku-unplugged.net/ \n\n"
+            "京大アンプラグドHP係開発部",
+            to_email=self.__user.get_receive_email(),
+            from_email="zenkai@message.ku-unplugged.net",
+        )
+        if settings.SEND_MAIL:
+            response = sendgridclient.send()
+            x_message_id = response.headers["X-Message-Id"]
+        else:
+            x_message_id = "settings.SEND_EMAIL was False"
+        content = super().save(commit=False)
+        content.sent_at = datetime.datetime.now()
+        content.user = self.__user
+        content.email = self.__user.get_receive_email()
+        content.x_message_id = x_message_id
+        content.save()
+        return content
 
 
 class GoogleUnlinkForm(forms.Form):

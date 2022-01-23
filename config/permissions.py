@@ -1,5 +1,3 @@
-from members.models import User
-
 # kansou
 def KansouPermission(user):
     return user.has_perm("kansou.add_kansouyoushi")
@@ -8,14 +6,6 @@ def KansouPermission(user):
 # members
 def MemberRegisterPermission(user):
     return user.has_perm("members.change_user")
-
-
-def AdminEnterPermission(user):
-    return (
-        user.is_superuser
-        or user.groups.filter(name="Administer").exists()
-        or user.groups.filter(name="HomepageGroup").exists()
-    )
 
 
 # pictures

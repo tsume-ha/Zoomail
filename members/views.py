@@ -1,77 +1,33 @@
 import datetime
-import json
-from django.contrib.messages.api import success
-from django.forms.widgets import EmailInput
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent
-from social_django.models import UserSocialAuth
-
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.db.utils import IntegrityError
 
-from django.conf import settings
-from .models import User, TestMail
+from social_django.models import UserSocialAuth
+
 from .forms import UserUpdateForm, MailSettingsForm, RegisterForm, MailTestForm, GoogleUnlinkForm
-from config.permissions import MemberRegisterPermission, AdminEnterPermission
-from .create_google_user import DuplicateGmailAccountError
-from .create_google_user import Create_Google_User as register
+from config.permissions import MemberRegisterPermission
 
 
 @login_required()
 def mailTestAPI(request):
-    user = request.user
     if request.method != "POST":
         messages.warning(request, "無効なリクエストです")
         return userInfo(request, status_code=400)
 
-    form = MailTestForm(request.POST)
+    form = MailTestForm(request.POST, user=request.user)
+    # user: 独自実装
 
     if not form.is_valid():
-        messages.error(request, "フォームが無効で、送信されませんでした")
+        messages.error(request, form.errors.as_text())
         return userInfo(request, status_code=400)
+    # ここで送信してる
+    form.save()
 
-    # 5分に1回しか送れない制限
-    now = datetime.datetime.now()
-    is_sent_in_5_min = TestMail.objects.filter(user=user, sent_at__gte=now - datetime.timedelta(minutes=5)).exists()
-    if is_sent_in_5_min:
-        messages.error(request, "テストメールを送信できるのは5分に1回です。時間をおいてもう一度お試しください。")
-        response = HttpResponse("Rate Limiting")
-        response.status_code = 429
-        return response
-
-    # sendrifで送信
-    email = user.get_receive_email()
-    obj, _ = TestMail.objects.update_or_create(user=user, defaults={"email": email, "sent_at": now})
-    text_content = """京大アンプラグド　メーリングリストサービスのUnplugged Messageです。
-    このメールはテストメールです。
-    このメールが受信できていたら、現在の設定で今後のメーリスが受信できます。
-
-    ---------------
-    https://message.ku-unplugged.net/"""
-    # message = Mail(
-    #     from_email=("zenkai@message.ku-unplugged.net", "テスト用メール"),
-    #     to_emails=[To(email)],
-    #     subject="テストメール【UnpluggedMessage】",
-    #     plain_text_content=PlainTextContent(text_content),
-    #     is_multiple=True,
-    # )
-    # if settings.SEND_MAIL:
-    #     sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
-    #     response = sendgrid_client.send(message)
-    #     try:
-    #         x_message_id = response.headers["X-Message-Id"]
-    #         obj.x_message_id = x_message_id
-    #         obj.save()
-    #     except Exception:
-    #         response = HttpResponse("Send mail faild")
-    #         response.status_code = 500
-    #         return response
-
+    messages.success(request, "テストメールを送信しました。")
     response = HttpResponse("Test mail was sent.")
     response.status_code = 200
     return response
@@ -79,9 +35,6 @@ def mailTestAPI(request):
 
 @login_required()
 def userInfo(request, status_code=200):
-    import time
-
-    time.sleep(3)
     user = request.user
     return JsonResponse(
         {
