@@ -156,7 +156,7 @@ label {
   display: inline-flex;
   font-size: 0.75rem;
   margin-right: 1rem !important;
-  align-items: end;
+  align-items: flex-end;
 
   input[type="checkbox"] {
     display: inline-block;
