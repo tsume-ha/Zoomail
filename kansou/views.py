@@ -1,58 +1,37 @@
-from django.shortcuts import render, redirect
+from django.http.response import JsonResponse
+from django.http import FileResponse
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.template.defaultfilters import filesizeformat
 from .models import Kansouyoushi
-from .forms import KansouUploadForm
-from config.permissions import KansouPermission
-from django.db.models import Max, Min
-from django.contrib import messages
-import datetime
 
-
-def exist_years(records):
-    if records.exists():
-        # レコードが登録されている「年度」の範囲のリストを返します
-        data_min = records.aggregate(Min('performed_at'))['performed_at__min']
-        data_max = records.aggregate(Max('performed_at'))['performed_at__max']
-        year_list = []
-        for year in range(data_min.year - 1, data_max.year + 1):
-            is_exist = records.filter(performed_at__gte=datetime.date(year, 4, 1),\
-                                      performed_at__lt=datetime.date(year + 1, 4, 1)).exists()
-            if is_exist:
-                year_list.append(year)
-        year_list.sort(reverse=True)
-        return year_list
-    else:
-        return []
 
 @login_required()
 def index(request):
-    records = Kansouyoushi.objects.all()
-
-    params = {
-        'kansou_allowed': KansouPermission(user=request.user),
-        'exist_years': exist_years(records)
-    }
-    return render(request, 'kansou/index.html', params)
+    records = Kansouyoushi.objects.all().order_by("performed_at")
+    return JsonResponse(
+        {
+            "kansou": [
+                {
+                    "id": item.id,
+                    "title": item.title,
+                    "detail": item.detail,
+                    "url": item.file.url,
+                    "performedAt": item.performed_at,
+                    "size": filesizeformat(item.file.size),
+                }
+                for item in records
+            ]
+        }
+    )
 
 
 @login_required()
-def KansouUpload(request):
-    now_user = request.user
-    is_allowed = KansouPermission(now_user)
-    if is_allowed:
-        form = KansouUploadForm(request.POST or None, request.FILES or None)
-        params = {
-            'form': form,
-        }
-        if (request.method == 'POST'):
-            if form.is_valid():
-                form.save(commit=False)
-                form.created_by = now_user
-                form.save()
-                messages.success(request, '登録しました。')
-                return redirect('/kansou/')
-            else:
-                messages.error(request, '登録できませんでした。')
-        return render(request, 'kansou/upload.html', params)
+def kansouDownloadView(request, kansou_id):
+    kansou = get_object_or_404(klass=Kansouyoushi, id=kansou_id)
+    filename = ""
+    if kansou.detail:
+        filename = "{} ({}) .pdf".format(kansou.title, kansou.detail)
     else:
-        return redirect('/kansou/')
+        filename = "{}.pdf".format(kansou.title)
+    return FileResponse(open(kansou.file.path, "rb"), as_attachment=False, filename=filename)

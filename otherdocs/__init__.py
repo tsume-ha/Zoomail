@@ -1,1 +1,1 @@
-default_app_config = 'otherdocs.apps.OtherdocsConfig'
+default_app_config = "otherdocs.apps.OtherdocsConfig"

@@ -1,137 +1,83 @@
 import datetime
-import json
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent
-from social_django.models import UserSocialAuth
-
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.db.utils import IntegrityError
 
-from django.conf import settings
-from .models import User, TestMail
-from .forms import UserUpdateForm, MailSettingsForm, RegisterForm
-from config.permissions import MemberRegisterPermission, AdminEnterPermission
-from .create_google_user import DuplicateGmailAccountError
-from .create_google_user import Create_Google_User as register
+from social_django.models import UserSocialAuth
+
+from .forms import UserUpdateForm, MailSettingsForm, RegisterForm, MailTestForm, GoogleUnlinkForm
+from config.permissions import MemberRegisterPermission
 
 
 @login_required()
 def mailTestAPI(request):
-    now_user = request.user
-    if request.method != "POST" or not request.body:
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    if request.method != "POST":
+        messages.warning(request, "無効なリクエストです")
+        return userInfo(request, status_code=400)
 
-    json_dict = json.loads(request.body)
-    if "send" not in json_dict or json_dict["send"] != "true":
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    form = MailTestForm(request.POST, user=request.user)
+    # user: 独自実装
 
-    now = datetime.datetime.now()
-    is_sent_in_5_min = TestMail.objects.filter(
-        user=now_user, sent_at__gte=now - datetime.timedelta(minutes=5)
-    ).exists()
-    if is_sent_in_5_min:
-        response = HttpResponse("Rate Limiting")
-        response.status_code = 429
-        return response
+    if not form.is_valid():
+        messages.error(request, form.errors.as_text())
+        return userInfo(request, status_code=400)
+    # ここで送信してる
+    form.save()
 
-    email = now_user.get_receive_email()
-    obj, created = TestMail.objects.update_or_create(
-        user=now_user, defaults={"email": email, "sent_at": now}
-    )
-    text_content = """京大アンプラグド　メーリングリストサービスのUnplugged Messageです。
-    このメールはテストメールです。
-    このメールが受信できていたら、現在の設定で今後のメーリスが受信できます。
-
-    ---------------
-    https://message.ku-unplugged.net/"""
-    message = Mail(
-        from_email=("zenkai@message.ku-unplugged.net", "テスト用メール"),
-        to_emails=[To(email)],
-        subject="テストメール【UnpluggedMessage】",
-        plain_text_content=PlainTextContent(text_content),
-        is_multiple=True,
-    )
-    if settings.SEND_MAIL:
-        sendgrid_client = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        response = sendgrid_client.send(message)
-        try:
-            x_message_id = response.headers["X-Message-Id"]
-            obj.x_message_id = x_message_id
-            obj.save()
-        except Exception:
-            return JsonResponse({'error': 'cannot send email'})
-
-    return JsonResponse({'success': 'send mail'})
+    messages.success(request, "テストメールを送信しました。")
+    response = HttpResponse("Test mail was sent.")
+    response.status_code = 200
+    return response
 
 
 @login_required()
-def getUserInfo(request):
+def userInfo(request, status_code=200):
     user = request.user
     return JsonResponse(
         {
-            "last_name": user.last_name,
-            "first_name": user.first_name,
-            "furigana": user.furigana,
-            "nickname": user.nickname,
-            "email": user.email,
-            "receive_email": user.get_receive_email(),
-            "livelog_email": user.livelog_email,
-            "send_mail": user.send_mail,
-            "year": user.year,
-            "created_at": user.created_at,
-            "updated_at": user.updated_at,
-            'google_oauth2': UserSocialAuth.objects.filter(
-                user=user, provider="google-oauth2").exists(),
-            'livelog_auth0': UserSocialAuth.objects.filter(
-                user=user, provider="auth0").exists(),
-            'permissions': {
-                "is_superuser": user.is_superuser,
-                "is_admin": AdminEnterPermission(user),
-                "can_register_user": MemberRegisterPermission(user)
+            "userInfo": {
+                "id": user.id,
+                "lastName": user.last_name,
+                "firstName": user.first_name,
+                "furigana": user.furigana,
+                "nickname": user.nickname,
+                "shortname": user.get_short_name(),
+                "email": user.email,
+                "receiveEmail": user.get_receive_email(),
+                "livelogEmail": user.livelog_email,
+                "sendMail": user.send_mail,
+                "year": user.year,
+                "createdAt": user.created_at,
+                "updatedAt": user.updated_at,
+                "googleOauth2": UserSocialAuth.objects.filter(user=user, provider="google-oauth2").exists(),
+                "livelogAuth0": UserSocialAuth.objects.filter(user=user, provider="auth0").exists(),
+                "isSuperuser": user.is_superuser,
+                "isStaff": user.is_staff,
+                "canRegisterUser": MemberRegisterPermission(user),
             }
-        }
+        },
+        status=status_code,
     )
-
-
-@login_required()
-def OAuthRegisterView(request):
-    now_user = request.user
-    params = {
-        "google": UserSocialAuth.objects.filter(
-            user=now_user, provider="google-oauth2"
-        ).exists(),
-        "livelog": UserSocialAuth.objects.filter(
-            user=now_user, provider="auth0"
-        ).exists(),
-    }
-    return render(request, "members/oauth_register.html", params)
 
 
 @login_required()
 def googleOauthUnlink(request):
     user = request.user
-    if request.method != "POST" or not request.body:
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    if request.method != "POST":
+        messages.warning(request, "無効なリクエストです")
+        return userInfo(request, status_code=400)
 
-    json_dict = json.loads(request.body)
-    if json_dict["unlink"] is not True:
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    form = GoogleUnlinkForm(request.POST)
+    if not form.is_valid():
+        messages.error(request, "解除できませんでした。開発者にお問い合わせください。")
+        for field_name in form._errors:
+            messages.error(request, field_name + form._errors[field_name].as_text())
+        return userInfo(request, status_code=400)
 
-    if UserSocialAuth.objects.filter(
-            user=user, provider="auth0"
-            ).exists() and user.livelog_email:
+    if UserSocialAuth.objects.filter(user=user, provider="auth0").exists() and user.livelog_email:
         query = UserSocialAuth.objects.filter(user=user, provider="google-oauth2")
         assert query.count() < 3
         # 一応安全確認 なんかのバグで全件取得とかできてしまったら怖い
@@ -139,131 +85,99 @@ def googleOauthUnlink(request):
         try:
             user.email = user.livelog_email
             user.save()
+            messages.success(request, "Googleアカウントの紐づけを解除しました。")
+            return userInfo(request)
         except IntegrityError:
-            response = JsonResponse({
-                "deleted": False,
-                "message": "Googleアカウントでのログインは無効化されましたが、データを全て削除できませんでした。"
-            })
-            response.status_code = 500
-            return response
-        return JsonResponse({
-            "deleted": True
-        })
+            messages.error(request, "Googleアカウントでのログインは無効化されましたが、データを全て削除できませんでした。")
+            return userInfo(request, status_code=500)
 
-    else:
-        return JsonResponse({
-            "deleted": False
-        })
+    return userInfo(request, status_code=400)
 
 
 @login_required()
-def userUpdateAPI(request):
+def profile(request):
     user = request.user
     if request.method != "POST":
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
-        
-    form = UserUpdateForm(request.POST, instance=user)
+        messages.warning(request, "無効なリクエストです")
+        return userInfo(request, status_code=400)
 
-    response = []
+    initial = {
+        "last_name": user.last_name,
+        "first_name": user.first_name,
+        "furigana": user.furigana,
+        "nickname": user.nickname,
+    }
+    form = UserUpdateForm(request.POST, instance=user, initial=initial)
+
     if not form.is_valid():
-        response.append("更新できませんでした")
+        messages.error(request, "更新できませんでした")
         for field_name in form._errors:
-            response.append(form._errors[field_name].as_text())
-        return JsonResponse({
-            "successed": False,
-            "messages": response
-        })
+            messages.error(request, field_name + form._errors[field_name].as_text())
+        return userInfo(request, status_code=400)
 
-    else:
+    elif form.has_changed():
         content = form.save(commit=False)
         content.updated_at = datetime.datetime.now()
         content.save()
-        response.append("更新しました")
+        messages.success(request, "更新しました")
 
-        return JsonResponse({
-            "successed": True,
-            "messages": response
-        })
+    else:
+        messages.info(request, "更新はありませんでした")
+
+    return userInfo(request)
 
 
 @login_required()
 def mailSettingsAPI(request):
     user = request.user
-    if request.method != "POST" or not request.body:
-        response = HttpResponse("BAD REQUEST")
-        response.status_code = 400
-        return response
+    if request.method != "POST":
+        messages.warning(request, "無効なリクエストです")
+        return userInfo(request, status_code=400)
 
-    json_dict = json.loads(request.body)
-    form = MailSettingsForm(json_dict, instance=user)
+    initial = {"receive_email": user.receive_email, "send_mail": user.send_mail}
+    form = MailSettingsForm(request.POST, instance=user, initial=initial)
 
-    response = []
     if not form.is_valid():
-        response.append("更新できませんでした")
+        messages.error(request, "更新できませんでした")
         for field_name in form._errors:
-            response.append(form._errors[field_name].as_text())
-        return JsonResponse({
-            "successed": False,
-            "messages": response
-        })
+            messages.error(request, field_name + form._errors[field_name].as_text())
+        return userInfo(request, status_code=400)
 
-    else:
+    elif form.has_changed():
         content = form.save(commit=False)
         content.updated_at = datetime.datetime.now()
         content.save()
-        response.append("更新しました")
+        messages.success(request, "更新しました")
 
-        return JsonResponse({
-            "successed": True,
-            "messages": response
-        })
+    else:
+        messages.info(request, "更新はありませんでした")
+
+    return userInfo(request)
+
 
 @login_required()
 def registerAPI(request):
     now_user = request.user
     is_allowed = MemberRegisterPermission(now_user)
     if not is_allowed:
-        response = HttpResponse("Forbidden")
-        response.status_code = 403
-        return response
+        raise PermissionError
 
-    if request.method != "POST" or not request.body:
+    if request.method != "POST":
+        messages.error(request, "不正なリクエストです")
         response = HttpResponse("BAD REQUEST")
         response.status_code = 400
         return response
 
-    json_dict = json.loads(request.body)
-    form = RegisterForm(json_dict)
+    form = RegisterForm(request.POST)
+    if form.is_valid():
+        form.save()
+        # save()でメール送信が走る
+        messages.success(request, "登録しました。")
+        return JsonResponse({"success": True})
 
-    messages = []
-    if not form.is_valid():
-        messages.append("登録に失敗しました。入力した値を確かめてください。")
-        for field_name in form._errors:
-            messages.append(form._errors[field_name].as_text())
-        return JsonResponse({
-            "successed": False,
-            "messages": messages
-        })
+    else:
+        messages.error(request, form.errors.as_text())
 
-    try:
-        register(
-            email=form.cleaned_data['email'],
-            year=int(form.cleaned_data['year']),
-            last_name=form.cleaned_data['last_name'],
-            first_name=form.cleaned_data['first_name'],
-            furigana=form.cleaned_data['furigana'],
-        )
-        messages.append(form.cleaned_data['email'] + "を登録しました。")
-    except DuplicateGmailAccountError:
-        messages.append(form.cleaned_data['email'] + " はすでに登録されているアカウントのため登録できませんでした。")
-        return JsonResponse({
-            "successed": False,
-            "messages": messages
-        })
-
-    return JsonResponse({
-        "successed": True,
-        "messages": messages
-    })
+    messages.error(request, "入力されたデータが不正です。")
+    messages.error(request, "登録に失敗しました。")
+    return JsonResponse({"success": False})

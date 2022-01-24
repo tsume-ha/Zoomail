@@ -10,27 +10,20 @@ from members.models import User
 
 
 def custom_upload_to(instance, filename):
-    path = 'others/' + datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+    path = "others/" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     extension = os.path.splitext(filename)[-1]
     return path + extension
 
+
 class Content(models.Model):
-    title = models.CharField(max_length=50, verbose_name='タイトル')
-    file = PrivateFileField(
-        upload_to=custom_upload_to,
-        max_file_size=30*1024*1024,
-        verbose_name='ファイル'
-    )
-    detail = models.CharField(max_length=200, null=True, blank=True, verbose_name='詳細事項')
-    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='others_create')
-    updated_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='others_update')
+    title = models.CharField(max_length=50, verbose_name="タイトル")
+    file = PrivateFileField(upload_to=custom_upload_to, max_file_size=30 * 1024 * 1024, verbose_name="ファイル")
+    detail = models.CharField(max_length=200, null=True, blank=True, verbose_name="詳細事項")
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="others_create")
+    updated_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="others_update")
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
-    index = models.IntegerField(
-        default=0,
-        blank=True,
-        help_text='ページ内での表示順です。初期値は「0」で、大きいほど上に、小さいほど(負の整数も可)下に表示されます。'
-    )
+    index = models.IntegerField(default=0, blank=True, help_text="ページ内での表示順です。初期値は「0」で、大きいほど上に、小さいほど(負の整数も可)下に表示されます。")
 
     def __str__(self):
         return self.title

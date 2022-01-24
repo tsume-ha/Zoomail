@@ -9,12 +9,10 @@ from django.core.exceptions import ObjectDoesNotExist
 def update_send_mail_address(sender, instance, **kwargs):
     if instance.send_mail:
         SendMailAddress.objects.update_or_create(
-            user = instance,
-            year = instance.year,
-            defaults = {
-                'email' : instance.get_receive_email()
-                },
-            )
+            user=instance,
+            year=instance.year,
+            defaults={"email": instance.get_receive_email()},
+        )
 
     else:
         try:

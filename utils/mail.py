@@ -4,7 +4,17 @@ import mimetypes
 from django.conf import settings
 
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, PlainTextContent, Attachment, FileContent, FileName, FileType, Disposition, ContentId
+from sendgrid.helpers.mail import (
+    Mail,
+    To,
+    PlainTextContent,
+    Attachment,
+    FileContent,
+    FileName,
+    FileType,
+    Disposition,
+    ContentId,
+)
 
 from board.models import Message
 from mail.models import SendMailAddress, MessageProcess
@@ -13,13 +23,14 @@ from mail.models import SendMailAddress, MessageProcess
 class ZeroTosError(Exception):
     pass
 
+
 class SendGridClient(SendGridAPIClient):
     def __init__(self) -> None:
         api_key = settings.SENDGRID_API_KEY
         super(SendGridClient, self).__init__(api_key)
 
 
-class SendgridMail(Mail):    
+class SendgridMail(Mail):
     def __init__(self, message: Message, year: int):
         self.message = message
         self.year = year
@@ -36,57 +47,59 @@ class SendgridMail(Mail):
             html_content=None,
             amp_html_content=None,
             global_substitutions=None,
-            is_multiple=True
-            )
+            is_multiple=True,
+        )
 
-        attachments = self.message.attachments.order_by('id').reverse()
+        attachments = self.message.attachments.order_by("id").reverse()
         for attachment in attachments:
             file_path = attachment.attachment_file.path
-            with open(file_path, 'rb') as f:
+            with open(file_path, "rb") as f:
                 a_data = f.read()
                 f.close()
             encoded = base64.b64encode(a_data).decode()
             attachment_file = Attachment(
-                file_content = FileContent(encoded),
-                file_name = FileName(attachment.fileName()),
-                )
+                file_content=FileContent(encoded),
+                file_name=FileName(attachment.fileName()),
+            )
             # disposition
             if attachment.isImage():
-                attachment_file.disposition = Disposition('inline')
+                attachment_file.disposition = Disposition("inline")
                 attachment_file.content_id = ContentId(str(attachment.pk))
             else:
-                attachment_file.disposition = Disposition('attachment')
+                attachment_file.disposition = Disposition("attachment")
             # MINE type
             mine_type = mimetypes.guess_type(file_path)[0]
             if mine_type is not None:
                 attachment_file.file_type = FileType(mine_type)
             else:
-                attachment_file.file_type = FileType('application/octet-stream')
+                attachment_file.file_type = FileType("application/octet-stream")
             super().add_attachment(attachment_file)
-
 
     def __generate_from_email(self):
         if self.year == 0:
-            from_adress = 'zenkai@message.ku-unplugged.net'
+            from_adress = "zenkai@message.ku-unplugged.net"
             return (from_adress, self.message.writer.get_short_name())
         else:
-            ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n/10%10!=1)*(n%10<4)*n%10::4])
-            from_adress = ordinal(self.year - 1994) + '_kaisei@message.ku-unplugged.net'
+            ordinal = lambda n: "%d%s" % (n, "tsnrhtdd"[(n / 10 % 10 != 1) * (n % 10 < 4) * n % 10 :: 4])
+            from_adress = ordinal(self.year - 1994) + "_kaisei@message.ku-unplugged.net"
             return (from_adress, self.message.writer.get_short_name())
-            
+
     def __generate_to_emails(self):
         if self.year == 0:
-            to_list = SendMailAddress.objects.all().values_list('email', flat=True)
+            to_list = SendMailAddress.objects.all().values_list("email", flat=True)
         else:
-            to_list = SendMailAddress.objects.filter(year=self.year).values_list('email', flat=True)
+            to_list = SendMailAddress.objects.filter(year=self.year).values_list("email", flat=True)
 
         if len(to_list) == 0:
-            raise ZeroTosError('宛先が0件です。メールは送信されませんでした。')
+            raise ZeroTosError("宛先が0件です。メールは送信されませんでした。")
 
         return [To(email=eml) for eml in to_list]
 
     def __generate_plain_text_content(self):
-        ADD_TEXT = '\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/' + str(self.message.pk)
+        ADD_TEXT = (
+            "\n\n--------------------------------\nこのメッセージのURLはこちら\nhttps://message.ku-unplugged.net/read/content/"
+            + str(self.message.pk)
+        )
         original_text = self.message.content
         return PlainTextContent(original_text + ADD_TEXT)
 
@@ -99,7 +112,7 @@ class MailingList(SendGridClient):
         to_years = message.years.all()
         sendgrid_objects = []
         if to_years.filter(year=0).exists():
-            sendgrid_objects = [SendgridMail(message=message, year=0), ]
+            sendgrid_objects = [SendgridMail(message=message, year=0)]
         else:
             to_years.exclude(year=0)
             sendgrid_objects = [SendgridMail(message=message, year=y.year) for y in to_years]
@@ -111,10 +124,10 @@ class MailingList(SendGridClient):
                 response = super().send(sendgrid_object)
 
                 # error handring follows
-                x_message_id = response.headers['X-Message-Id']
+                x_message_id = response.headers["X-Message-Id"]
                 requested = True
                 error_occurd = False
-                error_detail = ''
+                error_detail = ""
             except Exception as e:
                 x_message_id = ""
                 requested = False
@@ -133,10 +146,53 @@ class MailingList(SendGridClient):
                         Requested=requested,
                         Error_occurd=error_occurd,
                         Error_detail=error_detail,
-                        )
+                    )
                     process_list.append(obj)
                 MessageProcess.objects.bulk_create(process_list)
 
         total_send_num = MessageProcess.objects.filter(message=message, Requested=True, Error_occurd=False).count()
         return total_send_num
-        # return None
+
+
+class SympleMessageSendClient(SendGridClient):
+    def __init__(self, title: str, text: str, to_email: str, from_email: str):
+        super().__init__()
+        self.title = title
+        self.text = text
+        self.from_email = from_email
+        self.to_email = to_email
+
+    def send(self):
+        try:
+            response = super().send(
+                Mail(
+                    from_email=self.from_email,
+                    to_emails=[To(email=self.to_email)],
+                    reply_to=None,
+                    subject=self.title,
+                    plain_text_content=PlainTextContent(self.text),
+                    html_content=None,
+                    amp_html_content=None,
+                    global_substitutions=None,
+                    is_multiple=False,
+                )
+            )
+            x_message_id = response.headers["X-Message-Id"]
+            requested = True
+            error_occurd = False
+            error_detail = ""
+        except Exception as e:
+            x_message_id = ""
+            requested = False
+            error_occurd = True
+            error_detail = e
+        finally:
+            MessageProcess.objects.create(
+                message=None,
+                x_message_id=x_message_id,
+                email=self.to_email,
+                Requested=requested,
+                Error_occurd=error_occurd,
+                Error_detail=error_detail,
+            )
+        return response

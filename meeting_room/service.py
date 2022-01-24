@@ -6,7 +6,8 @@ from google.oauth2 import service_account
 from django.conf import settings
 
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/calendar.events']
+SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
+
 
 def createService():
     # creds = None
@@ -32,8 +33,6 @@ def createService():
 
     # return build('calendar', 'v3', credentials=creds)
 
-
-    json_path = os.path.join(settings.BASE_DIR, 'credentials.json')
-    creds = service_account.Credentials.from_service_account_file(
-        json_path, scopes=SCOPES)
-    return build('calendar', 'v3', credentials=creds)
+    json_path = os.path.join(settings.BASE_DIR, "credentials.json")
+    creds = service_account.Credentials.from_service_account_file(json_path, scopes=SCOPES)
+    return build("calendar", "v3", credentials=creds)

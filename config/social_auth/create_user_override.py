@@ -5,6 +5,13 @@ USER_FIELDS = ['username', 'email', 'year']
 
 def create_user(strategy, details, backend, user=None, *args, **kwargs):
     if user:
+        messages.success(backend.strategy.request, "ログインに成功しました")
+        if backend.name == 'auth0':
+            user.livelog_login = True
+            user.save()
+        if backend.name == 'google-oauth2':
+            user.google_login = True
+            user.save()
         return {'is_new': False}
     if backend.name != 'auth0':
         messages.error(backend.strategy.request, 'あなたのGoogleアカウントは登録されていないため、ログインできませんでいた。')
@@ -30,7 +37,7 @@ def create_user(strategy, details, backend, user=None, *args, **kwargs):
         return
     
     #nextリンクはsessionに保存されている、これを書き換える
-    strategy.session_set('next', reverse('home:first-register'))
+    strategy.session_set('next', reverse('first-register'))
     return {
         'is_new': True,
         'user': strategy.create_user(**fields)
