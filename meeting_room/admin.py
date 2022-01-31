@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Cashe
+from .models import Room
 
-admin.site.register(Cashe)
+admin.site.register(Room)
