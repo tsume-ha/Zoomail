@@ -1,17 +1,22 @@
+import os
+
 from django.db import models
 from members.models import User
 from private_storage.fields import PrivateFileField
 
 
-# To Do
-# live をChoiceFieldに
-# upload_toでファイル名を指定してしまう
+def kansou_upload_to(instance, filename):
+    performed_at = instance.performed_at
+    extension = os.path.splitext(filename)[-1]
+    year = performed_at.strftime("%Y")
+    year_date = performed_at.strftime("%Y%m%d")
+    return "kansou/{}/{}".format(year, year_date + extension)
 
 
 class Kansouyoushi(models.Model):
     title = models.CharField(max_length=200, verbose_name="ライブ名")
     detail = models.CharField(max_length=200, blank=True, verbose_name="その他特記事項")
-    file = PrivateFileField(upload_to="kansoyoshi/%Y/", null=True, verbose_name="PDFファイル")
+    file = PrivateFileField(upload_to=kansou_upload_to, null=True, verbose_name="PDFファイル")
     performed_at = models.DateField(verbose_name="ライブ日")
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="kansou_creater")

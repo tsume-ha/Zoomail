@@ -1,3 +1,5 @@
+import os
+
 from django.http.response import JsonResponse
 from django.http import FileResponse
 from django.contrib.auth.decorators import login_required
@@ -30,8 +32,9 @@ def index(request):
 def kansouDownloadView(request, kansou_id):
     kansou = get_object_or_404(klass=Kansouyoushi, id=kansou_id)
     filename = ""
+    extension = os.path.splitext(kansou.file.path)[-1]
     if kansou.detail:
-        filename = "{} ({}) .pdf".format(kansou.title, kansou.detail)
+        filename = "{} ({}) {}".format(kansou.title, kansou.detail, extension)
     else:
-        filename = "{}.pdf".format(kansou.title)
+        filename = "{}{}".format(kansou.title, extension)
     return FileResponse(open(kansou.file.path, "rb"), as_attachment=False, filename=filename)
