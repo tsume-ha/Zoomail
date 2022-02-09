@@ -1,21 +1,22 @@
-from django.test import TestCase, Client
-from members.models import User
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.contrib.auth.models import Permission
-from .models import Kansouyoushi
 import os
-from django.conf import settings
 import datetime
 
-livename = Kansouyoushi.livename
+from django.test import TestCase, Client
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth.models import Permission
+
+from django.conf import settings
+
+from members.models import User
+from .models import Kansouyoushi
 
 
-def User_LogOUT(self):
+def user_logout(self):
     self.client = Client()
     self.client.logout()
 
 
-def Make_User(self, year=2019):
+def make_a_user(self, year=2019):
     self.user = User.objects.create_user(email=str(year) + "mail@gmail.com", year=year)
     self.user.last_name = "京大"
     self.user.first_name = "太郎"
@@ -24,130 +25,100 @@ def Make_User(self, year=2019):
     return self.user
 
 
-def User_LogIN(self, year=2019):
+def make_a_staff_user(self, year=2019):
+    self.user = make_a_user(self, year)
+    self.user.is_staff = True
+    self.user.save()
+    return self.user
+
+
+def user_login(self, year=2019):
     self.client.force_login(User.objects.get(email=str(year) + "mail@gmail.com"))
 
 
-def User_LogIN_and_Get_a_Permission(self, year=2019):
+def user_login_and_give_permission(self, year=2019):
     user = User.objects.get(email=str(year) + "mail@gmail.com")
     permission = Permission.objects.get(codename="add_kansouyoushi")
     user.user_permissions.add(permission)
     self.client.force_login(user)
 
 
-def Make_KansouPDF(self, user_year=2019, performed_at=datetime.date.today()):
+def make_kansou(self, user_year=2019, performed_at=datetime.date.today()):
     Kansouyoushi.objects.all().delete()
     pdfdir = os.path.join(settings.BASE_DIR, "kansou", "test.pdf")
-    for i in range(len(livename)):
-        live = livename[i][0]
-        filename = performed_at.strftime("%Y_%m_%d") + "_" + live + ".pdf"
-        with open(pdfdir, "rb") as file:
-            Kansouyoushi.objects.create(
-                live=live,
-                detail="",
-                numbering=1,
-                file=SimpleUploadedFile(filename, file.read()),
-                performed_at=performed_at,
-                created_by=User.objects.get(email=str(user_year) + "mail@gmail.com"),
-            )
+    filename = "テスト感想用紙.pdf"
+    with open(pdfdir, "rb") as file:
+        Kansouyoushi.objects.create(
+            title="テストライブ",
+            detail="テストの分です",
+            file=SimpleUploadedFile(filename, file.read()),
+            performed_at=performed_at,
+            created_by=User.objects.get(email=str(user_year) + "mail@gmail.com"),
+            created_at=datetime.datetime.now()
+        )
 
 
-class KansouyoushiViewTest(TestCase):
+class KansouViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        Make_User(cls)
+        make_a_user(cls)
 
-    def test_kansou_index_logOUT(self):
-        User_LogOUT(self)
-        response = self.client.get("/kansou/")
+    def test_get_kansou_admin_logOUT(self):
+        user_logout(self)
+        response = self.client.get("/api/kansou/")
         self.assertEqual(response.status_code, 302)
-        url_redial_to = response.url
-        response = self.client.get(url_redial_to)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "admin/login.html")
 
-    def test_kansou_index_logIN(self):
-        User_LogIN(self)
-        Make_KansouPDF(self)
-        response = self.client.get("/kansou/")
+    def test_get_kansou_api_logIN(self):
+        user_login(self)
+        make_kansou(self)
+        response = self.client.get("/api/kansou/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "kansou/index.html")
-        for i in range(len(livename)):
-            self.assertContains(response, livename[i][1])
-            self.assertContains(response, Kansouyoushi.objects.get(live=livename[i][0]).file.url)
 
-    def test_kansou_index_logIN_3_31(self):
-        User_LogIN(self)
-        day = datetime.date(2018, 3, 31)
-        Make_KansouPDF(self, performed_at=day)
-        response = self.client.get("/kansou/")
+    def test_file_exists(self):
+        make_kansou(self)
+        today = datetime.date.today()
+        filepath = os.path.join(
+            settings.BASE_DIR, "private_media", "kansou",
+            today.strftime("%Y"), today.strftime("%Y%m%d") + ".pdf")
+        self.assertTrue(os.path.isfile(filepath))
+
+
+class KansouAdminTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        make_a_staff_user(cls)
+
+    def test_kansou_admin_login_without_permission(self):
+        user_login(self)
+        response = self.client.get("/admin/kansou/kansouyoushi/add/")
+        self.assertEqual(response.status_code, 403)
+
+    def test_kansou_admin_login_with_permission(self):
+        # 初め、感想用紙が存在しないことを確認
+        self.assertFalse(Kansouyoushi.objects.all().exists())
+        
+        user_login_and_give_permission(self)
+        response = self.client.get("/admin/kansou/kansouyoushi/add/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "kansou/index.html")
-        for i in range(len(livename)):
-            self.assertContains(response, livename[i][1])
-            self.assertContains(response, Kansouyoushi.objects.get(live=livename[i][0]).file.url)
-            self.assertContains(response, str(day.year - 1) + "年度")
-            self.assertNotContains(response, str(day.year) + "年度")
-            self.assertNotContains(response, str(day.year + 1) + "年度")
-
-    def test_kansou_index_logIN_4_1(self):
-        User_LogIN(self)
-        day = datetime.date(2018, 4, 1)
-        Make_KansouPDF(self, performed_at=day)
-        response = self.client.get("/kansou/")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "kansou/index.html")
-        for i in range(len(livename)):
-            self.assertContains(response, livename[i][1])
-            self.assertContains(response, Kansouyoushi.objects.get(live=livename[i][0]).file.url)
-            self.assertNotContains(response, str(day.year - 1) + "年度")
-            self.assertContains(response, str(day.year) + "年度")
-            self.assertNotContains(response, str(day.year + 1) + "年度")
-
-    def test_kansou_upload_logIN_POST_withOUT_Permission(self):
-        User_LogIN(self)
-        response = self.client.get("/kansou/upload/")
-        self.assertEqual(response.status_code, 302)
-        url_redial_to = response.url
-        self.assertEqual(url_redial_to, "/kansou/")
 
         filedir = os.path.join(settings.BASE_DIR, "kansou", "test.pdf")
         with open(filedir, "rb") as file:
             data = {
-                "live": livename[0][0],
+                "title": "テストライブ",
                 "performed_at": datetime.date.today(),
                 "file": SimpleUploadedFile("test.pdf", file.read()),
             }
-            request = self.client.post("/kansou/upload/", data)
+            request = self.client.post("/admin/kansou/kansouyoushi/add/", data)
+        
         self.assertEqual(request.status_code, 302)
-        url_redial_to = request.url
-        self.assertEqual(url_redial_to, "/kansou/")
 
-        response = self.client.get(url_redial_to)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "kansou/index.html")
-        self.assertNotContains(response, "登録しました。")
-        self.assertNotContains(response, data["performed_at"].strftime("%Y/%m/%d"))
+        # 感想用紙が存在することを確認
+        kansou = Kansouyoushi.objects.get(performed_at=data["performed_at"])
+        self.assertEqual(kansou.title, data["title"])
 
-    def test_kansou_upload_logIN_POST_with_Permission(self):
-        User_LogIN_and_Get_a_Permission(self)
-        response = self.client.get("/kansou/upload/")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "kansou/upload.html")
-        filedir = os.path.join(settings.BASE_DIR, "kansou", "test.pdf")
-        with open(filedir, "rb") as file:
-            data = {
-                "live": livename[0][0],
-                "performed_at": datetime.date.today(),
-                "file": SimpleUploadedFile("test.pdf", file.read()),
-            }
-            request = self.client.post("/kansou/upload/", data)
-        self.assertEqual(request.status_code, 302)
-        url_redial_to = request.url
-        self.assertEqual(url_redial_to, "/kansou/")
-
-        response = self.client.get(url_redial_to)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "kansou/index.html")
-        self.assertContains(response, "登録しました。")
-        self.assertContains(response, data["performed_at"].strftime("%Y/%m/%d"))
+        # 感想用紙が指定されたディレクトリに存在することを確認
+        performed_at = data["performed_at"]
+        filepath = os.path.join(
+            settings.BASE_DIR, "private_media", "kansou",
+            performed_at.strftime("%Y"), performed_at.strftime("%Y%m%d") + ".pdf")
+        self.assertTrue(os.path.isfile(filepath))
