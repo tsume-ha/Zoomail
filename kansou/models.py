@@ -5,10 +5,6 @@ from members.models import User
 from private_storage.fields import PrivateFileField
 
 
-# To Do
-# live をChoiceFieldに
-# upload_toでファイル名を指定してしまう
-
 def kansou_upload_to(instance, filename):
     performed_at = instance.performed_at
     extension = os.path.splitext(filename)[-1]
