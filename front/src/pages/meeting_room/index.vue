@@ -1,14 +1,29 @@
 <template>
   <article>
     <h3>例会教室</h3>
-    <div class="card">
-      <router-link
-        v-if="isStaff"
-        to="./register/"
-        id="register"
-        class="button button-primary"
-        >修正・登録</router-link
-      >
+    <div id="today-room" class="card">
+      今日(
+      <span :class="dayColor(todayRoom.date)">
+        {{ md(todayRoom.date) }}
+      </span>
+      )の例会教室は、<br />
+      <span id="today-room-name">
+        「
+        <span :class="roomColor(todayRoom.room)">
+          {{ room(todayRoom.room) }}
+        </span>
+        」
+      </span>
+      です。
+    </div>
+    <div id="register" class="card" v-if="isStaff">
+      <h4>教室係用メニュー</h4>
+      <router-link to="./register/" class="button button-primary"
+        >例会教室データの修正・登録 <Icon :icon="['fas', 'edit']"
+      /></router-link>
+    </div>
+    <div id="rooms" class="card">
+      <h4>1カ月先までの例会教室一覧</h4>
       <p v-if="rooms.length === 0">Now Loading...</p>
       <table v-else class="pure-table pure-table-bordered">
         <tr v-for="data in rooms" :key="data.date">
@@ -31,14 +46,19 @@
 <script setup>
 import moment from "@/utils/moment.js";
 import axios from "@/utils/axios.js";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 const rooms = ref([]);
-const isStaff = false;
+const isStaff = true;
 axios.get("/api/meeting_room/get31day/").then((res) => {
   rooms.value = res.data.rooms;
 });
 
-const md = (date) => moment(date).format("MM/DD (dd)");
+const md = (date) => moment(date).format("M/DD (dd)");
+
+const todayRoom = computed(() => {
+  const date = moment().format("YYYY-MM-DD");
+  return rooms.value.find((obj) => obj.date === date);
+});
 
 const dayColor = (date) => {
   const day = moment(date).format("d");
@@ -75,10 +95,23 @@ const roomColor = (room) => {
 <style lang="scss" scoped>
 .card {
   padding: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
 }
-#register {
+#today-room {
+  margin: 1rem auto;
+  #today-room-name {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+}
+h4 {
+  display: block;
+  margin: 0 0 1rem;
+}
+#register .button {
   display: inline-block;
-  margin: 1rem 0;
+  margin: 0;
   padding: 0.75rem;
 }
 .text-danger {
