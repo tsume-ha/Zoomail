@@ -1,3415 +1,385 @@
 {
   "status": "done",
   "assets": {
-    "static/dist/js/public.js": {
-      "name": "static/dist/js/public.js",
-      "path": "static\\dist\\js\\public.js",
-      "publicPath": "http://localhost:8080/static/dist/js/public.js"
-    },
     "static/dist/img/LP-BG.79fce175.jpeg": {
       "name": "static/dist/img/LP-BG.79fce175.jpeg",
       "path": "static\\dist\\img\\LP-BG.79fce175.jpeg",
-      "publicPath": "http://localhost:8080/static/dist/img/LP-BG.79fce175.jpeg"
+      "publicPath": "/static/dist/img/LP-BG.79fce175.jpeg"
     },
     "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png": {
       "name": "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png",
       "path": "static\\dist\\img\\btn_google_signin_light_focus_web@2x.c00d9ed0.png",
-      "publicPath": "http://localhost:8080/static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png"
+      "publicPath": "/static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png"
+    },
+    "static/dist/css/public.3a9f206e.css": {
+      "name": "static/dist/css/public.3a9f206e.css",
+      "path": "static\\dist\\css\\public.3a9f206e.css",
+      "publicPath": "/static/dist/css/public.3a9f206e.css"
+    },
+    "static/dist/js/public.991ce3a1.js": {
+      "name": "static/dist/js/public.991ce3a1.js",
+      "path": "static\\dist\\js\\public.991ce3a1.js",
+      "publicPath": "/static/dist/js/public.991ce3a1.js"
     },
     "static/dist/img/livelog.6df3ecdf.png": {
       "name": "static/dist/img/livelog.6df3ecdf.png",
       "path": "static\\dist\\img\\livelog.6df3ecdf.png",
-      "publicPath": "http://localhost:8080/static/dist/img/livelog.6df3ecdf.png"
+      "publicPath": "/static/dist/img/livelog.6df3ecdf.png"
     },
     "static/dist/img/zoomail.4c935cf7.png": {
       "name": "static/dist/img/zoomail.4c935cf7.png",
       "path": "static\\dist\\img\\zoomail.4c935cf7.png",
-      "publicPath": "http://localhost:8080/static/dist/img/zoomail.4c935cf7.png"
+      "publicPath": "/static/dist/img/zoomail.4c935cf7.png"
     },
-    "static/dist/js/private.js": {
-      "name": "static/dist/js/private.js",
-      "path": "static\\dist\\js\\private.js",
-      "publicPath": "http://localhost:8080/static/dist/js/private.js"
+    "static/dist/css/private.31860e42.css": {
+      "name": "static/dist/css/private.31860e42.css",
+      "path": "static\\dist\\css\\private.31860e42.css",
+      "publicPath": "/static/dist/css/private.31860e42.css"
     },
-    "static/dist/js/home.js": {
-      "name": "static/dist/js/home.js",
-      "path": "static\\dist\\js\\home.js",
-      "publicPath": "http://localhost:8080/static/dist/js/home.js"
+    "static/dist/js/private.345e6a23.js": {
+      "name": "static/dist/js/private.345e6a23.js",
+      "path": "static\\dist\\js\\private.345e6a23.js",
+      "publicPath": "/static/dist/js/private.345e6a23.js"
     },
-    "static/dist/js/read.js": {
-      "name": "static/dist/js/read.js",
-      "path": "static\\dist\\js\\read.js",
-      "publicPath": "http://localhost:8080/static/dist/js/read.js"
+    "static/dist/css/home.370765fe.css": {
+      "name": "static/dist/css/home.370765fe.css",
+      "path": "static\\dist\\css\\home.370765fe.css",
+      "publicPath": "/static/dist/css/home.370765fe.css"
     },
-    "static/dist/js/send.js": {
-      "name": "static/dist/js/send.js",
-      "path": "static\\dist\\js\\send.js",
-      "publicPath": "http://localhost:8080/static/dist/js/send.js"
+    "static/dist/js/home.743dd1c0.js": {
+      "name": "static/dist/js/home.743dd1c0.js",
+      "path": "static\\dist\\js\\home.743dd1c0.js",
+      "publicPath": "/static/dist/js/home.743dd1c0.js"
     },
-    "static/dist/js/photo.js": {
-      "name": "static/dist/js/photo.js",
-      "path": "static\\dist\\js\\photo.js",
-      "publicPath": "http://localhost:8080/static/dist/js/photo.js"
+    "static/dist/css/read.185294ad.css": {
+      "name": "static/dist/css/read.185294ad.css",
+      "path": "static\\dist\\css\\read.185294ad.css",
+      "publicPath": "/static/dist/css/read.185294ad.css"
+    },
+    "static/dist/js/read.fe3aa646.js": {
+      "name": "static/dist/js/read.fe3aa646.js",
+      "path": "static\\dist\\js\\read.fe3aa646.js",
+      "publicPath": "/static/dist/js/read.fe3aa646.js"
+    },
+    "static/dist/css/send.d2c7f5da.css": {
+      "name": "static/dist/css/send.d2c7f5da.css",
+      "path": "static\\dist\\css\\send.d2c7f5da.css",
+      "publicPath": "/static/dist/css/send.d2c7f5da.css"
+    },
+    "static/dist/js/send.b2f215fb.js": {
+      "name": "static/dist/js/send.b2f215fb.js",
+      "path": "static\\dist\\js\\send.b2f215fb.js",
+      "publicPath": "/static/dist/js/send.b2f215fb.js"
+    },
+    "static/dist/css/photo.a623dbbd.css": {
+      "name": "static/dist/css/photo.a623dbbd.css",
+      "path": "static\\dist\\css\\photo.a623dbbd.css",
+      "publicPath": "/static/dist/css/photo.a623dbbd.css"
+    },
+    "static/dist/js/photo.3ca9633b.js": {
+      "name": "static/dist/js/photo.3ca9633b.js",
+      "path": "static\\dist\\js\\photo.3ca9633b.js",
+      "publicPath": "/static/dist/js/photo.3ca9633b.js"
     },
     "static/dist/img/unplugged_logo.c717fdac.jpg": {
       "name": "static/dist/img/unplugged_logo.c717fdac.jpg",
       "path": "static\\dist\\img\\unplugged_logo.c717fdac.jpg",
-      "publicPath": "http://localhost:8080/static/dist/img/unplugged_logo.c717fdac.jpg"
+      "publicPath": "/static/dist/img/unplugged_logo.c717fdac.jpg"
     },
-    "static/dist/js/sound.js": {
-      "name": "static/dist/js/sound.js",
-      "path": "static\\dist\\js\\sound.js",
-      "publicPath": "http://localhost:8080/static/dist/js/sound.js"
+    "static/dist/css/sound.aff2ea39.css": {
+      "name": "static/dist/css/sound.aff2ea39.css",
+      "path": "static\\dist\\css\\sound.aff2ea39.css",
+      "publicPath": "/static/dist/css/sound.aff2ea39.css"
     },
-    "static/dist/js/kansou.js": {
-      "name": "static/dist/js/kansou.js",
-      "path": "static\\dist\\js\\kansou.js",
-      "publicPath": "http://localhost:8080/static/dist/js/kansou.js"
+    "static/dist/js/sound.1152feac.js": {
+      "name": "static/dist/js/sound.1152feac.js",
+      "path": "static\\dist\\js\\sound.1152feac.js",
+      "publicPath": "/static/dist/js/sound.1152feac.js"
     },
-    "static/dist/js/mypage.js": {
-      "name": "static/dist/js/mypage.js",
-      "path": "static\\dist\\js\\mypage.js",
-      "publicPath": "http://localhost:8080/static/dist/js/mypage.js"
+    "static/dist/css/kansou.5a9f743b.css": {
+      "name": "static/dist/css/kansou.5a9f743b.css",
+      "path": "static\\dist\\css\\kansou.5a9f743b.css",
+      "publicPath": "/static/dist/css/kansou.5a9f743b.css"
+    },
+    "static/dist/js/kansou.3b46ec87.js": {
+      "name": "static/dist/js/kansou.3b46ec87.js",
+      "path": "static\\dist\\js\\kansou.3b46ec87.js",
+      "publicPath": "/static/dist/js/kansou.3b46ec87.js"
+    },
+    "static/dist/css/mypage.dc6d3e5e.css": {
+      "name": "static/dist/css/mypage.dc6d3e5e.css",
+      "path": "static\\dist\\css\\mypage.dc6d3e5e.css",
+      "publicPath": "/static/dist/css/mypage.dc6d3e5e.css"
+    },
+    "static/dist/js/mypage.d86c7836.js": {
+      "name": "static/dist/js/mypage.d86c7836.js",
+      "path": "static\\dist\\js\\mypage.d86c7836.js",
+      "publicPath": "/static/dist/js/mypage.d86c7836.js"
     },
     "static/dist/img/google.fd4588af.png": {
       "name": "static/dist/img/google.fd4588af.png",
       "path": "static\\dist\\img\\google.fd4588af.png",
-      "publicPath": "http://localhost:8080/static/dist/img/google.fd4588af.png"
+      "publicPath": "/static/dist/img/google.fd4588af.png"
     },
-    "static/dist/js/mypage-invite.js": {
-      "name": "static/dist/js/mypage-invite.js",
-      "path": "static\\dist\\js\\mypage-invite.js",
-      "publicPath": "http://localhost:8080/static/dist/js/mypage-invite.js"
+    "static/dist/css/mypage-invite.87397bc8.css": {
+      "name": "static/dist/css/mypage-invite.87397bc8.css",
+      "path": "static\\dist\\css\\mypage-invite.87397bc8.css",
+      "publicPath": "/static/dist/css/mypage-invite.87397bc8.css"
     },
-    "static/dist/js/movie.js": {
-      "name": "static/dist/js/movie.js",
-      "path": "static\\dist\\js\\movie.js",
-      "publicPath": "http://localhost:8080/static/dist/js/movie.js"
+    "static/dist/js/mypage-invite.f3a228ea.js": {
+      "name": "static/dist/js/mypage-invite.f3a228ea.js",
+      "path": "static\\dist\\js\\mypage-invite.f3a228ea.js",
+      "publicPath": "/static/dist/js/mypage-invite.f3a228ea.js"
     },
-    "static/dist/js/others.js": {
-      "name": "static/dist/js/others.js",
-      "path": "static\\dist\\js\\others.js",
-      "publicPath": "http://localhost:8080/static/dist/js/others.js"
+    "static/dist/css/movie.14c8d511.css": {
+      "name": "static/dist/css/movie.14c8d511.css",
+      "path": "static\\dist\\css\\movie.14c8d511.css",
+      "publicPath": "/static/dist/css/movie.14c8d511.css"
     },
-    "static/dist/js/meeting_room.js": {
-      "name": "static/dist/js/meeting_room.js",
-      "path": "static\\dist\\js\\meeting_room.js",
-      "publicPath": "http://localhost:8080/static/dist/js/meeting_room.js"
+    "static/dist/js/movie.950bd52c.js": {
+      "name": "static/dist/js/movie.950bd52c.js",
+      "path": "static\\dist\\js\\movie.950bd52c.js",
+      "publicPath": "/static/dist/js/movie.950bd52c.js"
     },
-    "static/dist/js/src_pages_404_vue.js": {
-      "name": "static/dist/js/src_pages_404_vue.js",
-      "path": "static\\dist\\js\\src_pages_404_vue.js",
-      "publicPath": "http://localhost:8080/static/dist/js/src_pages_404_vue.js"
+    "static/dist/css/others.54b63cb6.css": {
+      "name": "static/dist/css/others.54b63cb6.css",
+      "path": "static\\dist\\css\\others.54b63cb6.css",
+      "publicPath": "/static/dist/css/others.54b63cb6.css"
     },
-    "static/dist/js/chunk-vendors.js": {
-      "name": "static/dist/js/chunk-vendors.js",
-      "path": "static\\dist\\js\\chunk-vendors.js",
-      "publicPath": "http://localhost:8080/static/dist/js/chunk-vendors.js"
+    "static/dist/js/others.b4402807.js": {
+      "name": "static/dist/js/others.b4402807.js",
+      "path": "static\\dist\\js\\others.b4402807.js",
+      "publicPath": "/static/dist/js/others.b4402807.js"
     },
-    "static/dist/js/chunk-common.js": {
-      "name": "static/dist/js/chunk-common.js",
-      "path": "static\\dist\\js\\chunk-common.js",
-      "publicPath": "http://localhost:8080/static/dist/js/chunk-common.js"
+    "static/dist/css/meeting_room.29e3ee58.css": {
+      "name": "static/dist/css/meeting_room.29e3ee58.css",
+      "path": "static\\dist\\css\\meeting_room.29e3ee58.css",
+      "publicPath": "/static/dist/css/meeting_room.29e3ee58.css"
     },
-    "static/dist/js/src_components_AbstractSetting_vue.js": {
-      "name": "static/dist/js/src_components_AbstractSetting_vue.js",
-      "path": "static\\dist\\js\\src_components_AbstractSetting_vue.js",
-      "publicPath": "http://localhost:8080/static/dist/js/src_components_AbstractSetting_vue.js"
+    "static/dist/js/meeting_room.9075b92e.js": {
+      "name": "static/dist/js/meeting_room.9075b92e.js",
+      "path": "static\\dist\\js\\meeting_room.9075b92e.js",
+      "publicPath": "/static/dist/js/meeting_room.9075b92e.js"
+    },
+    "static/dist/css/meeting_room:ical.9bfceb5f.css": {
+      "name": "static/dist/css/meeting_room:ical.9bfceb5f.css",
+      "path": "static\\dist\\css\\meeting_room:ical.9bfceb5f.css",
+      "publicPath": "/static/dist/css/meeting_room:ical.9bfceb5f.css"
+    },
+    "static/dist/js/meeting_room:ical.8bfc3be9.js": {
+      "name": "static/dist/js/meeting_room:ical.8bfc3be9.js",
+      "path": "static\\dist\\js\\meeting_room:ical.8bfc3be9.js",
+      "publicPath": "/static/dist/js/meeting_room:ical.8bfc3be9.js"
+    },
+    "static/dist/img/complete.d643c509.png": {
+      "name": "static/dist/img/complete.d643c509.png",
+      "path": "static\\dist\\img\\complete.d643c509.png",
+      "publicPath": "/static/dist/img/complete.d643c509.png"
+    },
+    "static/dist/css/893.803f6bf5.css": {
+      "name": "static/dist/css/893.803f6bf5.css",
+      "path": "static\\dist\\css\\893.803f6bf5.css",
+      "publicPath": "/static/dist/css/893.803f6bf5.css"
+    },
+    "static/dist/js/893.b1d5f6cc.js": {
+      "name": "static/dist/js/893.b1d5f6cc.js",
+      "path": "static\\dist\\js\\893.b1d5f6cc.js",
+      "publicPath": "/static/dist/js/893.b1d5f6cc.js"
+    },
+    "static/dist/css/chunk-vendors.0630f1fb.css": {
+      "name": "static/dist/css/chunk-vendors.0630f1fb.css",
+      "path": "static\\dist\\css\\chunk-vendors.0630f1fb.css",
+      "publicPath": "/static/dist/css/chunk-vendors.0630f1fb.css"
+    },
+    "static/dist/js/chunk-vendors.ac67307c.js": {
+      "name": "static/dist/js/chunk-vendors.ac67307c.js",
+      "path": "static\\dist\\js\\chunk-vendors.ac67307c.js",
+      "publicPath": "/static/dist/js/chunk-vendors.ac67307c.js"
+    },
+    "static/dist/css/public.3a9f206e.css.map": {
+      "name": "static/dist/css/public.3a9f206e.css.map",
+      "path": "static\\dist\\css\\public.3a9f206e.css.map",
+      "publicPath": "/static/dist/css/public.3a9f206e.css.map"
+    },
+    "static/dist/js/public.991ce3a1.js.map": {
+      "name": "static/dist/js/public.991ce3a1.js.map",
+      "path": "static\\dist\\js\\public.991ce3a1.js.map",
+      "publicPath": "/static/dist/js/public.991ce3a1.js.map"
+    },
+    "static/dist/css/private.31860e42.css.map": {
+      "name": "static/dist/css/private.31860e42.css.map",
+      "path": "static\\dist\\css\\private.31860e42.css.map",
+      "publicPath": "/static/dist/css/private.31860e42.css.map"
+    },
+    "static/dist/js/private.345e6a23.js.map": {
+      "name": "static/dist/js/private.345e6a23.js.map",
+      "path": "static\\dist\\js\\private.345e6a23.js.map",
+      "publicPath": "/static/dist/js/private.345e6a23.js.map"
+    },
+    "static/dist/css/home.370765fe.css.map": {
+      "name": "static/dist/css/home.370765fe.css.map",
+      "path": "static\\dist\\css\\home.370765fe.css.map",
+      "publicPath": "/static/dist/css/home.370765fe.css.map"
+    },
+    "static/dist/js/home.743dd1c0.js.map": {
+      "name": "static/dist/js/home.743dd1c0.js.map",
+      "path": "static\\dist\\js\\home.743dd1c0.js.map",
+      "publicPath": "/static/dist/js/home.743dd1c0.js.map"
+    },
+    "static/dist/css/read.185294ad.css.map": {
+      "name": "static/dist/css/read.185294ad.css.map",
+      "path": "static\\dist\\css\\read.185294ad.css.map",
+      "publicPath": "/static/dist/css/read.185294ad.css.map"
+    },
+    "static/dist/js/read.fe3aa646.js.map": {
+      "name": "static/dist/js/read.fe3aa646.js.map",
+      "path": "static\\dist\\js\\read.fe3aa646.js.map",
+      "publicPath": "/static/dist/js/read.fe3aa646.js.map"
+    },
+    "static/dist/css/send.d2c7f5da.css.map": {
+      "name": "static/dist/css/send.d2c7f5da.css.map",
+      "path": "static\\dist\\css\\send.d2c7f5da.css.map",
+      "publicPath": "/static/dist/css/send.d2c7f5da.css.map"
+    },
+    "static/dist/js/send.b2f215fb.js.map": {
+      "name": "static/dist/js/send.b2f215fb.js.map",
+      "path": "static\\dist\\js\\send.b2f215fb.js.map",
+      "publicPath": "/static/dist/js/send.b2f215fb.js.map"
+    },
+    "static/dist/css/photo.a623dbbd.css.map": {
+      "name": "static/dist/css/photo.a623dbbd.css.map",
+      "path": "static\\dist\\css\\photo.a623dbbd.css.map",
+      "publicPath": "/static/dist/css/photo.a623dbbd.css.map"
+    },
+    "static/dist/js/photo.3ca9633b.js.map": {
+      "name": "static/dist/js/photo.3ca9633b.js.map",
+      "path": "static\\dist\\js\\photo.3ca9633b.js.map",
+      "publicPath": "/static/dist/js/photo.3ca9633b.js.map"
+    },
+    "static/dist/css/sound.aff2ea39.css.map": {
+      "name": "static/dist/css/sound.aff2ea39.css.map",
+      "path": "static\\dist\\css\\sound.aff2ea39.css.map",
+      "publicPath": "/static/dist/css/sound.aff2ea39.css.map"
+    },
+    "static/dist/js/sound.1152feac.js.map": {
+      "name": "static/dist/js/sound.1152feac.js.map",
+      "path": "static\\dist\\js\\sound.1152feac.js.map",
+      "publicPath": "/static/dist/js/sound.1152feac.js.map"
+    },
+    "static/dist/css/kansou.5a9f743b.css.map": {
+      "name": "static/dist/css/kansou.5a9f743b.css.map",
+      "path": "static\\dist\\css\\kansou.5a9f743b.css.map",
+      "publicPath": "/static/dist/css/kansou.5a9f743b.css.map"
+    },
+    "static/dist/js/kansou.3b46ec87.js.map": {
+      "name": "static/dist/js/kansou.3b46ec87.js.map",
+      "path": "static\\dist\\js\\kansou.3b46ec87.js.map",
+      "publicPath": "/static/dist/js/kansou.3b46ec87.js.map"
+    },
+    "static/dist/css/mypage.dc6d3e5e.css.map": {
+      "name": "static/dist/css/mypage.dc6d3e5e.css.map",
+      "path": "static\\dist\\css\\mypage.dc6d3e5e.css.map",
+      "publicPath": "/static/dist/css/mypage.dc6d3e5e.css.map"
+    },
+    "static/dist/js/mypage.d86c7836.js.map": {
+      "name": "static/dist/js/mypage.d86c7836.js.map",
+      "path": "static\\dist\\js\\mypage.d86c7836.js.map",
+      "publicPath": "/static/dist/js/mypage.d86c7836.js.map"
+    },
+    "static/dist/css/mypage-invite.87397bc8.css.map": {
+      "name": "static/dist/css/mypage-invite.87397bc8.css.map",
+      "path": "static\\dist\\css\\mypage-invite.87397bc8.css.map",
+      "publicPath": "/static/dist/css/mypage-invite.87397bc8.css.map"
+    },
+    "static/dist/js/mypage-invite.f3a228ea.js.map": {
+      "name": "static/dist/js/mypage-invite.f3a228ea.js.map",
+      "path": "static\\dist\\js\\mypage-invite.f3a228ea.js.map",
+      "publicPath": "/static/dist/js/mypage-invite.f3a228ea.js.map"
+    },
+    "static/dist/css/movie.14c8d511.css.map": {
+      "name": "static/dist/css/movie.14c8d511.css.map",
+      "path": "static\\dist\\css\\movie.14c8d511.css.map",
+      "publicPath": "/static/dist/css/movie.14c8d511.css.map"
+    },
+    "static/dist/js/movie.950bd52c.js.map": {
+      "name": "static/dist/js/movie.950bd52c.js.map",
+      "path": "static\\dist\\js\\movie.950bd52c.js.map",
+      "publicPath": "/static/dist/js/movie.950bd52c.js.map"
+    },
+    "static/dist/css/others.54b63cb6.css.map": {
+      "name": "static/dist/css/others.54b63cb6.css.map",
+      "path": "static\\dist\\css\\others.54b63cb6.css.map",
+      "publicPath": "/static/dist/css/others.54b63cb6.css.map"
+    },
+    "static/dist/js/others.b4402807.js.map": {
+      "name": "static/dist/js/others.b4402807.js.map",
+      "path": "static\\dist\\js\\others.b4402807.js.map",
+      "publicPath": "/static/dist/js/others.b4402807.js.map"
+    },
+    "static/dist/css/meeting_room.29e3ee58.css.map": {
+      "name": "static/dist/css/meeting_room.29e3ee58.css.map",
+      "path": "static\\dist\\css\\meeting_room.29e3ee58.css.map",
+      "publicPath": "/static/dist/css/meeting_room.29e3ee58.css.map"
+    },
+    "static/dist/js/meeting_room.9075b92e.js.map": {
+      "name": "static/dist/js/meeting_room.9075b92e.js.map",
+      "path": "static\\dist\\js\\meeting_room.9075b92e.js.map",
+      "publicPath": "/static/dist/js/meeting_room.9075b92e.js.map"
+    },
+    "static/dist/css/meeting_room:ical.9bfceb5f.css.map": {
+      "name": "static/dist/css/meeting_room:ical.9bfceb5f.css.map",
+      "path": "static\\dist\\css\\meeting_room:ical.9bfceb5f.css.map",
+      "publicPath": "/static/dist/css/meeting_room:ical.9bfceb5f.css.map"
+    },
+    "static/dist/js/meeting_room:ical.8bfc3be9.js.map": {
+      "name": "static/dist/js/meeting_room:ical.8bfc3be9.js.map",
+      "path": "static\\dist\\js\\meeting_room:ical.8bfc3be9.js.map",
+      "publicPath": "/static/dist/js/meeting_room:ical.8bfc3be9.js.map"
+    },
+    "static/dist/css/893.803f6bf5.css.map": {
+      "name": "static/dist/css/893.803f6bf5.css.map",
+      "path": "static\\dist\\css\\893.803f6bf5.css.map",
+      "publicPath": "/static/dist/css/893.803f6bf5.css.map"
+    },
+    "static/dist/js/893.b1d5f6cc.js.map": {
+      "name": "static/dist/js/893.b1d5f6cc.js.map",
+      "path": "static\\dist\\js\\893.b1d5f6cc.js.map",
+      "publicPath": "/static/dist/js/893.b1d5f6cc.js.map"
+    },
+    "static/dist/css/chunk-vendors.0630f1fb.css.map": {
+      "name": "static/dist/css/chunk-vendors.0630f1fb.css.map",
+      "path": "static\\dist\\css\\chunk-vendors.0630f1fb.css.map",
+      "publicPath": "/static/dist/css/chunk-vendors.0630f1fb.css.map"
+    },
+    "static/dist/js/chunk-vendors.ac67307c.js.map": {
+      "name": "static/dist/js/chunk-vendors.ac67307c.js.map",
+      "path": "static\\dist\\js\\chunk-vendors.ac67307c.js.map",
+      "publicPath": "/static/dist/js/chunk-vendors.ac67307c.js.map"
     },
     "public.html": {
       "name": "public.html",
       "path": "public.html",
-      "publicPath": "http://localhost:8080/public.html"
+      "publicPath": "/public.html"
     },
     "private.html": {
       "name": "private.html",
       "path": "private.html",
-      "publicPath": "http://localhost:8080/private.html"
-    },
-    "public.7063ec82e0d65c0c.hot-update.js": {
-      "name": "public.7063ec82e0d65c0c.hot-update.js",
-      "path": "public.7063ec82e0d65c0c.hot-update.js",
-      "publicPath": "http://localhost:8080/public.7063ec82e0d65c0c.hot-update.js"
-    },
-    "private.7063ec82e0d65c0c.hot-update.js": {
-      "name": "private.7063ec82e0d65c0c.hot-update.js",
-      "path": "private.7063ec82e0d65c0c.hot-update.js",
-      "publicPath": "http://localhost:8080/private.7063ec82e0d65c0c.hot-update.js"
-    },
-    "public.7063ec82e0d65c0c.hot-update.json": {
-      "name": "public.7063ec82e0d65c0c.hot-update.json",
-      "path": "public.7063ec82e0d65c0c.hot-update.json",
-      "publicPath": "http://localhost:8080/public.7063ec82e0d65c0c.hot-update.json"
-    },
-    "private.7063ec82e0d65c0c.hot-update.json": {
-      "name": "private.7063ec82e0d65c0c.hot-update.json",
-      "path": "private.7063ec82e0d65c0c.hot-update.json",
-      "publicPath": "http://localhost:8080/private.7063ec82e0d65c0c.hot-update.json"
-    },
-    "public.d4e1b026d4a36ce5.hot-update.js": {
-      "name": "public.d4e1b026d4a36ce5.hot-update.js",
-      "path": "public.d4e1b026d4a36ce5.hot-update.js",
-      "publicPath": "http://localhost:8080/public.d4e1b026d4a36ce5.hot-update.js"
-    },
-    "private.d4e1b026d4a36ce5.hot-update.js": {
-      "name": "private.d4e1b026d4a36ce5.hot-update.js",
-      "path": "private.d4e1b026d4a36ce5.hot-update.js",
-      "publicPath": "http://localhost:8080/private.d4e1b026d4a36ce5.hot-update.js"
-    },
-    "meeting_room.d4e1b026d4a36ce5.hot-update.js": {
-      "name": "meeting_room.d4e1b026d4a36ce5.hot-update.js",
-      "path": "meeting_room.d4e1b026d4a36ce5.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.d4e1b026d4a36ce5.hot-update.js"
-    },
-    "public.d4e1b026d4a36ce5.hot-update.json": {
-      "name": "public.d4e1b026d4a36ce5.hot-update.json",
-      "path": "public.d4e1b026d4a36ce5.hot-update.json",
-      "publicPath": "http://localhost:8080/public.d4e1b026d4a36ce5.hot-update.json"
-    },
-    "private.d4e1b026d4a36ce5.hot-update.json": {
-      "name": "private.d4e1b026d4a36ce5.hot-update.json",
-      "path": "private.d4e1b026d4a36ce5.hot-update.json",
-      "publicPath": "http://localhost:8080/private.d4e1b026d4a36ce5.hot-update.json"
-    },
-    "public.c951287546b2878b.hot-update.js": {
-      "name": "public.c951287546b2878b.hot-update.js",
-      "path": "public.c951287546b2878b.hot-update.js",
-      "publicPath": "http://localhost:8080/public.c951287546b2878b.hot-update.js"
-    },
-    "private.c951287546b2878b.hot-update.js": {
-      "name": "private.c951287546b2878b.hot-update.js",
-      "path": "private.c951287546b2878b.hot-update.js",
-      "publicPath": "http://localhost:8080/private.c951287546b2878b.hot-update.js"
-    },
-    "meeting_room.c951287546b2878b.hot-update.js": {
-      "name": "meeting_room.c951287546b2878b.hot-update.js",
-      "path": "meeting_room.c951287546b2878b.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.c951287546b2878b.hot-update.js"
-    },
-    "public.c951287546b2878b.hot-update.json": {
-      "name": "public.c951287546b2878b.hot-update.json",
-      "path": "public.c951287546b2878b.hot-update.json",
-      "publicPath": "http://localhost:8080/public.c951287546b2878b.hot-update.json"
-    },
-    "private.c951287546b2878b.hot-update.json": {
-      "name": "private.c951287546b2878b.hot-update.json",
-      "path": "private.c951287546b2878b.hot-update.json",
-      "publicPath": "http://localhost:8080/private.c951287546b2878b.hot-update.json"
-    },
-    "public.462b5e9c26929f6a.hot-update.js": {
-      "name": "public.462b5e9c26929f6a.hot-update.js",
-      "path": "public.462b5e9c26929f6a.hot-update.js",
-      "publicPath": "http://localhost:8080/public.462b5e9c26929f6a.hot-update.js"
-    },
-    "private.462b5e9c26929f6a.hot-update.js": {
-      "name": "private.462b5e9c26929f6a.hot-update.js",
-      "path": "private.462b5e9c26929f6a.hot-update.js",
-      "publicPath": "http://localhost:8080/private.462b5e9c26929f6a.hot-update.js"
-    },
-    "meeting_room.462b5e9c26929f6a.hot-update.js": {
-      "name": "meeting_room.462b5e9c26929f6a.hot-update.js",
-      "path": "meeting_room.462b5e9c26929f6a.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.462b5e9c26929f6a.hot-update.js"
-    },
-    "public.462b5e9c26929f6a.hot-update.json": {
-      "name": "public.462b5e9c26929f6a.hot-update.json",
-      "path": "public.462b5e9c26929f6a.hot-update.json",
-      "publicPath": "http://localhost:8080/public.462b5e9c26929f6a.hot-update.json"
-    },
-    "private.462b5e9c26929f6a.hot-update.json": {
-      "name": "private.462b5e9c26929f6a.hot-update.json",
-      "path": "private.462b5e9c26929f6a.hot-update.json",
-      "publicPath": "http://localhost:8080/private.462b5e9c26929f6a.hot-update.json"
-    },
-    "public.f9345f628d851473.hot-update.js": {
-      "name": "public.f9345f628d851473.hot-update.js",
-      "path": "public.f9345f628d851473.hot-update.js",
-      "publicPath": "http://localhost:8080/public.f9345f628d851473.hot-update.js"
-    },
-    "private.f9345f628d851473.hot-update.js": {
-      "name": "private.f9345f628d851473.hot-update.js",
-      "path": "private.f9345f628d851473.hot-update.js",
-      "publicPath": "http://localhost:8080/private.f9345f628d851473.hot-update.js"
-    },
-    "meeting_room.f9345f628d851473.hot-update.js": {
-      "name": "meeting_room.f9345f628d851473.hot-update.js",
-      "path": "meeting_room.f9345f628d851473.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.f9345f628d851473.hot-update.js"
-    },
-    "public.f9345f628d851473.hot-update.json": {
-      "name": "public.f9345f628d851473.hot-update.json",
-      "path": "public.f9345f628d851473.hot-update.json",
-      "publicPath": "http://localhost:8080/public.f9345f628d851473.hot-update.json"
-    },
-    "private.f9345f628d851473.hot-update.json": {
-      "name": "private.f9345f628d851473.hot-update.json",
-      "path": "private.f9345f628d851473.hot-update.json",
-      "publicPath": "http://localhost:8080/private.f9345f628d851473.hot-update.json"
-    },
-    "public.98e421714fe89a6d.hot-update.js": {
-      "name": "public.98e421714fe89a6d.hot-update.js",
-      "path": "public.98e421714fe89a6d.hot-update.js",
-      "publicPath": "http://localhost:8080/public.98e421714fe89a6d.hot-update.js"
-    },
-    "private.98e421714fe89a6d.hot-update.js": {
-      "name": "private.98e421714fe89a6d.hot-update.js",
-      "path": "private.98e421714fe89a6d.hot-update.js",
-      "publicPath": "http://localhost:8080/private.98e421714fe89a6d.hot-update.js"
-    },
-    "meeting_room.98e421714fe89a6d.hot-update.js": {
-      "name": "meeting_room.98e421714fe89a6d.hot-update.js",
-      "path": "meeting_room.98e421714fe89a6d.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.98e421714fe89a6d.hot-update.js"
-    },
-    "public.98e421714fe89a6d.hot-update.json": {
-      "name": "public.98e421714fe89a6d.hot-update.json",
-      "path": "public.98e421714fe89a6d.hot-update.json",
-      "publicPath": "http://localhost:8080/public.98e421714fe89a6d.hot-update.json"
-    },
-    "private.98e421714fe89a6d.hot-update.json": {
-      "name": "private.98e421714fe89a6d.hot-update.json",
-      "path": "private.98e421714fe89a6d.hot-update.json",
-      "publicPath": "http://localhost:8080/private.98e421714fe89a6d.hot-update.json"
-    },
-    "public.7b89a07d69235c7e.hot-update.js": {
-      "name": "public.7b89a07d69235c7e.hot-update.js",
-      "path": "public.7b89a07d69235c7e.hot-update.js",
-      "publicPath": "http://localhost:8080/public.7b89a07d69235c7e.hot-update.js"
-    },
-    "private.7b89a07d69235c7e.hot-update.js": {
-      "name": "private.7b89a07d69235c7e.hot-update.js",
-      "path": "private.7b89a07d69235c7e.hot-update.js",
-      "publicPath": "http://localhost:8080/private.7b89a07d69235c7e.hot-update.js"
-    },
-    "meeting_room.7b89a07d69235c7e.hot-update.js": {
-      "name": "meeting_room.7b89a07d69235c7e.hot-update.js",
-      "path": "meeting_room.7b89a07d69235c7e.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.7b89a07d69235c7e.hot-update.js"
-    },
-    "public.7b89a07d69235c7e.hot-update.json": {
-      "name": "public.7b89a07d69235c7e.hot-update.json",
-      "path": "public.7b89a07d69235c7e.hot-update.json",
-      "publicPath": "http://localhost:8080/public.7b89a07d69235c7e.hot-update.json"
-    },
-    "private.7b89a07d69235c7e.hot-update.json": {
-      "name": "private.7b89a07d69235c7e.hot-update.json",
-      "path": "private.7b89a07d69235c7e.hot-update.json",
-      "publicPath": "http://localhost:8080/private.7b89a07d69235c7e.hot-update.json"
-    },
-    "public.ee6e5d2ce4ceef8b.hot-update.js": {
-      "name": "public.ee6e5d2ce4ceef8b.hot-update.js",
-      "path": "public.ee6e5d2ce4ceef8b.hot-update.js",
-      "publicPath": "http://localhost:8080/public.ee6e5d2ce4ceef8b.hot-update.js"
-    },
-    "private.ee6e5d2ce4ceef8b.hot-update.js": {
-      "name": "private.ee6e5d2ce4ceef8b.hot-update.js",
-      "path": "private.ee6e5d2ce4ceef8b.hot-update.js",
-      "publicPath": "http://localhost:8080/private.ee6e5d2ce4ceef8b.hot-update.js"
-    },
-    "meeting_room.ee6e5d2ce4ceef8b.hot-update.js": {
-      "name": "meeting_room.ee6e5d2ce4ceef8b.hot-update.js",
-      "path": "meeting_room.ee6e5d2ce4ceef8b.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.ee6e5d2ce4ceef8b.hot-update.js"
-    },
-    "public.ee6e5d2ce4ceef8b.hot-update.json": {
-      "name": "public.ee6e5d2ce4ceef8b.hot-update.json",
-      "path": "public.ee6e5d2ce4ceef8b.hot-update.json",
-      "publicPath": "http://localhost:8080/public.ee6e5d2ce4ceef8b.hot-update.json"
-    },
-    "private.ee6e5d2ce4ceef8b.hot-update.json": {
-      "name": "private.ee6e5d2ce4ceef8b.hot-update.json",
-      "path": "private.ee6e5d2ce4ceef8b.hot-update.json",
-      "publicPath": "http://localhost:8080/private.ee6e5d2ce4ceef8b.hot-update.json"
-    },
-    "public.7ef729a617cd16e8.hot-update.js": {
-      "name": "public.7ef729a617cd16e8.hot-update.js",
-      "path": "public.7ef729a617cd16e8.hot-update.js",
-      "publicPath": "http://localhost:8080/public.7ef729a617cd16e8.hot-update.js"
-    },
-    "private.7ef729a617cd16e8.hot-update.js": {
-      "name": "private.7ef729a617cd16e8.hot-update.js",
-      "path": "private.7ef729a617cd16e8.hot-update.js",
-      "publicPath": "http://localhost:8080/private.7ef729a617cd16e8.hot-update.js"
-    },
-    "meeting_room.7ef729a617cd16e8.hot-update.js": {
-      "name": "meeting_room.7ef729a617cd16e8.hot-update.js",
-      "path": "meeting_room.7ef729a617cd16e8.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.7ef729a617cd16e8.hot-update.js"
-    },
-    "public.7ef729a617cd16e8.hot-update.json": {
-      "name": "public.7ef729a617cd16e8.hot-update.json",
-      "path": "public.7ef729a617cd16e8.hot-update.json",
-      "publicPath": "http://localhost:8080/public.7ef729a617cd16e8.hot-update.json"
-    },
-    "private.7ef729a617cd16e8.hot-update.json": {
-      "name": "private.7ef729a617cd16e8.hot-update.json",
-      "path": "private.7ef729a617cd16e8.hot-update.json",
-      "publicPath": "http://localhost:8080/private.7ef729a617cd16e8.hot-update.json"
-    },
-    "public.c81e5f19c12a3e96.hot-update.js": {
-      "name": "public.c81e5f19c12a3e96.hot-update.js",
-      "path": "public.c81e5f19c12a3e96.hot-update.js",
-      "publicPath": "http://localhost:8080/public.c81e5f19c12a3e96.hot-update.js"
-    },
-    "private.c81e5f19c12a3e96.hot-update.js": {
-      "name": "private.c81e5f19c12a3e96.hot-update.js",
-      "path": "private.c81e5f19c12a3e96.hot-update.js",
-      "publicPath": "http://localhost:8080/private.c81e5f19c12a3e96.hot-update.js"
-    },
-    "meeting_room.c81e5f19c12a3e96.hot-update.js": {
-      "name": "meeting_room.c81e5f19c12a3e96.hot-update.js",
-      "path": "meeting_room.c81e5f19c12a3e96.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.c81e5f19c12a3e96.hot-update.js"
-    },
-    "public.c81e5f19c12a3e96.hot-update.json": {
-      "name": "public.c81e5f19c12a3e96.hot-update.json",
-      "path": "public.c81e5f19c12a3e96.hot-update.json",
-      "publicPath": "http://localhost:8080/public.c81e5f19c12a3e96.hot-update.json"
-    },
-    "private.c81e5f19c12a3e96.hot-update.json": {
-      "name": "private.c81e5f19c12a3e96.hot-update.json",
-      "path": "private.c81e5f19c12a3e96.hot-update.json",
-      "publicPath": "http://localhost:8080/private.c81e5f19c12a3e96.hot-update.json"
-    },
-    "public.c415b2533e790bc3.hot-update.js": {
-      "name": "public.c415b2533e790bc3.hot-update.js",
-      "path": "public.c415b2533e790bc3.hot-update.js",
-      "publicPath": "http://localhost:8080/public.c415b2533e790bc3.hot-update.js"
-    },
-    "private.c415b2533e790bc3.hot-update.js": {
-      "name": "private.c415b2533e790bc3.hot-update.js",
-      "path": "private.c415b2533e790bc3.hot-update.js",
-      "publicPath": "http://localhost:8080/private.c415b2533e790bc3.hot-update.js"
-    },
-    "meeting_room.c415b2533e790bc3.hot-update.js": {
-      "name": "meeting_room.c415b2533e790bc3.hot-update.js",
-      "path": "meeting_room.c415b2533e790bc3.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.c415b2533e790bc3.hot-update.js"
-    },
-    "public.c415b2533e790bc3.hot-update.json": {
-      "name": "public.c415b2533e790bc3.hot-update.json",
-      "path": "public.c415b2533e790bc3.hot-update.json",
-      "publicPath": "http://localhost:8080/public.c415b2533e790bc3.hot-update.json"
-    },
-    "private.c415b2533e790bc3.hot-update.json": {
-      "name": "private.c415b2533e790bc3.hot-update.json",
-      "path": "private.c415b2533e790bc3.hot-update.json",
-      "publicPath": "http://localhost:8080/private.c415b2533e790bc3.hot-update.json"
-    },
-    "public.6fce47f9ccb17ca2.hot-update.js": {
-      "name": "public.6fce47f9ccb17ca2.hot-update.js",
-      "path": "public.6fce47f9ccb17ca2.hot-update.js",
-      "publicPath": "http://localhost:8080/public.6fce47f9ccb17ca2.hot-update.js"
-    },
-    "private.6fce47f9ccb17ca2.hot-update.js": {
-      "name": "private.6fce47f9ccb17ca2.hot-update.js",
-      "path": "private.6fce47f9ccb17ca2.hot-update.js",
-      "publicPath": "http://localhost:8080/private.6fce47f9ccb17ca2.hot-update.js"
-    },
-    "meeting_room.6fce47f9ccb17ca2.hot-update.js": {
-      "name": "meeting_room.6fce47f9ccb17ca2.hot-update.js",
-      "path": "meeting_room.6fce47f9ccb17ca2.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.6fce47f9ccb17ca2.hot-update.js"
-    },
-    "public.6fce47f9ccb17ca2.hot-update.json": {
-      "name": "public.6fce47f9ccb17ca2.hot-update.json",
-      "path": "public.6fce47f9ccb17ca2.hot-update.json",
-      "publicPath": "http://localhost:8080/public.6fce47f9ccb17ca2.hot-update.json"
-    },
-    "private.6fce47f9ccb17ca2.hot-update.json": {
-      "name": "private.6fce47f9ccb17ca2.hot-update.json",
-      "path": "private.6fce47f9ccb17ca2.hot-update.json",
-      "publicPath": "http://localhost:8080/private.6fce47f9ccb17ca2.hot-update.json"
-    },
-    "public.f19d76fdf0c0dc13.hot-update.js": {
-      "name": "public.f19d76fdf0c0dc13.hot-update.js",
-      "path": "public.f19d76fdf0c0dc13.hot-update.js",
-      "publicPath": "http://localhost:8080/public.f19d76fdf0c0dc13.hot-update.js"
-    },
-    "private.f19d76fdf0c0dc13.hot-update.js": {
-      "name": "private.f19d76fdf0c0dc13.hot-update.js",
-      "path": "private.f19d76fdf0c0dc13.hot-update.js",
-      "publicPath": "http://localhost:8080/private.f19d76fdf0c0dc13.hot-update.js"
-    },
-    "meeting_room.f19d76fdf0c0dc13.hot-update.js": {
-      "name": "meeting_room.f19d76fdf0c0dc13.hot-update.js",
-      "path": "meeting_room.f19d76fdf0c0dc13.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.f19d76fdf0c0dc13.hot-update.js"
-    },
-    "public.f19d76fdf0c0dc13.hot-update.json": {
-      "name": "public.f19d76fdf0c0dc13.hot-update.json",
-      "path": "public.f19d76fdf0c0dc13.hot-update.json",
-      "publicPath": "http://localhost:8080/public.f19d76fdf0c0dc13.hot-update.json"
-    },
-    "private.f19d76fdf0c0dc13.hot-update.json": {
-      "name": "private.f19d76fdf0c0dc13.hot-update.json",
-      "path": "private.f19d76fdf0c0dc13.hot-update.json",
-      "publicPath": "http://localhost:8080/private.f19d76fdf0c0dc13.hot-update.json"
-    },
-    "public.755ecf5416ebb244.hot-update.js": {
-      "name": "public.755ecf5416ebb244.hot-update.js",
-      "path": "public.755ecf5416ebb244.hot-update.js",
-      "publicPath": "http://localhost:8080/public.755ecf5416ebb244.hot-update.js"
-    },
-    "private.755ecf5416ebb244.hot-update.js": {
-      "name": "private.755ecf5416ebb244.hot-update.js",
-      "path": "private.755ecf5416ebb244.hot-update.js",
-      "publicPath": "http://localhost:8080/private.755ecf5416ebb244.hot-update.js"
-    },
-    "meeting_room.755ecf5416ebb244.hot-update.js": {
-      "name": "meeting_room.755ecf5416ebb244.hot-update.js",
-      "path": "meeting_room.755ecf5416ebb244.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.755ecf5416ebb244.hot-update.js"
-    },
-    "public.755ecf5416ebb244.hot-update.json": {
-      "name": "public.755ecf5416ebb244.hot-update.json",
-      "path": "public.755ecf5416ebb244.hot-update.json",
-      "publicPath": "http://localhost:8080/public.755ecf5416ebb244.hot-update.json"
-    },
-    "private.755ecf5416ebb244.hot-update.json": {
-      "name": "private.755ecf5416ebb244.hot-update.json",
-      "path": "private.755ecf5416ebb244.hot-update.json",
-      "publicPath": "http://localhost:8080/private.755ecf5416ebb244.hot-update.json"
-    },
-    "public.cfb1432f7e42d52b.hot-update.js": {
-      "name": "public.cfb1432f7e42d52b.hot-update.js",
-      "path": "public.cfb1432f7e42d52b.hot-update.js",
-      "publicPath": "http://localhost:8080/public.cfb1432f7e42d52b.hot-update.js"
-    },
-    "private.cfb1432f7e42d52b.hot-update.js": {
-      "name": "private.cfb1432f7e42d52b.hot-update.js",
-      "path": "private.cfb1432f7e42d52b.hot-update.js",
-      "publicPath": "http://localhost:8080/private.cfb1432f7e42d52b.hot-update.js"
-    },
-    "meeting_room.cfb1432f7e42d52b.hot-update.js": {
-      "name": "meeting_room.cfb1432f7e42d52b.hot-update.js",
-      "path": "meeting_room.cfb1432f7e42d52b.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.cfb1432f7e42d52b.hot-update.js"
-    },
-    "public.cfb1432f7e42d52b.hot-update.json": {
-      "name": "public.cfb1432f7e42d52b.hot-update.json",
-      "path": "public.cfb1432f7e42d52b.hot-update.json",
-      "publicPath": "http://localhost:8080/public.cfb1432f7e42d52b.hot-update.json"
-    },
-    "private.cfb1432f7e42d52b.hot-update.json": {
-      "name": "private.cfb1432f7e42d52b.hot-update.json",
-      "path": "private.cfb1432f7e42d52b.hot-update.json",
-      "publicPath": "http://localhost:8080/private.cfb1432f7e42d52b.hot-update.json"
-    },
-    "public.1787a05c2f51b467.hot-update.js": {
-      "name": "public.1787a05c2f51b467.hot-update.js",
-      "path": "public.1787a05c2f51b467.hot-update.js",
-      "publicPath": "http://localhost:8080/public.1787a05c2f51b467.hot-update.js"
-    },
-    "private.1787a05c2f51b467.hot-update.js": {
-      "name": "private.1787a05c2f51b467.hot-update.js",
-      "path": "private.1787a05c2f51b467.hot-update.js",
-      "publicPath": "http://localhost:8080/private.1787a05c2f51b467.hot-update.js"
-    },
-    "meeting_room.1787a05c2f51b467.hot-update.js": {
-      "name": "meeting_room.1787a05c2f51b467.hot-update.js",
-      "path": "meeting_room.1787a05c2f51b467.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.1787a05c2f51b467.hot-update.js"
-    },
-    "public.1787a05c2f51b467.hot-update.json": {
-      "name": "public.1787a05c2f51b467.hot-update.json",
-      "path": "public.1787a05c2f51b467.hot-update.json",
-      "publicPath": "http://localhost:8080/public.1787a05c2f51b467.hot-update.json"
-    },
-    "private.1787a05c2f51b467.hot-update.json": {
-      "name": "private.1787a05c2f51b467.hot-update.json",
-      "path": "private.1787a05c2f51b467.hot-update.json",
-      "publicPath": "http://localhost:8080/private.1787a05c2f51b467.hot-update.json"
-    },
-    "public.1692652819501129.hot-update.js": {
-      "name": "public.1692652819501129.hot-update.js",
-      "path": "public.1692652819501129.hot-update.js",
-      "publicPath": "http://localhost:8080/public.1692652819501129.hot-update.js"
-    },
-    "private.1692652819501129.hot-update.js": {
-      "name": "private.1692652819501129.hot-update.js",
-      "path": "private.1692652819501129.hot-update.js",
-      "publicPath": "http://localhost:8080/private.1692652819501129.hot-update.js"
-    },
-    "meeting_room.1692652819501129.hot-update.js": {
-      "name": "meeting_room.1692652819501129.hot-update.js",
-      "path": "meeting_room.1692652819501129.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.1692652819501129.hot-update.js"
-    },
-    "public.1692652819501129.hot-update.json": {
-      "name": "public.1692652819501129.hot-update.json",
-      "path": "public.1692652819501129.hot-update.json",
-      "publicPath": "http://localhost:8080/public.1692652819501129.hot-update.json"
-    },
-    "private.1692652819501129.hot-update.json": {
-      "name": "private.1692652819501129.hot-update.json",
-      "path": "private.1692652819501129.hot-update.json",
-      "publicPath": "http://localhost:8080/private.1692652819501129.hot-update.json"
-    },
-    "public.3c5419de92078f07.hot-update.js": {
-      "name": "public.3c5419de92078f07.hot-update.js",
-      "path": "public.3c5419de92078f07.hot-update.js",
-      "publicPath": "http://localhost:8080/public.3c5419de92078f07.hot-update.js"
-    },
-    "private.3c5419de92078f07.hot-update.js": {
-      "name": "private.3c5419de92078f07.hot-update.js",
-      "path": "private.3c5419de92078f07.hot-update.js",
-      "publicPath": "http://localhost:8080/private.3c5419de92078f07.hot-update.js"
-    },
-    "meeting_room.3c5419de92078f07.hot-update.js": {
-      "name": "meeting_room.3c5419de92078f07.hot-update.js",
-      "path": "meeting_room.3c5419de92078f07.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.3c5419de92078f07.hot-update.js"
-    },
-    "public.3c5419de92078f07.hot-update.json": {
-      "name": "public.3c5419de92078f07.hot-update.json",
-      "path": "public.3c5419de92078f07.hot-update.json",
-      "publicPath": "http://localhost:8080/public.3c5419de92078f07.hot-update.json"
-    },
-    "private.3c5419de92078f07.hot-update.json": {
-      "name": "private.3c5419de92078f07.hot-update.json",
-      "path": "private.3c5419de92078f07.hot-update.json",
-      "publicPath": "http://localhost:8080/private.3c5419de92078f07.hot-update.json"
-    },
-    "public.c456430f058f8606.hot-update.js": {
-      "name": "public.c456430f058f8606.hot-update.js",
-      "path": "public.c456430f058f8606.hot-update.js",
-      "publicPath": "http://localhost:8080/public.c456430f058f8606.hot-update.js"
-    },
-    "private.c456430f058f8606.hot-update.js": {
-      "name": "private.c456430f058f8606.hot-update.js",
-      "path": "private.c456430f058f8606.hot-update.js",
-      "publicPath": "http://localhost:8080/private.c456430f058f8606.hot-update.js"
-    },
-    "meeting_room.c456430f058f8606.hot-update.js": {
-      "name": "meeting_room.c456430f058f8606.hot-update.js",
-      "path": "meeting_room.c456430f058f8606.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.c456430f058f8606.hot-update.js"
-    },
-    "public.c456430f058f8606.hot-update.json": {
-      "name": "public.c456430f058f8606.hot-update.json",
-      "path": "public.c456430f058f8606.hot-update.json",
-      "publicPath": "http://localhost:8080/public.c456430f058f8606.hot-update.json"
-    },
-    "private.c456430f058f8606.hot-update.json": {
-      "name": "private.c456430f058f8606.hot-update.json",
-      "path": "private.c456430f058f8606.hot-update.json",
-      "publicPath": "http://localhost:8080/private.c456430f058f8606.hot-update.json"
-    },
-    "public.6fba83f29fd3ca30.hot-update.js": {
-      "name": "public.6fba83f29fd3ca30.hot-update.js",
-      "path": "public.6fba83f29fd3ca30.hot-update.js",
-      "publicPath": "http://localhost:8080/public.6fba83f29fd3ca30.hot-update.js"
-    },
-    "private.6fba83f29fd3ca30.hot-update.js": {
-      "name": "private.6fba83f29fd3ca30.hot-update.js",
-      "path": "private.6fba83f29fd3ca30.hot-update.js",
-      "publicPath": "http://localhost:8080/private.6fba83f29fd3ca30.hot-update.js"
-    },
-    "meeting_room.6fba83f29fd3ca30.hot-update.js": {
-      "name": "meeting_room.6fba83f29fd3ca30.hot-update.js",
-      "path": "meeting_room.6fba83f29fd3ca30.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.6fba83f29fd3ca30.hot-update.js"
-    },
-    "public.6fba83f29fd3ca30.hot-update.json": {
-      "name": "public.6fba83f29fd3ca30.hot-update.json",
-      "path": "public.6fba83f29fd3ca30.hot-update.json",
-      "publicPath": "http://localhost:8080/public.6fba83f29fd3ca30.hot-update.json"
-    },
-    "private.6fba83f29fd3ca30.hot-update.json": {
-      "name": "private.6fba83f29fd3ca30.hot-update.json",
-      "path": "private.6fba83f29fd3ca30.hot-update.json",
-      "publicPath": "http://localhost:8080/private.6fba83f29fd3ca30.hot-update.json"
-    },
-    "public.89343c3f2fdf83e7.hot-update.js": {
-      "name": "public.89343c3f2fdf83e7.hot-update.js",
-      "path": "public.89343c3f2fdf83e7.hot-update.js",
-      "publicPath": "http://localhost:8080/public.89343c3f2fdf83e7.hot-update.js"
-    },
-    "private.89343c3f2fdf83e7.hot-update.js": {
-      "name": "private.89343c3f2fdf83e7.hot-update.js",
-      "path": "private.89343c3f2fdf83e7.hot-update.js",
-      "publicPath": "http://localhost:8080/private.89343c3f2fdf83e7.hot-update.js"
-    },
-    "meeting_room.89343c3f2fdf83e7.hot-update.js": {
-      "name": "meeting_room.89343c3f2fdf83e7.hot-update.js",
-      "path": "meeting_room.89343c3f2fdf83e7.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.89343c3f2fdf83e7.hot-update.js"
-    },
-    "public.89343c3f2fdf83e7.hot-update.json": {
-      "name": "public.89343c3f2fdf83e7.hot-update.json",
-      "path": "public.89343c3f2fdf83e7.hot-update.json",
-      "publicPath": "http://localhost:8080/public.89343c3f2fdf83e7.hot-update.json"
-    },
-    "private.89343c3f2fdf83e7.hot-update.json": {
-      "name": "private.89343c3f2fdf83e7.hot-update.json",
-      "path": "private.89343c3f2fdf83e7.hot-update.json",
-      "publicPath": "http://localhost:8080/private.89343c3f2fdf83e7.hot-update.json"
-    },
-    "public.c4c874d70eeacd2e.hot-update.js": {
-      "name": "public.c4c874d70eeacd2e.hot-update.js",
-      "path": "public.c4c874d70eeacd2e.hot-update.js",
-      "publicPath": "http://localhost:8080/public.c4c874d70eeacd2e.hot-update.js"
-    },
-    "private.c4c874d70eeacd2e.hot-update.js": {
-      "name": "private.c4c874d70eeacd2e.hot-update.js",
-      "path": "private.c4c874d70eeacd2e.hot-update.js",
-      "publicPath": "http://localhost:8080/private.c4c874d70eeacd2e.hot-update.js"
-    },
-    "meeting_room.c4c874d70eeacd2e.hot-update.js": {
-      "name": "meeting_room.c4c874d70eeacd2e.hot-update.js",
-      "path": "meeting_room.c4c874d70eeacd2e.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.c4c874d70eeacd2e.hot-update.js"
-    },
-    "public.c4c874d70eeacd2e.hot-update.json": {
-      "name": "public.c4c874d70eeacd2e.hot-update.json",
-      "path": "public.c4c874d70eeacd2e.hot-update.json",
-      "publicPath": "http://localhost:8080/public.c4c874d70eeacd2e.hot-update.json"
-    },
-    "private.c4c874d70eeacd2e.hot-update.json": {
-      "name": "private.c4c874d70eeacd2e.hot-update.json",
-      "path": "private.c4c874d70eeacd2e.hot-update.json",
-      "publicPath": "http://localhost:8080/private.c4c874d70eeacd2e.hot-update.json"
-    },
-    "public.b2291d990e241dc4.hot-update.js": {
-      "name": "public.b2291d990e241dc4.hot-update.js",
-      "path": "public.b2291d990e241dc4.hot-update.js",
-      "publicPath": "http://localhost:8080/public.b2291d990e241dc4.hot-update.js"
-    },
-    "private.b2291d990e241dc4.hot-update.js": {
-      "name": "private.b2291d990e241dc4.hot-update.js",
-      "path": "private.b2291d990e241dc4.hot-update.js",
-      "publicPath": "http://localhost:8080/private.b2291d990e241dc4.hot-update.js"
-    },
-    "meeting_room.b2291d990e241dc4.hot-update.js": {
-      "name": "meeting_room.b2291d990e241dc4.hot-update.js",
-      "path": "meeting_room.b2291d990e241dc4.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.b2291d990e241dc4.hot-update.js"
-    },
-    "public.b2291d990e241dc4.hot-update.json": {
-      "name": "public.b2291d990e241dc4.hot-update.json",
-      "path": "public.b2291d990e241dc4.hot-update.json",
-      "publicPath": "http://localhost:8080/public.b2291d990e241dc4.hot-update.json"
-    },
-    "private.b2291d990e241dc4.hot-update.json": {
-      "name": "private.b2291d990e241dc4.hot-update.json",
-      "path": "private.b2291d990e241dc4.hot-update.json",
-      "publicPath": "http://localhost:8080/private.b2291d990e241dc4.hot-update.json"
-    },
-    "public.e3bebac933628954.hot-update.js": {
-      "name": "public.e3bebac933628954.hot-update.js",
-      "path": "public.e3bebac933628954.hot-update.js",
-      "publicPath": "http://localhost:8080/public.e3bebac933628954.hot-update.js"
-    },
-    "private.e3bebac933628954.hot-update.js": {
-      "name": "private.e3bebac933628954.hot-update.js",
-      "path": "private.e3bebac933628954.hot-update.js",
-      "publicPath": "http://localhost:8080/private.e3bebac933628954.hot-update.js"
-    },
-    "meeting_room.e3bebac933628954.hot-update.js": {
-      "name": "meeting_room.e3bebac933628954.hot-update.js",
-      "path": "meeting_room.e3bebac933628954.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.e3bebac933628954.hot-update.js"
-    },
-    "public.e3bebac933628954.hot-update.json": {
-      "name": "public.e3bebac933628954.hot-update.json",
-      "path": "public.e3bebac933628954.hot-update.json",
-      "publicPath": "http://localhost:8080/public.e3bebac933628954.hot-update.json"
-    },
-    "private.e3bebac933628954.hot-update.json": {
-      "name": "private.e3bebac933628954.hot-update.json",
-      "path": "private.e3bebac933628954.hot-update.json",
-      "publicPath": "http://localhost:8080/private.e3bebac933628954.hot-update.json"
-    },
-    "public.f0d2ae0b9a4e4d32.hot-update.js": {
-      "name": "public.f0d2ae0b9a4e4d32.hot-update.js",
-      "path": "public.f0d2ae0b9a4e4d32.hot-update.js",
-      "publicPath": "http://localhost:8080/public.f0d2ae0b9a4e4d32.hot-update.js"
-    },
-    "private.f0d2ae0b9a4e4d32.hot-update.js": {
-      "name": "private.f0d2ae0b9a4e4d32.hot-update.js",
-      "path": "private.f0d2ae0b9a4e4d32.hot-update.js",
-      "publicPath": "http://localhost:8080/private.f0d2ae0b9a4e4d32.hot-update.js"
-    },
-    "meeting_room.f0d2ae0b9a4e4d32.hot-update.js": {
-      "name": "meeting_room.f0d2ae0b9a4e4d32.hot-update.js",
-      "path": "meeting_room.f0d2ae0b9a4e4d32.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.f0d2ae0b9a4e4d32.hot-update.js"
-    },
-    "public.f0d2ae0b9a4e4d32.hot-update.json": {
-      "name": "public.f0d2ae0b9a4e4d32.hot-update.json",
-      "path": "public.f0d2ae0b9a4e4d32.hot-update.json",
-      "publicPath": "http://localhost:8080/public.f0d2ae0b9a4e4d32.hot-update.json"
-    },
-    "private.f0d2ae0b9a4e4d32.hot-update.json": {
-      "name": "private.f0d2ae0b9a4e4d32.hot-update.json",
-      "path": "private.f0d2ae0b9a4e4d32.hot-update.json",
-      "publicPath": "http://localhost:8080/private.f0d2ae0b9a4e4d32.hot-update.json"
-    },
-    "public.29ee37735ed2fe58.hot-update.js": {
-      "name": "public.29ee37735ed2fe58.hot-update.js",
-      "path": "public.29ee37735ed2fe58.hot-update.js",
-      "publicPath": "http://localhost:8080/public.29ee37735ed2fe58.hot-update.js"
-    },
-    "private.29ee37735ed2fe58.hot-update.js": {
-      "name": "private.29ee37735ed2fe58.hot-update.js",
-      "path": "private.29ee37735ed2fe58.hot-update.js",
-      "publicPath": "http://localhost:8080/private.29ee37735ed2fe58.hot-update.js"
-    },
-    "meeting_room.29ee37735ed2fe58.hot-update.js": {
-      "name": "meeting_room.29ee37735ed2fe58.hot-update.js",
-      "path": "meeting_room.29ee37735ed2fe58.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.29ee37735ed2fe58.hot-update.js"
-    },
-    "public.29ee37735ed2fe58.hot-update.json": {
-      "name": "public.29ee37735ed2fe58.hot-update.json",
-      "path": "public.29ee37735ed2fe58.hot-update.json",
-      "publicPath": "http://localhost:8080/public.29ee37735ed2fe58.hot-update.json"
-    },
-    "private.29ee37735ed2fe58.hot-update.json": {
-      "name": "private.29ee37735ed2fe58.hot-update.json",
-      "path": "private.29ee37735ed2fe58.hot-update.json",
-      "publicPath": "http://localhost:8080/private.29ee37735ed2fe58.hot-update.json"
-    },
-    "public.5d8bc0f8fb8e3369.hot-update.js": {
-      "name": "public.5d8bc0f8fb8e3369.hot-update.js",
-      "path": "public.5d8bc0f8fb8e3369.hot-update.js",
-      "publicPath": "http://localhost:8080/public.5d8bc0f8fb8e3369.hot-update.js"
-    },
-    "private.5d8bc0f8fb8e3369.hot-update.js": {
-      "name": "private.5d8bc0f8fb8e3369.hot-update.js",
-      "path": "private.5d8bc0f8fb8e3369.hot-update.js",
-      "publicPath": "http://localhost:8080/private.5d8bc0f8fb8e3369.hot-update.js"
-    },
-    "meeting_room.5d8bc0f8fb8e3369.hot-update.js": {
-      "name": "meeting_room.5d8bc0f8fb8e3369.hot-update.js",
-      "path": "meeting_room.5d8bc0f8fb8e3369.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.5d8bc0f8fb8e3369.hot-update.js"
-    },
-    "public.5d8bc0f8fb8e3369.hot-update.json": {
-      "name": "public.5d8bc0f8fb8e3369.hot-update.json",
-      "path": "public.5d8bc0f8fb8e3369.hot-update.json",
-      "publicPath": "http://localhost:8080/public.5d8bc0f8fb8e3369.hot-update.json"
-    },
-    "private.5d8bc0f8fb8e3369.hot-update.json": {
-      "name": "private.5d8bc0f8fb8e3369.hot-update.json",
-      "path": "private.5d8bc0f8fb8e3369.hot-update.json",
-      "publicPath": "http://localhost:8080/private.5d8bc0f8fb8e3369.hot-update.json"
-    },
-    "public.bde9807c56b5c927.hot-update.js": {
-      "name": "public.bde9807c56b5c927.hot-update.js",
-      "path": "public.bde9807c56b5c927.hot-update.js",
-      "publicPath": "http://localhost:8080/public.bde9807c56b5c927.hot-update.js"
-    },
-    "private.bde9807c56b5c927.hot-update.js": {
-      "name": "private.bde9807c56b5c927.hot-update.js",
-      "path": "private.bde9807c56b5c927.hot-update.js",
-      "publicPath": "http://localhost:8080/private.bde9807c56b5c927.hot-update.js"
-    },
-    "meeting_room.bde9807c56b5c927.hot-update.js": {
-      "name": "meeting_room.bde9807c56b5c927.hot-update.js",
-      "path": "meeting_room.bde9807c56b5c927.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.bde9807c56b5c927.hot-update.js"
-    },
-    "public.bde9807c56b5c927.hot-update.json": {
-      "name": "public.bde9807c56b5c927.hot-update.json",
-      "path": "public.bde9807c56b5c927.hot-update.json",
-      "publicPath": "http://localhost:8080/public.bde9807c56b5c927.hot-update.json"
-    },
-    "private.bde9807c56b5c927.hot-update.json": {
-      "name": "private.bde9807c56b5c927.hot-update.json",
-      "path": "private.bde9807c56b5c927.hot-update.json",
-      "publicPath": "http://localhost:8080/private.bde9807c56b5c927.hot-update.json"
-    },
-    "public.fbb4368400ec623e.hot-update.js": {
-      "name": "public.fbb4368400ec623e.hot-update.js",
-      "path": "public.fbb4368400ec623e.hot-update.js",
-      "publicPath": "http://localhost:8080/public.fbb4368400ec623e.hot-update.js"
-    },
-    "private.fbb4368400ec623e.hot-update.js": {
-      "name": "private.fbb4368400ec623e.hot-update.js",
-      "path": "private.fbb4368400ec623e.hot-update.js",
-      "publicPath": "http://localhost:8080/private.fbb4368400ec623e.hot-update.js"
-    },
-    "meeting_room.fbb4368400ec623e.hot-update.js": {
-      "name": "meeting_room.fbb4368400ec623e.hot-update.js",
-      "path": "meeting_room.fbb4368400ec623e.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.fbb4368400ec623e.hot-update.js"
-    },
-    "public.fbb4368400ec623e.hot-update.json": {
-      "name": "public.fbb4368400ec623e.hot-update.json",
-      "path": "public.fbb4368400ec623e.hot-update.json",
-      "publicPath": "http://localhost:8080/public.fbb4368400ec623e.hot-update.json"
-    },
-    "private.fbb4368400ec623e.hot-update.json": {
-      "name": "private.fbb4368400ec623e.hot-update.json",
-      "path": "private.fbb4368400ec623e.hot-update.json",
-      "publicPath": "http://localhost:8080/private.fbb4368400ec623e.hot-update.json"
-    },
-    "public.94df0bd61e110e95.hot-update.js": {
-      "name": "public.94df0bd61e110e95.hot-update.js",
-      "path": "public.94df0bd61e110e95.hot-update.js",
-      "publicPath": "http://localhost:8080/public.94df0bd61e110e95.hot-update.js"
-    },
-    "private.94df0bd61e110e95.hot-update.js": {
-      "name": "private.94df0bd61e110e95.hot-update.js",
-      "path": "private.94df0bd61e110e95.hot-update.js",
-      "publicPath": "http://localhost:8080/private.94df0bd61e110e95.hot-update.js"
-    },
-    "meeting_room.94df0bd61e110e95.hot-update.js": {
-      "name": "meeting_room.94df0bd61e110e95.hot-update.js",
-      "path": "meeting_room.94df0bd61e110e95.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.94df0bd61e110e95.hot-update.js"
-    },
-    "public.94df0bd61e110e95.hot-update.json": {
-      "name": "public.94df0bd61e110e95.hot-update.json",
-      "path": "public.94df0bd61e110e95.hot-update.json",
-      "publicPath": "http://localhost:8080/public.94df0bd61e110e95.hot-update.json"
-    },
-    "private.94df0bd61e110e95.hot-update.json": {
-      "name": "private.94df0bd61e110e95.hot-update.json",
-      "path": "private.94df0bd61e110e95.hot-update.json",
-      "publicPath": "http://localhost:8080/private.94df0bd61e110e95.hot-update.json"
-    },
-    "public.38ff004b3b12d367.hot-update.js": {
-      "name": "public.38ff004b3b12d367.hot-update.js",
-      "path": "public.38ff004b3b12d367.hot-update.js",
-      "publicPath": "http://localhost:8080/public.38ff004b3b12d367.hot-update.js"
-    },
-    "private.38ff004b3b12d367.hot-update.js": {
-      "name": "private.38ff004b3b12d367.hot-update.js",
-      "path": "private.38ff004b3b12d367.hot-update.js",
-      "publicPath": "http://localhost:8080/private.38ff004b3b12d367.hot-update.js"
-    },
-    "meeting_room.38ff004b3b12d367.hot-update.js": {
-      "name": "meeting_room.38ff004b3b12d367.hot-update.js",
-      "path": "meeting_room.38ff004b3b12d367.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.38ff004b3b12d367.hot-update.js"
-    },
-    "public.38ff004b3b12d367.hot-update.json": {
-      "name": "public.38ff004b3b12d367.hot-update.json",
-      "path": "public.38ff004b3b12d367.hot-update.json",
-      "publicPath": "http://localhost:8080/public.38ff004b3b12d367.hot-update.json"
-    },
-    "private.38ff004b3b12d367.hot-update.json": {
-      "name": "private.38ff004b3b12d367.hot-update.json",
-      "path": "private.38ff004b3b12d367.hot-update.json",
-      "publicPath": "http://localhost:8080/private.38ff004b3b12d367.hot-update.json"
-    },
-    "public.895398ebafdff26d.hot-update.js": {
-      "name": "public.895398ebafdff26d.hot-update.js",
-      "path": "public.895398ebafdff26d.hot-update.js",
-      "publicPath": "http://localhost:8080/public.895398ebafdff26d.hot-update.js"
-    },
-    "private.895398ebafdff26d.hot-update.js": {
-      "name": "private.895398ebafdff26d.hot-update.js",
-      "path": "private.895398ebafdff26d.hot-update.js",
-      "publicPath": "http://localhost:8080/private.895398ebafdff26d.hot-update.js"
-    },
-    "meeting_room.895398ebafdff26d.hot-update.js": {
-      "name": "meeting_room.895398ebafdff26d.hot-update.js",
-      "path": "meeting_room.895398ebafdff26d.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.895398ebafdff26d.hot-update.js"
-    },
-    "public.895398ebafdff26d.hot-update.json": {
-      "name": "public.895398ebafdff26d.hot-update.json",
-      "path": "public.895398ebafdff26d.hot-update.json",
-      "publicPath": "http://localhost:8080/public.895398ebafdff26d.hot-update.json"
-    },
-    "private.895398ebafdff26d.hot-update.json": {
-      "name": "private.895398ebafdff26d.hot-update.json",
-      "path": "private.895398ebafdff26d.hot-update.json",
-      "publicPath": "http://localhost:8080/private.895398ebafdff26d.hot-update.json"
-    },
-    "public.888beb0ce7d07954.hot-update.js": {
-      "name": "public.888beb0ce7d07954.hot-update.js",
-      "path": "public.888beb0ce7d07954.hot-update.js",
-      "publicPath": "http://localhost:8080/public.888beb0ce7d07954.hot-update.js"
-    },
-    "private.888beb0ce7d07954.hot-update.js": {
-      "name": "private.888beb0ce7d07954.hot-update.js",
-      "path": "private.888beb0ce7d07954.hot-update.js",
-      "publicPath": "http://localhost:8080/private.888beb0ce7d07954.hot-update.js"
-    },
-    "meeting_room.888beb0ce7d07954.hot-update.js": {
-      "name": "meeting_room.888beb0ce7d07954.hot-update.js",
-      "path": "meeting_room.888beb0ce7d07954.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.888beb0ce7d07954.hot-update.js"
-    },
-    "public.888beb0ce7d07954.hot-update.json": {
-      "name": "public.888beb0ce7d07954.hot-update.json",
-      "path": "public.888beb0ce7d07954.hot-update.json",
-      "publicPath": "http://localhost:8080/public.888beb0ce7d07954.hot-update.json"
-    },
-    "private.888beb0ce7d07954.hot-update.json": {
-      "name": "private.888beb0ce7d07954.hot-update.json",
-      "path": "private.888beb0ce7d07954.hot-update.json",
-      "publicPath": "http://localhost:8080/private.888beb0ce7d07954.hot-update.json"
-    },
-    "public.18614fad12fe4db1.hot-update.js": {
-      "name": "public.18614fad12fe4db1.hot-update.js",
-      "path": "public.18614fad12fe4db1.hot-update.js",
-      "publicPath": "http://localhost:8080/public.18614fad12fe4db1.hot-update.js"
-    },
-    "private.18614fad12fe4db1.hot-update.js": {
-      "name": "private.18614fad12fe4db1.hot-update.js",
-      "path": "private.18614fad12fe4db1.hot-update.js",
-      "publicPath": "http://localhost:8080/private.18614fad12fe4db1.hot-update.js"
-    },
-    "meeting_room.18614fad12fe4db1.hot-update.js": {
-      "name": "meeting_room.18614fad12fe4db1.hot-update.js",
-      "path": "meeting_room.18614fad12fe4db1.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.18614fad12fe4db1.hot-update.js"
-    },
-    "public.18614fad12fe4db1.hot-update.json": {
-      "name": "public.18614fad12fe4db1.hot-update.json",
-      "path": "public.18614fad12fe4db1.hot-update.json",
-      "publicPath": "http://localhost:8080/public.18614fad12fe4db1.hot-update.json"
-    },
-    "private.18614fad12fe4db1.hot-update.json": {
-      "name": "private.18614fad12fe4db1.hot-update.json",
-      "path": "private.18614fad12fe4db1.hot-update.json",
-      "publicPath": "http://localhost:8080/private.18614fad12fe4db1.hot-update.json"
-    },
-    "public.ca359cd41250eee4.hot-update.js": {
-      "name": "public.ca359cd41250eee4.hot-update.js",
-      "path": "public.ca359cd41250eee4.hot-update.js",
-      "publicPath": "http://localhost:8080/public.ca359cd41250eee4.hot-update.js"
-    },
-    "private.ca359cd41250eee4.hot-update.js": {
-      "name": "private.ca359cd41250eee4.hot-update.js",
-      "path": "private.ca359cd41250eee4.hot-update.js",
-      "publicPath": "http://localhost:8080/private.ca359cd41250eee4.hot-update.js"
-    },
-    "meeting_room.ca359cd41250eee4.hot-update.js": {
-      "name": "meeting_room.ca359cd41250eee4.hot-update.js",
-      "path": "meeting_room.ca359cd41250eee4.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.ca359cd41250eee4.hot-update.js"
-    },
-    "public.ca359cd41250eee4.hot-update.json": {
-      "name": "public.ca359cd41250eee4.hot-update.json",
-      "path": "public.ca359cd41250eee4.hot-update.json",
-      "publicPath": "http://localhost:8080/public.ca359cd41250eee4.hot-update.json"
-    },
-    "private.ca359cd41250eee4.hot-update.json": {
-      "name": "private.ca359cd41250eee4.hot-update.json",
-      "path": "private.ca359cd41250eee4.hot-update.json",
-      "publicPath": "http://localhost:8080/private.ca359cd41250eee4.hot-update.json"
-    },
-    "public.1209a1f489cebb42.hot-update.js": {
-      "name": "public.1209a1f489cebb42.hot-update.js",
-      "path": "public.1209a1f489cebb42.hot-update.js",
-      "publicPath": "http://localhost:8080/public.1209a1f489cebb42.hot-update.js"
-    },
-    "private.1209a1f489cebb42.hot-update.js": {
-      "name": "private.1209a1f489cebb42.hot-update.js",
-      "path": "private.1209a1f489cebb42.hot-update.js",
-      "publicPath": "http://localhost:8080/private.1209a1f489cebb42.hot-update.js"
-    },
-    "meeting_room.1209a1f489cebb42.hot-update.js": {
-      "name": "meeting_room.1209a1f489cebb42.hot-update.js",
-      "path": "meeting_room.1209a1f489cebb42.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.1209a1f489cebb42.hot-update.js"
-    },
-    "public.1209a1f489cebb42.hot-update.json": {
-      "name": "public.1209a1f489cebb42.hot-update.json",
-      "path": "public.1209a1f489cebb42.hot-update.json",
-      "publicPath": "http://localhost:8080/public.1209a1f489cebb42.hot-update.json"
-    },
-    "private.1209a1f489cebb42.hot-update.json": {
-      "name": "private.1209a1f489cebb42.hot-update.json",
-      "path": "private.1209a1f489cebb42.hot-update.json",
-      "publicPath": "http://localhost:8080/private.1209a1f489cebb42.hot-update.json"
-    },
-    "public.4e4de9218bb6c22e.hot-update.js": {
-      "name": "public.4e4de9218bb6c22e.hot-update.js",
-      "path": "public.4e4de9218bb6c22e.hot-update.js",
-      "publicPath": "http://localhost:8080/public.4e4de9218bb6c22e.hot-update.js"
-    },
-    "private.4e4de9218bb6c22e.hot-update.js": {
-      "name": "private.4e4de9218bb6c22e.hot-update.js",
-      "path": "private.4e4de9218bb6c22e.hot-update.js",
-      "publicPath": "http://localhost:8080/private.4e4de9218bb6c22e.hot-update.js"
-    },
-    "meeting_room.4e4de9218bb6c22e.hot-update.js": {
-      "name": "meeting_room.4e4de9218bb6c22e.hot-update.js",
-      "path": "meeting_room.4e4de9218bb6c22e.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.4e4de9218bb6c22e.hot-update.js"
-    },
-    "public.4e4de9218bb6c22e.hot-update.json": {
-      "name": "public.4e4de9218bb6c22e.hot-update.json",
-      "path": "public.4e4de9218bb6c22e.hot-update.json",
-      "publicPath": "http://localhost:8080/public.4e4de9218bb6c22e.hot-update.json"
-    },
-    "private.4e4de9218bb6c22e.hot-update.json": {
-      "name": "private.4e4de9218bb6c22e.hot-update.json",
-      "path": "private.4e4de9218bb6c22e.hot-update.json",
-      "publicPath": "http://localhost:8080/private.4e4de9218bb6c22e.hot-update.json"
-    },
-    "public.6f2121dec29934b0.hot-update.js": {
-      "name": "public.6f2121dec29934b0.hot-update.js",
-      "path": "public.6f2121dec29934b0.hot-update.js",
-      "publicPath": "http://localhost:8080/public.6f2121dec29934b0.hot-update.js"
-    },
-    "private.6f2121dec29934b0.hot-update.js": {
-      "name": "private.6f2121dec29934b0.hot-update.js",
-      "path": "private.6f2121dec29934b0.hot-update.js",
-      "publicPath": "http://localhost:8080/private.6f2121dec29934b0.hot-update.js"
-    },
-    "meeting_room.6f2121dec29934b0.hot-update.js": {
-      "name": "meeting_room.6f2121dec29934b0.hot-update.js",
-      "path": "meeting_room.6f2121dec29934b0.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.6f2121dec29934b0.hot-update.js"
-    },
-    "public.6f2121dec29934b0.hot-update.json": {
-      "name": "public.6f2121dec29934b0.hot-update.json",
-      "path": "public.6f2121dec29934b0.hot-update.json",
-      "publicPath": "http://localhost:8080/public.6f2121dec29934b0.hot-update.json"
-    },
-    "private.6f2121dec29934b0.hot-update.json": {
-      "name": "private.6f2121dec29934b0.hot-update.json",
-      "path": "private.6f2121dec29934b0.hot-update.json",
-      "publicPath": "http://localhost:8080/private.6f2121dec29934b0.hot-update.json"
-    },
-    "public.df5b95dc6764199d.hot-update.js": {
-      "name": "public.df5b95dc6764199d.hot-update.js",
-      "path": "public.df5b95dc6764199d.hot-update.js",
-      "publicPath": "http://localhost:8080/public.df5b95dc6764199d.hot-update.js"
-    },
-    "private.df5b95dc6764199d.hot-update.js": {
-      "name": "private.df5b95dc6764199d.hot-update.js",
-      "path": "private.df5b95dc6764199d.hot-update.js",
-      "publicPath": "http://localhost:8080/private.df5b95dc6764199d.hot-update.js"
-    },
-    "meeting_room.df5b95dc6764199d.hot-update.js": {
-      "name": "meeting_room.df5b95dc6764199d.hot-update.js",
-      "path": "meeting_room.df5b95dc6764199d.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.df5b95dc6764199d.hot-update.js"
-    },
-    "public.df5b95dc6764199d.hot-update.json": {
-      "name": "public.df5b95dc6764199d.hot-update.json",
-      "path": "public.df5b95dc6764199d.hot-update.json",
-      "publicPath": "http://localhost:8080/public.df5b95dc6764199d.hot-update.json"
-    },
-    "private.df5b95dc6764199d.hot-update.json": {
-      "name": "private.df5b95dc6764199d.hot-update.json",
-      "path": "private.df5b95dc6764199d.hot-update.json",
-      "publicPath": "http://localhost:8080/private.df5b95dc6764199d.hot-update.json"
-    },
-    "public.7f6f6ef23e1dd5ac.hot-update.js": {
-      "name": "public.7f6f6ef23e1dd5ac.hot-update.js",
-      "path": "public.7f6f6ef23e1dd5ac.hot-update.js",
-      "publicPath": "http://localhost:8080/public.7f6f6ef23e1dd5ac.hot-update.js"
-    },
-    "private.7f6f6ef23e1dd5ac.hot-update.js": {
-      "name": "private.7f6f6ef23e1dd5ac.hot-update.js",
-      "path": "private.7f6f6ef23e1dd5ac.hot-update.js",
-      "publicPath": "http://localhost:8080/private.7f6f6ef23e1dd5ac.hot-update.js"
-    },
-    "meeting_room.7f6f6ef23e1dd5ac.hot-update.js": {
-      "name": "meeting_room.7f6f6ef23e1dd5ac.hot-update.js",
-      "path": "meeting_room.7f6f6ef23e1dd5ac.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.7f6f6ef23e1dd5ac.hot-update.js"
-    },
-    "public.7f6f6ef23e1dd5ac.hot-update.json": {
-      "name": "public.7f6f6ef23e1dd5ac.hot-update.json",
-      "path": "public.7f6f6ef23e1dd5ac.hot-update.json",
-      "publicPath": "http://localhost:8080/public.7f6f6ef23e1dd5ac.hot-update.json"
-    },
-    "private.7f6f6ef23e1dd5ac.hot-update.json": {
-      "name": "private.7f6f6ef23e1dd5ac.hot-update.json",
-      "path": "private.7f6f6ef23e1dd5ac.hot-update.json",
-      "publicPath": "http://localhost:8080/private.7f6f6ef23e1dd5ac.hot-update.json"
-    },
-    "public.ca6f12d2e0bd07fe.hot-update.js": {
-      "name": "public.ca6f12d2e0bd07fe.hot-update.js",
-      "path": "public.ca6f12d2e0bd07fe.hot-update.js",
-      "publicPath": "http://localhost:8080/public.ca6f12d2e0bd07fe.hot-update.js"
-    },
-    "private.ca6f12d2e0bd07fe.hot-update.js": {
-      "name": "private.ca6f12d2e0bd07fe.hot-update.js",
-      "path": "private.ca6f12d2e0bd07fe.hot-update.js",
-      "publicPath": "http://localhost:8080/private.ca6f12d2e0bd07fe.hot-update.js"
-    },
-    "meeting_room.ca6f12d2e0bd07fe.hot-update.js": {
-      "name": "meeting_room.ca6f12d2e0bd07fe.hot-update.js",
-      "path": "meeting_room.ca6f12d2e0bd07fe.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.ca6f12d2e0bd07fe.hot-update.js"
-    },
-    "public.ca6f12d2e0bd07fe.hot-update.json": {
-      "name": "public.ca6f12d2e0bd07fe.hot-update.json",
-      "path": "public.ca6f12d2e0bd07fe.hot-update.json",
-      "publicPath": "http://localhost:8080/public.ca6f12d2e0bd07fe.hot-update.json"
-    },
-    "private.ca6f12d2e0bd07fe.hot-update.json": {
-      "name": "private.ca6f12d2e0bd07fe.hot-update.json",
-      "path": "private.ca6f12d2e0bd07fe.hot-update.json",
-      "publicPath": "http://localhost:8080/private.ca6f12d2e0bd07fe.hot-update.json"
-    },
-    "public.cf9f503e34572b17.hot-update.js": {
-      "name": "public.cf9f503e34572b17.hot-update.js",
-      "path": "public.cf9f503e34572b17.hot-update.js",
-      "publicPath": "http://localhost:8080/public.cf9f503e34572b17.hot-update.js"
-    },
-    "private.cf9f503e34572b17.hot-update.js": {
-      "name": "private.cf9f503e34572b17.hot-update.js",
-      "path": "private.cf9f503e34572b17.hot-update.js",
-      "publicPath": "http://localhost:8080/private.cf9f503e34572b17.hot-update.js"
-    },
-    "meeting_room.cf9f503e34572b17.hot-update.js": {
-      "name": "meeting_room.cf9f503e34572b17.hot-update.js",
-      "path": "meeting_room.cf9f503e34572b17.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.cf9f503e34572b17.hot-update.js"
-    },
-    "public.cf9f503e34572b17.hot-update.json": {
-      "name": "public.cf9f503e34572b17.hot-update.json",
-      "path": "public.cf9f503e34572b17.hot-update.json",
-      "publicPath": "http://localhost:8080/public.cf9f503e34572b17.hot-update.json"
-    },
-    "private.cf9f503e34572b17.hot-update.json": {
-      "name": "private.cf9f503e34572b17.hot-update.json",
-      "path": "private.cf9f503e34572b17.hot-update.json",
-      "publicPath": "http://localhost:8080/private.cf9f503e34572b17.hot-update.json"
-    },
-    "public.83a08791720e3fcc.hot-update.js": {
-      "name": "public.83a08791720e3fcc.hot-update.js",
-      "path": "public.83a08791720e3fcc.hot-update.js",
-      "publicPath": "http://localhost:8080/public.83a08791720e3fcc.hot-update.js"
-    },
-    "private.83a08791720e3fcc.hot-update.js": {
-      "name": "private.83a08791720e3fcc.hot-update.js",
-      "path": "private.83a08791720e3fcc.hot-update.js",
-      "publicPath": "http://localhost:8080/private.83a08791720e3fcc.hot-update.js"
-    },
-    "meeting_room.83a08791720e3fcc.hot-update.js": {
-      "name": "meeting_room.83a08791720e3fcc.hot-update.js",
-      "path": "meeting_room.83a08791720e3fcc.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.83a08791720e3fcc.hot-update.js"
-    },
-    "public.83a08791720e3fcc.hot-update.json": {
-      "name": "public.83a08791720e3fcc.hot-update.json",
-      "path": "public.83a08791720e3fcc.hot-update.json",
-      "publicPath": "http://localhost:8080/public.83a08791720e3fcc.hot-update.json"
-    },
-    "private.83a08791720e3fcc.hot-update.json": {
-      "name": "private.83a08791720e3fcc.hot-update.json",
-      "path": "private.83a08791720e3fcc.hot-update.json",
-      "publicPath": "http://localhost:8080/private.83a08791720e3fcc.hot-update.json"
-    },
-    "public.90729402b3893bca.hot-update.js": {
-      "name": "public.90729402b3893bca.hot-update.js",
-      "path": "public.90729402b3893bca.hot-update.js",
-      "publicPath": "http://localhost:8080/public.90729402b3893bca.hot-update.js"
-    },
-    "private.90729402b3893bca.hot-update.js": {
-      "name": "private.90729402b3893bca.hot-update.js",
-      "path": "private.90729402b3893bca.hot-update.js",
-      "publicPath": "http://localhost:8080/private.90729402b3893bca.hot-update.js"
-    },
-    "meeting_room.90729402b3893bca.hot-update.js": {
-      "name": "meeting_room.90729402b3893bca.hot-update.js",
-      "path": "meeting_room.90729402b3893bca.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.90729402b3893bca.hot-update.js"
-    },
-    "public.90729402b3893bca.hot-update.json": {
-      "name": "public.90729402b3893bca.hot-update.json",
-      "path": "public.90729402b3893bca.hot-update.json",
-      "publicPath": "http://localhost:8080/public.90729402b3893bca.hot-update.json"
-    },
-    "private.90729402b3893bca.hot-update.json": {
-      "name": "private.90729402b3893bca.hot-update.json",
-      "path": "private.90729402b3893bca.hot-update.json",
-      "publicPath": "http://localhost:8080/private.90729402b3893bca.hot-update.json"
-    },
-    "public.a11d98bb018cf939.hot-update.js": {
-      "name": "public.a11d98bb018cf939.hot-update.js",
-      "path": "public.a11d98bb018cf939.hot-update.js",
-      "publicPath": "http://localhost:8080/public.a11d98bb018cf939.hot-update.js"
-    },
-    "private.a11d98bb018cf939.hot-update.js": {
-      "name": "private.a11d98bb018cf939.hot-update.js",
-      "path": "private.a11d98bb018cf939.hot-update.js",
-      "publicPath": "http://localhost:8080/private.a11d98bb018cf939.hot-update.js"
-    },
-    "meeting_room.a11d98bb018cf939.hot-update.js": {
-      "name": "meeting_room.a11d98bb018cf939.hot-update.js",
-      "path": "meeting_room.a11d98bb018cf939.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.a11d98bb018cf939.hot-update.js"
-    },
-    "public.a11d98bb018cf939.hot-update.json": {
-      "name": "public.a11d98bb018cf939.hot-update.json",
-      "path": "public.a11d98bb018cf939.hot-update.json",
-      "publicPath": "http://localhost:8080/public.a11d98bb018cf939.hot-update.json"
-    },
-    "private.a11d98bb018cf939.hot-update.json": {
-      "name": "private.a11d98bb018cf939.hot-update.json",
-      "path": "private.a11d98bb018cf939.hot-update.json",
-      "publicPath": "http://localhost:8080/private.a11d98bb018cf939.hot-update.json"
-    },
-    "public.b66c97ea3601e8b7.hot-update.js": {
-      "name": "public.b66c97ea3601e8b7.hot-update.js",
-      "path": "public.b66c97ea3601e8b7.hot-update.js",
-      "publicPath": "http://localhost:8080/public.b66c97ea3601e8b7.hot-update.js"
-    },
-    "private.b66c97ea3601e8b7.hot-update.js": {
-      "name": "private.b66c97ea3601e8b7.hot-update.js",
-      "path": "private.b66c97ea3601e8b7.hot-update.js",
-      "publicPath": "http://localhost:8080/private.b66c97ea3601e8b7.hot-update.js"
-    },
-    "meeting_room.b66c97ea3601e8b7.hot-update.js": {
-      "name": "meeting_room.b66c97ea3601e8b7.hot-update.js",
-      "path": "meeting_room.b66c97ea3601e8b7.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.b66c97ea3601e8b7.hot-update.js"
-    },
-    "public.b66c97ea3601e8b7.hot-update.json": {
-      "name": "public.b66c97ea3601e8b7.hot-update.json",
-      "path": "public.b66c97ea3601e8b7.hot-update.json",
-      "publicPath": "http://localhost:8080/public.b66c97ea3601e8b7.hot-update.json"
-    },
-    "private.b66c97ea3601e8b7.hot-update.json": {
-      "name": "private.b66c97ea3601e8b7.hot-update.json",
-      "path": "private.b66c97ea3601e8b7.hot-update.json",
-      "publicPath": "http://localhost:8080/private.b66c97ea3601e8b7.hot-update.json"
-    },
-    "public.ac47f36228d1c1f9.hot-update.js": {
-      "name": "public.ac47f36228d1c1f9.hot-update.js",
-      "path": "public.ac47f36228d1c1f9.hot-update.js",
-      "publicPath": "http://localhost:8080/public.ac47f36228d1c1f9.hot-update.js"
-    },
-    "private.ac47f36228d1c1f9.hot-update.js": {
-      "name": "private.ac47f36228d1c1f9.hot-update.js",
-      "path": "private.ac47f36228d1c1f9.hot-update.js",
-      "publicPath": "http://localhost:8080/private.ac47f36228d1c1f9.hot-update.js"
-    },
-    "meeting_room.ac47f36228d1c1f9.hot-update.js": {
-      "name": "meeting_room.ac47f36228d1c1f9.hot-update.js",
-      "path": "meeting_room.ac47f36228d1c1f9.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.ac47f36228d1c1f9.hot-update.js"
-    },
-    "public.ac47f36228d1c1f9.hot-update.json": {
-      "name": "public.ac47f36228d1c1f9.hot-update.json",
-      "path": "public.ac47f36228d1c1f9.hot-update.json",
-      "publicPath": "http://localhost:8080/public.ac47f36228d1c1f9.hot-update.json"
-    },
-    "private.ac47f36228d1c1f9.hot-update.json": {
-      "name": "private.ac47f36228d1c1f9.hot-update.json",
-      "path": "private.ac47f36228d1c1f9.hot-update.json",
-      "publicPath": "http://localhost:8080/private.ac47f36228d1c1f9.hot-update.json"
-    },
-    "public.5e7d39ae4b1b72c6.hot-update.js": {
-      "name": "public.5e7d39ae4b1b72c6.hot-update.js",
-      "path": "public.5e7d39ae4b1b72c6.hot-update.js",
-      "publicPath": "http://localhost:8080/public.5e7d39ae4b1b72c6.hot-update.js"
-    },
-    "private.5e7d39ae4b1b72c6.hot-update.js": {
-      "name": "private.5e7d39ae4b1b72c6.hot-update.js",
-      "path": "private.5e7d39ae4b1b72c6.hot-update.js",
-      "publicPath": "http://localhost:8080/private.5e7d39ae4b1b72c6.hot-update.js"
-    },
-    "meeting_room.5e7d39ae4b1b72c6.hot-update.js": {
-      "name": "meeting_room.5e7d39ae4b1b72c6.hot-update.js",
-      "path": "meeting_room.5e7d39ae4b1b72c6.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.5e7d39ae4b1b72c6.hot-update.js"
-    },
-    "public.5e7d39ae4b1b72c6.hot-update.json": {
-      "name": "public.5e7d39ae4b1b72c6.hot-update.json",
-      "path": "public.5e7d39ae4b1b72c6.hot-update.json",
-      "publicPath": "http://localhost:8080/public.5e7d39ae4b1b72c6.hot-update.json"
-    },
-    "private.5e7d39ae4b1b72c6.hot-update.json": {
-      "name": "private.5e7d39ae4b1b72c6.hot-update.json",
-      "path": "private.5e7d39ae4b1b72c6.hot-update.json",
-      "publicPath": "http://localhost:8080/private.5e7d39ae4b1b72c6.hot-update.json"
-    },
-    "public.e3dd3fbb9fe45445.hot-update.js": {
-      "name": "public.e3dd3fbb9fe45445.hot-update.js",
-      "path": "public.e3dd3fbb9fe45445.hot-update.js",
-      "publicPath": "http://localhost:8080/public.e3dd3fbb9fe45445.hot-update.js"
-    },
-    "private.e3dd3fbb9fe45445.hot-update.js": {
-      "name": "private.e3dd3fbb9fe45445.hot-update.js",
-      "path": "private.e3dd3fbb9fe45445.hot-update.js",
-      "publicPath": "http://localhost:8080/private.e3dd3fbb9fe45445.hot-update.js"
-    },
-    "meeting_room.e3dd3fbb9fe45445.hot-update.js": {
-      "name": "meeting_room.e3dd3fbb9fe45445.hot-update.js",
-      "path": "meeting_room.e3dd3fbb9fe45445.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.e3dd3fbb9fe45445.hot-update.js"
-    },
-    "public.e3dd3fbb9fe45445.hot-update.json": {
-      "name": "public.e3dd3fbb9fe45445.hot-update.json",
-      "path": "public.e3dd3fbb9fe45445.hot-update.json",
-      "publicPath": "http://localhost:8080/public.e3dd3fbb9fe45445.hot-update.json"
-    },
-    "private.e3dd3fbb9fe45445.hot-update.json": {
-      "name": "private.e3dd3fbb9fe45445.hot-update.json",
-      "path": "private.e3dd3fbb9fe45445.hot-update.json",
-      "publicPath": "http://localhost:8080/private.e3dd3fbb9fe45445.hot-update.json"
-    },
-    "public.e0ac9df16317e4d2.hot-update.js": {
-      "name": "public.e0ac9df16317e4d2.hot-update.js",
-      "path": "public.e0ac9df16317e4d2.hot-update.js",
-      "publicPath": "http://localhost:8080/public.e0ac9df16317e4d2.hot-update.js"
-    },
-    "private.e0ac9df16317e4d2.hot-update.js": {
-      "name": "private.e0ac9df16317e4d2.hot-update.js",
-      "path": "private.e0ac9df16317e4d2.hot-update.js",
-      "publicPath": "http://localhost:8080/private.e0ac9df16317e4d2.hot-update.js"
-    },
-    "meeting_room.e0ac9df16317e4d2.hot-update.js": {
-      "name": "meeting_room.e0ac9df16317e4d2.hot-update.js",
-      "path": "meeting_room.e0ac9df16317e4d2.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.e0ac9df16317e4d2.hot-update.js"
-    },
-    "public.e0ac9df16317e4d2.hot-update.json": {
-      "name": "public.e0ac9df16317e4d2.hot-update.json",
-      "path": "public.e0ac9df16317e4d2.hot-update.json",
-      "publicPath": "http://localhost:8080/public.e0ac9df16317e4d2.hot-update.json"
-    },
-    "private.e0ac9df16317e4d2.hot-update.json": {
-      "name": "private.e0ac9df16317e4d2.hot-update.json",
-      "path": "private.e0ac9df16317e4d2.hot-update.json",
-      "publicPath": "http://localhost:8080/private.e0ac9df16317e4d2.hot-update.json"
-    },
-    "public.17c3465550ef4b24.hot-update.js": {
-      "name": "public.17c3465550ef4b24.hot-update.js",
-      "path": "public.17c3465550ef4b24.hot-update.js",
-      "publicPath": "http://localhost:8080/public.17c3465550ef4b24.hot-update.js"
-    },
-    "private.17c3465550ef4b24.hot-update.js": {
-      "name": "private.17c3465550ef4b24.hot-update.js",
-      "path": "private.17c3465550ef4b24.hot-update.js",
-      "publicPath": "http://localhost:8080/private.17c3465550ef4b24.hot-update.js"
-    },
-    "meeting_room.17c3465550ef4b24.hot-update.js": {
-      "name": "meeting_room.17c3465550ef4b24.hot-update.js",
-      "path": "meeting_room.17c3465550ef4b24.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.17c3465550ef4b24.hot-update.js"
-    },
-    "public.17c3465550ef4b24.hot-update.json": {
-      "name": "public.17c3465550ef4b24.hot-update.json",
-      "path": "public.17c3465550ef4b24.hot-update.json",
-      "publicPath": "http://localhost:8080/public.17c3465550ef4b24.hot-update.json"
-    },
-    "private.17c3465550ef4b24.hot-update.json": {
-      "name": "private.17c3465550ef4b24.hot-update.json",
-      "path": "private.17c3465550ef4b24.hot-update.json",
-      "publicPath": "http://localhost:8080/private.17c3465550ef4b24.hot-update.json"
-    },
-    "public.ae669e59a5e99d11.hot-update.js": {
-      "name": "public.ae669e59a5e99d11.hot-update.js",
-      "path": "public.ae669e59a5e99d11.hot-update.js",
-      "publicPath": "http://localhost:8080/public.ae669e59a5e99d11.hot-update.js"
-    },
-    "private.ae669e59a5e99d11.hot-update.js": {
-      "name": "private.ae669e59a5e99d11.hot-update.js",
-      "path": "private.ae669e59a5e99d11.hot-update.js",
-      "publicPath": "http://localhost:8080/private.ae669e59a5e99d11.hot-update.js"
-    },
-    "meeting_room.ae669e59a5e99d11.hot-update.js": {
-      "name": "meeting_room.ae669e59a5e99d11.hot-update.js",
-      "path": "meeting_room.ae669e59a5e99d11.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.ae669e59a5e99d11.hot-update.js"
-    },
-    "public.ae669e59a5e99d11.hot-update.json": {
-      "name": "public.ae669e59a5e99d11.hot-update.json",
-      "path": "public.ae669e59a5e99d11.hot-update.json",
-      "publicPath": "http://localhost:8080/public.ae669e59a5e99d11.hot-update.json"
-    },
-    "private.ae669e59a5e99d11.hot-update.json": {
-      "name": "private.ae669e59a5e99d11.hot-update.json",
-      "path": "private.ae669e59a5e99d11.hot-update.json",
-      "publicPath": "http://localhost:8080/private.ae669e59a5e99d11.hot-update.json"
-    },
-    "public.0c6a644c3cfe6214.hot-update.js": {
-      "name": "public.0c6a644c3cfe6214.hot-update.js",
-      "path": "public.0c6a644c3cfe6214.hot-update.js",
-      "publicPath": "http://localhost:8080/public.0c6a644c3cfe6214.hot-update.js"
-    },
-    "private.0c6a644c3cfe6214.hot-update.js": {
-      "name": "private.0c6a644c3cfe6214.hot-update.js",
-      "path": "private.0c6a644c3cfe6214.hot-update.js",
-      "publicPath": "http://localhost:8080/private.0c6a644c3cfe6214.hot-update.js"
-    },
-    "meeting_room.0c6a644c3cfe6214.hot-update.js": {
-      "name": "meeting_room.0c6a644c3cfe6214.hot-update.js",
-      "path": "meeting_room.0c6a644c3cfe6214.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.0c6a644c3cfe6214.hot-update.js"
-    },
-    "public.0c6a644c3cfe6214.hot-update.json": {
-      "name": "public.0c6a644c3cfe6214.hot-update.json",
-      "path": "public.0c6a644c3cfe6214.hot-update.json",
-      "publicPath": "http://localhost:8080/public.0c6a644c3cfe6214.hot-update.json"
-    },
-    "private.0c6a644c3cfe6214.hot-update.json": {
-      "name": "private.0c6a644c3cfe6214.hot-update.json",
-      "path": "private.0c6a644c3cfe6214.hot-update.json",
-      "publicPath": "http://localhost:8080/private.0c6a644c3cfe6214.hot-update.json"
-    },
-    "public.385d261ebacbe278.hot-update.js": {
-      "name": "public.385d261ebacbe278.hot-update.js",
-      "path": "public.385d261ebacbe278.hot-update.js",
-      "publicPath": "http://localhost:8080/public.385d261ebacbe278.hot-update.js"
-    },
-    "private.385d261ebacbe278.hot-update.js": {
-      "name": "private.385d261ebacbe278.hot-update.js",
-      "path": "private.385d261ebacbe278.hot-update.js",
-      "publicPath": "http://localhost:8080/private.385d261ebacbe278.hot-update.js"
-    },
-    "meeting_room.385d261ebacbe278.hot-update.js": {
-      "name": "meeting_room.385d261ebacbe278.hot-update.js",
-      "path": "meeting_room.385d261ebacbe278.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.385d261ebacbe278.hot-update.js"
-    },
-    "public.385d261ebacbe278.hot-update.json": {
-      "name": "public.385d261ebacbe278.hot-update.json",
-      "path": "public.385d261ebacbe278.hot-update.json",
-      "publicPath": "http://localhost:8080/public.385d261ebacbe278.hot-update.json"
-    },
-    "private.385d261ebacbe278.hot-update.json": {
-      "name": "private.385d261ebacbe278.hot-update.json",
-      "path": "private.385d261ebacbe278.hot-update.json",
-      "publicPath": "http://localhost:8080/private.385d261ebacbe278.hot-update.json"
-    },
-    "public.48556868b13e9af9.hot-update.js": {
-      "name": "public.48556868b13e9af9.hot-update.js",
-      "path": "public.48556868b13e9af9.hot-update.js",
-      "publicPath": "http://localhost:8080/public.48556868b13e9af9.hot-update.js"
-    },
-    "private.48556868b13e9af9.hot-update.js": {
-      "name": "private.48556868b13e9af9.hot-update.js",
-      "path": "private.48556868b13e9af9.hot-update.js",
-      "publicPath": "http://localhost:8080/private.48556868b13e9af9.hot-update.js"
-    },
-    "meeting_room.48556868b13e9af9.hot-update.js": {
-      "name": "meeting_room.48556868b13e9af9.hot-update.js",
-      "path": "meeting_room.48556868b13e9af9.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.48556868b13e9af9.hot-update.js"
-    },
-    "public.48556868b13e9af9.hot-update.json": {
-      "name": "public.48556868b13e9af9.hot-update.json",
-      "path": "public.48556868b13e9af9.hot-update.json",
-      "publicPath": "http://localhost:8080/public.48556868b13e9af9.hot-update.json"
-    },
-    "private.48556868b13e9af9.hot-update.json": {
-      "name": "private.48556868b13e9af9.hot-update.json",
-      "path": "private.48556868b13e9af9.hot-update.json",
-      "publicPath": "http://localhost:8080/private.48556868b13e9af9.hot-update.json"
-    },
-    "public.18d30c0888f8195c.hot-update.js": {
-      "name": "public.18d30c0888f8195c.hot-update.js",
-      "path": "public.18d30c0888f8195c.hot-update.js",
-      "publicPath": "http://localhost:8080/public.18d30c0888f8195c.hot-update.js"
-    },
-    "private.18d30c0888f8195c.hot-update.js": {
-      "name": "private.18d30c0888f8195c.hot-update.js",
-      "path": "private.18d30c0888f8195c.hot-update.js",
-      "publicPath": "http://localhost:8080/private.18d30c0888f8195c.hot-update.js"
-    },
-    "meeting_room.18d30c0888f8195c.hot-update.js": {
-      "name": "meeting_room.18d30c0888f8195c.hot-update.js",
-      "path": "meeting_room.18d30c0888f8195c.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.18d30c0888f8195c.hot-update.js"
-    },
-    "public.18d30c0888f8195c.hot-update.json": {
-      "name": "public.18d30c0888f8195c.hot-update.json",
-      "path": "public.18d30c0888f8195c.hot-update.json",
-      "publicPath": "http://localhost:8080/public.18d30c0888f8195c.hot-update.json"
-    },
-    "private.18d30c0888f8195c.hot-update.json": {
-      "name": "private.18d30c0888f8195c.hot-update.json",
-      "path": "private.18d30c0888f8195c.hot-update.json",
-      "publicPath": "http://localhost:8080/private.18d30c0888f8195c.hot-update.json"
-    },
-    "public.3bc22c8d32ace090.hot-update.js": {
-      "name": "public.3bc22c8d32ace090.hot-update.js",
-      "path": "public.3bc22c8d32ace090.hot-update.js",
-      "publicPath": "http://localhost:8080/public.3bc22c8d32ace090.hot-update.js"
-    },
-    "private.3bc22c8d32ace090.hot-update.js": {
-      "name": "private.3bc22c8d32ace090.hot-update.js",
-      "path": "private.3bc22c8d32ace090.hot-update.js",
-      "publicPath": "http://localhost:8080/private.3bc22c8d32ace090.hot-update.js"
-    },
-    "meeting_room.3bc22c8d32ace090.hot-update.js": {
-      "name": "meeting_room.3bc22c8d32ace090.hot-update.js",
-      "path": "meeting_room.3bc22c8d32ace090.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.3bc22c8d32ace090.hot-update.js"
-    },
-    "public.3bc22c8d32ace090.hot-update.json": {
-      "name": "public.3bc22c8d32ace090.hot-update.json",
-      "path": "public.3bc22c8d32ace090.hot-update.json",
-      "publicPath": "http://localhost:8080/public.3bc22c8d32ace090.hot-update.json"
-    },
-    "private.3bc22c8d32ace090.hot-update.json": {
-      "name": "private.3bc22c8d32ace090.hot-update.json",
-      "path": "private.3bc22c8d32ace090.hot-update.json",
-      "publicPath": "http://localhost:8080/private.3bc22c8d32ace090.hot-update.json"
-    },
-    "public.9a993ff9d2252ce4.hot-update.js": {
-      "name": "public.9a993ff9d2252ce4.hot-update.js",
-      "path": "public.9a993ff9d2252ce4.hot-update.js",
-      "publicPath": "http://localhost:8080/public.9a993ff9d2252ce4.hot-update.js"
-    },
-    "private.9a993ff9d2252ce4.hot-update.js": {
-      "name": "private.9a993ff9d2252ce4.hot-update.js",
-      "path": "private.9a993ff9d2252ce4.hot-update.js",
-      "publicPath": "http://localhost:8080/private.9a993ff9d2252ce4.hot-update.js"
-    },
-    "meeting_room.9a993ff9d2252ce4.hot-update.js": {
-      "name": "meeting_room.9a993ff9d2252ce4.hot-update.js",
-      "path": "meeting_room.9a993ff9d2252ce4.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.9a993ff9d2252ce4.hot-update.js"
-    },
-    "public.9a993ff9d2252ce4.hot-update.json": {
-      "name": "public.9a993ff9d2252ce4.hot-update.json",
-      "path": "public.9a993ff9d2252ce4.hot-update.json",
-      "publicPath": "http://localhost:8080/public.9a993ff9d2252ce4.hot-update.json"
-    },
-    "private.9a993ff9d2252ce4.hot-update.json": {
-      "name": "private.9a993ff9d2252ce4.hot-update.json",
-      "path": "private.9a993ff9d2252ce4.hot-update.json",
-      "publicPath": "http://localhost:8080/private.9a993ff9d2252ce4.hot-update.json"
-    },
-    "public.7cbf9d496dcf165c.hot-update.js": {
-      "name": "public.7cbf9d496dcf165c.hot-update.js",
-      "path": "public.7cbf9d496dcf165c.hot-update.js",
-      "publicPath": "http://localhost:8080/public.7cbf9d496dcf165c.hot-update.js"
-    },
-    "private.7cbf9d496dcf165c.hot-update.js": {
-      "name": "private.7cbf9d496dcf165c.hot-update.js",
-      "path": "private.7cbf9d496dcf165c.hot-update.js",
-      "publicPath": "http://localhost:8080/private.7cbf9d496dcf165c.hot-update.js"
-    },
-    "meeting_room.7cbf9d496dcf165c.hot-update.js": {
-      "name": "meeting_room.7cbf9d496dcf165c.hot-update.js",
-      "path": "meeting_room.7cbf9d496dcf165c.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.7cbf9d496dcf165c.hot-update.js"
-    },
-    "public.7cbf9d496dcf165c.hot-update.json": {
-      "name": "public.7cbf9d496dcf165c.hot-update.json",
-      "path": "public.7cbf9d496dcf165c.hot-update.json",
-      "publicPath": "http://localhost:8080/public.7cbf9d496dcf165c.hot-update.json"
-    },
-    "private.7cbf9d496dcf165c.hot-update.json": {
-      "name": "private.7cbf9d496dcf165c.hot-update.json",
-      "path": "private.7cbf9d496dcf165c.hot-update.json",
-      "publicPath": "http://localhost:8080/private.7cbf9d496dcf165c.hot-update.json"
-    },
-    "public.3ffd2348f585946a.hot-update.js": {
-      "name": "public.3ffd2348f585946a.hot-update.js",
-      "path": "public.3ffd2348f585946a.hot-update.js",
-      "publicPath": "http://localhost:8080/public.3ffd2348f585946a.hot-update.js"
-    },
-    "private.3ffd2348f585946a.hot-update.js": {
-      "name": "private.3ffd2348f585946a.hot-update.js",
-      "path": "private.3ffd2348f585946a.hot-update.js",
-      "publicPath": "http://localhost:8080/private.3ffd2348f585946a.hot-update.js"
-    },
-    "meeting_room.3ffd2348f585946a.hot-update.js": {
-      "name": "meeting_room.3ffd2348f585946a.hot-update.js",
-      "path": "meeting_room.3ffd2348f585946a.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.3ffd2348f585946a.hot-update.js"
-    },
-    "public.3ffd2348f585946a.hot-update.json": {
-      "name": "public.3ffd2348f585946a.hot-update.json",
-      "path": "public.3ffd2348f585946a.hot-update.json",
-      "publicPath": "http://localhost:8080/public.3ffd2348f585946a.hot-update.json"
-    },
-    "private.3ffd2348f585946a.hot-update.json": {
-      "name": "private.3ffd2348f585946a.hot-update.json",
-      "path": "private.3ffd2348f585946a.hot-update.json",
-      "publicPath": "http://localhost:8080/private.3ffd2348f585946a.hot-update.json"
-    },
-    "public.02e829b98da3c5b5.hot-update.js": {
-      "name": "public.02e829b98da3c5b5.hot-update.js",
-      "path": "public.02e829b98da3c5b5.hot-update.js",
-      "publicPath": "http://localhost:8080/public.02e829b98da3c5b5.hot-update.js"
-    },
-    "private.02e829b98da3c5b5.hot-update.js": {
-      "name": "private.02e829b98da3c5b5.hot-update.js",
-      "path": "private.02e829b98da3c5b5.hot-update.js",
-      "publicPath": "http://localhost:8080/private.02e829b98da3c5b5.hot-update.js"
-    },
-    "meeting_room.02e829b98da3c5b5.hot-update.js": {
-      "name": "meeting_room.02e829b98da3c5b5.hot-update.js",
-      "path": "meeting_room.02e829b98da3c5b5.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.02e829b98da3c5b5.hot-update.js"
-    },
-    "public.02e829b98da3c5b5.hot-update.json": {
-      "name": "public.02e829b98da3c5b5.hot-update.json",
-      "path": "public.02e829b98da3c5b5.hot-update.json",
-      "publicPath": "http://localhost:8080/public.02e829b98da3c5b5.hot-update.json"
-    },
-    "private.02e829b98da3c5b5.hot-update.json": {
-      "name": "private.02e829b98da3c5b5.hot-update.json",
-      "path": "private.02e829b98da3c5b5.hot-update.json",
-      "publicPath": "http://localhost:8080/private.02e829b98da3c5b5.hot-update.json"
-    },
-    "public.31771ed816a05569.hot-update.js": {
-      "name": "public.31771ed816a05569.hot-update.js",
-      "path": "public.31771ed816a05569.hot-update.js",
-      "publicPath": "http://localhost:8080/public.31771ed816a05569.hot-update.js"
-    },
-    "private.31771ed816a05569.hot-update.js": {
-      "name": "private.31771ed816a05569.hot-update.js",
-      "path": "private.31771ed816a05569.hot-update.js",
-      "publicPath": "http://localhost:8080/private.31771ed816a05569.hot-update.js"
-    },
-    "meeting_room.31771ed816a05569.hot-update.js": {
-      "name": "meeting_room.31771ed816a05569.hot-update.js",
-      "path": "meeting_room.31771ed816a05569.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.31771ed816a05569.hot-update.js"
-    },
-    "public.31771ed816a05569.hot-update.json": {
-      "name": "public.31771ed816a05569.hot-update.json",
-      "path": "public.31771ed816a05569.hot-update.json",
-      "publicPath": "http://localhost:8080/public.31771ed816a05569.hot-update.json"
-    },
-    "private.31771ed816a05569.hot-update.json": {
-      "name": "private.31771ed816a05569.hot-update.json",
-      "path": "private.31771ed816a05569.hot-update.json",
-      "publicPath": "http://localhost:8080/private.31771ed816a05569.hot-update.json"
-    },
-    "public.0e3c4c7f26a48cf2.hot-update.js": {
-      "name": "public.0e3c4c7f26a48cf2.hot-update.js",
-      "path": "public.0e3c4c7f26a48cf2.hot-update.js",
-      "publicPath": "http://localhost:8080/public.0e3c4c7f26a48cf2.hot-update.js"
-    },
-    "private.0e3c4c7f26a48cf2.hot-update.js": {
-      "name": "private.0e3c4c7f26a48cf2.hot-update.js",
-      "path": "private.0e3c4c7f26a48cf2.hot-update.js",
-      "publicPath": "http://localhost:8080/private.0e3c4c7f26a48cf2.hot-update.js"
-    },
-    "meeting_room.0e3c4c7f26a48cf2.hot-update.js": {
-      "name": "meeting_room.0e3c4c7f26a48cf2.hot-update.js",
-      "path": "meeting_room.0e3c4c7f26a48cf2.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.0e3c4c7f26a48cf2.hot-update.js"
-    },
-    "public.0e3c4c7f26a48cf2.hot-update.json": {
-      "name": "public.0e3c4c7f26a48cf2.hot-update.json",
-      "path": "public.0e3c4c7f26a48cf2.hot-update.json",
-      "publicPath": "http://localhost:8080/public.0e3c4c7f26a48cf2.hot-update.json"
-    },
-    "private.0e3c4c7f26a48cf2.hot-update.json": {
-      "name": "private.0e3c4c7f26a48cf2.hot-update.json",
-      "path": "private.0e3c4c7f26a48cf2.hot-update.json",
-      "publicPath": "http://localhost:8080/private.0e3c4c7f26a48cf2.hot-update.json"
-    },
-    "public.dbec50693eb8ec46.hot-update.js": {
-      "name": "public.dbec50693eb8ec46.hot-update.js",
-      "path": "public.dbec50693eb8ec46.hot-update.js",
-      "publicPath": "http://localhost:8080/public.dbec50693eb8ec46.hot-update.js"
-    },
-    "private.dbec50693eb8ec46.hot-update.js": {
-      "name": "private.dbec50693eb8ec46.hot-update.js",
-      "path": "private.dbec50693eb8ec46.hot-update.js",
-      "publicPath": "http://localhost:8080/private.dbec50693eb8ec46.hot-update.js"
-    },
-    "meeting_room.dbec50693eb8ec46.hot-update.js": {
-      "name": "meeting_room.dbec50693eb8ec46.hot-update.js",
-      "path": "meeting_room.dbec50693eb8ec46.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.dbec50693eb8ec46.hot-update.js"
-    },
-    "public.dbec50693eb8ec46.hot-update.json": {
-      "name": "public.dbec50693eb8ec46.hot-update.json",
-      "path": "public.dbec50693eb8ec46.hot-update.json",
-      "publicPath": "http://localhost:8080/public.dbec50693eb8ec46.hot-update.json"
-    },
-    "private.dbec50693eb8ec46.hot-update.json": {
-      "name": "private.dbec50693eb8ec46.hot-update.json",
-      "path": "private.dbec50693eb8ec46.hot-update.json",
-      "publicPath": "http://localhost:8080/private.dbec50693eb8ec46.hot-update.json"
-    },
-    "public.0241dd8e28a02303.hot-update.js": {
-      "name": "public.0241dd8e28a02303.hot-update.js",
-      "path": "public.0241dd8e28a02303.hot-update.js",
-      "publicPath": "http://localhost:8080/public.0241dd8e28a02303.hot-update.js"
-    },
-    "private.0241dd8e28a02303.hot-update.js": {
-      "name": "private.0241dd8e28a02303.hot-update.js",
-      "path": "private.0241dd8e28a02303.hot-update.js",
-      "publicPath": "http://localhost:8080/private.0241dd8e28a02303.hot-update.js"
-    },
-    "meeting_room.0241dd8e28a02303.hot-update.js": {
-      "name": "meeting_room.0241dd8e28a02303.hot-update.js",
-      "path": "meeting_room.0241dd8e28a02303.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.0241dd8e28a02303.hot-update.js"
-    },
-    "public.0241dd8e28a02303.hot-update.json": {
-      "name": "public.0241dd8e28a02303.hot-update.json",
-      "path": "public.0241dd8e28a02303.hot-update.json",
-      "publicPath": "http://localhost:8080/public.0241dd8e28a02303.hot-update.json"
-    },
-    "private.0241dd8e28a02303.hot-update.json": {
-      "name": "private.0241dd8e28a02303.hot-update.json",
-      "path": "private.0241dd8e28a02303.hot-update.json",
-      "publicPath": "http://localhost:8080/private.0241dd8e28a02303.hot-update.json"
-    },
-    "public.5134d5c12ec4deec.hot-update.js": {
-      "name": "public.5134d5c12ec4deec.hot-update.js",
-      "path": "public.5134d5c12ec4deec.hot-update.js",
-      "publicPath": "http://localhost:8080/public.5134d5c12ec4deec.hot-update.js"
-    },
-    "private.5134d5c12ec4deec.hot-update.js": {
-      "name": "private.5134d5c12ec4deec.hot-update.js",
-      "path": "private.5134d5c12ec4deec.hot-update.js",
-      "publicPath": "http://localhost:8080/private.5134d5c12ec4deec.hot-update.js"
-    },
-    "meeting_room.5134d5c12ec4deec.hot-update.js": {
-      "name": "meeting_room.5134d5c12ec4deec.hot-update.js",
-      "path": "meeting_room.5134d5c12ec4deec.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.5134d5c12ec4deec.hot-update.js"
-    },
-    "public.5134d5c12ec4deec.hot-update.json": {
-      "name": "public.5134d5c12ec4deec.hot-update.json",
-      "path": "public.5134d5c12ec4deec.hot-update.json",
-      "publicPath": "http://localhost:8080/public.5134d5c12ec4deec.hot-update.json"
-    },
-    "private.5134d5c12ec4deec.hot-update.json": {
-      "name": "private.5134d5c12ec4deec.hot-update.json",
-      "path": "private.5134d5c12ec4deec.hot-update.json",
-      "publicPath": "http://localhost:8080/private.5134d5c12ec4deec.hot-update.json"
-    },
-    "public.d15f79d64aa07eb1.hot-update.js": {
-      "name": "public.d15f79d64aa07eb1.hot-update.js",
-      "path": "public.d15f79d64aa07eb1.hot-update.js",
-      "publicPath": "http://localhost:8080/public.d15f79d64aa07eb1.hot-update.js"
-    },
-    "private.d15f79d64aa07eb1.hot-update.js": {
-      "name": "private.d15f79d64aa07eb1.hot-update.js",
-      "path": "private.d15f79d64aa07eb1.hot-update.js",
-      "publicPath": "http://localhost:8080/private.d15f79d64aa07eb1.hot-update.js"
-    },
-    "meeting_room.d15f79d64aa07eb1.hot-update.js": {
-      "name": "meeting_room.d15f79d64aa07eb1.hot-update.js",
-      "path": "meeting_room.d15f79d64aa07eb1.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.d15f79d64aa07eb1.hot-update.js"
-    },
-    "public.d15f79d64aa07eb1.hot-update.json": {
-      "name": "public.d15f79d64aa07eb1.hot-update.json",
-      "path": "public.d15f79d64aa07eb1.hot-update.json",
-      "publicPath": "http://localhost:8080/public.d15f79d64aa07eb1.hot-update.json"
-    },
-    "private.d15f79d64aa07eb1.hot-update.json": {
-      "name": "private.d15f79d64aa07eb1.hot-update.json",
-      "path": "private.d15f79d64aa07eb1.hot-update.json",
-      "publicPath": "http://localhost:8080/private.d15f79d64aa07eb1.hot-update.json"
-    },
-    "public.0acf13f6eb219c44.hot-update.js": {
-      "name": "public.0acf13f6eb219c44.hot-update.js",
-      "path": "public.0acf13f6eb219c44.hot-update.js",
-      "publicPath": "http://localhost:8080/public.0acf13f6eb219c44.hot-update.js"
-    },
-    "private.0acf13f6eb219c44.hot-update.js": {
-      "name": "private.0acf13f6eb219c44.hot-update.js",
-      "path": "private.0acf13f6eb219c44.hot-update.js",
-      "publicPath": "http://localhost:8080/private.0acf13f6eb219c44.hot-update.js"
-    },
-    "meeting_room.0acf13f6eb219c44.hot-update.js": {
-      "name": "meeting_room.0acf13f6eb219c44.hot-update.js",
-      "path": "meeting_room.0acf13f6eb219c44.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.0acf13f6eb219c44.hot-update.js"
-    },
-    "public.0acf13f6eb219c44.hot-update.json": {
-      "name": "public.0acf13f6eb219c44.hot-update.json",
-      "path": "public.0acf13f6eb219c44.hot-update.json",
-      "publicPath": "http://localhost:8080/public.0acf13f6eb219c44.hot-update.json"
-    },
-    "private.0acf13f6eb219c44.hot-update.json": {
-      "name": "private.0acf13f6eb219c44.hot-update.json",
-      "path": "private.0acf13f6eb219c44.hot-update.json",
-      "publicPath": "http://localhost:8080/private.0acf13f6eb219c44.hot-update.json"
-    },
-    "public.dd8e5097f51aa4f6.hot-update.js": {
-      "name": "public.dd8e5097f51aa4f6.hot-update.js",
-      "path": "public.dd8e5097f51aa4f6.hot-update.js",
-      "publicPath": "http://localhost:8080/public.dd8e5097f51aa4f6.hot-update.js"
-    },
-    "private.dd8e5097f51aa4f6.hot-update.js": {
-      "name": "private.dd8e5097f51aa4f6.hot-update.js",
-      "path": "private.dd8e5097f51aa4f6.hot-update.js",
-      "publicPath": "http://localhost:8080/private.dd8e5097f51aa4f6.hot-update.js"
-    },
-    "meeting_room.dd8e5097f51aa4f6.hot-update.js": {
-      "name": "meeting_room.dd8e5097f51aa4f6.hot-update.js",
-      "path": "meeting_room.dd8e5097f51aa4f6.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.dd8e5097f51aa4f6.hot-update.js"
-    },
-    "public.dd8e5097f51aa4f6.hot-update.json": {
-      "name": "public.dd8e5097f51aa4f6.hot-update.json",
-      "path": "public.dd8e5097f51aa4f6.hot-update.json",
-      "publicPath": "http://localhost:8080/public.dd8e5097f51aa4f6.hot-update.json"
-    },
-    "private.dd8e5097f51aa4f6.hot-update.json": {
-      "name": "private.dd8e5097f51aa4f6.hot-update.json",
-      "path": "private.dd8e5097f51aa4f6.hot-update.json",
-      "publicPath": "http://localhost:8080/private.dd8e5097f51aa4f6.hot-update.json"
-    },
-    "public.7d4a851a9639be55.hot-update.js": {
-      "name": "public.7d4a851a9639be55.hot-update.js",
-      "path": "public.7d4a851a9639be55.hot-update.js",
-      "publicPath": "http://localhost:8080/public.7d4a851a9639be55.hot-update.js"
-    },
-    "private.7d4a851a9639be55.hot-update.js": {
-      "name": "private.7d4a851a9639be55.hot-update.js",
-      "path": "private.7d4a851a9639be55.hot-update.js",
-      "publicPath": "http://localhost:8080/private.7d4a851a9639be55.hot-update.js"
-    },
-    "meeting_room.7d4a851a9639be55.hot-update.js": {
-      "name": "meeting_room.7d4a851a9639be55.hot-update.js",
-      "path": "meeting_room.7d4a851a9639be55.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.7d4a851a9639be55.hot-update.js"
-    },
-    "public.7d4a851a9639be55.hot-update.json": {
-      "name": "public.7d4a851a9639be55.hot-update.json",
-      "path": "public.7d4a851a9639be55.hot-update.json",
-      "publicPath": "http://localhost:8080/public.7d4a851a9639be55.hot-update.json"
-    },
-    "private.7d4a851a9639be55.hot-update.json": {
-      "name": "private.7d4a851a9639be55.hot-update.json",
-      "path": "private.7d4a851a9639be55.hot-update.json",
-      "publicPath": "http://localhost:8080/private.7d4a851a9639be55.hot-update.json"
-    },
-    "public.c489e3a5d3bbd632.hot-update.js": {
-      "name": "public.c489e3a5d3bbd632.hot-update.js",
-      "path": "public.c489e3a5d3bbd632.hot-update.js",
-      "publicPath": "http://localhost:8080/public.c489e3a5d3bbd632.hot-update.js"
-    },
-    "private.c489e3a5d3bbd632.hot-update.js": {
-      "name": "private.c489e3a5d3bbd632.hot-update.js",
-      "path": "private.c489e3a5d3bbd632.hot-update.js",
-      "publicPath": "http://localhost:8080/private.c489e3a5d3bbd632.hot-update.js"
-    },
-    "meeting_room.c489e3a5d3bbd632.hot-update.js": {
-      "name": "meeting_room.c489e3a5d3bbd632.hot-update.js",
-      "path": "meeting_room.c489e3a5d3bbd632.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.c489e3a5d3bbd632.hot-update.js"
-    },
-    "public.c489e3a5d3bbd632.hot-update.json": {
-      "name": "public.c489e3a5d3bbd632.hot-update.json",
-      "path": "public.c489e3a5d3bbd632.hot-update.json",
-      "publicPath": "http://localhost:8080/public.c489e3a5d3bbd632.hot-update.json"
-    },
-    "private.c489e3a5d3bbd632.hot-update.json": {
-      "name": "private.c489e3a5d3bbd632.hot-update.json",
-      "path": "private.c489e3a5d3bbd632.hot-update.json",
-      "publicPath": "http://localhost:8080/private.c489e3a5d3bbd632.hot-update.json"
-    },
-    "public.59bec5a3802d077e.hot-update.js": {
-      "name": "public.59bec5a3802d077e.hot-update.js",
-      "path": "public.59bec5a3802d077e.hot-update.js",
-      "publicPath": "http://localhost:8080/public.59bec5a3802d077e.hot-update.js"
-    },
-    "private.59bec5a3802d077e.hot-update.js": {
-      "name": "private.59bec5a3802d077e.hot-update.js",
-      "path": "private.59bec5a3802d077e.hot-update.js",
-      "publicPath": "http://localhost:8080/private.59bec5a3802d077e.hot-update.js"
-    },
-    "meeting_room.59bec5a3802d077e.hot-update.js": {
-      "name": "meeting_room.59bec5a3802d077e.hot-update.js",
-      "path": "meeting_room.59bec5a3802d077e.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.59bec5a3802d077e.hot-update.js"
-    },
-    "public.59bec5a3802d077e.hot-update.json": {
-      "name": "public.59bec5a3802d077e.hot-update.json",
-      "path": "public.59bec5a3802d077e.hot-update.json",
-      "publicPath": "http://localhost:8080/public.59bec5a3802d077e.hot-update.json"
-    },
-    "private.59bec5a3802d077e.hot-update.json": {
-      "name": "private.59bec5a3802d077e.hot-update.json",
-      "path": "private.59bec5a3802d077e.hot-update.json",
-      "publicPath": "http://localhost:8080/private.59bec5a3802d077e.hot-update.json"
-    },
-    "public.4af66e42c3ea0c35.hot-update.js": {
-      "name": "public.4af66e42c3ea0c35.hot-update.js",
-      "path": "public.4af66e42c3ea0c35.hot-update.js",
-      "publicPath": "http://localhost:8080/public.4af66e42c3ea0c35.hot-update.js"
-    },
-    "private.4af66e42c3ea0c35.hot-update.js": {
-      "name": "private.4af66e42c3ea0c35.hot-update.js",
-      "path": "private.4af66e42c3ea0c35.hot-update.js",
-      "publicPath": "http://localhost:8080/private.4af66e42c3ea0c35.hot-update.js"
-    },
-    "meeting_room.4af66e42c3ea0c35.hot-update.js": {
-      "name": "meeting_room.4af66e42c3ea0c35.hot-update.js",
-      "path": "meeting_room.4af66e42c3ea0c35.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.4af66e42c3ea0c35.hot-update.js"
-    },
-    "public.4af66e42c3ea0c35.hot-update.json": {
-      "name": "public.4af66e42c3ea0c35.hot-update.json",
-      "path": "public.4af66e42c3ea0c35.hot-update.json",
-      "publicPath": "http://localhost:8080/public.4af66e42c3ea0c35.hot-update.json"
-    },
-    "private.4af66e42c3ea0c35.hot-update.json": {
-      "name": "private.4af66e42c3ea0c35.hot-update.json",
-      "path": "private.4af66e42c3ea0c35.hot-update.json",
-      "publicPath": "http://localhost:8080/private.4af66e42c3ea0c35.hot-update.json"
-    },
-    "public.cf52f24a20100039.hot-update.js": {
-      "name": "public.cf52f24a20100039.hot-update.js",
-      "path": "public.cf52f24a20100039.hot-update.js",
-      "publicPath": "http://localhost:8080/public.cf52f24a20100039.hot-update.js"
-    },
-    "private.cf52f24a20100039.hot-update.js": {
-      "name": "private.cf52f24a20100039.hot-update.js",
-      "path": "private.cf52f24a20100039.hot-update.js",
-      "publicPath": "http://localhost:8080/private.cf52f24a20100039.hot-update.js"
-    },
-    "meeting_room.cf52f24a20100039.hot-update.js": {
-      "name": "meeting_room.cf52f24a20100039.hot-update.js",
-      "path": "meeting_room.cf52f24a20100039.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.cf52f24a20100039.hot-update.js"
-    },
-    "public.cf52f24a20100039.hot-update.json": {
-      "name": "public.cf52f24a20100039.hot-update.json",
-      "path": "public.cf52f24a20100039.hot-update.json",
-      "publicPath": "http://localhost:8080/public.cf52f24a20100039.hot-update.json"
-    },
-    "private.cf52f24a20100039.hot-update.json": {
-      "name": "private.cf52f24a20100039.hot-update.json",
-      "path": "private.cf52f24a20100039.hot-update.json",
-      "publicPath": "http://localhost:8080/private.cf52f24a20100039.hot-update.json"
-    },
-    "public.6e378ab8e9a74050.hot-update.js": {
-      "name": "public.6e378ab8e9a74050.hot-update.js",
-      "path": "public.6e378ab8e9a74050.hot-update.js",
-      "publicPath": "http://localhost:8080/public.6e378ab8e9a74050.hot-update.js"
-    },
-    "private.6e378ab8e9a74050.hot-update.js": {
-      "name": "private.6e378ab8e9a74050.hot-update.js",
-      "path": "private.6e378ab8e9a74050.hot-update.js",
-      "publicPath": "http://localhost:8080/private.6e378ab8e9a74050.hot-update.js"
-    },
-    "meeting_room.6e378ab8e9a74050.hot-update.js": {
-      "name": "meeting_room.6e378ab8e9a74050.hot-update.js",
-      "path": "meeting_room.6e378ab8e9a74050.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.6e378ab8e9a74050.hot-update.js"
-    },
-    "public.6e378ab8e9a74050.hot-update.json": {
-      "name": "public.6e378ab8e9a74050.hot-update.json",
-      "path": "public.6e378ab8e9a74050.hot-update.json",
-      "publicPath": "http://localhost:8080/public.6e378ab8e9a74050.hot-update.json"
-    },
-    "private.6e378ab8e9a74050.hot-update.json": {
-      "name": "private.6e378ab8e9a74050.hot-update.json",
-      "path": "private.6e378ab8e9a74050.hot-update.json",
-      "publicPath": "http://localhost:8080/private.6e378ab8e9a74050.hot-update.json"
-    },
-    "public.4fffc59a17c10705.hot-update.js": {
-      "name": "public.4fffc59a17c10705.hot-update.js",
-      "path": "public.4fffc59a17c10705.hot-update.js",
-      "publicPath": "http://localhost:8080/public.4fffc59a17c10705.hot-update.js"
-    },
-    "private.4fffc59a17c10705.hot-update.js": {
-      "name": "private.4fffc59a17c10705.hot-update.js",
-      "path": "private.4fffc59a17c10705.hot-update.js",
-      "publicPath": "http://localhost:8080/private.4fffc59a17c10705.hot-update.js"
-    },
-    "meeting_room.4fffc59a17c10705.hot-update.js": {
-      "name": "meeting_room.4fffc59a17c10705.hot-update.js",
-      "path": "meeting_room.4fffc59a17c10705.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.4fffc59a17c10705.hot-update.js"
-    },
-    "public.4fffc59a17c10705.hot-update.json": {
-      "name": "public.4fffc59a17c10705.hot-update.json",
-      "path": "public.4fffc59a17c10705.hot-update.json",
-      "publicPath": "http://localhost:8080/public.4fffc59a17c10705.hot-update.json"
-    },
-    "private.4fffc59a17c10705.hot-update.json": {
-      "name": "private.4fffc59a17c10705.hot-update.json",
-      "path": "private.4fffc59a17c10705.hot-update.json",
-      "publicPath": "http://localhost:8080/private.4fffc59a17c10705.hot-update.json"
-    },
-    "public.b528cab63bbfebce.hot-update.js": {
-      "name": "public.b528cab63bbfebce.hot-update.js",
-      "path": "public.b528cab63bbfebce.hot-update.js",
-      "publicPath": "http://localhost:8080/public.b528cab63bbfebce.hot-update.js"
-    },
-    "private.b528cab63bbfebce.hot-update.js": {
-      "name": "private.b528cab63bbfebce.hot-update.js",
-      "path": "private.b528cab63bbfebce.hot-update.js",
-      "publicPath": "http://localhost:8080/private.b528cab63bbfebce.hot-update.js"
-    },
-    "meeting_room.b528cab63bbfebce.hot-update.js": {
-      "name": "meeting_room.b528cab63bbfebce.hot-update.js",
-      "path": "meeting_room.b528cab63bbfebce.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.b528cab63bbfebce.hot-update.js"
-    },
-    "public.b528cab63bbfebce.hot-update.json": {
-      "name": "public.b528cab63bbfebce.hot-update.json",
-      "path": "public.b528cab63bbfebce.hot-update.json",
-      "publicPath": "http://localhost:8080/public.b528cab63bbfebce.hot-update.json"
-    },
-    "private.b528cab63bbfebce.hot-update.json": {
-      "name": "private.b528cab63bbfebce.hot-update.json",
-      "path": "private.b528cab63bbfebce.hot-update.json",
-      "publicPath": "http://localhost:8080/private.b528cab63bbfebce.hot-update.json"
-    },
-    "public.09666dff55f2b9d2.hot-update.js": {
-      "name": "public.09666dff55f2b9d2.hot-update.js",
-      "path": "public.09666dff55f2b9d2.hot-update.js",
-      "publicPath": "http://localhost:8080/public.09666dff55f2b9d2.hot-update.js"
-    },
-    "private.09666dff55f2b9d2.hot-update.js": {
-      "name": "private.09666dff55f2b9d2.hot-update.js",
-      "path": "private.09666dff55f2b9d2.hot-update.js",
-      "publicPath": "http://localhost:8080/private.09666dff55f2b9d2.hot-update.js"
-    },
-    "meeting_room.09666dff55f2b9d2.hot-update.js": {
-      "name": "meeting_room.09666dff55f2b9d2.hot-update.js",
-      "path": "meeting_room.09666dff55f2b9d2.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.09666dff55f2b9d2.hot-update.js"
-    },
-    "public.09666dff55f2b9d2.hot-update.json": {
-      "name": "public.09666dff55f2b9d2.hot-update.json",
-      "path": "public.09666dff55f2b9d2.hot-update.json",
-      "publicPath": "http://localhost:8080/public.09666dff55f2b9d2.hot-update.json"
-    },
-    "private.09666dff55f2b9d2.hot-update.json": {
-      "name": "private.09666dff55f2b9d2.hot-update.json",
-      "path": "private.09666dff55f2b9d2.hot-update.json",
-      "publicPath": "http://localhost:8080/private.09666dff55f2b9d2.hot-update.json"
-    },
-    "public.7ba021eade9edbf3.hot-update.js": {
-      "name": "public.7ba021eade9edbf3.hot-update.js",
-      "path": "public.7ba021eade9edbf3.hot-update.js",
-      "publicPath": "http://localhost:8080/public.7ba021eade9edbf3.hot-update.js"
-    },
-    "private.7ba021eade9edbf3.hot-update.js": {
-      "name": "private.7ba021eade9edbf3.hot-update.js",
-      "path": "private.7ba021eade9edbf3.hot-update.js",
-      "publicPath": "http://localhost:8080/private.7ba021eade9edbf3.hot-update.js"
-    },
-    "meeting_room.7ba021eade9edbf3.hot-update.js": {
-      "name": "meeting_room.7ba021eade9edbf3.hot-update.js",
-      "path": "meeting_room.7ba021eade9edbf3.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.7ba021eade9edbf3.hot-update.js"
-    },
-    "public.7ba021eade9edbf3.hot-update.json": {
-      "name": "public.7ba021eade9edbf3.hot-update.json",
-      "path": "public.7ba021eade9edbf3.hot-update.json",
-      "publicPath": "http://localhost:8080/public.7ba021eade9edbf3.hot-update.json"
-    },
-    "private.7ba021eade9edbf3.hot-update.json": {
-      "name": "private.7ba021eade9edbf3.hot-update.json",
-      "path": "private.7ba021eade9edbf3.hot-update.json",
-      "publicPath": "http://localhost:8080/private.7ba021eade9edbf3.hot-update.json"
-    },
-    "public.5a571afe977cf4df.hot-update.js": {
-      "name": "public.5a571afe977cf4df.hot-update.js",
-      "path": "public.5a571afe977cf4df.hot-update.js",
-      "publicPath": "http://localhost:8080/public.5a571afe977cf4df.hot-update.js"
-    },
-    "private.5a571afe977cf4df.hot-update.js": {
-      "name": "private.5a571afe977cf4df.hot-update.js",
-      "path": "private.5a571afe977cf4df.hot-update.js",
-      "publicPath": "http://localhost:8080/private.5a571afe977cf4df.hot-update.js"
-    },
-    "meeting_room.5a571afe977cf4df.hot-update.js": {
-      "name": "meeting_room.5a571afe977cf4df.hot-update.js",
-      "path": "meeting_room.5a571afe977cf4df.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.5a571afe977cf4df.hot-update.js"
-    },
-    "public.5a571afe977cf4df.hot-update.json": {
-      "name": "public.5a571afe977cf4df.hot-update.json",
-      "path": "public.5a571afe977cf4df.hot-update.json",
-      "publicPath": "http://localhost:8080/public.5a571afe977cf4df.hot-update.json"
-    },
-    "private.5a571afe977cf4df.hot-update.json": {
-      "name": "private.5a571afe977cf4df.hot-update.json",
-      "path": "private.5a571afe977cf4df.hot-update.json",
-      "publicPath": "http://localhost:8080/private.5a571afe977cf4df.hot-update.json"
-    },
-    "public.5731a15d4f5a526f.hot-update.js": {
-      "name": "public.5731a15d4f5a526f.hot-update.js",
-      "path": "public.5731a15d4f5a526f.hot-update.js",
-      "publicPath": "http://localhost:8080/public.5731a15d4f5a526f.hot-update.js"
-    },
-    "private.5731a15d4f5a526f.hot-update.js": {
-      "name": "private.5731a15d4f5a526f.hot-update.js",
-      "path": "private.5731a15d4f5a526f.hot-update.js",
-      "publicPath": "http://localhost:8080/private.5731a15d4f5a526f.hot-update.js"
-    },
-    "meeting_room.5731a15d4f5a526f.hot-update.js": {
-      "name": "meeting_room.5731a15d4f5a526f.hot-update.js",
-      "path": "meeting_room.5731a15d4f5a526f.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.5731a15d4f5a526f.hot-update.js"
-    },
-    "public.5731a15d4f5a526f.hot-update.json": {
-      "name": "public.5731a15d4f5a526f.hot-update.json",
-      "path": "public.5731a15d4f5a526f.hot-update.json",
-      "publicPath": "http://localhost:8080/public.5731a15d4f5a526f.hot-update.json"
-    },
-    "private.5731a15d4f5a526f.hot-update.json": {
-      "name": "private.5731a15d4f5a526f.hot-update.json",
-      "path": "private.5731a15d4f5a526f.hot-update.json",
-      "publicPath": "http://localhost:8080/private.5731a15d4f5a526f.hot-update.json"
-    },
-    "public.64f1777c226d1726.hot-update.js": {
-      "name": "public.64f1777c226d1726.hot-update.js",
-      "path": "public.64f1777c226d1726.hot-update.js",
-      "publicPath": "http://localhost:8080/public.64f1777c226d1726.hot-update.js"
-    },
-    "private.64f1777c226d1726.hot-update.js": {
-      "name": "private.64f1777c226d1726.hot-update.js",
-      "path": "private.64f1777c226d1726.hot-update.js",
-      "publicPath": "http://localhost:8080/private.64f1777c226d1726.hot-update.js"
-    },
-    "meeting_room.64f1777c226d1726.hot-update.js": {
-      "name": "meeting_room.64f1777c226d1726.hot-update.js",
-      "path": "meeting_room.64f1777c226d1726.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.64f1777c226d1726.hot-update.js"
-    },
-    "public.64f1777c226d1726.hot-update.json": {
-      "name": "public.64f1777c226d1726.hot-update.json",
-      "path": "public.64f1777c226d1726.hot-update.json",
-      "publicPath": "http://localhost:8080/public.64f1777c226d1726.hot-update.json"
-    },
-    "private.64f1777c226d1726.hot-update.json": {
-      "name": "private.64f1777c226d1726.hot-update.json",
-      "path": "private.64f1777c226d1726.hot-update.json",
-      "publicPath": "http://localhost:8080/private.64f1777c226d1726.hot-update.json"
-    },
-    "public.a976a9abae86b19b.hot-update.js": {
-      "name": "public.a976a9abae86b19b.hot-update.js",
-      "path": "public.a976a9abae86b19b.hot-update.js",
-      "publicPath": "http://localhost:8080/public.a976a9abae86b19b.hot-update.js"
-    },
-    "private.a976a9abae86b19b.hot-update.js": {
-      "name": "private.a976a9abae86b19b.hot-update.js",
-      "path": "private.a976a9abae86b19b.hot-update.js",
-      "publicPath": "http://localhost:8080/private.a976a9abae86b19b.hot-update.js"
-    },
-    "meeting_room.a976a9abae86b19b.hot-update.js": {
-      "name": "meeting_room.a976a9abae86b19b.hot-update.js",
-      "path": "meeting_room.a976a9abae86b19b.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.a976a9abae86b19b.hot-update.js"
-    },
-    "public.a976a9abae86b19b.hot-update.json": {
-      "name": "public.a976a9abae86b19b.hot-update.json",
-      "path": "public.a976a9abae86b19b.hot-update.json",
-      "publicPath": "http://localhost:8080/public.a976a9abae86b19b.hot-update.json"
-    },
-    "private.a976a9abae86b19b.hot-update.json": {
-      "name": "private.a976a9abae86b19b.hot-update.json",
-      "path": "private.a976a9abae86b19b.hot-update.json",
-      "publicPath": "http://localhost:8080/private.a976a9abae86b19b.hot-update.json"
-    },
-    "public.4934afcffbf711c5.hot-update.js": {
-      "name": "public.4934afcffbf711c5.hot-update.js",
-      "path": "public.4934afcffbf711c5.hot-update.js",
-      "publicPath": "http://localhost:8080/public.4934afcffbf711c5.hot-update.js"
-    },
-    "private.4934afcffbf711c5.hot-update.js": {
-      "name": "private.4934afcffbf711c5.hot-update.js",
-      "path": "private.4934afcffbf711c5.hot-update.js",
-      "publicPath": "http://localhost:8080/private.4934afcffbf711c5.hot-update.js"
-    },
-    "meeting_room.4934afcffbf711c5.hot-update.js": {
-      "name": "meeting_room.4934afcffbf711c5.hot-update.js",
-      "path": "meeting_room.4934afcffbf711c5.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.4934afcffbf711c5.hot-update.js"
-    },
-    "public.4934afcffbf711c5.hot-update.json": {
-      "name": "public.4934afcffbf711c5.hot-update.json",
-      "path": "public.4934afcffbf711c5.hot-update.json",
-      "publicPath": "http://localhost:8080/public.4934afcffbf711c5.hot-update.json"
-    },
-    "private.4934afcffbf711c5.hot-update.json": {
-      "name": "private.4934afcffbf711c5.hot-update.json",
-      "path": "private.4934afcffbf711c5.hot-update.json",
-      "publicPath": "http://localhost:8080/private.4934afcffbf711c5.hot-update.json"
-    },
-    "public.0c5b673134277ed2.hot-update.js": {
-      "name": "public.0c5b673134277ed2.hot-update.js",
-      "path": "public.0c5b673134277ed2.hot-update.js",
-      "publicPath": "http://localhost:8080/public.0c5b673134277ed2.hot-update.js"
-    },
-    "private.0c5b673134277ed2.hot-update.js": {
-      "name": "private.0c5b673134277ed2.hot-update.js",
-      "path": "private.0c5b673134277ed2.hot-update.js",
-      "publicPath": "http://localhost:8080/private.0c5b673134277ed2.hot-update.js"
-    },
-    "meeting_room.0c5b673134277ed2.hot-update.js": {
-      "name": "meeting_room.0c5b673134277ed2.hot-update.js",
-      "path": "meeting_room.0c5b673134277ed2.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.0c5b673134277ed2.hot-update.js"
-    },
-    "public.0c5b673134277ed2.hot-update.json": {
-      "name": "public.0c5b673134277ed2.hot-update.json",
-      "path": "public.0c5b673134277ed2.hot-update.json",
-      "publicPath": "http://localhost:8080/public.0c5b673134277ed2.hot-update.json"
-    },
-    "private.0c5b673134277ed2.hot-update.json": {
-      "name": "private.0c5b673134277ed2.hot-update.json",
-      "path": "private.0c5b673134277ed2.hot-update.json",
-      "publicPath": "http://localhost:8080/private.0c5b673134277ed2.hot-update.json"
-    },
-    "public.8ccaa932be9501fa.hot-update.js": {
-      "name": "public.8ccaa932be9501fa.hot-update.js",
-      "path": "public.8ccaa932be9501fa.hot-update.js",
-      "publicPath": "http://localhost:8080/public.8ccaa932be9501fa.hot-update.js"
-    },
-    "private.8ccaa932be9501fa.hot-update.js": {
-      "name": "private.8ccaa932be9501fa.hot-update.js",
-      "path": "private.8ccaa932be9501fa.hot-update.js",
-      "publicPath": "http://localhost:8080/private.8ccaa932be9501fa.hot-update.js"
-    },
-    "meeting_room.8ccaa932be9501fa.hot-update.js": {
-      "name": "meeting_room.8ccaa932be9501fa.hot-update.js",
-      "path": "meeting_room.8ccaa932be9501fa.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.8ccaa932be9501fa.hot-update.js"
-    },
-    "public.8ccaa932be9501fa.hot-update.json": {
-      "name": "public.8ccaa932be9501fa.hot-update.json",
-      "path": "public.8ccaa932be9501fa.hot-update.json",
-      "publicPath": "http://localhost:8080/public.8ccaa932be9501fa.hot-update.json"
-    },
-    "private.8ccaa932be9501fa.hot-update.json": {
-      "name": "private.8ccaa932be9501fa.hot-update.json",
-      "path": "private.8ccaa932be9501fa.hot-update.json",
-      "publicPath": "http://localhost:8080/private.8ccaa932be9501fa.hot-update.json"
-    },
-    "public.c74b4fca3db56e81.hot-update.js": {
-      "name": "public.c74b4fca3db56e81.hot-update.js",
-      "path": "public.c74b4fca3db56e81.hot-update.js",
-      "publicPath": "http://localhost:8080/public.c74b4fca3db56e81.hot-update.js"
-    },
-    "private.c74b4fca3db56e81.hot-update.js": {
-      "name": "private.c74b4fca3db56e81.hot-update.js",
-      "path": "private.c74b4fca3db56e81.hot-update.js",
-      "publicPath": "http://localhost:8080/private.c74b4fca3db56e81.hot-update.js"
-    },
-    "meeting_room.c74b4fca3db56e81.hot-update.js": {
-      "name": "meeting_room.c74b4fca3db56e81.hot-update.js",
-      "path": "meeting_room.c74b4fca3db56e81.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.c74b4fca3db56e81.hot-update.js"
-    },
-    "public.c74b4fca3db56e81.hot-update.json": {
-      "name": "public.c74b4fca3db56e81.hot-update.json",
-      "path": "public.c74b4fca3db56e81.hot-update.json",
-      "publicPath": "http://localhost:8080/public.c74b4fca3db56e81.hot-update.json"
-    },
-    "private.c74b4fca3db56e81.hot-update.json": {
-      "name": "private.c74b4fca3db56e81.hot-update.json",
-      "path": "private.c74b4fca3db56e81.hot-update.json",
-      "publicPath": "http://localhost:8080/private.c74b4fca3db56e81.hot-update.json"
-    },
-    "public.aa7a0e2cada04225.hot-update.js": {
-      "name": "public.aa7a0e2cada04225.hot-update.js",
-      "path": "public.aa7a0e2cada04225.hot-update.js",
-      "publicPath": "http://localhost:8080/public.aa7a0e2cada04225.hot-update.js"
-    },
-    "private.aa7a0e2cada04225.hot-update.js": {
-      "name": "private.aa7a0e2cada04225.hot-update.js",
-      "path": "private.aa7a0e2cada04225.hot-update.js",
-      "publicPath": "http://localhost:8080/private.aa7a0e2cada04225.hot-update.js"
-    },
-    "meeting_room.aa7a0e2cada04225.hot-update.js": {
-      "name": "meeting_room.aa7a0e2cada04225.hot-update.js",
-      "path": "meeting_room.aa7a0e2cada04225.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.aa7a0e2cada04225.hot-update.js"
-    },
-    "public.aa7a0e2cada04225.hot-update.json": {
-      "name": "public.aa7a0e2cada04225.hot-update.json",
-      "path": "public.aa7a0e2cada04225.hot-update.json",
-      "publicPath": "http://localhost:8080/public.aa7a0e2cada04225.hot-update.json"
-    },
-    "private.aa7a0e2cada04225.hot-update.json": {
-      "name": "private.aa7a0e2cada04225.hot-update.json",
-      "path": "private.aa7a0e2cada04225.hot-update.json",
-      "publicPath": "http://localhost:8080/private.aa7a0e2cada04225.hot-update.json"
-    },
-    "public.79cf580772134728.hot-update.js": {
-      "name": "public.79cf580772134728.hot-update.js",
-      "path": "public.79cf580772134728.hot-update.js",
-      "publicPath": "http://localhost:8080/public.79cf580772134728.hot-update.js"
-    },
-    "private.79cf580772134728.hot-update.js": {
-      "name": "private.79cf580772134728.hot-update.js",
-      "path": "private.79cf580772134728.hot-update.js",
-      "publicPath": "http://localhost:8080/private.79cf580772134728.hot-update.js"
-    },
-    "meeting_room.79cf580772134728.hot-update.js": {
-      "name": "meeting_room.79cf580772134728.hot-update.js",
-      "path": "meeting_room.79cf580772134728.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.79cf580772134728.hot-update.js"
-    },
-    "public.79cf580772134728.hot-update.json": {
-      "name": "public.79cf580772134728.hot-update.json",
-      "path": "public.79cf580772134728.hot-update.json",
-      "publicPath": "http://localhost:8080/public.79cf580772134728.hot-update.json"
-    },
-    "private.79cf580772134728.hot-update.json": {
-      "name": "private.79cf580772134728.hot-update.json",
-      "path": "private.79cf580772134728.hot-update.json",
-      "publicPath": "http://localhost:8080/private.79cf580772134728.hot-update.json"
-    },
-    "public.deeedb913d385f01.hot-update.js": {
-      "name": "public.deeedb913d385f01.hot-update.js",
-      "path": "public.deeedb913d385f01.hot-update.js",
-      "publicPath": "http://localhost:8080/public.deeedb913d385f01.hot-update.js"
-    },
-    "private.deeedb913d385f01.hot-update.js": {
-      "name": "private.deeedb913d385f01.hot-update.js",
-      "path": "private.deeedb913d385f01.hot-update.js",
-      "publicPath": "http://localhost:8080/private.deeedb913d385f01.hot-update.js"
-    },
-    "meeting_room.deeedb913d385f01.hot-update.js": {
-      "name": "meeting_room.deeedb913d385f01.hot-update.js",
-      "path": "meeting_room.deeedb913d385f01.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.deeedb913d385f01.hot-update.js"
-    },
-    "public.deeedb913d385f01.hot-update.json": {
-      "name": "public.deeedb913d385f01.hot-update.json",
-      "path": "public.deeedb913d385f01.hot-update.json",
-      "publicPath": "http://localhost:8080/public.deeedb913d385f01.hot-update.json"
-    },
-    "private.deeedb913d385f01.hot-update.json": {
-      "name": "private.deeedb913d385f01.hot-update.json",
-      "path": "private.deeedb913d385f01.hot-update.json",
-      "publicPath": "http://localhost:8080/private.deeedb913d385f01.hot-update.json"
-    },
-    "public.441d31c518754b9f.hot-update.js": {
-      "name": "public.441d31c518754b9f.hot-update.js",
-      "path": "public.441d31c518754b9f.hot-update.js",
-      "publicPath": "http://localhost:8080/public.441d31c518754b9f.hot-update.js"
-    },
-    "private.441d31c518754b9f.hot-update.js": {
-      "name": "private.441d31c518754b9f.hot-update.js",
-      "path": "private.441d31c518754b9f.hot-update.js",
-      "publicPath": "http://localhost:8080/private.441d31c518754b9f.hot-update.js"
-    },
-    "meeting_room.441d31c518754b9f.hot-update.js": {
-      "name": "meeting_room.441d31c518754b9f.hot-update.js",
-      "path": "meeting_room.441d31c518754b9f.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.441d31c518754b9f.hot-update.js"
-    },
-    "public.441d31c518754b9f.hot-update.json": {
-      "name": "public.441d31c518754b9f.hot-update.json",
-      "path": "public.441d31c518754b9f.hot-update.json",
-      "publicPath": "http://localhost:8080/public.441d31c518754b9f.hot-update.json"
-    },
-    "private.441d31c518754b9f.hot-update.json": {
-      "name": "private.441d31c518754b9f.hot-update.json",
-      "path": "private.441d31c518754b9f.hot-update.json",
-      "publicPath": "http://localhost:8080/private.441d31c518754b9f.hot-update.json"
-    },
-    "public.6b77626a50aa6d92.hot-update.js": {
-      "name": "public.6b77626a50aa6d92.hot-update.js",
-      "path": "public.6b77626a50aa6d92.hot-update.js",
-      "publicPath": "http://localhost:8080/public.6b77626a50aa6d92.hot-update.js"
-    },
-    "private.6b77626a50aa6d92.hot-update.js": {
-      "name": "private.6b77626a50aa6d92.hot-update.js",
-      "path": "private.6b77626a50aa6d92.hot-update.js",
-      "publicPath": "http://localhost:8080/private.6b77626a50aa6d92.hot-update.js"
-    },
-    "meeting_room.6b77626a50aa6d92.hot-update.js": {
-      "name": "meeting_room.6b77626a50aa6d92.hot-update.js",
-      "path": "meeting_room.6b77626a50aa6d92.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.6b77626a50aa6d92.hot-update.js"
-    },
-    "public.6b77626a50aa6d92.hot-update.json": {
-      "name": "public.6b77626a50aa6d92.hot-update.json",
-      "path": "public.6b77626a50aa6d92.hot-update.json",
-      "publicPath": "http://localhost:8080/public.6b77626a50aa6d92.hot-update.json"
-    },
-    "private.6b77626a50aa6d92.hot-update.json": {
-      "name": "private.6b77626a50aa6d92.hot-update.json",
-      "path": "private.6b77626a50aa6d92.hot-update.json",
-      "publicPath": "http://localhost:8080/private.6b77626a50aa6d92.hot-update.json"
-    },
-    "public.4d126912adfafa7c.hot-update.js": {
-      "name": "public.4d126912adfafa7c.hot-update.js",
-      "path": "public.4d126912adfafa7c.hot-update.js",
-      "publicPath": "http://localhost:8080/public.4d126912adfafa7c.hot-update.js"
-    },
-    "private.4d126912adfafa7c.hot-update.js": {
-      "name": "private.4d126912adfafa7c.hot-update.js",
-      "path": "private.4d126912adfafa7c.hot-update.js",
-      "publicPath": "http://localhost:8080/private.4d126912adfafa7c.hot-update.js"
-    },
-    "meeting_room.4d126912adfafa7c.hot-update.js": {
-      "name": "meeting_room.4d126912adfafa7c.hot-update.js",
-      "path": "meeting_room.4d126912adfafa7c.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.4d126912adfafa7c.hot-update.js"
-    },
-    "public.4d126912adfafa7c.hot-update.json": {
-      "name": "public.4d126912adfafa7c.hot-update.json",
-      "path": "public.4d126912adfafa7c.hot-update.json",
-      "publicPath": "http://localhost:8080/public.4d126912adfafa7c.hot-update.json"
-    },
-    "private.4d126912adfafa7c.hot-update.json": {
-      "name": "private.4d126912adfafa7c.hot-update.json",
-      "path": "private.4d126912adfafa7c.hot-update.json",
-      "publicPath": "http://localhost:8080/private.4d126912adfafa7c.hot-update.json"
-    },
-    "public.26dcc6aed5090795.hot-update.js": {
-      "name": "public.26dcc6aed5090795.hot-update.js",
-      "path": "public.26dcc6aed5090795.hot-update.js",
-      "publicPath": "http://localhost:8080/public.26dcc6aed5090795.hot-update.js"
-    },
-    "private.26dcc6aed5090795.hot-update.js": {
-      "name": "private.26dcc6aed5090795.hot-update.js",
-      "path": "private.26dcc6aed5090795.hot-update.js",
-      "publicPath": "http://localhost:8080/private.26dcc6aed5090795.hot-update.js"
-    },
-    "meeting_room.26dcc6aed5090795.hot-update.js": {
-      "name": "meeting_room.26dcc6aed5090795.hot-update.js",
-      "path": "meeting_room.26dcc6aed5090795.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.26dcc6aed5090795.hot-update.js"
-    },
-    "public.26dcc6aed5090795.hot-update.json": {
-      "name": "public.26dcc6aed5090795.hot-update.json",
-      "path": "public.26dcc6aed5090795.hot-update.json",
-      "publicPath": "http://localhost:8080/public.26dcc6aed5090795.hot-update.json"
-    },
-    "private.26dcc6aed5090795.hot-update.json": {
-      "name": "private.26dcc6aed5090795.hot-update.json",
-      "path": "private.26dcc6aed5090795.hot-update.json",
-      "publicPath": "http://localhost:8080/private.26dcc6aed5090795.hot-update.json"
-    },
-    "public.0acf1e8802e94fbd.hot-update.js": {
-      "name": "public.0acf1e8802e94fbd.hot-update.js",
-      "path": "public.0acf1e8802e94fbd.hot-update.js",
-      "publicPath": "http://localhost:8080/public.0acf1e8802e94fbd.hot-update.js"
-    },
-    "private.0acf1e8802e94fbd.hot-update.js": {
-      "name": "private.0acf1e8802e94fbd.hot-update.js",
-      "path": "private.0acf1e8802e94fbd.hot-update.js",
-      "publicPath": "http://localhost:8080/private.0acf1e8802e94fbd.hot-update.js"
-    },
-    "meeting_room.0acf1e8802e94fbd.hot-update.js": {
-      "name": "meeting_room.0acf1e8802e94fbd.hot-update.js",
-      "path": "meeting_room.0acf1e8802e94fbd.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.0acf1e8802e94fbd.hot-update.js"
-    },
-    "public.0acf1e8802e94fbd.hot-update.json": {
-      "name": "public.0acf1e8802e94fbd.hot-update.json",
-      "path": "public.0acf1e8802e94fbd.hot-update.json",
-      "publicPath": "http://localhost:8080/public.0acf1e8802e94fbd.hot-update.json"
-    },
-    "private.0acf1e8802e94fbd.hot-update.json": {
-      "name": "private.0acf1e8802e94fbd.hot-update.json",
-      "path": "private.0acf1e8802e94fbd.hot-update.json",
-      "publicPath": "http://localhost:8080/private.0acf1e8802e94fbd.hot-update.json"
-    },
-    "public.b53b233b33e0bb47.hot-update.js": {
-      "name": "public.b53b233b33e0bb47.hot-update.js",
-      "path": "public.b53b233b33e0bb47.hot-update.js",
-      "publicPath": "http://localhost:8080/public.b53b233b33e0bb47.hot-update.js"
-    },
-    "private.b53b233b33e0bb47.hot-update.js": {
-      "name": "private.b53b233b33e0bb47.hot-update.js",
-      "path": "private.b53b233b33e0bb47.hot-update.js",
-      "publicPath": "http://localhost:8080/private.b53b233b33e0bb47.hot-update.js"
-    },
-    "meeting_room.b53b233b33e0bb47.hot-update.js": {
-      "name": "meeting_room.b53b233b33e0bb47.hot-update.js",
-      "path": "meeting_room.b53b233b33e0bb47.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.b53b233b33e0bb47.hot-update.js"
-    },
-    "public.b53b233b33e0bb47.hot-update.json": {
-      "name": "public.b53b233b33e0bb47.hot-update.json",
-      "path": "public.b53b233b33e0bb47.hot-update.json",
-      "publicPath": "http://localhost:8080/public.b53b233b33e0bb47.hot-update.json"
-    },
-    "private.b53b233b33e0bb47.hot-update.json": {
-      "name": "private.b53b233b33e0bb47.hot-update.json",
-      "path": "private.b53b233b33e0bb47.hot-update.json",
-      "publicPath": "http://localhost:8080/private.b53b233b33e0bb47.hot-update.json"
-    },
-    "public.cd51e8280c5b8e05.hot-update.js": {
-      "name": "public.cd51e8280c5b8e05.hot-update.js",
-      "path": "public.cd51e8280c5b8e05.hot-update.js",
-      "publicPath": "http://localhost:8080/public.cd51e8280c5b8e05.hot-update.js"
-    },
-    "private.cd51e8280c5b8e05.hot-update.js": {
-      "name": "private.cd51e8280c5b8e05.hot-update.js",
-      "path": "private.cd51e8280c5b8e05.hot-update.js",
-      "publicPath": "http://localhost:8080/private.cd51e8280c5b8e05.hot-update.js"
-    },
-    "meeting_room.cd51e8280c5b8e05.hot-update.js": {
-      "name": "meeting_room.cd51e8280c5b8e05.hot-update.js",
-      "path": "meeting_room.cd51e8280c5b8e05.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.cd51e8280c5b8e05.hot-update.js"
-    },
-    "public.cd51e8280c5b8e05.hot-update.json": {
-      "name": "public.cd51e8280c5b8e05.hot-update.json",
-      "path": "public.cd51e8280c5b8e05.hot-update.json",
-      "publicPath": "http://localhost:8080/public.cd51e8280c5b8e05.hot-update.json"
-    },
-    "private.cd51e8280c5b8e05.hot-update.json": {
-      "name": "private.cd51e8280c5b8e05.hot-update.json",
-      "path": "private.cd51e8280c5b8e05.hot-update.json",
-      "publicPath": "http://localhost:8080/private.cd51e8280c5b8e05.hot-update.json"
-    },
-    "public.45393bb2dc9c2d02.hot-update.js": {
-      "name": "public.45393bb2dc9c2d02.hot-update.js",
-      "path": "public.45393bb2dc9c2d02.hot-update.js",
-      "publicPath": "http://localhost:8080/public.45393bb2dc9c2d02.hot-update.js"
-    },
-    "private.45393bb2dc9c2d02.hot-update.js": {
-      "name": "private.45393bb2dc9c2d02.hot-update.js",
-      "path": "private.45393bb2dc9c2d02.hot-update.js",
-      "publicPath": "http://localhost:8080/private.45393bb2dc9c2d02.hot-update.js"
-    },
-    "meeting_room.45393bb2dc9c2d02.hot-update.js": {
-      "name": "meeting_room.45393bb2dc9c2d02.hot-update.js",
-      "path": "meeting_room.45393bb2dc9c2d02.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.45393bb2dc9c2d02.hot-update.js"
-    },
-    "public.45393bb2dc9c2d02.hot-update.json": {
-      "name": "public.45393bb2dc9c2d02.hot-update.json",
-      "path": "public.45393bb2dc9c2d02.hot-update.json",
-      "publicPath": "http://localhost:8080/public.45393bb2dc9c2d02.hot-update.json"
-    },
-    "private.45393bb2dc9c2d02.hot-update.json": {
-      "name": "private.45393bb2dc9c2d02.hot-update.json",
-      "path": "private.45393bb2dc9c2d02.hot-update.json",
-      "publicPath": "http://localhost:8080/private.45393bb2dc9c2d02.hot-update.json"
-    },
-    "public.6c9da36edc349dfd.hot-update.js": {
-      "name": "public.6c9da36edc349dfd.hot-update.js",
-      "path": "public.6c9da36edc349dfd.hot-update.js",
-      "publicPath": "http://localhost:8080/public.6c9da36edc349dfd.hot-update.js"
-    },
-    "private.6c9da36edc349dfd.hot-update.js": {
-      "name": "private.6c9da36edc349dfd.hot-update.js",
-      "path": "private.6c9da36edc349dfd.hot-update.js",
-      "publicPath": "http://localhost:8080/private.6c9da36edc349dfd.hot-update.js"
-    },
-    "meeting_room.6c9da36edc349dfd.hot-update.js": {
-      "name": "meeting_room.6c9da36edc349dfd.hot-update.js",
-      "path": "meeting_room.6c9da36edc349dfd.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.6c9da36edc349dfd.hot-update.js"
-    },
-    "public.6c9da36edc349dfd.hot-update.json": {
-      "name": "public.6c9da36edc349dfd.hot-update.json",
-      "path": "public.6c9da36edc349dfd.hot-update.json",
-      "publicPath": "http://localhost:8080/public.6c9da36edc349dfd.hot-update.json"
-    },
-    "private.6c9da36edc349dfd.hot-update.json": {
-      "name": "private.6c9da36edc349dfd.hot-update.json",
-      "path": "private.6c9da36edc349dfd.hot-update.json",
-      "publicPath": "http://localhost:8080/private.6c9da36edc349dfd.hot-update.json"
-    },
-    "public.1bb4dccd8ead8c4c.hot-update.js": {
-      "name": "public.1bb4dccd8ead8c4c.hot-update.js",
-      "path": "public.1bb4dccd8ead8c4c.hot-update.js",
-      "publicPath": "http://localhost:8080/public.1bb4dccd8ead8c4c.hot-update.js"
-    },
-    "private.1bb4dccd8ead8c4c.hot-update.js": {
-      "name": "private.1bb4dccd8ead8c4c.hot-update.js",
-      "path": "private.1bb4dccd8ead8c4c.hot-update.js",
-      "publicPath": "http://localhost:8080/private.1bb4dccd8ead8c4c.hot-update.js"
-    },
-    "meeting_room.1bb4dccd8ead8c4c.hot-update.js": {
-      "name": "meeting_room.1bb4dccd8ead8c4c.hot-update.js",
-      "path": "meeting_room.1bb4dccd8ead8c4c.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.1bb4dccd8ead8c4c.hot-update.js"
-    },
-    "public.1bb4dccd8ead8c4c.hot-update.json": {
-      "name": "public.1bb4dccd8ead8c4c.hot-update.json",
-      "path": "public.1bb4dccd8ead8c4c.hot-update.json",
-      "publicPath": "http://localhost:8080/public.1bb4dccd8ead8c4c.hot-update.json"
-    },
-    "private.1bb4dccd8ead8c4c.hot-update.json": {
-      "name": "private.1bb4dccd8ead8c4c.hot-update.json",
-      "path": "private.1bb4dccd8ead8c4c.hot-update.json",
-      "publicPath": "http://localhost:8080/private.1bb4dccd8ead8c4c.hot-update.json"
-    },
-    "public.63e3bddc2f196463.hot-update.js": {
-      "name": "public.63e3bddc2f196463.hot-update.js",
-      "path": "public.63e3bddc2f196463.hot-update.js",
-      "publicPath": "http://localhost:8080/public.63e3bddc2f196463.hot-update.js"
-    },
-    "private.63e3bddc2f196463.hot-update.js": {
-      "name": "private.63e3bddc2f196463.hot-update.js",
-      "path": "private.63e3bddc2f196463.hot-update.js",
-      "publicPath": "http://localhost:8080/private.63e3bddc2f196463.hot-update.js"
-    },
-    "meeting_room.63e3bddc2f196463.hot-update.js": {
-      "name": "meeting_room.63e3bddc2f196463.hot-update.js",
-      "path": "meeting_room.63e3bddc2f196463.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.63e3bddc2f196463.hot-update.js"
-    },
-    "public.63e3bddc2f196463.hot-update.json": {
-      "name": "public.63e3bddc2f196463.hot-update.json",
-      "path": "public.63e3bddc2f196463.hot-update.json",
-      "publicPath": "http://localhost:8080/public.63e3bddc2f196463.hot-update.json"
-    },
-    "private.63e3bddc2f196463.hot-update.json": {
-      "name": "private.63e3bddc2f196463.hot-update.json",
-      "path": "private.63e3bddc2f196463.hot-update.json",
-      "publicPath": "http://localhost:8080/private.63e3bddc2f196463.hot-update.json"
-    },
-    "public.8a6b3682808822f9.hot-update.js": {
-      "name": "public.8a6b3682808822f9.hot-update.js",
-      "path": "public.8a6b3682808822f9.hot-update.js",
-      "publicPath": "http://localhost:8080/public.8a6b3682808822f9.hot-update.js"
-    },
-    "private.8a6b3682808822f9.hot-update.js": {
-      "name": "private.8a6b3682808822f9.hot-update.js",
-      "path": "private.8a6b3682808822f9.hot-update.js",
-      "publicPath": "http://localhost:8080/private.8a6b3682808822f9.hot-update.js"
-    },
-    "meeting_room.8a6b3682808822f9.hot-update.js": {
-      "name": "meeting_room.8a6b3682808822f9.hot-update.js",
-      "path": "meeting_room.8a6b3682808822f9.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.8a6b3682808822f9.hot-update.js"
-    },
-    "public.8a6b3682808822f9.hot-update.json": {
-      "name": "public.8a6b3682808822f9.hot-update.json",
-      "path": "public.8a6b3682808822f9.hot-update.json",
-      "publicPath": "http://localhost:8080/public.8a6b3682808822f9.hot-update.json"
-    },
-    "private.8a6b3682808822f9.hot-update.json": {
-      "name": "private.8a6b3682808822f9.hot-update.json",
-      "path": "private.8a6b3682808822f9.hot-update.json",
-      "publicPath": "http://localhost:8080/private.8a6b3682808822f9.hot-update.json"
-    },
-    "public.ab27d605aa901ad0.hot-update.js": {
-      "name": "public.ab27d605aa901ad0.hot-update.js",
-      "path": "public.ab27d605aa901ad0.hot-update.js",
-      "publicPath": "http://localhost:8080/public.ab27d605aa901ad0.hot-update.js"
-    },
-    "private.ab27d605aa901ad0.hot-update.js": {
-      "name": "private.ab27d605aa901ad0.hot-update.js",
-      "path": "private.ab27d605aa901ad0.hot-update.js",
-      "publicPath": "http://localhost:8080/private.ab27d605aa901ad0.hot-update.js"
-    },
-    "meeting_room.ab27d605aa901ad0.hot-update.js": {
-      "name": "meeting_room.ab27d605aa901ad0.hot-update.js",
-      "path": "meeting_room.ab27d605aa901ad0.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.ab27d605aa901ad0.hot-update.js"
-    },
-    "public.ab27d605aa901ad0.hot-update.json": {
-      "name": "public.ab27d605aa901ad0.hot-update.json",
-      "path": "public.ab27d605aa901ad0.hot-update.json",
-      "publicPath": "http://localhost:8080/public.ab27d605aa901ad0.hot-update.json"
-    },
-    "private.ab27d605aa901ad0.hot-update.json": {
-      "name": "private.ab27d605aa901ad0.hot-update.json",
-      "path": "private.ab27d605aa901ad0.hot-update.json",
-      "publicPath": "http://localhost:8080/private.ab27d605aa901ad0.hot-update.json"
-    },
-    "public.57aece5af8947205.hot-update.js": {
-      "name": "public.57aece5af8947205.hot-update.js",
-      "path": "public.57aece5af8947205.hot-update.js",
-      "publicPath": "http://localhost:8080/public.57aece5af8947205.hot-update.js"
-    },
-    "private.57aece5af8947205.hot-update.js": {
-      "name": "private.57aece5af8947205.hot-update.js",
-      "path": "private.57aece5af8947205.hot-update.js",
-      "publicPath": "http://localhost:8080/private.57aece5af8947205.hot-update.js"
-    },
-    "meeting_room.57aece5af8947205.hot-update.js": {
-      "name": "meeting_room.57aece5af8947205.hot-update.js",
-      "path": "meeting_room.57aece5af8947205.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.57aece5af8947205.hot-update.js"
-    },
-    "public.57aece5af8947205.hot-update.json": {
-      "name": "public.57aece5af8947205.hot-update.json",
-      "path": "public.57aece5af8947205.hot-update.json",
-      "publicPath": "http://localhost:8080/public.57aece5af8947205.hot-update.json"
-    },
-    "private.57aece5af8947205.hot-update.json": {
-      "name": "private.57aece5af8947205.hot-update.json",
-      "path": "private.57aece5af8947205.hot-update.json",
-      "publicPath": "http://localhost:8080/private.57aece5af8947205.hot-update.json"
-    },
-    "public.e4210fbe6c641cf8.hot-update.js": {
-      "name": "public.e4210fbe6c641cf8.hot-update.js",
-      "path": "public.e4210fbe6c641cf8.hot-update.js",
-      "publicPath": "http://localhost:8080/public.e4210fbe6c641cf8.hot-update.js"
-    },
-    "private.e4210fbe6c641cf8.hot-update.js": {
-      "name": "private.e4210fbe6c641cf8.hot-update.js",
-      "path": "private.e4210fbe6c641cf8.hot-update.js",
-      "publicPath": "http://localhost:8080/private.e4210fbe6c641cf8.hot-update.js"
-    },
-    "meeting_room.e4210fbe6c641cf8.hot-update.js": {
-      "name": "meeting_room.e4210fbe6c641cf8.hot-update.js",
-      "path": "meeting_room.e4210fbe6c641cf8.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.e4210fbe6c641cf8.hot-update.js"
-    },
-    "public.e4210fbe6c641cf8.hot-update.json": {
-      "name": "public.e4210fbe6c641cf8.hot-update.json",
-      "path": "public.e4210fbe6c641cf8.hot-update.json",
-      "publicPath": "http://localhost:8080/public.e4210fbe6c641cf8.hot-update.json"
-    },
-    "private.e4210fbe6c641cf8.hot-update.json": {
-      "name": "private.e4210fbe6c641cf8.hot-update.json",
-      "path": "private.e4210fbe6c641cf8.hot-update.json",
-      "publicPath": "http://localhost:8080/private.e4210fbe6c641cf8.hot-update.json"
-    },
-    "public.4cf3067b5123abf2.hot-update.js": {
-      "name": "public.4cf3067b5123abf2.hot-update.js",
-      "path": "public.4cf3067b5123abf2.hot-update.js",
-      "publicPath": "http://localhost:8080/public.4cf3067b5123abf2.hot-update.js"
-    },
-    "private.4cf3067b5123abf2.hot-update.js": {
-      "name": "private.4cf3067b5123abf2.hot-update.js",
-      "path": "private.4cf3067b5123abf2.hot-update.js",
-      "publicPath": "http://localhost:8080/private.4cf3067b5123abf2.hot-update.js"
-    },
-    "meeting_room.4cf3067b5123abf2.hot-update.js": {
-      "name": "meeting_room.4cf3067b5123abf2.hot-update.js",
-      "path": "meeting_room.4cf3067b5123abf2.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.4cf3067b5123abf2.hot-update.js"
-    },
-    "public.4cf3067b5123abf2.hot-update.json": {
-      "name": "public.4cf3067b5123abf2.hot-update.json",
-      "path": "public.4cf3067b5123abf2.hot-update.json",
-      "publicPath": "http://localhost:8080/public.4cf3067b5123abf2.hot-update.json"
-    },
-    "private.4cf3067b5123abf2.hot-update.json": {
-      "name": "private.4cf3067b5123abf2.hot-update.json",
-      "path": "private.4cf3067b5123abf2.hot-update.json",
-      "publicPath": "http://localhost:8080/private.4cf3067b5123abf2.hot-update.json"
-    },
-    "public.7fea38217f534124.hot-update.js": {
-      "name": "public.7fea38217f534124.hot-update.js",
-      "path": "public.7fea38217f534124.hot-update.js",
-      "publicPath": "http://localhost:8080/public.7fea38217f534124.hot-update.js"
-    },
-    "private.7fea38217f534124.hot-update.js": {
-      "name": "private.7fea38217f534124.hot-update.js",
-      "path": "private.7fea38217f534124.hot-update.js",
-      "publicPath": "http://localhost:8080/private.7fea38217f534124.hot-update.js"
-    },
-    "meeting_room.7fea38217f534124.hot-update.js": {
-      "name": "meeting_room.7fea38217f534124.hot-update.js",
-      "path": "meeting_room.7fea38217f534124.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.7fea38217f534124.hot-update.js"
-    },
-    "public.7fea38217f534124.hot-update.json": {
-      "name": "public.7fea38217f534124.hot-update.json",
-      "path": "public.7fea38217f534124.hot-update.json",
-      "publicPath": "http://localhost:8080/public.7fea38217f534124.hot-update.json"
-    },
-    "private.7fea38217f534124.hot-update.json": {
-      "name": "private.7fea38217f534124.hot-update.json",
-      "path": "private.7fea38217f534124.hot-update.json",
-      "publicPath": "http://localhost:8080/private.7fea38217f534124.hot-update.json"
-    },
-    "public.530bb9812266062f.hot-update.js": {
-      "name": "public.530bb9812266062f.hot-update.js",
-      "path": "public.530bb9812266062f.hot-update.js",
-      "publicPath": "http://localhost:8080/public.530bb9812266062f.hot-update.js"
-    },
-    "private.530bb9812266062f.hot-update.js": {
-      "name": "private.530bb9812266062f.hot-update.js",
-      "path": "private.530bb9812266062f.hot-update.js",
-      "publicPath": "http://localhost:8080/private.530bb9812266062f.hot-update.js"
-    },
-    "meeting_room.530bb9812266062f.hot-update.js": {
-      "name": "meeting_room.530bb9812266062f.hot-update.js",
-      "path": "meeting_room.530bb9812266062f.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.530bb9812266062f.hot-update.js"
-    },
-    "public.530bb9812266062f.hot-update.json": {
-      "name": "public.530bb9812266062f.hot-update.json",
-      "path": "public.530bb9812266062f.hot-update.json",
-      "publicPath": "http://localhost:8080/public.530bb9812266062f.hot-update.json"
-    },
-    "private.530bb9812266062f.hot-update.json": {
-      "name": "private.530bb9812266062f.hot-update.json",
-      "path": "private.530bb9812266062f.hot-update.json",
-      "publicPath": "http://localhost:8080/private.530bb9812266062f.hot-update.json"
-    },
-    "public.d30156e5cdb7affb.hot-update.js": {
-      "name": "public.d30156e5cdb7affb.hot-update.js",
-      "path": "public.d30156e5cdb7affb.hot-update.js",
-      "publicPath": "http://localhost:8080/public.d30156e5cdb7affb.hot-update.js"
-    },
-    "private.d30156e5cdb7affb.hot-update.js": {
-      "name": "private.d30156e5cdb7affb.hot-update.js",
-      "path": "private.d30156e5cdb7affb.hot-update.js",
-      "publicPath": "http://localhost:8080/private.d30156e5cdb7affb.hot-update.js"
-    },
-    "meeting_room.d30156e5cdb7affb.hot-update.js": {
-      "name": "meeting_room.d30156e5cdb7affb.hot-update.js",
-      "path": "meeting_room.d30156e5cdb7affb.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.d30156e5cdb7affb.hot-update.js"
-    },
-    "public.d30156e5cdb7affb.hot-update.json": {
-      "name": "public.d30156e5cdb7affb.hot-update.json",
-      "path": "public.d30156e5cdb7affb.hot-update.json",
-      "publicPath": "http://localhost:8080/public.d30156e5cdb7affb.hot-update.json"
-    },
-    "private.d30156e5cdb7affb.hot-update.json": {
-      "name": "private.d30156e5cdb7affb.hot-update.json",
-      "path": "private.d30156e5cdb7affb.hot-update.json",
-      "publicPath": "http://localhost:8080/private.d30156e5cdb7affb.hot-update.json"
-    },
-    "public.fea9d345174f9bd1.hot-update.js": {
-      "name": "public.fea9d345174f9bd1.hot-update.js",
-      "path": "public.fea9d345174f9bd1.hot-update.js",
-      "publicPath": "http://localhost:8080/public.fea9d345174f9bd1.hot-update.js"
-    },
-    "private.fea9d345174f9bd1.hot-update.js": {
-      "name": "private.fea9d345174f9bd1.hot-update.js",
-      "path": "private.fea9d345174f9bd1.hot-update.js",
-      "publicPath": "http://localhost:8080/private.fea9d345174f9bd1.hot-update.js"
-    },
-    "meeting_room.fea9d345174f9bd1.hot-update.js": {
-      "name": "meeting_room.fea9d345174f9bd1.hot-update.js",
-      "path": "meeting_room.fea9d345174f9bd1.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.fea9d345174f9bd1.hot-update.js"
-    },
-    "public.fea9d345174f9bd1.hot-update.json": {
-      "name": "public.fea9d345174f9bd1.hot-update.json",
-      "path": "public.fea9d345174f9bd1.hot-update.json",
-      "publicPath": "http://localhost:8080/public.fea9d345174f9bd1.hot-update.json"
-    },
-    "private.fea9d345174f9bd1.hot-update.json": {
-      "name": "private.fea9d345174f9bd1.hot-update.json",
-      "path": "private.fea9d345174f9bd1.hot-update.json",
-      "publicPath": "http://localhost:8080/private.fea9d345174f9bd1.hot-update.json"
-    },
-    "public.71b0b2bb7140aa18.hot-update.js": {
-      "name": "public.71b0b2bb7140aa18.hot-update.js",
-      "path": "public.71b0b2bb7140aa18.hot-update.js",
-      "publicPath": "http://localhost:8080/public.71b0b2bb7140aa18.hot-update.js"
-    },
-    "private.71b0b2bb7140aa18.hot-update.js": {
-      "name": "private.71b0b2bb7140aa18.hot-update.js",
-      "path": "private.71b0b2bb7140aa18.hot-update.js",
-      "publicPath": "http://localhost:8080/private.71b0b2bb7140aa18.hot-update.js"
-    },
-    "meeting_room.71b0b2bb7140aa18.hot-update.js": {
-      "name": "meeting_room.71b0b2bb7140aa18.hot-update.js",
-      "path": "meeting_room.71b0b2bb7140aa18.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.71b0b2bb7140aa18.hot-update.js"
-    },
-    "public.71b0b2bb7140aa18.hot-update.json": {
-      "name": "public.71b0b2bb7140aa18.hot-update.json",
-      "path": "public.71b0b2bb7140aa18.hot-update.json",
-      "publicPath": "http://localhost:8080/public.71b0b2bb7140aa18.hot-update.json"
-    },
-    "private.71b0b2bb7140aa18.hot-update.json": {
-      "name": "private.71b0b2bb7140aa18.hot-update.json",
-      "path": "private.71b0b2bb7140aa18.hot-update.json",
-      "publicPath": "http://localhost:8080/private.71b0b2bb7140aa18.hot-update.json"
-    },
-    "public.35acaa0f6bc938ea.hot-update.js": {
-      "name": "public.35acaa0f6bc938ea.hot-update.js",
-      "path": "public.35acaa0f6bc938ea.hot-update.js",
-      "publicPath": "http://localhost:8080/public.35acaa0f6bc938ea.hot-update.js"
-    },
-    "private.35acaa0f6bc938ea.hot-update.js": {
-      "name": "private.35acaa0f6bc938ea.hot-update.js",
-      "path": "private.35acaa0f6bc938ea.hot-update.js",
-      "publicPath": "http://localhost:8080/private.35acaa0f6bc938ea.hot-update.js"
-    },
-    "meeting_room.35acaa0f6bc938ea.hot-update.js": {
-      "name": "meeting_room.35acaa0f6bc938ea.hot-update.js",
-      "path": "meeting_room.35acaa0f6bc938ea.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.35acaa0f6bc938ea.hot-update.js"
-    },
-    "public.35acaa0f6bc938ea.hot-update.json": {
-      "name": "public.35acaa0f6bc938ea.hot-update.json",
-      "path": "public.35acaa0f6bc938ea.hot-update.json",
-      "publicPath": "http://localhost:8080/public.35acaa0f6bc938ea.hot-update.json"
-    },
-    "private.35acaa0f6bc938ea.hot-update.json": {
-      "name": "private.35acaa0f6bc938ea.hot-update.json",
-      "path": "private.35acaa0f6bc938ea.hot-update.json",
-      "publicPath": "http://localhost:8080/private.35acaa0f6bc938ea.hot-update.json"
-    },
-    "public.434000f596c8ee2a.hot-update.js": {
-      "name": "public.434000f596c8ee2a.hot-update.js",
-      "path": "public.434000f596c8ee2a.hot-update.js",
-      "publicPath": "http://localhost:8080/public.434000f596c8ee2a.hot-update.js"
-    },
-    "private.434000f596c8ee2a.hot-update.js": {
-      "name": "private.434000f596c8ee2a.hot-update.js",
-      "path": "private.434000f596c8ee2a.hot-update.js",
-      "publicPath": "http://localhost:8080/private.434000f596c8ee2a.hot-update.js"
-    },
-    "meeting_room.434000f596c8ee2a.hot-update.js": {
-      "name": "meeting_room.434000f596c8ee2a.hot-update.js",
-      "path": "meeting_room.434000f596c8ee2a.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.434000f596c8ee2a.hot-update.js"
-    },
-    "public.434000f596c8ee2a.hot-update.json": {
-      "name": "public.434000f596c8ee2a.hot-update.json",
-      "path": "public.434000f596c8ee2a.hot-update.json",
-      "publicPath": "http://localhost:8080/public.434000f596c8ee2a.hot-update.json"
-    },
-    "private.434000f596c8ee2a.hot-update.json": {
-      "name": "private.434000f596c8ee2a.hot-update.json",
-      "path": "private.434000f596c8ee2a.hot-update.json",
-      "publicPath": "http://localhost:8080/private.434000f596c8ee2a.hot-update.json"
-    },
-    "public.2f9e97c18ebc15c4.hot-update.js": {
-      "name": "public.2f9e97c18ebc15c4.hot-update.js",
-      "path": "public.2f9e97c18ebc15c4.hot-update.js",
-      "publicPath": "http://localhost:8080/public.2f9e97c18ebc15c4.hot-update.js"
-    },
-    "private.2f9e97c18ebc15c4.hot-update.js": {
-      "name": "private.2f9e97c18ebc15c4.hot-update.js",
-      "path": "private.2f9e97c18ebc15c4.hot-update.js",
-      "publicPath": "http://localhost:8080/private.2f9e97c18ebc15c4.hot-update.js"
-    },
-    "meeting_room.2f9e97c18ebc15c4.hot-update.js": {
-      "name": "meeting_room.2f9e97c18ebc15c4.hot-update.js",
-      "path": "meeting_room.2f9e97c18ebc15c4.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.2f9e97c18ebc15c4.hot-update.js"
-    },
-    "public.2f9e97c18ebc15c4.hot-update.json": {
-      "name": "public.2f9e97c18ebc15c4.hot-update.json",
-      "path": "public.2f9e97c18ebc15c4.hot-update.json",
-      "publicPath": "http://localhost:8080/public.2f9e97c18ebc15c4.hot-update.json"
-    },
-    "private.2f9e97c18ebc15c4.hot-update.json": {
-      "name": "private.2f9e97c18ebc15c4.hot-update.json",
-      "path": "private.2f9e97c18ebc15c4.hot-update.json",
-      "publicPath": "http://localhost:8080/private.2f9e97c18ebc15c4.hot-update.json"
-    },
-    "public.6f02ca8bfbcc85dc.hot-update.js": {
-      "name": "public.6f02ca8bfbcc85dc.hot-update.js",
-      "path": "public.6f02ca8bfbcc85dc.hot-update.js",
-      "publicPath": "http://localhost:8080/public.6f02ca8bfbcc85dc.hot-update.js"
-    },
-    "private.6f02ca8bfbcc85dc.hot-update.js": {
-      "name": "private.6f02ca8bfbcc85dc.hot-update.js",
-      "path": "private.6f02ca8bfbcc85dc.hot-update.js",
-      "publicPath": "http://localhost:8080/private.6f02ca8bfbcc85dc.hot-update.js"
-    },
-    "meeting_room.6f02ca8bfbcc85dc.hot-update.js": {
-      "name": "meeting_room.6f02ca8bfbcc85dc.hot-update.js",
-      "path": "meeting_room.6f02ca8bfbcc85dc.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.6f02ca8bfbcc85dc.hot-update.js"
-    },
-    "public.6f02ca8bfbcc85dc.hot-update.json": {
-      "name": "public.6f02ca8bfbcc85dc.hot-update.json",
-      "path": "public.6f02ca8bfbcc85dc.hot-update.json",
-      "publicPath": "http://localhost:8080/public.6f02ca8bfbcc85dc.hot-update.json"
-    },
-    "private.6f02ca8bfbcc85dc.hot-update.json": {
-      "name": "private.6f02ca8bfbcc85dc.hot-update.json",
-      "path": "private.6f02ca8bfbcc85dc.hot-update.json",
-      "publicPath": "http://localhost:8080/private.6f02ca8bfbcc85dc.hot-update.json"
-    },
-    "public.4e85ad24a35a6247.hot-update.js": {
-      "name": "public.4e85ad24a35a6247.hot-update.js",
-      "path": "public.4e85ad24a35a6247.hot-update.js",
-      "publicPath": "http://localhost:8080/public.4e85ad24a35a6247.hot-update.js"
-    },
-    "private.4e85ad24a35a6247.hot-update.js": {
-      "name": "private.4e85ad24a35a6247.hot-update.js",
-      "path": "private.4e85ad24a35a6247.hot-update.js",
-      "publicPath": "http://localhost:8080/private.4e85ad24a35a6247.hot-update.js"
-    },
-    "meeting_room.4e85ad24a35a6247.hot-update.js": {
-      "name": "meeting_room.4e85ad24a35a6247.hot-update.js",
-      "path": "meeting_room.4e85ad24a35a6247.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.4e85ad24a35a6247.hot-update.js"
-    },
-    "public.4e85ad24a35a6247.hot-update.json": {
-      "name": "public.4e85ad24a35a6247.hot-update.json",
-      "path": "public.4e85ad24a35a6247.hot-update.json",
-      "publicPath": "http://localhost:8080/public.4e85ad24a35a6247.hot-update.json"
-    },
-    "private.4e85ad24a35a6247.hot-update.json": {
-      "name": "private.4e85ad24a35a6247.hot-update.json",
-      "path": "private.4e85ad24a35a6247.hot-update.json",
-      "publicPath": "http://localhost:8080/private.4e85ad24a35a6247.hot-update.json"
-    },
-    "public.859f183c44a5b032.hot-update.js": {
-      "name": "public.859f183c44a5b032.hot-update.js",
-      "path": "public.859f183c44a5b032.hot-update.js",
-      "publicPath": "http://localhost:8080/public.859f183c44a5b032.hot-update.js"
-    },
-    "private.859f183c44a5b032.hot-update.js": {
-      "name": "private.859f183c44a5b032.hot-update.js",
-      "path": "private.859f183c44a5b032.hot-update.js",
-      "publicPath": "http://localhost:8080/private.859f183c44a5b032.hot-update.js"
-    },
-    "meeting_room.859f183c44a5b032.hot-update.js": {
-      "name": "meeting_room.859f183c44a5b032.hot-update.js",
-      "path": "meeting_room.859f183c44a5b032.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.859f183c44a5b032.hot-update.js"
-    },
-    "public.859f183c44a5b032.hot-update.json": {
-      "name": "public.859f183c44a5b032.hot-update.json",
-      "path": "public.859f183c44a5b032.hot-update.json",
-      "publicPath": "http://localhost:8080/public.859f183c44a5b032.hot-update.json"
-    },
-    "private.859f183c44a5b032.hot-update.json": {
-      "name": "private.859f183c44a5b032.hot-update.json",
-      "path": "private.859f183c44a5b032.hot-update.json",
-      "publicPath": "http://localhost:8080/private.859f183c44a5b032.hot-update.json"
-    },
-    "public.4a2456c928b0225d.hot-update.js": {
-      "name": "public.4a2456c928b0225d.hot-update.js",
-      "path": "public.4a2456c928b0225d.hot-update.js",
-      "publicPath": "http://localhost:8080/public.4a2456c928b0225d.hot-update.js"
-    },
-    "private.4a2456c928b0225d.hot-update.js": {
-      "name": "private.4a2456c928b0225d.hot-update.js",
-      "path": "private.4a2456c928b0225d.hot-update.js",
-      "publicPath": "http://localhost:8080/private.4a2456c928b0225d.hot-update.js"
-    },
-    "meeting_room.4a2456c928b0225d.hot-update.js": {
-      "name": "meeting_room.4a2456c928b0225d.hot-update.js",
-      "path": "meeting_room.4a2456c928b0225d.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.4a2456c928b0225d.hot-update.js"
-    },
-    "public.4a2456c928b0225d.hot-update.json": {
-      "name": "public.4a2456c928b0225d.hot-update.json",
-      "path": "public.4a2456c928b0225d.hot-update.json",
-      "publicPath": "http://localhost:8080/public.4a2456c928b0225d.hot-update.json"
-    },
-    "private.4a2456c928b0225d.hot-update.json": {
-      "name": "private.4a2456c928b0225d.hot-update.json",
-      "path": "private.4a2456c928b0225d.hot-update.json",
-      "publicPath": "http://localhost:8080/private.4a2456c928b0225d.hot-update.json"
-    },
-    "public.d32a4d747d1d3fe9.hot-update.js": {
-      "name": "public.d32a4d747d1d3fe9.hot-update.js",
-      "path": "public.d32a4d747d1d3fe9.hot-update.js",
-      "publicPath": "http://localhost:8080/public.d32a4d747d1d3fe9.hot-update.js"
-    },
-    "private.d32a4d747d1d3fe9.hot-update.js": {
-      "name": "private.d32a4d747d1d3fe9.hot-update.js",
-      "path": "private.d32a4d747d1d3fe9.hot-update.js",
-      "publicPath": "http://localhost:8080/private.d32a4d747d1d3fe9.hot-update.js"
-    },
-    "meeting_room.d32a4d747d1d3fe9.hot-update.js": {
-      "name": "meeting_room.d32a4d747d1d3fe9.hot-update.js",
-      "path": "meeting_room.d32a4d747d1d3fe9.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.d32a4d747d1d3fe9.hot-update.js"
-    },
-    "public.d32a4d747d1d3fe9.hot-update.json": {
-      "name": "public.d32a4d747d1d3fe9.hot-update.json",
-      "path": "public.d32a4d747d1d3fe9.hot-update.json",
-      "publicPath": "http://localhost:8080/public.d32a4d747d1d3fe9.hot-update.json"
-    },
-    "private.d32a4d747d1d3fe9.hot-update.json": {
-      "name": "private.d32a4d747d1d3fe9.hot-update.json",
-      "path": "private.d32a4d747d1d3fe9.hot-update.json",
-      "publicPath": "http://localhost:8080/private.d32a4d747d1d3fe9.hot-update.json"
-    },
-    "public.d8b09469f439dd51.hot-update.js": {
-      "name": "public.d8b09469f439dd51.hot-update.js",
-      "path": "public.d8b09469f439dd51.hot-update.js",
-      "publicPath": "http://localhost:8080/public.d8b09469f439dd51.hot-update.js"
-    },
-    "private.d8b09469f439dd51.hot-update.js": {
-      "name": "private.d8b09469f439dd51.hot-update.js",
-      "path": "private.d8b09469f439dd51.hot-update.js",
-      "publicPath": "http://localhost:8080/private.d8b09469f439dd51.hot-update.js"
-    },
-    "meeting_room.d8b09469f439dd51.hot-update.js": {
-      "name": "meeting_room.d8b09469f439dd51.hot-update.js",
-      "path": "meeting_room.d8b09469f439dd51.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.d8b09469f439dd51.hot-update.js"
-    },
-    "public.d8b09469f439dd51.hot-update.json": {
-      "name": "public.d8b09469f439dd51.hot-update.json",
-      "path": "public.d8b09469f439dd51.hot-update.json",
-      "publicPath": "http://localhost:8080/public.d8b09469f439dd51.hot-update.json"
-    },
-    "private.d8b09469f439dd51.hot-update.json": {
-      "name": "private.d8b09469f439dd51.hot-update.json",
-      "path": "private.d8b09469f439dd51.hot-update.json",
-      "publicPath": "http://localhost:8080/private.d8b09469f439dd51.hot-update.json"
-    },
-    "public.e4f6801590732da6.hot-update.js": {
-      "name": "public.e4f6801590732da6.hot-update.js",
-      "path": "public.e4f6801590732da6.hot-update.js",
-      "publicPath": "http://localhost:8080/public.e4f6801590732da6.hot-update.js"
-    },
-    "private.e4f6801590732da6.hot-update.js": {
-      "name": "private.e4f6801590732da6.hot-update.js",
-      "path": "private.e4f6801590732da6.hot-update.js",
-      "publicPath": "http://localhost:8080/private.e4f6801590732da6.hot-update.js"
-    },
-    "meeting_room.e4f6801590732da6.hot-update.js": {
-      "name": "meeting_room.e4f6801590732da6.hot-update.js",
-      "path": "meeting_room.e4f6801590732da6.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.e4f6801590732da6.hot-update.js"
-    },
-    "public.e4f6801590732da6.hot-update.json": {
-      "name": "public.e4f6801590732da6.hot-update.json",
-      "path": "public.e4f6801590732da6.hot-update.json",
-      "publicPath": "http://localhost:8080/public.e4f6801590732da6.hot-update.json"
-    },
-    "private.e4f6801590732da6.hot-update.json": {
-      "name": "private.e4f6801590732da6.hot-update.json",
-      "path": "private.e4f6801590732da6.hot-update.json",
-      "publicPath": "http://localhost:8080/private.e4f6801590732da6.hot-update.json"
-    },
-    "public.f5b7c1b2aa44154e.hot-update.js": {
-      "name": "public.f5b7c1b2aa44154e.hot-update.js",
-      "path": "public.f5b7c1b2aa44154e.hot-update.js",
-      "publicPath": "http://localhost:8080/public.f5b7c1b2aa44154e.hot-update.js"
-    },
-    "private.f5b7c1b2aa44154e.hot-update.js": {
-      "name": "private.f5b7c1b2aa44154e.hot-update.js",
-      "path": "private.f5b7c1b2aa44154e.hot-update.js",
-      "publicPath": "http://localhost:8080/private.f5b7c1b2aa44154e.hot-update.js"
-    },
-    "meeting_room.f5b7c1b2aa44154e.hot-update.js": {
-      "name": "meeting_room.f5b7c1b2aa44154e.hot-update.js",
-      "path": "meeting_room.f5b7c1b2aa44154e.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.f5b7c1b2aa44154e.hot-update.js"
-    },
-    "public.f5b7c1b2aa44154e.hot-update.json": {
-      "name": "public.f5b7c1b2aa44154e.hot-update.json",
-      "path": "public.f5b7c1b2aa44154e.hot-update.json",
-      "publicPath": "http://localhost:8080/public.f5b7c1b2aa44154e.hot-update.json"
-    },
-    "private.f5b7c1b2aa44154e.hot-update.json": {
-      "name": "private.f5b7c1b2aa44154e.hot-update.json",
-      "path": "private.f5b7c1b2aa44154e.hot-update.json",
-      "publicPath": "http://localhost:8080/private.f5b7c1b2aa44154e.hot-update.json"
-    },
-    "public.a4476c1ac1ada7e1.hot-update.js": {
-      "name": "public.a4476c1ac1ada7e1.hot-update.js",
-      "path": "public.a4476c1ac1ada7e1.hot-update.js",
-      "publicPath": "http://localhost:8080/public.a4476c1ac1ada7e1.hot-update.js"
-    },
-    "private.a4476c1ac1ada7e1.hot-update.js": {
-      "name": "private.a4476c1ac1ada7e1.hot-update.js",
-      "path": "private.a4476c1ac1ada7e1.hot-update.js",
-      "publicPath": "http://localhost:8080/private.a4476c1ac1ada7e1.hot-update.js"
-    },
-    "meeting_room.a4476c1ac1ada7e1.hot-update.js": {
-      "name": "meeting_room.a4476c1ac1ada7e1.hot-update.js",
-      "path": "meeting_room.a4476c1ac1ada7e1.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.a4476c1ac1ada7e1.hot-update.js"
-    },
-    "public.a4476c1ac1ada7e1.hot-update.json": {
-      "name": "public.a4476c1ac1ada7e1.hot-update.json",
-      "path": "public.a4476c1ac1ada7e1.hot-update.json",
-      "publicPath": "http://localhost:8080/public.a4476c1ac1ada7e1.hot-update.json"
-    },
-    "private.a4476c1ac1ada7e1.hot-update.json": {
-      "name": "private.a4476c1ac1ada7e1.hot-update.json",
-      "path": "private.a4476c1ac1ada7e1.hot-update.json",
-      "publicPath": "http://localhost:8080/private.a4476c1ac1ada7e1.hot-update.json"
-    },
-    "public.4c43ea24e32f513f.hot-update.js": {
-      "name": "public.4c43ea24e32f513f.hot-update.js",
-      "path": "public.4c43ea24e32f513f.hot-update.js",
-      "publicPath": "http://localhost:8080/public.4c43ea24e32f513f.hot-update.js"
-    },
-    "private.4c43ea24e32f513f.hot-update.js": {
-      "name": "private.4c43ea24e32f513f.hot-update.js",
-      "path": "private.4c43ea24e32f513f.hot-update.js",
-      "publicPath": "http://localhost:8080/private.4c43ea24e32f513f.hot-update.js"
-    },
-    "meeting_room.4c43ea24e32f513f.hot-update.js": {
-      "name": "meeting_room.4c43ea24e32f513f.hot-update.js",
-      "path": "meeting_room.4c43ea24e32f513f.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.4c43ea24e32f513f.hot-update.js"
-    },
-    "public.4c43ea24e32f513f.hot-update.json": {
-      "name": "public.4c43ea24e32f513f.hot-update.json",
-      "path": "public.4c43ea24e32f513f.hot-update.json",
-      "publicPath": "http://localhost:8080/public.4c43ea24e32f513f.hot-update.json"
-    },
-    "private.4c43ea24e32f513f.hot-update.json": {
-      "name": "private.4c43ea24e32f513f.hot-update.json",
-      "path": "private.4c43ea24e32f513f.hot-update.json",
-      "publicPath": "http://localhost:8080/private.4c43ea24e32f513f.hot-update.json"
-    },
-    "public.29f231907a67b71e.hot-update.js": {
-      "name": "public.29f231907a67b71e.hot-update.js",
-      "path": "public.29f231907a67b71e.hot-update.js",
-      "publicPath": "http://localhost:8080/public.29f231907a67b71e.hot-update.js"
-    },
-    "private.29f231907a67b71e.hot-update.js": {
-      "name": "private.29f231907a67b71e.hot-update.js",
-      "path": "private.29f231907a67b71e.hot-update.js",
-      "publicPath": "http://localhost:8080/private.29f231907a67b71e.hot-update.js"
-    },
-    "meeting_room.29f231907a67b71e.hot-update.js": {
-      "name": "meeting_room.29f231907a67b71e.hot-update.js",
-      "path": "meeting_room.29f231907a67b71e.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.29f231907a67b71e.hot-update.js"
-    },
-    "public.29f231907a67b71e.hot-update.json": {
-      "name": "public.29f231907a67b71e.hot-update.json",
-      "path": "public.29f231907a67b71e.hot-update.json",
-      "publicPath": "http://localhost:8080/public.29f231907a67b71e.hot-update.json"
-    },
-    "private.29f231907a67b71e.hot-update.json": {
-      "name": "private.29f231907a67b71e.hot-update.json",
-      "path": "private.29f231907a67b71e.hot-update.json",
-      "publicPath": "http://localhost:8080/private.29f231907a67b71e.hot-update.json"
-    },
-    "public.bc726319ce7429af.hot-update.js": {
-      "name": "public.bc726319ce7429af.hot-update.js",
-      "path": "public.bc726319ce7429af.hot-update.js",
-      "publicPath": "http://localhost:8080/public.bc726319ce7429af.hot-update.js"
-    },
-    "private.bc726319ce7429af.hot-update.js": {
-      "name": "private.bc726319ce7429af.hot-update.js",
-      "path": "private.bc726319ce7429af.hot-update.js",
-      "publicPath": "http://localhost:8080/private.bc726319ce7429af.hot-update.js"
-    },
-    "meeting_room.bc726319ce7429af.hot-update.js": {
-      "name": "meeting_room.bc726319ce7429af.hot-update.js",
-      "path": "meeting_room.bc726319ce7429af.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.bc726319ce7429af.hot-update.js"
-    },
-    "public.bc726319ce7429af.hot-update.json": {
-      "name": "public.bc726319ce7429af.hot-update.json",
-      "path": "public.bc726319ce7429af.hot-update.json",
-      "publicPath": "http://localhost:8080/public.bc726319ce7429af.hot-update.json"
-    },
-    "private.bc726319ce7429af.hot-update.json": {
-      "name": "private.bc726319ce7429af.hot-update.json",
-      "path": "private.bc726319ce7429af.hot-update.json",
-      "publicPath": "http://localhost:8080/private.bc726319ce7429af.hot-update.json"
-    },
-    "public.36132769a61b61cd.hot-update.js": {
-      "name": "public.36132769a61b61cd.hot-update.js",
-      "path": "public.36132769a61b61cd.hot-update.js",
-      "publicPath": "http://localhost:8080/public.36132769a61b61cd.hot-update.js"
-    },
-    "private.36132769a61b61cd.hot-update.js": {
-      "name": "private.36132769a61b61cd.hot-update.js",
-      "path": "private.36132769a61b61cd.hot-update.js",
-      "publicPath": "http://localhost:8080/private.36132769a61b61cd.hot-update.js"
-    },
-    "meeting_room.36132769a61b61cd.hot-update.js": {
-      "name": "meeting_room.36132769a61b61cd.hot-update.js",
-      "path": "meeting_room.36132769a61b61cd.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.36132769a61b61cd.hot-update.js"
-    },
-    "public.36132769a61b61cd.hot-update.json": {
-      "name": "public.36132769a61b61cd.hot-update.json",
-      "path": "public.36132769a61b61cd.hot-update.json",
-      "publicPath": "http://localhost:8080/public.36132769a61b61cd.hot-update.json"
-    },
-    "private.36132769a61b61cd.hot-update.json": {
-      "name": "private.36132769a61b61cd.hot-update.json",
-      "path": "private.36132769a61b61cd.hot-update.json",
-      "publicPath": "http://localhost:8080/private.36132769a61b61cd.hot-update.json"
-    },
-    "public.179380a21769a29e.hot-update.js": {
-      "name": "public.179380a21769a29e.hot-update.js",
-      "path": "public.179380a21769a29e.hot-update.js",
-      "publicPath": "http://localhost:8080/public.179380a21769a29e.hot-update.js"
-    },
-    "private.179380a21769a29e.hot-update.js": {
-      "name": "private.179380a21769a29e.hot-update.js",
-      "path": "private.179380a21769a29e.hot-update.js",
-      "publicPath": "http://localhost:8080/private.179380a21769a29e.hot-update.js"
-    },
-    "meeting_room.179380a21769a29e.hot-update.js": {
-      "name": "meeting_room.179380a21769a29e.hot-update.js",
-      "path": "meeting_room.179380a21769a29e.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.179380a21769a29e.hot-update.js"
-    },
-    "public.179380a21769a29e.hot-update.json": {
-      "name": "public.179380a21769a29e.hot-update.json",
-      "path": "public.179380a21769a29e.hot-update.json",
-      "publicPath": "http://localhost:8080/public.179380a21769a29e.hot-update.json"
-    },
-    "private.179380a21769a29e.hot-update.json": {
-      "name": "private.179380a21769a29e.hot-update.json",
-      "path": "private.179380a21769a29e.hot-update.json",
-      "publicPath": "http://localhost:8080/private.179380a21769a29e.hot-update.json"
-    },
-    "public.69ec9c182e28e368.hot-update.js": {
-      "name": "public.69ec9c182e28e368.hot-update.js",
-      "path": "public.69ec9c182e28e368.hot-update.js",
-      "publicPath": "http://localhost:8080/public.69ec9c182e28e368.hot-update.js"
-    },
-    "private.69ec9c182e28e368.hot-update.js": {
-      "name": "private.69ec9c182e28e368.hot-update.js",
-      "path": "private.69ec9c182e28e368.hot-update.js",
-      "publicPath": "http://localhost:8080/private.69ec9c182e28e368.hot-update.js"
-    },
-    "meeting_room.69ec9c182e28e368.hot-update.js": {
-      "name": "meeting_room.69ec9c182e28e368.hot-update.js",
-      "path": "meeting_room.69ec9c182e28e368.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.69ec9c182e28e368.hot-update.js"
-    },
-    "public.69ec9c182e28e368.hot-update.json": {
-      "name": "public.69ec9c182e28e368.hot-update.json",
-      "path": "public.69ec9c182e28e368.hot-update.json",
-      "publicPath": "http://localhost:8080/public.69ec9c182e28e368.hot-update.json"
-    },
-    "private.69ec9c182e28e368.hot-update.json": {
-      "name": "private.69ec9c182e28e368.hot-update.json",
-      "path": "private.69ec9c182e28e368.hot-update.json",
-      "publicPath": "http://localhost:8080/private.69ec9c182e28e368.hot-update.json"
-    },
-    "public.814adc48b5bc6d38.hot-update.js": {
-      "name": "public.814adc48b5bc6d38.hot-update.js",
-      "path": "public.814adc48b5bc6d38.hot-update.js",
-      "publicPath": "http://localhost:8080/public.814adc48b5bc6d38.hot-update.js"
-    },
-    "private.814adc48b5bc6d38.hot-update.js": {
-      "name": "private.814adc48b5bc6d38.hot-update.js",
-      "path": "private.814adc48b5bc6d38.hot-update.js",
-      "publicPath": "http://localhost:8080/private.814adc48b5bc6d38.hot-update.js"
-    },
-    "meeting_room.814adc48b5bc6d38.hot-update.js": {
-      "name": "meeting_room.814adc48b5bc6d38.hot-update.js",
-      "path": "meeting_room.814adc48b5bc6d38.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.814adc48b5bc6d38.hot-update.js"
-    },
-    "public.814adc48b5bc6d38.hot-update.json": {
-      "name": "public.814adc48b5bc6d38.hot-update.json",
-      "path": "public.814adc48b5bc6d38.hot-update.json",
-      "publicPath": "http://localhost:8080/public.814adc48b5bc6d38.hot-update.json"
-    },
-    "private.814adc48b5bc6d38.hot-update.json": {
-      "name": "private.814adc48b5bc6d38.hot-update.json",
-      "path": "private.814adc48b5bc6d38.hot-update.json",
-      "publicPath": "http://localhost:8080/private.814adc48b5bc6d38.hot-update.json"
-    },
-    "public.cae09a44c0a0e16d.hot-update.js": {
-      "name": "public.cae09a44c0a0e16d.hot-update.js",
-      "path": "public.cae09a44c0a0e16d.hot-update.js",
-      "publicPath": "http://localhost:8080/public.cae09a44c0a0e16d.hot-update.js"
-    },
-    "private.cae09a44c0a0e16d.hot-update.js": {
-      "name": "private.cae09a44c0a0e16d.hot-update.js",
-      "path": "private.cae09a44c0a0e16d.hot-update.js",
-      "publicPath": "http://localhost:8080/private.cae09a44c0a0e16d.hot-update.js"
-    },
-    "meeting_room.cae09a44c0a0e16d.hot-update.js": {
-      "name": "meeting_room.cae09a44c0a0e16d.hot-update.js",
-      "path": "meeting_room.cae09a44c0a0e16d.hot-update.js",
-      "publicPath": "http://localhost:8080/meeting_room.cae09a44c0a0e16d.hot-update.js"
-    },
-    "public.cae09a44c0a0e16d.hot-update.json": {
-      "name": "public.cae09a44c0a0e16d.hot-update.json",
-      "path": "public.cae09a44c0a0e16d.hot-update.json",
-      "publicPath": "http://localhost:8080/public.cae09a44c0a0e16d.hot-update.json"
-    },
-    "private.cae09a44c0a0e16d.hot-update.json": {
-      "name": "private.cae09a44c0a0e16d.hot-update.json",
-      "path": "private.cae09a44c0a0e16d.hot-update.json",
-      "publicPath": "http://localhost:8080/private.cae09a44c0a0e16d.hot-update.json"
+      "publicPath": "/private.html"
     }
   },
   "chunks": {
     "public": [
-      "static/dist/js/chunk-vendors.js",
-      "static/dist/js/chunk-common.js",
-      "static/dist/js/public.js"
+      "static/dist/css/chunk-vendors.0630f1fb.css",
+      "static/dist/js/chunk-vendors.ac67307c.js",
+      "static/dist/css/public.3a9f206e.css",
+      "static/dist/js/public.991ce3a1.js"
     ],
     "private": [
-      "static/dist/js/chunk-vendors.js",
-      "static/dist/js/chunk-common.js",
-      "static/dist/js/private.js"
+      "static/dist/css/chunk-vendors.0630f1fb.css",
+      "static/dist/js/chunk-vendors.ac67307c.js",
+      "static/dist/css/private.31860e42.css",
+      "static/dist/js/private.345e6a23.js"
     ]
   },
-  "publicPath": "http://localhost:8080/",
-  "error": "ModuleError",
-  "message": "Module Error (from ./node_modules/vue-loader/dist/index.js):\n[@vue/compiler-sfc] Unexpected token, expected \",\" (35:8)\n\nC:\\Users\\mhash\\Documents\\UnpluggedMessage\\front\\src\\pages\\meeting_room\\register.vue\n81 |    loading.value = true;\n82 |    const response = await axios.get(\"/api/meeting_room/get_by_month/\", {\n83 |      year.value,\n   |          ^\n84 |      month.value,\n85 |    });"
+  "publicPath": "/"
 }

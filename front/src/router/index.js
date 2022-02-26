@@ -111,7 +111,7 @@ const routes = [
   {
     path: "/meeting_room/ical/",
     name: "meeting_room:ical",
-    component: () => import(/* webpackChunkName: "meeting_room" */ "../pages/meeting_room/ical.vue")
+    component: () => import(/* webpackChunkName: "meeting_room:ical" */ "../pages/meeting_room/ical.vue")
   },
   {
     path: "/:catchAll(.*)",

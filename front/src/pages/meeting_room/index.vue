@@ -25,9 +25,9 @@
       /></router-link>
     </div>
     <div id="ical" class="card">
-      <h4>icalフィード（Googleカレンダー連携）</h4>
+      <h4>Googleカレンダー連携</h4>
       <p>
-        icalフィードを利用してGoogleカレンダーなどに例会教室データを表示できるようにしました。<br />くわしくはこちら
+        Googleカレンダーなどに例会教室データを表示できるようにしました。<br />くわしくはこのボタンから
       </p>
       <router-link
         :to="{ name: 'meeting_room:ical' }"
