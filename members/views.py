@@ -9,7 +9,7 @@ from django.db.utils import IntegrityError
 from social_django.models import UserSocialAuth
 
 from .forms import UserUpdateForm, MailSettingsForm, RegisterForm, MailTestForm, GoogleUnlinkForm
-from config.permissions import MemberRegisterPermission
+from config.permissions import MemberRegisterPermission, MeetingRoomRegisterPermission
 
 
 @login_required()
@@ -57,6 +57,7 @@ def userInfo(request, status_code=200):
                 "isSuperuser": user.is_superuser,
                 "isStaff": user.is_staff,
                 "canRegisterUser": MemberRegisterPermission(user),
+                "canRegisterMeetingRoom": MeetingRoomRegisterPermission(user),
             }
         },
         status=status_code,

@@ -1,14 +1,42 @@
 <template>
   <article>
     <h3>例会教室</h3>
-    <div class="card">
+    <div id="today-room" class="card">
+      今日(
+      <span :class="dayColor(todayRoom.date)">
+        {{ md(todayRoom.date) }}
+      </span>
+      )の例会教室は、<br />
+      <span id="today-room-name">
+        「
+        <span :class="roomColor(todayRoom.room)">
+          {{ room(todayRoom.room) }}
+        </span>
+        」
+      </span>
+      です。
+    </div>
+    <div id="register" class="card" v-if="registerPermission">
+      <h4>教室係用メニュー</h4>
       <router-link
-        v-if="isStaff"
-        to="./register/"
-        id="register"
+        :to="{ name: 'meeting_room:register' }"
         class="button button-primary"
-        >修正・登録</router-link
-      >
+        >例会教室データの修正・登録 <Icon :icon="['fas', 'edit']"
+      /></router-link>
+    </div>
+    <div id="ical" class="card">
+      <h4>Googleカレンダー連携</h4>
+      <p>
+        Googleカレンダーなどに例会教室データを表示できるようにしました。<br />くわしくはこのボタンから
+      </p>
+      <router-link
+        :to="{ name: 'meeting_room:ical' }"
+        class="button button-primary"
+        >Googleカレンダー連携の方法 <Icon :icon="['far', 'calendar-plus']"
+      /></router-link>
+    </div>
+    <div id="rooms" class="card">
+      <h4>1カ月先までの例会教室一覧</h4>
       <p v-if="rooms.length === 0">Now Loading...</p>
       <table v-else class="pure-table pure-table-bordered">
         <tr v-for="data in rooms" :key="data.date">
@@ -31,54 +59,59 @@
 <script setup>
 import moment from "@/utils/moment.js";
 import axios from "@/utils/axios.js";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
+import { md, dayColor, room, roomColor } from "./formatter";
+const store = useStore();
+const registerPermission = computed(
+  () => store.state.mypage.userInfo.canRegisterMeetingRoom
+);
+
 const rooms = ref([]);
-const isStaff = false;
+
 axios.get("/api/meeting_room/get31day/").then((res) => {
   rooms.value = res.data.rooms;
 });
 
-const md = (date) => moment(date).format("MM/DD (dd)");
-
-const dayColor = (date) => {
-  const day = moment(date).format("d");
-  if (day === "0") {
-    return "text-danger";
-  } else if (day === "6") {
-    return "text-primary";
+const todayRoom = computed(() => {
+  const date = moment().format("YYYY-MM-DD");
+  const result = rooms.value.find((obj) => obj.date === date);
+  if (result === undefined) {
+    return {
+      date,
+      room: null,
+    };
   } else {
-    return "";
+    return result;
   }
-};
-const room = (room) => {
-  if (room === null) {
-    return "例会教室は未登録";
-  } else {
-    return room;
-  }
-};
-const roomColor = (room) => {
-  switch (room) {
-    case "終日使用不可":
-    case "使用不可":
-      return "text-danger";
-    case null:
-      return "text-muted";
-    case "(20時まで音出し不可)":
-      return "text-success";
-    default:
-      return "";
-  }
-};
+});
 </script>
 
 <style lang="scss" scoped>
 .card {
   padding: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
 }
-#register {
+#today-room {
+  margin: 1rem auto;
+  #today-room-name {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+}
+h4 {
+  display: block;
+  margin: 0 0 1rem;
+}
+#register .button {
   display: inline-block;
-  margin: 1rem 0;
+  margin: 0;
+  padding: 0.75rem;
+}
+#ical .button {
+  display: inline-block;
+  margin: 0.5rem 0;
   padding: 0.75rem;
 }
 .text-danger {

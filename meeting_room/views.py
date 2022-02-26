@@ -1,71 +1,119 @@
 import datetime
-import json
 from dateutil.relativedelta import relativedelta
-from django.http.response import JsonResponse
-from django.contrib.auth.decorators import login_required
 
-from config.permissions import MeetingroomPermission
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required, permission_required
+from django_ical.views import ICalFeed
+
 from .models import Room
+from .forms import RoomForm
 
 
-@login_required()
-def index(request):
-    # return permission
-    return JsonResponse({"meeting_room_permission": MeetingroomPermission(request.user)})
-
-
-@login_required()
-def register(request):
-    if not MeetingroomPermission(request.user):
-        return JsonResponse({"results": "403 Forbidden"})
-    content = json.loads(request.body)
-    room = Room()
-    results = []
-    for key in content:
-        dt = datetime.datetime.strptime(content[key]["date"], "%Y-%m-%d")
-        result = room.updateOrCreate(content[key]["room"], datetime.date(dt.year, dt.month, dt.day))
-        results.append({key: result})
-    return JsonResponse({"results": results})
-
-
-@login_required()
-def sync(request):
-    if not MeetingroomPermission(request.user):
-        return JsonResponse({"results": "403 Forbidden"})
-    room = Room()
-    room.syncFromCalendarToCashe()
-    return get_all(request)
-
-
-def get31day(request):
-    room = Room()
-    contents = room.getByDateRange(
-        start_date=datetime.date.today(), end_date=datetime.date.today() + datetime.timedelta(days=31)
+def getRoomsByRange(start_date, end_date):
+    room_list = (
+        Room.objects.filter(date__gte=start_date, date__lte=end_date).order_by("date").values("date", "room_name")
     )
-    return JsonResponse({"rooms": contents})
+    date_list = [start_date + datetime.timedelta(days=i) for i in range((end_date - start_date).days + 1)]
+    return [
+        {
+            "date": date.strftime("%Y-%m-%d"),
+            "room": next(filter(lambda item: item["date"] == date, room_list), {"room_name": None})["room_name"],
+        }
+        for date in date_list
+    ]
+
+
+class CalendarFeed(ICalFeed):
+    """
+    A simple event calender
+    """
+
+    product_id = "-//ku-unplugged.net//Zoomail_meeting_room_feed//EN"
+    timezone = "Asia/Tokyo"
+    file_name = "meeting_room.ics"
+
+    def items(self):
+        return Room.objects.exclude(room_name=None).order_by("-date")
+
+    def item_title(self, item):
+        return item.room_name
+
+    def item_description(self, item):
+        return item.description
+
+    def item_start_datetime(self, item):
+        return datetime.datetime.combine(item.date, datetime.time())
+
+    def item_link(self, item):
+        return "/meeting_room/"
+
+    def item_guid(self, item):
+        return "meeting_room{}@message.ku-unplugged.net".format(item.date.strftime("%Y-%m-%d"))
+
+    def item_start_datetime(self, item):
+        return item.date
+
+    def item_end_datetime(self, item):
+        return item.date
+
+    def item_updateddate(self, item):
+        return item.updated_at
 
 
 def today(request):
-    room = Room()
-    return JsonResponse(room.getByDate(datetime.date.today()))
+    today = datetime.date.today()
+    try:
+        room = Room.objects.get(date=today).room_name
+    except ObjectDoesNotExist:
+        room = None
+    return JsonResponse({"room": room, "date": today.strftime("%Y-%m-%d")})
+
+
+def get31day(request):
+    today = datetime.date.today()
+    return JsonResponse({"rooms": getRoomsByRange(start_date=today, end_date=today + datetime.timedelta(days=30))})
 
 
 @login_required()
-def get_all(request):
-    """
-    page: -1 で先月
-    page: 0で今月
-    page: 1で来月
-    といった風に1ヶ月ごとにroomsを返す
-    """
-    if not MeetingroomPermission(request.user):
-        return JsonResponse({"results": "403 Forbidden"})
-    page = 0
-    if "page" in request.GET:
-        page = int(request.GET["page"])
-    room = Room()
-    today = datetime.date.today()
-    start = today.replace(day=1) + relativedelta(months=page)
-    end = today.replace(day=1) + relativedelta(months=page + 1) - datetime.timedelta(days=1)
-    contents = room.getByDateRange(start_date=start, end_date=end)
-    return JsonResponse({"rooms": contents})
+@permission_required("meeting_room.change_room")
+def get_by_month(request):
+    if "year" in request.GET:
+        year = int(request.GET["year"])
+    else:
+        year = datetime.date.today().year
+    if "month" in request.GET and 1 <= int(request.GET["month"]) <= 12:
+        month = int(request.GET["month"])
+    else:
+        month = int(datetime.date.today().month)
+    print(year, month)
+    start_date = datetime.date(year=year, month=month, day=1)
+    end_date = start_date + relativedelta(months=1) - datetime.timedelta(days=1)
+    return JsonResponse({"rooms": getRoomsByRange(start_date=start_date, end_date=end_date)})
+
+
+@login_required()
+@permission_required("meeting_room.change_room")
+def register(request):
+    if not request.method == "POST":
+        return HttpResponse("Bad request", status=400)
+    if not "date" in request.POST:
+        return HttpResponse("Bad request", status=400)
+
+    date_str = request.POST["date"]
+    tdatetime = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    tdate = datetime.date(tdatetime.year, tdatetime.month, tdatetime.day)
+
+    try:
+        instance = Room.objects.get(date=tdate)
+    except ObjectDoesNotExist:
+        instance = None
+
+    form = RoomForm(request.POST, instance=instance)
+    if form.is_valid():
+        content = form.save(commit=False)
+        content.updated_at = datetime.datetime.now()
+        content.updated_by = request.user
+        content.save()
+        return JsonResponse({"room": content.room_name, "date": content.date.strftime("%Y-%m-%d")})
+    return HttpResponse("Bad request", status=400)
