@@ -16,7 +16,7 @@
       </span>
       です。
     </div>
-    <div id="register" class="card" v-if="isStaff">
+    <div id="register" class="card" v-if="registerPermission">
       <h4>教室係用メニュー</h4>
       <router-link to="./register/" class="button button-primary"
         >例会教室データの修正・登録 <Icon :icon="['fas', 'edit']"
@@ -47,8 +47,14 @@
 import moment from "@/utils/moment.js";
 import axios from "@/utils/axios.js";
 import { computed, ref } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+const registerPermission = computed(
+  () => store.state.mypage.userInfo.canRegisterMeetingRoom
+);
+
 const rooms = ref([]);
-const isStaff = true;
+
 axios.get("/api/meeting_room/get31day/").then((res) => {
   rooms.value = res.data.rooms;
 });

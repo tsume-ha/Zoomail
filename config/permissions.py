@@ -24,5 +24,5 @@ def OtherDocsPermission(user):
 
 
 # meeting room
-def MeetingroomPermission(user):
-    return user.has_perm("meeting_room.add_cashe")
+def MeetingRoomRegisterPermission(user):
+    return user.has_perm("meeting_room.add_room")

@@ -104,6 +104,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "meeting_room" */ "../pages/meeting_room/index.vue")
   },
   {
+    path: "/meeting_room/register/",
+    name: "meeting_room:register",
+    component: () => import(/* webpackChunkName: "meeting_room" */ "../pages/meeting_room/register.vue")
+  },
+  {
     path: "/:catchAll(.*)",
     name: "404",
     component: () => import("../pages/404.vue")
