@@ -86,7 +86,6 @@ def get_by_month(request):
         month = int(request.GET["month"])
     else:
         month = int(datetime.date.today().month)
-    print(year, month)
     start_date = datetime.date(year=year, month=month, day=1)
     end_date = start_date + relativedelta(months=1) - datetime.timedelta(days=1)
     return JsonResponse({"rooms": getRoomsByRange(start_date=start_date, end_date=end_date)})
