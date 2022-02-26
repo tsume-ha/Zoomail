@@ -32,7 +32,7 @@
       <router-link
         :to="{ name: 'meeting_room:ical' }"
         class="button button-primary"
-        >icalフィード <Icon :icon="['far', 'calendar-plus']"
+        >Googleカレンダー連携の方法 <Icon :icon="['far', 'calendar-plus']"
       /></router-link>
     </div>
     <div id="rooms" class="card">
