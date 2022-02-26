@@ -34,7 +34,7 @@ class CalendarFeed(ICalFeed):
     file_name = "meeting_room.ics"
 
     def items(self):
-        return Room.objects.all().order_by("-date")
+        return Room.objects.exclude(room_name=None).order_by("-date")
 
     def item_title(self, item):
         return item.room_name
@@ -47,6 +47,18 @@ class CalendarFeed(ICalFeed):
 
     def item_link(self, item):
         return "/meeting_room/"
+
+    def item_guid(self, item):
+        return "meeting_room{}@message.ku-unplugged.net".format(item.date.strftime("%Y-%m-%d"))
+
+    def item_start_datetime(self, item):
+        return item.date
+
+    def item_end_datetime(self, item):
+        return item.date
+
+    def item_updateddate(self, item):
+        return item.updated_at
 
 
 def today(request):

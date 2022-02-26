@@ -18,8 +18,21 @@
     </div>
     <div id="register" class="card" v-if="registerPermission">
       <h4>教室係用メニュー</h4>
-      <router-link to="./register/" class="button button-primary"
+      <router-link
+        :to="{ name: 'meeting_room:register' }"
+        class="button button-primary"
         >例会教室データの修正・登録 <Icon :icon="['fas', 'edit']"
+      /></router-link>
+    </div>
+    <div id="ical" class="card">
+      <h4>icalフィード（Googleカレンダー連携）</h4>
+      <p>
+        icalフィードを利用してGoogleカレンダーなどに例会教室データを表示できるようにしました。<br />くわしくはこちら
+      </p>
+      <router-link
+        :to="{ name: 'meeting_room:ical' }"
+        class="button button-primary"
+        >icalフィード <Icon :icon="['far', 'calendar-plus']"
       /></router-link>
     </div>
     <div id="rooms" class="card">
@@ -94,6 +107,11 @@ h4 {
 #register .button {
   display: inline-block;
   margin: 0;
+  padding: 0.75rem;
+}
+#ical .button {
+  display: inline-block;
+  margin: 0.5rem 0;
   padding: 0.75rem;
 }
 .text-danger {
