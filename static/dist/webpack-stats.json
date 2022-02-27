@@ -31,15 +31,15 @@
       "path": "static\\dist\\img\\zoomail.4c935cf7.png",
       "publicPath": "/static/dist/img/zoomail.4c935cf7.png"
     },
-    "static/dist/css/private.31860e42.css": {
-      "name": "static/dist/css/private.31860e42.css",
-      "path": "static\\dist\\css\\private.31860e42.css",
-      "publicPath": "/static/dist/css/private.31860e42.css"
+    "static/dist/css/private.64aa6ce1.css": {
+      "name": "static/dist/css/private.64aa6ce1.css",
+      "path": "static\\dist\\css\\private.64aa6ce1.css",
+      "publicPath": "/static/dist/css/private.64aa6ce1.css"
     },
-    "static/dist/js/private.ecf925f8.js": {
-      "name": "static/dist/js/private.ecf925f8.js",
-      "path": "static\\dist\\js\\private.ecf925f8.js",
-      "publicPath": "/static/dist/js/private.ecf925f8.js"
+    "static/dist/js/private.5a6b9753.js": {
+      "name": "static/dist/js/private.5a6b9753.js",
+      "path": "static\\dist\\js\\private.5a6b9753.js",
+      "publicPath": "/static/dist/js/private.5a6b9753.js"
     },
     "static/dist/css/home.370765fe.css": {
       "name": "static/dist/css/home.370765fe.css",
@@ -206,15 +206,15 @@
       "path": "static\\dist\\js\\public.991ce3a1.js.map",
       "publicPath": "/static/dist/js/public.991ce3a1.js.map"
     },
-    "static/dist/css/private.31860e42.css.map": {
-      "name": "static/dist/css/private.31860e42.css.map",
-      "path": "static\\dist\\css\\private.31860e42.css.map",
-      "publicPath": "/static/dist/css/private.31860e42.css.map"
+    "static/dist/css/private.64aa6ce1.css.map": {
+      "name": "static/dist/css/private.64aa6ce1.css.map",
+      "path": "static\\dist\\css\\private.64aa6ce1.css.map",
+      "publicPath": "/static/dist/css/private.64aa6ce1.css.map"
     },
-    "static/dist/js/private.ecf925f8.js.map": {
-      "name": "static/dist/js/private.ecf925f8.js.map",
-      "path": "static\\dist\\js\\private.ecf925f8.js.map",
-      "publicPath": "/static/dist/js/private.ecf925f8.js.map"
+    "static/dist/js/private.5a6b9753.js.map": {
+      "name": "static/dist/js/private.5a6b9753.js.map",
+      "path": "static\\dist\\js\\private.5a6b9753.js.map",
+      "publicPath": "/static/dist/js/private.5a6b9753.js.map"
     },
     "static/dist/css/home.370765fe.css.map": {
       "name": "static/dist/css/home.370765fe.css.map",
@@ -377,8 +377,8 @@
     "private": [
       "static/dist/css/chunk-vendors.0630f1fb.css",
       "static/dist/js/chunk-vendors.ac67307c.js",
-      "static/dist/css/private.31860e42.css",
-      "static/dist/js/private.ecf925f8.js"
+      "static/dist/css/private.64aa6ce1.css",
+      "static/dist/js/private.5a6b9753.js"
     ]
   },
   "publicPath": "/"

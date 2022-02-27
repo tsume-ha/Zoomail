@@ -34,6 +34,12 @@
       <li>
         <a href="/howto/">使い方</a>
       </li>
+      <hr />
+      <li>
+        <a href="https://awase-no-awase.web.app" target="_blank"
+          >あわせのあわせ <Icon :icon="['fas', 'external-link-alt']"
+        /></a>
+      </li>
     </ul>
   </nav>
 </template>
