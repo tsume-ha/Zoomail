@@ -174,7 +174,13 @@ SOCIAL_AUTH_AUTH0_SCOPE = [
 ]
 
 # allow CORS origin
-CORS_ORIGIN_WHITELIST = ["http://localhost:3333", "https://ku-unplugged.net", "https://message.ku-unplugged.net"]
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3333",
+    "http://localhost:8080",
+    "https://ku-unplugged.net",
+    "https://message.ku-unplugged.net",
+    "https://awase-no-awase.web.app",
+]
 # レスポンスを公開する
 CORS_ALLOW_CREDENTIALS = True
 
