@@ -1,0 +1,91 @@
+{% extends 'howto/content_base.html' %}
+{% load static %}
+
+{% block title %}例会教室 | 使い方 | UnpluggedMessage{% endblock %}
+
+{% block content %}
+<h3 class="mb-3">例会教室</h3>
+<h4 id="1">Google カレンダー連携</h4>
+<p>
+  Googleカレンダーで例会教室の情報を表示させることができます。<br />
+  <img src="{% static 'img/howto/meeting_room_1.png' %}" class="img-thumbnail" width="500"
+    alt="設定が完了し表示に成功したGoogleカレンダーの画面">
+</p>
+<p class="dev">
+  パソコン版Googleカレンダーからのみ設定できます。スマホ版からは設定できません。<br />
+  パソコン版で設定したあと、スマホからでも表示できます。
+</p>
+<p>Googleカレンダーにアクセスします。追加したいGoogleアカウントでログインしてください。</p>
+<p>
+  左のメニューから「他のカレンダー」の右にある「+」ボタンを押します。<br />
+  <img src="{% static 'img/howto/meeting_room_2.png' %}" class="img-thumbnail" width="300"
+    alt="「他のカレンダー」にあるプラスボタン"><br />
+  出てくるメニューの中から「URLで追加」を押します。
+  <img src="{% static 'img/howto/meeting_room_3.png' %}" class="img-thumbnail" width="300" alt="「他のカレンダー」メニューを開いた画面">
+</p>
+<p>
+  カレンダーのURL欄に、以下のURLを登録します。<br />
+  「カレンダーを一般公開する」のチェックは入れなくていいです。
+</p>
+<p>https://message.ku-unplugged.net/meeting_room/meeting_room.ics</p>
+<p><img src="{% static 'img/howto/meeting_room_4.png' %}" class="img-thumbnail" width="300"></p>
+<p>
+  URLをコピペしたら「カレンダーを追加」ボタンを押します。<br />数秒でカレンダーがインポートされるはずです。
+  <img src="{% static 'img/howto/meeting_room_5.png' %}" class="img-thumbnail" width="500">
+</p>
+<h4>名前の変更</h4>
+<p>
+  「他のカレンダーの設定」の下に、いま追加した例会教室カレンダーが表示されています。<br />
+  これをクリックして表示名を変更します。
+  <img src="{% static 'img/howto/meeting_room_6.png' %}" class="img-thumbnail" width="500">
+</p>
+
+<h4 id="2">スマホで表示する</h4>
+<p class="dev">
+  これを行うには、上で説明した手順で例会教室カレンダーを自分のGoogleカレンダーに登録する必要があります。
+</p>
+<p>
+  「Googleカレンダーアプリ」を開き、左上のメニューを押します。
+  <img src="{% static 'img/howto/meeting_room_7.png' %}" class="img-thumbnail" width="300">
+</p>
+<p>
+  一番下の「設定」を開きます。
+  <img src="{% static 'img/howto/meeting_room_8.png' %}" class="img-thumbnail" width="300">
+</p>
+<p>
+  <b>パソコンで設定したものと同じアカウント</b>を選んで、「もっと見る」を押します。
+  <img src="{% static 'img/howto/meeting_room_9.png' %}" class="img-thumbnail" width="300">
+</p>
+<p class="dev">
+  上記の設定を行ったGoogleアカウントから、「もっと見る」を選択する必要があります。
+</p>
+<p>
+  上記で<b>名前を変更した通り</b>の名前で表示されます。<br />
+  これを選択してください。
+  <img src="{% static 'img/howto/meeting_room_10.png' %}" class="img-thumbnail" width="300">
+</p>
+<p>
+  「同期」のスイッチをONにします。<br />
+  これでスマホの「Googleカレンダーアプリ」に表示されます。
+  <img src="{% static 'img/howto/meeting_room_11.png' %}" class="img-thumbnail" width="300">
+</p>
+<p class="dev">
+  この画面からお好みで色も変更できます。
+</p>
+<p>
+  お疲れさまでした。<br />
+  これでスマホ上でも例会教室が表示されるようになりました。
+</p>
+<p class="dev">
+  Googleの仕様から、同期は24時間に1回程度となっている模様です。ご了承ください。
+</p>
+<p class="dev">
+  今回追加したURLは「iCalendar」形式に則っています。Googleカレンダー以外のカレンダーにも同じように追加することができるはずです。
+</p>
+
+<hr>
+<p>
+  <a href="{% url 'howto:index' %}" class="mb-5">使い方・トップページ</a>に戻る
+</p>
+
+{% endblock %}

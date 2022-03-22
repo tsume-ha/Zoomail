@@ -26,6 +26,10 @@ def login(request):
     return render(request, "howto/login.html")
 
 
+def meeting_room(request):
+    return render(request, "howto/meeting_room.html")
+
+
 @login_required()
 def otherdocs(request):
     return render(request, "howto/otherdocs.html")

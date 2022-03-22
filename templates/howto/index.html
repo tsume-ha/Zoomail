@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}新メーリスの使い方 | UnpluggedMessage{% endblock %}
+{% block title %}新メーリスの使い方 | Zoomail{% endblock %}
 
 {% block extrastyle %}
 {% endblock %}
@@ -49,6 +49,11 @@
     <a class="list-group-item disabled">音源を聞く</a></li>
     <a class="list-group-item disabled">音源の一覧画面</a></li>
     <a class="list-group-item disabled">プレーヤーの機能</a></li>
+  </section>
+  <section class="list-group list-group-flush col-sm-6 col-lg-4 my-3">
+    <a href="{% url 'howto:meeting_room' %}" class="list-group-item">例会教室</a></li>
+    <a href="{% url 'howto:meeting_room' %}" class="list-group-item">Google カレンダー連携</a></li>
+    <a href="{% url 'howto:meeting_room' %}#2" class="list-group-item">スマホで表示する（Androidで確認）</a></li>
   </section>
   <section class="list-group list-group-flush col-sm-6 col-lg-4 my-3">
     <a href="{% url 'howto:otherdocs' %}" class="list-group-item ">その他資料について（管理者向け）</a></li>

@@ -29,11 +29,12 @@
       <p>
         Googleカレンダーなどに例会教室データを表示できるようにしました。<br />くわしくはこのボタンから
       </p>
-      <router-link
-        :to="{ name: 'meeting_room:ical' }"
+      <a
+        href="/howto/meeting_room/"
         class="button button-primary"
+        target="_blank"
         >Googleカレンダー連携の方法 <Icon :icon="['far', 'calendar-plus']"
-      /></router-link>
+      /></a>
     </div>
     <div id="rooms" class="card">
       <h4>1カ月先までの例会教室一覧</h4>

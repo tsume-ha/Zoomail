@@ -1,77 +1,78 @@
 {% extends 'howto/content_base.html' %}
 {% load static %}
 
-{% block title %}ログインについて | 使い方 | UnpluggedMessage{% endblock %}
+{% block title %}ログインについて | 使い方 | Zoomail{% endblock %}
 
 {% block content %}
 <h3 class="mb-3">ログインについて</h3>
 <h4 id="1">2種類の認証方法</h4>
 <p>
-    UnpluggedMessageのログインには以下の2つの方法を用意しています。
-    <ul>
-        <li>LiveLogアカウントでのログイン（おすすめ）</li>
-        <li>Googleアカウントでのログイン</li>
-    </ul>
+  Zoomailのログインには以下の2つの方法を用意しています。
+<ul>
+  <li>LiveLogアカウントでのログイン（おすすめ）</li>
+  <li>Googleアカウントでのログイン</li>
+</ul>
 </p>
 <p class="dev">
-    Emailとパスワードを登録することによるログインは採用していません。<br>
-    パスワードなどのセキュリティーが求められる管理をしたくないからです笑<br>
-    LiveLogも最近Auth0というIDaaSに移行しました。<br>
+  Emailとパスワードを登録することによるログインは採用していません。<br>
+  パスワードなどのセキュリティーが求められる管理をしたくないからです笑<br>
+  LiveLogも最近Auth0というIDaaSに移行しました。<br>
 </p>
 <h4 id="2">メーリスへの初回ログイン</h4>
 <p>
-    まず、それぞれの方法での<b>初回ログイン</b>の方法を書きます。<br>
-    初回ログインはどちらか一方の方法だけ行えば良いです。
+  まず、それぞれの方法での<b>初回ログイン</b>の方法を書きます。<br>
+  初回ログインはどちらか一方の方法だけ行えば良いです。
 </p>
 <div class="border-left-dotted mt-3 mb-4">
-    <h5 class="mt-2 mb-4">LiveLogアカウントでのサインアップ（初回ログイン）おすすめ</h5>
-    <ol class="process">
-        <li><a href="https://message.ku-unplugged.net" target="_blank">トップページ</a>から「LiveLogでログイン」をクリックします。</li>
-        <li>表示された画面に、自分のメールアドレス、パスワードを入力します。</li>
-        <li>UnpluggedMessageの「初回登録」ページに戻ってきます。ここで氏名、ふりがななどの必要事項を記入してください。</li>
-        <li>初回登録を完了するとサインアップは終了です。</li>
-    </ol>
+  <h5 class="mt-2 mb-4">LiveLogアカウントでのサインアップ（初回ログイン）おすすめ</h5>
+  <ol class="process">
+    <li><a href="https://message.ku-unplugged.net" target="_blank">トップページ</a>から「LiveLogでログイン」をクリックします。</li>
+    <li>表示された画面に、自分のメールアドレス、パスワードを入力します。</li>
+    <li>Zoomailの「初回登録」ページに戻ってきます。ここで氏名、ふりがななどの必要事項を記入してください。</li>
+    <li>初回登録を完了するとサインアップは終了です。</li>
+  </ol>
 </div>
 <div class="border-left-dotted mt-3 mb-4">
-    <h5 class="mt-2 mb-4">Googleアカウントでのサインアップ（初回ログイン）</h5>
-    <ol class="process">
-        <li>先にメーリスの管理者にGoogleアカウントを申請してUnpluggedMessageに登録してもらいます。<br>
-        申請時に必要な内容は氏名、ふりがな、Googleアカウント名（=Gmailアドレス）、入部年度です。</li>
-        <li>UnpluggedMessageへの登録が完了する（これは管理者が行います）と申請したGoogleアカウントのGmailアドレスに登録完了メールが届きます。</li>
-        <li>メールが届いてから、<a href="https://message.ku-unplugged.net" target="_blank">トップページ</a>の「Sign in with Google」をクリックします。</li>
-        <li>登録したGoogleアカウントでログインできるようになります。</li>
-    </ol>
+  <h5 class="mt-2 mb-4">Googleアカウントでのサインアップ（初回ログイン）</h5>
+  <ol class="process">
+    <li>先にメーリスの管理者にGoogleアカウントを申請してZoomailに登録してもらいます。<br>
+      申請時に必要な内容は氏名、ふりがな、Googleアカウント名（=Gmailアドレス）、入部年度です。</li>
+    <li>Zoomailへの登録が完了する（これは管理者が行います）と申請したGoogleアカウントのGmailアドレスに登録完了メールが届きます。</li>
+    <li>メールが届いてから、<a href="https://message.ku-unplugged.net" target="_blank">トップページ</a>の「Sign in with Google」をクリックします。
+    </li>
+    <li>登録したGoogleアカウントでログインできるようになります。</li>
+  </ol>
 </div>
 
 <hr>
 
 <p>
-    サインアップが完了すると、<b>次回から登録した方法でログイン</b>できるようになります。
+  サインアップが完了すると、<b>次回から登録した方法でログイン</b>できるようになります。
 </p>
 <p class="dev">
-    LiveLogアカウントでのログインは2020年4月に実装した新機能です。
+  LiveLogアカウントでのログインは2020年4月に実装した新機能です。
 </p>
 
 <h4 id="3">別の認証方法の追加</h4>
 <p>
-    LiveLogアカウント（またはGoogleアカウント）で初回登録したあとに、もう一方の認証を行うことで、どちらのアカウントでもログインできるようにすることができます。
+  LiveLogアカウント（またはGoogleアカウント）で初回登録したあとに、もう一方の認証を行うことで、どちらのアカウントでもログインできるようにすることができます。
 </p>
 <ol class="process">
-    <li>メーリスにいままで使っていた方法でログインします。（LiveLogかGoogleのどちらか）</li>
-    <li>MyPageの「<a href="/mypage/oauth/" target="_blank">LiveLog・Google認証</a>」へ行きます。</li>
-    <li>認証していない方のサービスに「認証する」と出ていると思うので、ここをクリックします。</li>
-    <li>メーリスへのログインに使いたいアカウントでログインします。</li>
-    <li>ふたたび「LiveLog・Google認証」ページが自動で開かれます。ここで「認証しています」と出れば紐付けは完了です。</li>
+  <li>メーリスにいままで使っていた方法でログインします。（LiveLogかGoogleのどちらか）</li>
+  <li>MyPageの「<a href="/mypage/oauth/" target="_blank">LiveLog・Google認証</a>」へ行きます。</li>
+  <li>認証していない方のサービスに「認証する」と出ていると思うので、ここをクリックします。</li>
+  <li>メーリスへのログインに使いたいアカウントでログインします。</li>
+  <li>ふたたび「LiveLog・Google認証」ページが自動で開かれます。ここで「認証しています」と出れば紐付けは完了です。</li>
 </ol>
 <p class="dev">
-    この作業でメーリスに収集される情報は以下の通りです。<br>
-    LiveLog：入部年度、ユーザーid、登録メールアドレス、認証した時刻<br>
-    Google：メールアドレス（Gmailアドレス）、認証した時刻<br>
-    これら以外の情報は保存されません。
+  この作業でメーリスに収集される情報は以下の通りです。<br>
+  LiveLog: 入部年度、ユーザーid、登録メールアドレス、認証した時刻<br>
+  Google: メールアドレス（Gmailアドレス）、認証した時刻<br>
+  これら以外の情報は保存されません。
 </p>
 <hr>
 <p>
-    <a href="{% url 'howto:index' %}" class="mb-5">使い方・トップページ</a>に戻る
+  <a href="{% url 'howto:index' %}" class="mb-5">使い方・トップページ</a>に戻る
 </p>
 
 {% endblock %}
