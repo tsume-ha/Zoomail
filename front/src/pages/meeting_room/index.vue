@@ -27,7 +27,7 @@
     <div id="ical" class="card">
       <h4>Googleカレンダー連携</h4>
       <p>
-        Googleカレンダーなどに例会教室データを表示できるようにしました。<br />くわしくはこのボタンから
+        Googleカレンダーなどに例会教室データを表示できるようにしました。<br />くわしくは下のリンクから
       </p>
       <a
         href="/howto/meeting_room/"
