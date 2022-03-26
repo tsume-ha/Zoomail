@@ -4,17 +4,25 @@ const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 
 module.exports = {
   pages: {
-    public: { entry: "./src/public.js" },
-    private: { entry: "./src/private.js" },
+    public: {
+      entry: "./src/public.js",
+      filename: "../../templates/public.html",
+    },
+    private: {
+      entry: "./src/private.js",
+      filename: "../../templates/private.html",
+    },
+    // private: { entry: "./src/private.js" },
   },
   //ここで指定した場所で展開する
-  outputDir: "../templates/",
+  outputDir: "../static/dist/",
   //サーバーを起動した時のルートパス
   publicPath: process.env.NODE_ENV === "production"
     ? "/"
     : "http://localhost:8080/",
   //outputDir起点でstaticファイルを格納する場所を指定
-  assetsDir: "../static/dist/",
+  assetsDir: "./static/dist/",
+  indexPath: "../../templates/",
 
   pwa: {
     manifestPath: "./manifest.json"
