@@ -8,13 +8,17 @@ module.exports = {
     private: { entry: "./src/private.js" },
   },
   //ここで指定した場所で展開する
-  outputDir: "../",
+  outputDir: "../templates/",
   //サーバーを起動した時のルートパス
   publicPath: process.env.NODE_ENV === "production"
     ? "/"
     : "http://localhost:8080/",
   //outputDir起点でstaticファイルを格納する場所を指定
-  assetsDir: "./static/dist",
+  assetsDir: "../static/dist/",
+
+  pwa: {
+    manifestPath: "./manifest.json"
+  },
 
   configureWebpack: {
     plugins: [
