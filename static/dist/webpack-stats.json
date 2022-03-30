@@ -1,490 +1,490 @@
 {
   "status": "done",
   "assets": {
-    "./manifest.json": {
-      "name": "./manifest.json",
+    "manifest.json": {
+      "name": "manifest.json",
       "path": "manifest.json",
-      "publicPath": "/./manifest.json"
+      "publicPath": "/static/dist/manifest.json"
     },
     "img/LP-BG.79fce175.jpeg": {
       "name": "img/LP-BG.79fce175.jpeg",
       "path": "img\\LP-BG.79fce175.jpeg",
-      "publicPath": "/img/LP-BG.79fce175.jpeg"
+      "publicPath": "/static/dist/img/LP-BG.79fce175.jpeg"
     },
     "img/btn_google_signin_light_focus_web@2x.c00d9ed0.png": {
       "name": "img/btn_google_signin_light_focus_web@2x.c00d9ed0.png",
       "path": "img\\btn_google_signin_light_focus_web@2x.c00d9ed0.png",
-      "publicPath": "/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png"
+      "publicPath": "/static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png"
     },
-    "css/public.7402cba3.css": {
-      "name": "css/public.7402cba3.css",
-      "path": "css\\public.7402cba3.css",
-      "publicPath": "/css/public.7402cba3.css"
+    "css/public.3a9f206e.css": {
+      "name": "css/public.3a9f206e.css",
+      "path": "css\\public.3a9f206e.css",
+      "publicPath": "/static/dist/css/public.3a9f206e.css"
     },
-    "js/public.881cf9a0.js": {
-      "name": "js/public.881cf9a0.js",
-      "path": "js\\public.881cf9a0.js",
-      "publicPath": "/js/public.881cf9a0.js"
+    "js/public.9073e4b9.js": {
+      "name": "js/public.9073e4b9.js",
+      "path": "js\\public.9073e4b9.js",
+      "publicPath": "/static/dist/js/public.9073e4b9.js"
     },
     "img/livelog.6df3ecdf.png": {
       "name": "img/livelog.6df3ecdf.png",
       "path": "img\\livelog.6df3ecdf.png",
-      "publicPath": "/img/livelog.6df3ecdf.png"
+      "publicPath": "/static/dist/img/livelog.6df3ecdf.png"
     },
     "img/zoomail.4c935cf7.png": {
       "name": "img/zoomail.4c935cf7.png",
       "path": "img\\zoomail.4c935cf7.png",
-      "publicPath": "/img/zoomail.4c935cf7.png"
+      "publicPath": "/static/dist/img/zoomail.4c935cf7.png"
     },
     "css/private.64aa6ce1.css": {
       "name": "css/private.64aa6ce1.css",
       "path": "css\\private.64aa6ce1.css",
-      "publicPath": "/css/private.64aa6ce1.css"
+      "publicPath": "/static/dist/css/private.64aa6ce1.css"
     },
-    "js/private.528817e6.js": {
-      "name": "js/private.528817e6.js",
-      "path": "js\\private.528817e6.js",
-      "publicPath": "/js/private.528817e6.js"
+    "js/private.93ebefb4.js": {
+      "name": "js/private.93ebefb4.js",
+      "path": "js\\private.93ebefb4.js",
+      "publicPath": "/static/dist/js/private.93ebefb4.js"
     },
-    "css/home.0dc7ffce.css": {
-      "name": "css/home.0dc7ffce.css",
-      "path": "css\\home.0dc7ffce.css",
-      "publicPath": "/css/home.0dc7ffce.css"
+    "css/home.370765fe.css": {
+      "name": "css/home.370765fe.css",
+      "path": "css\\home.370765fe.css",
+      "publicPath": "/static/dist/css/home.370765fe.css"
     },
     "js/home.e2eaf036.js": {
       "name": "js/home.e2eaf036.js",
       "path": "js\\home.e2eaf036.js",
-      "publicPath": "/js/home.e2eaf036.js"
+      "publicPath": "/static/dist/js/home.e2eaf036.js"
     },
     "css/read.185294ad.css": {
       "name": "css/read.185294ad.css",
       "path": "css\\read.185294ad.css",
-      "publicPath": "/css/read.185294ad.css"
+      "publicPath": "/static/dist/css/read.185294ad.css"
     },
     "js/read.59a272b1.js": {
       "name": "js/read.59a272b1.js",
       "path": "js\\read.59a272b1.js",
-      "publicPath": "/js/read.59a272b1.js"
+      "publicPath": "/static/dist/js/read.59a272b1.js"
     },
     "css/send.d2c7f5da.css": {
       "name": "css/send.d2c7f5da.css",
       "path": "css\\send.d2c7f5da.css",
-      "publicPath": "/css/send.d2c7f5da.css"
+      "publicPath": "/static/dist/css/send.d2c7f5da.css"
     },
     "js/send.4457a4d2.js": {
       "name": "js/send.4457a4d2.js",
       "path": "js\\send.4457a4d2.js",
-      "publicPath": "/js/send.4457a4d2.js"
+      "publicPath": "/static/dist/js/send.4457a4d2.js"
     },
     "css/photo.a623dbbd.css": {
       "name": "css/photo.a623dbbd.css",
       "path": "css\\photo.a623dbbd.css",
-      "publicPath": "/css/photo.a623dbbd.css"
+      "publicPath": "/static/dist/css/photo.a623dbbd.css"
     },
     "js/photo.bc0ca7b2.js": {
       "name": "js/photo.bc0ca7b2.js",
       "path": "js\\photo.bc0ca7b2.js",
-      "publicPath": "/js/photo.bc0ca7b2.js"
+      "publicPath": "/static/dist/js/photo.bc0ca7b2.js"
     },
     "img/unplugged_logo.c717fdac.jpg": {
       "name": "img/unplugged_logo.c717fdac.jpg",
       "path": "img\\unplugged_logo.c717fdac.jpg",
-      "publicPath": "/img/unplugged_logo.c717fdac.jpg"
+      "publicPath": "/static/dist/img/unplugged_logo.c717fdac.jpg"
     },
     "css/sound.aff2ea39.css": {
       "name": "css/sound.aff2ea39.css",
       "path": "css\\sound.aff2ea39.css",
-      "publicPath": "/css/sound.aff2ea39.css"
+      "publicPath": "/static/dist/css/sound.aff2ea39.css"
     },
     "js/sound.6412854a.js": {
       "name": "js/sound.6412854a.js",
       "path": "js\\sound.6412854a.js",
-      "publicPath": "/js/sound.6412854a.js"
+      "publicPath": "/static/dist/js/sound.6412854a.js"
     },
     "css/kansou.5a9f743b.css": {
       "name": "css/kansou.5a9f743b.css",
       "path": "css\\kansou.5a9f743b.css",
-      "publicPath": "/css/kansou.5a9f743b.css"
+      "publicPath": "/static/dist/css/kansou.5a9f743b.css"
     },
     "js/kansou.c8ea6cb9.js": {
       "name": "js/kansou.c8ea6cb9.js",
       "path": "js\\kansou.c8ea6cb9.js",
-      "publicPath": "/js/kansou.c8ea6cb9.js"
+      "publicPath": "/static/dist/js/kansou.c8ea6cb9.js"
     },
     "css/mypage.dc6d3e5e.css": {
       "name": "css/mypage.dc6d3e5e.css",
       "path": "css\\mypage.dc6d3e5e.css",
-      "publicPath": "/css/mypage.dc6d3e5e.css"
+      "publicPath": "/static/dist/css/mypage.dc6d3e5e.css"
     },
     "js/mypage.67216821.js": {
       "name": "js/mypage.67216821.js",
       "path": "js\\mypage.67216821.js",
-      "publicPath": "/js/mypage.67216821.js"
+      "publicPath": "/static/dist/js/mypage.67216821.js"
     },
     "img/google.fd4588af.png": {
       "name": "img/google.fd4588af.png",
       "path": "img\\google.fd4588af.png",
-      "publicPath": "/img/google.fd4588af.png"
+      "publicPath": "/static/dist/img/google.fd4588af.png"
     },
     "css/mypage-invite.87397bc8.css": {
       "name": "css/mypage-invite.87397bc8.css",
       "path": "css\\mypage-invite.87397bc8.css",
-      "publicPath": "/css/mypage-invite.87397bc8.css"
+      "publicPath": "/static/dist/css/mypage-invite.87397bc8.css"
     },
     "js/mypage-invite.da93ef78.js": {
       "name": "js/mypage-invite.da93ef78.js",
       "path": "js\\mypage-invite.da93ef78.js",
-      "publicPath": "/js/mypage-invite.da93ef78.js"
+      "publicPath": "/static/dist/js/mypage-invite.da93ef78.js"
     },
     "css/movie.14c8d511.css": {
       "name": "css/movie.14c8d511.css",
       "path": "css\\movie.14c8d511.css",
-      "publicPath": "/css/movie.14c8d511.css"
+      "publicPath": "/static/dist/css/movie.14c8d511.css"
     },
     "js/movie.fb761b63.js": {
       "name": "js/movie.fb761b63.js",
       "path": "js\\movie.fb761b63.js",
-      "publicPath": "/js/movie.fb761b63.js"
+      "publicPath": "/static/dist/js/movie.fb761b63.js"
     },
     "css/others.54b63cb6.css": {
       "name": "css/others.54b63cb6.css",
       "path": "css\\others.54b63cb6.css",
-      "publicPath": "/css/others.54b63cb6.css"
+      "publicPath": "/static/dist/css/others.54b63cb6.css"
     },
     "js/others.2b4dbbd1.js": {
       "name": "js/others.2b4dbbd1.js",
       "path": "js\\others.2b4dbbd1.js",
-      "publicPath": "/js/others.2b4dbbd1.js"
+      "publicPath": "/static/dist/js/others.2b4dbbd1.js"
     },
     "css/meeting_room.5220c51e.css": {
       "name": "css/meeting_room.5220c51e.css",
       "path": "css\\meeting_room.5220c51e.css",
-      "publicPath": "/css/meeting_room.5220c51e.css"
+      "publicPath": "/static/dist/css/meeting_room.5220c51e.css"
     },
     "js/meeting_room.b3a78739.js": {
       "name": "js/meeting_room.b3a78739.js",
       "path": "js\\meeting_room.b3a78739.js",
-      "publicPath": "/js/meeting_room.b3a78739.js"
+      "publicPath": "/static/dist/js/meeting_room.b3a78739.js"
     },
     "css/meeting_room_ical.9bfceb5f.css": {
       "name": "css/meeting_room_ical.9bfceb5f.css",
       "path": "css\\meeting_room_ical.9bfceb5f.css",
-      "publicPath": "/css/meeting_room_ical.9bfceb5f.css"
+      "publicPath": "/static/dist/css/meeting_room_ical.9bfceb5f.css"
     },
     "js/meeting_room_ical.7da39562.js": {
       "name": "js/meeting_room_ical.7da39562.js",
       "path": "js\\meeting_room_ical.7da39562.js",
-      "publicPath": "/js/meeting_room_ical.7da39562.js"
+      "publicPath": "/static/dist/js/meeting_room_ical.7da39562.js"
     },
     "img/complete.d643c509.png": {
       "name": "img/complete.d643c509.png",
       "path": "img\\complete.d643c509.png",
-      "publicPath": "/img/complete.d643c509.png"
+      "publicPath": "/static/dist/img/complete.d643c509.png"
     },
     "css/893.803f6bf5.css": {
       "name": "css/893.803f6bf5.css",
       "path": "css\\893.803f6bf5.css",
-      "publicPath": "/css/893.803f6bf5.css"
+      "publicPath": "/static/dist/css/893.803f6bf5.css"
     },
     "js/893.b1d5f6cc.js": {
       "name": "js/893.b1d5f6cc.js",
       "path": "js\\893.b1d5f6cc.js",
-      "publicPath": "/js/893.b1d5f6cc.js"
+      "publicPath": "/static/dist/js/893.b1d5f6cc.js"
     },
     "css/chunk-vendors.0630f1fb.css": {
       "name": "css/chunk-vendors.0630f1fb.css",
       "path": "css\\chunk-vendors.0630f1fb.css",
-      "publicPath": "/css/chunk-vendors.0630f1fb.css"
+      "publicPath": "/static/dist/css/chunk-vendors.0630f1fb.css"
     },
     "js/chunk-vendors.d3c7c23a.js": {
       "name": "js/chunk-vendors.d3c7c23a.js",
       "path": "js\\chunk-vendors.d3c7c23a.js",
-      "publicPath": "/js/chunk-vendors.d3c7c23a.js"
+      "publicPath": "/static/dist/js/chunk-vendors.d3c7c23a.js"
     },
     "robots.txt": {
       "name": "robots.txt",
       "path": "robots.txt",
-      "publicPath": "/robots.txt"
+      "publicPath": "/static/dist/robots.txt"
     },
     "img/icons/android-chrome-192x192.png": {
       "name": "img/icons/android-chrome-192x192.png",
       "path": "img\\icons\\android-chrome-192x192.png",
-      "publicPath": "/img/icons/android-chrome-192x192.png"
+      "publicPath": "/static/dist/img/icons/android-chrome-192x192.png"
     },
     "img/icons/android-chrome-512x512.png": {
       "name": "img/icons/android-chrome-512x512.png",
       "path": "img\\icons\\android-chrome-512x512.png",
-      "publicPath": "/img/icons/android-chrome-512x512.png"
+      "publicPath": "/static/dist/img/icons/android-chrome-512x512.png"
     },
     "img/icons/android-chrome-maskable-192x192.png": {
       "name": "img/icons/android-chrome-maskable-192x192.png",
       "path": "img\\icons\\android-chrome-maskable-192x192.png",
-      "publicPath": "/img/icons/android-chrome-maskable-192x192.png"
+      "publicPath": "/static/dist/img/icons/android-chrome-maskable-192x192.png"
     },
     "img/icons/android-chrome-maskable-512x512.png": {
       "name": "img/icons/android-chrome-maskable-512x512.png",
       "path": "img\\icons\\android-chrome-maskable-512x512.png",
-      "publicPath": "/img/icons/android-chrome-maskable-512x512.png"
+      "publicPath": "/static/dist/img/icons/android-chrome-maskable-512x512.png"
     },
     "img/icons/apple-touch-icon-120x120.png": {
       "name": "img/icons/apple-touch-icon-120x120.png",
       "path": "img\\icons\\apple-touch-icon-120x120.png",
-      "publicPath": "/img/icons/apple-touch-icon-120x120.png"
+      "publicPath": "/static/dist/img/icons/apple-touch-icon-120x120.png"
     },
     "img/icons/apple-touch-icon-152x152.png": {
       "name": "img/icons/apple-touch-icon-152x152.png",
       "path": "img\\icons\\apple-touch-icon-152x152.png",
-      "publicPath": "/img/icons/apple-touch-icon-152x152.png"
+      "publicPath": "/static/dist/img/icons/apple-touch-icon-152x152.png"
     },
     "img/icons/apple-touch-icon-180x180.png": {
       "name": "img/icons/apple-touch-icon-180x180.png",
       "path": "img\\icons\\apple-touch-icon-180x180.png",
-      "publicPath": "/img/icons/apple-touch-icon-180x180.png"
+      "publicPath": "/static/dist/img/icons/apple-touch-icon-180x180.png"
     },
     "img/icons/apple-touch-icon-60x60.png": {
       "name": "img/icons/apple-touch-icon-60x60.png",
       "path": "img\\icons\\apple-touch-icon-60x60.png",
-      "publicPath": "/img/icons/apple-touch-icon-60x60.png"
+      "publicPath": "/static/dist/img/icons/apple-touch-icon-60x60.png"
     },
     "img/icons/apple-touch-icon-76x76.png": {
       "name": "img/icons/apple-touch-icon-76x76.png",
       "path": "img\\icons\\apple-touch-icon-76x76.png",
-      "publicPath": "/img/icons/apple-touch-icon-76x76.png"
+      "publicPath": "/static/dist/img/icons/apple-touch-icon-76x76.png"
     },
     "img/icons/apple-touch-icon.png": {
       "name": "img/icons/apple-touch-icon.png",
       "path": "img\\icons\\apple-touch-icon.png",
-      "publicPath": "/img/icons/apple-touch-icon.png"
+      "publicPath": "/static/dist/img/icons/apple-touch-icon.png"
     },
     "img/icons/favicon-16x16.png": {
       "name": "img/icons/favicon-16x16.png",
       "path": "img\\icons\\favicon-16x16.png",
-      "publicPath": "/img/icons/favicon-16x16.png"
+      "publicPath": "/static/dist/img/icons/favicon-16x16.png"
     },
     "img/icons/favicon-32x32.png": {
       "name": "img/icons/favicon-32x32.png",
       "path": "img\\icons\\favicon-32x32.png",
-      "publicPath": "/img/icons/favicon-32x32.png"
+      "publicPath": "/static/dist/img/icons/favicon-32x32.png"
     },
     "img/icons/msapplication-icon-144x144.png": {
       "name": "img/icons/msapplication-icon-144x144.png",
       "path": "img\\icons\\msapplication-icon-144x144.png",
-      "publicPath": "/img/icons/msapplication-icon-144x144.png"
+      "publicPath": "/static/dist/img/icons/msapplication-icon-144x144.png"
     },
     "img/icons/mstile-150x150.png": {
       "name": "img/icons/mstile-150x150.png",
       "path": "img\\icons\\mstile-150x150.png",
-      "publicPath": "/img/icons/mstile-150x150.png"
+      "publicPath": "/static/dist/img/icons/mstile-150x150.png"
     },
     "img/icons/safari-pinned-tab.svg": {
       "name": "img/icons/safari-pinned-tab.svg",
       "path": "img\\icons\\safari-pinned-tab.svg",
-      "publicPath": "/img/icons/safari-pinned-tab.svg"
+      "publicPath": "/static/dist/img/icons/safari-pinned-tab.svg"
     },
-    "css/public.7402cba3.css.map": {
-      "name": "css/public.7402cba3.css.map",
-      "path": "css\\public.7402cba3.css.map",
-      "publicPath": "/css/public.7402cba3.css.map"
+    "css/public.3a9f206e.css.map": {
+      "name": "css/public.3a9f206e.css.map",
+      "path": "css\\public.3a9f206e.css.map",
+      "publicPath": "/static/dist/css/public.3a9f206e.css.map"
     },
-    "js/public.881cf9a0.js.map": {
-      "name": "js/public.881cf9a0.js.map",
-      "path": "js\\public.881cf9a0.js.map",
-      "publicPath": "/js/public.881cf9a0.js.map"
+    "js/public.9073e4b9.js.map": {
+      "name": "js/public.9073e4b9.js.map",
+      "path": "js\\public.9073e4b9.js.map",
+      "publicPath": "/static/dist/js/public.9073e4b9.js.map"
     },
     "css/private.64aa6ce1.css.map": {
       "name": "css/private.64aa6ce1.css.map",
       "path": "css\\private.64aa6ce1.css.map",
-      "publicPath": "/css/private.64aa6ce1.css.map"
+      "publicPath": "/static/dist/css/private.64aa6ce1.css.map"
     },
-    "js/private.528817e6.js.map": {
-      "name": "js/private.528817e6.js.map",
-      "path": "js\\private.528817e6.js.map",
-      "publicPath": "/js/private.528817e6.js.map"
+    "js/private.93ebefb4.js.map": {
+      "name": "js/private.93ebefb4.js.map",
+      "path": "js\\private.93ebefb4.js.map",
+      "publicPath": "/static/dist/js/private.93ebefb4.js.map"
     },
-    "css/home.0dc7ffce.css.map": {
-      "name": "css/home.0dc7ffce.css.map",
-      "path": "css\\home.0dc7ffce.css.map",
-      "publicPath": "/css/home.0dc7ffce.css.map"
+    "css/home.370765fe.css.map": {
+      "name": "css/home.370765fe.css.map",
+      "path": "css\\home.370765fe.css.map",
+      "publicPath": "/static/dist/css/home.370765fe.css.map"
     },
     "js/home.e2eaf036.js.map": {
       "name": "js/home.e2eaf036.js.map",
       "path": "js\\home.e2eaf036.js.map",
-      "publicPath": "/js/home.e2eaf036.js.map"
+      "publicPath": "/static/dist/js/home.e2eaf036.js.map"
     },
     "css/read.185294ad.css.map": {
       "name": "css/read.185294ad.css.map",
       "path": "css\\read.185294ad.css.map",
-      "publicPath": "/css/read.185294ad.css.map"
+      "publicPath": "/static/dist/css/read.185294ad.css.map"
     },
     "js/read.59a272b1.js.map": {
       "name": "js/read.59a272b1.js.map",
       "path": "js\\read.59a272b1.js.map",
-      "publicPath": "/js/read.59a272b1.js.map"
+      "publicPath": "/static/dist/js/read.59a272b1.js.map"
     },
     "css/send.d2c7f5da.css.map": {
       "name": "css/send.d2c7f5da.css.map",
       "path": "css\\send.d2c7f5da.css.map",
-      "publicPath": "/css/send.d2c7f5da.css.map"
+      "publicPath": "/static/dist/css/send.d2c7f5da.css.map"
     },
     "js/send.4457a4d2.js.map": {
       "name": "js/send.4457a4d2.js.map",
       "path": "js\\send.4457a4d2.js.map",
-      "publicPath": "/js/send.4457a4d2.js.map"
+      "publicPath": "/static/dist/js/send.4457a4d2.js.map"
     },
     "css/photo.a623dbbd.css.map": {
       "name": "css/photo.a623dbbd.css.map",
       "path": "css\\photo.a623dbbd.css.map",
-      "publicPath": "/css/photo.a623dbbd.css.map"
+      "publicPath": "/static/dist/css/photo.a623dbbd.css.map"
     },
     "js/photo.bc0ca7b2.js.map": {
       "name": "js/photo.bc0ca7b2.js.map",
       "path": "js\\photo.bc0ca7b2.js.map",
-      "publicPath": "/js/photo.bc0ca7b2.js.map"
+      "publicPath": "/static/dist/js/photo.bc0ca7b2.js.map"
     },
     "css/sound.aff2ea39.css.map": {
       "name": "css/sound.aff2ea39.css.map",
       "path": "css\\sound.aff2ea39.css.map",
-      "publicPath": "/css/sound.aff2ea39.css.map"
+      "publicPath": "/static/dist/css/sound.aff2ea39.css.map"
     },
     "js/sound.6412854a.js.map": {
       "name": "js/sound.6412854a.js.map",
       "path": "js\\sound.6412854a.js.map",
-      "publicPath": "/js/sound.6412854a.js.map"
+      "publicPath": "/static/dist/js/sound.6412854a.js.map"
     },
     "css/kansou.5a9f743b.css.map": {
       "name": "css/kansou.5a9f743b.css.map",
       "path": "css\\kansou.5a9f743b.css.map",
-      "publicPath": "/css/kansou.5a9f743b.css.map"
+      "publicPath": "/static/dist/css/kansou.5a9f743b.css.map"
     },
     "js/kansou.c8ea6cb9.js.map": {
       "name": "js/kansou.c8ea6cb9.js.map",
       "path": "js\\kansou.c8ea6cb9.js.map",
-      "publicPath": "/js/kansou.c8ea6cb9.js.map"
+      "publicPath": "/static/dist/js/kansou.c8ea6cb9.js.map"
     },
     "css/mypage.dc6d3e5e.css.map": {
       "name": "css/mypage.dc6d3e5e.css.map",
       "path": "css\\mypage.dc6d3e5e.css.map",
-      "publicPath": "/css/mypage.dc6d3e5e.css.map"
+      "publicPath": "/static/dist/css/mypage.dc6d3e5e.css.map"
     },
     "js/mypage.67216821.js.map": {
       "name": "js/mypage.67216821.js.map",
       "path": "js\\mypage.67216821.js.map",
-      "publicPath": "/js/mypage.67216821.js.map"
+      "publicPath": "/static/dist/js/mypage.67216821.js.map"
     },
     "css/mypage-invite.87397bc8.css.map": {
       "name": "css/mypage-invite.87397bc8.css.map",
       "path": "css\\mypage-invite.87397bc8.css.map",
-      "publicPath": "/css/mypage-invite.87397bc8.css.map"
+      "publicPath": "/static/dist/css/mypage-invite.87397bc8.css.map"
     },
     "js/mypage-invite.da93ef78.js.map": {
       "name": "js/mypage-invite.da93ef78.js.map",
       "path": "js\\mypage-invite.da93ef78.js.map",
-      "publicPath": "/js/mypage-invite.da93ef78.js.map"
+      "publicPath": "/static/dist/js/mypage-invite.da93ef78.js.map"
     },
     "css/movie.14c8d511.css.map": {
       "name": "css/movie.14c8d511.css.map",
       "path": "css\\movie.14c8d511.css.map",
-      "publicPath": "/css/movie.14c8d511.css.map"
+      "publicPath": "/static/dist/css/movie.14c8d511.css.map"
     },
     "js/movie.fb761b63.js.map": {
       "name": "js/movie.fb761b63.js.map",
       "path": "js\\movie.fb761b63.js.map",
-      "publicPath": "/js/movie.fb761b63.js.map"
+      "publicPath": "/static/dist/js/movie.fb761b63.js.map"
     },
     "css/others.54b63cb6.css.map": {
       "name": "css/others.54b63cb6.css.map",
       "path": "css\\others.54b63cb6.css.map",
-      "publicPath": "/css/others.54b63cb6.css.map"
+      "publicPath": "/static/dist/css/others.54b63cb6.css.map"
     },
     "js/others.2b4dbbd1.js.map": {
       "name": "js/others.2b4dbbd1.js.map",
       "path": "js\\others.2b4dbbd1.js.map",
-      "publicPath": "/js/others.2b4dbbd1.js.map"
+      "publicPath": "/static/dist/js/others.2b4dbbd1.js.map"
     },
     "css/meeting_room.5220c51e.css.map": {
       "name": "css/meeting_room.5220c51e.css.map",
       "path": "css\\meeting_room.5220c51e.css.map",
-      "publicPath": "/css/meeting_room.5220c51e.css.map"
+      "publicPath": "/static/dist/css/meeting_room.5220c51e.css.map"
     },
     "js/meeting_room.b3a78739.js.map": {
       "name": "js/meeting_room.b3a78739.js.map",
       "path": "js\\meeting_room.b3a78739.js.map",
-      "publicPath": "/js/meeting_room.b3a78739.js.map"
+      "publicPath": "/static/dist/js/meeting_room.b3a78739.js.map"
     },
     "css/meeting_room_ical.9bfceb5f.css.map": {
       "name": "css/meeting_room_ical.9bfceb5f.css.map",
       "path": "css\\meeting_room_ical.9bfceb5f.css.map",
-      "publicPath": "/css/meeting_room_ical.9bfceb5f.css.map"
+      "publicPath": "/static/dist/css/meeting_room_ical.9bfceb5f.css.map"
     },
     "js/meeting_room_ical.7da39562.js.map": {
       "name": "js/meeting_room_ical.7da39562.js.map",
       "path": "js\\meeting_room_ical.7da39562.js.map",
-      "publicPath": "/js/meeting_room_ical.7da39562.js.map"
+      "publicPath": "/static/dist/js/meeting_room_ical.7da39562.js.map"
     },
     "css/893.803f6bf5.css.map": {
       "name": "css/893.803f6bf5.css.map",
       "path": "css\\893.803f6bf5.css.map",
-      "publicPath": "/css/893.803f6bf5.css.map"
+      "publicPath": "/static/dist/css/893.803f6bf5.css.map"
     },
     "js/893.b1d5f6cc.js.map": {
       "name": "js/893.b1d5f6cc.js.map",
       "path": "js\\893.b1d5f6cc.js.map",
-      "publicPath": "/js/893.b1d5f6cc.js.map"
+      "publicPath": "/static/dist/js/893.b1d5f6cc.js.map"
     },
     "css/chunk-vendors.0630f1fb.css.map": {
       "name": "css/chunk-vendors.0630f1fb.css.map",
       "path": "css\\chunk-vendors.0630f1fb.css.map",
-      "publicPath": "/css/chunk-vendors.0630f1fb.css.map"
+      "publicPath": "/static/dist/css/chunk-vendors.0630f1fb.css.map"
     },
     "js/chunk-vendors.d3c7c23a.js.map": {
       "name": "js/chunk-vendors.d3c7c23a.js.map",
       "path": "js\\chunk-vendors.d3c7c23a.js.map",
-      "publicPath": "/js/chunk-vendors.d3c7c23a.js.map"
+      "publicPath": "/static/dist/js/chunk-vendors.d3c7c23a.js.map"
     },
-    "../../templates/public.html": {
-      "name": "../../templates/public.html",
-      "path": "..\\..\\templates\\public.html",
-      "publicPath": "/../../templates/public.html"
+    "public.html": {
+      "name": "public.html",
+      "path": "public.html",
+      "publicPath": "/static/dist/public.html"
     },
-    "../../templates/private.html": {
-      "name": "../../templates/private.html",
-      "path": "..\\..\\templates\\private.html",
-      "publicPath": "/../../templates/private.html"
+    "private.html": {
+      "name": "private.html",
+      "path": "private.html",
+      "publicPath": "/static/dist/private.html"
     },
     "service-worker.js.map": {
       "name": "service-worker.js.map",
       "path": "service-worker.js.map",
-      "publicPath": "/service-worker.js.map"
+      "publicPath": "/static/dist/service-worker.js.map"
     },
     "service-worker.js": {
       "name": "service-worker.js",
       "path": "service-worker.js",
-      "publicPath": "/service-worker.js"
+      "publicPath": "/static/dist/service-worker.js"
     },
     "workbox-4f586afe.js.map": {
       "name": "workbox-4f586afe.js.map",
       "path": "workbox-4f586afe.js.map",
-      "publicPath": "/workbox-4f586afe.js.map"
+      "publicPath": "/static/dist/workbox-4f586afe.js.map"
     },
     "workbox-4f586afe.js": {
       "name": "workbox-4f586afe.js",
       "path": "workbox-4f586afe.js",
-      "publicPath": "/workbox-4f586afe.js"
+      "publicPath": "/static/dist/workbox-4f586afe.js"
     }
   },
   "chunks": {
     "public": [
       "css/chunk-vendors.0630f1fb.css",
       "js/chunk-vendors.d3c7c23a.js",
-      "css/public.7402cba3.css",
-      "js/public.881cf9a0.js"
+      "css/public.3a9f206e.css",
+      "js/public.9073e4b9.js"
     ],
     "private": [
       "css/chunk-vendors.0630f1fb.css",
       "js/chunk-vendors.d3c7c23a.js",
       "css/private.64aa6ce1.css",
-      "js/private.528817e6.js"
+      "js/private.93ebefb4.js"
     ]
   },
-  "publicPath": "/"
+  "publicPath": "/static/dist/"
 }

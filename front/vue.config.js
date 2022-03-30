@@ -6,26 +6,24 @@ module.exports = {
   pages: {
     public: {
       entry: "./src/public.js",
-      filename: "../../templates/public.html",
+      publicPath: "/static/dist/"
     },
     private: {
       entry: "./src/private.js",
-      filename: "../../templates/private.html",
+      publicPath: "/static/dist/"
     },
-    // private: { entry: "./src/private.js" },
   },
-  //ここで指定した場所で展開する
-  outputDir: "../static/dist/",
   //サーバーを起動した時のルートパス
   publicPath: process.env.NODE_ENV === "production"
-    ? "/"
-    : "http://localhost:8080/",
+    ? "/static/dist/"
+    : "http://localhost:8080/static/dist/",
+  //ここで指定した場所で展開する
+  outputDir: "../static/dist/",
   //outputDir起点でstaticファイルを格納する場所を指定
-  assetsDir: "./static/dist/",
-  indexPath: "../../templates/",
+  assetsDir: "./",
 
   pwa: {
-    manifestPath: "./manifest.json"
+    manifestPath: "manifest.json"
   },
 
   configureWebpack: {
