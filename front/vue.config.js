@@ -23,7 +23,22 @@ module.exports = {
   assetsDir: "./",
 
   pwa: {
-    manifestPath: "manifest.json"
+    manifestPath: "manifest.json",
+    workboxOptions: {
+      runtimeCaching: [{
+        urlPattern: /\/api\/.+/,
+        handler: "StaleWhileRevalidate",
+        options: {
+          cacheName: "api",
+          expiration: {
+            maxAgeSeconds: 60 * 60 * 24
+          },
+          cacheableResponse: {
+            statuses: [0, 200]
+          }
+        }
+      }]
+    },
   },
 
   configureWebpack: {
