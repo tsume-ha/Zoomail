@@ -45,7 +45,7 @@ def firstRegister(request):
     params = {
         "form": form,
     }
-    return render(request, "home/first_register.html", params)
+    return render(request, "first_register.html", params)
 
 
 @login_required()

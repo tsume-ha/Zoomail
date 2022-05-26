@@ -6,6 +6,7 @@ module.exports = {
   pages: {
     public: { entry: "./src/public.js" },
     private: { entry: "./src/private.js" },
+    first_register: { entry: "./src/first_register.js" },
   },
   //ここで指定した場所で展開する
   outputDir: "../",
