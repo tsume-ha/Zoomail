@@ -1,385 +1,153 @@
 {
   "status": "done",
   "assets": {
+    "static/dist/js/public.js": {
+      "name": "static/dist/js/public.js",
+      "path": "static\\dist\\js\\public.js",
+      "publicPath": "http://localhost:8080/static/dist/js/public.js"
+    },
     "static/dist/img/LP-BG.79fce175.jpeg": {
       "name": "static/dist/img/LP-BG.79fce175.jpeg",
       "path": "static\\dist\\img\\LP-BG.79fce175.jpeg",
-      "publicPath": "/static/dist/img/LP-BG.79fce175.jpeg"
+      "publicPath": "http://localhost:8080/static/dist/img/LP-BG.79fce175.jpeg"
     },
     "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png": {
       "name": "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png",
       "path": "static\\dist\\img\\btn_google_signin_light_focus_web@2x.c00d9ed0.png",
-      "publicPath": "/static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png"
-    },
-    "static/dist/css/public.3a9f206e.css": {
-      "name": "static/dist/css/public.3a9f206e.css",
-      "path": "static\\dist\\css\\public.3a9f206e.css",
-      "publicPath": "/static/dist/css/public.3a9f206e.css"
-    },
-    "static/dist/js/public.991ce3a1.js": {
-      "name": "static/dist/js/public.991ce3a1.js",
-      "path": "static\\dist\\js\\public.991ce3a1.js",
-      "publicPath": "/static/dist/js/public.991ce3a1.js"
+      "publicPath": "http://localhost:8080/static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png"
     },
     "static/dist/img/livelog.6df3ecdf.png": {
       "name": "static/dist/img/livelog.6df3ecdf.png",
       "path": "static\\dist\\img\\livelog.6df3ecdf.png",
-      "publicPath": "/static/dist/img/livelog.6df3ecdf.png"
+      "publicPath": "http://localhost:8080/static/dist/img/livelog.6df3ecdf.png"
     },
     "static/dist/img/zoomail.4c935cf7.png": {
       "name": "static/dist/img/zoomail.4c935cf7.png",
       "path": "static\\dist\\img\\zoomail.4c935cf7.png",
-      "publicPath": "/static/dist/img/zoomail.4c935cf7.png"
+      "publicPath": "http://localhost:8080/static/dist/img/zoomail.4c935cf7.png"
     },
-    "static/dist/css/private.64aa6ce1.css": {
-      "name": "static/dist/css/private.64aa6ce1.css",
-      "path": "static\\dist\\css\\private.64aa6ce1.css",
-      "publicPath": "/static/dist/css/private.64aa6ce1.css"
+    "static/dist/js/private.js": {
+      "name": "static/dist/js/private.js",
+      "path": "static\\dist\\js\\private.js",
+      "publicPath": "http://localhost:8080/static/dist/js/private.js"
     },
-    "static/dist/js/private.295cdfea.js": {
-      "name": "static/dist/js/private.295cdfea.js",
-      "path": "static\\dist\\js\\private.295cdfea.js",
-      "publicPath": "/static/dist/js/private.295cdfea.js"
+    "static/dist/js/home.js": {
+      "name": "static/dist/js/home.js",
+      "path": "static\\dist\\js\\home.js",
+      "publicPath": "http://localhost:8080/static/dist/js/home.js"
     },
-    "static/dist/css/home.370765fe.css": {
-      "name": "static/dist/css/home.370765fe.css",
-      "path": "static\\dist\\css\\home.370765fe.css",
-      "publicPath": "/static/dist/css/home.370765fe.css"
+    "static/dist/js/read.js": {
+      "name": "static/dist/js/read.js",
+      "path": "static\\dist\\js\\read.js",
+      "publicPath": "http://localhost:8080/static/dist/js/read.js"
     },
-    "static/dist/js/home.743dd1c0.js": {
-      "name": "static/dist/js/home.743dd1c0.js",
-      "path": "static\\dist\\js\\home.743dd1c0.js",
-      "publicPath": "/static/dist/js/home.743dd1c0.js"
+    "static/dist/js/send.js": {
+      "name": "static/dist/js/send.js",
+      "path": "static\\dist\\js\\send.js",
+      "publicPath": "http://localhost:8080/static/dist/js/send.js"
     },
-    "static/dist/css/read.185294ad.css": {
-      "name": "static/dist/css/read.185294ad.css",
-      "path": "static\\dist\\css\\read.185294ad.css",
-      "publicPath": "/static/dist/css/read.185294ad.css"
-    },
-    "static/dist/js/read.fe3aa646.js": {
-      "name": "static/dist/js/read.fe3aa646.js",
-      "path": "static\\dist\\js\\read.fe3aa646.js",
-      "publicPath": "/static/dist/js/read.fe3aa646.js"
-    },
-    "static/dist/css/send.d2c7f5da.css": {
-      "name": "static/dist/css/send.d2c7f5da.css",
-      "path": "static\\dist\\css\\send.d2c7f5da.css",
-      "publicPath": "/static/dist/css/send.d2c7f5da.css"
-    },
-    "static/dist/js/send.b2f215fb.js": {
-      "name": "static/dist/js/send.b2f215fb.js",
-      "path": "static\\dist\\js\\send.b2f215fb.js",
-      "publicPath": "/static/dist/js/send.b2f215fb.js"
-    },
-    "static/dist/css/photo.a623dbbd.css": {
-      "name": "static/dist/css/photo.a623dbbd.css",
-      "path": "static\\dist\\css\\photo.a623dbbd.css",
-      "publicPath": "/static/dist/css/photo.a623dbbd.css"
-    },
-    "static/dist/js/photo.3ca9633b.js": {
-      "name": "static/dist/js/photo.3ca9633b.js",
-      "path": "static\\dist\\js\\photo.3ca9633b.js",
-      "publicPath": "/static/dist/js/photo.3ca9633b.js"
+    "static/dist/js/photo.js": {
+      "name": "static/dist/js/photo.js",
+      "path": "static\\dist\\js\\photo.js",
+      "publicPath": "http://localhost:8080/static/dist/js/photo.js"
     },
     "static/dist/img/unplugged_logo.c717fdac.jpg": {
       "name": "static/dist/img/unplugged_logo.c717fdac.jpg",
       "path": "static\\dist\\img\\unplugged_logo.c717fdac.jpg",
-      "publicPath": "/static/dist/img/unplugged_logo.c717fdac.jpg"
+      "publicPath": "http://localhost:8080/static/dist/img/unplugged_logo.c717fdac.jpg"
     },
-    "static/dist/css/sound.aff2ea39.css": {
-      "name": "static/dist/css/sound.aff2ea39.css",
-      "path": "static\\dist\\css\\sound.aff2ea39.css",
-      "publicPath": "/static/dist/css/sound.aff2ea39.css"
+    "static/dist/js/sound.js": {
+      "name": "static/dist/js/sound.js",
+      "path": "static\\dist\\js\\sound.js",
+      "publicPath": "http://localhost:8080/static/dist/js/sound.js"
     },
-    "static/dist/js/sound.1152feac.js": {
-      "name": "static/dist/js/sound.1152feac.js",
-      "path": "static\\dist\\js\\sound.1152feac.js",
-      "publicPath": "/static/dist/js/sound.1152feac.js"
+    "static/dist/js/kansou.js": {
+      "name": "static/dist/js/kansou.js",
+      "path": "static\\dist\\js\\kansou.js",
+      "publicPath": "http://localhost:8080/static/dist/js/kansou.js"
     },
-    "static/dist/css/kansou.5a9f743b.css": {
-      "name": "static/dist/css/kansou.5a9f743b.css",
-      "path": "static\\dist\\css\\kansou.5a9f743b.css",
-      "publicPath": "/static/dist/css/kansou.5a9f743b.css"
-    },
-    "static/dist/js/kansou.3b46ec87.js": {
-      "name": "static/dist/js/kansou.3b46ec87.js",
-      "path": "static\\dist\\js\\kansou.3b46ec87.js",
-      "publicPath": "/static/dist/js/kansou.3b46ec87.js"
-    },
-    "static/dist/css/mypage.dc6d3e5e.css": {
-      "name": "static/dist/css/mypage.dc6d3e5e.css",
-      "path": "static\\dist\\css\\mypage.dc6d3e5e.css",
-      "publicPath": "/static/dist/css/mypage.dc6d3e5e.css"
-    },
-    "static/dist/js/mypage.d86c7836.js": {
-      "name": "static/dist/js/mypage.d86c7836.js",
-      "path": "static\\dist\\js\\mypage.d86c7836.js",
-      "publicPath": "/static/dist/js/mypage.d86c7836.js"
+    "static/dist/js/mypage.js": {
+      "name": "static/dist/js/mypage.js",
+      "path": "static\\dist\\js\\mypage.js",
+      "publicPath": "http://localhost:8080/static/dist/js/mypage.js"
     },
     "static/dist/img/google.fd4588af.png": {
       "name": "static/dist/img/google.fd4588af.png",
       "path": "static\\dist\\img\\google.fd4588af.png",
-      "publicPath": "/static/dist/img/google.fd4588af.png"
+      "publicPath": "http://localhost:8080/static/dist/img/google.fd4588af.png"
     },
-    "static/dist/css/mypage-invite.87397bc8.css": {
-      "name": "static/dist/css/mypage-invite.87397bc8.css",
-      "path": "static\\dist\\css\\mypage-invite.87397bc8.css",
-      "publicPath": "/static/dist/css/mypage-invite.87397bc8.css"
+    "static/dist/js/mypage-invite.js": {
+      "name": "static/dist/js/mypage-invite.js",
+      "path": "static\\dist\\js\\mypage-invite.js",
+      "publicPath": "http://localhost:8080/static/dist/js/mypage-invite.js"
     },
-    "static/dist/js/mypage-invite.f3a228ea.js": {
-      "name": "static/dist/js/mypage-invite.f3a228ea.js",
-      "path": "static\\dist\\js\\mypage-invite.f3a228ea.js",
-      "publicPath": "/static/dist/js/mypage-invite.f3a228ea.js"
+    "static/dist/js/movie.js": {
+      "name": "static/dist/js/movie.js",
+      "path": "static\\dist\\js\\movie.js",
+      "publicPath": "http://localhost:8080/static/dist/js/movie.js"
     },
-    "static/dist/css/movie.14c8d511.css": {
-      "name": "static/dist/css/movie.14c8d511.css",
-      "path": "static\\dist\\css\\movie.14c8d511.css",
-      "publicPath": "/static/dist/css/movie.14c8d511.css"
+    "static/dist/js/others.js": {
+      "name": "static/dist/js/others.js",
+      "path": "static\\dist\\js\\others.js",
+      "publicPath": "http://localhost:8080/static/dist/js/others.js"
     },
-    "static/dist/js/movie.950bd52c.js": {
-      "name": "static/dist/js/movie.950bd52c.js",
-      "path": "static\\dist\\js\\movie.950bd52c.js",
-      "publicPath": "/static/dist/js/movie.950bd52c.js"
+    "static/dist/js/meeting_room.js": {
+      "name": "static/dist/js/meeting_room.js",
+      "path": "static\\dist\\js\\meeting_room.js",
+      "publicPath": "http://localhost:8080/static/dist/js/meeting_room.js"
     },
-    "static/dist/css/others.54b63cb6.css": {
-      "name": "static/dist/css/others.54b63cb6.css",
-      "path": "static\\dist\\css\\others.54b63cb6.css",
-      "publicPath": "/static/dist/css/others.54b63cb6.css"
-    },
-    "static/dist/js/others.b4402807.js": {
-      "name": "static/dist/js/others.b4402807.js",
-      "path": "static\\dist\\js\\others.b4402807.js",
-      "publicPath": "/static/dist/js/others.b4402807.js"
-    },
-    "static/dist/css/meeting_room.5220c51e.css": {
-      "name": "static/dist/css/meeting_room.5220c51e.css",
-      "path": "static\\dist\\css\\meeting_room.5220c51e.css",
-      "publicPath": "/static/dist/css/meeting_room.5220c51e.css"
-    },
-    "static/dist/js/meeting_room.3b823df6.js": {
-      "name": "static/dist/js/meeting_room.3b823df6.js",
-      "path": "static\\dist\\js\\meeting_room.3b823df6.js",
-      "publicPath": "/static/dist/js/meeting_room.3b823df6.js"
-    },
-    "static/dist/css/meeting_room_ical.9bfceb5f.css": {
-      "name": "static/dist/css/meeting_room_ical.9bfceb5f.css",
-      "path": "static\\dist\\css\\meeting_room_ical.9bfceb5f.css",
-      "publicPath": "/static/dist/css/meeting_room_ical.9bfceb5f.css"
-    },
-    "static/dist/js/meeting_room_ical.7da39562.js": {
-      "name": "static/dist/js/meeting_room_ical.7da39562.js",
-      "path": "static\\dist\\js\\meeting_room_ical.7da39562.js",
-      "publicPath": "/static/dist/js/meeting_room_ical.7da39562.js"
+    "static/dist/js/meeting_room_ical.js": {
+      "name": "static/dist/js/meeting_room_ical.js",
+      "path": "static\\dist\\js\\meeting_room_ical.js",
+      "publicPath": "http://localhost:8080/static/dist/js/meeting_room_ical.js"
     },
     "static/dist/img/complete.d643c509.png": {
       "name": "static/dist/img/complete.d643c509.png",
       "path": "static\\dist\\img\\complete.d643c509.png",
-      "publicPath": "/static/dist/img/complete.d643c509.png"
+      "publicPath": "http://localhost:8080/static/dist/img/complete.d643c509.png"
     },
-    "static/dist/css/893.803f6bf5.css": {
-      "name": "static/dist/css/893.803f6bf5.css",
-      "path": "static\\dist\\css\\893.803f6bf5.css",
-      "publicPath": "/static/dist/css/893.803f6bf5.css"
+    "static/dist/js/src_pages_404_vue.js": {
+      "name": "static/dist/js/src_pages_404_vue.js",
+      "path": "static\\dist\\js\\src_pages_404_vue.js",
+      "publicPath": "http://localhost:8080/static/dist/js/src_pages_404_vue.js"
     },
-    "static/dist/js/893.b1d5f6cc.js": {
-      "name": "static/dist/js/893.b1d5f6cc.js",
-      "path": "static\\dist\\js\\893.b1d5f6cc.js",
-      "publicPath": "/static/dist/js/893.b1d5f6cc.js"
+    "static/dist/js/chunk-vendors.js": {
+      "name": "static/dist/js/chunk-vendors.js",
+      "path": "static\\dist\\js\\chunk-vendors.js",
+      "publicPath": "http://localhost:8080/static/dist/js/chunk-vendors.js"
     },
-    "static/dist/css/chunk-vendors.0630f1fb.css": {
-      "name": "static/dist/css/chunk-vendors.0630f1fb.css",
-      "path": "static\\dist\\css\\chunk-vendors.0630f1fb.css",
-      "publicPath": "/static/dist/css/chunk-vendors.0630f1fb.css"
+    "static/dist/js/chunk-common.js": {
+      "name": "static/dist/js/chunk-common.js",
+      "path": "static\\dist\\js\\chunk-common.js",
+      "publicPath": "http://localhost:8080/static/dist/js/chunk-common.js"
     },
-    "static/dist/js/chunk-vendors.ac67307c.js": {
-      "name": "static/dist/js/chunk-vendors.ac67307c.js",
-      "path": "static\\dist\\js\\chunk-vendors.ac67307c.js",
-      "publicPath": "/static/dist/js/chunk-vendors.ac67307c.js"
-    },
-    "static/dist/css/public.3a9f206e.css.map": {
-      "name": "static/dist/css/public.3a9f206e.css.map",
-      "path": "static\\dist\\css\\public.3a9f206e.css.map",
-      "publicPath": "/static/dist/css/public.3a9f206e.css.map"
-    },
-    "static/dist/js/public.991ce3a1.js.map": {
-      "name": "static/dist/js/public.991ce3a1.js.map",
-      "path": "static\\dist\\js\\public.991ce3a1.js.map",
-      "publicPath": "/static/dist/js/public.991ce3a1.js.map"
-    },
-    "static/dist/css/private.64aa6ce1.css.map": {
-      "name": "static/dist/css/private.64aa6ce1.css.map",
-      "path": "static\\dist\\css\\private.64aa6ce1.css.map",
-      "publicPath": "/static/dist/css/private.64aa6ce1.css.map"
-    },
-    "static/dist/js/private.295cdfea.js.map": {
-      "name": "static/dist/js/private.295cdfea.js.map",
-      "path": "static\\dist\\js\\private.295cdfea.js.map",
-      "publicPath": "/static/dist/js/private.295cdfea.js.map"
-    },
-    "static/dist/css/home.370765fe.css.map": {
-      "name": "static/dist/css/home.370765fe.css.map",
-      "path": "static\\dist\\css\\home.370765fe.css.map",
-      "publicPath": "/static/dist/css/home.370765fe.css.map"
-    },
-    "static/dist/js/home.743dd1c0.js.map": {
-      "name": "static/dist/js/home.743dd1c0.js.map",
-      "path": "static\\dist\\js\\home.743dd1c0.js.map",
-      "publicPath": "/static/dist/js/home.743dd1c0.js.map"
-    },
-    "static/dist/css/read.185294ad.css.map": {
-      "name": "static/dist/css/read.185294ad.css.map",
-      "path": "static\\dist\\css\\read.185294ad.css.map",
-      "publicPath": "/static/dist/css/read.185294ad.css.map"
-    },
-    "static/dist/js/read.fe3aa646.js.map": {
-      "name": "static/dist/js/read.fe3aa646.js.map",
-      "path": "static\\dist\\js\\read.fe3aa646.js.map",
-      "publicPath": "/static/dist/js/read.fe3aa646.js.map"
-    },
-    "static/dist/css/send.d2c7f5da.css.map": {
-      "name": "static/dist/css/send.d2c7f5da.css.map",
-      "path": "static\\dist\\css\\send.d2c7f5da.css.map",
-      "publicPath": "/static/dist/css/send.d2c7f5da.css.map"
-    },
-    "static/dist/js/send.b2f215fb.js.map": {
-      "name": "static/dist/js/send.b2f215fb.js.map",
-      "path": "static\\dist\\js\\send.b2f215fb.js.map",
-      "publicPath": "/static/dist/js/send.b2f215fb.js.map"
-    },
-    "static/dist/css/photo.a623dbbd.css.map": {
-      "name": "static/dist/css/photo.a623dbbd.css.map",
-      "path": "static\\dist\\css\\photo.a623dbbd.css.map",
-      "publicPath": "/static/dist/css/photo.a623dbbd.css.map"
-    },
-    "static/dist/js/photo.3ca9633b.js.map": {
-      "name": "static/dist/js/photo.3ca9633b.js.map",
-      "path": "static\\dist\\js\\photo.3ca9633b.js.map",
-      "publicPath": "/static/dist/js/photo.3ca9633b.js.map"
-    },
-    "static/dist/css/sound.aff2ea39.css.map": {
-      "name": "static/dist/css/sound.aff2ea39.css.map",
-      "path": "static\\dist\\css\\sound.aff2ea39.css.map",
-      "publicPath": "/static/dist/css/sound.aff2ea39.css.map"
-    },
-    "static/dist/js/sound.1152feac.js.map": {
-      "name": "static/dist/js/sound.1152feac.js.map",
-      "path": "static\\dist\\js\\sound.1152feac.js.map",
-      "publicPath": "/static/dist/js/sound.1152feac.js.map"
-    },
-    "static/dist/css/kansou.5a9f743b.css.map": {
-      "name": "static/dist/css/kansou.5a9f743b.css.map",
-      "path": "static\\dist\\css\\kansou.5a9f743b.css.map",
-      "publicPath": "/static/dist/css/kansou.5a9f743b.css.map"
-    },
-    "static/dist/js/kansou.3b46ec87.js.map": {
-      "name": "static/dist/js/kansou.3b46ec87.js.map",
-      "path": "static\\dist\\js\\kansou.3b46ec87.js.map",
-      "publicPath": "/static/dist/js/kansou.3b46ec87.js.map"
-    },
-    "static/dist/css/mypage.dc6d3e5e.css.map": {
-      "name": "static/dist/css/mypage.dc6d3e5e.css.map",
-      "path": "static\\dist\\css\\mypage.dc6d3e5e.css.map",
-      "publicPath": "/static/dist/css/mypage.dc6d3e5e.css.map"
-    },
-    "static/dist/js/mypage.d86c7836.js.map": {
-      "name": "static/dist/js/mypage.d86c7836.js.map",
-      "path": "static\\dist\\js\\mypage.d86c7836.js.map",
-      "publicPath": "/static/dist/js/mypage.d86c7836.js.map"
-    },
-    "static/dist/css/mypage-invite.87397bc8.css.map": {
-      "name": "static/dist/css/mypage-invite.87397bc8.css.map",
-      "path": "static\\dist\\css\\mypage-invite.87397bc8.css.map",
-      "publicPath": "/static/dist/css/mypage-invite.87397bc8.css.map"
-    },
-    "static/dist/js/mypage-invite.f3a228ea.js.map": {
-      "name": "static/dist/js/mypage-invite.f3a228ea.js.map",
-      "path": "static\\dist\\js\\mypage-invite.f3a228ea.js.map",
-      "publicPath": "/static/dist/js/mypage-invite.f3a228ea.js.map"
-    },
-    "static/dist/css/movie.14c8d511.css.map": {
-      "name": "static/dist/css/movie.14c8d511.css.map",
-      "path": "static\\dist\\css\\movie.14c8d511.css.map",
-      "publicPath": "/static/dist/css/movie.14c8d511.css.map"
-    },
-    "static/dist/js/movie.950bd52c.js.map": {
-      "name": "static/dist/js/movie.950bd52c.js.map",
-      "path": "static\\dist\\js\\movie.950bd52c.js.map",
-      "publicPath": "/static/dist/js/movie.950bd52c.js.map"
-    },
-    "static/dist/css/others.54b63cb6.css.map": {
-      "name": "static/dist/css/others.54b63cb6.css.map",
-      "path": "static\\dist\\css\\others.54b63cb6.css.map",
-      "publicPath": "/static/dist/css/others.54b63cb6.css.map"
-    },
-    "static/dist/js/others.b4402807.js.map": {
-      "name": "static/dist/js/others.b4402807.js.map",
-      "path": "static\\dist\\js\\others.b4402807.js.map",
-      "publicPath": "/static/dist/js/others.b4402807.js.map"
-    },
-    "static/dist/css/meeting_room.5220c51e.css.map": {
-      "name": "static/dist/css/meeting_room.5220c51e.css.map",
-      "path": "static\\dist\\css\\meeting_room.5220c51e.css.map",
-      "publicPath": "/static/dist/css/meeting_room.5220c51e.css.map"
-    },
-    "static/dist/js/meeting_room.3b823df6.js.map": {
-      "name": "static/dist/js/meeting_room.3b823df6.js.map",
-      "path": "static\\dist\\js\\meeting_room.3b823df6.js.map",
-      "publicPath": "/static/dist/js/meeting_room.3b823df6.js.map"
-    },
-    "static/dist/css/meeting_room_ical.9bfceb5f.css.map": {
-      "name": "static/dist/css/meeting_room_ical.9bfceb5f.css.map",
-      "path": "static\\dist\\css\\meeting_room_ical.9bfceb5f.css.map",
-      "publicPath": "/static/dist/css/meeting_room_ical.9bfceb5f.css.map"
-    },
-    "static/dist/js/meeting_room_ical.7da39562.js.map": {
-      "name": "static/dist/js/meeting_room_ical.7da39562.js.map",
-      "path": "static\\dist\\js\\meeting_room_ical.7da39562.js.map",
-      "publicPath": "/static/dist/js/meeting_room_ical.7da39562.js.map"
-    },
-    "static/dist/css/893.803f6bf5.css.map": {
-      "name": "static/dist/css/893.803f6bf5.css.map",
-      "path": "static\\dist\\css\\893.803f6bf5.css.map",
-      "publicPath": "/static/dist/css/893.803f6bf5.css.map"
-    },
-    "static/dist/js/893.b1d5f6cc.js.map": {
-      "name": "static/dist/js/893.b1d5f6cc.js.map",
-      "path": "static\\dist\\js\\893.b1d5f6cc.js.map",
-      "publicPath": "/static/dist/js/893.b1d5f6cc.js.map"
-    },
-    "static/dist/css/chunk-vendors.0630f1fb.css.map": {
-      "name": "static/dist/css/chunk-vendors.0630f1fb.css.map",
-      "path": "static\\dist\\css\\chunk-vendors.0630f1fb.css.map",
-      "publicPath": "/static/dist/css/chunk-vendors.0630f1fb.css.map"
-    },
-    "static/dist/js/chunk-vendors.ac67307c.js.map": {
-      "name": "static/dist/js/chunk-vendors.ac67307c.js.map",
-      "path": "static\\dist\\js\\chunk-vendors.ac67307c.js.map",
-      "publicPath": "/static/dist/js/chunk-vendors.ac67307c.js.map"
+    "static/dist/js/src_components_AbstractSetting_vue.js": {
+      "name": "static/dist/js/src_components_AbstractSetting_vue.js",
+      "path": "static\\dist\\js\\src_components_AbstractSetting_vue.js",
+      "publicPath": "http://localhost:8080/static/dist/js/src_components_AbstractSetting_vue.js"
     },
     "public.html": {
       "name": "public.html",
       "path": "public.html",
-      "publicPath": "/public.html"
+      "publicPath": "http://localhost:8080/public.html"
     },
     "private.html": {
       "name": "private.html",
       "path": "private.html",
-      "publicPath": "/private.html"
+      "publicPath": "http://localhost:8080/private.html"
     }
   },
   "chunks": {
     "public": [
-      "static/dist/css/chunk-vendors.0630f1fb.css",
-      "static/dist/js/chunk-vendors.ac67307c.js",
-      "static/dist/css/public.3a9f206e.css",
-      "static/dist/js/public.991ce3a1.js"
+      "static/dist/js/chunk-vendors.js",
+      "static/dist/js/chunk-common.js",
+      "static/dist/js/public.js"
     ],
     "private": [
-      "static/dist/css/chunk-vendors.0630f1fb.css",
-      "static/dist/js/chunk-vendors.ac67307c.js",
-      "static/dist/css/private.64aa6ce1.css",
-      "static/dist/js/private.295cdfea.js"
+      "static/dist/js/chunk-vendors.js",
+      "static/dist/js/chunk-common.js",
+      "static/dist/js/private.js"
     ]
   },
-  "publicPath": "/"
+  "publicPath": "http://localhost:8080/"
 }
