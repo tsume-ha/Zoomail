@@ -22,6 +22,9 @@ export default {
     dataList: { type: Array, required: true },
     oneContentAPIPath: { type: String, required: true },
   },
+  emits: [
+    "setContent"
+  ],
   setup(props, context) {
     const route = useRoute();
     const store = useStore();
