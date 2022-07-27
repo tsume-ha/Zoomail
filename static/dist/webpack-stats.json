@@ -135,50 +135,18 @@
       "name": "private.html",
       "path": "private.html",
       "publicPath": "http://localhost:8080/private.html"
-    },
-    "public.0ffc448cf9972b5a.hot-update.js": {
-      "name": "public.0ffc448cf9972b5a.hot-update.js",
-      "path": "public.0ffc448cf9972b5a.hot-update.js",
-      "publicPath": "http://localhost:8080/public.0ffc448cf9972b5a.hot-update.js"
-    },
-    "private.0ffc448cf9972b5a.hot-update.js": {
-      "name": "private.0ffc448cf9972b5a.hot-update.js",
-      "path": "private.0ffc448cf9972b5a.hot-update.js",
-      "publicPath": "http://localhost:8080/private.0ffc448cf9972b5a.hot-update.js"
-    },
-    "read.0ffc448cf9972b5a.hot-update.js": {
-      "name": "read.0ffc448cf9972b5a.hot-update.js",
-      "path": "read.0ffc448cf9972b5a.hot-update.js",
-      "publicPath": "http://localhost:8080/read.0ffc448cf9972b5a.hot-update.js"
-    },
-    "sound.0ffc448cf9972b5a.hot-update.js": {
-      "name": "sound.0ffc448cf9972b5a.hot-update.js",
-      "path": "sound.0ffc448cf9972b5a.hot-update.js",
-      "publicPath": "http://localhost:8080/sound.0ffc448cf9972b5a.hot-update.js"
-    },
-    "public.0ffc448cf9972b5a.hot-update.json": {
-      "name": "public.0ffc448cf9972b5a.hot-update.json",
-      "path": "public.0ffc448cf9972b5a.hot-update.json",
-      "publicPath": "http://localhost:8080/public.0ffc448cf9972b5a.hot-update.json"
-    },
-    "private.0ffc448cf9972b5a.hot-update.json": {
-      "name": "private.0ffc448cf9972b5a.hot-update.json",
-      "path": "private.0ffc448cf9972b5a.hot-update.json",
-      "publicPath": "http://localhost:8080/private.0ffc448cf9972b5a.hot-update.json"
     }
   },
   "chunks": {
     "public": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
-      "static/dist/js/public.js",
-      "public.0ffc448cf9972b5a.hot-update.js"
+      "static/dist/js/public.js"
     ],
     "private": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
-      "static/dist/js/private.js",
-      "private.0ffc448cf9972b5a.hot-update.js"
+      "static/dist/js/private.js"
     ]
   },
   "publicPath": "http://localhost:8080/"
