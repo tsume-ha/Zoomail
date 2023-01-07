@@ -1,40 +1,15 @@
 {
   "status": "done",
   "assets": {
-    "private.f84a8fa1e1152121.hot-update.js": {
-      "name": "private.f84a8fa1e1152121.hot-update.js",
-      "path": "private.f84a8fa1e1152121.hot-update.js",
-      "publicPath": "http://localhost:8080/private.f84a8fa1e1152121.hot-update.js"
-    },
-    "private.f84a8fa1e1152121.hot-update.json": {
-      "name": "private.f84a8fa1e1152121.hot-update.json",
-      "path": "private.f84a8fa1e1152121.hot-update.json",
-      "publicPath": "http://localhost:8080/private.f84a8fa1e1152121.hot-update.json"
-    },
     "private.html": {
       "name": "private.html",
       "path": "private.html",
       "publicPath": "http://localhost:8080/private.html"
     },
-    "public.f84a8fa1e1152121.hot-update.js": {
-      "name": "public.f84a8fa1e1152121.hot-update.js",
-      "path": "public.f84a8fa1e1152121.hot-update.js",
-      "publicPath": "http://localhost:8080/public.f84a8fa1e1152121.hot-update.js"
-    },
-    "public.f84a8fa1e1152121.hot-update.json": {
-      "name": "public.f84a8fa1e1152121.hot-update.json",
-      "path": "public.f84a8fa1e1152121.hot-update.json",
-      "publicPath": "http://localhost:8080/public.f84a8fa1e1152121.hot-update.json"
-    },
     "public.html": {
       "name": "public.html",
       "path": "public.html",
       "publicPath": "http://localhost:8080/public.html"
-    },
-    "send.f84a8fa1e1152121.hot-update.js": {
-      "name": "send.f84a8fa1e1152121.hot-update.js",
-      "path": "send.f84a8fa1e1152121.hot-update.js",
-      "publicPath": "http://localhost:8080/send.f84a8fa1e1152121.hot-update.js"
     },
     "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png": {
       "name": "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png",
@@ -171,17 +146,13 @@
     "private": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
-      "static/dist/js/private.js",
-      "private.f84a8fa1e1152121.hot-update.js"
+      "static/dist/js/private.js"
     ],
     "public": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
-      "static/dist/js/public.js",
-      "public.f84a8fa1e1152121.hot-update.js"
+      "static/dist/js/public.js"
     ]
   },
-  "publicPath": "http://localhost:8080/",
-  "error": "ModuleNotFoundError",
-  "message": "Module not found: Error: Can't resolve '../assets/img/loading-puff-green.svg' in 'C:\\Users\\mhash\\Documents\\UnpluggedMessage\\front\\src\\pages\\mail'"
+  "publicPath": "http://localhost:8080/"
 }
