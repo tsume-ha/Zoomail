@@ -1,15 +1,40 @@
 {
   "status": "done",
   "assets": {
+    "private.1c88d2356468bfef.hot-update.js": {
+      "name": "private.1c88d2356468bfef.hot-update.js",
+      "path": "private.1c88d2356468bfef.hot-update.js",
+      "publicPath": "http://localhost:8080/private.1c88d2356468bfef.hot-update.js"
+    },
+    "private.1c88d2356468bfef.hot-update.json": {
+      "name": "private.1c88d2356468bfef.hot-update.json",
+      "path": "private.1c88d2356468bfef.hot-update.json",
+      "publicPath": "http://localhost:8080/private.1c88d2356468bfef.hot-update.json"
+    },
     "private.html": {
       "name": "private.html",
       "path": "private.html",
       "publicPath": "http://localhost:8080/private.html"
     },
+    "public.1c88d2356468bfef.hot-update.js": {
+      "name": "public.1c88d2356468bfef.hot-update.js",
+      "path": "public.1c88d2356468bfef.hot-update.js",
+      "publicPath": "http://localhost:8080/public.1c88d2356468bfef.hot-update.js"
+    },
+    "public.1c88d2356468bfef.hot-update.json": {
+      "name": "public.1c88d2356468bfef.hot-update.json",
+      "path": "public.1c88d2356468bfef.hot-update.json",
+      "publicPath": "http://localhost:8080/public.1c88d2356468bfef.hot-update.json"
+    },
     "public.html": {
       "name": "public.html",
       "path": "public.html",
       "publicPath": "http://localhost:8080/public.html"
+    },
+    "src_components_AbstractSetting_vue.1c88d2356468bfef.hot-update.js": {
+      "name": "src_components_AbstractSetting_vue.1c88d2356468bfef.hot-update.js",
+      "path": "src_components_AbstractSetting_vue.1c88d2356468bfef.hot-update.js",
+      "publicPath": "http://localhost:8080/src_components_AbstractSetting_vue.1c88d2356468bfef.hot-update.js"
     },
     "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png": {
       "name": "static/dist/img/btn_google_signin_light_focus_web@2x.c00d9ed0.png",
@@ -146,13 +171,17 @@
     "private": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
-      "static/dist/js/private.js"
+      "static/dist/js/private.js",
+      "private.1c88d2356468bfef.hot-update.js"
     ],
     "public": [
       "static/dist/js/chunk-vendors.js",
       "static/dist/js/chunk-common.js",
-      "static/dist/js/public.js"
+      "static/dist/js/public.js",
+      "public.1c88d2356468bfef.hot-update.js"
     ]
   },
-  "publicPath": "http://localhost:8080/"
+  "publicPath": "http://localhost:8080/",
+  "error": "ModuleNotFoundError",
+  "message": "Module not found: Error: Can't resolve 'vue-loading-overlay/dist/vue-loading.css' in 'C:\\Users\\mhash\\Documents\\UnpluggedMessage\\front\\src\\components'"
 }
