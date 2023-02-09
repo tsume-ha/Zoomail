@@ -3,7 +3,7 @@
     <h3>{{ h3Text }}</h3>
     <div class="card" v-if="status === 'sending'">
       <div class="icon">
-        <RotateSquare2 />
+        <img src="../../assets/img/loading-puff-green.svg" width="50" height="50" alt="Senging spinner" />
       </div>
       <p>
         送信中です。しばらくお待ちください。<br />
@@ -48,7 +48,6 @@
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { RotateSquare2 } from "vue-loading-spinner";
 
 const store = useStore();
 const router = useRouter();
