@@ -1,7 +1,10 @@
 from django.urls import path, include
-from .views import homeAPI
+from .views import homeAPI, tempUser, firstRegisterAPI
 
+app_name = "api"
 urlpatterns = [
+    path("tempuser/", tempUser, name="tempuser"),
+    path("first-register/", firstRegisterAPI, name="first_register_api"),
     path("home/index/", homeAPI),
     path("board/", include("board.urls")),
     path("mypage/", include("members.urls")),
