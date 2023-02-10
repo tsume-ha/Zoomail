@@ -25,7 +25,7 @@ def create_user(strategy, details, backend, user=None, *args, **kwargs):
     # #ここまで、新入生が入ってきたら消す
 
     # 2019よりも上回はLiveLogでの新規登録はさせないように
-    if details.get("year") <= 201:
+    if details.get("year") <= 2019:
         messages.warning(backend.strategy.request, "2019年度入会以上の上回生は、先にGoogleアカウントでログインしてからLiveLogアカウントへの紐付けを行ってください。")
         return
 
