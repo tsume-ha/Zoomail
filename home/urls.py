@@ -34,7 +34,7 @@ urlpatterns = [
     # old path
     path("read/content/<int:id>/", redirect_from_old_url),
     # API
-    path("api/", include("home.urls_api")),
+    path("api/", include("home.urls_api"), name="api"),
     # SPA
     path("login/", TemplateView.as_view(template_name="public.html"), name="login"),
     path("logged_out/", TemplateView.as_view(template_name="public.html"), name="logged_out"),
