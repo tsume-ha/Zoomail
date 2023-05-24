@@ -102,3 +102,12 @@ def save_livelog_email(backend, user, details, *args, **kwargs):
         if backend.name == 'auth0':
             user.livelog_email = details.get('email')
             user.save()
+
+def update_login_status(backend, user, details, *args, **kwargs):
+    if user:
+        if backend.name == "auth0":
+            user.livelog_login = True
+            user.save()
+        if backend.name == "google-oauth2":
+            user.google_login = True
+            user.save()
