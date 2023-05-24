@@ -3,7 +3,7 @@
     <h3>メーリス・受信ボックス</h3>
     <search-form />
 
-    <div v-if="nowLoading">now loading</div>
+    <div v-if="messages.length === 0 && nowLoading">now loading</div>
     <transition-group name="message-row" v-else appear>
       <one-message-row
         v-for="mes in messages"
@@ -20,7 +20,7 @@
 <script>
 import { computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-import { useRoute, onBeforeRouteLeave, useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import oneMessageRow from "./components/one-message-row.vue";
 import searchForm from "./components/search-form.vue";
 import Paginator from "@/components/Paginator.vue";
@@ -36,15 +36,14 @@ export default {
     const router = useRouter();
 
     watch(route, () => {
-      updateMessage();
-    });
-    onBeforeRouteLeave((_to, _from, next) => {
-      updateMessage();
-      next();
+      if (route.path === "/mail/") {
+        updateMessage();
+      }
     });
 
     const messages = computed(() => store.state.read.messages);
     const nowLoading = computed(() => store.state.read.nowLoading);
+    const query = computed(() => store.state.read.params);
 
     const cleanQuery = computed(() => {
       const query = {};
@@ -77,12 +76,18 @@ export default {
     };
 
     const updateMessage = () => {
-      store.dispatch("read/getMessagesFromAPI", cleanQuery.value);
+      if (
+        messages.value.length === 0 ||
+        cleanQuery.value.is_kaisei !== query.value.is_kaisei ||
+        cleanQuery.value.is_zenkai !== query.value.is_zenkai ||
+        cleanQuery.value.is_bookmark !== query.value.is_bookmark ||
+        cleanQuery.value.is_sender !== query.value.is_sender ||
+        cleanQuery.value.text !== query.value.text ||
+        cleanQuery.value.page !== query.value.page
+      ) {
+        store.dispatch("read/getMessagesFromAPI", cleanQuery.value);
+      }
     };
-
-    if (messages.value.length === 0) {
-      updateMessage();
-    }
 
     onMounted(() => updateMessage());
 
@@ -108,19 +113,11 @@ export default {
 .one-message-row {
   display: block;
 }
-.message-row-leave-active {
-  position: absolute;
-}
-.message-row-move {
-  transition: all 0.5s;
+.message-row-enter-from,
+.message-row-leave-to {
+  opacity: 0;
 }
 .message-row-enter-active {
   transition: all 0.5s;
-}
-.message-row-enter-from {
-  opacity: 0;
-}
-.message-row-enter-to {
-  opacity: 1;
 }
 </style>

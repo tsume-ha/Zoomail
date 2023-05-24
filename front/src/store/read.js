@@ -21,65 +21,65 @@ export default {
     totalPages: 0,
   },
   mutations: {
-    setMessages (state, messages) {
+    setMessages(state, messages) {
       state.messages.length = 0;
       state.messages = messages;
     },
-    startAPILoading (state) {
+    startAPILoading(state) {
       state.nowLoading = true;
       console.log("startAPILoading");
     },
-    finishAPILoading (state) {
+    finishAPILoading(state) {
       state.nowLoading = false;
       console.log("finishAPILoading");
     },
-    updateBookmarked (state, payload) {
+    updateBookmarked(state, payload) {
       const target = state.messages.find(item => item.id === payload.id);
       if (target) {
         // state.messages[]が空でtargetがundefinedになってる場合を弾く
         target.is_bookmarked = payload.bool;
       }
     },
-    updateParams (state, payload) {
+    updateParams(state, payload) {
       state.params = payload;
     },
-    setTotalPages (state, payload) {
+    setTotalPages(state, payload) {
       state.totalPages = Number(payload);
     }
   },
   actions: {
-    getMessagesFromAPI (context, params) {
+    getMessagesFromAPI(context, params) {
       // APIを叩く
       context.commit("startAPILoading");
-      axios.get("/api/board/json/", {params}).then(res => {
+      axios.get("/api/board/json/", { params }).then(res => {
         // messages を更新;
         context.commit("setMessages", res.data.messages);
         context.commit("updateParams", params);
         context.commit("setTotalPages", res.data.paginator.total);
       })
-      .catch(e => {
-        console.log("name", e.name);
-        console.log("message", e.message);
-        console.log("response", e.response);
-        console.log("response.status", e.response.status);
-      }).finally(() => {
-        context.commit("finishAPILoading");
-      });
+        .catch(e => {
+          console.log("name", e.name);
+          console.log("message", e.message);
+          console.log("response", e.response);
+          console.log("response.status", e.response.status);
+        }).finally(() => {
+          context.commit("finishAPILoading");
+        });
     },
-    async loadOneMessage (context, id) {
+    async loadOneMessage(context, id) {
       context.commit("startAPILoading");
       const res = await axios.get(`/api/board/content/${String(id)}/`)
-      .catch(e => {
-        console.log("name", e.name);
-        console.log("message", e.message);
-        console.log("response", e.response);
-        console.log("response.status", e.response.status);
-      });
+        .catch(e => {
+          console.log("name", e.name);
+          console.log("message", e.message);
+          console.log("response", e.response);
+          console.log("response.status", e.response.status);
+        });
       context.commit("finishAPILoading");
       context.commit("setMessages", [res.data.message]);
       return res.data.message;
     },
-    toggleBookmark (context, id) {
+    toggleBookmark(context, id) {
       const message = context.state.messages.find(item => item.id === id);
       context.commit("updateBookmarked", {
         "id": id,
