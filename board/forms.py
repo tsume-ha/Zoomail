@@ -1,6 +1,7 @@
+from typing import Any, Dict
 from django import forms
-from .models import Message, Attachment
-
+from .models import Message, Attachment, ToGroup
+from members.models import User
 
 ## new API form
 class MessageForm(forms.ModelForm):
@@ -40,3 +41,17 @@ class AttachmentForm(forms.Form):
     def save(self, message: Message):
         files = self.cleaned_data["attachments"]
         return [Attachment.objects.create(message=message, attachment_file=file) for file in files]
+
+class ToGroupAdminForm(forms.ModelForm):
+    class Meta:
+        model = ToGroup
+        verbose_name = "宛先"
+        verbose_name_plural = "宛先"
+        fields = ["year", "leader", "label"]
+
+    def clean(self) -> Dict[str, Any]:
+        leader: User = self.cleaned_data.get("leader")
+        if leader:
+            if self.cleaned_data["year"] != leader.year:
+                raise forms.ValidationError("会長に指定されたユーザーの学年が、宛先に設定された学年と一致していません。")
+        return super().clean()

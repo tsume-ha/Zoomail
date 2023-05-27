@@ -85,13 +85,17 @@ class Bookmark(models.Model):
 
 
 class ToGroup(models.Model):
+    class Meta:
+        verbose_name = "宛先グループ"
+        verbose_name_plural = "宛先グループ"
     year = models.PositiveSmallIntegerField(null=False, blank=False)
-    leader = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="to_kaichou")
+    leader = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="to_kaichou", verbose_name="会長")
     label = models.CharField(
         max_length=40,
         null=True,
         blank=True,
-        help_text="If label is specified, auto generateed label is replaced to this.",
+        help_text="ここに表示名(ex「全回メーリス」)を指定すると、選択肢としてこの表示名が表示されます。指定がなければ「2018 24期」のように表示されます。",
+        verbose_name="表示名"
     )
 
     def __str__(self):
