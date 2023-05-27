@@ -1,7 +1,8 @@
 from django.contrib import admin
 
-from .models import Message, MessageYear, Attachment, Bookmark
-
+from custom_admin.admin import custom_admin_site
+from .models import Message, MessageYear, Attachment, Bookmark, ToGroup
+from .forms import ToGroupAdminForm
 
 class AttachmentAdmin(admin.StackedInline):
     model = Attachment
@@ -42,4 +43,12 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
         return obj.process.filter(Error_occurd=True).count()
 
 
+class ToGroupAdmin(admin.ModelAdmin):
+    model = ToGroup
+    form = ToGroupAdminForm
+    fields = ("year", "label", "leader")
+    list_display = ("year", "label", "leader")
+
 admin.site.register(Message, MessageSuperuserAdmin)
+admin.site.register(ToGroup, ToGroupAdmin)
+custom_admin_site.register(ToGroup, ToGroupAdmin)

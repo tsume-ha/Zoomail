@@ -19,6 +19,10 @@ def create_default_group(sender, **kwargs):
         | Q(codename="change_content", content_type__app_label="otherdocs", content_type__model="content")
         | Q(codename="delete_content", content_type__app_label="otherdocs", content_type__model="content")
         | Q(codename="view_content", content_type__app_label="otherdocs", content_type__model="content")
+        | Q(codename="add_togroup", content_type__app_label="board", content_type__model="togroup")
+        | Q(codename="change_togroup", content_type__app_label="board", content_type__model="togroup")
+        | Q(codename="delete_togroup", content_type__app_label="board", content_type__model="togroup")
+        | Q(codename="view_togroup", content_type__app_label="board", content_type__model="togroup")
     )
     kanbu.permissions.set(permission_list)
 
@@ -62,6 +66,10 @@ def create_default_group(sender, **kwargs):
         | Q(codename="change_announcement", content_type__app_label="home", content_type__model="announcement")
         | Q(codename="delete_announcement", content_type__app_label="home", content_type__model="announcement")
         | Q(codename="view_announcement", content_type__app_label="home", content_type__model="announcement")
+        | Q(codename="add_togroup", content_type__app_label="board", content_type__model="togroup")
+        | Q(codename="change_togroup", content_type__app_label="board", content_type__model="togroup")
+        | Q(codename="delete_togroup", content_type__app_label="board", content_type__model="togroup")
+        | Q(codename="view_togroup", content_type__app_label="board", content_type__model="togroup")
     )
     HP.permissions.set(permission_list)
 
@@ -113,6 +121,10 @@ def create_default_group(sender, **kwargs):
         | Q(codename="change_song", content_type__app_label="sound", content_type__model="song")
         | Q(codename="delete_song", content_type__app_label="sound", content_type__model="song")
         | Q(codename="view_song", content_type__app_label="sound", content_type__model="song")
+        | Q(codename="add_togroup", content_type__app_label="board", content_type__model="togroup")
+        | Q(codename="change_togroup", content_type__app_label="board", content_type__model="togroup")
+        | Q(codename="delete_togroup", content_type__app_label="board", content_type__model="togroup")
+        | Q(codename="view_togroup", content_type__app_label="board", content_type__model="togroup")
     )
     PA.permissions.set(permission_list)
 
