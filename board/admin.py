@@ -46,6 +46,7 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
 class ToGroupAdmin(admin.ModelAdmin):
     model = ToGroup
     form = ToGroupAdminForm
+    ordering = ["-year"]
     fields = ("year", "label", "leader")
     list_display = ("year", "label", "leader")
 
