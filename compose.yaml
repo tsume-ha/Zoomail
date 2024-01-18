@@ -1,5 +1,5 @@
 volumes:
-  database_data:
+  zoomail_database_data:
 
 networks:
   database:
@@ -37,4 +37,4 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - database_data:/var/lib/mysql:Z
+      - zoomail_database_data:/var/lib/mysql:Z
