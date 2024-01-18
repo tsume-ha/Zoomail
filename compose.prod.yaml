@@ -1,0 +1,32 @@
+volumes:
+  database_data:
+  django_static_files:
+
+networks:
+  nginx:
+    driver: bridge
+
+services:
+  django:
+    build:
+      context: .
+      target: production
+    networks:
+      - nginx
+      - database
+    volumes:
+      - django_static_files:/django/collected_static
+    command: >
+      bash -c "python manage.py collectstatic --noinput &&
+               python manage.py migrate &&
+               uwsgi --http 0.0.0.0:8080 --chdir /django/ --wsgi-file ./cpmap/wsgi.py"
+    ports: []
+
+  nginx:
+    image: nginx:alpine-slim
+    restart: on-failure
+    networks:
+      - nginx
+    ports:
+      - 80:80
+      - 443:443

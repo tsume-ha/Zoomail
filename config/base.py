@@ -16,11 +16,8 @@ import environ
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-env = environ.Env()
-env.read_env(os.path.join(BASE_DIR, "config", "base.env"))
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -100,10 +97,15 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": os.getenv("DATABASE_HOST", "database"),  # docker networkの解決先
+        "PORT": os.getenv("DATABASE_PORT", "3306"),
+        "NAME": os.getenv("DATABASE_NAME", "zoomail"),
+        "USER": os.getenv("DATABASE_USER", "zoomail"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
     }
 }
+
 
 # CustomUserModel
 AUTH_USER_MODEL = "members.User"
@@ -133,10 +135,10 @@ PRIVATE_STORAGE_AUTH_FUNCTION = "private_storage.permissions.allow_authenticated
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = "/static/"
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, "collected_static/")
 
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024
@@ -157,14 +159,14 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/logged_out/"
 SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 
 SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
 # Google 認証のurlもスラッシュを外したモノに変更する必要
 SOCIAL_AUTH_AUTH0_DOMAIN = "patient-bar-7812.auth0.com"
-SOCIAL_AUTH_AUTH0_KEY = env("SOCIAL_AUTH_AUTH0_KEY")
-SOCIAL_AUTH_AUTH0_SECRET = env("SOCIAL_AUTH_AUTH0_SECRET")
+SOCIAL_AUTH_AUTH0_KEY = os.getenv("SOCIAL_AUTH_AUTH0_KEY")
+SOCIAL_AUTH_AUTH0_SECRET = os.getenv("SOCIAL_AUTH_AUTH0_SECRET")
 
 SOCIAL_AUTH_AUTH0_SCOPE = [
     "aud",
@@ -234,12 +236,12 @@ WEBPACK_LOADER = {
 
 
 SEND_MAIL = False
-SENDGRID_API_KEY = env("SENDGRID_API_KEY")
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
 # Send Grid Mail Settings
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = env("SENDGRID_API_KEY")
+EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_API_KEY")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
