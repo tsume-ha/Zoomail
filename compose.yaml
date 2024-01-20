@@ -34,7 +34,5 @@ services:
       - MARIADB_PASSWORD=${DATABASE_PASSWORD}
       - MARIADB_USER=${DATABASE_USER}
       - MARIADB_DATABASE=${DATABASE_NAME}
-    ports:
-      - 3306:3306
     volumes:
       - zoomail_database_data:/var/lib/mysql:Z
