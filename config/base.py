@@ -23,9 +23,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", False)
 
-ALLOWED_HOSTS = ["message.ku-unplugged.net", "ku-unplugged.net", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["zoomail.ku-unplugged.net", "ku-unplugged.net", "127.0.0.1", "localhost"]
 
 # Application definition
 

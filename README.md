@@ -97,3 +97,31 @@ yarn 1.22.11, node v18.12.1 をインストールしてください.
 - 1か月分：`https://message.ku-unplugged.net/api/meeting_room/get31day/`
 
 
+## SSl設定 (Let's encrypt)
+
+dockerを利用したcertbotにより更新します。
+
+### 初回の設定
+
+- nginxの`listen 443 ssl;`に関する項目を全てコメントアウトする
+```
+docker compose -f compose.prod.yaml up --build -d
+```
+にてコンテナを起動
+
+```
+docker ps
+```
+にて、certbotが動いているcontainer idを取得する
+
+```
+docker run -it --rm --volumes-from <container id> certbot/certbot certonly
+```
+より、docker composeで立ち上げたコンテナとは別のcertbotを立ち上げ、コンソールに進む。
+認証は`2`のwebrootと呼ばれる方。
+```
+Input the webroot for zoomail.ku-unplugged.net: (Enter 'c' to cancel): 
+```
+の質問には`/var/www/html/`と返す。（このディレクトリに`.well-knowen`とかのファイルが出力されるよ！）
+
+認証が済んだら、nginxの設定を元に戻して、もう一度`docker compose -f compose.prod.yaml up --build -d`

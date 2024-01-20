@@ -2,6 +2,7 @@ volumes:
   zoomail_database_data:
   zoomail_static_files:
   zoomail_cert_files:
+  zoomail_ssl_wellknowen:
 
 networks:
   database:
@@ -53,10 +54,9 @@ services:
     networks:
       - nginx
     volumes:
-      # - zoomail_static_files:/var/www/html/static
-      # - ./nginx/dist:/var/www/html
-      - ./nginx/.well-known:/var/www/html/.well-known
-      - ./nginx/cert:/etc/letsencrypt
+      - zoomail_static_files:/var/www/html/static
+      - zoomail_ssl_wellknowen:/var/www/html/.well-known
+      - zoomail_cert_files:/etc/letsencrypt
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
@@ -65,7 +65,7 @@ services:
   certbot:
     image: certbot/certbot:latest
     volumes:
-      - ./nginx/.well-known:/var/www/html/.well-known
-      - ./nginx/cert:/etc/letsencrypt
+      - zoomail_ssl_wellknowen:/var/www/html/.well-known
+      - zoomail_cert_files:/etc/letsencrypt
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 10d & wait $${!}; done;'"
     command: ["--version"]
