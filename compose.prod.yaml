@@ -23,7 +23,7 @@ services:
       - database
     volumes:
       - zoomail_static_files:/django/collected_static
-      - zoomail_private_media:/django/private_media
+      - ./private_media:/django/private_media
     command: >
       bash -c "python manage.py collectstatic --noinput &&
                python manage.py migrate &&
