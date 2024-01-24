@@ -31,3 +31,18 @@ class MessageProcess(models.Model):
             )
         else:
             return str(self.message) + " - Processed:" + str(self.Processed) + " Delivered:" + str(self.Delivered)
+
+class MailLog(models.Model):
+
+    class SendServerChoices(models.IntegerChoices):
+        SENDGRID = 1
+        SES = 2
+
+    message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name="logs")
+    mail_id = models.CharField(max_length=100, editable=False, null=True, blank=True)
+    email = models.EmailField(null=False, blank=False, verbose_name="送信時メールアドレス")
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name="mail_logs")
+    send_server = models.PositiveSmallIntegerField(null=True, blank=True, choices=SendServerChoices.choices)
+    status = models.CharField(max_length=20, null=True, blank=True)
+    error = models.CharField(max_length=1000, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)

@@ -237,6 +237,12 @@ WEBPACK_LOADER = {
 
 SEND_MAIL = False
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+AWS_SES_SEND_NUM = 10
+EMAIL_USE_SENDGRID = True
+EMAIL_USE_SES = True
+AWS_SES_REGION_NAME = "us-east-1"
+AWS_SES_ACCESS_KEY = os.getenv("AWS_SES_ACCESS_KEY", "")
+AWS_SES_SECRET_KEY = os.getenv("AWS_SES_SECRET_KEY", "")
 
 # Send Grid Mail Settings
 EMAIL_HOST = "smtp.sendgrid.net"

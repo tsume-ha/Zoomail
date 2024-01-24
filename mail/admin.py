@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.contrib.admin import filters
-from .models import SendMailAddress, MessageProcess
+from .models import SendMailAddress, MailLog
 
 
-class MessageProcessAdmin(admin.ModelAdmin):
-    list_display = ("message", "Requested", "Processed", "Delivered", "Opened", "Error_occurd")
-    list_filter = ["Error_occurd"]
+class MailLogAdmin(admin.ModelAdmin):
+    list_display = ("message", "mail_id", "user", "send_server", "status", "error")
+    list_filter = ["status"]
 
 
 admin.site.register(SendMailAddress)
-admin.site.register(MessageProcess, MessageProcessAdmin)
+admin.site.register(MailLog, MailLogAdmin)
