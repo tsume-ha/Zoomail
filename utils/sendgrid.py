@@ -31,7 +31,6 @@ class SendgridMail(mail.Mail):
         attachments=[],
     ):
         super().__init__(
-            self,
             from_email=from_email,
             to_emails=to_emails,
             reply_to=reply_to,

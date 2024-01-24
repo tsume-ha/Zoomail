@@ -1,4 +1,5 @@
 from enum import Enum
+import time
 
 import pandas as pd
 
@@ -9,7 +10,9 @@ from .sendgrid import SendGridClient, SendgridMail
 from .ses import build_raw_mail, SESSender
 
 AWS_SES_SEND_NUM = settings.AWS_SES_SEND_NUM
-AWS_SES_SEND_RATE = 10
+AWS_SES_SEND_RATE = 1
+EMAIL_USE_SENDGRID = settings.EMAIL_USE_SENDGRID
+EMAIL_USE_SES = settings.EMAIL_USE_SES
 
 
 class MailStatus(Enum):
@@ -60,11 +63,14 @@ class MailisSender:
         return df
 
     def assign_send_server(self, df: pd.DataFrame) -> pd.DataFrame:
-        allow_ses_df = df[df["allow_ses"]]
-        print(df)
-        df.loc[allow_ses_df.sample(n=self.get_ses_num()).index, "send_server"] = SendServers.SES
-        df.loc[df["send_server"].isnull(), "send_server"] = SendServers.SENDGRID
-        print(df)
+        if EMAIL_USE_SENDGRID and not EMAIL_USE_SES:
+            df["send_server"] = SendServers.SENDGRID
+        elif not EMAIL_USE_SENDGRID and EMAIL_USE_SES:
+            df["send_server"] = SendServers.SES
+        elif EMAIL_USE_SENDGRID and EMAIL_USE_SES:
+            allow_ses_df = df[df["allow_ses"]]
+            df.loc[allow_ses_df.sample(n=self.get_ses_num()).index, "send_server"] = SendServers.SES
+            df.loc[df["send_server"].isnull(), "send_server"] = SendServers.SENDGRID
         return df
 
     def get_ses_num(self):
@@ -74,8 +80,10 @@ class MailisSender:
             return AWS_SES_SEND_NUM
 
     def send(self):
-        self.send_by_sendgrid()
-        self.send_by_ses()
+        if EMAIL_USE_SENDGRID:
+            self.send_by_sendgrid()
+        if EMAIL_USE_SES:
+            self.send_by_ses()
         return len(self.to_emails_df)
 
     def send_by_sendgrid(self):
@@ -83,7 +91,7 @@ class MailisSender:
         for from_email, group_df in sendgrid_df.groupby(["from_email"]):
             client = SendGridClient()
             mail = SendgridMail(
-                from_email=from_email,
+                from_email=(from_email, self.from_name),
                 to_emails=group_df["email"].tolist(),
                 subject=self.subject,
                 plain_text_content=self.text_content,
@@ -122,6 +130,8 @@ class MailisSender:
         ses_df = self.to_emails_df[self.to_emails_df["send_server"] == SendServers.SES]
         # ses_dfを10行ずつ分割してfor文で回す
         for i in range(len(ses_df) // AWS_SES_SEND_RATE + 1):
+            if i > 0:
+                time.sleep(1)
             group_df = ses_df[AWS_SES_SEND_RATE * i : min(AWS_SES_SEND_RATE * (i + 1), len(ses_df))]
             log_list = []
             for index, row in group_df.iterrows():
