@@ -1,5 +1,6 @@
 from enum import Enum
 import time
+import datetime
 
 import pandas as pd
 
@@ -10,7 +11,7 @@ from .sendgrid import SendGridClient, SendgridMail
 from .ses import build_raw_mail, SESSender
 
 AWS_SES_SEND_NUM = settings.AWS_SES_SEND_NUM
-AWS_SES_SEND_RATE = 1
+AWS_SES_SEND_RATE = 10
 EMAIL_USE_SENDGRID = settings.EMAIL_USE_SENDGRID
 EMAIL_USE_SES = settings.EMAIL_USE_SES
 
@@ -74,10 +75,25 @@ class MailisSender:
         return df
 
     def get_ses_num(self):
-        if len(self.to_emails_df) < AWS_SES_SEND_NUM:
-            return len(self.to_emails_df)
-        else:
-            return AWS_SES_SEND_NUM
+        """
+        Amazon SESを利用して送信する件数を指定する
+        """
+        # 今月のSendgridで送信したメールの件数
+        today = datetime.date.today()
+        this_month_start = datetime.date.today().replace(day=1)
+        sendgrid_logs = MailLog.objects.filter(
+            send_server=MailLog.SendServerChoices.SENDGRID,
+            created_at__range=(this_month_start, today),
+            status=MailStatus.SUCCESS,
+        )
+        sendgrid_num = sendgrid_logs.count()
+        # print("Sendgrid mails count this month: ", sendgrid_num)
+
+        if sendgrid_num < 10000:
+            return min(len(self.to_emails_df), AWS_SES_SEND_NUM)
+
+        ratio = min(1, (sendgrid_num - 10000) / 2000)
+        return min(len(self.to_emails_df), int(AWS_SES_SEND_NUM * ratio))
 
     def send(self):
         if EMAIL_USE_SENDGRID:
@@ -105,12 +121,12 @@ class MailisSender:
             try:
                 response = client.send(mail)
                 x_message_id = response.headers["X-Message-Id"]
-                group_df["mail_id"] = x_message_id
-                group_df["status"] = MailStatus.SUCCESS
+                sendgrid_df.loc[group_df.index, "mail_id"] = x_message_id
+                sendgrid_df.loc[group_df.index, "status"] = MailStatus.SUCCESS.value
             except Exception as e:
-                group_df["status"] = MailStatus.FAILED
-                group_df["mail_id"] = ""
-                group_df["error"] = str(e)
+                sendgrid_df.loc[group_df.index, "status"] = MailStatus.FAILED.value
+                sendgrid_df.loc[group_df.index, "mail_id"] = ""
+                sendgrid_df.loc[group_df.index, "error"] = str(e)
 
         log_list = []
         for index, row in sendgrid_df.iterrows():
@@ -149,9 +165,9 @@ class MailisSender:
                     response = client.send(mail)
                     mail_id = response["MessageId"]
                     row["mail_id"] = mail_id
-                    row["status"] = MailStatus.SUCCESS
+                    row["status"] = MailStatus.SUCCESS.value
                 except Exception as e:
-                    row["status"] = MailStatus.FAILED
+                    row["status"] = MailStatus.FAILED.value
                     row["mail_id"] = ""
                     row["error"] = str(e)
                 finally:
