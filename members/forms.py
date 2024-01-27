@@ -106,10 +106,10 @@ class MailTestForm(forms.ModelForm):
             "これからも京大アンプラグドをよろしくお願いします。\n"
             "-------------\n"
             "Zoomail - 京大アンプラグドの部内メール配信サービス\n"
-            "https://message.ku-unplugged.net/ \n\n"
-            "京大アンプラグドHP係開発部",
+            "https://zoomail.ku-unplugged.net/ \n\n"
+            "京大アンプラグド HP係",
             to_email=self.__user.get_receive_email(),
-            from_email="zenkai@message.ku-unplugged.net",
+            from_email="zenkai@zoomail.ku-unplugged.net",
         )
         if settings.SEND_MAIL:
             response = sendgridclient.send()
