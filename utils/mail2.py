@@ -31,7 +31,10 @@ class MailisSender:
     def __init__(self, message: Message):
         self.message = message
         self.subject = message.title
-        self.text_content = message.content
+        self.text_content = (
+            message.content + "\n\n--------------------------------"
+            "\nこのメーリスのURLはこちら\nhttps://zoomail.ku-unplugged.net/mail/" + str(self.message.pk)
+        )
         self.attachments = message.attachments.all()
         self.from_name = message.writer.get_short_name()
         self.to_emails_df: pd.DataFrame = self.compose_to_emails(message)
