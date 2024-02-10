@@ -1,5 +1,5 @@
 volumes:
-  zoomail_database_data:
+  zoomail_database_data_2:
 
 networks:
   database:
@@ -35,4 +35,4 @@ services:
       - MARIADB_USER=${DATABASE_USER}
       - MARIADB_DATABASE=${DATABASE_NAME}
     volumes:
-      - zoomail_database_data:/var/lib/mysql:Z
+      - zoomail_database_data_2:/var/lib/mysql:Z

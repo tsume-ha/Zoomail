@@ -1,5 +1,5 @@
 # 開発環境の設定
-FROM python:3.6-buster AS develop
+FROM python:3.12-bookworm AS develop
 
 WORKDIR /django
 
@@ -25,7 +25,7 @@ COPY requirements.txt /django/requirements.txt
 RUN pip install -r requirements.txt
 
 
-FROM python:3.6-slim-buster AS production
+FROM python:3.12-slim-bookworm AS production
 # 実行環境の設定
 
 WORKDIR /django
