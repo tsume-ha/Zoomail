@@ -14,6 +14,8 @@ services:
       - database
     env_file:
       - .env
+    environment:
+      - DATABASE="mariadb"
     depends_on:
       - database
     volumes:
