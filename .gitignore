@@ -32,3 +32,5 @@ credentials.json
 token.pickle
 
 log/*
+
+.env

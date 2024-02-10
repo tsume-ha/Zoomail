@@ -245,10 +245,12 @@ def sendAPI(request):
             django_messages.info(request, "メール送信のsettingがFalseなので、メールは送信されませんでした。")
             return JsonResponse({"total_send_num": 0, "response": "SEND_MAIL was False."})
 
-        from utils.mail import MailingList
+        from utils.mail2 import MailisSender
 
-        client = MailingList()
-        total_send_num = client.send(message)
+        # client = MailingList()
+        # total_send_num = client.send(message)
+        sender = MailisSender(message)
+        total_send_num = sender.send()
         django_messages.success(request, "メーリスを送信しました。")
         return JsonResponse({"total_send_num": total_send_num, "response": "done"})
 

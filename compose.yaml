@@ -1,0 +1,38 @@
+volumes:
+  zoomail_database_data:
+
+networks:
+  database:
+    driver: bridge
+
+services:
+  django:
+    build:
+      context: .
+      target: develop
+    networks:
+      - database
+    env_file:
+      - .env
+    depends_on:
+      - database
+    volumes:
+      - ./:/django
+    command: "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+
+  database:
+    image: mariadb:11.2.2-jammy
+    restart: on-failure
+    networks:
+      - database
+    env_file:
+      - .env
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MARIADB_PASSWORD=${DATABASE_PASSWORD}
+      - MARIADB_USER=${DATABASE_USER}
+      - MARIADB_DATABASE=${DATABASE_NAME}
+    volumes:
+      - zoomail_database_data:/var/lib/mysql:Z

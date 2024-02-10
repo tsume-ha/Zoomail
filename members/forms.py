@@ -30,7 +30,7 @@ class RegisterForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["furigana"].validators = [
             validators.RegexValidator(
-                regex=u"^[ぁ-んー]+$",
+                regex="^[ぁ-んー]+$",
                 message="ふりがなは全角ひらがなのみで入力してください。",
             )
         ]
@@ -61,11 +61,11 @@ class RegisterForm(forms.ModelForm):
             "ログインするには、以下のURLからZoomailのウェブサイトへ行き、\n"
             "「Googleでログイン」ボタンからこのGmailのアカウントでログインしてください。\n\n"
             "【ログインURL】\n"
-            "https://message.ku-unplugged.net \n\n"
-            "ログインできないなど、なにかお困りの時は message@ku-unplugged.net までご連絡ください。\n"
+            "https://zoomail.ku-unplugged.net \n\n"
+            "ログインできないなど、なにかお困りの時は info@ku-unplugged.net までご連絡ください。\n"
             "京大アンプラグドHP係開発部".format(user.get_full_name()),
             to_email=user.email,
-            from_email="register@message.ku-unplugged.net",
+            from_email="register@zoomail.ku-unplugged.net",
         )
         if settings.SEND_MAIL:
             sendgridclient.send()
@@ -106,10 +106,10 @@ class MailTestForm(forms.ModelForm):
             "これからも京大アンプラグドをよろしくお願いします。\n"
             "-------------\n"
             "Zoomail - 京大アンプラグドの部内メール配信サービス\n"
-            "https://message.ku-unplugged.net/ \n\n"
-            "京大アンプラグドHP係開発部",
+            "https://zoomail.ku-unplugged.net/ \n\n"
+            "京大アンプラグド HP係",
             to_email=self.__user.get_receive_email(),
-            from_email="zenkai@message.ku-unplugged.net",
+            from_email="zenkai@zoomail.ku-unplugged.net",
         )
         if settings.SEND_MAIL:
             response = sendgridclient.send()

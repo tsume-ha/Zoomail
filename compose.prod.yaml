@@ -1,0 +1,71 @@
+volumes:
+  zoomail_database_data:
+  zoomail_static_files:
+  zoomail_cert_files:
+  zoomail_ssl_wellknowen:
+
+networks:
+  database:
+    driver: bridge
+  nginx:
+    driver: bridge
+
+services:
+  django:
+    build:
+      target: production
+    restart: on-failure
+    networks:
+      - database
+      - nginx
+    env_file:
+      - .env
+    depends_on:
+      - database
+    volumes:
+      - zoomail_static_files:/django/collected_static
+      - ./private_media:/django/private_media
+    command: >
+      bash -c "python manage.py collectstatic --noinput &&
+               python manage.py migrate &&
+               uwsgi --http 0.0.0.0:8080 --processes 2 --threads 2 --chdir /django/ --wsgi-file ./config/wsgi.py"
+    ports: []
+
+  database:
+    image: mariadb:11.2.2-jammy
+    restart: on-failure
+    networks:
+      - database
+    env_file:
+      - .env
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MARIADB_PASSWORD=${DATABASE_PASSWORD}
+      - MARIADB_USER=${DATABASE_USER}
+      - MARIADB_DATABASE=${DATABASE_NAME}
+    volumes:
+      - zoomail_database_data:/var/lib/mysql:Z
+
+  nginx:
+    image: nginx:alpine-slim
+    restart: on-failure
+    depends_on:
+      - django
+    networks:
+      - nginx
+    volumes:
+      - zoomail_static_files:/var/www/html/static
+      - zoomail_ssl_wellknowen:/var/www/html/.well-known
+      - zoomail_cert_files:/etc/letsencrypt
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - zoomail_ssl_wellknowen:/var/www/html/.well-known
+      - zoomail_cert_files:/etc/letsencrypt
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 10d & wait $${!}; done;'"
+    command: ["--version"]
