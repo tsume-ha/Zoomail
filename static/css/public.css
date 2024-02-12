@@ -1,0 +1,21 @@
+body {
+    background-image: linear-gradient(var(--bg-primary-transparent),
+            var(--bg-primary-transparent)),
+        url("/static/img/LP-BG.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+header,
+main,
+footer {
+    background-color: transparent !important;
+    color: var(--text-light) !important;
+    transition: background-color 0.5s;
+}
+
+input#nav_open:checked~header,
+input#nav_open:checked~main,
+input#nav_open:checked~footer {
+    background-color: var(--bg-primary) !important;
+}

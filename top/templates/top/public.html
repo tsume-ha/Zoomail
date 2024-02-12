@@ -1,2 +1,63 @@
 {% extends "base_layout.html" %}
 {% load static %}
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/public.css' %}">
+{% endblock %}
+
+{% block main %}
+<main class="container">
+    <hr>
+    <article>
+        <div class="logo-wraper">
+            <img id="logo" class="pure-img" src="/static/img/zoomail.png" />
+        </div>
+
+        <p>
+            <span>京都大学を中心に活動する</span><span>アコースティック軽音サークル</span><br />
+            <span>「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a>」</span><span>の部内連絡管理アプリ</span>
+        </p>
+
+        <button id="login-button" class="btn-flat">LOG IN</button>
+    </article>
+</main>
+<style>
+    main hr {
+        margin: 0 0 0.5rem;
+    }
+
+    article {
+        text-align: center;
+
+        p {
+            text-shadow: 0 0 0.25rem var(--text-dark);
+
+            >* {
+                display: inline-block;
+            }
+        }
+
+        .logo-wraper {
+            display: block;
+            max-width: 400px;
+            margin: 1rem auto;
+        }
+
+        #login-button {
+            margin: 2.5rem;
+        }
+
+        button.btn-flat {
+            display: inline-block;
+            border: 2px solid var(--text-light);
+            color: currentColor;
+            background: inherit;
+            padding: 0.5rem;
+            margin: 0.5rem;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+</style>
+{% endblock %}
