@@ -5,18 +5,31 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pure.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&family=Zen+Kaku+Gothic+New&display=swap"
+        rel="stylesheet">
+    <title>{% block title %}Zoomail{% endblock %}</title>
     {% block extrastyle %}{% endblock %}
 </head>
 
 <body>
     <input type="checkbox" id="nav_open">
-    <header>
-        <div class="container">
-            <h1><a href="/">Zoomail</a></h1>
-        </div>
-    </header>
+
+    {% block header %}
+    {% include "componsnts/header.html" %}
+    {% endblock %}
+
+    {% block main %}
+    <main class="container"></main>
+    {% endblock %}
+
+    {% block footer %}
+    {% include "componsnts/footer.html" %}
+    {% endblock %}
+
 </body>
 
 </html>
