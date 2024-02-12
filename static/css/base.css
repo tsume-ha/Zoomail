@@ -40,16 +40,6 @@ body {
 
 header {
     height: 3rem;
-    background-color: var(--bg-primary);
-    color: var(--text-light);
-
-    >h1 {
-        display: inline-block;
-        margin: 0;
-        padding: 0.5rem 0rem;
-        font-size: 1.75rem;
-        font-weight: 500;
-    }
 }
 
 main {
@@ -60,16 +50,6 @@ main {
 
 footer {
     height: 1.5rem;
-    background-color: var(--bg-primary);
-    color: var(--text-light);
-    font-size: 0.75rem;
-    text-align: center;
-
-    p {
-        display: inline-block;
-        margin: 0;
-        padding: 0.25rem;
-    }
 }
 
 /* レスポンシブな横幅の定義 */

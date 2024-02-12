@@ -1,0 +1,59 @@
+<label for="nav_open" class="menu_button">
+    <span></span>
+</label>
+<style>
+    label.menu_button {
+        position: relative;
+        display: inline-block;
+        height: 30px;
+        width: 35px;
+        background: transparent;
+        border: 1px solid var(--text-light);
+        border-radius: 8px;
+    }
+
+    label.menu_button>span {
+        top: 14px;
+        left: 7px;
+    }
+
+    label.menu_button>span,
+    label.menu_button>span:before,
+    label.menu_button>span:after {
+        position: absolute;
+        content: "";
+        height: 1px;
+        width: 20px;
+        background: var(--text-light);
+        display: block;
+        transition: 0.5s;
+    }
+
+    input#nav_open:not(:checked)+header label.menu_button span {
+        transform: rotate(0);
+    }
+
+    input#nav_open:not(:checked)+header label.menu_button span:before {
+        top: -6px;
+        left: 0;
+    }
+
+    input#nav_open:not(:checked)+header label.menu_button span:after {
+        top: 6px;
+        left: 0;
+    }
+
+    input#nav_open:checked+header label.menu_button span {
+        transform: rotate(-45deg);
+    }
+
+    input#nav_open:checked+header label.menu_button span::before {
+        opacity: 0;
+    }
+
+    input#nav_open:checked+header label.menu_button span::after {
+        top: 0px;
+        left: 0px;
+        transform: rotate(90deg);
+    }
+</style>
