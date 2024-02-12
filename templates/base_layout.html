@@ -22,9 +22,14 @@
     {% include "componsnts/header/header.html" %}
     {% endblock %}
 
-    {% block main %}
-    <main class="container"></main>
-    {% endblock %}
+    <main class="container">
+        {% block main %}
+
+        {% endblock %}
+        {% block nav %}
+        {% include "componsnts/nav.html" %}
+        {% endblock %}
+    </main>
 
     {% block footer %}
     {% include "componsnts/footer.html" %}

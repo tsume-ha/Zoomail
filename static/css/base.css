@@ -46,6 +46,23 @@ main {
     flex: 1;
     background-color: var(--bg-content);
     color: var(--text-content);
+    position: relative;
+}
+
+main nav {
+    transition: visibility 0.5s, opacity 0.5s;
+}
+
+input#nav_open:not(:checked)~main nav {
+    visibility: hidden;
+    display: hidden;
+    opacity: 0;
+}
+
+input#nav_open:checked~main nav {
+    visibility: visible;
+    display: block;
+    opacity: 1;
 }
 
 footer {
