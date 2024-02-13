@@ -8,7 +8,7 @@
 <hr>
 <article>
     <div class="logo-wraper">
-        <img id="logo" class="pure-img" src="/static/img/zoomail.png" />
+        <img id="logo" class="pure-img" src="{% static 'img/zoomail.png' %}" />
     </div>
 
     <p>
@@ -16,7 +16,7 @@
         <span>「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a>」</span><span>の部内連絡管理アプリ</span>
     </p>
 
-    <button id="login-button" class="btn-flat">LOG IN</button>
+    <button id="login-button" class="btn-flat" onclick="toggleNav()">LOG IN</button>
 </article>
 <style>
     main hr {
@@ -56,6 +56,119 @@
         button.btn-flat:hover {
             text-decoration: underline;
         }
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        if (window.location.search.includes("login")) {
+            document.getElementById("nav-open").checked = true;
+        }
+    });
+</script>
+{% endblock %}
+
+{% block nav %}
+<nav>
+    <h2>LOG IN</h2>
+    <div class="login-wraper">
+        <a href="/auth/login/auth0" class="livelogin">
+            <span>Log in with</span><img src="{% static 'img/livelog.png' %}" width="80" height="59" alt="LiveLog" />
+        </a>
+        <a href="/auth/login/google-oauth2" id="G-login" alt="Sign in with Google">
+            Sign in with Google
+        </a>
+    </div>
+
+    <p>
+        Googleアカウントでログインするには事前の登録が必要です。<br />
+        詳しくはHP係までご連絡ください。
+    </p>
+
+</nav>
+<style>
+    nav {
+        position: absolute;
+        top: 1px;
+        /* main要素の1pxのhrと重ならないようにする */
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        text-align: center;
+        background-color: var(--bg-primary);
+        color: var(--text-light);
+
+        h2 {
+            margin: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .login-wraper {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    a#G-login {
+        display: inline-block;
+        color: transparent;
+        text-decoration: none;
+        background-image: url("{% static 'img/btn_google_signin_light_normal_web@2x.png' %}");
+        background-size: 192px 46px;
+        background-color: transparent;
+        box-sizing: content-box;
+        height: 46px;
+        width: 192px;
+        margin: 1rem;
+        flex-shrink: 0;
+        font-size: 0;
+        border: transparent 2px solid;
+    }
+
+    a#G-login:hover {
+        text-decoration: none;
+        background-image: url("{% static 'img/btn_google_signin_light_focus_web@2x.png' %}");
+        border: var(--text-light) 2px solid;
+    }
+
+    a.livelogin {
+        display: inline-flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        box-sizing: content-box;
+        width: 192px;
+        height: 64px;
+        border-radius: 4px;
+        color: #666 !important;
+        margin: 0 0.5rem;
+        padding: 0 6px;
+        border: transparent 2px solid;
+        text-decoration: none;
+        flex-shrink: 0;
+        background-color: #fcf8e3;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+
+    a.livelogin:hover {
+        text-decoration: underline;
+        border: var(--text-light) 2px solid;
+    }
+
+    a.livelogin span {
+        display: inline-block;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+    }
+
+    a.livelogin img {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
     }
 </style>
 {% endblock %}

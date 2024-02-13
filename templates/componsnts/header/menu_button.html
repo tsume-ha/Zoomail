@@ -1,4 +1,4 @@
-<label for="nav_open" class="menu_button">
+<label for="nav-open" class="menu_button">
     <span></span>
 </label>
 <style>
@@ -29,29 +29,29 @@
         transition: 0.5s;
     }
 
-    input#nav_open:not(:checked)+header label.menu_button span {
+    input#nav-open:not(:checked)+header label.menu_button span {
         transform: rotate(0);
     }
 
-    input#nav_open:not(:checked)+header label.menu_button span:before {
+    input#nav-open:not(:checked)+header label.menu_button span:before {
         top: -6px;
         left: 0;
     }
 
-    input#nav_open:not(:checked)+header label.menu_button span:after {
+    input#nav-open:not(:checked)+header label.menu_button span:after {
         top: 6px;
         left: 0;
     }
 
-    input#nav_open:checked+header label.menu_button span {
+    input#nav-open:checked+header label.menu_button span {
         transform: rotate(-45deg);
     }
 
-    input#nav_open:checked+header label.menu_button span::before {
+    input#nav-open:checked+header label.menu_button span::before {
         opacity: 0;
     }
 
-    input#nav_open:checked+header label.menu_button span::after {
+    input#nav-open:checked+header label.menu_button span::after {
         top: 0px;
         left: 0px;
         transform: rotate(90deg);

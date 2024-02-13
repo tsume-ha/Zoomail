@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <input type="checkbox" id="nav_open">
+    <input type="checkbox" id="nav-open">
 
     {% block header %}
     {% include "componsnts/header/header.html" %}
@@ -36,5 +36,7 @@
     {% endblock %}
 
 </body>
+<script src="{% static 'js/toggleLoginMenu.js' %}"></script>
+<script src="{% static 'js/toggleNav.js' %}"></script>
 
 </html>

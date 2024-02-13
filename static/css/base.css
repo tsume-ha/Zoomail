@@ -28,7 +28,7 @@ h6 {
     margin: 0;
 }
 
-input#nav_open {
+input#nav-open {
     display: none;
 }
 
@@ -53,13 +53,13 @@ main nav {
     transition: visibility 0.5s, opacity 0.5s;
 }
 
-input#nav_open:not(:checked)~main nav {
+input#nav-open:not(:checked)~main nav {
     visibility: hidden;
     display: hidden;
     opacity: 0;
 }
 
-input#nav_open:checked~main nav {
+input#nav-open:checked~main nav {
     visibility: visible;
     display: block;
     opacity: 1;
