@@ -10,8 +10,9 @@ from django.conf import settings
 from .sendgrid import SendGridClient, SendgridMail
 from .ses import build_raw_mail, SESSender
 
+SENDGRID_SEND_NUM = settings.SENDGRID_SEND_NUM
 AWS_SES_SEND_NUM = settings.AWS_SES_SEND_NUM
-AWS_SES_SEND_RATE = 10
+AWS_SES_SEND_RATE = settings.AWS_SES_SEND_RATE
 EMAIL_USE_SENDGRID = settings.EMAIL_USE_SENDGRID
 EMAIL_USE_SES = settings.EMAIL_USE_SES
 
@@ -72,9 +73,8 @@ class MailisSender:
         elif not EMAIL_USE_SENDGRID and EMAIL_USE_SES:
             df["send_server"] = SendServers.SES
         elif EMAIL_USE_SENDGRID and EMAIL_USE_SES:
-            allow_ses_df = df[df["allow_ses"]]
-            df.loc[allow_ses_df.sample(n=self.get_ses_num()).index, "send_server"] = SendServers.SES
-            df.loc[df["send_server"].isnull(), "send_server"] = SendServers.SENDGRID
+            df.loc[df.sample(n=self.get_sendgrid_num()).index, "send_server"] = SendServers.SENDGRID
+            df.loc[df["send_server"].isnull(), "send_server"] = SendServers.SES
         return df
 
     def get_ses_num(self):
@@ -97,6 +97,23 @@ class MailisSender:
 
         ratio = min(1, (sendgrid_num - 10000) / 2000)
         return min(len(self.to_emails_df), int(AWS_SES_SEND_NUM * ratio))
+
+    def get_sendgrid_num(self):
+        """
+        sendgridを利用して送信する件数を指定する
+        過去24hに100件まで送る。
+        """
+        now = datetime.datetime.now()
+        sendgrid_logs = MailLog.objects.filter(
+            send_server=MailLog.SendServerChoices.SENDGRID,
+            created_at__range=(now - datetime.timedelta(hours=24), now),
+            status=MailStatus.SUCCESS,
+        )
+        sendgrid_num = sendgrid_logs.count()
+        if sendgrid_num >= 100:
+            return 0
+        else:
+            return min(len(self.to_emails_df), SENDGRID_SEND_NUM - sendgrid_num)
 
     def send(self):
         if EMAIL_USE_SENDGRID:

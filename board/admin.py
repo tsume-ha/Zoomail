@@ -4,6 +4,7 @@ from custom_admin.admin import custom_admin_site
 from .models import Message, MessageYear, Attachment, Bookmark, ToGroup
 from .forms import ToGroupAdminForm
 
+
 class AttachmentAdmin(admin.StackedInline):
     model = Attachment
     extra = 0
@@ -37,10 +38,10 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
         return list(obj.years.all())
 
     def sent_num(self, obj):
-        return obj.process.all().count()
+        return obj.logs.filter(status="success").count()
 
     def error_num(self, obj):
-        return obj.process.filter(Error_occurd=True).count()
+        return obj.logs.filter(status="failed").count()
 
 
 class ToGroupAdmin(admin.ModelAdmin):
@@ -49,6 +50,7 @@ class ToGroupAdmin(admin.ModelAdmin):
     ordering = ["-year"]
     fields = ("year", "label", "leader")
     list_display = ("year", "label", "leader")
+
 
 admin.site.register(Message, MessageSuperuserAdmin)
 admin.site.register(ToGroup, ToGroupAdmin)
