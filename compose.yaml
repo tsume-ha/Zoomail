@@ -36,3 +36,4 @@ services:
       - MARIADB_DATABASE=${DATABASE_NAME}
     volumes:
       - zoomail_database_data:/var/lib/mysql:Z
+      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
