@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
+from django.utils.decorators import method_decorator
 from django.http import HttpResponseBadRequest, HttpResponseForbidden, JsonResponse
 from .models import MailLog
 from django.conf import settings
@@ -8,7 +9,11 @@ MAIL_STATUS_API_KEY = settings.MAIL_STATUS_API_KEY
 
 
 class MailStatusView(View):
-    @csrf_exempt
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get(self, request):
         # confirm x-auth header
         auth_header = request.META.get("HTTP_X_AUTHORIZATION")
