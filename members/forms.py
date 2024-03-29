@@ -5,7 +5,7 @@ from django.core import validators
 from django.conf import settings
 
 from social_django.models import UserSocialAuth
-from utils.mail import SympleMessageSendClient
+from utils.mail3 import SympleMailSender, MailContent
 from .models import User, TestMail
 
 
@@ -54,8 +54,8 @@ class RegisterForm(forms.ModelForm):
         user.save()
 
         # send a mail
-        sendgridclient = SympleMessageSendClient(
-            title="招待されました！【Zoomail】京大アンプラグド",
+        content = MailContent(
+            subject="招待されました！【Zoomail】京大アンプラグド",
             text="ようこそ、京大アンプラグドへ！{}さん\n\n"
             "京大アンプラグドのメーリスシステム「Zoomail」に招待されました\n"
             "ログインするには、以下のURLからZoomailのウェブサイトへ行き、\n"
@@ -65,10 +65,12 @@ class RegisterForm(forms.ModelForm):
             "ログインできないなど、なにかお困りの時は info@ku-unplugged.net までご連絡ください。\n"
             "京大アンプラグドHP係開発部".format(user.get_full_name()),
             to_email=user.email,
+            from_name="京大アンプラグド メーリスシステム Zoomail",
             from_email="register@zoomail.ku-unplugged.net",
         )
-        if settings.SEND_MAIL:
-            sendgridclient.send()
+        sender = SympleMailSender()
+        sender.set_content_list([content])
+        sender.send()
 
         return user
 
@@ -95,12 +97,14 @@ class MailTestForm(forms.ModelForm):
         if TestMail.objects.filter(
             user=self.__user, sent_at__gte=(datetime.datetime.now() - datetime.timedelta(minutes=5))
         ).exists():
-            raise forms.ValidationError("テストメールを送信できるのは5分に1回です。時間をおいてもう一度お試しください。")
+            raise forms.ValidationError(
+                "テストメールを送信できるのは5分に1回です。時間をおいてもう一度お試しください。"
+            )
 
     def save(self):
         # send a mail
-        sendgridclient = SympleMessageSendClient(
-            title="テストメールです【Zoomail】",
+        content = MailContent(
+            subject="テストメールです【Zoomail】",
             text="このメールは、Zoomailからの送信テストメールです\n\n"
             "このメールが受信できていたら、現在の設定で今後のメーリスが受信できます。ご安心ください。\n"
             "これからも京大アンプラグドをよろしくお願いします。\n"
@@ -109,11 +113,16 @@ class MailTestForm(forms.ModelForm):
             "https://zoomail.ku-unplugged.net/ \n\n"
             "京大アンプラグド HP係",
             to_email=self.__user.get_receive_email(),
+            from_name="京大アンプラグド メーリスシステム Zoomail",
             from_email="zenkai@zoomail.ku-unplugged.net",
+            user=self.__user,
         )
+        sender = SympleMailSender()
+        sender.set_content_list([content])
+
         if settings.SEND_MAIL:
-            response = sendgridclient.send()
-            x_message_id = response.headers["X-Message-Id"]
+            response = sender.send()
+            x_message_id = content.mail_id
         else:
             x_message_id = "settings.SEND_EMAIL was False"
         content = super().save(commit=False)
