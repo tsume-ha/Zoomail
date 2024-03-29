@@ -55,7 +55,7 @@ class RegisterForm(forms.ModelForm):
 
         # send a mail
         content = MailContent(
-            subject="招待されました！【Zoomail】京大アンプラグド",
+            subject="招待されました！【京大アンプラグド】メーリスシステム Zoomail",
             text="ようこそ、京大アンプラグドへ！{}さん\n\n"
             "京大アンプラグドのメーリスシステム「Zoomail」に招待されました\n"
             "ログインするには、以下のURLからZoomailのウェブサイトへ行き、\n"
@@ -104,7 +104,7 @@ class MailTestForm(forms.ModelForm):
     def save(self):
         # send a mail
         content = MailContent(
-            subject="テストメールです【Zoomail】",
+            subject="テストメーリス配信【京大アンプラグド】Zoomail",
             text="このメールは、Zoomailからの送信テストメールです\n\n"
             "このメールが受信できていたら、現在の設定で今後のメーリスが受信できます。ご安心ください。\n"
             "これからも京大アンプラグドをよろしくお願いします。\n"
