@@ -103,7 +103,7 @@ class SympleMailSender:
     def __request(self):
         data = {
             "message": [content.as_dict() for content in self.content_list],
-            "attachment": [attachment.as_dict() for attachment in self.attachment_list],
+            "attachments": [attachment.as_dict() for attachment in self.attachment_list],
         }
         headers = {"x-api-key": SEND_MAIL_API_KEY, "x-api-id": SEND_MAIL_API_ID, "Content-Type": "application/json"}
         response = requests.post(url=SEND_MAIL_API_ENDPOINT, json=data, headers=headers)
@@ -113,6 +113,9 @@ class SympleMailSender:
         if SEND_MAIL:
             self.__save_mail_logs()
             self.__request()
+            return len(self.content_list)
+        else:
+            return 0
 
 
 class MailisSender(SympleMailSender):
@@ -122,16 +125,17 @@ class MailisSender(SympleMailSender):
 
         # メール内容を設定
         if message.years.filter(year=0).exists():
-            send_address_list = SendMailAddress.objects.all().values_list("email", "user", flat=False)
+            send_address_list = SendMailAddress.objects.all()
             content_list = [
                 MailContent(
                     subject=message.title,
                     text=message.content
                     + "\n\n--------------------------------\nこのメーリスのURLはこちら\nhttps://zoomail.ku-unplugged.net/mail/"
                     + str(message.pk),
-                    to_email=address["email"],
+                    to_email=address.email,
                     from_email="zenkai@zoomail.ku-unplugged.net",
-                    user=address["user"],
+                    from_name=message.writer.get_short_name(),
+                    user=address.user,
                 )
                 for address in send_address_list
             ]
@@ -139,18 +143,16 @@ class MailisSender(SympleMailSender):
         else:
             content_list = []
             for year in message.years.all().values_list("year", flat=True):
-                send_address_list = SendMailAddress.objects.filter(user__year=year).values_list(
-                    "email", "user", flat=False
-                )
+                send_address_list = SendMailAddress.objects.filter(user__year=year)
                 content_list += [
                     MailContent(
                         subject=message.title,
                         text=message.content
                         + "\n\n--------------------------------\nこのメーリスのURLはこちら\nhttps://zoomail.ku-unplugged.net/mail/"
                         + str(message.pk),
-                        to_email=address["email"],
+                        to_email=address.email,
                         from_email=f"{year - 1994}kaisei@zoomail.ku-unplugged.net",
-                        user=address["user"],
+                        user=address.user,
                     )
                     for address in send_address_list
                 ]
@@ -160,6 +162,7 @@ class MailisSender(SympleMailSender):
         attachment_list = []
         for attachment in message.attachments.all():
             file = MailAttachment()
-            file.load_file(attachment.file.path)
+            file.load_file(attachment.attachment_file.path)
             attachment_list.append(file)
-        super().set_attachment_list(attachment_list)
+        if len(attachment_list):
+            super().set_attachment_list(attachment_list)

@@ -10,11 +10,14 @@ from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.utils.safestring import mark_safe
 from django.utils.html import linebreaks, urlize
 
+
 from django.conf import settings
 
 from .models import Message, Bookmark, ToGroup
 from .forms import MessageForm, AttachmentForm
 from members.models import User
+from utils.mail3 import MailisSender
+
 
 # html formatter
 def target_blank(content):
@@ -245,13 +248,9 @@ def sendAPI(request):
             django_messages.info(request, "メール送信のsettingがFalseなので、メールは送信されませんでした。")
             return JsonResponse({"total_send_num": 0, "response": "SEND_MAIL was False."})
 
-        from utils.mail2 import MailisSender
-
-        # client = MailingList()
-        # total_send_num = client.send(message)
         sender = MailisSender(message)
         total_send_num = sender.send()
-        django_messages.success(request, "メーリスを送信しました。")
+        django_messages.success(request, "メーリスを送信しました。メール到達まで1分ほどかかります。")
         return JsonResponse({"total_send_num": total_send_num, "response": "done"})
 
 
@@ -274,6 +273,6 @@ def AttachmentDownloadView(request, message_id, attachment_id):
     return FileResponse(
         open(attachment.attachment_file.path, "rb"),
         as_attachment=False,
-        filename=message.title + "_添付" + attachment.extension()
+        filename=message.title + "_添付" + attachment.extension(),
         # TO DO ファイル名をデータベースに保存しておく
     )
