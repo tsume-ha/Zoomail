@@ -87,7 +87,7 @@ class SympleMailSender:
     def set_attachment_list(self, attachment_list: List[MailAttachment]):
         self.attachment_list = attachment_list
 
-    def __save_mail_logs(self):
+    def _save_mail_logs(self):
         log_list = [
             MailLog(
                 mail_id=content.mail_id,
@@ -100,7 +100,7 @@ class SympleMailSender:
         ]
         MailLog.objects.bulk_create(log_list)
 
-    def __request(self):
+    def _request(self):
         data = {
             "message": [content.as_dict() for content in self.content_list],
             "attachments": [attachment.as_dict() for attachment in self.attachment_list],
@@ -111,8 +111,8 @@ class SympleMailSender:
 
     def send(self):
         if SEND_MAIL:
-            self.__save_mail_logs()
-            self.__request()
+            self._save_mail_logs()
+            self._request()
             return len(self.content_list)
         else:
             return 0
@@ -122,6 +122,7 @@ class MailisSender(SympleMailSender):
 
     def __init__(self, message: Message):
         super().__init__()
+        self.message = message
 
         # メール内容を設定
         if message.years.filter(year=0).exists():
@@ -166,3 +167,17 @@ class MailisSender(SympleMailSender):
             attachment_list.append(file)
         if len(attachment_list):
             super().set_attachment_list(attachment_list)
+
+    def _save_mail_logs(self):
+        log_list = [
+            MailLog(
+                message=self.message,
+                mail_id=content.mail_id,
+                email=content.to_email,
+                user=content.user,
+                send_server=MailLog.SendServerChoices.SES,
+                status=MailLog.StatusChoices.PENDING,
+            )
+            for content in self.content_list
+        ]
+        MailLog.objects.bulk_create(log_list)
