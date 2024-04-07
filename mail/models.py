@@ -32,11 +32,17 @@ class MessageProcess(models.Model):
         else:
             return str(self.message) + " - Processed:" + str(self.Processed) + " Delivered:" + str(self.Delivered)
 
+
 class MailLog(models.Model):
 
     class SendServerChoices(models.IntegerChoices):
         SENDGRID = 1
         SES = 2
+
+    class StatusChoices(models.TextChoices):
+        PENDING = "pending"
+        SUCCESS = "success"
+        FAILED = "failed"
 
     message = models.ForeignKey(Message, null=True, on_delete=models.CASCADE, related_name="logs")
     mail_id = models.CharField(max_length=100, editable=False, null=True, blank=True)

@@ -246,6 +246,12 @@ AWS_SES_REGION_NAME = "us-east-1"
 AWS_SES_ACCESS_KEY = os.getenv("AWS_SES_ACCESS_KEY", "")
 AWS_SES_SECRET_KEY = os.getenv("AWS_SES_SECRET_KEY", "")
 
+
+SEND_MAIL_API_ENDPOINT = os.getenv("SEND_MAIL_API_ENDPOINT", "")
+SEND_MAIL_API_ID = os.getenv("SEND_MAIL_API_ID", "")
+SEND_MAIL_API_KEY = os.getenv("SEND_MAIL_API_KEY", "")
+MAIL_STATUS_API_KEY = os.getenv("MAIL_STATUS_API_KEY", "")
+
 # Send Grid Mail Settings
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_HOST_USER = "apikey"

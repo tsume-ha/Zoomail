@@ -14,4 +14,5 @@ urlpatterns = [
     path("kansou/", include("kansou.urls")),
     path("movie/", include("movie.urls")),
     path("others/", include("otherdocs.urls")),
+    path("mail/", include("mail.urls")),
 ]
