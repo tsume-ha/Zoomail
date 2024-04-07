@@ -157,6 +157,7 @@ class MailisSender(SympleMailSender):
                         + str(self.message.pk),
                         to_email=address.email,
                         from_email=f"{year - 1994}kaisei@zoomail.ku-unplugged.net",
+                        from_name=self.message.writer.get_short_name(),
                         user=address.user,
                     )
                     for address in send_address_list
