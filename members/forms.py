@@ -95,10 +95,10 @@ class MailTestForm(forms.ModelForm):
     def clean(self):
         super().clean()
         if TestMail.objects.filter(
-            user=self.__user, sent_at__gte=(datetime.datetime.now() - datetime.timedelta(minutes=5))
+            user=self.__user, sent_at__gte=(datetime.datetime.now() - datetime.timedelta(minutes=1))
         ).exists():
             raise forms.ValidationError(
-                "テストメールを送信できるのは5分に1回です。時間をおいてもう一度お試しください。"
+                "テストメールを送信できるのは1分に1回です。時間をおいてもう一度お試しください。"
             )
 
     def save(self):
