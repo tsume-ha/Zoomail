@@ -71,10 +71,10 @@
 <nav>
     <h2>LOG IN</h2>
     <div class="login-wraper">
-        <a href="/auth/login/auth0" class="livelogin">
+        <a href="{% url 'social:begin' 'livelog' %}" class="livelogin">
             <span>Log in with</span><img src="{% static 'img/livelog.png' %}" width="80" height="59" alt="LiveLog" />
         </a>
-        <a href="/auth/login/google-oauth2" id="G-login" alt="Sign in with Google">
+        <a href="{% url 'social:begin' 'google-oauth2' %}" id="G-login" alt="Sign in with Google">
             Sign in with Google
         </a>
     </div>
