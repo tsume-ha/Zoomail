@@ -51,7 +51,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "social_django",
     "top",
+    "members",
 ]
+
+# CustomUserModel
+AUTH_USER_MODEL = "members.User"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -124,6 +128,7 @@ LOGIN_URL = "/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/logged_out/"
 
+SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 SOCIAL_AUTH_URL_NAMESPACE = "social"
 SOCIAL_AUTH_LIVELOG_KEY = os.getenv("SOCIAL_AUTH_LIVELOG_KEY", "")
 SOCIAL_AUTH_LIVELOG_SECRET = os.getenv("SOCIAL_AUTH_LIVELOG_SECRET", "")
