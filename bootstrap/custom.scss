@@ -6,15 +6,50 @@
 
 // custom configuration here
 $primary: #386471;
-$success: #16A34A;
-$danger: #E11D48;
-$warning: #D97706;
-$info: #0284C7;
+$success: hsl(142, 100%, 36%);
+$danger: hsl(347, 100%, 50%);
+$warning: hsl(32, 100%, 44%);
+$info: hsl(200, 100%, 39%);
 $secondary: #6c757d;
+$light: #f3f4f6;
 
-// カスタム背景色の設定
-$secondary-bg: #F3F4F6;
-$secondary-bg-subtle: #F3F4F6;
+// Create your own map
+$theme-accent: (
+    "accent": #F97316
+);
+
+
+// フォントサイズの設定
+$font-size-base: 1rem;
+$h1-font-size: $font-size-base * 1.5;
+$h2-font-size: $font-size-base * 1.15;
+$h3-font-size: $font-size-base * 1;
+$h4-font-size: $font-size-base * 0.8;
+$h5-font-size: $font-size-base * 0.75;
+$h6-font-size: $font-size-base * 0.5;
+
+$font-sizes: (
+    1: $h1-font-size,
+    2: $h2-font-size,
+    3: $h3-font-size,
+    4: $h4-font-size,
+    5: $h5-font-size,
+    6: $h6-font-size,
+    sm: $font-size-base * 0.8,
+    xs: $font-size-base * 0.7
+);
+
+// アラートの設定
+$alert-border-radius: 4px;
+$alert-border-width: 2px;
+
+// フォーカスリングの設定
+$focus-ring-width: .125rem;
+$focus-ring-opacity: .25;
+$focus-ring-color: rgba($secondary, $focus-ring-opacity);
+
+// フォームの設定
+$input-border-radius: 4px;
 
 // Required
 @import "./bootstrap/scss/variables";
@@ -23,6 +58,8 @@ $secondary-bg-subtle: #F3F4F6;
 @import "./bootstrap/scss/mixins";
 @import "./bootstrap/scss/utilities";
 
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $theme-accent);
 
 // Layout & components
 @import "./bootstrap/scss/root";

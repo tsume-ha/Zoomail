@@ -28,7 +28,6 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: var(--bs-secondary-bg);
         }
 
         .main-wrapper {
@@ -48,6 +47,11 @@
             border-radius: 0;
         }
 
+        main h2 {
+            font-weight: bold;
+            line-height: 32px;
+        }
+
         /* ヘッダーの高さ設定 */
         header {
             height: var(--header-height-sm);
@@ -58,8 +62,11 @@
         /* Kiwi Maru をヘッダーのh1に適用 */
         header h1 {
             font-family: "Kiwi Maru", serif;
-            font-size: 1.5rem;
             font-weight: bold;
+        }
+
+        footer p {
+            font-size: .75rem;
         }
 
         @media (min-width: 576px) {
@@ -67,12 +74,9 @@
                 height: var(--header-height-md);
             }
 
-            header h1 {
-                font-size: 1.65rem;
-            }
-
             main {
                 border-radius: .75rem;
+                box-shadow: var(--bs-box-shadow-sm);
             }
 
             .message-wrapper {
@@ -83,7 +87,7 @@
 </head>
 
 <body>
-    <div class="wrapper">
+    <div class="wrapper bg-light">
         <!-- Header -->
         <header class="bg-primary text-white py-3">
             <div class="container d-flex justify-content-between align-items-center">
@@ -118,6 +122,11 @@
                 メーリスを送信しました。
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                メールアドレスが不正です。
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                </button>
+            </div>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 更新に失敗しました。
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
@@ -130,14 +139,49 @@
         <div class="main-wrapper container my-0 mb-sm-3 p-0">
             <main class="m-0">
                 <div class="m-3">
-                    <h2>メインコンテンツエリア</h2>
-                    <p>ここにメインのコンテンツを配置します。</p>
+                    <h2 class="text-primary font-weight-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-mail" style="vertical-align: middle;">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                        <span class="ms-2">
+                            メーリス受信箱
+                        </span>
+                    </h2>
+                    <section class="mb-3">
+                        <p>ここにメインのコンテンツを配置します。</p>
+                        <button class="btn btn-primary">Primary</button>
+                        <button class="btn btn-secondary">Secondary</button>
+                        <button class="btn btn-success">Success</button>
+                        <button class="btn btn-danger">Danger</button>
+                        <button class="btn btn-warning">Warning</button>
+                        <button class="btn btn-info">Info</button>
+                        <button class="btn btn-light">Light</button>
+                        <button class="btn btn-dark">Dark</button>
+                        <button class="btn btn-accent">Accent</button>
+                    </section>
+                    <section class="mb-3">
+                        <span class="badge text-bg-primary">Primary</span>
+                        <span class="badge text-bg-secondary">Secondary</span>
+                        <span class="badge text-bg-success">Success</span>
+                        <span class="badge text-bg-danger">Danger</span>
+                        <span class="badge text-bg-warning">Warning</span>
+                        <span class="badge text-bg-info">Info</span>
+                        <span class="badge text-bg-light">Light</span>
+                        <span class="badge text-bg-dark">Dark</span>
+                        <span class="badge text-bg-accent">Accent</span>
+                    </section>
+                    <form action="">
+                        <input type="text" class="form-control">
+                    </form>
                 </div>
             </main>
         </div>
 
         <!-- Footer -->
-        <footer class="bg-primary text-white py-3">
+        <footer class="bg-primary text-white py-2">
             <div class="container text-center">
                 <p class="mb-0">© 2019-2024 京大アンプラグド</p>
             </div>
