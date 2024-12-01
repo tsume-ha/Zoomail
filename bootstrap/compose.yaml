@@ -11,4 +11,4 @@ services:
       - ./bootstrap:/app/scss/bootstrap
       - ./build:/app/scss/build
       - scss_compiler_node_modules:/app/scss/node_modules
-    command: [ "sass", "custom.scss", "build/bootstrap-5-custom.css" ]
+    command: [ "sass", "custom.scss", "build/bootstrap-5-custom.css", ]

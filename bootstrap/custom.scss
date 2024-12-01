@@ -5,8 +5,16 @@
 
 
 // custom configuration here
-$primary: #1B5471;
+$primary: #386471;
+$success: #16A34A;
+$danger: #E11D48;
+$warning: #D97706;
+$info: #0284C7;
+$secondary: #6c757d;
 
+// カスタム背景色の設定
+$secondary-bg: #F3F4F6;
+$secondary-bg-subtle: #F3F4F6;
 
 // Required
 @import "./bootstrap/scss/variables";
