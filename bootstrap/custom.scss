@@ -6,16 +6,17 @@
 
 // custom configuration here
 $primary: #386471;
-$success: hsl(142, 100%, 36%);
-$danger: hsl(347, 100%, 50%);
-$warning: hsl(32, 100%, 44%);
-$info: hsl(200, 100%, 39%);
+$success: hsl(142, 90%, 36%);
+$danger: hsl(347, 90%, 50%);
+$warning: hsl(36, 90%, 44%);
+$info: hsl(206, 90%, 39%);
 $secondary: #6c757d;
 $light: #f3f4f6;
+$accent: #F97316;
 
 // Create your own map
 $theme-accent: (
-    "accent": #F97316
+    "accent": $accent
 );
 
 
@@ -61,6 +62,14 @@ $input-border-radius: 4px;
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $theme-accent);
 
+//tint = white, shade = black
+
+// ボタンの設定
+
+$btn-border-radius: 4px;
+$btn-border-radius-sm: 3px;
+$btn-border-radius-lg: 5px;
+
 // Layout & components
 @import "./bootstrap/scss/root";
 @import "./bootstrap/scss/reboot";
@@ -93,6 +102,34 @@ $theme-colors: map-merge($theme-colors, $theme-accent);
 @import "./bootstrap/scss/spinners";
 @import "./bootstrap/scss/offcanvas";
 @import "./bootstrap/scss/placeholders";
+
+.btn-primary {
+    @include button-variant(tint-color($primary, 12%), tint-color($primary, 10%));
+}
+
+.btn-secondary {
+    @include button-variant(tint-color($secondary, 80%), tint-color($secondary, 76%));
+}
+
+.btn-success {
+    @include button-variant(tint-color($success, 35%), tint-color($success, 30%));
+}
+
+.btn-danger {
+    @include button-variant(tint-color($danger, 30%), tint-color($danger, 27%));
+}
+
+.btn-warning {
+    @include button-variant(tint-color($warning, 27%), tint-color($warning, 25%));
+}
+
+.btn-info {
+    @include button-variant(tint-color($info, 32%), tint-color($info, 29%));
+}
+
+.btn-accent {
+    @include button-variant(shade-color($accent, 12%), shade-color($accent, 10%), $white);
+}
 
 // Helpers
 @import "./bootstrap/scss/helpers";
