@@ -5,14 +5,14 @@
 
 
 // custom configuration here
-$primary: #386471;
-$success: hsl(142, 90%, 36%);
-$danger: hsl(347, 90%, 50%);
-$warning: hsl(36, 90%, 44%);
-$info: hsl(206, 90%, 39%);
-$secondary: #6c757d;
+$primary: hsl(194, 41%, 33%);
+$success: hsl(142, 69%, 62%);
+$danger: #ef4444;
+$warning: #eab308;
+$info: #0ea5e9;
+$secondary: #e5e5e5;
 $light: #f3f4f6;
-$accent: #F97316;
+$accent: #ea580c;
 
 // Create your own map
 $theme-accent: (
@@ -65,10 +65,15 @@ $theme-colors: map-merge($theme-colors, $theme-accent);
 //tint = white, shade = black
 
 // ボタンの設定
-
 $btn-border-radius: 4px;
 $btn-border-radius-sm: 3px;
 $btn-border-radius-lg: 5px;
+
+// バッジの設定
+$badge-font-weight: 400;
+
+// フォームの設定
+$input-padding-y: .5rem;
 
 // Layout & components
 @import "./bootstrap/scss/root";
@@ -108,7 +113,7 @@ $btn-border-radius-lg: 5px;
 }
 
 .btn-secondary {
-    @include button-variant(tint-color($secondary, 80%), tint-color($secondary, 76%));
+    @include button-variant(tint-color($secondary, 30%), tint-color($secondary, 76%));
 }
 
 .btn-success {
@@ -131,8 +136,16 @@ $btn-border-radius-lg: 5px;
     @include button-variant(shade-color($accent, 12%), shade-color($accent, 10%), $white);
 }
 
+
 // Helpers
 @import "./bootstrap/scss/helpers";
+
+
+// バッジの設定
+.text-bg-accent {
+    color: $white !important;
+    background-color: shade-color($accent, 12%) !important;
+}
 
 // Utilities
 @import "./bootstrap/scss/utilities/api";
