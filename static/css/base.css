@@ -1,126 +1,69 @@
-* {
-    box-sizing: border-box;
-}
-
-html,
-button,
-input,
-select,
-textarea,
-.pure-g,
-[class *="pure-u"] {
-    /* Set your content font stack here: */
-    font-family: 'Kiwi Maru', serif, Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.pure-g {
-    letter-spacing: normal;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin: 0;
-}
-
-input#nav-open {
-    display: none;
+:root {
+    --header-height-sm: 48px;
+    --header-height-md: 60px;
 }
 
 body {
+    margin: 0;
+    font-family: "BIZ UDPGothic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.wrapper {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-header {
-    height: 3rem;
+.main-wrapper {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-wrapper {
+    background-color: var(--bs-white);
 }
 
 main {
+    min-height: 100%;
     flex: 1;
-    background-color: var(--bg-content);
-    color: var(--text-content);
-    position: relative;
+    background-color: var(--bs-white);
+    border-radius: 0;
 }
 
-main nav {
-    transition: visibility 0.5s, opacity 0.5s;
+main h2 {
+    font-weight: bold;
+    line-height: 32px;
 }
 
-input#nav-open:not(:checked)~main nav {
-    visibility: hidden;
-    display: hidden;
-    opacity: 0;
+/* ヘッダーの高さ設定 */
+header {
+    height: var(--header-height-sm);
+    display: flex;
+    align-items: center;
 }
 
-input#nav-open:checked~main nav {
-    visibility: visible;
-    display: block;
-    opacity: 1;
+/* Kiwi Maru をヘッダーのh1に適用 */
+header h1 {
+    font-family: "Kiwi Maru", serif;
+    font-weight: bold;
 }
 
-footer {
-    height: 1.5rem;
+footer p {
+    font-size: .75rem;
 }
 
-/* レスポンシブな横幅の定義 */
-.container {
-    position: relative;
-    width: 100%;
-    padding: 0 1rem;
-
-    @media screen and (min-width: 35.5em) {
-        padding: 0 10%;
+@media (min-width: 576px) {
+    header {
+        height: var(--header-height-md);
     }
 
-    @media screen and (min-width: 48em) {
-        padding: 0 12%;
+    main {
+        border-radius: .55rem;
+        box-shadow: var(--bs-box-shadow-sm);
     }
 
-    @media screen and (min-width: 64em) {
-        padding: 0 18%;
+    .message-wrapper {
+        background-color: transparent;
     }
-
-    @media screen and (min-width: 80em) {
-        padding: 0 20%;
-    }
-}
-
-/* リンクのスタイル定義 */
-a,
-a:active,
-a:focus {
-    background-color: transparent;
-    text-decoration: none;
-    color: inherit;
-    outline: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
-}
-
-/* color定義 */
-:root {
-    --bg-primary: rgba(56, 100, 113, 1);
-    --bg-primary-transparent: rgba(56, 100, 113, 0.8);
-    --bg-content: hsl(193, 31%, 80%);
-    --bg-white: #F2F2F8;
-    --bg-dark: #D8DFDF;
-    --text-content: hsl(193, 31%, 7%);
-    --text-dark: #525252;
-    --text-light: #F2F2F8;
-}
-
-/* アイコンのスタイル定義 */
-.icon {
-    display: inline-block;
-    vertical-align: middle;
-    aspect-ratio: 1;
 }

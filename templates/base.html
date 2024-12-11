@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="京大アンプラグドの部内連絡アプリ「Zoomail」">
+    <meta name="author" content="京大アンプラグド">
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap-5-custom.css' %}" rel="stylesheet">
+    <!-- Google Fonts の追加 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=Kiwi+Maru&display=swap" rel="stylesheet">
+    <title>{% block title %}Zoomail{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "BIZ UDPGothic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-wrapper {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message-wrapper {
+            background-color: var(--bs-white);
+        }
+
+        main {
+            min-height: 100%;
+            flex: 1;
+            background-color: var(--bs-white);
+            border-radius: 0;
+        }
+
+        header {
+            height: 48px;
+            display: flex;
+            align-items: center;
+        }
+
+        input#nav-toggle {
+            display: none !important;
+        }
+
+        @media (min-width: 576px) {
+            header {
+                height: 60px;
+            }
+
+            main {
+                border-radius: .55rem;
+                box-shadow: var(--bs-box-shadow-sm);
+            }
+
+            .message-wrapper {
+                background-color: transparent;
+            }
+        }
+    </style>
+    {% block extrastyle %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="wrapper bg-light">
+        <input type="checkbox" id="nav-toggle">
+        {% block header %}
+        <header class="bg-primary text-white pt-2 pb-2">
+            {% include "componsnts/header/header.html" %}
+        </header>
+        {% endblock %}
+
+        <!-- Main Content -->
+        <div class="main-wrapper container my-0 mb-sm-3 p-0">
+            <main class="m-0">
+                {% block main %}
+
+                {% endblock %}
+            </main>
+        </div>
+
+        <footer class="bg-primary text-white py-2">
+            {% block footer %}
+            {% include "componsnts/footer.html" %}
+            {% endblock %}
+        </footer>
+
+        {% block nav %}
+        <!-- {% include "componsnts/nav.html" %} -->
+        {% endblock %}
+
+    </div>
+</body>
+<script src="{% static 'js/toggleLoginMenu.js' %}"></script>
+<script src="{% static 'js/toggleNav.js' %}"></script>
+
+</html>
