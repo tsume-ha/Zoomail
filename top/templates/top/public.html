@@ -1,61 +1,50 @@
-{% extends "top/base.html" %}
+{% extends "base.html" %}
 {% load static %}
-{% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/public.css' %}">
-{% endblock %}
 
 {% block main %}
-<hr>
-<article>
-    <div class="logo-wraper">
-        <img id="logo" class="pure-img" src="{% static 'img/zoomail.png' %}" />
+<div class="container text-white">
+    <div class=" logo-wrapper">
+        <img id="logo" class="w-100" src="{% static 'img/zoomail.png' %}" alt="zoomail" />
     </div>
-
-    <p>
+    <p class="text-center my-4">
         <span>京都大学を中心に活動する</span><span>アコースティック軽音サークル</span><br />
         <span>「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a>」</span><span>の部内連絡管理アプリ</span>
     </p>
+    <div class="my-5 text-center">
+        <button id="login-button" class="btn btn-outline-light text-uppercase px-4 py-2">log in</button>
+    </div>
 
-    <button id="login-button" class="btn-flat" onclick="toggleNav()">LOG IN</button>
-</article>
+</div>
 <style>
-    main hr {
-        margin: 0 0 0.5rem;
+    body div.wrapper {
+
+        background-image: linear-gradient(rgba(56, 100, 113, 0.8),
+                rgba(56, 100, 113, 0.8)),
+            url("/static/img/LP-BG.jpeg") !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
     }
 
-    article {
-        text-align: center;
+    main p {
+        text-shadow: 0 0 0.25rem var(--bs-gray);
 
-        p {
-            text-shadow: 0 0 0.25rem var(--text-dark);
-
-            >* {
-                display: inline-block;
-            }
-        }
-
-        .logo-wraper {
-            display: block;
-            max-width: 400px;
-            margin: 1rem auto;
-        }
-
-        #login-button {
-            margin: 2.5rem;
-        }
-
-        button.btn-flat {
+        >* {
             display: inline-block;
-            border: 2px solid var(--text-light);
-            color: currentColor;
-            background: inherit;
-            padding: 0.5rem;
-            margin: 0.5rem;
         }
+    }
 
-        button.btn-flat:hover {
-            text-decoration: underline;
-        }
+    header,
+    main,
+    footer,
+    .message-wrapper,
+    .main-wrapper {
+        background-color: transparent !important;
+    }
+
+    .logo-wrapper {
+        display: block;
+        max-width: 400px;
+        margin: 1rem auto;
     }
 </style>
 <script>
@@ -66,8 +55,8 @@
     });
 </script>
 {% endblock %}
-
 {% block nav %}
+<!-- 
 <nav>
     <h2>LOG IN</h2>
     <div class="login-wraper">
@@ -170,5 +159,5 @@
         margin: 0;
         padding: 0;
     }
-</style>
+</style> -->
 {% endblock %}
