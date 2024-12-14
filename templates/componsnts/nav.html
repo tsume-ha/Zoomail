@@ -1,42 +1,46 @@
 <nav>
     <ul>
         <li>
-            <a href="{ name: 'mail:index' }"> メーリス </a>
+            <a href=""> メーリス </a>
         </li>
         <li>
-            <a href="{ name: 'mail:send' }"> メーリス送信 </a>
+            <a href=""> メーリス送信 </a>
         </li>
         <li>
-            <a href="{ name: 'sound:index' }"> リハ音源 </a>
+            <a href=""> リハ音源 </a>
         </li>
         <li>
-            <a href="{ name: 'movie:index' }"> ライブ映像 </a>
+            <a href=""> ライブ映像 </a>
         </li>
         <li>
-            <a href="{ name: 'photo:index' }"> 写真 </a>
+            <a href=""> 写真 </a>
         </li>
         <li>
-            <a href="{ name: 'kansou:index' }"> 感想用紙 </a>
+            <a href=""> 感想用紙 </a>
         </li>
         <li>
-            <a href="{ name: 'meeting_room:index' }">
-                例会教室
-            </a>
+            <a href=""> 例会教室 </a>
         </li>
         <li>
-            <a href="{ name: 'others:index' }"> その他資料 </a>
+            <a href=""> その他資料 </a>
         </li>
         <hr />
         <li>
-            <a href="{ name: 'mypage:index' }"> My Page </a>
+            <a href=""> My Page </a>
         </li>
         <li>
-            <a href="/howto/">使い方</a>
+            <a href="">使い方</a>
         </li>
         <hr />
         <li>
             <a href="https://awase-no-awase.web.app" target="_blank">あわせのあわせ
-                <Icon :icon="['fas', 'external-link-alt']" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-square-arrow-out-up-right">
+                    <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6" />
+                    <path d="m21 3-9 9" />
+                    <path d="M15 3h6v6" />
+                </svg>
             </a>
         </li>
     </ul>
@@ -49,10 +53,13 @@
         left: 0;
         width: 100%;
         height: 100%;
+        margin-top: var(--header-height);
         overflow-y: auto;
         text-align: center;
         background-color: var(--bg-primary);
         color: var(--text-light);
+        transition: visibility 0.5s, opacity 0.5s;
+        z-index: 10;
 
         ul {
             padding: 1.25rem 0 3rem;
@@ -83,5 +90,17 @@
                 border-color: var(--text-light);
             }
         }
+    }
+
+    input#nav-toggle:not(:checked)~nav {
+        visibility: hidden;
+        display: hidden;
+        opacity: 0;
+    }
+
+    input#nav-toggle:checked~nav {
+        visibility: visible;
+        display: block;
+        opacity: 1;
     }
 </style>
