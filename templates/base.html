@@ -15,9 +15,16 @@
     <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=Kiwi+Maru&display=swap" rel="stylesheet">
     <title>{% block title %}Zoomail{% endblock %}</title>
     <style>
+        :root {
+            --header-height-sm: 48px;
+            --header-height-md: 60px;
+        }
+
         body {
             margin: 0;
-            font-family: "BIZ UDPGothic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: 'Kiwi Maru', serif, Avenir, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .wrapper {
@@ -31,6 +38,7 @@
             display: flex;
             flex-direction: column;
             background-color: var(--bs-bg-light);
+            z-index: 1;
         }
 
         .message-wrapper {
@@ -42,10 +50,11 @@
             flex: 1;
             background-color: var(--bs-white);
             border-radius: 0;
+            font-family: "BIZ UDPGothic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
         header {
-            height: 48px;
+            height: var(--header-height-sm);
             display: flex;
             align-items: center;
         }
@@ -54,9 +63,33 @@
             display: none !important;
         }
 
+        nav {
+            position: absolute;
+            top: var(--header-height-sm);
+            left: 0;
+            width: 100%;
+            height: calc(100% - var(--header-height-sm));
+            overflow-y: auto;
+            z-index: 10;
+            transition: visibility 0.5s, opacity 0.5s;
+        }
+
+
+        input#nav-toggle:not(:checked)~nav {
+            visibility: hidden;
+            display: hidden;
+            opacity: 0;
+        }
+
+        input#nav-toggle:checked~nav {
+            visibility: visible;
+            display: block;
+            opacity: 1;
+        }
+
         @media (min-width: 576px) {
             header {
-                height: 60px;
+                height: var(--header-height-md);
             }
 
             main {
@@ -66,6 +99,12 @@
             .message-wrapper {
                 background-color: transparent;
             }
+
+            nav {
+                top: var(--header-height-md);
+                height: calc(100% - var(--header-height-md));
+            }
+
         }
     </style>
     {% block extrastyle %}
@@ -104,9 +143,11 @@
             {% endblock %}
         </footer>
 
-        {% block nav %}
-        {% include "componsnts/nav.html" %}
-        {% endblock %}
+        <nav class="bg-primary text-white">
+            {% block nav %}
+            {% include "componsnts/nav.html" %}
+            {% endblock %}
+        </nav>
 
     </div>
 </body>

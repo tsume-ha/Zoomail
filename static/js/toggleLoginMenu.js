@@ -1,4 +1,4 @@
-var menuCheckbox = document.getElementById('nav-open');
+var menuCheckbox = document.getElementById('nav-toggle');
 menuCheckbox.addEventListener('change', function () {
     if (menuCheckbox.checked) {
         // add ?login=true to the URL

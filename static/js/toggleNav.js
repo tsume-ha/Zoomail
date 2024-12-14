@@ -1,5 +1,5 @@
 function toggleNav() {
-    var checkbox = document.getElementById('nav-open');
+    var checkbox = document.getElementById('nav-toggle');
     // chekcbox の値をtoggleする
     checkbox.checked = !checkbox.checked;
     // 手動でイベントを発火する

@@ -11,7 +11,9 @@
         <span>「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a>」</span><span>の部内連絡管理アプリ</span>
     </p>
     <div class="my-5 text-center">
-        <button id="login-button" class="btn btn-outline-light text-uppercase px-4 py-2">log in</button>
+        <button id="login-button" class="btn btn-outline-light text-uppercase px-4 py-2">
+            log in
+        </button>
     </div>
 
 </div>
@@ -50,17 +52,21 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         if (window.location.search.includes("login")) {
-            document.getElementById("nav-open").checked = true;
+            document.getElementById("nav-toggle").checked = true;
+        }
+    });
+    document.addEventListener("click", (e) => {
+        if (e.target.id === "login-button") {
+            document.getElementById("nav-toggle").checked = true;
         }
     });
 </script>
 {% endblock %}
 
 {% block nav %}
-<!-- 
-<nav>
-    <h2>LOG IN</h2>
-    <div class="login-wraper">
+<div class="container mx-auto text-center border-top border-white pt-5">
+    <h2 class="text-uppercase my-5">Log in</h2>
+    <div class="d-flex justify-content-center align-items-center flex-wrap mb-4">
         <a href="{% url 'social:begin' 'livelog' %}" class="livelogin">
             <span>Log in with</span><img src="{% static 'img/livelog.png' %}" width="80" height="59" alt="LiveLog" />
         </a>
@@ -69,39 +75,13 @@
         </a>
     </div>
 
-    <p>
+    <p class="fs-sm">
         Googleアカウントでログインするには事前の登録が必要です。<br />
         詳しくはHP係までご連絡ください。
     </p>
 
-</nav>
+</div>
 <style>
-    nav {
-        position: absolute;
-        top: 1px;
-        /* main要素の1pxのhrと重ならないようにする */
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow-y: auto;
-        text-align: center;
-        background-color: var(--bg-primary);
-        color: var(--text-light);
-
-        h2 {
-            margin: 1rem;
-            font-size: 1.25rem;
-        }
-
-        .login-wraper {
-            display: flex;
-            flex-flow: row wrap;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-    }
-
     a#G-login {
         display: inline-block;
         color: transparent;
@@ -116,12 +96,13 @@
         flex-shrink: 0;
         font-size: 0;
         border: transparent 2px solid;
+        border-radius: 2px;
     }
 
     a#G-login:hover {
         text-decoration: none;
         background-image: url("{% static 'img/btn_google_signin_light_focus_web@2x.png' %}");
-        border: var(--text-light) 2px solid;
+        border: var(--bs-white) 2px solid;
     }
 
     a.livelogin {
@@ -136,7 +117,7 @@
         color: #666 !important;
         margin: 0 0.5rem;
         padding: 0 6px;
-        border: transparent 2px solid;
+        border: transparent 4px solid;
         text-decoration: none;
         flex-shrink: 0;
         background-color: #fcf8e3;
@@ -145,7 +126,7 @@
 
     a.livelogin:hover {
         text-decoration: underline;
-        border: var(--text-light) 2px solid;
+        border: var(--bs-white) 4px solid;
     }
 
     a.livelogin span {
@@ -160,5 +141,5 @@
         margin: 0;
         padding: 0;
     }
-</style> -->
+</style>
 {% endblock %}
