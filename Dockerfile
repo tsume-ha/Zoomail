@@ -16,7 +16,7 @@ RUN apt-get update --fix-missing && apt upgrade -y
 
 # pythonパッケージのインストール
 RUN pip install --upgrade pip
-RUN pip install uWSGI==2.0.23
+RUN pip install uWSGI==2.0.28
 
 # ホストのカレントディレクトリ（現在はdjangoディレクトリ）を作業ディレクトリにコピー
 COPY requirements.txt /django/requirements.txt
