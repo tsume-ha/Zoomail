@@ -10,6 +10,24 @@
         <span>京都大学を中心に活動する</span><span>アコースティック軽音サークル</span><br />
         <span>「<a href="https://ku-unplugged.net" target="_blank">京大アンプラグド</a>」</span><span>の部内連絡管理アプリ</span>
     </p>
+    <div class="my-5 row justify-content-center">
+        <div class="col-12 col-lg-6 col-xl-4 mt-4">
+            <h3 class="border-bottom border-white pb-1 px-2 fw-bold">New Contents</h3>
+            <ul class="list-group list-group-flush">
+                {% for new_content in new_contents %}
+                <li class="list-group-item bg-transparent text-white py-2 border-0">{{new_content}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-4 mt-4">
+            <h3 class="border-bottom border-white pb-1 px-2 fw-bold">Announcements</h3>
+            <ul class="list-group list-group-flush">
+                {% for announcement in announcements %}
+                <li class="list-group-item bg-transparent text-white py-2 border-0">{{announcement}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
 </div>
 <style>
