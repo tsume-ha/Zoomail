@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "social_django",
     "top",
     "members",
+    "mail",
 ]
 
 # CustomUserModel
