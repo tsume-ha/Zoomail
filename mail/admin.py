@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from custom_admin.admin import custom_admin_site
-from .models import Message, MessageYear, Attachment, ToGroup
+from .models import Message, Attachment, ToGroup
 from .forms import ToGroupAdminForm
 
 # from utils.mail3 import MailisReSender
@@ -13,13 +13,6 @@ class AttachmentAdmin(admin.StackedInline):
     extra = 0
     fields = ("attachment_file",)
     readonly_fields = ("attachment_file",)
-
-
-class MessageYearAdmin(admin.StackedInline):
-    model = MessageYear
-    extra = 0
-    fields = ("year",)
-    readonly_fields = ("year",)
 
 
 class MessageSuperuserAdmin(admin.ModelAdmin):
@@ -44,7 +37,7 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
     )
     list_display_links = ("title", "years")
 
-    inlines = [MessageYearAdmin, AttachmentAdmin]
+    inlines = [AttachmentAdmin]
 
     def years(self, obj):
         return list(obj.years.all())

@@ -9,4 +9,11 @@
     </svg>
     メーリス受信箱
 </h2>
+
+
+{% for message in messages %}
+{{message.title}}
+{{message.body}}
+{% endfor %}
+
 {% endblock %}

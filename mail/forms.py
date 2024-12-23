@@ -1,10 +1,10 @@
 from typing import Any, Dict
 from django import forms
-from .models import Message, Attachment, ToGroup
+from django.forms import inlineformset_factory, modelformset_factory
 from members.models import User
+from .models import Message, Attachment, ToGroup
 
 
-## new API form
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
@@ -13,42 +13,70 @@ class MessageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    to = forms.MultipleChoiceField(required=True)
-
-
-class AttachmentForm(forms.Form):
-    """
-    ModelFormではなく通常のFormであることに注意
-    save()のみ独自実装
-    """
-
-    attachments = forms.FileField(
-        required=False,
-        allow_empty_file=False,
-        widget=forms.ClearableFileInput(attrs={"allow_multiple_selected": True}),
+    to = forms.MultipleChoiceField(
+        required=True, label="宛先グループ", widget=forms.SelectMultiple
     )
 
-    def clean_attachments(self):
-        files = self.files.getlist("attachments")
-        total_file_size = 0
-        for file in files:
-            if file.size < 3:
-                raise forms.ValidationError("ファイルサイズが0です")
-            if file.size > 10 * 1000 * 1000:
-                raise forms.ValidationError("ファイルサイズが上限(10MB)を超えています")
-            total_file_size += file.size
-        if total_file_size > 20 * 1024 * 1024:
-            raise forms.ValidationError(
-                "合計のファイルサイズが上限(20MB)を超えています"
-            )
-        return files
 
-    def save(self, message: Message):
-        files = self.cleaned_data["attachments"]
-        return [
-            Attachment.objects.create(message=message, attachment_file=file)
-            for file in files
-        ]
+class AttachmentForm(forms.ModelForm):
+    """
+    ModelFormを使用してAttachmentフォームを作成
+    """
+
+    class Meta:
+        model = Attachment
+        fields = ["attachment_file"]
+
+    def clean_attachment_file(self):
+        file = self.cleaned_data.get("attachment_file")
+        if file.size < 3:
+            raise forms.ValidationError("ファイルサイズが0です")
+        if file.size > 10 * 1024 * 1024:
+            raise forms.ValidationError("ファイルサイズが上限(10MB)を超えています")
+        return file
+
+
+class ToGroupForm(forms.ModelForm):
+    """
+    宛先グループのフォーム
+    """
+
+    class Meta:
+        model = ToGroup
+        fields = ["year", "leader", "label"]
+
+
+# フォームセットを作成
+AttachmentFormSet = inlineformset_factory(
+    Message,
+    Attachment,
+    form=AttachmentForm,
+    fields=["attachment_file"],
+    extra=1,
+    can_delete=True,
+)
+
+
+# 全体をまとめたフォーム
+class MailisForm(forms.Form):
+    message_form = MessageForm()
+    attachment_formset = AttachmentFormSet()
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.pop("instance", None)
+        super().__init__(*args, **kwargs)
+        if instance:
+            self.message_form = MessageForm(instance=instance)
+            self.attachment_formset = AttachmentFormSet(instance=instance)
+
+    def is_valid(self):
+        return self.message_form.is_valid() and self.attachment_formset.is_valid()
+
+    def save(self, commit=True):
+        message = self.message_form.save(commit=commit)
+        self.attachment_formset.instance = message
+        self.attachment_formset.save(commit=commit)
+        return message
 
 
 class ToGroupAdminForm(forms.ModelForm):

@@ -6,6 +6,47 @@ from private_storage.fields import PrivateFileField
 from django.utils import timezone
 
 
+class ToGroup(models.Model):
+    class Meta:
+        verbose_name = "宛先グループ"
+        verbose_name_plural = "宛先グループ"
+
+    year = models.PositiveSmallIntegerField(null=False, blank=False)
+    leader = models.ForeignKey(
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="to_kaichou",
+        verbose_name="会長",
+    )
+    label = models.CharField(
+        max_length=40,
+        null=True,
+        blank=True,
+        help_text="ここに表示名(ex「全回メーリス」)を指定すると、選択肢としてこの表示名が表示されます。指定がなければ「2018 24期」のように表示されます。",
+        verbose_name="表示名",
+    )
+
+    def __str__(self):
+        return self.text()
+
+    def text(self):
+        if self.year == 0:
+            return self.label
+        if 1995 < self.year < 2100:
+            if self.label:
+                return self.label
+            if self.leader:
+                return "{} {}期（会長：{}）".format(
+                    self.year, self.year - 1994, self.leader.get_short_name()
+                )
+            if not self.leader:
+                return "{} {}期".format(self.year, self.year - 1994)
+        else:
+            return str(self.year)
+
+
 class Message(models.Model):
     class Meta:
         verbose_name = "メーリス"
@@ -22,27 +63,12 @@ class Message(models.Model):
     writer = models.ForeignKey(
         User, null=True, on_delete=models.SET_NULL, related_name="write_message"
     )
+    to_groups = models.ManyToManyField(ToGroup, related_name="messages")
     updated_at = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return "mes_ID=" + str(self.id) + ", title=" + self.title
-
-
-class MessageYear(models.Model):
-    ALL = 0
-
-    year = models.IntegerField()
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="years")
-
-    def display(self) -> str:
-        if self.year == self.ALL:
-            return "全回"
-
-        return str(self.year)
-
-    def __str__(self):
-        return self.display()
 
 
 def custom_upload_to(instance, filename):
@@ -80,42 +106,30 @@ class Attachment(models.Model):
         ]
 
 
-class ToGroup(models.Model):
-    class Meta:
-        verbose_name = "宛先グループ"
-        verbose_name_plural = "宛先グループ"
+class MailLog(models.Model):
 
-    year = models.PositiveSmallIntegerField(null=False, blank=False)
-    leader = models.ForeignKey(
-        User,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="to_kaichou",
-        verbose_name="会長",
+    class SendServerChoices(models.IntegerChoices):
+        SENDGRID = 1
+        SES = 2
+
+    class StatusChoices(models.TextChoices):
+        PENDING = "pending"
+        SUCCESS = "success"
+        FAILED = "failed"
+
+    message = models.ForeignKey(
+        Message, null=True, on_delete=models.CASCADE, related_name="logs"
     )
-    label = models.CharField(
-        max_length=40,
-        null=True,
-        blank=True,
-        help_text="ここに表示名(ex「全回メーリス」)を指定すると、選択肢としてこの表示名が表示されます。指定がなければ「2018 24期」のように表示されます。",
-        verbose_name="表示名",
+    mail_id = models.CharField(max_length=100, editable=False, null=True, blank=True)
+    email = models.EmailField(
+        null=False, blank=False, verbose_name="送信時メールアドレス"
     )
-
-    def __str__(self):
-        return self.text()
-
-    def text(self):
-        if self.year == 0:
-            return self.label
-        if 1995 < self.year < 2100:
-            if self.label:
-                return self.label
-            if self.leader:
-                return "{} {}期（会長：{}）".format(
-                    self.year, self.year - 1994, self.leader.get_full_name()
-                )
-            if not self.leader:
-                return "{} {}期".format(self.year, self.year - 1994)
-        else:
-            return str(self.year)
+    user = models.ForeignKey(
+        User, null=True, on_delete=models.CASCADE, related_name="mail_logs"
+    )
+    send_server = models.PositiveSmallIntegerField(
+        null=True, blank=True, choices=SendServerChoices.choices
+    )
+    status = models.CharField(max_length=20, null=True, blank=True)
+    error = models.CharField(max_length=1000, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
