@@ -9,11 +9,47 @@
     </svg>
     メーリス受信箱
 </h2>
-
-
+<div class="px-2">
+    
 {% for message in messages %}
-{{message.title}}
-{{message.body}}
+<div class="row message-row">
+  <div class="my-3">
+    <div class="row">
+      <div class="col-10">
+        <a href="/mail/{{message.id}}" class="mb-0 fs-3">新機能のお知らせ</a>
+      </div>
+      <div class="col-2 text-end">
+        <button class="btn btn-outline-secondary btn-small">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+        </button>
+      </div>
+    </div>
+  
+    <div class="row mt-2">
+      <div class="col-12">
+        <p class="mb-0">
+          新しいメッセージ管理ツールの機能についてお知らせします。
+        </p>
+      </div>
+    </div>
+  
+    <div class="row mt-2">
+      <div class="col-12 text-muted small">
+        システム管理者　2024/01/01 12:30
+      </div>
+    </div>
+  </div>
+</div>
 {% endfor %}
+</div>
 
+
+{% endblock %}
+
+{% block extrastyle %}
+<style>
+.message-row:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+</style>
 {% endblock %}
