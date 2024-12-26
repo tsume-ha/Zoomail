@@ -18,10 +18,15 @@
       <div class="col-10">
         <a href="/mail/{{message.id}}" class="mb-0 fs-3">新機能のお知らせ</a>
       </div>
-      <div class="col-2 text-end">
-        <button class="btn btn-outline-secondary btn-small">
+      <div class="col-2 text-end dropstart">
+        <button class="btn btn-small dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
         </button>
+        <ul class="dropdown-menu py-0">
+          <li><a class="dropdown-item py-3 px-4" href="#">送信ログ</a></li>
+          <li><a class="dropdown-item py-3 px-4" href="#">自分に再送信</a></li>
+          <li><a class="dropdown-item py-3 px-4" href="#">このメールを引用</a></li>
+        </ul>
       </div>
     </div>
   

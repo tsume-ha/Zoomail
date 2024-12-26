@@ -6913,6 +6913,10 @@ textarea.form-control-lg {
   --bs-btn-disabled-border-color: rgb(210.6, 79.2, 10.8);
 }
 
+.dropstart .dropdown-toggle::before {
+  display: none;
+}
+
 .clearfix::after {
   display: block;
   clear: both;

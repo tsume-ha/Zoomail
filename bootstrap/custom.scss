@@ -137,6 +137,11 @@ $input-padding-y: .5rem;
 }
 
 
+.dropstart .dropdown-toggle::before {
+    display: none;
+}
+
+
 // Helpers
 @import "./bootstrap/scss/helpers";
 
