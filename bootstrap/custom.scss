@@ -75,6 +75,29 @@ $badge-font-weight: 400;
 // フォームの設定
 $input-padding-y: .5rem;
 
+// ページネーションの設定
+$pagination-padding-y: .4rem;
+$pagination-padding-x: .8rem;
+
+$pagination-font-size: 0.9rem;
+
+$pagination-color: $gray-900;
+$pagination-bg: transparent;
+$pagination-border-radius: 50%;
+$pagination-border-width: var(--#{$prefix}border-width);
+$pagination-border-color: transparent;
+
+$pagination-active-color: $primary;
+$pagination-active-bg: transparent;
+$pagination-active-border-color: $primary;
+
+$pagination-disabled-color: $gray-300;
+$pagination-disabled-bg: transparent;
+$pagination-disabled-border-color: transparent;
+
+$pagination-border-radius-sm: 50%;
+$pagination-border-radius-lg: 50%;
+
 // Layout & components
 @import "./bootstrap/scss/root";
 @import "./bootstrap/scss/reboot";
