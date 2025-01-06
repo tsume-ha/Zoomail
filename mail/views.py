@@ -29,3 +29,10 @@ def inbox(request):
         "is_paginated": is_paginated or True,  # ページが複数あるかどうか
     }
     return render(request, "mail/inbox.html", context)
+
+
+@login_required
+def mail_detail(request, message_id):
+    message = Message.objects.get(id=message_id)
+    context = {"message": message}
+    return render(request, "mail/mail_detail.html", context)

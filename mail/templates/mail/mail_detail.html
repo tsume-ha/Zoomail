@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2 class="fw-bold text-primary">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
+        <path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z"/>
+        <path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/>
+    </svg>
+    {{ message.title }}
+</h2>
+
+
+<div class="row mt-3">
+    <div class="col-12 text-muted small">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="inline-block pe-3">{{message.sender.get_short_name}}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+      <span class="">{{ message.updated_at | date:"Y/m/d H:i" }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <p class="mb-0">
+      {{ message.content | linebreaks | urlize }}
+    </p>
+  </div>
+</div>
+
+
+{% endblock %}
