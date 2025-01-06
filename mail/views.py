@@ -70,10 +70,11 @@ def send(request):
             attachments = attachment_form.save(commit=False)
             for attachment in attachments:
                 attachment.message = message
+                attachment.org_filename = attachment.file.name
                 attachment.save()
 
             messages.success(request, "メッセージが正常に作成されました。")
-            return redirect("message_success")  # 適切なリダイレクト先に変更してください
+            return redirect("mail:inbox")
         else:
             messages.error(request, "入力にエラーがあります。")
             context = {

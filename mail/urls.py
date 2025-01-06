@@ -6,3 +6,5 @@ urlpatterns = [
     path("<int:message_id>/", mail_detail, name="mail_detail"),
     path("send/", send, name="send"),
 ]
+
+app_name = "mail"

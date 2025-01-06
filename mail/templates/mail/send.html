@@ -81,11 +81,11 @@
                 {% endif %}
                 
                 <div class="form-group">
-                    {{ form.attachment_file.label_tag }}
-                    {{ form.attachment_file }}
-                    {% if form.attachment_file.errors %}
+                    {{ form.file.label_tag }}
+                    {{ form.file }}
+                    {% if form.file.errors %}
                         <div class="text-danger">
-                            {{ form.attachment_file.errors }}
+                            {{ form.file.errors }}
                         </div>
                     {% endif %}
                 </div>

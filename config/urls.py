@@ -23,6 +23,6 @@ urlpatterns = [
     path("db/", admin.site.urls),
     path("admin/", custom_admin_site.urls),
     path("auth/", include("social_django.urls", namespace="social")),
-    path("", include("top.urls")),
-    path("mail/", include("mail.urls")),
+    path("", include("top.urls", namespace="top")),
+    path("mail/", include("mail.urls", namespace="mail")),
 ]

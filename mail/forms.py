@@ -38,22 +38,20 @@ class AttachmentForm(forms.ModelForm):
 
     class Meta:
         model = Attachment
-        fields = ["attachment_file"]  # org_filenameはviewで設定する。
+        fields = ["file"]  # org_filenameはviewで設定する。
         widgets = {
-            "attachment_file": forms.ClearableFileInput(
-                attrs={"class": "form-control-file"}
-            ),
+            "file": forms.ClearableFileInput(attrs={"class": "form-control-file"}),
         }
         labels = {
-            "attachment_file": "添付ファイル",
+            "file": "添付ファイル",
         }
 
-    def clean_attachment_file(self):
+    def clean_file(self):
         """
-        attachment_fileフィールドのバリデーション
+        fileフィールドのバリデーション
         ファイルサイズが3バイト以上、10MB以下であることを確認します。
         """
-        file = self.cleaned_data.get("attachment_file")
+        file = self.cleaned_data.get("file")
         if file:
             if file.size < 3:
                 raise forms.ValidationError("ファイルサイズが0です")
@@ -91,7 +89,7 @@ class FileInlineFormSet(BaseInlineFormSet):
 AttachmentFormset = inlineformset_factory(
     parent_model=Message,
     model=Attachment,
-    fields=("attachment_file",),  # 他のフィールドがあれば追加してください
+    fields=("file",),  # 他のフィールドがあれば追加してください
     extra=1,
     can_delete=False,
     formset=FileInlineFormSet,  # カスタム Formset を指定

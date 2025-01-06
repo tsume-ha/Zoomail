@@ -5,3 +5,5 @@ urlpatterns = [
     path("", top_page_view, name="top_page"),
     path("", top_page_view, name="first_register"),
 ]
+
+app_name = "top"

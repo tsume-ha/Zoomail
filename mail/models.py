@@ -82,7 +82,7 @@ class Attachment(models.Model):
     message = models.ForeignKey(
         Message, null=True, on_delete=models.CASCADE, related_name="attachments"
     )
-    attachment_file = PrivateFileField(
+    file = PrivateFileField(
         upload_to=custom_upload_to,
         max_file_size=10 * 1000 * 1000,  # < 10*1024*1024, 余裕を持たせる
         null=True,
@@ -91,10 +91,10 @@ class Attachment(models.Model):
     org_filename = models.CharField(max_length=200, null=False, blank=False)
 
     def __str__(self):
-        return self.message.title
+        return self.org_filename
 
     def extension(self):
-        _, extension = os.path.splitext(self.attachment_file.name)
+        _, extension = os.path.splitext(self.file.name)
         return extension
 
     def is_image(self):

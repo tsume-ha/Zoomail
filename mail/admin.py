@@ -12,8 +12,8 @@ from django.contrib import messages
 class AttachmentAdmin(admin.StackedInline):
     model = Attachment
     extra = 0
-    fields = ("attachment_file",)
-    readonly_fields = ("attachment_file",)
+    fields = ("file",)
+    readonly_fields = ("file",)
 
 
 class MessageSuperuserAdmin(admin.ModelAdmin):
