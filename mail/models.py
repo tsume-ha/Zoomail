@@ -1,5 +1,6 @@
 import os
 import datetime
+import uuid
 from django.db import models
 from members.models import User
 from private_storage.fields import PrivateFileField
@@ -72,12 +73,9 @@ class Message(models.Model):
 
 
 def custom_upload_to(instance, filename):
-    now = datetime.datetime.now()
-    path = (
-        "attachments/" + now.strftime("%Y/%m/%d/") + now.strftime("%Y_%m_%d__%H_%M_%S")
-    )
     extension = os.path.splitext(filename)[-1]
-    return path + extension
+    unique_filename = f"attachments/{uuid.uuid4()}{extension}"
+    return unique_filename
 
 
 class Attachment(models.Model):

@@ -2,7 +2,8 @@ from django.contrib import admin
 
 from custom_admin.admin import custom_admin_site
 from .models import Message, Attachment, ToGroup
-from .forms import ToGroupAdminForm
+
+# from .forms import ToGroupAdminForm
 
 # from utils.mail3 import MailisReSender
 from django.contrib import messages
@@ -68,14 +69,14 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
     actions = [resend_mail]
 
 
-class ToGroupAdmin(admin.ModelAdmin):
-    model = ToGroup
-    form = ToGroupAdminForm
-    ordering = ["-year"]
-    fields = ("year", "label", "leader")
-    list_display = ("year", "label", "leader")
+# class ToGroupAdmin(admin.ModelAdmin):
+#     model = ToGroup
+#     form = ToGroupAdminForm
+#     ordering = ["-year"]
+#     fields = ("year", "label", "leader")
+#     list_display = ("year", "label", "leader")
 
 
 admin.site.register(Message, MessageSuperuserAdmin)
-admin.site.register(ToGroup, ToGroupAdmin)
-custom_admin_site.register(ToGroup, ToGroupAdmin)
+# admin.site.register(ToGroup, ToGroupAdmin)
+# custom_admin_site.register(ToGroup, ToGroupAdmin)

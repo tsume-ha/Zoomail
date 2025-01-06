@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "social_django",
+    "private_storage",
     "top",
     "members",
     "mail",
@@ -225,3 +226,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Private Storage
+PRIVATE_STORAGE_ROOT = BASE_DIR / "private_media"
+PRIVATE_STORAGE_AUTH_FUNCTION = "private_storage.permissions.allow_authenticated"
