@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import inbox, mail_detail, send
+from .views import inbox, detail, send
 
 urlpatterns = [
     path("", inbox, name="inbox"),
-    path("<int:message_id>/", mail_detail, name="mail_detail"),
+    path("<int:id>/", detail, name="detail"),
     path("send/", send, name="send"),
 ]
 

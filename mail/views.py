@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
@@ -41,10 +41,10 @@ def inbox(request):
 
 @require_http_methods(["GET"])
 @login_required
-def mail_detail(request, message_id):
-    message = Message.objects.get(id=message_id)
+def detail(request, id):
+    message = get_object_or_404(Message, id=id)
     context = {"message": message}
-    return render(request, "mail/mail_detail.html", context)
+    return render(request, "mail/detail.html", context)
 
 
 @require_http_methods(["GET", "POST"])
