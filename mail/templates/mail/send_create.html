@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h2 class="fw-bold text-primary">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+    メーリス送信
+</h2>
+
+<div class="d-flex justify-content-center align-items-center gap-2 my-4">
+    <!-- Step 1 -->
+    <div class="d-flex align-items-center">
+        <div class="step bg-primary text-white rounded-pill px-3 py-2 fw-bold">① 入力</div>
+        <span class="text-secondary fw-bold ms-2">≫</span>
+    </div>
+    <!-- Step 2 -->
+    <div class="d-flex align-items-center">
+        <div class="step bg-light text-secondary rounded-pill px-3 py-2 fw-bold">② 確認</div>
+        <span class="text-secondary fw-bold ms-2">≫</span>
+    </div>
+    <!-- Step 3 -->
+    <div class="d-flex align-items-center">
+        <div class="step bg-light text-secondary rounded-pill px-3 py-2 fw-bold">③ 送信完了</div>
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- Wizard管理用のhidden (ダミーフォームなので必須) -->
+    {{ wizard.management_form }}
+  
+    <!-- MessageForm -->
+    {{ message_form.non_field_errors }}
+    <p>
+      {{ message_form.writer.label }}<br>
+      {{ message_form.writer }}
+      {{ message_form.writer.errors }}
+    </p>
+    <p>
+      {{ message_form.to_groups.label }}<br>
+      {{ message_form.to_groups }}
+      {{ message_form.to_groups.errors }}
+    </p>
+    <p>
+      {{ message_form.title.label }}<br>
+      {{ message_form.title }}
+      {{ message_form.title.errors }}
+    </p>
+    <p>
+      {{ message_form.content.label }}<br>
+      {{ message_form.content }}
+      {{ message_form.content.errors }}
+    </p>
+  
+  
+    <!-- AttachmentFormset -->
+    {{ attachment_formset.management_form }}
+    {% for form in attachment_formset %}
+      <div>
+        {{ form.file.label }}  
+        {{ form.file }}  
+        {% if form.file.errors %}
+          <div class="error">{{ form.file.errors }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  
+    <button type="submit">確認画面へ</button>
+
+{% endblock %}
