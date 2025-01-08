@@ -103,16 +103,20 @@ class SendWizardView(SessionWizardView):
 
         # --- (2) AttachmentFormset.save() ---
         # Attachment モデルを保存
+        for attachment_form in composite_form.attachment_formset:
+            attachment = attachment_form.save(commit=False)
+            attachment.org_filename = attachment.file.name
+            attachment.save()
 
-        for attach_data in composite_form.attachment_formset.cleaned_data:
-            file_obj = attach_data.get("file", None)
-            if file_obj:
-                attachment = Attachment(
-                    message=message_obj,
-                    file=file_obj,
-                    org_filename=file_obj.name,
-                )
-                attachment.save()
+        # for attach_data in composite_form.attachment_formset.cleaned_data:
+        #     file_obj = attach_data.get("file", None)
+        #     if file_obj:
+        #         attachment = Attachment(
+        #             message=message_obj,
+        #             file=file_obj,
+        #             org_filename=file_obj.name,
+        #         )
+        #         attachment.save()
 
         # すべて保存完了したら、適当なページへリダイレクト
         return redirect("mail:inbox")
