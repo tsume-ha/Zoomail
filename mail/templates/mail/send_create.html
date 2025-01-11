@@ -82,8 +82,19 @@
   <label for="" class="form-label">添付ファイル</label>
   <div id="file-input-container">
     {% for form in attachment_formset %}
-    <div class="mb-2">
-      {{ form.file }}
+    <div class="mb-2 file-input-wrapper" data-index="{{ forloop.counter0 }}">
+      <div class="d-flex align-items-center gap-2">
+        {{ form.file }}
+        <button type="button" class="btn btn-outline-danger px-3 remove-file-button"
+          data-index="{{ forloop.counter0 }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-x">
+            <path d="M18 6 6 18"></path>
+            <path d="M6 6 18 18"></path>
+          </svg>
+        </button>
+      </div>
       {% if form.file.errors %}
       <div class="invalid-feedback">
         {{ form.file.errors|join:", " }}
@@ -111,5 +122,5 @@
   </div>
 
 </form>
-<script src="{% static 'js/mail/mail_add_file_input.js' %}"></script>
+<script src="{% static 'js/mail/mail_file_input.js' %}"></script>
 {% endblock %}
