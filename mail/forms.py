@@ -22,7 +22,9 @@ class MessageForm(forms.ModelForm):
             ),
             "content": forms.Textarea(attrs={"class": "form-control"}),
             "writer": forms.Select(attrs={"class": "form-control"}),
-            "to_groups": forms.SelectMultiple(attrs={"class": "form-control"}),
+            "to_groups": forms.CheckboxSelectMultiple(
+                attrs={"class": "form-check-input"}
+            ),
         }
         labels = {
             "title": "件名",
@@ -97,7 +99,8 @@ AttachmentFormset = inlineformset_factory(
     parent_model=Message,
     model=Attachment,
     fields=("file",),  # 他のフィールドがあれば追加してください
-    extra=1,
+    extra=2,
+    max_num=20,
     can_delete=False,
     form=AttachmentForm,
     formset=FileInlineFormSet,  # カスタム Formset を指定
