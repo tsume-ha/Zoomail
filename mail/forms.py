@@ -5,6 +5,7 @@ from django.forms import inlineformset_factory
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from .models import Message, Attachment, ToGroup
+from .models import User
 
 
 class MessageForm(forms.ModelForm):
@@ -21,7 +22,7 @@ class MessageForm(forms.ModelForm):
             ),
             "content": forms.Textarea(attrs={"class": "form-control"}),
             "writer": forms.Select(attrs={"class": "form-control"}),
-            "to_groups": forms.SelectMultiple(),
+            "to_groups": forms.SelectMultiple(attrs={"class": "form-control"}),
         }
         labels = {
             "title": "件名",
@@ -29,6 +30,13 @@ class MessageForm(forms.ModelForm):
             "writer": "差出人",
             "to_groups": "宛先",
         }
+
+    writer = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        required=True,
+        label="差出人",
+        widget=forms.Select(attrs={"class": "form-control"}),
+    )
 
 
 class AttachmentForm(forms.ModelForm):
@@ -39,12 +47,11 @@ class AttachmentForm(forms.ModelForm):
     class Meta:
         model = Attachment
         fields = ["file"]  # org_filenameはviewで設定する。
-        widgets = {
-            "file": forms.ClearableFileInput(attrs={"class": "form-control-file"}),
-        }
-        labels = {
-            "file": "添付ファイル",
-        }
+
+    file = forms.FileField(
+        label="添付ファイル",
+        widget=forms.FileInput(attrs={"class": "form-control"}),
+    )
 
     def clean_file(self):
         """
@@ -92,6 +99,7 @@ AttachmentFormset = inlineformset_factory(
     fields=("file",),  # 他のフィールドがあれば追加してください
     extra=1,
     can_delete=False,
+    form=AttachmentForm,
     formset=FileInlineFormSet,  # カスタム Formset を指定
 )
 
@@ -112,11 +120,14 @@ class CompositeForm(forms.Form):
         self.instance = kwargs.pop(
             "instance", None
         )  # Messageインスタンス (新規 or 既存)
+        initial = kwargs.pop("initial", {})
         super().__init__(*args, **kwargs)
 
         # Message用フォームを内部的に初期化
         self.message_form = MessageForm(
-            data=self.data if self.is_bound else None, instance=self.instance
+            data=self.data if self.is_bound else None,
+            instance=self.instance,
+            initial=initial,
         )
 
         # Attachment用の inline formset を内部的に初期化

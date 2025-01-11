@@ -41,7 +41,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update --fix-missing && apt upgrade -y
 
 # パッケージのコピー
-COPY --from=develop /usr/local/lib/python3.6/site-packages /usr/local/lib/python3.6/site-packages
+COPY --from=develop /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=develop /usr/local/bin/uwsgi /usr/local/bin/uwsgi
 COPY --from=develop /usr/lib /usr/lib
 

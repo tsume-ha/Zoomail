@@ -1,10 +1,7 @@
-# views.py
-import os
-import uuid
-import datetime
 from django.core.files.storage import FileSystemStorage
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib import messages
+from django import forms
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from django.conf import settings
@@ -12,12 +9,9 @@ from django.conf import settings
 from formtools.wizard.views import SessionWizardView
 
 from members.models import User
-from ..models import Message, Attachment
-from ..forms import MessageForm, AttachmentFormset, CompositeForm
+from ..models import Message
+from ..forms import CompositeForm
 
-# 2ステップ: "create" (入力画面), "confirm" (確認画面)
-# Form Wizardには'ダミー'を割り当てている（実際のフォームは手動管理するため）
-from django import forms
 
 FORMS = [
     (
@@ -46,10 +40,11 @@ class SendWizardView(SessionWizardView):
     def get_template_names(self):
         return [TEMPLATES[self.steps.current]]
 
-    def process_step_files(self, form):
-        result = super().process_step_files(form)
-        print(result)
-        return result
+    def get_form_initial(self, step):
+        initial = super().get_form_initial(step)
+        if step == "compose":
+            initial.update({"writer": self.request.user})
+        return initial
 
     def get_form_kwargs(self, step=None):
         """
@@ -108,15 +103,5 @@ class SendWizardView(SessionWizardView):
             attachment.org_filename = attachment.file.name
             attachment.save()
 
-        # for attach_data in composite_form.attachment_formset.cleaned_data:
-        #     file_obj = attach_data.get("file", None)
-        #     if file_obj:
-        #         attachment = Attachment(
-        #             message=message_obj,
-        #             file=file_obj,
-        #             org_filename=file_obj.name,
-        #         )
-        #         attachment.save()
-
-        # すべて保存完了したら、適当なページへリダイレクト
+        # すべて保存完了したら、メーリス一覧のページへリダイレクト
         return redirect("mail:inbox")
