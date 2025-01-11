@@ -2,42 +2,109 @@
 
 {% block main %}
 <h2 class="fw-bold text-primary">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
-    メーリス送信
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send">
+    <path
+      d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" />
+    <path d="m21.854 2.147-10.94 10.939" />
+  </svg>
+  メーリス送信
 </h2>
 
 <div class="d-flex justify-content-center align-items-center gap-2 my-4">
-    <!-- Step 1 -->
-    <div class="d-flex align-items-center">
-        <div class="step bg-light text-secondary rounded-pill px-3 py-2 fw-bold">① 入力</div>
-        <span class="text-secondary fw-bold ms-2">≫</span>
+  <!-- Step 1 -->
+  <div class="d-flex align-items-center">
+    <div class="step bg-light text-secondary rounded-pill px-3 py-2 fw-bold">① 入力</div>
+    <span class="text-secondary fw-bold ms-2">≫</span>
+  </div>
+  <!-- Step 2 -->
+  <div class="d-flex align-items-center">
+    <div class="step bg-primary text-white rounded-pill px-3 py-2 fw-bold">② 確認</div>
+    <span class="text-secondary fw-bold ms-2">≫</span>
+  </div>
+  <!-- Step 3 -->
+  <div class="d-flex align-items-center">
+    <div class="step bg-light text-secondary rounded-pill px-3 py-2 fw-bold">③ 送信完了</div>
+  </div>
+</div>
+{% if compose_data %}
+<div class="card my-4">
+  <div class="card-body">
+    <h5 class="card-title fw-bold">以下の内容でよろしいですか？</h5>
+
+    <!-- 差出人 -->
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label fw-bold">差出人</label>
+      <div class="col-sm-9">
+        <p class="form-control-plaintext">
+          {{ compose_data.message_form.writer }}
+        </p>
+      </div>
     </div>
-    <!-- Step 2 -->
-    <div class="d-flex align-items-center">
-        <div class="step bg-primary text-white rounded-pill px-3 py-2 fw-bold">② 確認</div>
-        <span class="text-secondary fw-bold ms-2">≫</span>
+
+    <!-- 宛先 -->
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label fw-bold">宛先</label>
+      <div class="col-sm-9">
+        {% if compose_data.message_form.to_groups %}
+        {% for group in compose_data.message_form.to_groups %}
+        <p class="text-primary me-1">{{ group.text }}</p>
+        {% endfor %}
+        {% else %}
+        <span class="text-muted">選択なし</span>
+        {% endif %}
+      </div>
     </div>
-    <!-- Step 3 -->
-    <div class="d-flex align-items-center">
-        <div class="step bg-light text-secondary rounded-pill px-3 py-2 fw-bold">③ 送信完了</div>
+
+    <!-- 件名 -->
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label fw-bold">件名</label>
+      <div class="col-sm-9">
+        <p class="form-control-plaintext">
+          {{ compose_data.message_form.title }}
+        </p>
+      </div>
     </div>
+
+    <!-- 本文 -->
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label fw-bold">本文</label>
+      <div class="col-sm-9">
+        {{ compose_data.message_form.content | linebreaks | urlize }}
+      </div>
+    </div>
+
+    <!-- 添付ファイル -->
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label fw-bold">添付ファイル</label>
+      <div class="col-sm-9">
+        {% if compose_data.attachments %}
+        <ul class="list-group">
+          {% for attach in compose_data.attachments %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ attach.file.name }}
+            <span class="badge text-bg-secondary">
+              {{ attach.file.size | filesizeformat }}
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <span class="text-muted">ファイルは添付されていません</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </div>
 
+<!-- 送信ボタン -->
 <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ wizard.management_form }}
-  
-    <!-- Step1 で受け取ったデータを表示 -->
-    <p>件名: {{ message_form_data.title }}</p>
-    <p>本文: {{ message_form_data.content }}</p>
-  
-    <h3>添付ファイル一覧</h3>
-    <ul>
-      {% for attach in attachment_form_data %}
-        <li>{{ attach.file.name }}</li>
-      {% endfor %}
-    </ul>
-  
-    <button type="submit">送信</button>
-  </form>
+  {% csrf_token %}
+  {{ wizard.management_form }}
+  <div class="d-flex my-3">
+    <button type="submit" class="btn btn-primary ms-auto px-4">送信</button>
+  </div>
+</form>
+{% endif %}
+
 {% endblock %}

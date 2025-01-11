@@ -45,7 +45,7 @@
   </div>
   <div class="mb-3">
     <label class="form-label">{{ message_form.to_groups.label }}</label>
-    <div>
+    <div class="overflow-y-scroll">
       {% for checkbox in message_form.to_groups %}
       <div class="form-check">
         {{ checkbox.tag|safe }}
@@ -75,7 +75,6 @@
     {{ message_form.content }}
     {{ message_form.content.errors }}
   </div>
-
 
   <!-- AttachmentFormset -->
   {{ attachment_formset.management_form }}

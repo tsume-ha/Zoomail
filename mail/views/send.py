@@ -70,6 +70,13 @@ class SendWizardView(SessionWizardView):
                     "attachment_formset": form.attachment_formset,
                 }
             )
+        elif self.steps.current == "confirm":
+            # confirmステップのときは、composeステップで入力されたデータをそのまま渡す
+            kwargs.update(
+                {
+                    "compose_data": self.get_cleaned_data_for_step("compose"),
+                }
+            )
         return super().render(form=form, **kwargs)
 
     def done(self, form_list, **kwargs):
@@ -99,9 +106,11 @@ class SendWizardView(SessionWizardView):
         # --- (2) AttachmentFormset.save() ---
         # Attachment モデルを保存
         for attachment_form in composite_form.attachment_formset:
-            attachment = attachment_form.save(commit=False)
-            attachment.org_filename = attachment.file.name
-            attachment.save()
+            if attachment_form.cleaned_data:
+                # ファイルがアップロードされている場合のみ保存
+                attachment = attachment_form.save(commit=False)
+                attachment.org_filename = attachment.file.name
+                attachment.save()
 
         # すべて保存完了したら、メーリス一覧のページへリダイレクト
         return redirect("mail:inbox")
