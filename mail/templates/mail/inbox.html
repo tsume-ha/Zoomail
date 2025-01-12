@@ -2,7 +2,7 @@
 {% load custom_filters %}
 
 {% block main %}
-<h2 class="fw-bold text-primary">
+<h2 class="fw-bold text-primary mb-4">
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
         <rect width="20" height="16" x="2" y="4" rx="2" />
@@ -10,6 +10,50 @@
     </svg>
     メーリス受信箱
 </h2>
+
+{% comment %} <form method="get" action="{% url 'mail:inbox' %}" class="mb-2">
+  <div class="input-group mb-2">
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="query" id="query-all" value="all">
+      <label class="form-check-label" for="query-all">すべて</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="query" id="query-zenkai" value="zenkai">
+      <label class="form-check-label" for="query-zenkai">全回メーリス</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="query" id="query-kaisei" value="kaisei">
+      <label class="form-check-label" for="query-kaisei">回生メーリス</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="query" id="query-sender" value="sender">
+      <label class="form-check-label" for="query-sender">送信済み</label>
+    </div>
+  </div>
+  <div class="input-group mb-2">
+    <input type="text" name="text" class="form-control" placeholder="検索キーワードを入力">
+    <button class="btn btn-primary" type="submit">検索</button>
+  </div>
+</form> {% endcomment %}
+
+<form method="get" action="{% url 'mail:inbox' %}" class="mb-2">
+  <div class="input-group mb-2">
+    {% for value, label in form.fields.query.choices %}
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="{{ form.query.html_name }}" 
+               id="query-{{ value }}" value="{{ value }}" 
+               {% if form.query.value == value %}checked{% endif %}>
+        <label class="form-check-label" for="query-{{ value }}">{{ label }}</label>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <div class="input-group mb-2">
+    <input type="text" name="{{ form.text.html_name }}" class="form-control" placeholder="検索キーワードを入力" 
+           value="{{ form.text.value|default:'' }}">
+    <button class="btn btn-primary" type="submit">検索</button>
+  </div>
+</form>
 
 <div class="px-2">    
 {% for message in mailis %}

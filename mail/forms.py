@@ -8,6 +8,31 @@ from .models import Message, Attachment, ToGroup
 from .models import User
 
 
+class InboxForm(forms.Form):
+    """
+    メール一覧画面の検索フォーム
+    """
+
+    text = forms.CharField(
+        label="検索",
+        max_length=64,
+        required=False,
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    query = forms.ChoiceField(
+        label="条件",
+        choices=[
+            ("all", "すべて"),
+            ("zenkai", "全回メーリス"),
+            ("kaisei", "回生メーリス"),
+            ("sender", "送信済み"),
+        ],
+        widget=forms.RadioSelect(attrs={"class": "form-check-input"}),
+        initial="all",
+        required=True,
+    )
+
+
 class MessageForm(forms.ModelForm):
     """
     Messageモデル用のフォーム
