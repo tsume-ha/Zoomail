@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django import forms
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
 from django.conf import settings
 
@@ -27,6 +28,7 @@ TEMPLATES = {
 }
 
 
+@method_decorator(never_cache, name="dispatch")
 class SendWizardView(SessionWizardView):
     """
     2ステップ:
@@ -112,5 +114,7 @@ class SendWizardView(SessionWizardView):
                 attachment.org_filename = attachment.file.name
                 attachment.save()
 
+        self.storage.reset()
+        messages.success(self.request, "メーリスを送信しました。")
         # すべて保存完了したら、メーリス一覧のページへリダイレクト
         return redirect("mail:inbox")

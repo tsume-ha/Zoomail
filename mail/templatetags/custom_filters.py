@@ -12,7 +12,6 @@ def make_message_short(content: str) -> str:
     # 最初の改行を探す
     content = content.lstrip("\n")
     first_newline_index = content.find("\n")
-    print(first_newline_index)
     if first_newline_index != -1:
         content = content[first_newline_index + 1 :]  # 最初の改行後の部分を切り取る
 

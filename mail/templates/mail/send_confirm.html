@@ -102,6 +102,7 @@
   {% csrf_token %}
   {{ wizard.management_form }}
   <div class="d-flex my-3">
+    <button type="submit" name="wizard_goto_step" value="{{ wizard.steps.prev }}" class="btn btn-secondary me-2 px-4">戻る</button>
     <button type="submit" class="btn btn-primary ms-auto px-4">送信</button>
   </div>
 </form>
