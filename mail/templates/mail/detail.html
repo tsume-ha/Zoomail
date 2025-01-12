@@ -21,21 +21,29 @@
 </div>
 
 <div class="row mt-3">
-  <div class="col-12">
-    <p class="mb-0">
-      {{ message.content | linebreaks | urlize }}
-    </p>
+  <div class="col-12 mb-4">
+    {{ message.content | linebreaks | urlize }}
   </div>
 </div>
 
+{% if message.attachments.all %}
+<hr />
 <div class="row mt-3">
-  <div class="col-12">
+  <div class="col-12 mb-4">
     {% for attachment in message.attachments.all %}
-    <p>
-      {{ attachment.org_filename }}
-    </p>
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'mail:attachment_download' message.id attachment.id %}" class="text-decoration-none">
+          {{attachment.org_filename}}
+        </a>
+          
+      </div>
+
+    </div>
     {% endfor %}
   </div>
 </div>
+{% endif %}
+
 
 {% endblock %}
