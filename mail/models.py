@@ -95,13 +95,29 @@ class Attachment(models.Model):
 
     def extension(self):
         _, extension = os.path.splitext(self.file.name)
-        return extension
+        return extension.lower()
 
     def is_image(self):
         ImageExtensions = [".gif", ".png", ".jpeg", ".jpg", ".bmp"]
         return self.extension() in [str.lower() for str in ImageExtensions] + [
             str.upper() for str in ImageExtensions
         ]
+
+    def get_attachment_icon(self) -> str:
+        prefix = "/img/mail/icon_"
+        suffix = ".png"
+        ext = self.extension()
+        if ext in ["pdf"]:
+            return f"{prefix}pdf{suffix}"
+        if ext in ["doc", "docx"]:
+            return f"{prefix}word{suffix}"
+        if ext in ["xls", "xlsx"]:
+            return f"{prefix}excel{suffix}"
+        if ext in ["ppt", "pptx"]:
+            return f"{prefix}powerpoint{suffix}"
+        if self.is_image():
+            return f"{prefix}photo{suffix}"
+        return f"{prefix}file{suffix}"
 
 
 class MailLog(models.Model):

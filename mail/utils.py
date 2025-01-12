@@ -1,4 +1,4 @@
-from .models import Message
+from .models import Message, Attachment
 from members.models import User
 
 
