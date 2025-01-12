@@ -30,7 +30,8 @@ def inbox(request):
     is_paginated = page_obj.has_other_pages()
 
     context = {
-        "messages": page_obj,  # ページネートされたメッセージ
+        "mailis": page_obj,  # ページネートされたメッセージ
+        # message framework と変数名が競合するため、ここではmailisとしている
         "page_obj": page_obj,  # ページネーション情報
         "is_paginated": is_paginated,  # ページが複数あるかどうか
     }
