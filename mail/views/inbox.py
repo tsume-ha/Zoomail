@@ -45,7 +45,7 @@ def inbox(request):
                         content__icontains=term
                     )
                 else:  # 通常検索フィルタ
-                    include_queries |= Q(title__icontains=t) | Q(content__icontains=t)
+                    include_queries &= Q(title__icontains=t) | Q(content__icontains=t)
             # フィルタを適用
             messages = messages.filter(include_queries).exclude(exclude_queries)
 
