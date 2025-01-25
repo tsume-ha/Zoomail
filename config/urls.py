@@ -25,5 +25,6 @@ urlpatterns = [
     path("auth/", include("social_django.urls", namespace="social")),
     path("", include("top.urls", namespace="top")),
     path("mail/", include("mail.urls", namespace="mail")),
+    path("mypage/", include("members.urls", namespace="mypage")),
     path("download/", include("private_storage.urls")),
 ]

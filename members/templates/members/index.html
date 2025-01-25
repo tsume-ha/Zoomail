@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+
+<style>
+  .menu-item-icon {
+    width: 120px;
+    /* 画像の固定幅 */
+    height: 120px;
+    flex-shrink: 0;
+    /* Flexboxによる縮小を無効化 */
+  }
+
+  .menu-item-icon img {
+    width: 100%;
+    /* 親要素にフィット */
+    height: 100%;
+    object-fit: cover;
+    /* 画像が縦横比を保ちながらフィット */
+  }
+
+  @media (max-width: 768px) {
+    .menu-item-icon {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .menu-item-icon {
+      width: 80px;
+      height: 80px;
+    }
+  }
+</style>
+
+<h2 class="fw-bold text-primary mb-4">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round">
+    <path d="M18 20a6 6 0 0 0-12 0" />
+    <circle cx="12" cy="10" r="4" />
+    <circle cx="12" cy="12" r="10" />
+  </svg>
+  マイページ
+</h2>
+
+<div class="">
+  <!-- ユーザー情報変更 -->
+  <div class="d-flex align-items-center p-3 border-bottom">
+    <div class="menu-item-icon rounded-circle me-3">
+      <img src="{% static 'img/mypage/sheep.png' %}" alt="Sheep Icon" class="img-fluid">
+    </div>
+    <div>
+      <a href="/user/edit" class="text-decoration-none text-dark">
+        <h3 class="h3 text-primary fw-bold mb-1">ユーザー情報変更</h3>
+      </a>
+      <p class="mb-0 text-muted small">
+        名前 / メールアドレス / LiveLog・Google認証 などの変更
+      </p>
+    </div>
+  </div>
+  <!-- メーリス受信テスト -->
+  <div class="d-flex align-items-center p-3 border-bottom">
+    <div class="menu-item-icon rounded-circle me-3">
+      <img src="{% static 'img/mypage/bird.png' %}" alt="Bird Icon" class="img-fluid">
+    </div>
+    <div>
+      <a href="/mail/test" class="text-decoration-none text-dark">
+        <h3 class="h3 text-primary fw-bold mb-1">メーリス受信テスト</h3>
+      </a>
+      <p class="mb-0 text-muted small">
+        サーバーからテストメールを送信します
+      </p>
+    </div>
+  </div>
+  <!-- ユーザー招待 -->
+  <div class="d-flex align-items-center p-3 border-bottom">
+    <div class="menu-item-icon rounded-circle me-3">
+      <img src="{% static 'img/mypage/penguin.png' %}" alt="Penguin Icon" class="img-fluid">
+    </div>
+    <div>
+      <a href="/user/invite" class="text-decoration-none text-dark">
+        <h3 class="h3 text-primary fw-bold mb-1">ユーザー招待</h3>
+      </a>
+      <p class="mb-0 text-muted small">
+        新しいユーザーGoogleアカウントで招待します<br>
+        (LiveLogは招待なしでログインできます)
+      </p>
+    </div>
+  </div>
+  <!-- ログアウト -->
+  <div class="d-flex align-items-center p-3">
+    <div class="menu-item-icon rounded-circle me-3">
+      <img src="{% static 'img/mypage/panda.png' %}" alt="Panda Icon" class="img-fluid">
+    </div>
+    <div>
+      <a href="/logout" class="text-decoration-none text-dark">
+        <h3 class="h3 text-primary fw-bold mb-1">ログアウト</h3>
+      </a>
+      <p class="mb-0 text-muted small">またね！</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
