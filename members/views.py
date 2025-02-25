@@ -22,4 +22,12 @@ def profile(request):
             )  # リダイレクト先のURL名はプロジェクトに合わせて調整してください
     else:
         form = UserUpdateForm(instance=user)
-    return render(request, "members/profile.html", {"form": form})
+    return render(
+        request,
+        "members/profile.html",
+        {
+            "form": form,
+            "livelog_login": user.livelog_login,
+            "google_login": user.google_login,
+        },
+    )

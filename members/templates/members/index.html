@@ -109,9 +109,12 @@
       <img src="{% static 'img/mypage/panda.png' %}" alt="Panda Icon" class="img-fluid">
     </div>
     <div>
-      <a href="/logout" class="text-decoration-none text-dark">
-        <h3 class="h3 text-primary fw-bold mb-1">ログアウト</h3>
-      </a>
+      <form action="{% url 'logout' %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-link p-0 text-decoration-none text-dark">
+          <h3 class="h3 text-primary fw-bold mb-1">ログアウト</h3>
+        </button>
+      </form>
       <p class="mb-0 text-muted small">またね！</p>
     </div>
   </div>

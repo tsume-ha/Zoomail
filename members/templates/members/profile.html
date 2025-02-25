@@ -63,10 +63,76 @@
       </div>
     {% endif %}
   </div>
-
-    <div class="d-flex my-3 justify-content-between">
-        <a href="/mypage/" class="btn btn-secondary px-4">戻る</a>
-        <button type="submit" class="btn btn-primary px-4">更新</button>
-    </div>
+  
+  <div class="d-flex my-3">
+    <button type="submit" class="btn btn-primary ms-auto px-4">更新</button>
+  </div>
 </form>
+
+<h3 class="fw-bold text-primary">
+    LiveLog・Google認証
+</h3>
+
+<p>
+    認証を行うと、LiveLog・Googleアカウントでログインできるようになります。
+</p>
+
+<div class="row">
+    <!-- Google認証カード -->
+    <div class="col-12 col-md-6 mb-3">
+      <div class="card oauth-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <img src="{% static 'img/mypage/google.png' %}" alt="Google認証" style="height: 3rem; width: auto;" class="me-3">
+            {% if google_login %}
+              <span class="badge bg-success">認証済み</span>
+            {% else %}
+              <span class="badge bg-secondary">未認証</span>
+            {% endif %}
+          </div>
+          <div class="mt-3">
+            {% if google_login %}
+              {% if livelog_login %}
+                <!-- Google認証済みかつLiveLog認証済みの場合 -->
+                <form action="{% url 'unlink_google' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-warning">紐付けを解除する</button>
+                </form>
+              {% else %}
+                <!-- Google認証済みだが、LiveLogは未認証の場合 -->
+                <p>紐付けを解除するためには、もう一度LiveLogへログインしてください</p>
+              {% endif %}
+            {% else %}
+              <a href="/auth/login/google-oauth2?next=/mypage/oauth/" class="btn btn-primary">認証する</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- LiveLog認証カード -->
+    <div class="col-12 col-md-6 mb-3">
+      <div class="card oauth-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <img src="{% static 'img/mypage/livelog.png' %}" alt="LiveLog認証" style="height: 3rem; width: auto;" class="me-3">
+            {% if livelog_login %}
+              <span class="badge bg-success">認証済み</span>
+            {% else %}
+              <span class="badge bg-secondary">未認証</span>
+            {% endif %}
+          </div>
+          <div class="mt-3">
+            {% if not livelog_login %}
+              <a href="/auth/login/auth0?next=/mypage/oauth/" class="btn btn-primary">認証する</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="d-flex">
+    <a href="{% url 'mypage:index' %}" class="btn btn-secondary ms-auto px-4">戻る</a>
+  </div>
 {% endblock %}
