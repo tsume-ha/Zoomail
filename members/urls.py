@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import index
+from .views import index, profile
 
 urlpatterns = [
     path("", index, name="index"),
+    path("profile/", profile, name="profile"),
 ]
 
-app_name = "mail"
+app_name = "members"
