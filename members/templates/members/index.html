@@ -52,7 +52,7 @@
       <img src="{% static 'img/mypage/sheep.png' %}" alt="Sheep Icon" class="img-fluid">
     </div>
     <div>
-      <a href="/mypage/profile" class="text-decoration-none text-dark">
+      <a href="{% url 'mypage:profile' %}" class="text-decoration-none text-dark">
         <h3 class="h3 text-primary fw-bold mb-1">ユーザー情報変更</h3>
       </a>
       <p class="mb-0 text-muted small">
@@ -66,7 +66,7 @@
       <img src="{% static 'img/mypage/bird.png' %}" alt="Bird Icon" class="img-fluid">
     </div>
     <div>
-      <a href="/mail/test" class="text-decoration-none text-dark">
+      <a href="{% url 'mypage:test_mail' %}" class="text-decoration-none text-dark">
         <h3 class="h3 text-primary fw-bold mb-1">メーリス受信テスト</h3>
       </a>
       <p class="mb-0 text-muted small">

@@ -22,3 +22,7 @@ class UserUpdateForm(forms.ModelForm):
             "nickname": "ニックネーム",
             "furigana": "ふりがな",
         }
+
+
+class TestMailForm(forms.Form):
+    send = forms.BooleanField(required=False)
