@@ -103,7 +103,7 @@
                 <p>紐付けを解除するためには、もう一度LiveLogへログインしてください</p>
               {% endif %}
             {% else %}
-              <a href="/auth/login/google-oauth2?next=/mypage/oauth/" class="btn btn-primary">認証する</a>
+              <a href="{% url 'social:begin' 'google-oauth2' %}?next=/mypage/profile/" class="btn btn-primary">認証する</a>
             {% endif %}
           </div>
         </div>
@@ -124,7 +124,7 @@
           </div>
           <div class="mt-3">
             {% if not livelog_login %}
-              <a href="/auth/login/auth0?next=/mypage/oauth/" class="btn btn-primary">認証する</a>
+              <a href="{% url 'social:begin' 'livelog' %}?next=/mypage/profile/" class="btn btn-primary">認証する</a>
             {% endif %}
           </div>
         </div>
