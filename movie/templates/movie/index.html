@@ -8,19 +8,24 @@
 </h2>
 <div class="row">
     {% for item in items %}
-    <div class="col-12 mb-4">
-        <h3>{{ item.title }}</h3>
-        <iframe
-            width="100%"
-            height="315"
-            class="youtube_content"
-            src="{{ item.url }}"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-        </iframe>
-        {% if item.textcontent %}
-        <p class="mt-2">{{ item.textcontent }}</p>
+    <div class="col-12 mb-2">
+        <div class="card-body">
+            <h3 class="fw-bold text-primary my-2">{{ item.title }}</h3>
+            <iframe
+                width="100%"
+                height="240"
+                class="youtube_content"
+                src="{{ item.url }}"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+            {% if item.textcontent %}
+            <p class="mt-2">{{ item.textcontent }}</p>
+            {% endif %}
+        </div>
+        {% if not forloop.last %}
+        <hr>
         {% endif %}
     </div>
     {% endfor %}
