@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<h2 class="fw-bold text-primary">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-cog">
+    <circle cx="12" cy="7" r="4"></circle>
+    <path d="M5 21v-2a4 4 0 0 1 4-4h4"></path>
+    <circle cx="19" cy="17" r="2"></circle>
+    <path d="M17 21a4 4 0 0 0 4-4"></path>
+    <path d="M21 13a4 4 0 0 0-4-4"></path>
+  </svg>
+  招待情報編集
+</h2>
+
+{% if messages %}
+<div class="my-3">
+  {% for message in messages %}
+    <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'warning' %}alert-warning{% else %}alert-{{ message.tags }}{% endif %}" role="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<form method="post" class="my-4">
+  {% csrf_token %}
+  
+  <div class="my-4">
+    <label for="{{ form.email.id_for_label }}" class="form-label">
+      Emailアドレス：
+    </label>
+    {{ form.email }}
+    {% if form.email.errors %}
+      <div class="invalid-feedback d-block">
+        {{ form.email.errors }}
+      </div>
+    {% endif %}
+  </div>
+  
+  <div class="mb-4">
+    <label for="{{ form.year.id_for_label }}" class="form-label">
+      入部年度：
+    </label>
+    {{ form.year }}
+    <div class="form-text">{{ form.year.help_text }}</div>
+    {% if form.year.errors %}
+      <div class="invalid-feedback d-block">
+        {{ form.year.errors }}
+      </div>
+    {% endif %}
+  </div>
+  
+  <div class="d-flex">
+    <a href="{% url 'mypage:invitation_list' %}" class="btn btn-secondary">戻る</a>
+    <button type="submit" class="btn btn-primary ms-auto px-4">更新して招待メールを再送信</button>
+  </div>
+</form>
+{% endblock %}

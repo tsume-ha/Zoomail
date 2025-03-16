@@ -80,7 +80,7 @@
       <img src="{% static 'img/mypage/penguin.png' %}" alt="Penguin Icon" class="img-fluid">
     </div>
     <div>
-      <a href="/user/invite" class="text-decoration-none text-dark">
+      <a href="{% url 'mypage:invitation_list' %}" class="text-decoration-none text-dark">
         <h3 class="h3 text-primary fw-bold mb-1">ユーザー招待</h3>
       </a>
       <p class="mb-0 text-muted small">

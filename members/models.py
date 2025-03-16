@@ -102,3 +102,27 @@ class TestMail(models.Model):
 
     def __str__(self):
         return self.user.fullname + " - " + self.email
+
+
+class UserInvitation(models.Model):
+    inviter = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="sent_invitations",
+        verbose_name="招待者",
+    )
+    email = models.EmailField(verbose_name="Emailアドレス")
+    year = models.IntegerField(
+        verbose_name="入部年度",
+        help_text="2024年4月入部の場合、2024を入力してください。",
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="作成日時")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="更新日時")
+
+    def __str__(self):
+        return f"{self.year} - {self.email} (invited by {self.inviter.fullname} ({self.inviter.year}))"
+
+    class Meta:
+        verbose_name = "ユーザー招待"
+        verbose_name_plural = "ユーザー招待一覧"
+        ordering = ["-created_at"]

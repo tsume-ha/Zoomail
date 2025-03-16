@@ -11,16 +11,6 @@
   メーリス受信テスト
 </h2>
 
-{% if messages %}
-<div class="my-3">
-  {% for message in messages %}
-    <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'warning' %}alert-warning{% else %}alert-{{ message.tags }}{% endif %}" role="alert">
-      {{ message }}
-    </div>
-  {% endfor %}
-</div>
-{% endif %}
-
 <form method="post" class="my-4">
   {% csrf_token %}
   
