@@ -27,6 +27,7 @@ urlpatterns = [
     path("auth/logout/", LogoutView.as_view(), name="logout"),
     path("", include("top.urls", namespace="top")),
     path("mail/", include("mail.urls", namespace="mail")),
+    path("movie/", include("movie.urls", namespace="movie")),
     path("mypage/", include("members.urls", namespace="mypage")),
     path("download/", include("private_storage.urls")),
 ]
