@@ -18,6 +18,11 @@ def custom_upload_to(instance, filename):
 
 
 class PhotoAlbum(models.Model):
+
+    class Meta:
+        verbose_name = "アルバム"
+        verbose_name_plural = "アルバム"
+
     title = models.CharField(max_length=200, verbose_name="イベント名")
     url = models.URLField(blank=True, verbose_name="アルバムのURL")
     held_at = models.DateField(verbose_name="イベントを行った日")

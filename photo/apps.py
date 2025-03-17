@@ -2,5 +2,6 @@ from django.apps import AppConfig
 
 
 class PhotoConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'photo'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "photo"
+    verbose_name = "写真"
