@@ -28,6 +28,7 @@ urlpatterns = [
     path("", include("top.urls", namespace="top")),
     path("mail/", include("mail.urls", namespace="mail")),
     path("movie/", include("movie.urls", namespace="movie")),
+    path("photo/", include("photo.urls", namespace="photo")),
     path("mypage/", include("members.urls", namespace="mypage")),
     path("download/", include("private_storage.urls")),
 ]

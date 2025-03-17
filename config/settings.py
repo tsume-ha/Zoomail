@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "members",
     "mail",
     "movie",
+    "photo",
 ]
 
 # CustomUserModel
