@@ -3,6 +3,10 @@ from members.models import User
 
 
 class YoutubeURL(models.Model):
+    class Meta:
+        verbose_name = "Youtube動画"
+        verbose_name_plural = "Youtube動画"
+
     title = models.CharField(max_length=200, verbose_name="イベント名")
     url = models.CharField(max_length=2000, blank=True, verbose_name="Youtubeの再生URL")
     textcontent = models.TextField(max_length=2000, blank=True, verbose_name="テキスト")
