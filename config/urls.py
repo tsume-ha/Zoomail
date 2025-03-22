@@ -31,5 +31,6 @@ urlpatterns = [
     path("photo/", include("photo.urls", namespace="photo")),
     path("kansou/", include("kansou.urls", namespace="kansou")),
     path("mypage/", include("members.urls", namespace="mypage")),
+    path("others/", include("others.urls", namespace="others")),
     path("download/", include("private_storage.urls")),
 ]

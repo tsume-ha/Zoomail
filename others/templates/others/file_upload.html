@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h1>Upload File</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+    <a href="{% url 'others:file_list' %}" class="btn btn-secondary mt-3">Back to List</a>
+</div>
+{% endblock content %}
