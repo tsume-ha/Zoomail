@@ -1,5 +1,6 @@
 from django import forms
 from .models import User, UserInvitation
+from social_django.models import UserSocialAuth
 
 
 class UserUpdateForm(forms.ModelForm):
