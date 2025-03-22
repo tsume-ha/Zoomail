@@ -1,4 +1,5 @@
 # forms.py
+from typing import Any, Dict
 
 from django import forms
 from django.forms import inlineformset_factory
@@ -197,3 +198,20 @@ class CompositeForm(forms.Form):
                 f.cleaned_data for f in self.attachment_formset.forms if f.cleaned_data
             ],
         }
+
+
+class ToGroupAdminForm(forms.ModelForm):
+    class Meta:
+        model = ToGroup
+        verbose_name = "宛先"
+        verbose_name_plural = "宛先"
+        fields = ["year", "leader", "label"]
+
+    def clean(self) -> Dict[str, Any]:
+        leader: User = self.cleaned_data.get("leader")
+        if leader:
+            if self.cleaned_data["year"] != leader.year:
+                raise forms.ValidationError(
+                    "会長に指定されたユーザーの学年が、宛先に設定された学年と一致していません。"
+                )
+        return super().clean()
