@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "movie",
     "photo",
     "kansou",
+    "others",
 ]
 
 # CustomUserModel
