@@ -38,6 +38,11 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+
+    class Meta:
+        verbose_name = "ユーザー"
+        verbose_name_plural = "ユーザー"
+
     email = models.EmailField(unique=True, verbose_name="Emailアドレス")
     receive_email = models.EmailField(
         blank=True, null=False, verbose_name="受信用メールアドレス"
