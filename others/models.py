@@ -3,23 +3,18 @@ from private_storage.fields import PrivateFileField
 from members.models import User
 import uuid
 import os
-from django.utils.deconstruct import deconstructible
 from django.conf import settings
 from PIL import Image
 from pdf2image import convert_from_path
 
 
-@deconstructible
-class PathAndRename:
-    def __init__(self, sub_path):
-        self.sub_path = sub_path
+def others_custom_upload_to(instance, filename):
+    ext = os.path.splitext(filename)[-1]
+    return "others/{}{}".format(uuid.uuid4().hex, ext)
 
-    def __call__(self, instance, filename):
-        ext = filename.split(".")[-1]
-        # set filename as random string
-        filename = "{}.{}".format(uuid.uuid4().hex, ext)
-        # return the whole path to the file
-        return os.path.join(self.sub_path, filename)
+
+def others_custom_thumbnail_upload_to(instance, filename):
+    return "others/{}_thumb.jpg".format(uuid.uuid4().hex)
 
 
 class File(models.Model):
@@ -28,8 +23,10 @@ class File(models.Model):
     )
     title = models.CharField(max_length=255, blank=True)
     original_name = models.CharField(max_length=255)
-    file = PrivateFileField(upload_to=PathAndRename("others"))
-    thumbnail = PrivateFileField(upload_to="others", blank=True, null=True)
+    file = PrivateFileField(upload_to=others_custom_upload_to)
+    thumbnail = PrivateFileField(
+        upload_to=others_custom_thumbnail_upload_to, blank=True, null=True
+    )
     description = models.TextField(blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -47,10 +44,11 @@ class File(models.Model):
     def create_image_thumbnail(self):
         with Image.open(self.file.path) as img:
             img.thumbnail((100, 100))
-            thumbnail_path = os.path.join(
-                settings.MEDIA_ROOT,
-                "others",
-                os.path.splitext(os.path.basename(self.file.name))[0] + "_thumb.jpg",
+            thumbnail_path = (
+                settings.PRIVATE_STORAGE_ROOT
+                / "/others/"
+                / os.path.splitext(os.path.basename(self.file.name))[0]
+                / "_thumb.jpg"
             )
             img.save(thumbnail_path)
             self.thumbnail = thumbnail_path
@@ -59,10 +57,11 @@ class File(models.Model):
     def create_pdf_thumbnail(self):
         images = convert_from_path(self.file.path, first_page=0, last_page=1)
         if images:
-            thumbnail_path = os.path.join(
-                settings.MEDIA_ROOT,
-                "others",
-                os.path.splitext(os.path.basename(self.file.name))[0] + "_thumb.jpg",
+            thumbnail_path = (
+                settings.PRIVATE_STORAGE_ROOT
+                / "/others/"
+                / os.path.splitext(os.path.basename(self.file.name))[0]
+                / "_thumb.jpg"
             )
             images[0].save(thumbnail_path, "JPEG")
             self.thumbnail = thumbnail_path
