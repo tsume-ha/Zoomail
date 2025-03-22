@@ -1,4 +1,5 @@
 from django.db import models
+from private_storage.fields import PrivateFileField
 from members.models import User
 import uuid
 import os
@@ -27,8 +28,8 @@ class File(models.Model):
     )
     title = models.CharField(max_length=255, blank=True)
     original_name = models.CharField(max_length=255)
-    file = models.FileField(upload_to=PathAndRename("uploads/"))
-    thumbnail = models.ImageField(upload_to="thumbnails/", blank=True, null=True)
+    file = PrivateFileField(upload_to=PathAndRename("others"))
+    thumbnail = PrivateFileField(upload_to="others", blank=True, null=True)
     description = models.TextField(blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -47,7 +48,9 @@ class File(models.Model):
         with Image.open(self.file.path) as img:
             img.thumbnail((100, 100))
             thumbnail_path = os.path.join(
-                settings.MEDIA_ROOT, "thumbnails", os.path.basename(self.file.name)
+                settings.MEDIA_ROOT,
+                "others",
+                os.path.splitext(os.path.basename(self.file.name))[0] + "_thumb.jpg",
             )
             img.save(thumbnail_path)
             self.thumbnail = thumbnail_path
@@ -58,8 +61,8 @@ class File(models.Model):
         if images:
             thumbnail_path = os.path.join(
                 settings.MEDIA_ROOT,
-                "thumbnails",
-                os.path.basename(self.file.name) + ".jpg",
+                "others",
+                os.path.splitext(os.path.basename(self.file.name))[0] + "_thumb.jpg",
             )
             images[0].save(thumbnail_path, "JPEG")
             self.thumbnail = thumbnail_path
