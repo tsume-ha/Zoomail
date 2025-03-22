@@ -13,6 +13,11 @@ def index(request):
 
 
 @login_required
+def first_register(request):
+    return render(request, "members/first_register.html")
+
+
+@login_required
 def profile(request):
     user = request.user  # ログイン中のユーザー情報を取得
     if request.method == "POST":

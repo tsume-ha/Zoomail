@@ -23,5 +23,5 @@ def create_user(strategy, details, backend, user=None, *args, **kwargs):
         return
 
     # nextリンクはsessionに保存されている、これを書き換える
-    strategy.session_set("next", reverse("first_register"))
+    strategy.session_set("next", reverse("members:first_register"))
     return {"is_new": True, "user": strategy.create_user(**fields)}
