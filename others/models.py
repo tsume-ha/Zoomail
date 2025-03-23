@@ -3,7 +3,8 @@ from private_storage.fields import PrivateFileField
 from members.models import User
 import uuid
 import os
-from django.conf import settings
+from io import BytesIO
+from django.core.files.base import ContentFile
 from PIL import Image
 from pdf2image import convert_from_path
 
@@ -18,21 +19,31 @@ def others_custom_thumbnail_upload_to(instance, filename):
 
 
 class File(models.Model):
-    upload_user = models.ForeignKey(
-        User, null=True, blank=True, on_delete=models.SET_NULL
-    )
-    title = models.CharField(max_length=255, blank=True)
-    original_name = models.CharField(max_length=255)
+    filename = models.CharField(max_length=255, blank=True, null=False)
     file = PrivateFileField(upload_to=others_custom_upload_to)
     thumbnail = PrivateFileField(
         upload_to=others_custom_thumbnail_upload_to, blank=True, null=True
     )
-    description = models.TextField(blank=True)
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="created_other_file",
+    )
+    updated_by = models.ForeignKey(
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="updated_other_file",
+    )
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if self.file:
+        if self.file and self.thumbnail is None:
             self.generate_thumbnail()
 
     def generate_thumbnail(self):
@@ -44,25 +55,21 @@ class File(models.Model):
     def create_image_thumbnail(self):
         with Image.open(self.file.path) as img:
             img.thumbnail((100, 100))
-            thumbnail_path = (
-                settings.PRIVATE_STORAGE_ROOT
-                / "/others/"
-                / os.path.splitext(os.path.basename(self.file.name))[0]
-                / "_thumb.jpg"
+            thumb_io = BytesIO()
+            img.save(thumb_io, format="JPEG")
+            thumb_content = ContentFile(thumb_io.getvalue())
+            self.thumbnail.save(
+                os.path.splitext(os.path.basename(self.file.name))[0] + "_thumb.jpg",
+                thumb_content,
             )
-            img.save(thumbnail_path)
-            self.thumbnail = thumbnail_path
-            self.save(update_fields=["thumbnail"])
 
     def create_pdf_thumbnail(self):
         images = convert_from_path(self.file.path, first_page=0, last_page=1)
         if images:
-            thumbnail_path = (
-                settings.PRIVATE_STORAGE_ROOT
-                / "/others/"
-                / os.path.splitext(os.path.basename(self.file.name))[0]
-                / "_thumb.jpg"
+            thumb_io = BytesIO()
+            images[0].save(thumb_io, format="JPEG")
+            thumb_content = ContentFile(thumb_io.getvalue())
+            self.thumbnail.save(
+                os.path.splitext(os.path.basename(self.file.name))[0] + "_thumb.jpg",
+                thumb_content,
             )
-            images[0].save(thumbnail_path, "JPEG")
-            self.thumbnail = thumbnail_path
-            self.save(update_fields=["thumbnail"])

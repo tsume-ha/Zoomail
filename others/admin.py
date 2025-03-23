@@ -1,25 +1,35 @@
 from django.contrib import admin
 from custom_admin.admin import custom_admin_site
 from .models import File
+from .forms import FileUploadForm
 
 
 class FileAdmin(admin.ModelAdmin):
+    form = FileUploadForm
     fields = (
-        "title",
-        "original_name",
+        "filename",
         "file",
         "thumbnail",
-        "description",
-        "uploaded_at",
-        "upload_user",
+        "created_at",
+        "updated_at",
+        "created_by",
+        "updated_by",
     )
-    readonly_fields = ("uploaded_at", "thumbnail")
-    list_display = ("title", "original_name", "upload_user", "uploaded_at")
-    list_display_links = ("title", "original_name")
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "thumbnail",
+        "updated_by",
+        "created_by",
+    )
+    list_display = ("filename", "updated_by", "updated_at")
+    list_display_links = ("filename",)
 
     def save_model(self, request, obj, form, change):
         if not change:
-            obj.upload_user = request.user
+            obj.created_by = request.user
+        if form.has_changed():
+            obj.updated_by = request.user
         super().save_model(request, obj, form, change)
 
 
