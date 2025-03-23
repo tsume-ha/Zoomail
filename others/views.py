@@ -17,9 +17,18 @@ def file_list(request):
 
 
 @login_required
-def file_detail(request, pk):
-    file = get_object_or_404(File, pk=pk)
-    return render(request, "others/file_detail.html", {"file": file})
+def file_edit(request, pk):
+    file_instance = get_object_or_404(File, pk=pk)
+    if request.method == "POST":
+        form = FileUploadForm(request.POST, request.FILES, instance=file_instance)
+        if form.is_valid():
+            form.save()
+            return redirect("others:file_list")
+    else:
+        form = FileUploadForm(instance=file_instance)
+    return render(
+        request, "others/file_edit.html", {"form": form, "file": file_instance}
+    )
 
 
 @login_required
@@ -38,8 +47,8 @@ def file_upload(request):
 
 
 @login_required()
-def file_download(request, content_id):
-    content = get_object_or_404(File, id=content_id)
+def file_download(request, pk):
+    content = get_object_or_404(File, pk=pk)
     filename = content.filename + os.path.splitext(content.file.name)[1]
     return FileResponse(
         open(content.file.path, "rb"), as_attachment=False, filename=filename

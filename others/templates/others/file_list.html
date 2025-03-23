@@ -59,8 +59,8 @@
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ file.filename }}</h5>
-                    <a href="{% url 'others:file_edit' file.pk %}" class="btn btn-primary">Edit</a>
-                    <a href="{% url 'others:file_download' file.pk %}" class="btn btn-secondary">Download</a>
+                    <a href="{% url 'others:file_edit' file.pk %}" class="btn btn-primary">編集</a>
+                    <a href="{% url 'others:file_download' file.pk %}" class="btn btn-secondary">ダウンロード</a>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
             <tr>
                 <th>Filename</th>
                 <th>Uploaded At</th>
-                <th>Actions</th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -81,7 +81,8 @@
                 <td>{{ file.filename }}</td>
                 <td>{{ file.created_at }}</td>
                 <td>
-                    <a href="{% url 'others:file_detail' file.pk %}" class="btn btn-sm btn-primary">View</a>
+                    <a href="{% url 'others:file_edit' file.pk %}" class="btn btn-sm btn-primary">編集</a>
+                    <a href="{% url 'others:file_download' file.pk %}" class="btn btn-sm btn-secondary">ダウンロード</a>
                 </td>
             </tr>
             {% endfor %}
