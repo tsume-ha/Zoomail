@@ -8,6 +8,7 @@ from .forms import FileUploadForm
 def file_list(request):
     files = File.objects.all()
     view_mode = request.GET.get("view", "list")
+    print(files)
     return render(
         request, "others/file_list.html", {"files": files, "view_mode": view_mode}
     )

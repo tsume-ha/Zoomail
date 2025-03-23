@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block content %}
+{% block main %}
 <div class="container my-4">
     <h1>Upload File</h1>
     <form method="post" enctype="multipart/form-data">
@@ -11,4 +11,4 @@
     </form>
     <a href="{% url 'others:file_list' %}" class="btn btn-secondary mt-3">Back to List</a>
 </div>
-{% endblock content %}
+{% endblock main %}
