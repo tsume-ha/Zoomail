@@ -1,3 +1,5 @@
+import os
+from django.http import FileResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import File
@@ -33,3 +35,12 @@ def file_upload(request):
     else:
         form = FileUploadForm()
     return render(request, "others/file_upload.html", {"form": form})
+
+
+@login_required()
+def file_download(request, content_id):
+    content = get_object_or_404(File, id=content_id)
+    filename = content.filename + os.path.splitext(content.file.name)[1]
+    return FileResponse(
+        open(content.file.path, "rb"), as_attachment=False, filename=filename
+    )

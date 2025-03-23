@@ -59,7 +59,8 @@
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ file.filename }}</h5>
-                    <a href="{% url 'others:file_detail' file.pk %}" class="btn btn-primary">View Details</a>
+                    <a href="{% url 'others:file_edit' file.pk %}" class="btn btn-primary">Edit</a>
+                    <a href="{% url 'others:file_download' file.pk %}" class="btn btn-secondary">Download</a>
                 </div>
             </div>
         </div>
