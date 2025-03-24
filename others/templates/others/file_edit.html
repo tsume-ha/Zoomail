@@ -12,10 +12,11 @@
     <div class="mb-3">
       <label for="{{ form.file.id_for_label }}">{{ form.file.label }}</label>
       <div class="mb-1">
-        <span>現在：{{ form.instance.filename }}</span>
+        <span>現在：<a href="{% url 'others:file_download' file.pk %}">{{ form.instance.filename }}</a></span>
       </div>
       <div>
-        {{ form.file }}
+        <span>変更：</span>
+        {{ form.file_input }}
       </div>
     </div>
     <div class="mb-3">

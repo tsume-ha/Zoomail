@@ -29,9 +29,16 @@ class FileEditForm(forms.ModelForm):
         model = File
         fields = ["file", "filename"]
 
+    @property
+    def file_input(self):
+        return self.fields["file"].widget.render(
+            name=self.add_prefix("file"), value="", attrs={"class": "form-control"}
+        )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["file"].widget.attrs.update({"class": "form-control"})
+        self.fields["file"].label = "ファイル"
+        self.fields["file"].widget = forms.FileInput(attrs={"class": "form-control"})
         self.fields["filename"].widget.attrs.update({"class": "form-control"})
         self.file_ext = ""
         if self.instance and getattr(self.instance, "pk", None):
@@ -45,8 +52,13 @@ class FileEditForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        input_basename = self.cleaned_data.get("filename", "")
-        instance.filename = input_basename + self.file_ext
+        if "file" in self.changed_data:
+            uploaded_file = self.files.get("file")
+            if uploaded_file:
+                instance.filename = uploaded_file.name
+        else:
+            input_basename = self.cleaned_data.get("filename", "")
+            instance.filename = input_basename + self.file_ext
         if commit:
             instance.save()
         return instance
