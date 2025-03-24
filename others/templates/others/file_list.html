@@ -70,19 +70,23 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Filename</th>
-                <th>Uploaded At</th>
+                <th>ファイル</th>
+                <th>更新日</th>
                 <th>操作</th>
             </tr>
         </thead>
         <tbody>
             {% for file in files %}
             <tr>
-                <td>{{ file.filename }}</td>
-                <td>{{ file.created_at }}</td>
+                <td class="flex items-center"><a href="{% url 'others:file_download' file.pk %}" >{{ file.filename }}</a></td>
+                <td><span class="small">{{ file.created_at }}</span></td>
                 <td>
-                    <a href="{% url 'others:file_edit' file.pk %}" class="btn btn-sm btn-primary">編集</a>
-                    <a href="{% url 'others:file_download' file.pk %}" class="btn btn-sm btn-secondary">ダウンロード</a>
+                    <a href="{% url 'others:file_edit' file.pk %}" class="btn btn-sm btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg> 
+                    </a>
+                    <a href="{% url 'others:file_download' file.pk %}" class="btn btn-sm btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    </a>
                 </td>
             </tr>
             {% endfor %}
@@ -91,7 +95,7 @@
     {% endif %}
     {% else %}
     <div class="alert alert-info">
-        No files uploaded yet. Click <a href="{% url 'others:file_upload' %}">Upload File</a> to add your first file.
+        アップロードされたファイルはありません。最初のファイルは<a href="{% url 'others:file_upload' %}">アップロード</a>からファイルを追加してください。
     </div>
     {% endif %}
 </div>
