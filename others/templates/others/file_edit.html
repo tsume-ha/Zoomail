@@ -9,16 +9,23 @@
 <div class="container my-4">
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <div>
+    <div class="mb-3">
       <label for="{{ form.file.id_for_label }}">{{ form.file.label }}</label>
-      {{ form.file }}
+      <div class="mb-1">
+        <span>現在：{{ form.instance.filename }}</span>
+      </div>
+      <div>
+        {{ form.file }}
+      </div>
     </div>
-    <div>
-      <label for="{{ form.filename.id_for_label }}">{{ form.filename.label }}</label>
-      {{ form.filename }}
-      <span>{{ form.file_ext }}</span>
+    <div class="mb-3">
+      <label for="{{ form.filename.id_for_label }}" class="form-label">{{ form.filename.label }}</label>
+      <div class="d-flex">
+        {{ form.filename }}
+        <span class="align-self-center ms-2">{{ form.file_ext }}</span>
+      </div>
     </div>
-    <button type="submit">保存</button>
+    <button type="submit" class="btn btn-primary">保存</button>
   </form>
     <a href="{% url 'others:file_list' %}" class="btn btn-secondary mt-3">戻る</a>
 </div>

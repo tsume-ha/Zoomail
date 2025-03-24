@@ -31,6 +31,8 @@ class FileEditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["file"].widget.attrs.update({"class": "form-control"})
+        self.fields["filename"].widget.attrs.update({"class": "form-control"})
         self.file_ext = ""
         if self.instance and getattr(self.instance, "pk", None):
             full_name = self.instance.filename
