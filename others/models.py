@@ -47,6 +47,7 @@ class File(models.Model):
             self.generate_thumbnail()
 
     def generate_thumbnail(self):
+        print("generate_thumbnail")
         if self.file.name.lower().endswith((".jpg", ".jpeg", ".png", ".gif")):
             self.create_image_thumbnail()
         elif self.file.name.lower().endswith(".pdf"):

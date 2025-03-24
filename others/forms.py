@@ -20,3 +20,9 @@ class FileUploadForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class FileEditForm(forms.ModelForm):
+    class Meta:
+        model = File
+        fields = ["file", "filename"]

@@ -3,14 +3,13 @@ from django.http import FileResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import File
-from .forms import FileUploadForm
+from .forms import FileUploadForm, FileEditForm
 
 
 @login_required
 def file_list(request):
     files = File.objects.all()
     view_mode = request.GET.get("view", "list")
-    print(files)
     return render(
         request, "others/file_list.html", {"files": files, "view_mode": view_mode}
     )
@@ -20,12 +19,12 @@ def file_list(request):
 def file_edit(request, pk):
     file_instance = get_object_or_404(File, pk=pk)
     if request.method == "POST":
-        form = FileUploadForm(request.POST, request.FILES, instance=file_instance)
+        form = FileEditForm(request.POST, request.FILES, instance=file_instance)
         if form.is_valid():
             form.save()
             return redirect("others:file_list")
     else:
-        form = FileUploadForm(instance=file_instance)
+        form = FileEditForm(instance=file_instance)
     return render(
         request, "others/file_edit.html", {"form": form, "file": file_instance}
     )
