@@ -24,6 +24,7 @@ class FileUploadForm(forms.ModelForm):
 
 class FileEditForm(forms.ModelForm):
     filename = forms.CharField(label="ファイル名", max_length=255)
+    delete = forms.BooleanField(required=False, label="削除")
 
     class Meta:
         model = File
@@ -40,6 +41,7 @@ class FileEditForm(forms.ModelForm):
         self.fields["file"].label = "ファイル"
         self.fields["file"].widget = forms.FileInput(attrs={"class": "form-control"})
         self.fields["filename"].widget.attrs.update({"class": "form-control"})
+        self.fields["delete"].widget.attrs.update({"class": "form-check-input"})
         self.file_ext = ""
         if self.instance and getattr(self.instance, "pk", None):
             full_name = self.instance.filename
@@ -52,6 +54,8 @@ class FileEditForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit=False)
+        if self.cleaned_data.get("delete"):
+            instance.is_deleted = True
         if "file" in self.changed_data:
             uploaded_file = self.files.get("file")
             if uploaded_file:

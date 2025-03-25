@@ -26,6 +26,9 @@
         <span class="align-self-center ms-2">{{ form.file_ext }}</span>
       </div>
     </div>
+    <div class="mb-3 form-check">
+      {{ form.delete }} {{ form.delete.label_tag }}
+    </div>
     <button type="submit" class="btn btn-primary">保存</button>
   </form>
     <a href="{% url 'others:file_list' %}" class="btn btn-secondary mt-3">戻る</a>

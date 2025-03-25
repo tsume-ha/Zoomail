@@ -1,5 +1,6 @@
 import os
 from django.http import FileResponse
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import File
@@ -8,8 +9,8 @@ from .forms import FileUploadForm, FileEditForm
 
 @login_required
 def file_list(request):
-    files = File.objects.all()
-    view_mode = request.GET.get("view", "list")
+    files = File.objects.filter(is_deleted=False).order_by("-created_at")
+    view_mode = request.GET.get("view", "grid")
     return render(
         request, "others/file_list.html", {"files": files, "view_mode": view_mode}
     )
@@ -19,6 +20,11 @@ def file_list(request):
 def file_edit(request, pk):
     file_instance = get_object_or_404(File, pk=pk)
     if request.method == "POST":
+        if "delete" in request.POST:
+            file_instance.is_deleted = True
+            file_instance.save()
+            messages.success(request, f"{file_instance.filename}を削除しました。")
+            return redirect("others:file_list")
         form = FileEditForm(request.POST, request.FILES, instance=file_instance)
         if form.is_valid():
             form.save()

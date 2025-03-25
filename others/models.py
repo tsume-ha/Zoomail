@@ -40,6 +40,7 @@ class File(models.Model):
         on_delete=models.SET_NULL,
         related_name="updated_other_file",
     )
+    is_deleted = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
