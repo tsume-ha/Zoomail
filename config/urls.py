@@ -32,5 +32,6 @@ urlpatterns = [
     path("kansou/", include("kansou.urls", namespace="kansou")),
     path("mypage/", include("members.urls", namespace="mypage")),
     path("others/", include("others.urls", namespace="others")),
+    path("howto/", include("howto.urls", namespace="howto")),
     path("download/", include("private_storage.urls")),
 ]
