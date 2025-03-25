@@ -50,26 +50,39 @@
     </div>
     {% if files %}
     {% if view_mode == "grid" %}
-    <div class="row">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
         {% for file in files %}
-        <div class="col-md-3 mb-3">
-            <div class="card">
-                {% if file.thumbnail %}
-                <img src="{{ file.thumbnail.url }}" class="card-img-top" alt="{{ file.filename }}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ file.filename }}</h5>
-                    <a href="{% url 'others:file_edit' file.pk %}" class="btn btn-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg> 
-                    </a>
-                    <a href="{% url 'others:file_download' file.pk %}" class="btn btn-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                    </a>
-                </div>
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0">
+            {% if file.thumbnail %}
+            <a href="{% url 'others:file_download' file.pk %}" target="_blank">
+              <img src="{{ file.thumbnail.url }}" class="card-img-top" alt="{{ file.filename }}">
+            </a>
+            {% endif %}
+            <div class="card-body text-center d-flex flex-column">
+              <h5 class="card-title fw-bold"><a href="{% url 'others:file_download' file.pk %}" target="_blank" >{{ file.filename }}</a></h5>
+              <div class="d-flex justify-content-center gap-2 mt-auto">
+                <a href="{% url 'others:file_edit' file.pk %}" class="btn btn-primary rounded-pill">
+                  <!-- 編集アイコン -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
+                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path>
+                    <path d="m15 5 4 4"></path>
+                  </svg>
+                </a>
+                <a href="{% url 'others:file_download' file.pk %}" target="_blank" class="btn btn-secondary rounded-pill">
+                  <!-- ダウンロードアイコン -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
             </div>
+          </div>
         </div>
         {% endfor %}
-    </div>
+      </div>
     {% else %}
     <table class="table">
         <thead>
@@ -82,13 +95,13 @@
         <tbody>
             {% for file in files %}
             <tr>
-                <td><a href="{% url 'others:file_download' file.pk %}">{{ file.filename }}</a></td>
+                <td><a href="{% url 'others:file_download' file.pk %}" target="_blank">{{ file.filename }}</a></td>
                 <td><span>{{ file.created_at }}</span></td>
                 <td>
                     <a href="{% url 'others:file_edit' file.pk %}" class="btn btn-sm btn-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg> 
                     </a>
-                    <a href="{% url 'others:file_download' file.pk %}" class="btn btn-sm btn-primary">
+                    <a href="{% url 'others:file_download' file.pk %}" target="_blank" class="btn btn-sm btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                     </a>
                 </td>

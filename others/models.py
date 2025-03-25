@@ -43,12 +43,10 @@ class File(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        print("self.thumbnail", bool(self.thumbnail))
         if self.file and not self.thumbnail:
             self.generate_thumbnail()
 
     def generate_thumbnail(self):
-        print("generate_thumbnail")
         if self.file.name.lower().endswith((".jpg", ".jpeg", ".png", ".gif")):
             self.create_image_thumbnail()
         elif self.file.name.lower().endswith(".pdf"):
