@@ -43,7 +43,8 @@ class File(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if self.file and self.thumbnail is None:
+        print("self.thumbnail", bool(self.thumbnail))
+        if self.file and not self.thumbnail:
             self.generate_thumbnail()
 
     def generate_thumbnail(self):
@@ -55,7 +56,10 @@ class File(models.Model):
 
     def create_image_thumbnail(self):
         with Image.open(self.file.path) as img:
-            img.thumbnail((100, 100))
+            img.thumbnail((256, 256))
+            # Convert image to RGB if it has an alpha channel (e.g., RGBA)
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
             thumb_io = BytesIO()
             img.save(thumb_io, format="JPEG")
             thumb_content = ContentFile(thumb_io.getvalue())
@@ -65,10 +69,12 @@ class File(models.Model):
             )
 
     def create_pdf_thumbnail(self):
-        images = convert_from_path(self.file.path, first_page=0, last_page=1)
+        images = convert_from_path(self.file.path, first_page=1, last_page=1)
         if images:
+            # Resize the image to 256x256 pixels
+            resized_image = images[0].resize((256, 256), Image.LANCZOS)
             thumb_io = BytesIO()
-            images[0].save(thumb_io, format="JPEG")
+            resized_image.save(thumb_io, format="JPEG")
             thumb_content = ContentFile(thumb_io.getvalue())
             self.thumbnail.save(
                 os.path.splitext(os.path.basename(self.file.name))[0] + "_thumb.jpg",

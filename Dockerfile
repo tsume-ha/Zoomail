@@ -14,6 +14,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # パッケージ更新
 RUN apt-get update --fix-missing && apt upgrade -y
 
+# Pdf2imageの依存関係のインストール
+RUN apt-get install poppler-utils -y
+
 # pythonパッケージのインストール
 RUN pip install --upgrade pip
 RUN pip install uWSGI==2.0.28
