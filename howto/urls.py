@@ -11,8 +11,26 @@ urlpatterns = [
         name="hajimeni",
     ),
     path(
-        "login/",
-        TemplateView.as_view(template_name="howto/login.html"),
-        name="login",
+        "login/", TemplateView.as_view(template_name="howto/login.html"), name="login"
+    ),
+    path(
+        "mailtest/",
+        TemplateView.as_view(template_name="howto/mailtest.html"),
+        name="mailtest",
+    ),
+    path(
+        "mailview/",
+        TemplateView.as_view(template_name="howto/mailview.html"),
+        name="mailview",
+    ),
+    path(
+        "mailsend/",
+        TemplateView.as_view(template_name="howto/mailsend.html"),
+        name="mailsend",
+    ),
+    path(
+        "userinfo/",
+        TemplateView.as_view(template_name="howto/userinfo.html"),
+        name="userinfo",
     ),
 ]

@@ -1,14 +1,14 @@
 {% extends "base.html" %}
-{% block content %}
+{% block main %}
 <div class="container my-5">
-    <h2 class="fw-bold text-primary mb-4">
+    <h2 id="login-overview" class="fw-bold text-primary mb-4">
         <i class="bi bi-lock"></i> ログインについて 🔐🔐🔐
     </h2>
     <p>
         Zoomailでは、安全で簡単なログインのために2種類の認証方法を採用しています。利用しやすい方法を選んでログインしてください。
     </p>
 
-    <h3 class="fw-bold text-secondary mb-3">認証方法の種類</h3>
+    <h3 id="login-auth-methods" class="fw-bold text-secondary mb-3">認証方法の種類</h3>
     <ul class="list-group mb-4">
         <li class="list-group-item">
             <strong>LiveLogアカウントでのログイン（おすすめ）</strong>
@@ -23,10 +23,10 @@
 
     <hr class="mb-5">
 
-    <h2 class="fw-bold text-primary mb-4">初回ログインの手順</h2>
+    <h2 id="login-steps" class="fw-bold text-primary mb-4">初回ログインの手順</h2>
     <p>初回ログイン（サインアップ）は、どちらか一方の方法で行えば完了します。</p>
 
-    <h3 class="fw-bold text-secondary mb-3">LiveLogアカウントでのサインアップ（おすすめ）🌟</h3>
+    <h3 id="login-signup-livelog" class="fw-bold text-secondary mb-3">LiveLogアカウントでのサインアップ（おすすめ）🌟</h3>
     <ol class="list-group list-group-numbered mb-4">
         <li class="list-group-item">Zoomailトップページの「LiveLogでログイン」をクリックします。</li>
         <li class="list-group-item">LiveLogのログイン画面で、メールアドレスとパスワードを入力します。</li>
@@ -34,7 +34,7 @@
         <li class="list-group-item">登録完了で、次回以降も同じ方法でログイン可能です。</li>
     </ol>
 
-    <h3 class="fw-bold text-secondary mb-3">Googleアカウントでのサインアップ 🌟</h3>
+    <h3 id="login-signup-google" class="fw-bold text-secondary mb-3">Googleアカウントでのサインアップ 🌟</h3>
     <ol class="list-group list-group-numbered mb-4">
         <li class="list-group-item">事前にメーリス管理者へGoogleアカウント（Gmail）の登録を申請します。</li>
         <li class="list-group-item">管理者が登録すると、登録完了メールが届きます。</li>
@@ -44,10 +44,10 @@
 
     <hr class="mb-5">
 
-    <h2 class="fw-bold text-primary mb-4">認証方法の追加（アカウントの紐付け）🔗🔗🔗</h2>
+    <h2 id="login-linking" class="fw-bold text-primary mb-4">認証方法の追加（アカウントの紐付け）🔗🔗🔗</h2>
     <p>どちらか一方で初回登録をしたあとでも、もう一方の認証方法を追加できます。</p>
 
-    <h3 class="fw-bold text-secondary mb-3">アカウント紐付け手順</h3>
+    <h3 id="login-linking-steps" class="fw-bold text-secondary mb-3">アカウント紐付け手順</h3>
     <ol class="list-group list-group-numbered">
         <li class="list-group-item">現在のアカウントでログイン後、「マイページ」の「LiveLog・Google認証」を選択します。</li>
         <li class="list-group-item">認証を追加したいサービスの「認証する」をクリックします。</li>

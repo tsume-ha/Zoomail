@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% block content %}
+{% block main %}
 <div class="container my-5">
-    <h2 class="fw-bold text-primary mb-4">
+    <h2 id="about-site" class="fw-bold text-primary mb-4">
         <i class="bi bi-info-circle"></i> このサイトについて 🌟🌟🌟
+        <a href="#about-site" class="text-decoration-none ms-2"><i class="bi bi-link-45deg"></i></a>
     </h2>
     <p>
         京大アンプラグドでは、部内連絡や情報共有のために主に3つのウェブサイトを運用しています。それぞれの役割は以下の通りです。
@@ -27,7 +28,10 @@
         </li>
     </ol>
 
-    <h3 class="fw-bold text-secondary mb-4">サイト運用の背景 📚📚📚</h3>
+    <h3 id="site-background" class="fw-bold text-secondary mb-4">
+        サイト運用の背景 📚📚📚
+        <a href="#site-background" class="text-decoration-none ms-2"><i class="bi bi-link-45deg"></i></a>
+    </h3>
     <ul class="list-group mb-5">
         <li class="list-group-item">
             <strong>旧システムからの移行</strong><br>
@@ -43,8 +47,9 @@
         </li>
     </ul>
 
-    <h2 class="fw-bold text-primary mb-4">
+    <h2 id="live-log-login" class="fw-bold text-primary mb-4">
         <i class="bi bi-key"></i> LiveLogアカウントでの初回ログイン方法 🔑🔑🔑
+        <a href="#live-log-login" class="text-decoration-none ms-2"><i class="bi bi-link-45deg"></i></a>
     </h2>
     <ol class="list-group list-group-numbered">
         <li class="list-group-item">

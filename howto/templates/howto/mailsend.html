@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block content %}
+{% block main %}
 <div class="container my-5">
     <h2 class="fw-bold text-primary mb-4">
         <i class="bi bi-envelope-paper"></i> メーリスを送信する ✉️✉️✉️
@@ -9,7 +9,7 @@
     </p>
     <hr class="mb-5">
 
-    <h3 class="fw-bold text-secondary mb-3">① 入力</h3>
+    <h3 id="mailsend-input" class="fw-bold text-secondary mb-3">① 入力</h3>
     <ol class="list-group list-group-numbered mb-5">
         <li class="list-group-item">
             上部メニューから「メーリス送信」をクリックします。
@@ -29,14 +29,14 @@
         </li>
     </ol>
 
-    <h3 class="fw-bold text-secondary mb-3">② 確認</h3>
+    <h3 id="mailsend-confirm" class="fw-bold text-secondary mb-3">② 確認</h3>
     <p class="mb-5">
         送信前に入力内容を確認します。<br>
         - 内容を修正したい場合は「戻る」ボタンで戻ります。<br>
         - 問題がなければ「送信」ボタンをクリックします。
     </p>
 
-    <h3 class="fw-bold text-secondary mb-3">③ 送信完了</h3>
+    <h3 id="mailsend-complete" class="fw-bold text-secondary mb-3">③ 送信完了</h3>
     <ul class="list-group mb-5">
         <li class="list-group-item">
             送信が成功すると「メールが正常に送信されました！」と表示されます。
