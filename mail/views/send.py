@@ -12,6 +12,7 @@ from formtools.wizard.views import SessionWizardView
 from members.models import User
 from ..models import Message
 from ..forms import CompositeForm
+from ..send import MailisSender
 
 
 FORMS = [
@@ -113,6 +114,9 @@ class SendWizardView(SessionWizardView):
                 attachment = attachment_form.save(commit=False)
                 attachment.org_filename = attachment.file.name
                 attachment.save()
+
+        sender = MailisSender(message=message_obj)
+        sender.send()
 
         self.storage.reset()
         messages.success(self.request, "メーリスを送信しました。")

@@ -137,19 +137,11 @@ class MailisSender(SympleMailSender):
         self.load_attachment_list()
 
     def load_conent_list(self):
-        if self.message.years.filter(year=0).exists():
-            send_to_users = (
-                User.objects.filter(
-                    send_mail=True,
-                )
-                .annotate(
-                    send_email=Coalesce(NullIf("receive_email", Value("")), F("email"))
-                )
-                .values(
-                    [
-                        "send_email",
-                    ]
-                )
+        if self.message.to_groups.filter(year=0).exists():
+            send_to_users = User.objects.filter(
+                send_mail=True,
+            ).annotate(
+                send_email=Coalesce(NullIf("receive_email", Value("")), F("email"))
             )
             content_list = [
                 MailContent(
@@ -160,26 +152,18 @@ class MailisSender(SympleMailSender):
                     to_email=send_to_user.send_email,
                     from_email="zenkai@zoomail.ku-unplugged.net",
                     from_name=self.message.writer.get_short_name(),
-                    user=send_to_user.pk,
+                    user=send_to_user,
                 )
                 for send_to_user in send_to_users
             ]
             super().set_content_list(content_list)
         else:
             content_list = []
-            for year in self.message.years.all().values_list("year", flat=True):
-                send_to_users = (
-                    User.objects.filter(year=year, send_mail=True)
-                    .annotate(
-                        send_email=Coalesce(
-                            NullIf("receive_email", Value("")), F("email")
-                        )
-                    )
-                    .values(
-                        [
-                            "send_email",
-                        ]
-                    )
+            for to_group in self.message.to_groups.all():
+                send_to_users = User.objects.filter(
+                    year=to_group.year, send_mail=True
+                ).annotate(
+                    send_email=Coalesce(NullIf("receive_email", Value("")), F("email"))
                 )
                 content_list += [
                     MailContent(
@@ -188,7 +172,7 @@ class MailisSender(SympleMailSender):
                         + "\n\n--------------------------------\nこのメーリスのURLはこちら\nhttps://zoomail.ku-unplugged.net/mail/"
                         + str(self.message.pk),
                         to_email=send_to_user.send_email,
-                        from_email=f"{year - 1994}kaisei@zoomail.ku-unplugged.net",
+                        from_email=f"{to_group.year - 1994}kaisei@zoomail.ku-unplugged.net",
                         from_name=self.message.writer.get_short_name(),
                         user=send_to_user,
                     )

@@ -254,3 +254,9 @@ MESSAGE_TAGS = {
 # Private Storage
 PRIVATE_STORAGE_ROOT = BASE_DIR / "private_media"
 PRIVATE_STORAGE_AUTH_FUNCTION = "private_storage.permissions.allow_authenticated"
+
+# mail settings
+SEND_MAIL = False
+SEND_MAIL_API_ENDPOINT = os.getenv("SEND_MAIL_API_ENDPOINT", "")
+SEND_MAIL_API_ID = os.getenv("SEND_MAIL_API_ID", "")
+SEND_MAIL_API_KEY = os.getenv("SEND_MAIL_API_KEY", "")
