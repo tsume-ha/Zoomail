@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="fw-bold text-primary mb-4">
+        <i class="bi bi-envelope"></i> メール受信テストについて 📩📩📩
+    </h2>
+    <p>
+        Zoomailのメーリスが正しく受信できるかどうかを確認するためのテストメール機能があります。このページでは、テストメールの利用方法を説明します。
+    </p>
+    <hr class="mb-5">
+    <h3 class="fw-bold text-secondary mb-3">テストメールを送る方法</h3>
+    <ol class="list-group list-group-numbered mb-5">
+        <li class="list-group-item">上部メニューの「マイページ」をクリックします。</li>
+        <li class="list-group-item">「メーリス受信テスト」ボタンをクリックします。</li>
+        <li class="list-group-item">表示されたページにある「テストメール送信」ボタンをクリックします。</li>
+        <li class="list-group-item">登録済みの受信用メールアドレス宛にテストメールが送信されます。メールは <code>zenkai@zoomail.ku-unplugged.net</code>
+            から届きます。</li>
+    </ol>
+    <h3 class="fw-bold text-secondary mb-3">メールが届かない場合の確認事項</h3>
+    <ul class="list-group mb-5">
+        <li class="list-group-item">プロフィール設定で「メーリスを受信する」にチェックが入っているか。</li>
+        <li class="list-group-item">登録した受信用メールアドレスが正しく入力されているか。</li>
+        <li class="list-group-item">迷惑メールフォルダやプロモーションフォルダなどに振り分けられていないか。</li>
+        <li class="list-group-item">受信用メールアドレスが有効であるか（メールボックスが一杯ではないか）。</li>
+    </ul>
+    <p>
+        メールが届かない状態が続く場合は、Zoomailの管理者までご相談ください。
+    </p>
+    <hr class="mb-5">
+    <p class="mt-5">正しくメールを受信できるように設定を確認しましょう！😊</p>
+</div>
+{% endblock %}

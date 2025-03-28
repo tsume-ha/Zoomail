@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="fw-bold text-primary mb-4">
+        <i class="bi bi-pencil-square"></i> ユーザー情報の設定 📝📝📝
+    </h2>
+    <p>
+        Zoomailを快適に利用するために、自分のユーザー情報を適切に設定しましょう。ここでは、「名前・ニックネーム」と「受信用メールアドレス」の設定方法を説明します。
+    </p>
+    <hr class="mb-5">
+
+    <h3 class="fw-bold text-secondary mb-3">名前・ニックネームの設定</h3>
+    <p>
+        Zoomail上で表示される自分の名前やニックネームを設定できます。
+    </p>
+    <h4 class="fw-bold text-secondary mb-3">設定方法</h4>
+    <ol class="list-group list-group-numbered mb-5">
+        <li class="list-group-item">上部メニューの「マイページ」をクリックします。</li>
+        <li class="list-group-item">「ユーザー情報変更」ボタンをクリックします。</li>
+        <li class="list-group-item">
+            氏名、ふりがなを入力します（必須）。
+            <br><small class="text-muted">※ふりがなは、登録者リストの表示順序に使用されます。</small>
+        </li>
+        <li class="list-group-item">
+            ニックネームは任意ですが、設定するとメーリス送信時の表示名として使われます。
+        </li>
+    </ol>
+
+    <hr class="mb-5">
+
+    <h3 class="fw-bold text-secondary mb-3">受信用メールアドレスの設定 📧📧📧</h3>
+    <p>
+        メーリスを受け取るメールアドレスを自由に設定することができます。
+    </p>
+    <div class="mb-4">
+        <h5 class="fw-bold">受信用メールアドレスを設定しない場合</h5>
+        <ul class="list-group">
+            <li class="list-group-item">
+                メーリスは、初回登録時に使用したメールアドレスへ送信されます。<br>
+                <small class="text-muted">
+                    - Googleアカウントで登録 → Gmailアドレス<br>
+                    - LiveLogアカウントで登録 → LiveLogでログインするときに利用するメールアドレス
+                </small>
+            </li>
+        </ul>
+    </div>
+    <div class="mb-5">
+        <h5 class="fw-bold">受信用メールアドレスを設定した場合</h5>
+        <ul class="list-group">
+            <li class="list-group-item">
+                設定したメールアドレスにのみ、メーリスが届きます。<br>
+                <small class="text-muted">初回登録時のメールアドレスには届きません。</small>
+            </li>
+        </ul>
+    </div>
+
+    <h4 class="fw-bold text-secondary mb-3">設定方法</h4>
+    <ol class="list-group list-group-numbered">
+        <li class="list-group-item">「マイページ」をクリックし、「ユーザー情報変更」を選択します。</li>
+        <li class="list-group-item">「受信用メールアドレス」の項目に、使用したいメールアドレスを入力します。</li>
+        <li class="list-group-item">保存すると設定が完了します。</li>
+    </ol>
+    <p class="mt-4">
+        メールアドレスの確認やテストメール受信については、「マイページ」の「メーリス受信テスト」から行えます。
+    </p>
+    <p class="mt-5">
+        情報を正しく設定して、部内の情報共有をスムーズにしましょう！😊
+    </p>
+</div>
+{% endblock %}
