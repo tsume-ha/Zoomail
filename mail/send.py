@@ -200,6 +200,7 @@ class MailisSender(SympleMailSender):
         attachment_list = []
         for attachment in self.message.attachments.all():
             file = MailAttachment()
+            file.filename = attachment.org_filename
             file.load_file(attachment.attachment_file.path)
             attachment_list.append(file)
         super().set_attachment_list(attachment_list)
