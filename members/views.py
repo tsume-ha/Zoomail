@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import TestMail, UserInvitation
-from .forms import UserUpdateForm, TestMailForm, UserInvitationForm
+from .forms import UserUpdateForm, TestMailForm, UserInvitationForm, FirstRegisterForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
 
@@ -14,7 +14,26 @@ def index(request):
 
 @login_required
 def first_register(request):
-    return render(request, "members/first_register.html")
+    if request.method == "POST":
+        form = FirstRegisterForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            django_messages.success(
+                request, "初回登録が完了しました。ようこそZoomailへ！"
+            )
+            return redirect("members:index")
+        else:
+            if not request.POST.get("receive_email", "").strip():
+                form.fields["receive_email"].widget.attrs["value"] = request.user.email
+    else:
+        form = FirstRegisterForm(
+            instance=request.user, initial={"receive_email": request.user.email}
+        )
+        django_messages.success(
+            request,
+            "LiveLogとの連携が完了しました！続けてZoomailにて必要な情報を登録してください。",
+        )
+    return render(request, "members/first_register.html", {"form": form})
 
 
 @login_required
@@ -183,9 +202,6 @@ def edit_invitation(request, invitation_id):
                 django_messages.error(request, f"メール送信エラー: {str(e)}")
 
             django_messages.success(request, "招待情報を更新しました。")
-            return redirect("members:invitation_list")
-    else:
-        form = UserInvitationForm(instance=invitation)
 
     context = {
         "form": form,

@@ -3,6 +3,34 @@ from .models import User, UserInvitation
 from social_django.models import UserSocialAuth
 
 
+class FirstRegisterForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["fullname", "nickname", "receive_email", "send_mail"]
+        widgets = {
+            "fullname": forms.TextInput(attrs={"class": "form-control"}),
+            "nickname": forms.TextInput(attrs={"class": "form-control"}),
+            "receive_email": forms.EmailInput(attrs={"class": "form-control"}),
+            "send_mail": forms.CheckboxInput(
+                attrs={"class": "form-check-input", "role": "switch"}
+            ),
+        }
+        labels = {
+            "fullname": "フルネーム",
+            "nickname": "ニックネーム",
+            "receive_email": "受信用メールアドレス",
+            "send_mail": "メーリスを受信する",
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.instance.pk:
+            self.fields["receive_email"].initial = (
+                self.instance.email if hasattr(self.instance, "email") else ""
+            )
+            self.fields["send_mail"].initial = True
+
+
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User

@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     index,
+    first_register,
     profile,
     test_mail,
     invitation_list,
@@ -10,6 +11,7 @@ from .views import (
 
 urlpatterns = [
     path("", index, name="index"),
+    path("first_register/", first_register, name="first_register"),
     path("profile/", profile, name="profile"),
     path("test_mail/", test_mail, name="test_mail"),
     path("invite/", invitation_list, name="invitation_list"),

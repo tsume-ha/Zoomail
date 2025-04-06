@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+
+<h2 class="fw-bold text-primary mb-4">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-mail-plus-icon lucide-mail-plus">
+        <path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        <path d="M19 16v6" />
+        <path d="M16 19h6" />
+    </svg>
+    Zoomail初回登録
+</h2>
+
+<p>
+    京大アンプラグドへようこそ！
+</p>
+
+<p class="line-height-1_5">
+    <strong>Zoomail</strong>は、京大アンプラグドの<strong>メール配信プラットフォーム</strong>です。<br>
+    このZoomailを通して、皆さんにはサークルの全体連絡である<strong>メーリス</strong>が届きます。<br>
+    日常的な連絡はSlackで行われますが、Zoomailからは<strong>ライブの告知</strong>や<strong>合宿のお知らせ</strong>、<strong>会費の振り込み</strong>など、<strong>サークル運営にかかわる重要な連絡</strong>が送られてきます！
+</p>
+<p>このフォームにメールアドレスを登録して、メーリスを受信しましょう</p>
+
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">登録する</button>
+</form>
+
+{% endblock %}
