@@ -98,6 +98,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         else:
             return self.receive_email
 
+    def is_filled_vaild(self):
+        if self.year is None:
+            return False
+        if self.fullname is None or self.fullname == "":
+            return False
+        if self.furigana is None or self.furigana == "":
+            return False
+        return True
+
 
 class TestMail(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="test_mail")

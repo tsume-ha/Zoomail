@@ -14,6 +14,12 @@ def index(request):
 
 @login_required
 def first_register(request):
+    if request.user and request.user.is_filled_vaild():
+        django_messages.info(
+            request,
+            "すでに初回登録は完了しています。",
+        )
+        return redirect("members:profile")
     if request.method == "POST":
         form = FirstRegisterForm(request.POST, instance=request.user)
         if form.is_valid():
