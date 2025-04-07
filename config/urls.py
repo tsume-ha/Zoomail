@@ -19,6 +19,7 @@ from django.contrib import admin
 from custom_admin.admin import custom_admin_site
 from django.contrib.auth.views import LogoutView
 from django.urls import path, include
+from mail.views.status_api import MailStatusView
 
 urlpatterns = [
     path("db/", admin.site.urls),
@@ -34,4 +35,5 @@ urlpatterns = [
     path("others/", include("others.urls", namespace="others")),
     path("howto/", include("howto.urls", namespace="howto")),
     path("download/", include("private_storage.urls")),
+    path("api/mail/status/", MailStatusView.as_view(), name="mail_status_api"),
 ]
