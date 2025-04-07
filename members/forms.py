@@ -6,10 +6,14 @@ from social_django.models import UserSocialAuth
 class FirstRegisterForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["fullname", "nickname", "receive_email", "send_mail"]
+        fields = ["fullname", "furigana", "receive_email", "send_mail"]
         widgets = {
-            "fullname": forms.TextInput(attrs={"class": "form-control"}),
-            "nickname": forms.TextInput(attrs={"class": "form-control"}),
+            "fullname": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "京大太郎"}
+            ),
+            "furigana": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "きょうだいたろう"}
+            ),
             "receive_email": forms.EmailInput(attrs={"class": "form-control"}),
             "send_mail": forms.CheckboxInput(
                 attrs={"class": "form-check-input", "role": "switch"}
@@ -17,7 +21,7 @@ class FirstRegisterForm(forms.ModelForm):
         }
         labels = {
             "fullname": "フルネーム",
-            "nickname": "ニックネーム",
+            "furigana": "ふりがな",
             "receive_email": "受信用メールアドレス",
             "send_mail": "メーリスを受信する",
         }
