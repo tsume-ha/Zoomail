@@ -39,7 +39,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["24a4-39-111-233-45.ngrok-free.app", "localhost"]
 
 
 # Application definition
@@ -256,7 +256,8 @@ PRIVATE_STORAGE_ROOT = BASE_DIR / "private_media"
 PRIVATE_STORAGE_AUTH_FUNCTION = "private_storage.permissions.allow_authenticated"
 
 # mail settings
-SEND_MAIL = False
+SEND_MAIL = True
 SEND_MAIL_API_ENDPOINT = os.getenv("SEND_MAIL_API_ENDPOINT", "")
 SEND_MAIL_API_ID = os.getenv("SEND_MAIL_API_ID", "")
 SEND_MAIL_API_KEY = os.getenv("SEND_MAIL_API_KEY", "")
+MAIL_STATUS_API_KEY = os.getenv("MAIL_STATUS_API_KEY", "")
