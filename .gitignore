@@ -34,3 +34,4 @@ token.pickle
 log/*
 
 .env
+dump.json
