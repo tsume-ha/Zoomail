@@ -7,13 +7,15 @@ class FirstRegisterRedirectMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        response = self.get_response(request)
-        return response
-
-    def process_view(self, request, view_func, view_args, view_kwargs):
         user = request.user
         if user.is_authenticated:
             if not user.is_filled_vaild():
                 form_path = reverse("members:first_register")
-                if request.path != form_path:
-                    return redirect(to=form_path)
+                auth_path = "/auth/"
+                if request.path != form_path and not str(request.path).startswith(
+                    auth_path
+                ):
+                    return redirect(form_path)
+
+        response = self.get_response(request)
+        return response
