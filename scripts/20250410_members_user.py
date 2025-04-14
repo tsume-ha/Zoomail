@@ -42,3 +42,78 @@ for row in user_data:
 print(f"Creating {len(users)} users...")
 User.objects.bulk_create(users)
 print("Users created.")
+
+from social_django.models import UserSocialAuth
+
+user_social_auth_data = [
+    row for row in data if row["model"] == "social_django.usersocialauth"
+]
+print(f"Found {len(user_social_auth_data)} user social auths in dump.json")
+user_social_auths = []
+for row in user_social_auth_data:
+    fields = row["fields"]
+    user_social_auth = UserSocialAuth(
+        pk=row["pk"],
+        user_id=fields["user"],
+        provider=fields["provider"],
+        uid=fields["uid"],
+        extra_data=json.dumps(fields["extra_data"]),
+        created=datetime.datetime.fromisoformat(fields["created"]),
+        modified=datetime.datetime.fromisoformat(fields["modified"]),
+    )
+    user_social_auths.append(user_social_auth)
+print(f"Creating {len(user_social_auths)} user social auths...")
+UserSocialAuth.objects.bulk_create(user_social_auths)
+print("User social auths created.")
+
+
+from mail.models import Message, ToGroup
+
+to_group_data = [row for row in data if row["model"] == "board.togroup"]
+print(f"Found {len(to_group_data)} to groups in dump.json")
+to_groups = []
+for row in to_group_data:
+    fields = row["fields"]
+    to_group = ToGroup(
+        pk=row["pk"],
+        year=fields["year"],
+        leader_id=fields["leader"],
+        label=fields["label"],
+    )
+    to_groups.append(to_group)
+print(f"Creating {len(to_groups)} to groups...")
+ToGroup.objects.bulk_create(to_groups)
+print("To groups created.")
+
+message_data = [row for row in data if row["model"] == "board.message"]
+print(f"Found {len(message_data)} messages in dump.json")
+messages = []
+for row in message_data:
+    fields = row["fields"]
+    message = Message(
+        pk=row["pk"],
+        title=fields["title"],
+        content=fields["content"],
+        sender_id=fields["sender"],
+        writer_id=fields["writer"],
+        updated_at=datetime.datetime.fromisoformat(fields["updated_at"]),
+        created_at=datetime.datetime.fromisoformat(fields["created_at"]),
+    )
+    messages.append(message)
+print(f"Creating {len(messages)} messages...")
+Message.objects.bulk_create(messages)
+print("Messages created.")
+
+for message in Message.objects.all():
+    to_group_data = [
+        row
+        for row in data
+        if row["model"] == "board.messageyear"
+        and row["fields"]["message"] == message.pk
+    ]
+    print(f"Found {len(to_group_data)} to groups for message {message.pk}")
+    for row in to_group_data:
+        fields = row["fields"]
+        to_group = ToGroup.objects.get(year=fields["year"])
+        message.to_groups.add(to_group)
+print("Messages to groups added.")
