@@ -67,7 +67,7 @@ UserSocialAuth.objects.bulk_create(user_social_auths)
 print("User social auths created.")
 
 
-from mail.models import Message, ToGroup
+from mail.models import Message, ToGroup, Attachment
 
 to_group_data = [row for row in data if row["model"] == "board.togroup"]
 print(f"Found {len(to_group_data)} to groups in dump.json")
@@ -117,3 +117,36 @@ for message in Message.objects.all():
         to_group = ToGroup.objects.get(year=fields["year"])
         message.to_groups.add(to_group)
 print("Messages to groups added.")
+
+from django.core.files.base import ContentFile
+
+message_attachment_data = [row for row in data if row["model"] == "board.attachment"]
+print(f"Found {len(message_attachment_data)} message attachments in dump.json")
+
+for row in message_attachment_data:
+    fields = row["fields"]
+    filepath = os.path.join("private_media", "old", fields["attachment_file"])
+    with open(filepath, "rb") as f:
+        file_content = f.read()
+    content_file = ContentFile(file_content)
+    message_attachment = Attachment(
+        pk=row["pk"],
+        message_id=fields["message"],
+        org_filename=os.path.split(fields["attachment_file"])[1],
+    )
+    message_attachment.file.save(
+        os.path.split(fields["attachment_file"])[1], content_file, save=False
+    )
+    message_attachment.save()
+print("Message attachments created.")
+
+for message in Message.objects.filter(attachments__isnull=False):
+    for index, attachment in enumerate(message.attachments.all()):
+        if index == 0:
+            attachment.org_filename = message.title + attachment.extension()
+        else:
+            attachment.org_filename = (
+                message.title + f" ({index})" + attachment.extension()
+            )
+        attachment.save()
+print("Message attachments renamed.")
