@@ -59,6 +59,30 @@ for row in picture_data:
     album.save()
 print("Pictures created.")
 
+from kansou.models import Kansouyoushi
+
+kansou_data = [row for row in data if row["model"] == "kansou.kansouyoushi"]
+print(f"Found {len(kansou_data)} kansous in dump.json")
+for row in kansou_data:
+    fields = row["fields"]
+    kansou = Kansouyoushi(
+        pk=row["pk"],
+        title=fields["title"],
+        detail=fields["detail"],
+        performed_at=datetime.date.fromisoformat(fields["performed_at"]),
+        created_at=datetime.datetime.fromisoformat(fields["created_at"]),
+        created_by_id=fields["created_by"],
+    )
+    if fields["file"]:
+        filepath = os.path.join("private_media", "old", fields["file"])
+        with open(filepath, "rb") as f:
+            file_content = f.read()
+        content_file = ContentFile(file_content)
+        kansou.file.save(fields["file"], content_file, save=False)
+    kansou.save()
+print("Kansous created.")
+
+
 from others.models import File
 
 other_data = [row for row in data if row["model"] == "otherdocs.content"]

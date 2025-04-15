@@ -8,9 +8,8 @@ from private_storage.fields import PrivateFileField
 def kansou_upload_to(instance, filename):
     performed_at = instance.performed_at
     extension = os.path.splitext(filename)[-1]
-    year = performed_at.strftime("%Y")
-    year_date = performed_at.strftime("%Y%m%d")
-    return "kansou/{}/{}".format(year, year_date + extension)
+    date = performed_at.strftime("%Y-%m-%d")
+    return "kansou/{}".format(date + extension)
 
 
 class Kansouyoushi(models.Model):
