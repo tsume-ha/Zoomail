@@ -58,3 +58,27 @@ for row in picture_data:
         album.thumbnail.save(fields["thumbnail"], content_file, save=False)
     album.save()
 print("Pictures created.")
+
+from others.models import File
+
+other_data = [row for row in data if row["model"] == "otherdocs.content"]
+print(f"Found {len(other_data)} others in dump.json")
+for row in other_data:
+    fields = row["fields"]
+    item = File(
+        pk=row["pk"],
+        filename=fields["title"],
+        created_at=datetime.datetime.fromisoformat(fields["created_at"]),
+        updated_at=datetime.datetime.fromisoformat(fields["updated_at"]),
+        created_by_id=fields["created_by"],
+        updated_by_id=fields["updated_by"],
+        is_deleted=False,
+    )
+    if fields["file"]:
+        filepath = os.path.join("private_media", "old", fields["file"])
+        with open(filepath, "rb") as f:
+            file_content = f.read()
+        content_file = ContentFile(file_content)
+        item.file.save(fields["file"], content_file, save=False)
+    item.save()
+print("Others created.")
