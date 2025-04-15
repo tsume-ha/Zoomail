@@ -106,3 +106,18 @@ for row in other_data:
         item.file.save(fields["file"], content_file, save=False)
     item.save()
 print("Others created.")
+
+
+from top.models import Announcement
+
+announsement_data = [row for row in data if row["model"] == "home.announcement"]
+print(f"Found {len(announsement_data)} announcements in dump.json")
+for row in announsement_data:
+    fields = row["fields"]
+    item = Announcement(
+        pk=row["pk"],
+        text=fields["text"],
+        created_at=datetime.datetime.fromisoformat(fields["created_at"]),
+    )
+    item.save()
+print("Announcements created.")

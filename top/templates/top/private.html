@@ -3,7 +3,7 @@
 
 {% block main %}
 <div class="container text-white">
-    <div class=" logo-wrapper">
+    <div class="logo-wrapper">
         <img id="logo" class="w-100" src="{% static 'img/zoomail.png' %}" alt="zoomail" />
     </div>
     <p class="text-center my-4">
@@ -15,7 +15,11 @@
             <h3 class="border-bottom border-white pb-1 px-2 fw-bold">New Contents</h3>
             <ul class="list-group list-group-flush">
                 {% for new_content in new_contents %}
-                <li class="list-group-item bg-transparent text-white py-2 border-0">{{new_content}}</li>
+                <li class="list-group-item bg-transparent text-white py-2 border-0">
+                    <a href="{{ new_content.4 }}" class="text-white">
+                        【{{ new_content.1 }}】 {{ new_content.3 }}
+                    </a>
+                </li>
                 {% endfor %}
             </ul>
         </div>
@@ -23,18 +27,18 @@
             <h3 class="border-bottom border-white pb-1 px-2 fw-bold">Announcements</h3>
             <ul class="list-group list-group-flush">
                 {% for announcement in announcements %}
-                <li class="list-group-item bg-transparent text-white py-2 border-0">{{announcement}}</li>
+                <li class="list-group-item bg-transparent text-white py-2 border-0">
+                    <small>{{ announcement.created_at|date:"Y/m/d" }}</small><br />
+                    {{ announcement.text }}
+                </li>
                 {% endfor %}
             </ul>
         </div>
     </div>
-
 </div>
 <style>
     body div.wrapper {
-
-        background-image: linear-gradient(rgba(56, 100, 113, 0.8),
-                rgba(56, 100, 113, 0.8)),
+        background-image: linear-gradient(rgba(56, 100, 113, 0.8), rgba(56, 100, 113, 0.8)),
             url("/static/img/LP-BG.jpeg") !important;
         background-repeat: no-repeat !important;
         background-size: cover !important;
@@ -42,10 +46,6 @@
 
     main p {
         text-shadow: 0 0 0.25rem var(--bs-gray);
-
-        >* {
-            display: inline-block;
-        }
     }
 
     header,
@@ -60,6 +60,12 @@
         display: block;
         max-width: 400px;
         margin: 1rem auto;
+    }
+    a.text-white {
+        text-decoration: none;
+    }
+    a.text-white:hover {
+        text-decoration: underline;
     }
 </style>
 {% endblock %}
