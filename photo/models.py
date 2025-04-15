@@ -6,13 +6,8 @@ import os
 
 
 def custom_upload_to(instance, filename):
-    now = datetime.datetime.now()
-    path = (
-        "photo_album_thumbnail/"
-        + str(now.year)
-        + "/"
-        + now.strftime("%Y_%m_%d__%H_%M_%S")
-    )
+    held_at = instance.held_at
+    path = "photo_album_thumbnail/" + held_at.strftime("%Y_%m_%d")
     extension = os.path.splitext(filename)[-1]
     return path + extension
 
