@@ -1,6 +1,3 @@
-volumes:
-  zoomail_database_data:
-
 networks:
   database:
     driver: bridge
@@ -48,4 +45,4 @@ services:
       - MARIADB_CHARACTER_SET_SERVER=utf8mb4
       - MARIADB_COLLATION_SERVER=utf8mb4_ja_0900_as_cs_ks
     volumes:
-      - zoomail_database_data:/var/lib/mysql
+      - ./mariadb:/var/lib/mysql
