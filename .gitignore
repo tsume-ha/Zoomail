@@ -33,5 +33,7 @@ token.pickle
 
 log/*
 
+collected_static/*
+
 .env
 dump.json
