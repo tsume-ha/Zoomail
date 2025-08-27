@@ -1,10 +1,12 @@
-# forms.py
 from typing import Any, Dict
 
 from django import forms
 from django.forms import inlineformset_factory
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
+
+from dal import autocomplete
+
 from .models import Message, Attachment, ToGroup
 from .models import User
 
@@ -47,7 +49,7 @@ class MessageForm(forms.ModelForm):
                 attrs={"max_length": 200, "class": "form-control"}
             ),
             "content": forms.Textarea(attrs={"class": "form-control"}),
-            "writer": forms.Select(attrs={"class": "form-control"}),
+            "writer": autocomplete.ModelSelect2(url="mail:send_autocomplete_writer"),
             "to_groups": forms.CheckboxSelectMultiple(
                 attrs={"class": "form-check-input"}
             ),
@@ -58,13 +60,6 @@ class MessageForm(forms.ModelForm):
             "writer": "差出人",
             "to_groups": "宛先",
         }
-
-    writer = forms.ModelChoiceField(
-        queryset=User.objects.all(),
-        required=True,
-        label="差出人",
-        widget=forms.Select(attrs={"class": "form-control"}),
-    )
 
 
 class AttachmentForm(forms.ModelForm):

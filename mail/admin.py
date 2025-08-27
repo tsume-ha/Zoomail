@@ -28,7 +28,7 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
     )
     list_display = (
         "title",
-        "years",
+        "to_groups",
         "sender",
         "writer",
         "created_at",
@@ -36,12 +36,12 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
         "error_num",
         "pending_num",
     )
-    list_display_links = ("title", "years")
+    list_display_links = ("title", "to_groups")
 
     inlines = [AttachmentAdmin]
 
-    def years(self, obj):
-        return list(obj.years.all())
+    def to_groups(self, obj):
+        return list(obj.to_groups.all())
 
     @admin.display(description="送信中")
     def pending_num(self, obj):

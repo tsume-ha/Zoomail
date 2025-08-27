@@ -10,6 +10,11 @@ urlpatterns = [
         name="attachment_download",
     ),
     path("send/", send.SendWizardView.as_view(), name="send"),
+    path(
+        "send/autocomplete/writer",
+        send.WriterAutoComplete.as_view(),
+        name="send_autocomplete_writer",
+    ),
 ]
 
 app_name = "mail"

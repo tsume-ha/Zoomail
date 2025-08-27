@@ -1,12 +1,17 @@
+import re
+import unicodedata
+
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django import forms
-from django.views.decorators.http import require_http_methods
+from django.db.models import Q
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
 from django.conf import settings
 
+from dal import autocomplete
 from formtools.wizard.views import SessionWizardView
 
 from members.models import User
@@ -122,3 +127,33 @@ class SendWizardView(SessionWizardView):
         messages.success(self.request, "メーリスを送信しました。")
         # すべて保存完了したら、メーリス一覧のページへリダイレクト
         return redirect("mail:inbox")
+
+
+class WriterAutoComplete(LoginRequiredMixin, autocomplete.Select2QuerySetView):
+    # 未ログイン時に403を返す（リダイレクトではなく）
+    raise_exception = True
+
+    def get_queryset(self):
+        qs = User.objects.all()
+
+        # 入力なし時に全件返さない
+        if not self.q:
+            return qs.none()
+
+        # 半角/全角スペースで分割＋NFKC正規化
+        tokens = [
+            unicodedata.normalize("NFKC", t)
+            for t in re.split(r"[\s\u3000]+", self.q.strip())
+            if t
+        ]
+
+        for tok in tokens:
+            # 「2024年」→「2024」を許容
+            t = tok[:-1] if tok.endswith("年") else tok
+            if t.isdigit():
+                qs = qs.filter(year=int(t))
+            else:
+                qs = qs.filter(Q(fullname__icontains=tok) | Q(nickname__icontains=tok))
+
+        # year:降順、furigana:昇順 で確定ソート
+        return qs.order_by("-year", "furigana")
