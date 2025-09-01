@@ -10,11 +10,19 @@ class InboxViewTests(TestCase):
     def setUp(self):
         # テスト用ユーザーを作成
         self.user_2025 = User.objects.create_user(
-            email="testuser2025@example.com", year=2025
+            email="testuser2025@example.com",
+            year=2025,
         )
+        self.user_2025.fullname = "Test User 2025"
+        self.user_2025.furigana = "てすとゆーざー"
+        self.user_2025.save()
+
         self.user_2024 = User.objects.create_user(
             email="testuser2024@example.com", year=2024
         )
+        self.user_2024.fullname = "Test User 2024"
+        self.user_2024.furigana = "てすとゆーざー"
+        self.user_2024.save()
 
         # ToGroup 作成
         self.group_2025 = ToGroup.objects.create(year=2025, label="2025年度メンバー")
@@ -69,6 +77,7 @@ class InboxViewTests(TestCase):
         """ユーザーのyearに一致するメッセージだけ表示される"""
         self.client.force_login(self.user_2025)
         response = self.client.get(self.inbox_url)
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "2025向けのお知らせ")
         self.assertContains(response, "全体向けのお知らせ")  # 全体向けは常に表示
         self.assertNotContains(
@@ -80,6 +89,7 @@ class InboxViewTests(TestCase):
         """全体メーリス (year=0) のメッセージは誰にでも表示される"""
         self.client.force_login(self.user_2024)
         response = self.client.get(self.inbox_url)
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "全体向けのお知らせ")
 
     # 3. 年度が一致しないメッセージは表示されない
@@ -87,6 +97,7 @@ class InboxViewTests(TestCase):
         """ユーザーのyearと一致しないメッセージは表示されない"""
         self.client.force_login(self.user_2024)
         response = self.client.get(self.inbox_url)
+        self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "2025向けのお知らせ")
 
     # 4. senderまたはwriterの場合はyearが異なっていても表示される
@@ -94,6 +105,7 @@ class InboxViewTests(TestCase):
         """ユーザーがsenderまたはwriterの場合、yearが異なっていてもメッセージが表示される"""
         self.client.force_login(self.user_2025)
         response = self.client.get(self.inbox_url)
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "異なるyearのメッセージ")
 
     # 5. 最新順にソートされているか
@@ -101,6 +113,7 @@ class InboxViewTests(TestCase):
         """メッセージは作成日時の新しい順に表示される"""
         self.client.force_login(self.user_2025)
         response = self.client.get(self.inbox_url)
-        messages = list(response.context["messages"])
+        self.assertEqual(response.status_code, 200)
+        messages = list(response.context["mailis"])
         created_at_list = [message.created_at for message in messages]
         self.assertEqual(created_at_list, sorted(created_at_list, reverse=True))

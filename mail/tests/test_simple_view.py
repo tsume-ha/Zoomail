@@ -10,6 +10,7 @@ class SimpleViewTests(TestCase):
         self.user = User.objects.create_user(email="testuser@example.com", year=2025)
         self.user.fullname = "テストユーザー"
         self.user.nickname = "テスト"
+        self.user.furigana = "てすと"
         self.user.save()
 
         self.inbox_url = reverse("mail:inbox")
@@ -19,19 +20,19 @@ class SimpleViewTests(TestCase):
 
     # 1. 認証が必要なビューのテスト (リダイレクトの確認)
     def test_inbox_redirects_to_login_if_not_authenticated(self):
-        """ログインしていない場合はログインページへリダイレクトされる"""
+        """ログインしていない場合はログインページへリダイレクトされる[inbox]"""
         response = self.client.get(self.inbox_url)
         expected_url = f"{self.login_url}?next={self.inbox_url}"
         self.assertRedirects(response, expected_url)
 
     def test_detail_redirects_to_login_if_not_authenticated(self):
-        """ログインしていない場合はログインページへリダイレクトされる"""
+        """ログインしていない場合はログインページへリダイレクトされる[detail]"""
         response = self.client.get(self.detail_url)
         expected_url = f"{self.login_url}?next={self.detail_url}"
         self.assertRedirects(response, expected_url)
 
     def test_send_redirects_to_login_if_not_authenticated(self):
-        """ログインしていない場合はログインページへリダイレクトされる"""
+        """ログインしていない場合はログインページへリダイレクトされる[send]"""
         response = self.client.post(self.send_url)
         expected_url = f"{self.login_url}?next={self.send_url}"
         self.assertRedirects(response, expected_url)
@@ -49,7 +50,7 @@ class SimpleViewTests(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(self.send_url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "mail/send.html")
+        self.assertTemplateUsed(response, "mail/send_create.html")
 
     # 3. 無効な詳細ビューリクエスト
     def test_invalid_detail_access(self):

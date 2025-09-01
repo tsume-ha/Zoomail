@@ -35,7 +35,7 @@ TEMPLATES = {
 
 
 @method_decorator(never_cache, name="dispatch")
-class SendWizardView(SessionWizardView):
+class SendWizardView(LoginRequiredMixin, SessionWizardView):
     """
     2ステップ:
       1) compose: MessageForm + AttachmentFormset (複合フォーム)
