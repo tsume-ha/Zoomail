@@ -37,7 +37,7 @@
       <label class="col-sm-3 col-form-label fw-bold">差出人</label>
       <div class="col-sm-9">
         <p class="form-control-plaintext">
-          {{ compose_data.message_form.writer }}
+          {{ compose_data.message_form.writer.get_short_name }}
         </p>
       </div>
     </div>

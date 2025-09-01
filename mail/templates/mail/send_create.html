@@ -55,7 +55,7 @@
   </div>
   <div class="mb-3">
     <label class="form-label">{{ message_form.to_groups.label }}</label>
-    <div class="overflow-y-scroll">
+    <div class="overflow-y-scroll" style="max-height: 160px;">
       {% for checkbox in message_form.to_groups %}
       <div class="form-check">
         {{ checkbox.tag|safe }}

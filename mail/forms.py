@@ -4,6 +4,7 @@ from django import forms
 from django.forms import inlineformset_factory
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
+from django.db.models import Case, When, Value, IntegerField
 
 from dal import autocomplete
 
@@ -60,6 +61,22 @@ class MessageForm(forms.ModelForm):
             "writer": "差出人",
             "to_groups": "宛先",
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # year=0 を先頭に、それ以外は year 降順で並べ替え
+        self.fields["to_groups"].queryset = (
+            self.fields["to_groups"]
+            .queryset.annotate(
+                sort_priority=Case(
+                    When(year=0, then=Value(0)),  # year=0 は最優先
+                    default=Value(1),  # それ以外
+                    output_field=IntegerField(),
+                )
+            )
+            .order_by("sort_priority", "-year")
+        )
 
 
 class AttachmentForm(forms.ModelForm):
