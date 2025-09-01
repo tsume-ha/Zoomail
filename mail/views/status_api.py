@@ -5,8 +5,6 @@ from django.http import HttpResponseBadRequest, HttpResponseForbidden, JsonRespo
 from ..models import MailLog
 from django.conf import settings
 
-MAIL_STATUS_API_KEY = settings.MAIL_STATUS_API_KEY
-
 
 class MailStatusView(View):
 
@@ -17,7 +15,7 @@ class MailStatusView(View):
     def get(self, request):
         # confirm x-auth header
         auth_header = request.META.get("HTTP_X_AUTHORIZATION")
-        if auth_header != MAIL_STATUS_API_KEY:
+        if auth_header != settings.MAIL_STATUS_API_KEY:
             return HttpResponseForbidden()
 
         message_id = request.GET.get("message_id")
@@ -39,7 +37,7 @@ class MailStatusView(View):
     @csrf_exempt
     def post(self, request):
         auth_header = request.META.get("HTTP_X_AUTHORIZATION")
-        if auth_header != MAIL_STATUS_API_KEY:
+        if auth_header != settings.MAIL_STATUS_API_KEY:
             return HttpResponseForbidden()
 
         try:
