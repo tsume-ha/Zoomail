@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from members.models import User
-from mail.models import ToGroup
+from mail.models import ToGroup, Message
 
 
 class SendViewTests(TestCase):
@@ -30,7 +30,7 @@ class SendViewTests(TestCase):
 
     def test_send_view_accessible_for_logged_in_user(self):
         """
-        ログイン済みユーザーはメール送信ページにアクセスできること
+        ログイン済みユーザーはメール送信ページへアクセスできること
         """
         self.client.force_login(self.user)
         response = self.client.get(self.send_url)
@@ -52,22 +52,22 @@ class SendViewTests(TestCase):
 
     def test_send_create_fill_form(self):
         """
-        メール送信フォームに必要項目を入力し、POSTすると確認画面に遷移すること
+        メール送信フォームに必要項目を入力し、Compose -> Confirm -> Complete の
+        ウィザード全体の流れで Message が作成されることを検証する
         """
         # グループ作成
         group = ToGroup.objects.create(year=2025, label="2025年度メンバー")
         self.client.force_login(self.user)
 
-        # 初期表示でmanagement_formとフォーム情報を取得
-        response = self.client.get(self.send_url)
-        wizard = response.context["wizard"]
+        # Step 1: Compose 表示を取得して管理フォーム・フォームセットを取得
+        resp1 = self.client.get(self.send_url)
+        wizard = resp1.context["wizard"]
         management_form = wizard["management_form"]
-        message_form = response.context["message_form"]
-        attachment_formset = response.context["attachment_formset"]
+        attachment_formset = resp1.context["attachment_formset"]
 
-        # wizard管理用データ
-        post_data = {"send_wizard_view-current_step": "compose"}
-        post_data.update(
+        # Compose ステップ用の POST データを準備
+        post = {"send_wizard_view-current_step": "compose"}
+        post.update(
             {
                 "writer": str(self.user.id),
                 "to_groups": [str(group.id)],
@@ -76,29 +76,34 @@ class SendViewTests(TestCase):
             }
         )
 
-        # message_formデータ
-        post_data.update(
-            {
-                "writer": str(self.user.id),
-                "to_groups": [str(group.id)],
-                "title": "テスト件名",
-                "content": "テスト本文",
-                "message_form-title": "テスト件名",
-                "message_form-content": "テスト本文",
-                "message_form-writer": str(self.user.id),
-                "message_form-to_groups": [str(group.id)],
-            }
-        )
+        # wizard 管理用 hidden フィールドを追加
+        for field in management_form.hidden_fields():
+            post[field.name] = field.value()
 
-        # attachment_formset管理用データ
+        # attachment formset の管理用 hidden フィールドを追加
         for field in attachment_formset.management_form.hidden_fields():
-            post_data[field.name] = field.value()
+            post[field.name] = field.value()
 
         # 添付ファイルを作成（3バイト以上で有効）
         file_data = SimpleUploadedFile("test.txt", b"abc")
         files = {f"{attachment_formset.prefix}-0-file": file_data}
 
-        # POSTして確認ステップに遷移
-        response2 = self.client.post(self.send_url, data=post_data, files=files)
-        self.assertEqual(response2.status_code, 200)
-        self.assertTemplateUsed(response2, "mail/send_create.html")
+        # Step 1 -> Step 2 (confirm) へ移行
+        resp2 = self.client.post(self.send_url, data=post, files=files, follow=True)
+        self.assertIn(resp2.status_code, (200, 302))
+        if resp2.status_code == 200:
+            self.assertTemplateUsed(resp2, "mail/send_confirm.html")
+
+        # Step 2: Confirm 送信を実行 (Complete 実行)
+        resp3 = self.client.post(
+            self.send_url,
+            data={"send_wizard_view-current_step": "confirm"},
+            follow=True,
+        )
+        self.assertIn(resp3.status_code, (200, 302))
+
+        # 送信後に Message が作成されていることを検証
+        last = Message.objects.filter(sender=self.user).order_by("-id").first()
+        self.assertIsNotNone(last)
+        self.assertEqual(last.title, "テスト件名")
+        self.assertEqual(last.content, "テスト本文")
