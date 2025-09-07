@@ -24,10 +24,10 @@ class TopLoginRequiredTest(TestCase):
 
         cls.client = Client()
 
-    def test_unauthenticated_redirects_top_page(self):
+    def test_unauthenticated_view_top_page(self):
         url = reverse("top:top_page")
         resp = self.client.get(url)
-        assert resp.status_code in (301, 302)
+        assert resp.status_code == 200
 
     def test_incomplete_profile_redirects_top_page(self):
         self.client.force_login(self.incomplete_user)

@@ -42,6 +42,8 @@ class SendWizardView(LoginRequiredMixin, SessionWizardView):
       2) confirm: 確認用の空フォーム
     """
 
+    login_url = settings.LOGIN_URL
+
     form_list = FORMS
     file_storage = FileSystemStorage(location=settings.PRIVATE_STORAGE_ROOT / "tmp")
 
