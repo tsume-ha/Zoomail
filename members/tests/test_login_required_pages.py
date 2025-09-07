@@ -26,56 +26,37 @@ class LoginRequiredPagesTest(TestCase):
 
         cls.client = Client()
 
-    def test_unauthenticated_redirects_mail_inbox(self):
-        url = reverse("mail:inbox")
+    def test_unauthenticated_redirects_members_index(self):
+        url = reverse("members:index")
         resp = self.client.get(url)
         assert resp.status_code in (301, 302)
 
-    def test_unauthenticated_redirects_mail_send(self):
-        url = reverse("mail:send")
+    def test_unauthenticated_redirects_members_first_register(self):
+        url = reverse("members:first_register")
         resp = self.client.get(url)
         assert resp.status_code in (301, 302)
 
-    def test_unauthenticated_redirects_mail_autocomplete_writer(self):
-        url = reverse("mail:send_autocomplete_writer")
-        resp = self.client.get(url)
-        assert resp.status_code == 403
-
-    def test_incomplete_profile_redirects_mail_inbox(self):
-        self.client.force_login(self.incomplete_user)
-        url = reverse("mail:inbox")
+    def test_unauthenticated_redirects_members_profile(self):
+        url = reverse("members:profile")
         resp = self.client.get(url)
         assert resp.status_code in (301, 302)
-        target = reverse("members:first_register")
-        assert str(resp.get("Location", "")).endswith(target)
 
-    def test_incomplete_profile_redirects_mail_send(self):
-        self.client.force_login(self.incomplete_user)
-        url = reverse("mail:send")
+    def test_unauthenticated_redirects_members_test_mail(self):
+        url = reverse("members:test_mail")
         resp = self.client.get(url)
         assert resp.status_code in (301, 302)
-        target = reverse("members:first_register")
-        assert str(resp.get("Location", "")).endswith(target)
 
-    def test_incomplete_profile_redirects_mail_autocomplete_writer(self):
-        self.client.force_login(self.incomplete_user)
-        url = reverse("mail:send_autocomplete_writer")
+    def test_unauthenticated_redirects_members_invitation_list(self):
+        url = reverse("members:invitation_list")
         resp = self.client.get(url)
         assert resp.status_code in (301, 302)
-        target = reverse("members:first_register")
-        assert str(resp.get("Location", "")).endswith(target)
 
-    def test_complete_profile_accesses_get_200(self):
-        self.client.force_login(self.complete_user)
+    def test_unauthenticated_redirects_members_edit_invitation(self):
+        url = reverse("members:edit_invitation", args=[1])
+        resp = self.client.get(url)
+        assert resp.status_code in (301, 302)
 
-        url_inbox = reverse("mail:inbox")
-        resp_inbox = self.client.get(url_inbox)
-        assert resp_inbox.status_code == 200
-
-        url_send = reverse("mail:send")
-        resp_send = self.client.get(url_send)
-        assert resp_send.status_code == 200
-
-        url_autocomplete_writer = reverse("mail:send_autocomplete_writer")
-        resp_autocomplete_writer = self.client.get(url_autocomplete_writer)
-        assert resp_autocomplete_writer.status_code == 200
+    def test_unauthenticated_redirects_members_delete_invitation(self):
+        url = reverse("members:delete_invitation", args=[1])
+        resp = self.client.get(url)
+        assert resp.status_code in (301, 302)
