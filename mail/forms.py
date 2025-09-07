@@ -173,6 +173,7 @@ class CompositeForm(forms.Form):
 
         # Attachment用の inline formset を内部的に初期化
         self.attachment_formset = AttachmentFormset(
+            prefix="attachments",
             data=self.data if self.is_bound else None,
             instance=self.instance,
             files=self.files if self.is_bound else None,

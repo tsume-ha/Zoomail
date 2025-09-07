@@ -83,6 +83,8 @@ class SendViewTests(TestCase):
         # attachment formset の管理用 hidden フィールドを追加
         for field in attachment_formset.management_form.hidden_fields():
             post[field.name] = field.value()
+        post["attachments-TOTAL_FORMS"] = str(attachment_formset.total_form_count())
+        post["attachments-INITIAL_FORMS"] = str(attachment_formset.initial_form_count())
 
         # 添付ファイルを作成（3バイト以上で有効）
         file_data = SimpleUploadedFile("test.txt", b"abc")
@@ -107,3 +109,5 @@ class SendViewTests(TestCase):
         self.assertIsNotNone(last)
         self.assertEqual(last.title, "テスト件名")
         self.assertEqual(last.content, "テスト本文")
+        self.assertEqual(last.sender, self.user)
+        self.assertTrue(last.to_groups.filter(id=group.id).exists())
