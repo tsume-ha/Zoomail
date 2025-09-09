@@ -40,8 +40,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     # pip の定期的なバージョンチェックを無効化する
     PIP_DISABLE_PIP_VERSION_CHECK=on
 
-# パッケージ更新
-RUN apt-get update --fix-missing && apt upgrade -y
+# OS パッケージは production 側でも入れる
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends poppler-utils && \
+    rm -rf /var/lib/apt/lists/*
 
 # パッケージのコピー
 COPY --from=develop /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages

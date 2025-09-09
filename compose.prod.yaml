@@ -24,7 +24,7 @@ services:
                python manage.py migrate &&
                uwsgi --http 0.0.0.0:8080 --processes 2 --threads 2 --chdir /django/ --wsgi-file ./config/wsgi.py"
     ports:
-      - "127.0.0.1:8080:8080"
+      - "8080:8080"
 
   database:
     image: mariadb:11.2.2-jammy
