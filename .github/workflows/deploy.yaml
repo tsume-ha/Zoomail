@@ -22,7 +22,7 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           fingerprint: ${{ secrets.SSH_FINGERPRINT }}
           script: |
-            cd /svr/zoomail
+            cd /srv/zoomail
             git pull
             docker compose -f compose.prod.yaml down
             docker compose -f compose.prod.yaml up --build -d
