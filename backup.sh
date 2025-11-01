@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # get the current date and time
 now=$(date +"%Y%m%d_%H%M")
@@ -21,16 +22,12 @@ chmod 600 zoomail_$now.tar.gz
 
 cd -
 
-# build the awscli docker image
-docker image build -t awscli -f aws-cli.Dockerfile .
-
 # copy the compressed database dump to the backup server
 docker run \
     --rm \
-    -it \
     -v ~/zoomail_db_dump:/zoomail_db_dump \
     -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
     -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
-    awscli \
+    amazon/aws-cli:2 \
     aws s3 cp /zoomail_db_dump/zoomail_$now.tar.gz s3://zoomail-db-dump/dumps/zoomail_$now.tar.gz
