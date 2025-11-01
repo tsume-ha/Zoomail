@@ -8,7 +8,7 @@ now=$(date +"%Y%m%d_%H%M")
 mkdir -p ~/zoomail_db_dump
 
 # dump the database
-docker compose -f compose.prod.yaml exec -T database mariadb-dump --all-databases -uroot -p$DATABASE_PASSWORD > ~/zoomail_db_dump/zoomail_$now.sql
+docker compose -f /srv/zoomail/compose.prod.yaml exec -T database mariadb-dump --all-databases -uroot -p$DATABASE_PASSWORD > ~/zoomail_db_dump/zoomail_$now.sql
 
 cd ~/zoomail_db_dump
 
