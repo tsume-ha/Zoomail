@@ -12,7 +12,7 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE="mariadb"
+      - DATABASE=mariadb
     depends_on:
       database:
         condition: service_healthy

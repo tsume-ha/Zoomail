@@ -15,26 +15,16 @@ from pathlib import Path
 
 from django.contrib.messages import constants as message_constants
 
-import environ
-
-
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Take environment variables from .env file
-environ.Env.read_env(BASE_DIR / ".env")
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+DEBUG = os.getenv("DEBUG", "False") == "True"
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = ["zoomail.ku-unplugged.net", "localhost"]
 
@@ -108,11 +98,11 @@ if os.getenv("DATABASE") == "mariadb":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
-            "HOST": env("DATABASE_HOST", "database"),  # docker networkの解決先
-            "PORT": env("DATABASE_PORT", "3306"),
-            "NAME": env("DATABASE_NAME", "zoomail"),
-            "USER": env("DATABASE_USER", "zoomail"),
-            "PASSWORD": env("DATABASE_PASSWORD"),
+            "HOST": os.getenv("DATABASE_HOST", "database"),  # docker networkの解決先
+            "PORT": os.getenv("DATABASE_PORT", "3306"),
+            "NAME": os.getenv("DATABASE_NAME", "zoomail"),
+            "USER": os.getenv("DATABASE_USER", "zoomail"),
+            "PASSWORD": os.getenv("DATABASE_PASSWORD"),
         }
     }
 else:

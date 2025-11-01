@@ -14,6 +14,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # パッケージ更新
 RUN apt-get update --fix-missing && apt upgrade -y
 
+# mariadb-client のインストール
+RUN apt-get update && apt-get install -y \
+    default-libmysqlclient-dev build-essential
+
 # Pdf2imageの依存関係のインストール
 RUN apt-get install poppler-utils -y
 
