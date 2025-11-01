@@ -103,6 +103,10 @@ if os.getenv("DATABASE") == "mariadb":
             "NAME": os.getenv("DATABASE_NAME", "zoomail"),
             "USER": os.getenv("DATABASE_USER", "zoomail"),
             "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+            "OPTIONS": {
+                "charset": "utf8mb4",
+                "use_unicode": True,
+            },
         }
     }
 else:

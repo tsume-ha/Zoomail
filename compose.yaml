@@ -36,5 +36,7 @@ services:
       - MARIADB_PASSWORD=${DATABASE_PASSWORD}
       - MARIADB_USER=${DATABASE_USER}
       - MARIADB_DATABASE=${DATABASE_NAME}
+      - MARIADB_CHARACTER_SET_SERVER=utf8mb4
+      - MARIADB_COLLATION_SERVER=utf8mb4_ja_0900_as_cs
     volumes:
       - zoomail_database_data_2:/var/lib/mysql
