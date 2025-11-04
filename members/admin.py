@@ -4,7 +4,6 @@ from django.contrib import messages
 from social_django.models import UserSocialAuth
 from custom_admin.admin import custom_admin_site
 from .models import User, TestMail
-from .forms import RegisterForm
 
 
 class SuperuserUserAdmin(BaseUserAdmin):
@@ -14,7 +13,7 @@ class SuperuserUserAdmin(BaseUserAdmin):
             {
                 "fields": (
                     "year",
-                    ("last_name", "first_name"),
+                    "fullname",
                     "nickname",
                     "furigana",
                     "email",
@@ -23,22 +22,17 @@ class SuperuserUserAdmin(BaseUserAdmin):
                 )
             },
         ),
-        (("Permissions"), {"fields": ("is_staff", "is_superuser", "groups")}),
+        (("Permissions"), {"fields": (("is_staff", "is_superuser"), "groups")}),
     )
     add_fieldsets = (
         (
             None,
             {
                 "classes": ("wide",),
-                "fields": ("email", ("last_name", "first_name"), "year", "furigana"),
+                "fields": ("email", "fullname", "year", "furigana"),
             },
         ),
     )
-
-    def get_all_groups(self, obj):
-        return list(obj.groups.all().values_list("name", flat=True))
-
-    get_all_groups.short_description = "係・役職"
 
     def google_oauth(self, obj):
         try:
@@ -56,72 +50,83 @@ class SuperuserUserAdmin(BaseUserAdmin):
 
     list_display = (
         "year",
-        "get_full_name",
+        "fullname",
         "google_oauth",
         "livelog_oauth",
         "is_staff",
         "is_superuser",
-        "get_all_groups",
         "send_mail",
     )
-    list_display_links = ("year", "get_full_name")
+    list_display_links = ("year", "fullname")
     list_filter = ("year", "is_staff", "is_superuser", "send_mail")
-    search_fields = (
-        "last_name",
-        "first_name",
-    )
+    search_fields = ("fullname", "email")
     ordering = (
         "year",
         "furigana",
     )
-    filter_horizontal = ("groups",)
-    add_form = RegisterForm
+
+    def has_add_permission(self, request):
+        return False
+
+    # アプリ一覧（index）から “追加” 権限を消す
+    def get_model_perms(self, request):
+        perms = super().get_model_perms(request)
+        perms["add"] = False
+        return perms
 
 
 class BasicUserAdmin(BaseUserAdmin):
     fieldsets = (
-        (None, {"fields": ("year", ("last_name", "first_name"), "nickname", "furigana")}),
-        (("Permissions"), {"fields": ("is_staff", "groups")}),
+        (
+            None,
+            {"fields": ("year", "fullname", "nickname", "furigana")},
+        ),
+        (("Permissions"), {"fields": ("is_staff",)}),
     )
     add_fieldsets = (
         (
             None,
             {
                 "classes": ("wide",),
-                "fields": ("email", ("last_name", "first_name"), "year", "furigana"),
+                "fields": ("email", "fullname", "year", "furigana"),
             },
         ),
     )
 
-    def get_all_groups(self, obj):
-        return list(obj.groups.all().values_list("name", flat=True))
-
-    get_all_groups.short_description = "係・役職"
-
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == "groups":
-            kwargs["queryset"] = request.user.groups
-        return super().formfield_for_manytomany(db_field, request, **kwargs)
-
-    list_display = ("year", "get_full_name", "google_login", "livelog_login", "is_staff", "get_all_groups")
-    list_display_links = ("year", "get_full_name")
+    list_display = (
+        "year",
+        "fullname",
+        "google_login",
+        "livelog_login",
+        "is_staff",
+    )
+    list_display_links = ("year", "fullname")
     list_filter = ("year", "is_staff")
     search_fields = (
-        "last_name",
-        "first_name",
+        "fullname",
+        "email",
     )
     ordering = (
         "year",
         "furigana",
     )
-    filter_horizontal = ("groups",)
-    add_form = RegisterForm
+
+    def has_add_permission(self, request):
+        return False
+
+    # アプリ一覧（index）から “追加” 権限を消す
+    def get_model_perms(self, request):
+        perms = super().get_model_perms(request)
+        perms["add"] = False
+        return perms
 
     def get_deleted_objects(self, objs, request):
         for query in objs:
             if query.is_superuser:
                 messages.error(request, "開発者アカウントは削除できません")
-                deleted_objects, model_count, perms_needed, protected = super().get_deleted_objects(objs, request)
+                deleted_objects, model_count, perms_needed, protected = (
+                    super().get_deleted_objects(objs, request)
+                )
                 protected = ["開発者アカウント"]
                 return (deleted_objects, model_count, perms_needed, protected)
         return super().get_deleted_objects(objs, request)

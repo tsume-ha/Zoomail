@@ -1,0 +1,58 @@
+<div class="container mx-auto text-center border-top border-white pt-5">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item bg-transparent text-white py-3 border-0">
+            <a href="{% url 'mail:inbox'%}" class="fw-normal text-white"> メーリス </a>
+        </li>
+        <li class="list-group-item bg-transparent text-white py-3 border-0">
+            <a href="{% url 'mail:send'%}" class="fw-normal text-white"> メーリス送信 </a>
+        </li>
+        <li class="list-group-item bg-transparent text-white py-3 border-0">
+            <a href="{% url 'movie:index'%}" class="fw-normal text-white"> ライブ映像 </a>
+        </li>
+        <li class="list-group-item bg-transparent text-white py-3 border-0">
+            <a href="{% url 'photo:index'%}" class="fw-normal text-white"> 写真 </a>
+        </li>
+        <li class="list-group-item bg-transparent text-white py-3 border-0">
+            <a href="{% url 'kansou:index'%}" class="fw-normal text-white"> 感想用紙 </a>
+        </li>
+        <li class="list-group-item bg-transparent text-white py-3 border-0">
+            <a href="/others" class="fw-normal text-white"> その他資料 </a>
+        </li>
+        <hr />
+        <li class="list-group-item bg-transparent text-white py-3 border-0">
+            <a href="{% url 'members:index'%}" class="fw-normal text-white"> My Page </a>
+        </li>
+        <li class="list-group-item bg-transparent text-white py-3 border-0">
+            <a href="{% url 'howto:index'%}" class="fw-normal text-white">使い方</a>
+        </li>
+        <hr />
+        <li class="list-group-item bg-transparent text-white py-3 border-0">
+            <a href="https://awase-no-awase.colour-field.jp" target="_blank" rel="noopener noreferrer" class="fw-normal text-white">
+                あわせのあわせ
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-square-arrow-out-up-right">
+                    <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6" />
+                    <path d="m21 3-9 9" />
+                    <path d="M15 3h6v6" />
+                </svg>
+            </a>
+        </li>
+    </ul>
+</div>
+<style>
+    nav div a {
+        padding: 0.75rem 2rem;
+        border-radius: 0.5rem;
+
+    }
+
+    nav div hr {
+        display: block;
+        width: 14rem;
+        margin: 0 auto;
+        border-width: 1px 0 0 0;
+        border-style: solid;
+        opacity: 0.75;
+    }
+</style>

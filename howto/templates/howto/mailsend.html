@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="container my-5">
+    <h2 class="fw-bold text-primary mb-4">
+        <i class="bi bi-envelope-paper"></i> メーリスを送信する ✉️✉️✉️
+    </h2>
+    <p>
+        Zoomailのメーリス送信手順について説明します。
+    </p>
+    <hr class="mb-5">
+
+    <h3 id="mailsend-input" class="fw-bold text-secondary mb-3">① 入力</h3>
+    <ol class="list-group list-group-numbered mb-5">
+        <li class="list-group-item">
+            上部メニューから「メーリス送信」をクリックします。
+        </li>
+        <li class="list-group-item">
+            <strong>差出人（From）の設定（代理送信について）</strong>
+            <ul class="mt-3">
+                <li>通常、自分の名前が設定されています。</li>
+                <li>別の人が書いた文章を代理で送信する場合は、差出人をその人の名前に変更できます。</li>
+                <li>例えば、副会長が会長の名前でメーリスを送信する場合、副会長が代わりにログインして入力しても、
+                    Fromで会長を選ぶことで送信されるメーリスの差出人が会長になります。
+                </li>
+            </ul>
+        </li>
+        <li class="list-group-item">
+            宛先、件名、本文を入力し、必要に応じて添付ファイルを追加します。
+        </li>
+    </ol>
+
+    <h3 id="mailsend-confirm" class="fw-bold text-secondary mb-3">② 確認</h3>
+    <p class="mb-5">
+        送信前に入力内容を確認します。<br>
+        - 内容を修正したい場合は「戻る」ボタンで戻ります。<br>
+        - 問題がなければ「送信」ボタンをクリックします。
+    </p>
+
+    <h3 id="mailsend-complete" class="fw-bold text-secondary mb-3">③ 送信完了</h3>
+    <ul class="list-group mb-5">
+        <li class="list-group-item">
+            送信が成功すると「メールが正常に送信されました！」と表示されます。
+        </li>
+        <li class="list-group-item">
+            メール配信には1～2分かかります。
+        </li>
+        <li class="list-group-item">
+            「メーリス一覧へ」ボタンで一覧を確認できます。
+        </li>
+    </ul>
+
+    <p class="mt-5">
+        差出人の設定機能をうまく活用し、効率的にメーリスを送りましょう！😊
+    </p>
+</div>
+{% endblock %}

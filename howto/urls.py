@@ -1,13 +1,36 @@
 from django.urls import path
-from . import views
+from django.views.generic import TemplateView
 
 app_name = "howto"
+
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("introduction/", views.introduction, name="introduction"),
-    path("login/", views.login, name="login"),
-    path("user_setting/", views.user_setting, name="user_setting"),
-    path("send_message/", views.send_message, name="send_message"),
-    path("otherdocs/", views.otherdocs, name="otherdocs"),
-    path("meeting_room/", views.meeting_room, name="meeting_room"),
+    path("", TemplateView.as_view(template_name="howto/index.html"), name="index"),
+    path(
+        "hajimeni/",
+        TemplateView.as_view(template_name="howto/hajimeni.html"),
+        name="hajimeni",
+    ),
+    path(
+        "login/", TemplateView.as_view(template_name="howto/login.html"), name="login"
+    ),
+    path(
+        "mailtest/",
+        TemplateView.as_view(template_name="howto/mailtest.html"),
+        name="mailtest",
+    ),
+    path(
+        "mailview/",
+        TemplateView.as_view(template_name="howto/mailview.html"),
+        name="mailview",
+    ),
+    path(
+        "mailsend/",
+        TemplateView.as_view(template_name="howto/mailsend.html"),
+        name="mailsend",
+    ),
+    path(
+        "userinfo/",
+        TemplateView.as_view(template_name="howto/userinfo.html"),
+        name="userinfo",
+    ),
 ]

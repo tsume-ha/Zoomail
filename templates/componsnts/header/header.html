@@ -1,0 +1,31 @@
+<div class="container d-flex justify-content-between align-items-center">
+    <h1 class="d-inline-block pt-2">
+        <a href="/">Zoomail</a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-mail icon" style="height: 1.75rem;">
+            <rect width="20" height="16" x="2" y="4" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
+    </h1>
+    {% include "componsnts/header/menu_button.html" %}
+</div>
+<style>
+    header {
+        
+    h1>svg {
+        padding-bottom: .25rem;
+    }
+
+    a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-weight: bold;
+        font-family: "Kiwi Maru", serif;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+</style>

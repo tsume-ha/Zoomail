@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<h2 class="fw-bold text-primary">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user">
+    <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
+    <path d="M4 21v-2a4 4 0 0 1 3-3.87"></path>
+    <circle cx="12" cy="7" r="4"></circle>
+  </svg>
+  ユーザー情報変更
+</h2>
+
+<form method="post" class="my-4">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  
+  <div class="mb-3">
+    <label for="{{ form.receive_email.id_for_label }}" class="form-label">
+      {{ form.receive_email.label }}
+    </label>
+    {{ form.receive_email }}
+    {{ form.receive_email.errors }}
+  </div>
+  
+  <div class="mb-3">
+    <label for="{{ form.fullname.id_for_label }}" class="form-label">
+      {{ form.fullname.label }}
+    </label>
+    {{ form.fullname }}
+    {{ form.fullname.errors }}
+  </div>
+  
+  <div class="mb-3">
+    <label for="{{ form.nickname.id_for_label }}" class="form-label">
+      {{ form.nickname.label }}
+    </label>
+    {{ form.nickname }}
+    {{ form.nickname.errors }}
+  </div>
+  
+  <div class="mb-3">
+    <label for="{{ form.furigana.id_for_label }}" class="form-label">
+      {{ form.furigana.label }}
+    </label>
+    {{ form.furigana }}
+    {{ form.furigana.errors }}
+  </div>
+
+  
+  <!-- send_mail を toggle button として出力 -->
+  <div class="mb-3">
+    <div class="form-check form-switch">
+      {{ form.send_mail }}
+      <label class="form-check-label" for="{{ form.send_mail.id_for_label }}">
+        {{ form.send_mail.label }}
+      </label>
+    </div>
+    {% if form.send_mail.errors %}
+      <div class="invalid-feedback d-block">
+        {{ form.send_mail.errors }}
+      </div>
+    {% endif %}
+  </div>
+  
+  <div class="d-flex my-3">
+    <button type="submit" class="btn btn-primary ms-auto px-4">更新</button>
+  </div>
+</form>
+
+<h3 class="fw-bold text-primary">
+    LiveLog・Google認証
+</h3>
+
+<p>
+    認証を行うと、LiveLog・Googleアカウントでログインできるようになります。
+</p>
+
+<div class="row">
+    <!-- Google認証カード -->
+    <div class="col-12 col-md-6 mb-3">
+      <div class="card oauth-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <img src="{% static 'img/mypage/google.png' %}" alt="Google認証" style="height: 3rem; width: auto;" class="me-3">
+            {% if google_login %}
+              <span class="badge bg-success">認証済み</span>
+            {% else %}
+              <span class="badge bg-secondary">未認証</span>
+            {% endif %}
+          </div>
+          <div class="mt-3">
+            {% if google_login %}
+              {% if livelog_login %}
+                <!-- Google認証済みかつLiveLog認証済みの場合 -->
+                <!-- TODO ボタン作成 -->
+                {% comment %} <form action="{% url 'unlink_google' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-warning">紐付けを解除する</button>
+                </form> {% endcomment %}
+              {% else %}
+                <!-- Google認証済みだが、LiveLogは未認証の場合 -->
+                <p>紐付けを解除するためには、もう一度LiveLogへログインしてください</p>
+              {% endif %}
+            {% else %}
+              <a href="{% url 'social:begin' 'google-oauth2' %}?next=/mypage/profile/" class="btn btn-primary">認証する</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- LiveLog認証カード -->
+    <div class="col-12 col-md-6 mb-3">
+      <div class="card oauth-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <img src="{% static 'img/mypage/livelog.png' %}" alt="LiveLog認証" style="height: 3rem; width: auto;" class="me-3">
+            {% if livelog_login %}
+              <span class="badge bg-success">認証済み</span>
+            {% else %}
+              <span class="badge bg-secondary">未認証</span>
+            {% endif %}
+          </div>
+          <div class="mt-3">
+            {% if not livelog_login %}
+              <a href="{% url 'social:begin' 'livelog' %}?next=/mypage/profile/" class="btn btn-primary">認証する</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="d-flex">
+    <a href="{% url 'mypage:index' %}" class="btn btn-secondary ms-auto px-4">戻る</a>
+  </div>
+{% endblock %}

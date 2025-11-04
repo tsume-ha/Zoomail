@@ -1,144 +1,87 @@
-import datetime
-
 from django import forms
-from django.core import validators
-from django.conf import settings
-
+from .models import User, UserInvitation
 from social_django.models import UserSocialAuth
-from utils.mail3 import SympleMailSender, MailContent
-from .models import User, TestMail
+
+
+class FirstRegisterForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["fullname", "furigana", "receive_email", "send_mail"]
+        widgets = {
+            "fullname": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "京大太郎"}
+            ),
+            "furigana": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "きょうだいたろう"}
+            ),
+            "receive_email": forms.EmailInput(attrs={"class": "form-control"}),
+            "send_mail": forms.CheckboxInput(
+                attrs={"class": "form-check-input", "role": "switch"}
+            ),
+        }
+        labels = {
+            "fullname": "フルネーム",
+            "furigana": "ふりがな",
+            "receive_email": "受信用メールアドレス",
+            "send_mail": "メーリスを受信する",
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.instance.pk:
+            self.fields["receive_email"].initial = (
+                self.instance.email if hasattr(self.instance, "email") else ""
+            )
+            self.fields["send_mail"].initial = True
 
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["last_name", "first_name", "furigana", "nickname"]
+        fields = ["receive_email", "send_mail", "fullname", "nickname", "furigana"]
+        widgets = {
+            "receive_email": forms.EmailInput(attrs={"class": "form-control"}),
+            "send_mail": forms.CheckboxInput(
+                attrs={"class": "form-check-input", "role": "switch"}
+            ),
+            "fullname": forms.TextInput(attrs={"class": "form-control"}),
+            "nickname": forms.TextInput(attrs={"class": "form-control"}),
+            "furigana": forms.TextInput(attrs={"class": "form-control"}),
+        }
+        labels = {
+            "receive_email": "受信用メールアドレス",
+            "send_mail": "メーリスを受信する",
+            "fullname": "フルネーム",
+            "nickname": "ニックネーム",
+            "furigana": "ふりがな",
+        }
 
 
-class MailSettingsForm(forms.ModelForm):
+class TestMailForm(forms.Form):
+    send = forms.BooleanField(required=False)
+
+
+class UserInvitationForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ["receive_email", "send_mail"]
-
-
-class RegisterForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ["email", "year", "last_name", "first_name", "furigana"]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["furigana"].validators = [
-            validators.RegexValidator(
-                regex="^[ぁ-んー]+$",
-                message="ふりがなは全角ひらがなのみで入力してください。",
-            )
+        model = UserInvitation
+        fields = [
+            "email",
+            "year",
         ]
+        widgets = {
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
+            "year": forms.NumberInput(
+                attrs={"class": "form-control", "min": "2000", "max": "2100"}
+            ),
+        }
+        help_texts = {
+            "year": "2024年4月入部の場合、2024を入力してください。",
+        }
 
     def clean_year(self):
-        year = self.cleaned_data["year"]
-        if not (year == 0 or 1990 < year < 2100):
-            raise forms.ValidationError("無効な入部年度です。第24期などでなく、入部年度（2018）を入力してください。")
-        return year
-
-    def clean_email(self):
-        email = self.cleaned_data["email"]
-        if UserSocialAuth.objects.filter(uid=email).exists():
-            raise forms.ValidationError("このGoogleアカウントはすでに登録されています")
-        return email
-
-    def save(self, commit=True):
-        user = super(RegisterForm, self).save(commit=commit)
-        user.receive_email = self.cleaned_data["email"]
-        user.social_auth.create(provider="google-oauth2", uid=self.cleaned_data["email"])
-        user.save()
-
-        # send a mail
-        content = MailContent(
-            subject="招待されました！【京大アンプラグド】メーリスシステム Zoomail",
-            text="ようこそ、京大アンプラグドへ！{}さん\n\n"
-            "京大アンプラグドのメーリスシステム「Zoomail」に招待されました\n"
-            "ログインするには、以下のURLからZoomailのウェブサイトへ行き、\n"
-            "「Googleでログイン」ボタンからこのGmailのアカウントでログインしてください。\n\n"
-            "【ログインURL】\n"
-            "https://zoomail.ku-unplugged.net \n\n"
-            "ログインできないなど、なにかお困りの時は info@ku-unplugged.net までご連絡ください。\n"
-            "京大アンプラグドHP係開発部".format(user.get_full_name()),
-            to_email=user.email,
-            from_name="京大アンプラグド メーリスシステム Zoomail",
-            from_email="register@zoomail.ku-unplugged.net",
-        )
-        sender = SympleMailSender()
-        sender.set_content_list([content])
-        sender.send()
-
-        return user
-
-
-class MailTestForm(forms.ModelForm):
-    def __init__(self, data, user):
-        super().__init__(data)
-        self.__user = user
-
-    class Meta:
-        model = TestMail
-        fields = []
-
-    send = forms.BooleanField(required=True)
-
-    def clean_send(self):
-        bool = self.cleaned_data["send"]
-        if not bool:
-            raise forms.ValidationError("リクエストの形式が無効です")
-        return bool
-
-    def clean(self):
-        super().clean()
-        if TestMail.objects.filter(
-            user=self.__user, sent_at__gte=(datetime.datetime.now() - datetime.timedelta(minutes=1))
-        ).exists():
+        year = self.cleaned_data.get("year")
+        if year < 1980 or year > 2100:
             raise forms.ValidationError(
-                "テストメールを送信できるのは1分に1回です。時間をおいてもう一度お試しください。"
+                "入部年度は30期などの数字ではなく、西暦4桁で入力してください。"
             )
-
-    def save(self):
-        # send a mail
-        content = MailContent(
-            subject="テストメーリス配信【京大アンプラグド】Zoomail",
-            text="このメールは、Zoomailからの送信テストメールです\n\n"
-            "このメールが受信できていたら、現在の設定で今後のメーリスが受信できます。ご安心ください。\n"
-            "これからも京大アンプラグドをよろしくお願いします。\n"
-            "-------------\n"
-            "Zoomail - 京大アンプラグドの部内メール配信サービス\n"
-            "https://zoomail.ku-unplugged.net/ \n\n"
-            "京大アンプラグド HP係",
-            to_email=self.__user.get_receive_email(),
-            from_name="京大アンプラグド メーリスシステム Zoomail",
-            from_email="zenkai@zoomail.ku-unplugged.net",
-            user=self.__user,
-        )
-        sender = SympleMailSender()
-        sender.set_content_list([content])
-
-        if settings.SEND_MAIL:
-            response = sender.send()
-            x_message_id = content.mail_id
-        else:
-            x_message_id = "settings.SEND_EMAIL was False"
-        content = super().save(commit=False)
-        content.sent_at = datetime.datetime.now()
-        content.user = self.__user
-        content.email = self.__user.get_receive_email()
-        content.x_message_id = x_message_id
-        content.save()
-        return content
-
-
-class GoogleUnlinkForm(forms.Form):
-    unlink = forms.BooleanField(required=True)
-
-    def clean_send(self):
-        bool = self.cleaned_data["unlink"]
-        if not bool:
-            raise forms.ValidationError("リクエストの形式が無効です")
-        return bool
+        return year

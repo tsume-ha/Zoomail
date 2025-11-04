@@ -1,11 +1,10 @@
 from django.apps import AppConfig
-from django.db.models.signals import post_migrate
 
 
 class MembersConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
     name = "members"
+    verbose_name = "ユーザー"
 
     def ready(self):
-        from .signals import create_default_group
-
-        post_migrate.connect(create_default_group, sender=self)
+        import members.signals

@@ -1,0 +1,59 @@
+<label for="nav-toggle" class="menu_button">
+    <span></span>
+</label>
+<style>
+    label.menu_button {
+        position: relative;
+        display: inline-block;
+        height: 30px;
+        width: 35px;
+        background: transparent;
+        border: 1px solid var(--bs-white);
+        border-radius: 8px;
+    }
+
+    label.menu_button>span {
+        top: 14px;
+        left: 7px;
+    }
+
+    label.menu_button>span,
+    label.menu_button>span:before,
+    label.menu_button>span:after {
+        position: absolute;
+        content: "";
+        height: 1px;
+        width: 20px;
+        background: var(--bs-white);
+        display: block;
+        transition: 0.5s;
+    }
+
+    input#nav-toggle:not(:checked)+header div label.menu_button span {
+        transform: rotate(0);
+    }
+
+    input#nav-toggle:not(:checked)+header div label.menu_button span:before {
+        top: -6px;
+        left: 0;
+    }
+
+    input#nav-toggle:not(:checked)+header div label.menu_button span:after {
+        top: 6px;
+        left: 0;
+    }
+
+    input#nav-toggle:checked+header div label.menu_button span {
+        transform: rotate(-45deg);
+    }
+
+    input#nav-toggle:checked+header div label.menu_button span::before {
+        opacity: 0;
+    }
+
+    input#nav-toggle:checked+header div label.menu_button span::after {
+        top: 0px;
+        left: 0px;
+        transform: rotate(90deg);
+    }
+</style>

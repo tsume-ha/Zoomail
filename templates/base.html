@@ -3,42 +3,157 @@
 <html lang="ja">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-  <title>{% block title %}{% endblock %}</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-  <script src="{% static 'js/jquery-3.6.0.slim.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-  {% block extrastyle %}{% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="京大アンプラグドの部内連絡アプリ「Zoomail」">
+    <meta name="author" content="京大アンプラグド">
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap-5-custom.css' %}" rel="stylesheet">
+    <!-- Google Fonts の追加 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=Kiwi+Maru&display=swap" rel="stylesheet">
+    <title>{% block title %}Zoomail{% endblock %}</title>
+    <style>
+        :root {
+            --header-height-sm: 48px;
+            --header-height-md: 60px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Kiwi Maru', serif, Avenir, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: 100vh;
+            background-color: rgb(var(--bs-light-rgb));
+        }
+
+        .main-wrapper {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .message-wrapper {
+            background-color: var(--bs-white);
+        }
+
+        main {
+            min-height: 100%;
+            flex: 1;
+            background-color: var(--bs-white);
+            border-radius: 0;
+            font-family: "BIZ UDPGothic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        header {
+            height: var(--header-height-sm);
+            display: flex;
+            align-items: center;
+        }
+
+        input#nav-toggle {
+            display: none !important;
+        }
+
+        nav {
+            position: absolute;
+            top: var(--header-height-sm);
+            left: 0;
+            width: 100%;
+            height: calc(100% - var(--header-height-sm));
+            overflow-y: auto;
+            z-index: 10;
+            transition: visibility 0.5s, opacity 0.5s;
+        }
+
+
+        input#nav-toggle:not(:checked)~nav {
+            visibility: hidden;
+            display: hidden;
+            opacity: 0;
+        }
+
+        input#nav-toggle:checked~nav {
+            visibility: visible;
+            display: block;
+            opacity: 1;
+        }
+
+        @media (min-width: 576px) {
+            header {
+                height: var(--header-height-md);
+            }
+
+            main {
+                border-radius: .55rem;
+            }
+
+            .message-wrapper {
+                background-color: transparent;
+            }
+
+            nav {
+                top: var(--header-height-md);
+                height: calc(100% - var(--header-height-md));
+            }
+
+        }
+    </style>
+    {% block extrastyle %}
+    {% endblock %}
 </head>
 
 <body>
-  <input type="checkbox" id="nav_open">
-  <header>
-    <div class="container">
-      <h1><a href="/">Zoomail</a></h1>
+    <div class="wrapper">
+        <input type="checkbox" id="nav-toggle">
+        {% block header %}
+        <header class="bg-primary text-white pt-2 pb-2">
+            {% include "componsnts/header/header.html" %}
+        </header>
+        {% endblock %}
+
+        <!-- Message -->
+        <div class="message-wrapper container px-0 pt-3">
+            {% block message %}
+            {% include "componsnts/message.html" %}
+            {% endblock %}
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-wrapper container my-0 mb-sm-3 p-0">
+            <main class="m-0 p-3">
+                {% block main %}
+
+                {% endblock %}
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-primary text-white py-2">
+            {% block footer %}
+            {% include "componsnts/footer.html" %}
+            {% endblock %}
+        </footer>
+
+        <nav class="bg-primary text-white">
+            {% block nav %}
+            {% include "componsnts/nav.html" %}
+            {% endblock %}
+        </nav>
+
     </div>
-  </header>
-  {% if messages %}
-  <div class="container mt-3">
-    <div class="messages my-3">
-      {% for message in messages %}
-      <p
-        class="alert 
-			{% if message.tags %}alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} ">
-        {{ message }}</p>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-
-  <div id="no-vue" class="container mt-3">
-    {% block body %}
-    {% endblock %}
-  </div>
-
-
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/toggleLoginMenu.js' %}"></script>
+<script src="{% static 'js/toggleNav.js' %}"></script>
 
 </html>

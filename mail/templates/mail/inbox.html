@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+
+{% block main %}
+<h2 class="fw-bold text-primary mb-4">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
+        <rect width="20" height="16" x="2" y="4" rx="2" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
+    メーリス受信箱
+</h2>
+
+{% comment %} <form method="get" action="{% url 'mail:inbox' %}" class="mb-2">
+  <div class="input-group mb-2">
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="query" id="query-all" value="all">
+      <label class="form-check-label" for="query-all">すべて</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="query" id="query-zenkai" value="zenkai">
+      <label class="form-check-label" for="query-zenkai">全回メーリス</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="query" id="query-kaisei" value="kaisei">
+      <label class="form-check-label" for="query-kaisei">回生メーリス</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="query" id="query-sender" value="sender">
+      <label class="form-check-label" for="query-sender">送信済み</label>
+    </div>
+  </div>
+  <div class="input-group mb-2">
+    <input type="text" name="text" class="form-control" placeholder="検索キーワードを入力">
+    <button class="btn btn-primary" type="submit">検索</button>
+  </div>
+</form> {% endcomment %}
+
+<form method="get" action="{% url 'mail:inbox' %}" class="mb-2">
+  <div class="input-group mb-2">
+    {% for value, label in form.fields.query.choices %}
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="{{ form.query.html_name }}" 
+               id="query-{{ value }}" value="{{ value }}" 
+               {% if form.query.value == value %}checked{% endif %}>
+        <label class="form-check-label" for="query-{{ value }}">{{ label }}</label>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <div class="input-group mb-2">
+    <input type="text" name="{{ form.text.html_name }}" class="form-control" placeholder="検索キーワードを入力" 
+           value="{{ form.text.value|default:'' }}">
+    <button class="btn btn-primary" type="submit">検索</button>
+  </div>
+</form>
+
+<div class="px-2">    
+{% for message in mailis %}
+<div class="row message-row">
+  <div class="my-3">
+    <div class="row">
+      <div class="col-10">
+        <a href="/mail/{{message.id}}" class="mb-0 fs-3">{{message.title}}</a>
+      </div>
+      {% comment %} <div class="col-2 text-end dropstart">
+        <button class="btn btn-small dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+        </button>
+        <ul class="dropdown-menu py-0">
+          <li><a class="dropdown-item py-3 px-4" href="#">送信ログ</a></li>
+          <li><a class="dropdown-item py-3 px-4" href="#">自分に再送信</a></li>
+          <li><a class="dropdown-item py-3 px-4" href="#">このメールを引用</a></li>
+        </ul>
+      </div> {% endcomment %}
+    </div>
+  
+    <div class="row mt-2">
+      <div class="col-12">
+        <p class="mb-0">
+          {{ message.content | make_message_short }}
+        </p>
+      </div>
+    </div>
+  
+    <div class="row mt-2">
+      <div class="col-12 text-muted small">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="inline-block pe-3">{{message.writer.get_short_name}}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+        <span class="">{{ message.updated_at | date:"Y/m/d H:i" }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+{% include "componsnts/pagination.html" %}
+
+{% endblock %}
+
+
+{% block extrastyle %}
+<style>
+.message-row:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+</style>
+{% endblock %}

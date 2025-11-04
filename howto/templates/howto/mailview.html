@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="container my-5">
+    <h2 class="fw-bold text-primary mb-4">
+        <i class="bi bi-envelope-open"></i> メーリスを閲覧する 📬📬📬
+    </h2>
+    <p>
+        Zoomailに届いたメーリスを閲覧する方法を説明します。
+    </p>
+    <hr class="mb-5">
+
+    <h3 id="mailview-inbox" class="fw-bold text-secondary mb-3">受信箱を見る</h3>
+    <ol class="list-group list-group-numbered mb-5">
+        <li class="list-group-item">上部メニューから「メーリス受信箱」をクリックします。</li>
+        <li class="list-group-item">受信したメーリスの一覧が表示されます。</li>
+    </ol>
+    <p>一覧には以下の情報が表示されています。</p>
+    <ul class="list-group mb-5">
+        <li class="list-group-item">メールの件名</li>
+        <li class="list-group-item">送信者名</li>
+        <li class="list-group-item">送信日時</li>
+    </ul>
+
+    <h3 id="mailview-content" class="fw-bold text-secondary mb-3">メールの内容を見る</h3>
+    <p>
+        メーリスの件名をクリックすると、メールの本文を確認できます。
+    </p>
+
+    <hr class="mb-5">
+
+    <h3 id="mailview-search" class="fw-bold text-secondary mb-3">メーリスを検索する</h3>
+    <ol class="list-group list-group-numbered mb-5">
+        <li class="list-group-item">受信箱の上部にある検索ボックスにキーワードを入力します。</li>
+        <li class="list-group-item">「検索」ボタンをクリックします。</li>
+    </ol>
+    <p>また、検索時には以下のフィルターを設定できます。</p>
+    <ul class="list-group mb-5">
+        <li class="list-group-item">すべてのメール</li>
+        <li class="list-group-item">全回メーリス</li>
+        <li class="list-group-item">回生メーリス</li>
+        <li class="list-group-item">自分が送信したメーリス</li>
+    </ul>
+
+    <h3 id="mailview-features" class="fw-bold text-secondary mb-3">便利な機能</h3>
+    <p>
+        各メーリスの右側にあるメニュー（…のアイコン）から、以下の操作が可能です。
+    </p>
+    <ul class="list-group mb-5">
+        <li class="list-group-item">送信ログの確認</li>
+        <li class="list-group-item">自分に再送信</li>
+        <li class="list-group-item">メールを引用して新たにメールを作成</li>
+    </ul>
+
+    <p class="mt-5">メーリスをしっかり確認し、情報共有に役立てましょう！😊</p>
+</div>
+{% endblock %}

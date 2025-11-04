@@ -11,7 +11,7 @@ from social_django.models import UserSocialAuth
 class UserManager(BaseUserManager):
     def create_user(self, email, year=0):
         if not email:
-            raise ValueError("Users must have a Google account")
+            raise ValueError("Users must have a email address")
         user = self.model(
             email=email,
             year=year,
@@ -38,24 +38,40 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+
+    class Meta:
+        verbose_name = "ユーザー"
+        verbose_name_plural = "ユーザー"
+
     email = models.EmailField(unique=True, verbose_name="Emailアドレス")
-    receive_email = models.EmailField(blank=True, null=False, verbose_name="受信用メールアドレス")
-    livelog_email = models.EmailField(blank=True, null=True, verbose_name="Livelogメールアドレス")
+    receive_email = models.EmailField(
+        blank=True, null=False, verbose_name="受信用メールアドレス"
+    )
+    livelog_email = models.EmailField(
+        blank=True, null=True, verbose_name="Livelogメールアドレス"
+    )
     send_mail = models.BooleanField(default=True, verbose_name="メーリスを受信する")
-    first_name = models.CharField(max_length=255, verbose_name="名前")
-    last_name = models.CharField(max_length=255, verbose_name="名字")
+    fullname = models.CharField(max_length=255, verbose_name="フルネーム")
     nickname = models.CharField(max_length=255, blank=True, verbose_name="ニックネーム")
     furigana = models.CharField(
         max_length=255,
         default="",
         verbose_name="ふりがな",
-        validators=[RegexValidator(regex=u"^[ぁ-んー]+$", message="ふりがなは全角ひらがなのみで入力してください。")],
+        validators=[
+            RegexValidator(
+                regex="^[ぁ-んー]+$",
+                message="ふりがなは全角ひらがなのみで入力してください。",
+            )
+        ],
     )
-    year = models.IntegerField(verbose_name="入部年度")
+    year = models.IntegerField(
+        verbose_name="入部年度",
+        help_text="2024年4月入部の場合、2024を入力してください。",
+    )
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False, verbose_name="管理者")
+    is_superuser = models.BooleanField(default=False, verbose_name="開発者")
     livelog_login = models.BooleanField(default=False)
     google_login = models.BooleanField(default=False)
 
@@ -65,27 +81,31 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["year"]
 
     def __str__(self):
-        return str(self.year) + " " + self.get_full_name()
+        return str(self.year) + " " + self.fullname
 
     def set_password(self, *args, **kwargs):
         raise ValidationError("Password can not be set!")
 
     def get_short_name(self):
         if self.nickname == "":
-            return self.last_name + self.first_name
+            return self.fullname
         else:
             return self.nickname
-
-    def get_full_name(self):
-        return self.last_name + self.first_name
-
-    get_full_name.short_description = "フルネーム"
 
     def get_receive_email(self):
         if self.receive_email == "" or self.receive_email is None:
             return self.email
         else:
             return self.receive_email
+
+    def is_filled_vaild(self):
+        if self.year is None:
+            return False
+        if self.fullname is None or self.fullname == "":
+            return False
+        if self.furigana is None or self.furigana == "":
+            return False
+        return True
 
 
 class TestMail(models.Model):
@@ -95,4 +115,28 @@ class TestMail(models.Model):
     x_message_id = models.CharField(max_length=100, editable=False)
 
     def __str__(self):
-        return self.user.get_full_name() + " - " + self.email
+        return self.user.fullname + " - " + self.email
+
+
+class UserInvitation(models.Model):
+    inviter = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="sent_invitations",
+        verbose_name="招待者",
+    )
+    email = models.EmailField(verbose_name="Emailアドレス")
+    year = models.IntegerField(
+        verbose_name="入部年度",
+        help_text="2024年4月入部の場合、2024を入力してください。",
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="作成日時")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="更新日時")
+
+    def __str__(self):
+        return f"{self.year} - {self.email} (invited by {self.inviter.fullname} ({self.inviter.year}))"
+
+    class Meta:
+        verbose_name = "ユーザー招待"
+        verbose_name_plural = "ユーザー招待一覧"
+        ordering = ["-created_at"]

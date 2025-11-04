@@ -1,31 +1,52 @@
 import os
+from datetime import date
 
-from django.http.response import JsonResponse
+from django.shortcuts import render
 from django.http import FileResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.template.defaultfilters import filesizeformat
 from .models import Kansouyoushi
 
 
 @login_required()
 def index(request):
-    records = Kansouyoushi.objects.all().order_by("performed_at")
-    return JsonResponse(
-        {
-            "kansou": [
+    kansou_qs = Kansouyoushi.objects.all().order_by("performed_at")
+
+    # 各アイテムを年度毎にグループ化（performed_atが4月1日未満なら前年の年度とする）
+    grouped = {}
+    for item in kansou_qs:
+        performed_date = item.performed_at
+        group_year = performed_date.year
+        if performed_date < date(performed_date.year, 4, 1):
+            group_year -= 1
+
+        grouped.setdefault(group_year, []).append(item)
+
+    # 年度を降順にソートし、各年度内はperformed_atの降順に並べ替える
+    sorted_years = sorted(grouped.keys(), reverse=True)
+    result = []
+    for year in sorted_years:
+        items_sorted = sorted(grouped[year], key=lambda x: x.performed_at, reverse=True)
+        items_list = []
+        for item in items_sorted:
+            file_size = item.file.size if item.file else ""
+            items_list.append(
                 {
                     "id": item.id,
                     "title": item.title,
                     "detail": item.detail,
-                    "url": item.file.url,
-                    "performedAt": item.performed_at,
-                    "size": filesizeformat(item.file.size),
+                    "performed_at": item.performed_at,
+                    "size": file_size,
                 }
-                for item in records
-            ]
-        }
-    )
+            )
+        result.append(
+            {
+                "year": year,
+                "items": items_list,
+            }
+        )
+
+    return render(request, "kansou/index.html", {"kansou": result})
 
 
 @login_required()
@@ -37,4 +58,6 @@ def kansouDownloadView(request, kansou_id):
         filename = "{} ({}) {}".format(kansou.title, kansou.detail, extension)
     else:
         filename = "{}{}".format(kansou.title, extension)
-    return FileResponse(open(kansou.file.path, "rb"), as_attachment=False, filename=filename)
+    return FileResponse(
+        open(kansou.file.path, "rb"), as_attachment=False, filename=filename
+    )

@@ -2,11 +2,11 @@ from social_core.exceptions import AuthAlreadyAssociated, AuthException, AuthFor
 
 
 def social_details(backend, details, response, *args, **kwargs):
-    return {'details': dict(backend.get_user_details(response), **details)}
+    return {"details": dict(backend.get_user_details(response), **details)}
 
 
 def social_uid(backend, details, response, *args, **kwargs):
-    return {'uid': backend.get_user_id(details, response)}
+    return {"uid": backend.get_user_id(details, response)}
 
 
 def auth_allowed(backend, details, response, *args, **kwargs):
@@ -16,26 +16,29 @@ def auth_allowed(backend, details, response, *args, **kwargs):
 
 from django.contrib.auth import logout
 
+
 def social_user(backend, uid, user=None, *args, **kwargs):
     provider = backend.name
     social = backend.strategy.storage.user.get_social_auth(provider, uid)
-    if provider == 'google-oauth2':
+    if provider == "google-oauth2":
         if social:
             if user and social.user != user:
                 logout(backend.strategy.request)
             elif not user:
                 user = social.user
-    elif provider == 'auth0':
+    elif provider == "auth0":
         if social:
             if user and social.user != user:
-                msg = 'This account is already in use.'
+                msg = "This account is already in use."
                 raise AuthAlreadyAssociated(backend, msg)
             elif not user:
                 user = social.user
-    return {'social': social,
-            'user': user,
-            'is_new': user is None,
-            'new_association': social is None}
+    return {
+        "social": social,
+        "user": user,
+        "is_new": user is None,
+        "new_association": social is None,
+    }
 
 
 def associate_user(backend, uid, user=None, social=None, *args, **kwargs):
@@ -52,9 +55,7 @@ def associate_user(backend, uid, user=None, social=None, *args, **kwargs):
             #   https://github.com/omab/django-social-auth/issues/131
             return social_user(backend, uid, user, *args, **kwargs)
         else:
-            return {'social': social,
-                    'user': social.user,
-                    'new_association': True}
+            return {"social": social, "user": social.user, "new_association": True}
 
 
 def associate_by_email(backend, details, user=None, *args, **kwargs):
@@ -70,7 +71,7 @@ def associate_by_email(backend, details, user=None, *args, **kwargs):
     if user:
         return None
 
-    email = details.get('email')
+    email = details.get("email")
     if email:
         # Try to associate accounts registered with the same email address,
         # only if it's a single object. AuthException is raised if multiple
@@ -80,28 +81,27 @@ def associate_by_email(backend, details, user=None, *args, **kwargs):
             return None
         elif len(users) > 1:
             raise AuthException(
-                backend,
-                'The given email address is associated with another account'
+                backend, "The given email address is associated with another account"
             )
         else:
-            return {'user': users[0],
-                    'is_new': False}
+            return {"user": users[0], "is_new": False}
 
 
 def load_extra_data(backend, details, response, uid, user, *args, **kwargs):
-    social = kwargs.get('social') or \
-             backend.strategy.storage.user.get_social_auth(backend.name, uid)
+    social = kwargs.get("social") or backend.strategy.storage.user.get_social_auth(
+        backend.name, uid
+    )
     if social:
-        extra_data = backend.extra_data(user, uid, response, details,
-                                        *args, **kwargs)
+        extra_data = backend.extra_data(user, uid, response, details, *args, **kwargs)
         social.set_extra_data(extra_data)
 
 
 def save_livelog_email(backend, user, details, *args, **kwargs):
     if user:
-        if backend.name == 'auth0':
-            user.livelog_email = details.get('email')
+        if backend.name == "auth0":
+            user.livelog_email = details.get("email")
             user.save()
+
 
 def update_login_status(backend, user, details, *args, **kwargs):
     if user:

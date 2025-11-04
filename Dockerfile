@@ -1,5 +1,5 @@
 # 開発環境の設定
-FROM python:3.6-buster AS develop
+FROM python:3.12-bookworm AS develop
 
 WORKDIR /django
 
@@ -14,9 +14,16 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # パッケージ更新
 RUN apt-get update --fix-missing && apt upgrade -y
 
+# mariadb-client のインストール
+RUN apt-get update && apt-get install -y \
+    default-libmysqlclient-dev build-essential
+
+# Pdf2imageの依存関係のインストール
+RUN apt-get install poppler-utils -y
+
 # pythonパッケージのインストール
 RUN pip install --upgrade pip
-RUN pip install uWSGI==2.0.23
+RUN pip install uWSGI==2.0.28
 
 # ホストのカレントディレクトリ（現在はdjangoディレクトリ）を作業ディレクトリにコピー
 COPY requirements.txt /django/requirements.txt
@@ -25,7 +32,7 @@ COPY requirements.txt /django/requirements.txt
 RUN pip install -r requirements.txt
 
 
-FROM python:3.6-slim-buster AS production
+FROM python:3.12-slim-bookworm AS production
 # 実行環境の設定
 
 WORKDIR /django
@@ -37,11 +44,13 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     # pip の定期的なバージョンチェックを無効化する
     PIP_DISABLE_PIP_VERSION_CHECK=on
 
-# パッケージ更新
-RUN apt-get update --fix-missing && apt upgrade -y
+# OS パッケージは production 側でも入れる
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends poppler-utils && \
+    rm -rf /var/lib/apt/lists/*
 
 # パッケージのコピー
-COPY --from=develop /usr/local/lib/python3.6/site-packages /usr/local/lib/python3.6/site-packages
+COPY --from=develop /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=develop /usr/local/bin/uwsgi /usr/local/bin/uwsgi
 COPY --from=develop /usr/lib /usr/lib
 

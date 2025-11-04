@@ -1,12 +1,26 @@
 from django.urls import path
-from . import views
+from .views import (
+    index,
+    first_register,
+    profile,
+    test_mail,
+    invitation_list,
+    edit_invitation,
+    delete_invitation,
+)
+
+urlpatterns = [
+    path("", index, name="index"),
+    path("first_register/", first_register, name="first_register"),
+    path("profile/", profile, name="profile"),
+    path("test_mail/", test_mail, name="test_mail"),
+    path("invite/", invitation_list, name="invitation_list"),
+    path("invite/<int:invitation_id>/", edit_invitation, name="edit_invitation"),
+    path(
+        "invite/<int:invitation_id>/delete/",
+        delete_invitation,
+        name="delete_invitation",
+    ),
+]
 
 app_name = "members"
-urlpatterns = [
-    path("user/", views.userInfo, name="api_get_user"),
-    path("google-unlink/", views.googleOauthUnlink),
-    path("profile/", views.profile),
-    path("mail-settings/", views.mailSettingsAPI),
-    path("mail-test/", views.mailTestAPI),
-    path("invite/", views.registerAPI),
-]

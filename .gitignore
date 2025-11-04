@@ -33,4 +33,8 @@ token.pickle
 
 log/*
 
+collected_static/*
+mariadb/*
+
 .env
+dump.json

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<style>
+    /* カード全体のスタイル */
+    .card-photo {
+      position: relative;
+      border-radius: 12px;
+      color: #fff;
+      overflow: hidden;
+      transition: background-color 0.4s, color 0.4s;
+    }
+    
+    /* カード内の画像は角丸で表示 */
+    .card-photo img {
+      display: block;
+      width: 100%;
+      border-radius: 12px;
+    }
+    
+    /* 擬似要素でオーバーレイを実現 */
+    .card-photo::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+      background-color: rgba(0, 0, 0, 0.8);
+      opacity: 0.3;
+      transition: background-color 0.4s, box-shadow 0.4s;
+      z-index: 1;
+    }
+    
+    /* hover 時のスタイル変更 */
+    .card-photo:hover {
+      text-decoration: none;
+      color: #000;
+    }
+    .card-photo:hover::after {
+      background-color: rgba(255, 255, 255, 1);
+    }
+    
+    /* タイトルと日付はカード上に絶対配置 */
+    .photo-title,
+    .photo-date {
+      position: absolute;
+      z-index: 2;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .photo-title {
+      top: 0.75rem;
+      left: 0.75rem;
+    }
+    .photo-date {
+      bottom: 0.75rem;
+      right: 0.75rem;
+      font-size: 0.75rem;
+    }
+    </style>
+{% endblock %}
+
+{% block main %}
+<h2 class="fw-bold text-primary mb-4">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+    写真
+</h2>
+<div class="row px-2">
+    {% for item in items %}
+    <div class="col-6 col-sm-4 col-md-3 mb-2 mx-0 px-1">
+        <a href="{{ item.url }}" target="_blank" class="card-photo d-block">
+          {% if item.thumbnail %}
+          <img src="{{ item.thumbnail.url }}" alt="{{ item.title }} - サムネイル" class="img-fluid">
+          {% else %}
+          <img src="{% static 'img/unplugged_logo.jpg' %}" alt="{{ item.title }} - サムネイル" class="img-fluid">
+          {% endif %}
+          <span class="photo-title">{{ item.title }}</span>
+          <span class="photo-date">{{ item.held_at|date:"Y/m/d" }}</span>
+        </a>
+      </div>
+    {% endfor %}
+</div>
+{% endblock %}

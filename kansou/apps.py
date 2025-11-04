@@ -2,7 +2,6 @@ from django.apps import AppConfig
 
 
 class KansouConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
     name = "kansou"
-    
-    def ready(self):
-        from . import signals
+    verbose_name = "感想用紙"

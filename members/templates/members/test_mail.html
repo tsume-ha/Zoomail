@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<h2 class="fw-bold text-primary">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
+    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+  </svg>
+  メーリス受信テスト
+</h2>
+
+<form method="post" class="my-4">
+  {% csrf_token %}
+  
+  <div class="mb-3">
+    <label for="email-display" class="form-label">現在設定されているメールアドレス</label>
+    <input 
+      type="email" 
+      id="email-display" 
+      value="{% if show_email %}{{ receive_email }}{% else %}***************{% endif %}" 
+      readonly 
+      class="form-control"
+    >
+  </div>
+  
+  <div class="mb-3">
+    <button 
+      type="button" 
+      id="toggle-email" 
+      class="btn btn-secondary"
+      onclick="toggleEmailDisplay()"
+    >
+      {% if show_email %}メールアドレスを隠す{% else %}メールアドレスを表示する{% endif %}
+    </button>
+  </div>
+  
+  <div class="mb-3">
+    <p class="small">
+      メーリスがきちんと受信できるか確かめるために、テストメールを送信します。<br>
+      テストメールの送信は5分に1回行うことができます。
+    </p>
+  </div>
+  
+  <input type="hidden" name="send" value="true">
+  
+  <div class="d-flex my-3">
+    <a href="{% url 'mypage:index' %}" class="btn btn-secondary">戻る</a>
+    <button type="submit" class="btn btn-primary ms-auto px-4" {% if not can_send %}disabled{% endif %}>送信する</button>
+  </div>
+</form>
+
+<script>
+  // Toggle email visibility
+  let emailVisible = {% if show_email %}true{% else %}false{% endif %};
+  const emailInput = document.getElementById('email-display');
+  const toggleButton = document.getElementById('toggle-email');
+  const actualEmail = "{{ receive_email }}";
+  
+  function toggleEmailDisplay() {
+    emailVisible = !emailVisible;
+    if (emailVisible) {
+      emailInput.value = actualEmail;
+      toggleButton.textContent = "メールアドレスを隠す";
+    } else {
+      emailInput.value = "***************";
+      toggleButton.textContent = "メールアドレスを表示する";
+    }
+  }
+</script>
+{% endblock %}

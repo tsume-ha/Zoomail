@@ -1,0 +1,39 @@
+"""
+URL configuration for zoomail project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/4.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+
+from django.contrib import admin
+from custom_admin.admin import custom_admin_site
+from django.contrib.auth.views import LogoutView
+from django.urls import path, include
+from mail.views.status_api import MailStatusView
+
+urlpatterns = [
+    path("db/", admin.site.urls),
+    path("admin/", custom_admin_site.urls),
+    path("auth/", include("social_django.urls", namespace="social")),
+    path("auth/logout/", LogoutView.as_view(), name="logout"),
+    path("", include("top.urls", namespace="top")),
+    path("mail/", include("mail.urls", namespace="mail")),
+    path("movie/", include("movie.urls", namespace="movie")),
+    path("photo/", include("photo.urls", namespace="photo")),
+    path("kansou/", include("kansou.urls", namespace="kansou")),
+    path("mypage/", include("members.urls", namespace="mypage")),
+    path("others/", include("others.urls", namespace="others")),
+    path("howto/", include("howto.urls", namespace="howto")),
+    path("download/", include("private_storage.urls")),
+    path("api/mail/status/", MailStatusView.as_view(), name="mail_status_api"),
+]

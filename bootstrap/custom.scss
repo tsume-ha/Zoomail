@@ -1,0 +1,179 @@
+// Override Bootstrap's Sass default variables
+
+// Include functions first
+@import "./bootstrap/scss/functions";
+
+
+// custom configuration here
+$primary: hsl(194, 41%, 33%);
+$success: hsl(142, 69%, 62%);
+$danger: #ef4444;
+$warning: #eab308;
+$info: #0ea5e9;
+$secondary: #e5e5e5;
+$light: #f3f4f6;
+$accent: #ea580c;
+
+// Create your own map
+$theme-accent: (
+    "accent": $accent
+);
+
+
+// フォントサイズの設定
+$font-size-base: 1rem;
+$h1-font-size: $font-size-base * 1.5;
+$h2-font-size: $font-size-base * 1.35;
+$h3-font-size: $font-size-base * 1.25;
+$h4-font-size: $font-size-base * 1.2;
+$h5-font-size: $font-size-base * 1.1;
+$h6-font-size: $font-size-base * 1;
+
+$font-sizes: (
+    1: $h1-font-size,
+    2: $h2-font-size,
+    3: $h3-font-size,
+    4: $h4-font-size,
+    5: $h5-font-size,
+    6: $h6-font-size,
+    sm: $font-size-base * 0.8,
+    xs: $font-size-base * 0.7
+);
+
+// アラートの設定
+$alert-border-radius: 4px;
+$alert-border-width: 2px;
+
+// フォーカスリングの設定
+$focus-ring-width: .125rem;
+$focus-ring-opacity: .25;
+$focus-ring-color: rgba($secondary, $focus-ring-opacity);
+
+// フォームの設定
+$input-border-radius: 4px;
+
+// Required
+@import "./bootstrap/scss/variables";
+@import "./bootstrap/scss/variables-dark";
+@import "./bootstrap/scss/maps";
+@import "./bootstrap/scss/mixins";
+@import "./bootstrap/scss/utilities";
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $theme-accent);
+
+//tint = white, shade = black
+
+// ボタンの設定
+$btn-border-radius: 4px;
+$btn-border-radius-sm: 3px;
+$btn-border-radius-lg: 5px;
+
+// バッジの設定
+$badge-font-weight: 400;
+
+// フォームの設定
+$input-padding-y: .5rem;
+
+// ページネーションの設定
+$pagination-padding-y: .4rem;
+$pagination-padding-x: .8rem;
+
+$pagination-font-size: 0.9rem;
+
+$pagination-color: $gray-900;
+$pagination-bg: transparent;
+$pagination-border-radius: 50%;
+$pagination-border-width: var(--#{$prefix}border-width);
+$pagination-border-color: transparent;
+
+$pagination-active-color: $primary;
+$pagination-active-bg: transparent;
+$pagination-active-border-color: $primary;
+
+$pagination-disabled-color: $gray-300;
+$pagination-disabled-bg: transparent;
+$pagination-disabled-border-color: transparent;
+
+$pagination-border-radius-sm: 50%;
+$pagination-border-radius-lg: 50%;
+
+// Layout & components
+@import "./bootstrap/scss/root";
+@import "./bootstrap/scss/reboot";
+@import "./bootstrap/scss/type";
+@import "./bootstrap/scss/images";
+@import "./bootstrap/scss/containers";
+@import "./bootstrap/scss/grid";
+@import "./bootstrap/scss/tables";
+@import "./bootstrap/scss/forms";
+@import "./bootstrap/scss/buttons";
+@import "./bootstrap/scss/transitions";
+@import "./bootstrap/scss/dropdown";
+@import "./bootstrap/scss/button-group";
+@import "./bootstrap/scss/nav";
+@import "./bootstrap/scss/navbar";
+@import "./bootstrap/scss/card";
+@import "./bootstrap/scss/accordion";
+@import "./bootstrap/scss/breadcrumb";
+@import "./bootstrap/scss/pagination";
+@import "./bootstrap/scss/badge";
+@import "./bootstrap/scss/alert";
+@import "./bootstrap/scss/progress";
+@import "./bootstrap/scss/list-group";
+@import "./bootstrap/scss/close";
+@import "./bootstrap/scss/toasts";
+@import "./bootstrap/scss/modal";
+@import "./bootstrap/scss/tooltip";
+@import "./bootstrap/scss/popover";
+@import "./bootstrap/scss/carousel";
+@import "./bootstrap/scss/spinners";
+@import "./bootstrap/scss/offcanvas";
+@import "./bootstrap/scss/placeholders";
+
+.btn-primary {
+    @include button-variant(tint-color($primary, 12%), tint-color($primary, 10%));
+}
+
+.btn-secondary {
+    @include button-variant(tint-color($secondary, 30%), tint-color($secondary, 76%));
+}
+
+.btn-success {
+    @include button-variant(tint-color($success, 35%), tint-color($success, 30%));
+}
+
+.btn-danger {
+    @include button-variant(tint-color($danger, 30%), tint-color($danger, 27%));
+}
+
+.btn-warning {
+    @include button-variant(tint-color($warning, 27%), tint-color($warning, 25%));
+}
+
+.btn-info {
+    @include button-variant(tint-color($info, 32%), tint-color($info, 29%));
+}
+
+.btn-accent {
+    @include button-variant(shade-color($accent, 12%), shade-color($accent, 10%), $white);
+}
+
+
+.dropstart .dropdown-toggle::before {
+    display: none;
+}
+
+
+// Helpers
+@import "./bootstrap/scss/helpers";
+
+
+// バッジの設定
+.text-bg-accent {
+    color: $white !important;
+    background-color: shade-color($accent, 12%) !important;
+}
+
+// Utilities
+@import "./bootstrap/scss/utilities/api";
