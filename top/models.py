@@ -27,6 +27,11 @@ def content_log(LIST_NUM=3):
 
 
 class Announcement(models.Model):
+    class Meta:
+        verbose_name = "お知らせ"
+        verbose_name_plural = "お知らせ"
+        ordering = ["-created_at"]
+
     text = models.TextField(blank=False, null=False)
     created_at = models.DateTimeField(blank=False, null=False, default=timezone.now)
 

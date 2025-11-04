@@ -19,6 +19,10 @@ def others_custom_thumbnail_upload_to(instance, filename):
 
 
 class File(models.Model):
+    class Meta:
+        verbose_name = "その他ファイル"
+        verbose_name_plural = "その他ファイル"
+
     filename = models.CharField(max_length=255, blank=True, null=False)
     file = PrivateFileField(upload_to=others_custom_upload_to)
     thumbnail = PrivateFileField(
