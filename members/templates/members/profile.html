@@ -94,10 +94,11 @@
             {% if google_login %}
               {% if livelog_login %}
                 <!-- Google認証済みかつLiveLog認証済みの場合 -->
-                <form action="{% url 'unlink_google' %}" method="post">
+                <!-- TODO ボタン作成 -->
+                {% comment %} <form action="{% url 'unlink_google' %}" method="post">
                   {% csrf_token %}
                   <button type="submit" class="btn btn-warning">紐付けを解除する</button>
-                </form>
+                </form> {% endcomment %}
               {% else %}
                 <!-- Google認証済みだが、LiveLogは未認証の場合 -->
                 <p>紐付けを解除するためには、もう一度LiveLogへログインしてください</p>
