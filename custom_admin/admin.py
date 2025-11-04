@@ -17,22 +17,22 @@ class CustomAdminSite(admin.AdminSite):
 custom_admin_site = CustomAdminSite(name="custom_admin")
 
 
-class GroupBasicAdmin(admin.ModelAdmin):
-    fieldsets = (
-        (
-            None,
-            {
-                "fields": ("name", "users"),
-                "description": "「利用可能 users」から係に登録したい人を選んで「選択された users 」に移動させてください。<br>"
-                + "自分自身を係から外すと、このページに戻ることができなくなるので注意してください。",
-            },
-        ),
-    )
-    readonly_fields = ("name",)
-    form = GroupAdminForm
+# class GroupBasicAdmin(admin.ModelAdmin):
+#     fieldsets = (
+#         (
+#             None,
+#             {
+#                 "fields": ("name", "users"),
+#                 "description": "「利用可能 users」から係に登録したい人を選んで「選択された users 」に移動させてください。<br>"
+#                 + "自分自身を係から外すと、このページに戻ることができなくなるので注意してください。",
+#             },
+#         ),
+#     )
+#     readonly_fields = ("name",)
+#     form = GroupAdminForm
 
-    def get_queryset(self, request):
-        return request.user.groups
+#     def get_queryset(self, request):
+#         return request.user.groups.all()
 
 
-custom_admin_site.register(Group, GroupBasicAdmin)
+# custom_admin_site.register(Group, GroupBasicAdmin)

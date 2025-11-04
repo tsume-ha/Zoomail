@@ -124,6 +124,8 @@ else:
 AUTHENTICATION_BACKENDS = (
     "social_core.backends.google.GoogleOAuth2",
     "config.social_auth.auth0backend.Auth0",
+    # django-adminのpermission管理で必要
+    "django.contrib.auth.backends.ModelBackend",
 )
 SOCIAL_AUTH_LOGIN_URL = "/"
 LOGIN_URL = "/"

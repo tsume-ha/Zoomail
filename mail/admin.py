@@ -5,7 +5,7 @@ from .models import Message, Attachment, ToGroup
 
 from .forms import ToGroupAdminForm
 
-# from utils.mail3 import MailisReSender
+from mail.send import MailisReSender
 from django.contrib import messages
 
 
@@ -58,13 +58,19 @@ class MessageSuperuserAdmin(admin.ModelAdmin):
     @admin.action(description="選択したメーリスを再送信する")
     def resend_mail(self, request, queryset):
         pass
-        # for message in queryset:
-        #     sender = MailisReSender(message)
-        #     count = sender.send()
-        #     messages.add_message(
-        #         request, messages.SUCCESS, f"メーリス「{message.title}」を{count}人に再送信しました。"
-        #     )
-        #     messages.add_message(request, messages.INFO, f"最新の状態を取得するには、ページを更新してください。")
+        for message in queryset:
+            sender = MailisReSender(message)
+            count = sender.send()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                f"メーリス「{message.title}」を{count}人に再送信しました。",
+            )
+            messages.add_message(
+                request,
+                messages.INFO,
+                f"最新の状態を取得するには、ページを更新してください。",
+            )
 
     actions = [resend_mail]
 
@@ -78,5 +84,5 @@ class ToGroupAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Message, MessageSuperuserAdmin)
-# admin.site.register(ToGroup, ToGroupAdmin)
+admin.site.register(ToGroup, ToGroupAdmin)
 custom_admin_site.register(ToGroup, ToGroupAdmin)

@@ -22,14 +22,14 @@ class SuperuserUserAdmin(BaseUserAdmin):
                 )
             },
         ),
-        (("Permissions"), {"fields": ("is_staff", "is_superuser")}),
+        (("Permissions"), {"fields": (("is_staff", "is_superuser"), "groups")}),
     )
     add_fieldsets = (
         (
             None,
             {
                 "classes": ("wide",),
-                "fields": ("email", ("last_name", "first_name"), "year", "furigana"),
+                "fields": ("email", "fullname", "year", "furigana"),
             },
         ),
     )
@@ -59,10 +59,7 @@ class SuperuserUserAdmin(BaseUserAdmin):
     )
     list_display_links = ("year", "fullname")
     list_filter = ("year", "is_staff", "is_superuser", "send_mail")
-    search_fields = (
-        "last_name",
-        "first_name",
-    )
+    search_fields = ("fullname", "email")
     ordering = (
         "year",
         "furigana",
@@ -106,8 +103,8 @@ class BasicUserAdmin(BaseUserAdmin):
     list_display_links = ("year", "fullname")
     list_filter = ("year", "is_staff")
     search_fields = (
-        "last_name",
-        "first_name",
+        "fullname",
+        "email",
     )
     ordering = (
         "year",
