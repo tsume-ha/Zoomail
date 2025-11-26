@@ -98,14 +98,40 @@
 </div>
 
 <!-- 送信ボタン -->
-<form method="post" enctype="multipart/form-data">
+<form id="send-confirm-form" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ wizard.management_form }}
   <div class="d-flex my-3">
     <button type="submit" name="wizard_goto_step" value="{{ wizard.steps.prev }}" class="btn btn-secondary me-2 px-4">戻る</button>
-    <button type="submit" class="btn btn-primary ms-auto px-4">送信</button>
+    <button id="send-submit" type="submit" class="btn btn-primary ms-auto px-4">送信</button>
   </div>
 </form>
+
+<script>
+(function(){
+  // 多重送信防止: クリック時に一旦 preventDefault してから form.submit() する
+  var form = document.getElementById('send-confirm-form');
+  if (!form) return;
+  var btn = document.getElementById('send-submit');
+  if (!btn) return;
+  var submitted = false;
+  btn.addEventListener('click', function(e){
+    if (submitted) {
+      // すでに送信処理中なら何もしない
+      e.preventDefault();
+      return;
+    }
+    // 通常のクリック動作を止めてから JS で一回だけ submit を走らせる
+    e.preventDefault();
+    submitted = true;
+    btn.disabled = true;
+    // disabled 状態が反映されるように少し遅らせて submit
+    setTimeout(function(){
+      form.submit();
+    }, 10);
+  });
+})();
+</script>
 {% endif %}
 
 {% endblock %}
