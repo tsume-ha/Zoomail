@@ -184,7 +184,7 @@ SOCIAL_AUTH_PIPELINE = (
     # LiveLog, Googleでのログイン情報を保存
     "config.social_auth.social_auth_pipelines.update_login_status",
 )
-
+SOCIAL_AUTH_ACTIVE_USERS_FILTER = {}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
