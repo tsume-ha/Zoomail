@@ -8,6 +8,9 @@ services:
       context: .
       target: production
       args:
+        # production コンテナ内の zoomail ユーザーをホスト側 UID/GID に合わせる。
+        # bind mount する collected_static/private_media も同じ UID/GID で
+        # 事前作成しておかないと collectstatic が PermissionError になる。
         APP_UID: ${APP_UID:-1000}
         APP_GID: ${APP_GID:-1000}
     restart: on-failure
@@ -21,6 +24,9 @@ services:
       database:
         condition: service_healthy
     volumes:
+      # nginx はホスト側 ./collected_static を直接配信する想定。
+      # 初回セットアップ時に deploy 実行ユーザー所有で mkdir/chmod/chown を済ませ、
+      # .env の APP_UID / APP_GID と一致させておくこと。
       - ./collected_static:/django/collected_static
       - ./private_media:/django/private_media
     logging:

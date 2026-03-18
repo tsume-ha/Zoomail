@@ -23,5 +23,8 @@ jobs:
           script: |
             cd /srv/zoomail
             git pull
+            mkdir -p collected_static private_media
+            test -w collected_static
+            test -w private_media
             docker compose -f compose.prod.yaml down
             docker compose -f compose.prod.yaml up --build -d
