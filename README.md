@@ -113,3 +113,44 @@ python manage.py migrate members
 python manage.py migrate
 ```
 
+## Python依存パッケージの更新手順
+
+Zoomail では、`requirements.txt` を **最終的に `pip freeze` の結果で固定** して管理します。
+Dependabot で直接依存・間接依存の両方を追跡しやすくするためです。
+
+更新するときは、次の流れで行います。
+
+1. まず `requirements.txt` を、アプリが直接使う最小限の依存だけにする
+2. development コンテナを build して依存関係を解決する
+3. コンテナ内で `pip freeze` を実行し、結果で `requirements.txt` を更新する
+4. Django の最低限の起動確認を行う
+
+### 最小依存から再生成するときの例
+
+`requirements.txt` を直接依存だけにしたあと、以下を実行します。
+
+```bash
+docker compose run --rm --build django pip freeze
+```
+
+出力された内容で `requirements.txt` を更新したら、Django コンテナを起動して確認します。
+
+```bash
+docker compose up -d django
+docker compose exec django python manage.py check
+```
+
+### 間接依存に脆弱性が見つかったとき
+
+Dependabot で脆弱性警告が出た場合は、次の順で対処します。
+
+1. まず、どの **直接依存** が問題の **間接依存** を引き込んでいるか確認する
+2. 可能なら、親になっている直接依存を更新して解消する
+3. 親の更新だけで解消しない場合は、互換性を確認したうえで、必要なバージョンが入るように最小依存の見直しを行う
+4. その状態で development コンテナを再 build する
+5. `pip freeze` を取り直して `requirements.txt` を更新する
+6. 最後に `docker compose exec django python manage.py check` などで最低限の動作確認を行う
+
+重要なのは、**間接依存だけを場当たり的に手で直すのではなく、最終的に再度 `pip freeze` して `requirements.txt` 全体を実環境と一致させること** です。
+
+
