@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 
-from mail.send import MailContent, SympleMailSender
+from mail.send import MailContent, MailRecipient, SympleMailSender
 from .models import TestMail, UserInvitation
 from .forms import UserUpdateForm, TestMailForm, UserInvitationForm, FirstRegisterForm
 from django.contrib.auth.decorators import login_required
@@ -96,6 +96,8 @@ def test_mail(request):
             mail_content = MailContent(
                 subject="メーリス受信テスト",
                 text=f"{user.fullname or user.username} 様\n\nこれはメーリス受信テストメールです。\nこのメールが正常に届いていれば、メーリスの受信設定は正常です。",
+            )
+            recipient = MailRecipient(
                 to_email=receive_email,
                 from_email="zenkai@zoomail.ku-unplugged.net",
                 from_name="Zoomail テスト配信",
@@ -104,7 +106,8 @@ def test_mail(request):
 
             try:
                 sender = SympleMailSender()
-                sender.set_content_list([mail_content])
+                sender.set_content(mail_content)
+                sender.set_recipient_list([recipient])
                 sender.send()
                 TestMail.objects.create(
                     user=user,
@@ -161,6 +164,8 @@ def invitation_list(request):
                     f"https://zoomail.ku-unplugged.net/\n\n\n"
                     "このメールは Zoomail より自動送信されました。心当たりのない場合は破棄してください。"
                 ),
+            )
+            recipient = MailRecipient(
                 to_email=invitation.email,
                 from_email="invitation@zoomail.ku-unplugged.net",
                 from_name="京大アンプラグド Zoomail",
@@ -169,7 +174,8 @@ def invitation_list(request):
 
             try:
                 sender = SympleMailSender()
-                sender.set_content_list([mail_content])
+                sender.set_content(mail_content)
+                sender.set_recipient_list([recipient])
                 sender.send()
                 django_messages.success(
                     request, f"「{invitation.email}」宛に招待メールを送信しました。"

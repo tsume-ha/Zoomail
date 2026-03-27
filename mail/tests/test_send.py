@@ -2,8 +2,10 @@ from django.test import TestCase
 from django.urls import reverse
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
+from unittest.mock import Mock, patch
 from members.models import User
-from mail.models import ToGroup, Message
+from mail.models import MailLog, ToGroup, Message
+from mail.send import MailContent, MailRecipient, SympleMailSender, MailisSender
 
 
 class SendViewTests(TestCase):
@@ -111,3 +113,106 @@ class SendViewTests(TestCase):
         self.assertEqual(last.content, "テスト本文")
         self.assertEqual(last.sender, self.user)
         self.assertTrue(last.to_groups.filter(id=group.id).exists())
+
+
+class SenderPayloadTests(TestCase):
+    def test_simple_mail_sender_posts_content_and_recipients_payload(self):
+        sender = SympleMailSender()
+        sender.set_content(MailContent(subject="件名", text="本文"))
+        sender.set_recipient_list(
+            [
+                MailRecipient(
+                    to_email="to@example.com",
+                    from_email="from@example.com",
+                    from_name="差出人",
+                )
+            ]
+        )
+
+        mock_response = Mock()
+        mock_response.raise_for_status = Mock()
+
+        with patch("mail.send.requests.post", return_value=mock_response) as mock_post:
+            sender._request()
+
+        _, kwargs = mock_post.call_args
+        self.assertEqual(kwargs["json"]["content"], {"subject": "件名", "text": "本文"})
+        self.assertEqual(len(kwargs["json"]["recipients"]), 1)
+        self.assertEqual(kwargs["json"]["recipients"][0]["to"], "to@example.com")
+        self.assertEqual(
+            kwargs["json"]["recipients"][0]["from"],
+            {"email": "from@example.com", "name": "差出人"},
+        )
+        self.assertEqual(kwargs["json"]["attachments"], [])
+
+    def test_mailis_sender_builds_recipient_specific_from_addresses(self):
+        writer = User.objects.create_user(email="writer@example.com", year=2025)
+        writer.fullname = "送信者 テスト"
+        writer.furigana = "そうしんしゃ"
+        writer.save()
+
+        user_zenkai = User.objects.create_user(email="all@example.com", year=2024)
+        user_zenkai.receive_email = "all-receive@example.com"
+        user_zenkai.send_mail = True
+        user_zenkai.save()
+
+        user_kaisei = User.objects.create_user(email="year@example.com", year=2025)
+        user_kaisei.receive_email = "year-receive@example.com"
+        user_kaisei.send_mail = True
+        user_kaisei.save()
+
+        zenkai_group = ToGroup.objects.create(year=0, label="全回")
+        kaisei_group = ToGroup.objects.create(year=2025, label="2025")
+
+        message = Message.objects.create(
+            title="件名",
+            content="本文",
+            sender=writer,
+            writer=writer,
+        )
+        message.to_groups.set([zenkai_group, kaisei_group])
+
+        sender = MailisSender(message=message)
+
+        recipients_by_email = {
+            recipient.to_email: recipient for recipient in sender.recipient_list
+        }
+        self.assertIn("all-receive@example.com", recipients_by_email)
+        self.assertEqual(
+            recipients_by_email["all-receive@example.com"].from_email,
+            "zenkai@zoomail.ku-unplugged.net",
+        )
+        self.assertIn("year-receive@example.com", recipients_by_email)
+        self.assertEqual(
+            recipients_by_email["year-receive@example.com"].from_email,
+            "2025kaisei@zoomail.ku-unplugged.net",
+        )
+
+    def test_send_creates_logs_per_recipient(self):
+        sender = SympleMailSender()
+        sender.set_content(MailContent(subject="件名", text="本文"))
+        sender.set_recipient_list(
+            [
+                MailRecipient(
+                    to_email="to1@example.com",
+                    from_email="from@example.com",
+                    from_name="差出人1",
+                ),
+                MailRecipient(
+                    to_email="to2@example.com",
+                    from_email="from@example.com",
+                    from_name="差出人2",
+                ),
+            ]
+        )
+
+        mock_response = Mock()
+        mock_response.raise_for_status = Mock()
+
+        with patch("mail.send.requests.post", return_value=mock_response), patch(
+            "mail.send.SEND_MAIL", True
+        ):
+            count = sender.send()
+
+        self.assertEqual(count, 2)
+        self.assertEqual(MailLog.objects.count(), 2)

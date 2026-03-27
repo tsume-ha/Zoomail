@@ -20,25 +20,37 @@ class MailContent:
         self,
         subject: str = None,
         text: str = None,
-        to_email: str = None,
-        from_email: str = None,
-        from_name: str = None,
-        user=None,
-        mail_id: str = None,
     ) -> None:
         self.subject = subject
         self.text = text
-        self.to_email = to_email
-        self.from_email = from_email
-        self.from_name = from_name
-        self.user = user
-        self.mail_id = mail_id if mail_id else str(uuid.uuid4())
 
     def set_subject(self, subject: str):
         self.subject = subject
 
     def set_text(self, text: str):
         self.text = text
+
+    def as_dict(self) -> dict:
+        return {
+            "subject": self.subject,
+            "text": self.text,
+        }
+
+
+class MailRecipient:
+    def __init__(
+        self,
+        to_email: str = None,
+        from_email: str = None,
+        from_name: str = None,
+        user=None,
+        mail_id: str = None,
+    ) -> None:
+        self.to_email = to_email
+        self.from_email = from_email
+        self.from_name = from_name
+        self.user = user
+        self.mail_id = mail_id if mail_id else str(uuid.uuid4())
 
     def set_to(self, email: str):
         self.to_email = email
@@ -52,8 +64,6 @@ class MailContent:
 
     def as_dict(self) -> dict:
         return {
-            "subject": self.subject,
-            "text": self.text,
             "to": self.to_email,
             "from": {"email": self.from_email, "name": self.from_name},
             "id": self.mail_id,
@@ -82,11 +92,15 @@ class MailAttachment:
 class SympleMailSender:
 
     def __init__(self) -> None:
-        self.content_list: List[MailContent] = []
+        self.content: MailContent | None = None
+        self.recipient_list: List[MailRecipient] = []
         self.attachment_list: List[MailAttachment] = []
 
-    def set_content_list(self, content_list: List[MailContent]):
-        self.content_list = content_list
+    def set_content(self, content: MailContent):
+        self.content = content
+
+    def set_recipient_list(self, recipient_list: List[MailRecipient]):
+        self.recipient_list = recipient_list
 
     def set_attachment_list(self, attachment_list: List[MailAttachment]):
         self.attachment_list = attachment_list
@@ -94,19 +108,20 @@ class SympleMailSender:
     def _save_mail_logs(self):
         log_list = [
             MailLog(
-                mail_id=content.mail_id,
-                email=content.to_email,
-                user=content.user,
+                mail_id=recipient.mail_id,
+                email=recipient.to_email,
+                user=recipient.user,
                 send_server=MailLog.SendServerChoices.SES,
                 status=MailLog.StatusChoices.PENDING,
             )
-            for content in self.content_list
+            for recipient in self.recipient_list
         ]
         MailLog.objects.bulk_create(log_list)
 
     def _request(self):
         data = {
-            "message": [content.as_dict() for content in self.content_list],
+            "content": self.content.as_dict(),
+            "recipients": [recipient.as_dict() for recipient in self.recipient_list],
             "attachments": [
                 attachment.as_dict() for attachment in self.attachment_list
             ],
@@ -123,7 +138,7 @@ class SympleMailSender:
         if SEND_MAIL:
             self._save_mail_logs()
             self._request()
-            return len(self.content_list)
+            return len(self.recipient_list)
         else:
             return 0
 
@@ -133,22 +148,29 @@ class MailisSender(SympleMailSender):
     def __init__(self, message: Message):
         super().__init__()
         self.message = message
-        self.load_conent_list()
+        self.load_content()
+        self.load_recipient_list()
         self.load_attachment_list()
 
-    def load_conent_list(self):
+    def load_content(self):
+        super().set_content(
+            MailContent(
+                subject=self.message.title,
+                text=self.message.content
+                + "\n\n--------------------------------\nこのメーリスのURLはこちら\nhttps://zoomail.ku-unplugged.net/mail/"
+                + str(self.message.pk),
+            )
+        )
+
+    def load_recipient_list(self):
         if self.message.to_groups.filter(year=0).exists():
             send_to_users = User.objects.filter(
                 send_mail=True,
             ).annotate(
                 send_email=Coalesce(NullIf("receive_email", Value("")), F("email"))
             )
-            content_list = [
-                MailContent(
-                    subject=self.message.title,
-                    text=self.message.content
-                    + "\n\n--------------------------------\nこのメーリスのURLはこちら\nhttps://zoomail.ku-unplugged.net/mail/"
-                    + str(self.message.pk),
+            recipient_list = [
+                MailRecipient(
                     to_email=send_to_user.send_email,
                     from_email="zenkai@zoomail.ku-unplugged.net",
                     from_name=self.message.writer.get_short_name(),
@@ -156,21 +178,17 @@ class MailisSender(SympleMailSender):
                 )
                 for send_to_user in send_to_users
             ]
-            super().set_content_list(content_list)
+            super().set_recipient_list(recipient_list)
         else:
-            content_list = []
+            recipient_list = []
             for to_group in self.message.to_groups.all():
                 send_to_users = User.objects.filter(
                     year=to_group.year, send_mail=True
                 ).annotate(
                     send_email=Coalesce(NullIf("receive_email", Value("")), F("email"))
                 )
-                content_list += [
-                    MailContent(
-                        subject=self.message.title,
-                        text=self.message.content
-                        + "\n\n--------------------------------\nこのメーリスのURLはこちら\nhttps://zoomail.ku-unplugged.net/mail/"
-                        + str(self.message.pk),
+                recipient_list += [
+                    MailRecipient(
                         to_email=send_to_user.send_email,
                         from_email=f"{to_group.year - 1994}kaisei@zoomail.ku-unplugged.net",
                         from_name=self.message.writer.get_short_name(),
@@ -178,7 +196,7 @@ class MailisSender(SympleMailSender):
                     )
                     for send_to_user in send_to_users
                 ]
-            super().set_content_list(content_list)
+            super().set_recipient_list(recipient_list)
 
     def load_attachment_list(self):
         attachment_list = []
@@ -193,30 +211,26 @@ class MailisSender(SympleMailSender):
         log_list = [
             MailLog(
                 message=self.message,
-                mail_id=content.mail_id,
-                email=content.to_email,
-                user=content.user,
+                mail_id=recipient.mail_id,
+                email=recipient.to_email,
+                user=recipient.user,
                 send_server=MailLog.SendServerChoices.SES,
                 status=MailLog.StatusChoices.PENDING,
             )
-            for content in self.content_list
+            for recipient in self.recipient_list
         ]
         MailLog.objects.bulk_create(log_list)
 
 
 class MailisReSender(MailisSender):
-    def load_conent_list(self):
+    def load_recipient_list(self):
         # MailLogでsuccessしていないものだけを再送信
         error_log_list = MailLog.objects.filter(message=self.message).filter(
             Q(status=MailLog.StatusChoices.FAILED)
             | Q(status=MailLog.StatusChoices.PENDING)
         )
-        content_list = [
-            MailContent(
-                subject=self.message.title,
-                text=self.message.content
-                + "\n\n--------------------------------\nこのメーリスのURLはこちら\nhttps://zoomail.ku-unplugged.net/mail/"
-                + str(self.message.pk),
+        recipient_list = [
+            MailRecipient(
                 to_email=mail_log.email,
                 from_email="zenkai@zoomail.ku-unplugged.net",
                 from_name=self.message.writer.get_short_name(),
@@ -225,7 +239,7 @@ class MailisReSender(MailisSender):
             )
             for mail_log in error_log_list
         ]
-        super().set_content_list(content_list)
+        super().set_recipient_list(recipient_list)
 
     def _save_mail_logs(self):
         return
