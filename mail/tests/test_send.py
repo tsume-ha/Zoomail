@@ -2,10 +2,14 @@ from django.test import TestCase
 from django.urls import reverse
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth import BACKEND_SESSION_KEY
 from unittest.mock import Mock, patch
 from members.models import User
 from mail.models import MailLog, ToGroup, Message
 from mail.send import MailContent, MailRecipient, SympleMailSender, MailisSender
+
+
+TEST_AUTH_BACKEND = "django.contrib.auth.backends.ModelBackend"
 
 
 class SendViewTests(TestCase):
@@ -18,7 +22,14 @@ class SendViewTests(TestCase):
         self.user.fullname = "テストユーザー"
         self.user.furigana = "てすと"
         self.user.save()
+        self.user.backend = TEST_AUTH_BACKEND
         self.send_url = reverse("mail:send")
+
+    def _force_login_with_model_backend(self, user):
+        self.client.force_login(user, backend=TEST_AUTH_BACKEND)
+        session = self.client.session
+        session[BACKEND_SESSION_KEY] = TEST_AUTH_BACKEND
+        session.save()
 
     def test_send_view_redirects_if_not_logged_in(self):
         """
@@ -34,7 +45,7 @@ class SendViewTests(TestCase):
         """
         ログイン済みユーザーはメール送信ページへアクセスできること
         """
-        self.client.force_login(self.user)
+        self._force_login_with_model_backend(self.user)
         response = self.client.get(self.send_url)
         self.assertEqual(response.status_code, 200)
 
@@ -47,7 +58,8 @@ class SendViewTests(TestCase):
             year=2025,
         )
         # fullnameとfuriganaを設定しない
-        self.client.force_login(incomplete_user)
+        incomplete_user.backend = TEST_AUTH_BACKEND
+        self._force_login_with_model_backend(incomplete_user)
         response = self.client.get(self.send_url)
         expected_url = reverse("members:first_register")
         self.assertRedirects(response, expected_url, fetch_redirect_response=False)
@@ -59,7 +71,7 @@ class SendViewTests(TestCase):
         """
         # グループ作成
         group = ToGroup.objects.create(year=2025, label="2025年度メンバー")
-        self.client.force_login(self.user)
+        self._force_login_with_model_backend(self.user)
 
         # Step 1: Compose 表示を取得して管理フォーム・フォームセットを取得
         resp1 = self.client.get(self.send_url)
@@ -145,7 +157,7 @@ class SenderPayloadTests(TestCase):
         )
         self.assertEqual(kwargs["json"]["attachments"], [])
 
-    def test_mailis_sender_builds_recipient_specific_from_addresses(self):
+    def test_mailis_sender_uses_zenkai_from_for_year_zero_group(self):
         writer = User.objects.create_user(email="writer@example.com", year=2025)
         writer.fullname = "送信者 テスト"
         writer.furigana = "そうしんしゃ"
@@ -156,13 +168,7 @@ class SenderPayloadTests(TestCase):
         user_zenkai.send_mail = True
         user_zenkai.save()
 
-        user_kaisei = User.objects.create_user(email="year@example.com", year=2025)
-        user_kaisei.receive_email = "year-receive@example.com"
-        user_kaisei.send_mail = True
-        user_kaisei.save()
-
         zenkai_group = ToGroup.objects.create(year=0, label="全回")
-        kaisei_group = ToGroup.objects.create(year=2025, label="2025")
 
         message = Message.objects.create(
             title="件名",
@@ -170,7 +176,7 @@ class SenderPayloadTests(TestCase):
             sender=writer,
             writer=writer,
         )
-        message.to_groups.set([zenkai_group, kaisei_group])
+        message.to_groups.set([zenkai_group])
 
         sender = MailisSender(message=message)
 
@@ -182,10 +188,36 @@ class SenderPayloadTests(TestCase):
             recipients_by_email["all-receive@example.com"].from_email,
             "zenkai@zoomail.ku-unplugged.net",
         )
+
+    def test_mailis_sender_uses_kaisei_from_for_year_group(self):
+        writer = User.objects.create_user(email="writer2@example.com", year=2025)
+        writer.fullname = "送信者 テスト"
+        writer.furigana = "そうしんしゃ"
+        writer.save()
+
+        user_kaisei = User.objects.create_user(email="year@example.com", year=2025)
+        user_kaisei.receive_email = "year-receive@example.com"
+        user_kaisei.send_mail = True
+        user_kaisei.save()
+
+        kaisei_group = ToGroup.objects.create(year=2025, label="2025")
+        message = Message.objects.create(
+            title="件名",
+            content="本文",
+            sender=writer,
+            writer=writer,
+        )
+        message.to_groups.set([kaisei_group])
+
+        sender = MailisSender(message=message)
+
+        recipients_by_email = {
+            recipient.to_email: recipient for recipient in sender.recipient_list
+        }
         self.assertIn("year-receive@example.com", recipients_by_email)
         self.assertEqual(
             recipients_by_email["year-receive@example.com"].from_email,
-            "2025kaisei@zoomail.ku-unplugged.net",
+            "31kaisei@zoomail.ku-unplugged.net",
         )
 
     def test_send_creates_logs_per_recipient(self):
