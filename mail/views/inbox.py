@@ -74,5 +74,11 @@ def inbox(request):
 @login_required
 def detail(request, id):
     message = get_object_or_404(Message, id=id)
+    if (
+        not message.to_groups.filter(Q(year=0) | Q(year=request.user.year)).exists()
+        and message.sender != request.user
+        and message.writer != request.user
+    ):
+        return get_object_or_404(Message, id=0)
     context = {"message": message}
     return render(request, "mail/detail.html", context)

@@ -49,3 +49,72 @@ class FirstRegisterFlowTest(TestCase):
         # Step 5: access index again -> should be accessible now
         resp = client.get(url_index)
         self.assertEqual(resp.status_code, 200)
+
+    def test_first_register_fails_when_fullname_missing(self):
+        user = User.objects.create_user(email="missing-fullname@example.com", year=2022)
+        user.fullname = ""
+        user.furigana = ""
+        user.save()
+
+        client = Client()
+        client.force_login(user)
+        url = reverse("members:first_register")
+
+        resp = client.post(
+            url,
+            data={
+                "fullname": "",
+                "furigana": "やまだたろう",
+                "receive_email": "missing-fullname@example.com",
+                "send_mail": "on",
+            },
+        )
+
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn("form", resp.context)
+        self.assertIn("fullname", resp.context["form"].errors)
+        user.refresh_from_db()
+        self.assertEqual(user.fullname, "")
+
+    def test_first_register_fails_when_furigana_missing(self):
+        user = User.objects.create_user(email="missing-furigana@example.com", year=2022)
+        user.fullname = ""
+        user.furigana = ""
+        user.save()
+
+        client = Client()
+        client.force_login(user)
+        url = reverse("members:first_register")
+
+        resp = client.post(
+            url,
+            data={
+                "fullname": "山田太郎",
+                "furigana": "",
+                "receive_email": "missing-furigana@example.com",
+                "send_mail": "on",
+            },
+        )
+
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn("form", resp.context)
+        self.assertIn("furigana", resp.context["form"].errors)
+        user.refresh_from_db()
+        self.assertEqual(user.furigana, "")
+
+    def test_first_register_completed_user_redirects_to_profile(self):
+        user = User.objects.create_user(email="completed@example.com", year=2022)
+        user.fullname = "完了ユーザー"
+        user.furigana = "かんりょうゆーざー"
+        user.save()
+
+        client = Client()
+        client.force_login(user)
+        url = reverse("members:first_register")
+
+        resp = client.get(url)
+
+        self.assertIn(resp.status_code, (301, 302))
+        self.assertTrue(
+            str(resp.get("Location", "")).endswith(reverse("members:profile"))
+        )
