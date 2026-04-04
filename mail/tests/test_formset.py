@@ -105,3 +105,23 @@ class FormBoundaryTests(TestCase):
         files["form-2-file"] = file4  # これで合計32MB
         formset = AttachmentFormset(data=formset_data, files=files)
         self.assertFalse(formset.is_valid(), "合計30MBを超えるファイルは無効であるべき")
+
+    def test_attachment_formset_rejects_total_size_over_30mb(self):
+        """各ファイルは上限内でも合計30MB超なら無効"""
+        formset_data = {
+            "form-TOTAL_FORMS": 4,
+            "form-INITIAL_FORMS": 0,
+            "form-MIN_NUM_FORMS": 0,
+            "form-MAX_NUM_FORMS": 20,
+        }
+        files = {
+            "form-0-file": SimpleUploadedFile("file1.txt", b"a" * (8 * 1024 * 1024)),
+            "form-1-file": SimpleUploadedFile("file2.txt", b"a" * (8 * 1024 * 1024)),
+            "form-2-file": SimpleUploadedFile("file3.txt", b"a" * (8 * 1024 * 1024)),
+            "form-3-file": SimpleUploadedFile("file4.txt", b"a" * (8 * 1024 * 1024)),
+        }
+
+        formset = AttachmentFormset(data=formset_data, files=files)
+
+        self.assertFalse(formset.is_valid())
+        self.assertTrue(formset.non_form_errors())

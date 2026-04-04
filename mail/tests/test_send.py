@@ -218,3 +218,32 @@ class SendViewTests(TestCase):
         self.assertContains(response, "確認件名")
         self.assertContains(response, "確認本文")
         self.assertContains(response, "2025年度メンバー")
+
+    @override_settings(SEND_MAIL=False)
+    def test_send_validation_error_when_to_groups_missing(self):
+        self.client.force_login(self.user)
+
+        response = self.client.get(self.send_url)
+        management_form = response.context["wizard"]["management_form"]
+        attachment_formset = response.context["attachment_formset"]
+
+        post = {
+            "send_wizard_view-current_step": "compose",
+            "writer": str(self.user.id),
+            "to_groups": [],
+            "title": "件名",
+            "content": "本文",
+            "attachments-TOTAL_FORMS": str(attachment_formset.total_form_count()),
+            "attachments-INITIAL_FORMS": str(attachment_formset.initial_form_count()),
+        }
+        for field in management_form.hidden_fields():
+            post[field.name] = field.value()
+        for field in attachment_formset.management_form.hidden_fields():
+            post[field.name] = field.value()
+
+        response = self.client.post(self.send_url, data=post)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "mail/send_create.html")
+        self.assertIn("to_groups", response.context["message_form"].errors)
+        self.assertEqual(Message.objects.count(), 0)
