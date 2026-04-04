@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON `test\_%`.* TO 'zoomail'@'%';
+FLUSH PRIVILEGES;

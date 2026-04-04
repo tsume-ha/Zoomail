@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.conf import settings
+from django.test.utils import override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from members.models import User
 from mail.models import ToGroup, Message
@@ -111,3 +112,138 @@ class SendViewTests(TestCase):
         self.assertEqual(last.content, "テスト本文")
         self.assertEqual(last.sender, self.user)
         self.assertTrue(last.to_groups.filter(id=group.id).exists())
+
+    @override_settings(SEND_MAIL=False)
+    def test_send_validation_error_when_title_missing(self):
+        group = ToGroup.objects.create(year=2025, label="2025年度メンバー")
+        self.client.force_login(self.user)
+
+        response = self.client.get(self.send_url)
+        management_form = response.context["wizard"]["management_form"]
+        attachment_formset = response.context["attachment_formset"]
+
+        post = {
+            "send_wizard_view-current_step": "compose",
+            "writer": str(self.user.id),
+            "to_groups": [str(group.id)],
+            "title": "",
+            "content": "テスト本文",
+            "attachments-TOTAL_FORMS": str(attachment_formset.total_form_count()),
+            "attachments-INITIAL_FORMS": str(attachment_formset.initial_form_count()),
+        }
+        for field in management_form.hidden_fields():
+            post[field.name] = field.value()
+        for field in attachment_formset.management_form.hidden_fields():
+            post[field.name] = field.value()
+
+        response = self.client.post(self.send_url, data=post)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "mail/send_create.html")
+        self.assertTrue(response.context["message_form"].errors)
+        self.assertIn("title", response.context["message_form"].errors)
+        self.assertEqual(Message.objects.count(), 0)
+
+    @override_settings(SEND_MAIL=False)
+    def test_send_validation_error_when_content_missing(self):
+        group = ToGroup.objects.create(year=2025, label="2025年度メンバー")
+        self.client.force_login(self.user)
+
+        response = self.client.get(self.send_url)
+        management_form = response.context["wizard"]["management_form"]
+        attachment_formset = response.context["attachment_formset"]
+
+        post = {
+            "send_wizard_view-current_step": "compose",
+            "writer": str(self.user.id),
+            "to_groups": [str(group.id)],
+            "title": "件名",
+            "content": "",
+            "attachments-TOTAL_FORMS": str(attachment_formset.total_form_count()),
+            "attachments-INITIAL_FORMS": str(attachment_formset.initial_form_count()),
+        }
+        for field in management_form.hidden_fields():
+            post[field.name] = field.value()
+        for field in attachment_formset.management_form.hidden_fields():
+            post[field.name] = field.value()
+
+        response = self.client.post(self.send_url, data=post)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "mail/send_create.html")
+        self.assertTrue(response.context["message_form"].errors)
+        self.assertIn("content", response.context["message_form"].errors)
+        self.assertEqual(Message.objects.count(), 0)
+
+    @override_settings(SEND_MAIL=False)
+    def test_send_confirm_direct_post_does_not_create_message(self):
+        self.client.force_login(self.user)
+
+        response = self.client.post(
+            self.send_url,
+            data={"send_wizard_view-current_step": "confirm"},
+            follow=True,
+        )
+
+        self.assertIn(response.status_code, (200, 400))
+        self.assertEqual(Message.objects.count(), 0)
+
+    @override_settings(SEND_MAIL=False)
+    def test_send_confirm_page_displays_composed_values(self):
+        group = ToGroup.objects.create(year=2025, label="2025年度メンバー")
+        self.client.force_login(self.user)
+
+        resp1 = self.client.get(self.send_url)
+        management_form = resp1.context["wizard"]["management_form"]
+        attachment_formset = resp1.context["attachment_formset"]
+
+        post = {
+            "send_wizard_view-current_step": "compose",
+            "writer": str(self.user.id),
+            "to_groups": [str(group.id)],
+            "title": "確認件名",
+            "content": "確認本文",
+            "attachments-TOTAL_FORMS": str(attachment_formset.total_form_count()),
+            "attachments-INITIAL_FORMS": str(attachment_formset.initial_form_count()),
+        }
+        for field in management_form.hidden_fields():
+            post[field.name] = field.value()
+        for field in attachment_formset.management_form.hidden_fields():
+            post[field.name] = field.value()
+
+        response = self.client.post(self.send_url, data=post, follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "mail/send_confirm.html")
+        self.assertContains(response, "確認件名")
+        self.assertContains(response, "確認本文")
+        self.assertContains(response, "2025年度メンバー")
+
+    @override_settings(SEND_MAIL=False)
+    def test_send_validation_error_when_to_groups_missing(self):
+        self.client.force_login(self.user)
+
+        response = self.client.get(self.send_url)
+        management_form = response.context["wizard"]["management_form"]
+        attachment_formset = response.context["attachment_formset"]
+
+        post = {
+            "send_wizard_view-current_step": "compose",
+            "writer": str(self.user.id),
+            "to_groups": [],
+            "title": "件名",
+            "content": "本文",
+            "attachments-TOTAL_FORMS": str(attachment_formset.total_form_count()),
+            "attachments-INITIAL_FORMS": str(attachment_formset.initial_form_count()),
+        }
+        for field in management_form.hidden_fields():
+            post[field.name] = field.value()
+        for field in attachment_formset.management_form.hidden_fields():
+            post[field.name] = field.value()
+
+        response = self.client.post(self.send_url, data=post)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "mail/send_create.html")
+        self.assertIn("to_groups", response.context["message_form"].errors)
+        self.assertEqual(Message.objects.count(), 0)

@@ -40,3 +40,4 @@ services:
       - MARIADB_COLLATION_SERVER=utf8mb4_ja_0900_as_cs
     volumes:
       - zoomail_database_data_2:/var/lib/mysql
+      - ./docker/mariadb/initdb:/docker-entrypoint-initdb.d:ro

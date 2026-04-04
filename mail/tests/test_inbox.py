@@ -117,3 +117,65 @@ class InboxViewTests(TestCase):
         messages = list(response.context["mailis"])
         created_at_list = [message.created_at for message in messages]
         self.assertEqual(created_at_list, sorted(created_at_list, reverse=True))
+
+    def test_inbox_query_zenkai_displays_only_global_messages(self):
+        self.client.force_login(self.user_2025)
+        response = self.client.get(self.inbox_url, {"query": "zenkai"})
+
+        self.assertEqual(response.status_code, 200)
+        messages = list(response.context["mailis"])
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(messages[0], self.message_all)
+
+    def test_inbox_query_sender_displays_only_sender_or_writer_messages(self):
+        self.client.force_login(self.user_2025)
+        response = self.client.get(self.inbox_url, {"query": "sender"})
+
+        self.assertEqual(response.status_code, 200)
+        messages = list(response.context["mailis"])
+        self.assertIn(self.message_2025, messages)
+        self.assertIn(self.message_all, messages)
+        self.assertIn(self.other_year_message, messages)
+        self.assertNotIn(self.message_2024, messages)
+
+    def test_inbox_text_search_with_multiple_words_uses_and_condition(self):
+        target = Message.objects.create(
+            title="特別 キーワード",
+            content="青い 空",
+            sender=self.user_2025,
+            writer=self.user_2025,
+            created_at=timezone.now(),
+        )
+        target.to_groups.add(self.group_2025)
+        Message.objects.create(
+            title="特別だけ",
+            content="青い海",
+            sender=self.user_2025,
+            writer=self.user_2025,
+            created_at=timezone.now(),
+        ).to_groups.add(self.group_2025)
+
+        self.client.force_login(self.user_2025)
+        response = self.client.get(self.inbox_url, {"text": "特別 青い"})
+
+        self.assertEqual(response.status_code, 200)
+        messages = list(response.context["mailis"])
+        self.assertIn(target, messages)
+        self.assertEqual(sum(1 for m in messages if m.title == "特別 キーワード"), 1)
+
+    def test_inbox_distinct_prevents_duplicate_messages(self):
+        duplicated = Message.objects.create(
+            title="重複防止メッセージ",
+            content="同じメッセージが重複しない",
+            sender=self.user_2025,
+            writer=self.user_2025,
+            created_at=timezone.now(),
+        )
+        duplicated.to_groups.add(self.group_2025, self.group_all)
+
+        self.client.force_login(self.user_2025)
+        response = self.client.get(self.inbox_url)
+
+        self.assertEqual(response.status_code, 200)
+        messages = list(response.context["mailis"])
+        self.assertEqual(sum(1 for m in messages if m.id == duplicated.id), 1)

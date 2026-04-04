@@ -1,14 +1,20 @@
 #!/bin/bash
 set -euo pipefail
 
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+COMPOSE_FILE="$SCRIPT_DIR/compose.prod.yaml"
+
 # get the current date and time
 now=$(date +"%Y%m%d_%H%M")
 
 # create zoomail_db_dump directory if it doesn't exist
 mkdir -p ~/zoomail_db_dump
 
-# dump the database
-docker compose -f /srv/zoomail/compose.prod.yaml exec -T database mariadb-dump --all-databases -uroot -p$DATABASE_PASSWORD > ~/zoomail_db_dump/zoomail_$now.sql
+# dump only the application database so local restore can use different credentials
+# use the credentials already set in the running database container
+docker compose -f "$COMPOSE_FILE" exec -T database \
+    sh -lc 'exec mariadb-dump -uroot -p"$MARIADB_ROOT_PASSWORD" --databases "$MARIADB_DATABASE"' \
+    > ~/zoomail_db_dump/zoomail_$now.sql
 
 cd ~/zoomail_db_dump
 

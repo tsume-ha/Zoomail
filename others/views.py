@@ -42,8 +42,8 @@ def file_upload(request):
         form = FileUploadForm(request.POST, request.FILES)
         if form.is_valid():
             file_instance = form.save(commit=False)
-            file_instance.upload_user = request.user
-            file_instance.original_name = request.FILES["file"].name
+            file_instance.created_by = request.user
+            file_instance.updated_by = request.user
             file_instance.save()
             return redirect("others:file_list")
     else:

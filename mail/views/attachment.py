@@ -13,7 +13,7 @@ from mail.utils import can_read_message
 def download(request, message_id, attachment_id):
     try:
         message = Message.objects.get(pk=message_id)
-        file = Attachment.objects.get(pk=attachment_id)
+        file = Attachment.objects.get(pk=attachment_id, message=message)
     except ObjectDoesNotExist:
         return HttpResponseNotFound("File not found")
 
