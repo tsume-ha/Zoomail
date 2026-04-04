@@ -153,4 +153,70 @@ Dependabot で脆弱性警告が出た場合は、次の順で対処します。
 
 重要なのは、**間接依存だけを場当たり的に手で直すのではなく、最終的に再度 `pip freeze` して `requirements.txt` 全体を実環境と一致させること** です。
 
+## バックアップしたDBダンプをローカルの Docker MariaDB にリストアする
+
+`backup.sh` では、以下の形式で DB バックアップを作成しています。
+
+- `mariadb-dump --all-databases` で **全データベース** を SQL ダンプする
+- その SQL ファイルを `tar.gz` に固める
+- 例: `zoomail_20260404_1508.tar.gz`
+
+そのため、ローカルで `docker compose up` した MariaDB に戻すときは、**既存のローカル DB を消したうえで、空の DB コンテナに全体を流し込む**のが安全です。
+
+### 注意
+
+以下の手順には `docker compose down -v` が含まれます。これは、**ローカルの MariaDB volume を削除し、現在のローカル DB データを完全に消す操作**です。
+
+必要なデータが残っていないことを確認してから実行してください。
+
+### 手順
+
+1. バックアップファイルをプロジェクトルートに置く
+
+   例:
+
+   ```bash
+   ls zoomail_20260404_1508.tar.gz
+   ```
+
+2. 既存のローカル DB を削除する
+
+   ```bash
+   docker compose down -v
+   ```
+
+3. DB コンテナだけ先に起動する
+
+   ```bash
+   docker compose up -d database
+   ```
+
+4. `tar.gz` の中の SQL をそのまま MariaDB に流し込む
+
+   ```bash
+   tar -xOf zoomail_20260404_1508.tar.gz | docker compose exec -T database sh -c 'mariadb -uroot -p"$DATABASE_PASSWORD"'
+   ```
+
+   - `tar -xOf ...` でアーカイブ内の SQL を標準出力に展開しています
+   - `docker compose exec -T database ...` で DB コンテナに標準入力を渡しています
+   - ダンプは `--all-databases` で作られているため、`USE` 文や作成文を含めてそのまま流し込めます
+
+5. 必要ならアプリ全体を起動する
+
+   ```bash
+   docker compose up -d
+   ```
+
+6. 接続確認をする
+
+   ```bash
+   docker compose exec database mariadb -uroot -p"$DATABASE_PASSWORD" -e 'SHOW DATABASES;'
+   ```
+
+### 補足
+
+- 開発用 `compose.yaml` の DB サービス名は `database` です
+- root パスワードは `.env` の `DATABASE_PASSWORD` がコンテナ内に渡されます
+- バックアップは `mariadb-dump --all-databases` なので、ローカルで事前に作られていた DB 状態に上書きで合わせるというより、**空の MariaDB に丸ごと復元する**前提で扱うのがわかりやすいです
+
 
