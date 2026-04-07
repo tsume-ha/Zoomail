@@ -72,6 +72,20 @@ class InboxViewTests(TestCase):
         # ビューのURL
         self.inbox_url = reverse("mail:inbox")
 
+    def create_sender_messages(self, count, title_prefix="sender", content="共通本文"):
+        messages = []
+        for index in range(count):
+            message = Message.objects.create(
+                title=f"{title_prefix} {index}",
+                content=content,
+                sender=self.user_2025,
+                writer=self.user_2025,
+                created_at=timezone.now(),
+            )
+            message.to_groups.add(self.group_2025)
+            messages.append(message)
+        return messages
+
     # 1. 正しいyearのメッセージが表示されるか
     def test_inbox_displays_correct_messages_for_user_year(self):
         """ユーザーのyearに一致するメッセージだけ表示される"""
@@ -179,3 +193,73 @@ class InboxViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         messages = list(response.context["mailis"])
         self.assertEqual(sum(1 for m in messages if m.id == duplicated.id), 1)
+
+    def test_inbox_pagination_links_preserve_query_and_text(self):
+        self.create_sender_messages(12, title_prefix="特定語", content="検索対象")
+
+        self.client.force_login(self.user_2025)
+        response = self.client.get(
+            self.inbox_url,
+            {"query": "sender", "text": "特定語"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "?query=sender&amp;text=%E7%89%B9%E5%AE%9A%E8%AA%9E&amp;page=2")
+        self.assertEqual(response.context["preserved_query"], "query=sender&text=%E7%89%B9%E5%AE%9A%E8%AA%9E")
+
+    def test_inbox_pagination_second_page_keeps_filters(self):
+        matching_messages = self.create_sender_messages(
+            12, title_prefix="特定語", content="絞り込み対象"
+        )
+        self.create_sender_messages(3, title_prefix="別件", content="対象外")
+
+        self.client.force_login(self.user_2025)
+        response = self.client.get(
+            self.inbox_url,
+            {"query": "sender", "text": "特定語", "page": 2},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        page_messages = list(response.context["mailis"])
+        self.assertEqual(response.context["mailis"].number, 2)
+        self.assertEqual(response.context["preserved_query"], "query=sender&text=%E7%89%B9%E5%AE%9A%E8%AA%9E")
+        self.assertEqual(len(page_messages), len(matching_messages) - 10)
+        self.assertTrue(all("特定語" in message.title for message in page_messages))
+
+    def test_inbox_pagination_links_preserve_text_only(self):
+        self.create_sender_messages(12, title_prefix="検索語", content="本文")
+
+        self.client.force_login(self.user_2025)
+        response = self.client.get(self.inbox_url, {"text": "検索語"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "?text=%E6%A4%9C%E7%B4%A2%E8%AA%9E&amp;page=2")
+        self.assertNotContains(response, "?text=%E6%A4%9C%E7%B4%A2%E8%AA%9E&amp;page=2&amp;page=")
+
+    def test_inbox_pagination_links_preserve_query_only(self):
+        for index in range(12):
+            message = Message.objects.create(
+                title=f"全体連絡 {index}",
+                content="全回向け",
+                sender=self.user_2024,
+                writer=self.user_2024,
+                created_at=timezone.now(),
+            )
+            message.to_groups.add(self.group_all)
+
+        self.client.force_login(self.user_2025)
+        response = self.client.get(self.inbox_url, {"query": "zenkai"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "?query=zenkai&amp;page=2")
+        self.assertEqual(response.context["preserved_query"], "query=zenkai")
+
+    def test_inbox_pagination_links_without_filters_use_only_page_param(self):
+        self.create_sender_messages(12, title_prefix="通常一覧", content="本文")
+
+        self.client.force_login(self.user_2025)
+        response = self.client.get(self.inbox_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "?page=2")
+        self.assertEqual(response.context["preserved_query"], "")
