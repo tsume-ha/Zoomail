@@ -55,6 +55,8 @@ def inbox(request):
     paginator = Paginator(messages, 10)
     page_number = request.GET.get("page")  # URLの?page=からページ番号を取得
     page_obj = paginator.get_page(page_number)  # ページオブジェクトを取得
+    preserved_query = request.GET.copy()
+    preserved_query.pop("page", None)
 
     # ページが複数ある場合はis_paginatedをTrueに設定
     is_paginated = page_obj.has_other_pages()
@@ -66,6 +68,7 @@ def inbox(request):
         "page_obj": page_obj,  # ページネーション情報
         "is_paginated": is_paginated,  # ページが複数あるかどうか
         "form": form,
+        "preserved_query": preserved_query.urlencode(),
     }
     return render(request, "mail/inbox.html", context)
 
