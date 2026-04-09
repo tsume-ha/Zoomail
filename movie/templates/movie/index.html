@@ -16,8 +16,10 @@
                 height="240"
                 class="youtube_content"
                 src="{{ item.url }}"
+                title="{{ item.title }}"
                 frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen>
             </iframe>
             {% endif %}
