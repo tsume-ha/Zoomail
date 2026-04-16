@@ -2,9 +2,12 @@ import os
 from datetime import date
 
 from django.shortcuts import render
-from django.http import FileResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_http_methods
+
+from utils.file_response import file_response_or_404
+
 from .models import Kansouyoushi
 
 
@@ -49,15 +52,17 @@ def index(request):
     return render(request, "kansou/index.html", {"kansou": result})
 
 
+@require_http_methods(["GET"])
 @login_required()
-def kansouDownloadView(request, kansou_id):
+def download(request, kansou_id):
     kansou = get_object_or_404(klass=Kansouyoushi, id=kansou_id)
-    filename = ""
     extension = os.path.splitext(kansou.file.path)[-1]
     if kansou.detail:
-        filename = "{} ({}) {}".format(kansou.title, kansou.detail, extension)
+        filename = f"{kansou.title} ({kansou.detail}){extension}"
     else:
-        filename = "{}{}".format(kansou.title, extension)
-    return FileResponse(
-        open(kansou.file.path, "rb"), as_attachment=False, filename=filename
+        filename = f"{kansou.title}{extension}"
+    return file_response_or_404(
+        filepath=kansou.file.path,
+        filename=filename,
+        mimetype="application/pdf",
     )
