@@ -15,7 +15,7 @@
             <ul class="list-group list-group-flush">
                 {% for item in group.items %}
                     <li class="list-group-item">
-                        <a href="/download/kansou/{{ item.id }}/" target="_blank">
+                        <a href="{% url 'kansou:download' item.id %}" target="_blank">
                             {{ item.title }} ({{ item.size|filesizeformat }})
                         </a>
                         <br>
