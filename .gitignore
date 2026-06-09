@@ -38,3 +38,5 @@ mariadb/*
 
 .env
 dump.json
+
+.codex
